@@ -1291,6 +1291,17 @@
 	$("#makeBricks").on("click", game.makeBricks.bind(game))
 	$("#reset").on("click", game.reset.bind(game))
 	$("#convert").on("click", game.convertDamage.bind(game))
+	$("body").on("keypress", function(e){
+		console.log(e.originalEvent)
+		if (e.originalEvent.key === "e"){
+			prompt("Export: Copy this, save it somewhere", Cookies.get("save"))
+		}
+		else if (e.originalEvent.key === "i"){
+			var save = prompt("Paste save here:")
+			Cookies.set("save", zip, {SameSite: "None", Secure: true})
+			game.load()
+		}
+	})
 
 	function Building(name, pluralName, baseCosts, baseEffects, damageType, buildingClass, url, idName, flavorText, startsUnlocked, costMult){
 		this.name = name
