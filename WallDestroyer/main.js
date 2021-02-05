@@ -1298,7 +1298,7 @@
 		}
 		else if (e.originalEvent.key === "i"){
 			var save = prompt("Paste save here:")
-			Cookies.set("save", zip, {SameSite: "None", Secure: true})
+			Cookies.set("save", save, {SameSite: "None", Secure: true})
 			game.load()
 		}
 	})
