@@ -96,7 +96,7 @@
 		secondsPerDownPixel: 0,
 
 		//Resources
-		money: 10000,
+		money: 0,
 		moneyIncome: 0,
 		damage: 0,
 		damageIncome: 0,
