@@ -179,7 +179,6 @@ html, body{
 	top:8%;left:0;right:0;bottom:0;
 	text-align: center;
 	margin:auto;
-	padding-top: 12.5%;
 	padding-left: 12.5%;
 }
 
@@ -187,11 +186,12 @@ html, body{
 	display: none;
 	image-rendering: pixelated;
 	width: 30%;
+	margin-top: 7%;
 	transition: margin-top 0.3s, width 0.3s;
 }
 
 #hitWall.hovered{
-	margin-top:-2%;
+	margin-top:5%;
 	width:35%;
 }
 

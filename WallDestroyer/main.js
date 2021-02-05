@@ -782,6 +782,7 @@
 			this.fourthWallBrickIncome = totalFourthWallBrickIncome
 
 			this.secondsPerDownPixel = this.damagePerDownPixel / this.damageIncome
+			document.title = this.toResourceString(this.money, "money") + ", " + this.toResourceString(this.damage, "damage")
 
 			//Check if we've unlocked anything
 			this.unlockUpgradesThatShouldBeUnlocked()
