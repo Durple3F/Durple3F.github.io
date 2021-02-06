@@ -255,7 +255,7 @@ html, body{
 	scrollbar-width: none;
 	z-index: 2;
 }
-#buildings::-webkit-scrollbar{
+#buildings::-webkit-scrollbar, #upgrades::-webkit-scrollbar, #achievements::-webkit-scrollbar{
 	display: none;
 }
 

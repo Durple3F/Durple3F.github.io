@@ -208,11 +208,13 @@
 				this.addDamageNumber(amt)
 
 				this.fixProgressBarText()
-				//TODO: add other animations
-				var rand = Math.floor(Math.random()*1)
-				$("#hitWall").css("animation", "shake"+rand+" 0.05s").on("animationend", function(){
-					this.style.animation = "none"
-				})
+				var state = this.hitWallClickable[0].style.animation
+				if (!state || !parseInt(state.substring(0, state.indexOf("s")))){
+					//var rand = Math.floor(Math.random()*1)
+					this.hitWallClickable.css("animation", "shake0 0.3s").on("animationend", function(){
+						this.style.animation = "none"
+					})
+				}
 			}
 		},
 		makeBricks: function(){
@@ -280,10 +282,10 @@
 			if (!building.count){
 				var mainIncome = building.effects[0]
 				if (mainIncome[1] === "damage"){
-					res += "Buying would increase your DPS by "+this.toReadableNum(mainIncome[0])+(this.damageIncome ? " ("+this.toReadableNum(mainIncome[0] / this.damageIncome * 100)+"% of DPS)" : "")
+					res += "Buying would increase your DPS by <b>"+this.toReadableNum(mainIncome[0])+(this.damageIncome ? "</b> (<b>"+this.toReadableNum(mainIncome[0] / this.damageIncome * 100)+"%</b> of DPS)" : "</b>")
 				}
 				else if (mainIncome[1] === "bricks"){
-					res += "Buying would increase your bricks created per second by "+this.toReadableNum(mainIncome[0])+(this.brickIncome ? " ("+this.toReadableNum(mainIncome[0] / this.brickIncome * 100)+"% of BPS)" : "")
+					res += "Buying would increase your bricks created per second by <b>"+this.toReadableNum(mainIncome[0])+(this.brickIncome ? "</b> (<b>"+this.toReadableNum(mainIncome[0] / this.brickIncome * 100)+"%</b> of BPS)" : "</b>")
 				}
 			}
 			else {
@@ -291,20 +293,21 @@
 				var mainIncome = building.incomes[0]
 				var eachIncome = mainIncome / building.count
 				if (mainEffect[1] === "damage"){
-					res += "Each of your "+building.pluralName.toLowerCase()+" deal "+this.toReadableNum(eachIncome)+" DPS.<br>"
-					res += "In total, they deal "+this.toReadableNum(mainIncome)+" DPS. ("+this.toReadableNum(mainIncome / this.damageIncome * 100)+"% of total DPS)<br>"
-					res += "Total Damage Dealt: "+this.toReadableNum(building.totalAmounts[mainEffect[1]], undefined, undefined, undefined, false)
+					res += "Each of your "+building.pluralName.toLowerCase()+" deal <b>"+this.toReadableNum(eachIncome)+"</b> DPS.<br>"
+					res += "In total, they deal <b>"+this.toReadableNum(mainIncome)+"</b> DPS. (<b>"+this.toReadableNum(mainIncome / this.damageIncome * 100)+"%</b> of total DPS)<br>"
+					res += "Total Damage Dealt: <b>"+this.toReadableNum(building.totalAmounts[mainEffect[1]], undefined, undefined, undefined, false)+"</b>"
 				}
 				else if (mainEffect[1] === "bricks"){
-					res += "Each of your "+building.pluralName.toLowerCase()+" create "+eachIncome+" bricks per second.<br>"
-					res += "In total, they create "+mainIncome+" bricks per second. ("+this.toReadableNum(mainIncome / this.brickIncome * 100)+"% of total BPS)<br>"
-					res += "Total Bricks Created: "+this.toReadableNum(building.totalAmounts[mainEffect[1]], undefined, undefined, undefined, false)
+					res += "Each of your "+building.pluralName.toLowerCase()+" create <b>"+eachIncome+"</b> bricks per second.<br>"
+					res += "In total, they create <b>"+mainIncome+"</b> bricks per second. (<b>"+this.toReadableNum(mainIncome / this.brickIncome * 100)+"%</b> of total BPS)<br>"
+					res += "Total Bricks Created: <b>"+this.toReadableNum(building.totalAmounts[mainEffect[1]], undefined, undefined, undefined, false)+"</b>"
 				}
 			}
 			res += "</div>"
 			return res
 		},
 		fixBuildingVisuals: function(){
+			this.lastBuildingUpdate = Date.now()
 			var buildings = this.buildings
 			var selling = this.buildingBuyAmount < 0
 			var amt = selling ? 1 : this.buildingBuyAmount
@@ -1202,6 +1205,7 @@
 
 		lastTick: Date.now(),
 		lastSave: Date.now(),
+		lastBuildingUpdate: 0,
 		lastProgressBarVisualUpdate: Date.now(),
 		progressBarUpdateFrequency: 0,
 		mouseX: 0,
@@ -1319,29 +1323,33 @@
 			var mouseActive = this.mouseActive
 			//Are we hovering over any buildings?
 			var skip = false
-			for (var i = 0; i < this.buildings.length; i++){
-				var building = this.buildings[i]
-				var elem = building.elem
-				if (elem.is(":hover")){
-					var tooltipContent = this.getBuildingTooltip(building)
-					skip = true
-					tooltipType = "left"
-					break
+			if (this.buildingsElement.is(":hover")){
+				for (var i = 0; i < this.buildings.length; i++){
+					var building = this.buildings[i]
+					var elem = building.elem
+					if (elem.is(":hover")){
+						var tooltipContent = this.getBuildingTooltip(building)
+						skip = true
+						tooltipType = "left"
+						break
+					}
 				}
 			}
-			for (var i = skip ? Infinity : 0; i < this.upgrades.length; i++){
-				var upgrade = this.upgrades[i]
-				if (!upgrade) continue
-				var elem = upgrade.elem
-				if (elem && elem.is(":hover")){
-					var tooltipContent = this.getUpgradeTooltip(upgrade)
-					skip = true
-					tooltipType = upgrade.bought ? "right" : "left"
-					break
+			if (this.buildingsElement.is(":hover") || this.upgradesElement.is(":hover")){
+				for (var i = skip ? Infinity : 0; i < this.upgrades.length; i++){
+					var upgrade = this.upgrades[i]
+					if (!upgrade) continue
+					var elem = upgrade.elem
+					if (elem && elem.is(":hover")){
+						var tooltipContent = this.getUpgradeTooltip(upgrade)
+						skip = true
+						tooltipType = upgrade.bought ? "right" : "left"
+						break
+					}
 				}
 			}
 			if (!skip && this.progressBar.is(":hover")){
-				var tooltipContent = this.wall.flavorText
+				var tooltipContent = "<b>"+this.wall.name+"</b><br>"+this.wall.flavorText
 			}
 			else if (!skip && this.resetButton.is(":hover")){
 				var tooltipContent = "Rewind time, sending you all the way back to square one.<br>Gain future knowledge capsules based on your progress, which makes subsequent runs faster."
@@ -1403,9 +1411,10 @@
 			}
 			else if (this.tooltipShown){
 				tooltip.css("opacity", "0")
+				this.tooltipShown = false
 			}
 
-			if (this.openMenus.includes("b")){
+			if (now - this.lastBuildingUpdate > 1000 && this.openMenus.includes("b")){
 				this.fixBuildingVisuals()
 			}
 		},
@@ -1574,14 +1583,20 @@
 			return 1 + (this.futureKnowledgeCapsules * this.futureKnowledgePower)
 		},
 		addDamageNumber: function(num){
-			var w = $(window).width()
+			var allNumbers = $(".floatingNumber")
+			if (allNumbers.length > 10){
+				allNumbers.eq(0).remove()
+			}
+			// var w = $(window).width()
 			var h = $(window).height()
-			var fullUnit = Math.min(w, h)
-			var difference = w - h
-			var hitWallHeight = $("#hitWall").height()
-			var rad = Math.random() * 2 * Math.PI
-			var W = (fullUnit * 0.5) + (Math.cos(rad) * hitWallHeight * 0.8) + (difference * 0.47)
-			var H = (fullUnit * 0.5) + (Math.sin(rad) * hitWallHeight * 0.8)
+			// var fullUnit = Math.min(w, h)
+			// var difference = w - h
+			// var hitWallHeight = this.hitWallClickable.height()
+			// var rad = Math.random() * 2 * Math.PI
+			// var W = (fullUnit * 0.5) + (Math.cos(rad) * hitWallHeight * 0.8) + (difference * 0.47)
+			// var H = (fullUnit * 0.5) + (Math.sin(rad) * hitWallHeight * 0.8)
+			var W = this.mouseX + Math.floor(Math.random() * 5)
+			var H = this.mouseY + Math.floor(Math.random() * 5)
 			var elem = document.createElement("div")
 			elem.classList.add("floatingNumber")
 			elem.style.left = W+"px"
@@ -1645,13 +1660,15 @@
 				}
 			}
 			var zip = LZString.compressToBase64(JSON.stringify(saveObj))
-			console.log(zip.length)
-			console.log(zip)
-			console.log(saveObj)
-			Cookies.set("save", zip, {SameSite: "None", Secure: true})
+			var d = new Date()
+			d.setYear(d.getYear() + 1902)
+			//Cookies.set("save", zip, {SameSite: "None", Secure: true})
+			document.cookie = "save="+zip+";expires="+d.toUTCString()+";SameSite=none;Secure=true"
+			return zip
 		},
-		load: function(){
-			var str = LZString.decompressFromBase64(Cookies.get("save"))
+		load: function(input){
+			var save = input || Cookies.get("save")
+			var str = LZString.decompressFromBase64(save)
 			var obj = str && JSON.parse(str)
 			if (obj && obj.upgrades && typeof obj.upgrades === "string" && obj.buildings && typeof obj.buildings === "object"){
 				this.hardReset()
@@ -1792,12 +1809,13 @@
 	$("#convert").on("click", game.convertDamage.bind(game))
 	$("body").on("keypress", function(e){
 		if (e.originalEvent.key === "e"){
-			prompt("Export: Copy this, save it somewhere", Cookies.get("save"))
+			var save = game.save()
+			prompt("Export: Copy this, save it somewhere", save)
 		}
 		else if (e.originalEvent.key === "i"){
 			var save = prompt("Paste save here:")
 			Cookies.set("save", save, {SameSite: "None", Secure: true})
-			game.load()
+			game.load(save)
 		}
 	})
 
@@ -2251,7 +2269,7 @@
 		new Upgrade("#7's Sword",                         "swordsmanUpgradeArmy",   [[1.1e37, "money"], [1.1e26, "bricks"], [1.1e22, "fourth wall bricks"]],   [["static", 800, "Swordsman"]], [["static", 4, "Swordsman"]],   "According to a demon historian, 35,000 years ago \"some masked asshole tried to sneak into the boss's HQ\". This sword and the mask (made of the same strange material) are all that remain of the stranger, after \"the boss taught him a lesson\". This incident was one of the only times in history that demons were killed, and as said by the Devil, \"the only time I ever got a real challenge\".<br> <br>As a test of this sword's strength, Agent Johnson cut one of our swords that cuts through everything clean in half. He wanted to attempt chopping down a Finality Tree next, but the plan was vetoed by literally everyone else."),
 		new Upgrade("Building-Sized Swords",              "swordsman4thWallUpgrade",[[5.5e16, "money"], [2500, "fourth wall bricks"]],                         [],                             [["static", 4, "Swordsman"]],   "We can hold them because it's a damn idle game, it doesn't need to make sense.", ["Reality Research"]),
 	];
-	//Swordsman-y stuff
+	//Clubber & Swordsman-y stuff
 	[
 		new Upgrade("Sword Clubs",                   "clubAndSwordUpgrade",  [[1.5e6, "money"]],  [["static", 25, "Swordsman"], ["static", 25, "Clubber"]],   [["dynamic", "Swordsman", 0.05, "building", "Clubber"], ["dynamic", "Clubber", 0.05, "building", "Swordsman"]],   "I don't actually know what these are, but they sound badass."),
 		new Upgrade("Clubs Covered in Swords",       "clubAndSwordUpgrade2", [[3e8, "money"]],    [["static", 100, "Swordsman"], ["static", 100, "Clubber"]], [["dynamic", "Swordsman", 0.03, "building", "Clubber"], ["dynamic", "Clubber", 0.04, "building", "Swordsman"]],   "Genius."),
@@ -2380,6 +2398,24 @@
 		new Upgrade("The Devil's Fingernail Clippings", "necromancerUpgradeHell2",   [[6e22, "money"], [6e10, "bricks"]], [["static", 250, "Necromancer"]], [["static", 4, "Necromancer"]],   "So powerful with hell magic they can bring people back to life easily. And Satan's janitor is willing to sell some to us!"),
 		new Upgrade("The Cursed Boneyards of Hell",     "necromancerUpgradeHell3",   [[3e26, "money"], [3e15, "bricks"]], [["static", 350, "Necromancer"]], [["static", 5, "Necromancer"]],   "The Boneyards hold the corpses of many famous wizards, and even deceased demons. The Devil has stated he doesn't really care about them, giving us the perfect entrance. He'll still make us pay a shitload for them, because after all he is a businessman."),
 		new Upgrade("Black-Melded Zombies",             "necromancerUpgradeBlack",   [[5e36, "money"], [5e25, "bricks"]], [["static", 600, "Necromancer"]], [["static", 6, "Necromancer"]],   "It sounds cool, but really they only last a couple minutes before The Black is done with the bones. Black-melded zombies: actually kind of lame."),
+	];
+	//Titan-y stuff
+	[
+		new Upgrade("Wizard Translators",                   "giantUpgrade1",       [[4.444e12, "money"]],                       [["static", 1, "Titan"]],   [["static", 1.5, "Titan"]], "The titans only speak the language of the Old World, so we gotta get the wizards to translate that."),
+		new Upgrade("Strength Restoration Spells",          "giantUpgrade2",       [[4.444e13, "money"]],                       [["static", 5, "Titan"]],   [["static", 2, "Titan"]],   "Turns out being dead for thousands of years can do things to your strength."),
+		new Upgrade("The Lexicon of Knowledge",             "giantUpgrade3",       [[4.444e14, "money"]],                       [["static", 25, "Titan"]],  [["static", 2, "Titan"]],   "It tells us that the actually strong titans were buried over there."),
+		new Upgrade("Giant Brass Knuckles",                 "giantUpgrade4",       [[4.444e15, "money"]],                       [["static", 50, "Titan"]],  [["static", 2, "Titan"]],   "We finally found a way to improve the titans themselves!"),
+		new Upgrade("Giant Swords",                         "giantUpgrade5",       [[2.222e16, "money"]],                       [["static", 75, "Titan"]],  [["static", 2, "Titan"]],   "Even bigger than the anime swords!"),
+		new Upgrade("Giant Lightsabers",                    "giantUpgrade6",       [[2.222e17, "money"]],                       [["static", 100, "Titan"]], [["static", 3, "Titan"]],   "These cost a lot to make, but totally worth."),
+		new Upgrade("Enlarged Cataract",                    "giantUpgrade7",       [[8.888e19, "money"]],                       [["static", 150, "Titan"]], [["static", 3, "Titan"]],   "These guys are really big, so they need a really big crack to get through faster."),
+		new Upgrade("The Strongest Titans",                 "giantUpgrade8",       [[8.888e20, "money"]],                       [["static", 200, "Titan"]], [["static", 4, "Titan"]],   "We found them, finally!"),
+		new Upgrade("The Titan King",                       "giantUpgrade9",       [[2.222e25, "money"]],                       [["static", 300, "Titan"]], [["static", 5, "Titan"]],   "He lives again, so he can destroy these brick walls for us."),
+		new Upgrade("Vwynido's Guide to Hand Combat",       "giantUpgrade10",      [[4.444e29, "money"]],                       [["static", 400, "Titan"]], [["static", 5, "Titan"]],   "One of the greatest lost books of all time, and we found it! (It was on an online trading site)"),
+		new Upgrade("All The Titan King Scrolls of Wisdom", "giantUpgrade11",      [[8.888e33, "money"]],                       [["static", 500, "Titan"]], [["static", 7, "Titan"]],   "\"What took so long?\" ~Head of Titan Relations<br>\"None of us wanted to attempt to get all the ones that the demons had. We temporarily lifted Agent Johnson's ban from the demons and he managed to get them to fork 'em over for only a few sacrifices.\" ~Agent Connor<br>\"On what grounds?\"<br>\"He didn't... Oh god damn it.\""),
+		new Upgrade("Hellfire Weapons",                     "giantUpgradeHell",    [[2.222e18, "money"], [2.222e7, "bricks"]],  [["static", 125, "Titan"]], [["static", 3, "Titan"]],   "Of course they're not made out of fire, they're just evilium forged in hellfire."),
+		new Upgrade("Access to The Library of Hell",        "giantUpgradeHell2",   [[8.888e22, "money"], [8.888e9, "bricks"]],  [["static", 250, "Titan"]], [["static", 4, "Titan"]],   "The library of hell has scrolls from the Old World, knowledge that will allow the titans to regain their old strength."),
+		new Upgrade("Baths in The Pits of Ahnsquall",       "giantUpgradeHell3",   [[2.222e27, "money"], [2.222e14, "bricks"]], [["static", 350, "Titan"]], [["static", 5, "Titan"]],   "These pits full of red liquid are legendary, for they are what give demons their superhuman strength: they are the demon birthplace. Only beings full of magic can survive being submerged, and the results are extreme."),
+		new Upgrade("Black-Encrusted Knuckles",             "giantUpgradeBlack",   [[6.666e37, "money"], [6.666e25, "bricks"]], [["static", 600, "Titan"]], [["static", 6, "Titan"]],   "\"This kills more titans than walls.\" ~Agent Lawrence<br>\"What are we gonna do, not have a Black titan upgrade?\" ~Head of R&D"),
 	];
 
 	var map = []
@@ -2555,6 +2591,7 @@
 		$("#quantitySelector div").removeClass("active")
 		$(this).addClass("active")
 		game.buildingBuyAmount = parseInt($(this).attr("data"))
+		game.fixBuildingVisuals()
 	})
 	// $("#availableUpgrades").on("mouseenter", function(){
 	// 	var children = $(this).children().length
