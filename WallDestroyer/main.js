@@ -143,6 +143,8 @@
 			this.handBricksStaticMult = 1
 			this.handBricksDynamicMults = []
 
+			alert("The Time Bear is coming.")
+
 			this.buildings.forEach(building => this.resetBuilding(building))
 			this.upgrades.forEach(upgrade => this.resetUpgrade(upgrade))
 		},
@@ -1596,7 +1598,7 @@
 			// var W = (fullUnit * 0.5) + (Math.cos(rad) * hitWallHeight * 0.8) + (difference * 0.47)
 			// var H = (fullUnit * 0.5) + (Math.sin(rad) * hitWallHeight * 0.8)
 			var W = this.mouseX + Math.floor(Math.random() * 5)
-			var H = this.mouseY + Math.floor(Math.random() * 5)
+			var H = this.mouseY + Math.floor(Math.random() * 5) + 10
 			var elem = document.createElement("div")
 			elem.classList.add("floatingNumber")
 			elem.style.left = W+"px"
@@ -1608,14 +1610,13 @@
 			}).css("margin-top", (-1 * h * 0.1)+"px")
 		},
 		addBrickNumber: function(num){
-			var w = $(window).width()
+			var allNumbers = $(".floatingNumber")
+			if (allNumbers.length > 10){
+				allNumbers.eq(0).remove()
+			}
 			var h = $(window).height()
-			var fullUnit = Math.min(w, h)
-			var difference = w - h
-			var hitWallHeight = $("#makeBricks").height() * 1.4
-			var rad = ((Math.random() * 1.25) - 1.125) * Math.PI
-			var W = (fullUnit * 0.5) + (Math.cos(rad) * hitWallHeight * 0.8) + (difference * 0.47)
-			var H = h - (fullUnit * 0.1) + (Math.sin(rad) * hitWallHeight * 0.8)
+			var W = this.mouseX + Math.floor(Math.random() * 5)
+			var H = this.mouseY + Math.floor(Math.random() * 5) + 10
 			var elem = document.createElement("div")
 			elem.classList.add("floatingNumber")
 			elem.style.left = W+"px"
@@ -2401,21 +2402,21 @@
 	];
 	//Titan-y stuff
 	[
-		new Upgrade("Wizard Translators",                   "giantUpgrade1",       [[4.444e12, "money"]],                       [["static", 1, "Titan"]],   [["static", 1.5, "Titan"]], "The titans only speak the language of the Old World, so we gotta get the wizards to translate that."),
-		new Upgrade("Strength Restoration Spells",          "giantUpgrade2",       [[4.444e13, "money"]],                       [["static", 5, "Titan"]],   [["static", 2, "Titan"]],   "Turns out being dead for thousands of years can do things to your strength."),
-		new Upgrade("The Lexicon of Knowledge",             "giantUpgrade3",       [[4.444e14, "money"]],                       [["static", 25, "Titan"]],  [["static", 2, "Titan"]],   "It tells us that the actually strong titans were buried over there."),
-		new Upgrade("Giant Brass Knuckles",                 "giantUpgrade4",       [[4.444e15, "money"]],                       [["static", 50, "Titan"]],  [["static", 2, "Titan"]],   "We finally found a way to improve the titans themselves!"),
-		new Upgrade("Giant Swords",                         "giantUpgrade5",       [[2.222e16, "money"]],                       [["static", 75, "Titan"]],  [["static", 2, "Titan"]],   "Even bigger than the anime swords!"),
-		new Upgrade("Giant Lightsabers",                    "giantUpgrade6",       [[2.222e17, "money"]],                       [["static", 100, "Titan"]], [["static", 3, "Titan"]],   "These cost a lot to make, but totally worth."),
-		new Upgrade("Enlarged Cataract",                    "giantUpgrade7",       [[8.888e19, "money"]],                       [["static", 150, "Titan"]], [["static", 3, "Titan"]],   "These guys are really big, so they need a really big crack to get through faster."),
-		new Upgrade("The Strongest Titans",                 "giantUpgrade8",       [[8.888e20, "money"]],                       [["static", 200, "Titan"]], [["static", 4, "Titan"]],   "We found them, finally!"),
-		new Upgrade("The Titan King",                       "giantUpgrade9",       [[2.222e25, "money"]],                       [["static", 300, "Titan"]], [["static", 5, "Titan"]],   "He lives again, so he can destroy these brick walls for us."),
-		new Upgrade("Vwynido's Guide to Hand Combat",       "giantUpgrade10",      [[4.444e29, "money"]],                       [["static", 400, "Titan"]], [["static", 5, "Titan"]],   "One of the greatest lost books of all time, and we found it! (It was on an online trading site)"),
-		new Upgrade("All The Titan King Scrolls of Wisdom", "giantUpgrade11",      [[8.888e33, "money"]],                       [["static", 500, "Titan"]], [["static", 7, "Titan"]],   "\"What took so long?\" ~Head of Titan Relations<br>\"None of us wanted to attempt to get all the ones that the demons had. We temporarily lifted Agent Johnson's ban from the demons and he managed to get them to fork 'em over for only a few sacrifices.\" ~Agent Connor<br>\"On what grounds?\"<br>\"He didn't... Oh god damn it.\""),
-		new Upgrade("Hellfire Weapons",                     "giantUpgradeHell",    [[2.222e18, "money"], [2.222e7, "bricks"]],  [["static", 125, "Titan"]], [["static", 3, "Titan"]],   "Of course they're not made out of fire, they're just evilium forged in hellfire."),
-		new Upgrade("Access to The Library of Hell",        "giantUpgradeHell2",   [[8.888e22, "money"], [8.888e9, "bricks"]],  [["static", 250, "Titan"]], [["static", 4, "Titan"]],   "The library of hell has scrolls from the Old World, knowledge that will allow the titans to regain their old strength."),
-		new Upgrade("Baths in The Pits of Ahnsquall",       "giantUpgradeHell3",   [[2.222e27, "money"], [2.222e14, "bricks"]], [["static", 350, "Titan"]], [["static", 5, "Titan"]],   "These pits full of red liquid are legendary, for they are what give demons their superhuman strength: they are the demon birthplace. Only beings full of magic can survive being submerged, and the results are extreme."),
-		new Upgrade("Black-Encrusted Knuckles",             "giantUpgradeBlack",   [[6.666e37, "money"], [6.666e25, "bricks"]], [["static", 600, "Titan"]], [["static", 6, "Titan"]],   "\"This kills more titans than walls.\" ~Agent Lawrence<br>\"What are we gonna do, not have a Black titan upgrade?\" ~Head of R&D"),
+		new Upgrade("Wizard Translators",                   "giantUpgrade1",       [[4.4444e12, "money"]],                        [["static", 1, "Titan"]],   [["static", 1.5, "Titan"]], "The titans only speak the language of the Old World, so we gotta get the wizards to translate that."),
+		new Upgrade("Strength Restoration Spells",          "giantUpgrade2",       [[4.4444e13, "money"]],                        [["static", 5, "Titan"]],   [["static", 2, "Titan"]],   "Turns out being dead for thousands of years can do things to your strength."),
+		new Upgrade("The Lexicon of Knowledge",             "giantUpgrade3",       [[4.4444e14, "money"]],                        [["static", 25, "Titan"]],  [["static", 2, "Titan"]],   "It tells us that the actually strong titans were buried over there."),
+		new Upgrade("Giant Brass Knuckles",                 "giantUpgrade4",       [[4.4444e15, "money"]],                        [["static", 50, "Titan"]],  [["static", 2, "Titan"]],   "We finally found a way to improve the titans themselves!"),
+		new Upgrade("Giant Swords",                         "giantUpgrade5",       [[2.2222e16, "money"]],                        [["static", 75, "Titan"]],  [["static", 2, "Titan"]],   "Even bigger than the anime swords!"),
+		new Upgrade("Giant Lightsabers",                    "giantUpgrade6",       [[2.2222e17, "money"]],                        [["static", 100, "Titan"]], [["static", 3, "Titan"]],   "These cost a lot to make, but totally worth."),
+		new Upgrade("Enlarged Cataract",                    "giantUpgrade7",       [[8.8888e19, "money"]],                        [["static", 150, "Titan"]], [["static", 3, "Titan"]],   "These guys are really big, so they need a really big crack to get through faster."),
+		new Upgrade("The Strongest Titans",                 "giantUpgrade8",       [[8.8888e20, "money"]],                        [["static", 200, "Titan"]], [["static", 4, "Titan"]],   "We found them, finally!"),
+		new Upgrade("The Titan King",                       "giantUpgrade9",       [[2.2222e25, "money"]],                        [["static", 300, "Titan"]], [["static", 5, "Titan"]],   "He lives again, so he can destroy these brick walls for us."),
+		new Upgrade("Vwynido's Guide to Hand Combat",       "giantUpgrade10",      [[4.4444e29, "money"]],                        [["static", 400, "Titan"]], [["static", 5, "Titan"]],   "One of the greatest lost books of all time, and we found it! (It was on an online trading site)"),
+		new Upgrade("All The Titan King Scrolls of Wisdom", "giantUpgrade11",      [[8.8888e33, "money"]],                        [["static", 500, "Titan"]], [["static", 7, "Titan"]],   "\"What took so long?\" ~Head of Titan Relations<br>\"None of us wanted to attempt to get all the ones that the demons had. We temporarily lifted Agent Johnson's ban from the demons and he managed to get them to fork 'em over for only a few sacrifices.\" ~Agent Connor<br>\"On what grounds?\"<br>\"He didn't... Oh god damn it.\""),
+		new Upgrade("Hellfire Weapons",                     "giantUpgradeHell",    [[2.2222e18, "money"], [2.2222e7, "bricks"]],  [["static", 125, "Titan"]], [["static", 3, "Titan"]],   "Of course they're not made out of fire, they're just evilium forged in hellfire."),
+		new Upgrade("Access to The Library of Hell",        "giantUpgradeHell2",   [[8.8888e22, "money"], [8.8888e9, "bricks"]],  [["static", 250, "Titan"]], [["static", 4, "Titan"]],   "The library of hell has scrolls from the Old World, knowledge that will allow the titans to regain their old strength."),
+		new Upgrade("Baths in The Pits of Ahnsquall",       "giantUpgradeHell3",   [[2.2222e27, "money"], [2.2222e14, "bricks"]], [["static", 350, "Titan"]], [["static", 5, "Titan"]],   "These pits full of red liquid are legendary, for they are what give demons their superhuman strength: they are the demon birthplace. Only beings full of magic can survive being submerged, and the results are extreme."),
+		new Upgrade("Black-Encrusted Knuckles",             "giantUpgradeBlack",   [[6.6666e37, "money"], [6.6666e25, "bricks"]], [["static", 600, "Titan"]], [["static", 6, "Titan"]],   "\"This kills more titans than walls.\" ~Agent Lawrence<br>\"What are we gonna do, not have a Black titan upgrade?\" ~Head of R&D"),
 	];
 
 	var map = []
