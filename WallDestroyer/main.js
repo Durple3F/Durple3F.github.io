@@ -363,7 +363,7 @@
 			var upgrades = this.upgrades
 			for (var i = 0; i < upgrades.length; i++){
 				var upgrade = upgrades[i]
-				if (upgrade.bought || !upgrade.unlocked){
+				if (!upgrade || upgrade.bought || !upgrade.unlocked){
 					continue
 				}
 				var canAfford = this.canAffordList(upgrade.costs)
@@ -465,11 +465,11 @@
 			else {
 				var upgrade = which
 			}
+			upgrade.unlocked = true
 			if (upgrade.bought){
 				this.putUpgradeWhereItShouldBe(upgrade)
 				return
 			}
-			upgrade.unlocked = true
 			this.putUpgradeWhereItShouldBe(upgrade)
 
 			this.fixUpgradeVisuals()
@@ -615,6 +615,7 @@
 		unlockUpgradesThatShouldBeUnlocked: function(){
 			for (var i = 0; i < this.upgrades.length; i++){
 				var upgrade = this.upgrades[i]
+				if (!upgrade) continue
 				if (!upgrade.unlocked && this.upgradeShouldBeUnlocked(upgrade)){
 					this.unlockUpgrade(upgrade)
 				}
@@ -716,6 +717,486 @@
 				}
 			}
 		},
+		upgradesMap: [
+			"win",
+			"magicUnlock",
+			"magicLevel2",
+			"magicLevel3",
+			"giantUnlock",
+			"fourthWallUnlock",
+			"resetUnlock",
+			"damageConverterUnlock",
+			"finalWallUnlock",
+			"spaceResearch",
+			"spaceUpgrade1",
+			"spaceUpgrade2",
+			"spaceUpgrade3",
+			"spaceUpgrade4",
+			"spaceUpgrade5",
+			"spaceUpgrade6",
+			"spaceUpgrade7",
+			"spaceUpgrade8",
+			"spaceUpgrade9",
+			"spaceUpgrade10",
+			"deepSpaceResearch",
+			"spaceUpgrade11",
+			"spaceUpgrade12",
+			"spaceUpgrade13",
+			"spaceUpgrade14",
+			"spaceUpgrade15",
+			"spaceUpgrade16",
+			"spaceUpgrade17",
+			"spaceUpgrade18",
+			"timeUpgrade1",
+			"timeUpgrade2",
+			"timeUpgrade3",
+			"timeUpgrade4",
+			"timeUpgrade5",
+			"timeUpgrade6",
+			"timeUpgrade7",
+			"timeUpgrade8",
+			"timeUpgrade9",
+			"timeUpgrade10",
+			"timeUpgrade11",
+			"timeUpgrade12",
+			"timeUpgrade13",
+			"timeUpgrade14",
+			"timeUpgrade15",
+			"timeUpgrade16",
+			"timeUpgrade17",
+			"timeUpgrade18",
+			"timeUpgrade19",
+			"timeUpgrade20",
+			"timeUpgrade21",
+			"specialBrickBonus",
+			"specialBrickBonus2",
+			"endStory",
+			"endStory2",
+			"endStory3",
+			"endStory4",
+			"endStory5",
+			"endStory6",
+			"endStory7",
+			"endStory8",
+			"endStory9",
+			"endStory10",
+			"endStory11",
+			"finalityUnlock",
+			"endStory12",
+			"endStory13",
+			"endStory14",
+			"endStory15",
+			"endStory16",
+			"endStory17",
+			"endStory18",
+			"endStory19",
+			"endStory20",
+			"timeBearWard0",
+			"timeBearWard1",
+			"timeBearWard2",
+			"timeBearWard3",
+			"timeBearWard4",
+			"timeBearWard5",
+			"timeBearWard6",
+			"timeBearWard7",
+			"timeBearWard8",
+			"timeBearWard9",
+			"timeBearWard10",
+			"timeBearWard11",
+			"timeBearWard12",
+			"timeBearWard13",
+			"timeBearWard14",
+			"wallMultiplier",
+			"productionMultiplier1",
+			"productionMultiplier2",
+			"productionMultiplier3",
+			"productionMultiplier4",
+			"productionMultiplier5",
+			"productionMultiplierMagic",
+			"productionMultiplierMagic2",
+			"productionMultiplierMagic3",
+			"productionMultiplier6",
+			"productionMultiplierHell",
+			"productionMultiplierHell2",
+			"productionMultiplierHell3",
+			"productionMultiplier7",
+			"productionMultiplierBlack",
+			"productionMultiplier8",
+			"productionMultiplierArmy",
+			"productionMultiplier9",
+			"productionMultiplier10",
+			"fourthWallLegend1",
+			"fourthWallLegend2",
+			"fourthWallLegend3",
+			"fourthWallLegend4",
+			"fourthWallLegend5",
+			"fourthWallLegend6",
+			"fourthWallLegend7",
+			"fourthWallLegend8",
+			"fourthWallLegend9",
+			"fourthWallLegend10",
+			"fourthWallLegend11",
+			"fourthWallLegend12",
+			"fourthWallLegend13",
+			"handAndPuncherUpgrade1",
+			"handAndPuncherUpgrade2",
+			"handAndPuncherUpgrade3",
+			"handAndPuncherUpgrade4",
+			"handAndPuncherUpgrade5",
+			"handAndPuncherUpgrade6",
+			"handAndPuncherUpgrade7",
+			"handAndClubberUpgrade",
+			"handAndSwordsmanUpgrade",
+			"handAndGunnerUpgrade",
+			"handAndGrenadeUpgrade",
+			"handAndWreckingBallUpgrade",
+			"handAndBulldozerUpgrade",
+			"handAndAirstrikeUpgrade",
+			"handAndNecromancerUpgrade",
+			"handAndGiantUpgrade",
+			"handAndDemonUpgrade",
+			"handAndCompromiserUpgrade",
+			"handAndObliteratorUpgrade",
+			"handBrickFactoryUpgrade",
+			"handBrickUnlock",
+			"handBrickUpgrade",
+			"handBrickUpgrade2",
+			"handBrickUpgrade3",
+			"handBrickUpgrade4",
+			"handBrickUpgrade5",
+			"handBrickUpgrade6",
+			"handBrickUpgrade7",
+			"handBrickUpgrade8",
+			"handBrickUpgrade9",
+			"handUpgrade1",
+			"handUpgrade2",
+			"handUpgrade3",
+			"handUpgrade4",
+			"handUpgrade5",
+			"handUpgrade6",
+			"handUpgrade7",
+			"handUpgrade8",
+			"handUpgrade9",
+			"handUpgrade10",
+			"handUpgrade11",
+			"handUpgrade12",
+			"handUpgrade13",
+			"handUpgrade14",
+			"handUpgrade15",
+			"puncherUpgrade1",
+			"puncherUpgrade2",
+			"puncherUpgrade3",
+			"puncherUpgrade4",
+			"puncherUpgrade5",
+			"puncherUpgrade6",
+			"puncherUpgrade7",
+			"puncherUpgrade8",
+			"puncherUpgrade9",
+			"puncherUpgrade10",
+			"puncherUpgrade11",
+			"puncherUpgrade12",
+			"puncherUpgrade13",
+			"puncherUpgradeMagic1",
+			"puncherUpgradeMagic2",
+			"puncherUpgradeMagic3",
+			"puncherUpgradeBlack",
+			"puncherUpgradeArmy",
+			"puncher4thWallUpgrade",
+			"clubberUpgrade1",
+			"clubberUpgrade2",
+			"clubberUpgrade3",
+			"clubberUpgrade4",
+			"clubberUpgrade5",
+			"clubberUpgrade6",
+			"clubberUpgrade7",
+			"clubberUpgrade8",
+			"clubberUpgrade9",
+			"clubberUpgrade10",
+			"clubberUpgrade11",
+			"clubberUpgrade12",
+			"clubberUpgradeMagic",
+			"clubberUpgradeMagic2",
+			"clubberUpgradeMagic3",
+			"clubberUpgradeBlack",
+			"clubberUpgradeArmy",
+			"clubber4thWallUpgrade",
+			"swordsmanUpgrade1",
+			"swordsmanUpgrade2",
+			"swordsmanUpgrade3",
+			"swordsmanUpgrade4",
+			"swordsmanUpgrade5",
+			"swordsmanUpgrade6",
+			"swordsmanUpgrade7",
+			"swordsmanUpgrade8",
+			"swordsmanUpgrade9",
+			"swordsmanUpgrade10",
+			"swordsmanUpgrade11",
+			"swordsmanUpgrade12",
+			"swordsmanUpgradeMagic",
+			"swordsmanUpgradeMagic2",
+			"swordsmanUpgradeMagic3",
+			"swordsmanUpgradeBlack",
+			"swordsmanUpgradeArmy",
+			"swordsman4thWallUpgrade",
+			"clubAndSwordUpgrade",
+			"clubAndSwordUpgrade2",
+			"clubAndSwordUpgrade3",
+			"clubAndSwordUpgrade4",
+			"clubAndSwordUpgrade5",
+			"clubAndSwordUpgrade6",
+			"clubAndSwordUpgrade7",
+			"gunnerUpgrade1",
+			"gunnerUpgrade2",
+			"gunnerUpgrade3",
+			"gunnerUpgrade4",
+			"gunnerUpgrade5",
+			"gunnerUpgrade6",
+			"gunnerUpgrade7",
+			"gunnerUpgrade8",
+			"gunnerUpgrade9",
+			"gunnerUpgrade10",
+			"gunnerUpgrade11",
+			"gunnerUpgrade12",
+			"gunnerUpgradeMagic",
+			"gunnerUpgradeMagic2",
+			"gunnerUpgradeMagic3",
+			"gunnerUpgradeBlack",
+			"gunnerUpgradeArmy",
+			"gunner4thWallUpgrade",
+			"grenadeUpgrade1",
+			"grenadeUpgrade2",
+			"grenadeUpgrade3",
+			"grenadeUpgrade4",
+			"grenadeUpgrade5",
+			"grenadeUpgrade6",
+			"grenadeUpgrade7",
+			"grenadeUpgrade8",
+			"grenadeUpgrade9",
+			"grenadeUpgrade10",
+			"grenadeUpgrade11",
+			"grenadeUpgrade12",
+			"grenadeUpgradeMagic",
+			"grenadeUpgradeMagic2",
+			"grenadeUpgradeMagic3",
+			"grenadeUpgradeBlack",
+			"grenadeUpgradeArmy",
+			"grenade4thWallUpgrade",
+			"gunAndGrenadeUpgrade",
+			"gunAndGrenadeUpgrade2",
+			"gunAndGrenadeUpgrade3",
+			"gunAndGrenadeUpgrade4",
+			"gunAndGrenadeUpgrade5",
+			"gunAndGrenadeUpgrade6",
+			"gunAndGrenadeUpgrade7",
+			"wreckingBallUpgrade1",
+			"wreckingBallUpgrade2",
+			"wreckingBallUpgrade3",
+			"wreckingBallUpgrade4",
+			"wreckingBallUpgrade5",
+			"wreckingBallUpgrade6",
+			"wreckingBallUpgrade7",
+			"wreckingBallUpgrade8",
+			"wreckingBallUpgrade9",
+			"wreckingBallUpgrade10",
+			"wreckingBallUpgrade11",
+			"wreckingBallUpgrade12",
+			"wreckingBallUpgradeMagic",
+			"wreckingBallUpgradeMagic2",
+			"wreckingBallUpgradeMagic3",
+			"wreckingBallUpgradeBlack",
+			"wreckingBall4thWallUpgrade",
+			"puncherAndWreckingBallUpgrade",
+			"puncherAndWreckingBallUpgrade2",
+			"puncherAndWreckingBallUpgrade3",
+			"puncherAndWreckingBallUpgrade4",
+			"puncherAndWreckingBallUpgrade5",
+			"puncherAndWreckingBallUpgrade6",
+			"puncherAndWreckingBallUpgrade7",
+			"bulldozerUpgrade1",
+			"bulldozerUpgrade2",
+			"bulldozerUpgrade3",
+			"bulldozerUpgrade4",
+			"bulldozerUpgrade5",
+			"bulldozerUpgrade6",
+			"bulldozerUpgrade7",
+			"bulldozerUpgrade8",
+			"bulldozerUpgrade9",
+			"bulldozerUpgrade10",
+			"bulldozerUpgrade11",
+			"bulldozerUpgrade12",
+			"bulldozerUpgradeMagic",
+			"bulldozerUpgradeMagic2",
+			"bulldozerUpgradeMagic3",
+			"bulldozerUpgradeBlack",
+			"bulldozer4thWallUpgrade",
+			"airstrikeUpgrade1",
+			"airstrikeUpgrade2",
+			"airstrikeUpgrade3",
+			"airstrikeUpgrade4",
+			"airstrikeUpgrade5",
+			"airstrikeUpgrade6",
+			"airstrikeUpgrade7",
+			"airstrikeUpgrade8",
+			"airstrikeUpgrade9",
+			"airstrikeUpgrade10",
+			"airstrikeUpgrade11",
+			"airstrikeUpgrade12",
+			"airstrikeUpgradeMagic",
+			"airstrikeUpgradeMagic2",
+			"airstrikeUpgradeMagic3",
+			"airstrikeUpgradeBlack",
+			"airstrike4thWallUpgrade",
+			"bulldozerAndAirstrikeUpgrade",
+			"bulldozerAndAirstrikeUpgrade2",
+			"bulldozerAndAirstrikeUpgrade3",
+			"bulldozerAndAirstrikeUpgrade4",
+			"bulldozerAndAirstrikeUpgrade5",
+			"bulldozerAndAirstrikeUpgrade6",
+			"bulldozerAndAirstrikeUpgrade7",
+			"necromancerUpgrade1",
+			"necromancerUpgrade2",
+			"necromancerUpgrade3",
+			"necromancerUpgrade4",
+			"necromancerUpgrade5",
+			"necromancerUpgrade6",
+			"necromancerUpgrade7",
+			"necromancerUpgrade8",
+			"necromancerUpgrade9",
+			"necromancerUpgrade10",
+			"necromancerUpgrade11",
+			"necromancerUpgradeHell",
+			"necromancerUpgradeHell2",
+			"necromancerUpgradeHell3",
+			"necromancerUpgradeBlack",
+			"giantUpgrade1",
+			"giantUpgrade2",
+			"giantUpgrade3",
+			"giantUpgrade4",
+			"giantUpgrade5",
+			"giantUpgrade6",
+			"giantUpgrade7",
+			"giantUpgrade8",
+			"giantUpgrade9",
+			"giantUpgrade10",
+			"giantUpgrade11",
+			"giantUpgradeHell",
+			"giantUpgradeHell2",
+			"giantUpgradeHell3",
+			"giantUpgradeBlack",
+			"necromancerAndTitanUpgrade",
+			"necromancerAndTitanUpgrade2",
+			"necromancerAndTitanUpgrade3",
+			"necromancerAndTitanUpgrade4",
+			"necromancerAndTitanUpgrade5",
+			"necromancerAndTitanUpgrade6",
+			"demonUpgrade1",
+			"demonUpgrade2",
+			"demonUpgrade3",
+			"demonUpgrade4",
+			"demonUpgrade5",
+			"demonUpgrade6",
+			"demonUpgrade7",
+			"demonUpgrade8",
+			"demonUpgrade9",
+			"demonUpgrade10",
+			"demonUpgrade11",
+			"demonMagicUpgrade",
+			"demonMagicUpgrade2",
+			"demonMagicUpgrade3",
+			"demonUpgradeBlack",
+			"compromiserUpgrade",
+			"compromiserUpgrade2",
+			"compromiserUpgrade3",
+			"compromiserUpgrade4",
+			"compromiserUpgrade5",
+			"compromiserUpgrade6",
+			"compromiserUpgrade7",
+			"compromiserUpgrade8",
+			"compromiserUpgrade9",
+			"compromiserUpgrade10",
+			"compromiserUpgrade11",
+			"compromiserMagicUpgrade",
+			"compromiserMagicUpgrade2",
+			"compromiserMagicUpgrade3",
+			"compromiserUpgradeBlack",
+			"lastBuildingUpgrade",
+			"lastBuildingUpgrade2",
+			"lastBuildingUpgrade3",
+			"lastBuildingUpgrade4",
+			"lastBuildingUpgrade5",
+			"lastBuildingUpgrade6",
+			"lastBuildingUpgrade7",
+			"lastBuildingUpgrade8",
+			"lastBuildingUpgrade9",
+			"lastBuildingUpgrade10",
+			"lastBuildingUpgradeMagic",
+			"lastBuildingUpgradeMagic2",
+			"lastBuildingUpgradeMagic3",
+			"compromiserAndLastBuildingUpgrade",
+			"compromiserAndLastBuildingUpgrade2",
+			"compromiserAndLastBuildingUpgrade3",
+			"compromiserAndLastBuildingUpgrade4",
+			"compromiserAndLastBuildingUpgrade5",
+			"brickFactoryUpgrade",
+			"brickFactoryUpgrade2",
+			"brickFactoryUpgrade3",
+			"brickFactoryUpgrade4",
+			"brickFactoryUpgrade5",
+			"brickFactoryUpgrade6",
+			"brickFactoryUpgrade7",
+			"brickFactoryUpgrade8",
+			"brickFactoryUpgrade9",
+			"brickFactoryUpgrade10",
+			"brickFactoryUpgrade11",
+			"brickFactoryMagicUpgrade",
+			"brickFactoryMagicUpgrade2",
+			"brickFactoryMagicUpgrade3",
+			"brickFactoryUpgradeBlack",
+			"brickFactoryAndDemonUpgrade",
+			"brickFactoryAndDemonUpgrade2",
+			"brickFactoryAndDemonUpgrade3",
+			"brickFactoryAndDemonUpgrade4",
+			"brickFactoryAndDemonUpgrade5",
+			"brickFactoryAndDemonUpgrade6",
+			"buildingTrophy1",
+			"buildingTrophy2",
+			"buildingTrophy3",
+			"buildingTrophy4",
+			"buildingTrophy5",
+			"buildingTrophy6",
+			"buildingTrophy7",
+			"buildingTrophy8",
+			"buildingTrophy9",
+			"buildingTrophy10",
+			"buildingTrophy11",
+			"buildingTrophy12",
+			"buildingTrophy13",
+			"buildingTrophy14",
+			"trophy1",
+			"trophy2",
+			"trophy3",
+			"trophy4",
+			"trophy5",
+			"trophy6",
+			"trophy7",
+			"trophy8",
+			"trophy9",
+			"trophy10",
+			"trophy11",
+			"trophy12",
+			"trophy13",
+			"trophy14",
+			"trophy15",
+			"trophy16",
+			"trophy17",
+			"trophy18",
+			"trophy19",
+			"trophy20",
+			"trophy21",
+			"trophy22",
+			"trophy23",
+			"trophy24"
+		],
 
 		achievements: [],
 
@@ -850,6 +1331,7 @@
 			}
 			for (var i = skip ? Infinity : 0; i < this.upgrades.length; i++){
 				var upgrade = this.upgrades[i]
+				if (!upgrade) continue
 				var elem = upgrade.elem
 				if (elem && elem.is(":hover")){
 					var tooltipContent = this.getUpgradeTooltip(upgrade)
@@ -895,8 +1377,6 @@
 				else {
 					var placeX = mouseX + 15
 					var placeY = mouseY + 15
-					var rightEdge = mouseX + 15 + tw
-					var bottomEdge = mouseY + 15 + th
 					if (rightEdge > w - 25){
 						placeX = w - 25 - tw
 					}
@@ -909,6 +1389,15 @@
 						tooltip.css("width", this.currentTooltipWidth+"px")
 						this.currentTooltip = tooltipContent
 					}
+				}
+				var newTooltipHeight = tooltip.height()
+				var rightEdge = placeX + this.currentTooltipWidth
+				var bottomEdge = placeY + newTooltipHeight + 17
+				if (w < rightEdge){
+					placeX = w - this.currentTooltipWidth - 5
+				}
+				if (h < bottomEdge){
+					placeY = h - newTooltipHeight - 17
 				}
 				tooltip.css("left", placeX+"px").css("top", placeY+"px").css("opacity", "1")
 			}
@@ -963,6 +1452,7 @@
 			var suffixStyle = suffixStyle || 0
 			var precision = precision === undefined ? 2 : precision
 			precision++
+			precision = Math.max(precision, 0)
 			var force = force || (num > 1000)
 			var decimal = decimal === undefined ? true : decimal
 			if (num === undefined){
@@ -977,7 +1467,7 @@
 					if (!decimal){
 						return Math.floor(num).toString()
 					}
-					var p = Math.floor(Math.log10(num)+precision)
+					var p = Math.max(Math.floor(Math.log10(num)+precision), 0)
 					return p ? num.toPrecision(p) : (Math.floor(num * 100) / 100).toString()
 				}
 				var digits = Math.floor(Math.log10(num))+1
@@ -1145,15 +1635,25 @@
 				bobj.totalAmounts = building.totalAmounts
 				return bobj
 			})
-			saveObj.upgrades = {}
-			this.upgrades.forEach(upg => saveObj.upgrades[upg.name] = upg.bought + upg.unlocked)
+			saveObj.upgrades = ""
+			for (var i = 0; i < this.upgrades.length; i++){
+				if (!this.upgrades[i]){
+					saveObj.upgrades += "0"
+				}
+				else {
+					saveObj.upgrades += (this.upgrades[i].bought + this.upgrades[i].unlocked).toString()
+				}
+			}
 			var zip = LZString.compressToBase64(JSON.stringify(saveObj))
+			console.log(zip.length)
+			console.log(zip)
+			console.log(saveObj)
 			Cookies.set("save", zip, {SameSite: "None", Secure: true})
 		},
 		load: function(){
 			var str = LZString.decompressFromBase64(Cookies.get("save"))
 			var obj = str && JSON.parse(str)
-			if (obj){
+			if (obj && obj.upgrades && typeof obj.upgrades === "string" && obj.buildings && typeof obj.buildings === "object"){
 				this.hardReset()
 				$("#quantitySelector div").eq(1).click()
 				this.currentWall = obj.currentWall || 0
@@ -1179,15 +1679,14 @@
 						this.buildings[i].incomes.forEach(income => this.buildings[i].totalAmounts[income[1]] = this.buildings[i].totalAmounts[income[1]] || 0)
 					}
 				})
-				obj.upgrades && Object.keys(obj.upgrades).forEach((upgName, i) => {
-					var upgrade = this.upgrades.findIndex(upg => upg.name === upgName)
-					if (upgrade !== -1){
-						if (obj.upgrades[upgName] > 1){
-							upgrade.unlocked = true
-							this.buyUpgrade(upgrade, true)
+				obj.upgrades && obj.upgrades.split("").forEach((num, i) => {
+					var upgrade = this.upgrades[i]
+					if (upgrade){
+						if (parseInt(num) > 0){
+							this.unlockUpgrade(i)
 						}
-						else if (obj.upgrades[upgName] > 0){
-							this.unlockUpgrade(upgrade)
+						if (parseInt(num) > 1){
+							this.buyUpgrade(i, true)
 						}
 					}
 				})
@@ -1292,7 +1791,6 @@
 	$("#reset").on("click", game.reset.bind(game))
 	$("#convert").on("click", game.convertDamage.bind(game))
 	$("body").on("keypress", function(e){
-		console.log(e.originalEvent)
 		if (e.originalEvent.key === "e"){
 			prompt("Export: Copy this, save it somewhere", Cookies.get("save"))
 		}
@@ -1344,7 +1842,6 @@
 	
 	function Upgrade(name, url, costs, unlocks, effects, flavorText, requiredUpgrades, keptOnPrestige){
 		game.upgrades.push(this)
-		this.index = game.upgrades.indexOf(this)
 		this.name = name
 		this.costs = costs
 		this.unlocks = unlocks
@@ -1531,19 +2028,19 @@
 			[["special", "reset"]],
 			"Unlocks the <b>reset button</b>, which converts walls destroyed into future knowledge capsules.<div class='flavorText'>We can rewind time and keep our knowledge.</div>",
 		),
-		new Upgrade("Black Research",
-			"finalWallUnlock",
-			[[4.2e19, "money"]],
-			[["static", 5, "wallsDestroyed"]],
-			[["unlock", "building", "Black Obliterator"]],
-			"We have discovered a substance in <b>[REDACTED]</b> that holds more power than anything we have ever encountered. We call it The Black because it is pitch black.",
-		),
 		new Upgrade("Prestige Hacker",
 			"finalWallUnlock",
 			[[1e37, "money"]],
 			[["static", 5, "wallsDestroyed"]],
 			[["special", "convert"]],
 			"The hackers decided there was an easier way to go about this.",
+		),
+		new Upgrade("Black Research",
+			"finalWallUnlock",
+			[[4.2e19, "money"]],
+			[["static", 5, "wallsDestroyed"]],
+			[["unlock", "building", "Black Obliterator"]],
+			"We have discovered a substance in <b>[REDACTED]</b> that holds more power than anything we have ever encountered. We call it The Black because it is pitch black.",
 		),
 	];
 	//Time Bear Wards
@@ -1857,7 +2354,7 @@
 		new Upgrade("Missiles",                "airstrikeUpgrade7",       [[6e16, "money"]],                              [["static", 150, "Airstrike Caller"]], [["static", 3, "Airstrike Caller"]],   "Yeah, we gave in eventually."),
 		new Upgrade("Nukes",                   "airstrikeUpgrade8",       [[6e18, "money"]],                              [["static", 200, "Airstrike Caller"]], [["static", 4, "Airstrike Caller"]],   "A little overkill for a brick wall, you think? Well, you haven't seen this wall."),
 		new Upgrade("Astral Magnets",          "airstrikeUpgrade9",       [[6e22, "money"]],                              [["static", 300, "Airstrike Caller"]], [["static", 5, "Airstrike Caller"]],   "We drop these and they pull down a bunch of asteroids with them. Also satellites, uh, that was unintentional."),
-		new Upgrade("Bigger Everything",       "airstrikeUpgrade10",      [[1,5e27, "money"]],                            [["static", 400, "Airstrike Caller"]], [["static", 5, "Airstrike Caller"]],   "\"Bigger = More Damage\" ~The entire BE proposal"),
+		new Upgrade("Bigger Everything",       "airstrikeUpgrade10",      [[1.5e27, "money"]],                            [["static", 400, "Airstrike Caller"]], [["static", 5, "Airstrike Caller"]],   "\"Bigger = More Damage\" ~The entire BE proposal"),
 		new Upgrade("The Walls of Bixtec",     "airstrikeUpgrade11",      [[1.5e31, "money"]],                            [["static", 500, "Airstrike Caller"]], [["static", 7, "Airstrike Caller"]],   "Bixtec Castle was made to be impenetrable, so its walls are almost indestructible, very heavy, and magicked up to reflect any damage dealt to them back to their attacker. We knew immediately what to do."),
 		new Upgrade("The Boxes of Relocation", "airstrikeUpgrade12",      [[3e39, "money"]],                              [["static", 700, "Airstrike Caller"]], [["static", 5, "Airstrike Caller"]],   "Two boxes Lord Reaefsek made that relocate everything put into the \"in\" box to the \"out\" box. So obviously we should tie the out box upside-down to our space station so we can reduce our plane usage."),
 		new Upgrade("Density Spells",          "airstrikeUpgradeMagic",   [[3e15, "money"], [2.5e3, "bricks"]],           [["static", 125, "Airstrike Caller"]], [["static", 3, "Airstrike Caller"]],   "How useful!", ["Magic Mining"]),
@@ -1866,13 +2363,45 @@
 		new Upgrade("Black-Merged Anvils",     "airstrikeUpgradeBlack",   [[3e35, "money"], [3e22, "bricks"]],            [["static", 600, "Airstrike Caller"]], [["static", 6, "Airstrike Caller"]],   "\"Is it time to buff the anvils? The answer is yes, always, forever.\" ~Agent Connor, in the BMA proposal<br>\"Finally, we agree.\" ~Agent Johnson"),
 		new Upgrade("Planets",                 "airstrike4thWallUpgrade", [[5e18, "money"], [1e7, "fourth wall bricks"]], [],                                    [["static", 4, "Airstrike Caller"]],   "Yeah, we already used this, but it works here too.", ["Reality Research"]),
 	];
+	//Necromancer-y stuff
+	[
+		new Upgrade("Polished Bricks",                  "necromancerUpgrade1",       [[3e11, "money"], [2, "bricks"]],    [["static", 1, "Necromancer"]],   [["static", 1.5, "Necromancer"]], "Gives them more of an incentive."),
+		new Upgrade("Giant Hats",                       "necromancerUpgrade2",       [[3e12, "money"], [4, "bricks"]],    [["static", 5, "Necromancer"]],   [["static", 2, "Necromancer"]],   "If there's one thing the wizards value other than bricks, it's big hats."),
+		new Upgrade("Ancient Scrolls",                  "necromancerUpgrade3",       [[3e13, "money"], [33, "bricks"]],   [["static", 25, "Necromancer"]],  [["static", 2, "Necromancer"]],   "We find these while mining, so we might as well finally put them to use."),
+		new Upgrade("Thrones",                          "necromancerUpgrade4",       [[3e14, "money"], [333, "bricks"]],  [["static", 50, "Necromancer"]],  [["static", 2, "Necromancer"]],   "They're demanding these. Necromancers are assholes."),
+		new Upgrade("Zombie Preservatives",             "necromancerUpgrade5",       [[3e15, "money"], [3e3, "bricks"]],  [["static", 75, "Necromancer"]],  [["static", 2, "Necromancer"]],   "Keeps them from rotting too fast."),
+		new Upgrade("Better Graveyards",                "necromancerUpgrade6",       [[3e16, "money"], [3e5, "bricks"]],  [["static", 100, "Necromancer"]], [["static", 3, "Necromancer"]],   "They were using some pretty low-class wizard graveyards before."),
+		new Upgrade("Higher-Classed Necromancers",      "necromancerUpgrade7",       [[3e18, "money"], [3e7, "bricks"]],  [["static", 150, "Necromancer"]], [["static", 3, "Necromancer"]],   "The guys we hired before turned out to be scrubs."),
+		new Upgrade("Teleportation Spells",             "necromancerUpgrade8",       [[6e19, "money"], [6e8, "bricks"]],  [["static", 200, "Necromancer"]], [["static", 4, "Necromancer"]],   "So they can clean out the world's graveyards faster."),
+		new Upgrade("Duplication Spells",               "necromancerUpgrade9",       [[3e24, "money"], [3e13, "bricks"]], [["static", 300, "Necromancer"]], [["static", 5, "Necromancer"]],   "To multiply the zombification spells for cheap."),
+		new Upgrade("Ancient Tombs",                    "necromancerUpgrade10",      [[3e28, "money"], [3e17, "bricks"]], [["static", 400, "Necromancer"]], [["static", 5, "Necromancer"]],   "\"All ancient tombs have tons of useful magical stuff and only the highest quality corpses. We've never really thought why; it's just a fact.\" ~A necromancer"),
+		new Upgrade("First Wizard Scrolls",             "necromancerUpgrade11",      [[3e32, "money"], [3e17, "bricks"]], [["static", 500, "Necromancer"]], [["static", 7, "Necromancer"]],   "A few centuries ago, some demons snuck into the Great Wizard Library, took all the First Wizards' scrolls, and sent the wizards on the greatest treasure hunt ever constructed to get them back. The scrolls were never found. We're just going to cheat and use the compromisers to hunt them down.<br> <br>\"I propose we send everyone we have out on the hunt instead of cheating.\" ~Agent Johnson<br>\"No.\" ~Everyone"),
+		new Upgrade("Demon Healing Magic",              "necromancerUpgradeHell",    [[3e17, "money"], [3e6, "bricks"]],  [["static", 125, "Necromancer"]], [["static", 3, "Necromancer"]],   "Demon healing magic is so strong it can bring them back from the dead. It's part of the reason they're such assholes, because they know they can never really be killed."),
+		new Upgrade("The Devil's Fingernail Clippings", "necromancerUpgradeHell2",   [[6e22, "money"], [6e10, "bricks"]], [["static", 250, "Necromancer"]], [["static", 4, "Necromancer"]],   "So powerful with hell magic they can bring people back to life easily. And Satan's janitor is willing to sell some to us!"),
+		new Upgrade("The Cursed Boneyards of Hell",     "necromancerUpgradeHell3",   [[3e26, "money"], [3e15, "bricks"]], [["static", 350, "Necromancer"]], [["static", 5, "Necromancer"]],   "The Boneyards hold the corpses of many famous wizards, and even deceased demons. The Devil has stated he doesn't really care about them, giving us the perfect entrance. He'll still make us pay a shitload for them, because after all he is a businessman."),
+		new Upgrade("Black-Melded Zombies",             "necromancerUpgradeBlack",   [[5e36, "money"], [5e25, "bricks"]], [["static", 600, "Necromancer"]], [["static", 6, "Necromancer"]],   "It sounds cool, but really they only last a couple minutes before The Black is done with the bones. Black-melded zombies: actually kind of lame."),
+	];
 
+	var map = []
+	for (var i = 0; i < game.upgrades.length; i++){
+		var index = game.upgradesMap.findIndex(name => name.toLowerCase() === game.upgrades[i].idName.toLowerCase())
+		if (index !== -1){
+			map[index] = game.upgrades[i]
+		}
+		else {
+			index = Math.max(game.upgradesMap.length, map.length)
+			map[index] = game.upgrades[i]
+		}
+	}
+	game.upgrades = map
 	for (var i = 0; i < game.upgrades.length; i++){
 		var upgrade = game.upgrades[i]
+		if (!upgrade) continue
+		upgrade.index = i
 		game.createUpgradeElement(upgrade)
 		var reqs = upgrade.preReqUpgrades
 		for (var j = 0; j < reqs.length; j++){
-			reqs[j] = game.upgrades.find(upg => upg.name === reqs[j])
+			reqs[j] = game.upgrades.find(upg => upg && upg.name === reqs[j])
 		}
 		var len = upgrade.preReqUpgrades.length
 		upgrade.preReqUpgrades = upgrade.preReqUpgrades.filter(upg => upg)
@@ -2073,5 +2602,5 @@
     game.fixBuildingVisuals()
     game.load()
 
-	Game = game
+    Game = game
 })()
