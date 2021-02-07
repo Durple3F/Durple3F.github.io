@@ -1311,7 +1311,7 @@
 				availableUpgrades.css("height", this.upgradeLeftWidth + "px")
 				this.availableUpgradesAreOpen = false
 			}
-			else if (hovered && !availableUpgradesWasOpen){
+			else if (hovered && !availableUpgradesWasOpen && availableUpgrades.children().length){
 				availableUpgrades.css("height", this.upgradeLeftWidth * this.upgradeLeftRows + "px")
 				this.availableUpgradesAreOpen = true
 			}
@@ -1597,8 +1597,8 @@
 			// var rad = Math.random() * 2 * Math.PI
 			// var W = (fullUnit * 0.5) + (Math.cos(rad) * hitWallHeight * 0.8) + (difference * 0.47)
 			// var H = (fullUnit * 0.5) + (Math.sin(rad) * hitWallHeight * 0.8)
-			var W = this.mouseX + Math.floor(Math.random() * 5)
-			var H = this.mouseY + Math.floor(Math.random() * 5) + 10
+			var W = this.mouseX + Math.floor(Math.random() * h * 0.05)
+			var H = this.mouseY + Math.floor(Math.random() * h * 0.05) - 10
 			var elem = document.createElement("div")
 			elem.classList.add("floatingNumber")
 			elem.style.left = W+"px"
@@ -2321,6 +2321,16 @@
 		new Upgrade("Black-Infused Grenades",     "grenadeUpgradeBlack",  [[3e31, "money"], [3e18, "bricks"]],                               [["static", 600, "Grenade Thrower"]], [["static", 6, "Grenade Thrower"]],   "\"I support this because its acronym is 'BIG'.\" ~Agent Johnson"),
 		new Upgrade("Grenades",                   "grenadeUpgradeArmy",   [[4e39, "money"], [4e28, "bricks"], [4e24, "fourth wall bricks"]], [["static", 800, "Grenade Thrower"]], [["static", 4, "Grenade Thrower"]],   "\"We've hit critical.\" ~Head of R&D"),
 		new Upgrade("Enlarged Explosions",        "grenade4thWallUpgrade",[[2e17, "money"], [5e4, "fourth wall bricks"]],                    [],                                   [["static", 4, "Grenade Thrower"]],   "Now that we can alter reality, we don't need reasons for things. Explosions are just really big now.", ["Reality Research"]),
+	];
+	//Gunner & Grenade-y stuff
+	[
+		new Upgrade("Gun That Shoots Grenades",                      "gunAndGrenadeUpgrade",  [[4e7, "money"]],  [["static", 25, "Grenade Thrower"], ["static", 25, "Gunner"]],   [["dynamic", "Grenade Thrower", 0.04, "building", "Gunner"], ["dynamic", "Gunner", 0.05, "building", "Grenade Thrower"]],   "Not to be confused with a grenade launcher."),
+		new Upgrade("Grenade That Shoots",                           "gunAndGrenadeUpgrade2", [[8e10, "money"]], [["static", 100, "Grenade Thrower"], ["static", 100, "Gunner"]], [["dynamic", "Grenade Thrower", 0.01, "building", "Gunner"], ["dynamic", "Gunner", 0.02, "building", "Grenade Thrower"]],   "It shoots little grenades."),
+		new Upgrade("Giant Gun Grenades",                            "gunAndGrenadeUpgrade3", [[8e14, "money"]], [["static", 200, "Grenade Thrower"], ["static", 200, "Gunner"]], [["dynamic", "Grenade Thrower", 0.01, "building", "Gunner"], ["dynamic", "Gunner", 0.015, "building", "Grenade Thrower"]],  "Whatever you're thinking these are, they're more ridiculous than that."),
+		new Upgrade("Grenade Guns",                                  "gunAndGrenadeUpgrade4", [[8e18, "money"]], [["static", 300, "Grenade Thrower"], ["static", 300, "Gunner"]], [["dynamic", "Grenade Thrower", 0.008, "building", "Gunner"], ["dynamic", "Gunner", 0.01, "building", "Grenade Thrower"]],  "It's hard to describe what exactly these are, but they're perfect."),
+		new Upgrade("Hyperbeam Laser Plasma Photon Fusion Gunnades", "gunAndGrenadeUpgrade5", [[8e22, "money"]], [["static", 400, "Grenade Thrower"], ["static", 400, "Gunner"]], [["dynamic", "Grenade Thrower", 0.008, "building", "Gunner"], ["dynamic", "Gunner", 0.008, "building", "Grenade Thrower"]], "\"We just threw a bunch of space-age crap together and whaddya know, it works!\" ~Chief of R&D, RUC"),
+		new Upgrade("The Turrets of Bextic",                         "gunAndGrenadeUpgrade6", [[1e27, "money"]], [["static", 500, "Grenade Thrower"], ["static", 500, "Gunner"]], [["dynamic", "Grenade Thrower", 0.007, "building", "Gunner"], ["dynamic", "Gunner", 0.007, "building", "Grenade Thrower"]], "Hyzem's castle defenses were the stuff of legends: giant bombs, guns that shoot bombs, giant guns, bombs that explode into guns... And they're all extremely powerful with Old World magic!"),
+		new Upgrade("Inspirational War Films",                       "gunAndGrenadeUpgrade7", [[3e35, "money"]], [["static", 700, "Grenade Thrower"], ["static", 700, "Gunner"]], [["dynamic", "Grenade Thrower", 0.004, "building", "Gunner"], ["dynamic", "Gunner", 0.004, "building", "Grenade Thrower"]], "\"I'm impressed by their ability to even find movies this absolutely terrible.\" ~Agent Connor<br>\"Quality is different from <b>inspirational-ness</b>.\" ~Gunner Project Leader"),
 	];
 	//Wrecking Ball-y stuff
 	[
