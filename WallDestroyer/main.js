@@ -278,7 +278,13 @@
 			for (var i = 0; i < building.costs.length; i++){
 				var cost = building.costs[i]
 				var canAfford = this.canAfford(cost[0], cost[1])
-				res += "<div class='tooltipCost "+(canAfford ? "green" : "red")+"'>"+this.toResourceString(cost[0], cost[1]) + "</div>"
+				if (canAfford){
+					res += "<div class='tooltipCost green'>"+this.toResourceString(cost[0], cost[1]) + "</div>"
+				}
+				else {
+					var time = this.getTimeUntilCanAfford(cost[0], cost[1])
+					res += "<div class='tooltipCost red'>"+this.toResourceString(cost[0], cost[1]) + (time ? (" <a class='tooltipTime'>(" + time + ")</a><br>") : "") + "</div>"
+				}
 			}
 			res += "<div class='tooltipExtraInfo'>"
 			if (!building.count){
@@ -499,7 +505,7 @@
 					}
 					else {
 						var time = this.getTimeUntilCanAfford(cost[0], cost[1])
-						res = "<div class='tooltipCost red'>"+this.toResourceString(cost[0], cost[1]) + (time ? (" <a class='tooltipTime'>" + time + "</a><br>") : "") + "</div>" + res
+						res = "<div class='tooltipCost red'>"+this.toResourceString(cost[0], cost[1]) + (time ? (" <a class='tooltipTime'>(" + time + ")</a><br>") : "") + "</div>" + res
 					}
 				}
 			}

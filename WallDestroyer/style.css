@@ -37,7 +37,7 @@ html, body{
 	color: gray;
 }
 
-#tooltip .tooltipCost{
+#tooltip > .tooltipCost{
 	font-weight: 600;
 	/*float: right;*/
 	/*margin-left: 30px;*/
@@ -53,6 +53,10 @@ html, body{
 
 #tooltip > .tooltipExtraInfo{
 	font-size: 70%;
+}
+
+#tooltip > .tooltipTime{
+	color: white;
 }
 
 #mainProgressBar{
