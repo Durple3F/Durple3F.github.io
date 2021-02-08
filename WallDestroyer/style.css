@@ -228,6 +228,7 @@ html, body{
 #buildingButton{
 	position:absolute;
 	width: 3%;
+	max-width: 3em;
 	top:44%;bottom:44%;left:0;
 	border-top:1px solid black;
 	border-right:1px solid black;
@@ -361,6 +362,7 @@ html, body{
 #upgradeButton{
 	position:absolute;
 	top:44%;bottom:44%;left:97%;width:3%;
+	max-width: 3em;
 	border-top:1px solid black;
 	border-left:1px solid black;
 	border-bottom:1px solid black;
@@ -438,6 +440,7 @@ html, body{
 #achievementsButton{
 	position:absolute;
 	top:58%;height:12%;left:97%;width:3%;
+	max-width: 3em;
 	border-top:1px solid black;
 	border-left:1px solid black;
 	border-bottom:1px solid black;
