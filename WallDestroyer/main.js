@@ -1900,7 +1900,7 @@
 		game.buildings[10] = new Building("Demon", "Demons", [[666, "bricks"]], [[3666666666, "damage"], [3666666666, "money"]], "demon", "magic", "img/demon.png", "demonBuilding", "Defiles the wall with the darkest magic of all.", false)
 		game.buildings[11] = new Building("Reality Compromiser", "Reality Compromisers", [[1.01e13, "money"]], [[4e10, "damage"], [4e10, "money"], [0.05, "fourth wall bricks"]], "compromiser", "dream", "img/compromiser.png", "compromiserBuilding", "Enters reality code and removes the wall from existence.", false)
 		game.buildings[12] = new Building("Black Obliterator", "Black Obliterators", [[5.2e18, "money"], [52000, "fourth wall bricks"]], [[1e16, "damage"], [1e16, "money"]], "obliterator", "dream", "img/obliterator.png", "obliteratorBuilding", "Robots covered in The Black. They're really cool, so no one questions mixing the most dangerous & evil thing ever with cold, unfeeling robots.", false)
-		game.buildings[13] = new Building("Brick Factory", "Brick Factories", [[16666666666666, "money"]], [[0.05, "bricks"]], "factory", "special", "img/factory.png", "factoryBuilding", "Creates artificial bricks with dark magic. The wizards will never know.", false)
+		game.buildings[13] = new Building("Brick Factory", "Brick Factories", [[16666666666666, "money"]], [[0.05, "bricks"]], "factory", "special", "img/factory.png", "factoryBuilding", "Creates artificial bricks with dark magic.<br>The wizards will never know.", false)
 	})()
 	
 	function Upgrade(name, url, costs, unlocks, effects, flavorText, requiredUpgrades, keptOnPrestige){
