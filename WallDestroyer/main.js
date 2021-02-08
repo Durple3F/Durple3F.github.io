@@ -1358,7 +1358,7 @@
 					if (!upgrade) continue
 					var elem = upgrade.elem
 					if (elem && elem.is(":hover")){
-						var tooltipContent = upgrade.tooltip
+						var tooltipContent = this.getUpgradeTooltip(upgrade)
 						skip = true
 						tooltipType = upgrade.bought ? "right" : "left"
 						break
