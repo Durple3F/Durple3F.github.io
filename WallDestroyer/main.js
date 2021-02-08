@@ -499,7 +499,7 @@
 					}
 					else {
 						var time = this.getTimeUntilCanAfford(cost[0], cost[1])
-						res = "<div class='tooltipCost red'>"+this.toResourceString(cost[0], cost[1]) + "</div>" + (time ? time + "<br>" : "") + res
+						res = "<div class='tooltipCost red'>"+this.toResourceString(cost[0], cost[1]) + (time ? " <a class='tooltipTime'>" time + "</a><br>" : "") + "</div>" + res
 					}
 				}
 			}
@@ -1561,11 +1561,15 @@
 				case "fourth wall bricks": var income = this.fourthWallBricksIncome; var have = this.fourthWallBricks; break;
 				default: var income = this.moneyIncome; var have = this.money; break;
 			}
+			if (income === 0){
+				return ""
+			}
 			var time = (amt - have) / income
+			console.log(amt, have, income, time)
 			var days = Math.floor(time / 86400)
 			var hours = Math.floor(time / 3600) % 24
 			var minutes = Math.floor(time / 60) % 60
-			var seconds = time % 60
+			var seconds = Math.floor(time % 60)
 			var ret = ""
 			if (days){
 				ret += days + "d" + (hours || minutes || seconds ? ", " : "")
