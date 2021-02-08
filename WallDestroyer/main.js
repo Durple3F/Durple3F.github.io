@@ -1652,7 +1652,7 @@
 			var width = elem.offsetWidth
 			$(elem).hide()
 			var W = this.mouseX - (width * 0.5) + Math.floor(Math.random() * h * 0.05) - (h * 0.025)
-			var H = this.mouseY - Math.floor(Math.random() * h * 0.05) - (h * 0.05)
+			var H = this.mouseY - Math.floor(Math.random() * h * 0.05) - (h * 0.01)
 			elem.style.left = W+"px"
 			elem.style.top = H+"px"
 			$(elem).show()
@@ -1673,7 +1673,7 @@
 			var width = elem.offsetWidth
 			$(elem).hide()
 			var W = this.mouseX - (width * 0.5) + Math.floor(Math.random() * h * 0.05) - (h * 0.025)
-			var H = this.mouseY - Math.floor(Math.random() * h * 0.05) - (h * 0.05)
+			var H = this.mouseY - Math.floor(Math.random() * h * 0.05) - (h * 0.01)
 			elem.style.left = W+"px"
 			elem.style.top = H+"px"
 			$(elem).show()
