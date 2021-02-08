@@ -103,7 +103,7 @@
 		bricks: 0,
 		bricksIncome: 0,
 		fourthWallBricks: 0,
-		fourthWallBrickIncome: 0,
+		fourthWallBricksIncome: 0,
 		cosmicKnowledge: 0,
 		futureKnowledgeCapsules: 0,
 		futureKnowledgePower: 0,
@@ -494,7 +494,13 @@
 				for (var i = 0; i < upgrade.costs.length; i++){
 					var cost = upgrade.costs[i]
 					var canAfford = this.canAfford(cost[0], cost[1])
-					res = "<div class='tooltipCost "+(canAfford ? "green" : "red")+"'>"+this.toResourceString(cost[0], cost[1]) + "</div>" + res
+					if (canAfford){
+						res = "<div class='tooltipCost green'>"+this.toResourceString(cost[0], cost[1]) + "</div>" + res
+					}
+					else {
+						var time = this.getTimeUntilCanAfford(cost[0], cost[1])
+						res = "<div class='tooltipCost red'>"+this.toResourceString(cost[0], cost[1]) + "</div>" + (time ? time + "<br>" : "") + res
+					}
 				}
 			}
 			else {
@@ -1238,7 +1244,7 @@
 			var totalDamageIncome = 0
 			var totalMoneyIncome = 0
 			var totalBrickIncome = 0
-			var totalFourthWallBrickIncome = 0
+			var totalfourthWallBricksIncome = 0
 			for (var i = 0; i < buildings.length; i++){
 				var building = buildings[i]
 				if (!building.count){
@@ -1256,7 +1262,7 @@
 						case "damage": totalDamageIncome += amt; break;
 						case "money": totalMoneyIncome += amt; break;
 						case "bricks": totalBrickIncome += amt; break;
-						case "fourth wall bricks": totalFourthWallBrickIncome += amt; break;
+						case "fourth wall bricks": totalfourthWallBricksIncome += amt; break;
 					}
 				}
 			}
@@ -1266,8 +1272,8 @@
 			this.moneyIncome = totalMoneyIncome
 			this.bricks += totalBrickIncome / this.tickRate * times
 			this.brickIncome = totalBrickIncome
-			this.fourthWallBricks += totalFourthWallBrickIncome / this.tickRate * times * 1e6
-			this.fourthWallBrickIncome = totalFourthWallBrickIncome
+			this.fourthWallBricks += totalfourthWallBricksIncome / this.tickRate * times * 1e6
+			this.fourthWallBricksIncome = totalfourthWallBricksIncome
 
 			this.secondsPerDownPixel = this.damagePerDownPixel / this.damageIncome
 			document.title = this.toResourceString(this.money, "money") + ", " + this.toResourceString(this.damage, "damage")
@@ -1296,8 +1302,8 @@
 			}
 			if (this.fourthWallBricks || this.wallsDestroyed >= 4){
 				str += "<div class='importantResource'>"+this.toResourceString(this.fourthWallBricks, "fourth wall bricks", undefined, undefined, true)
-				if (this.fourthWallBrickIncome){
-					str += " ("+this.toReadableNum(this.fourthWallBrickIncome)+"/sec)"
+				if (this.fourthWallBricksIncome){
+					str += " ("+this.toReadableNum(this.fourthWallBricksIncome)+"/sec)"
 				}
 				str += "</div>"
 			}
@@ -1548,6 +1554,33 @@
 			}
 			return canAfford
 		},
+		getTimeUntilCanAfford: function(amt, resource){
+			switch(resource){
+				case "money": var income = this.moneyIncome; var have = this.money; break;
+				case "bricks": var income = this.bricksIncome; var have = this.bricks; break;
+				case "fourth wall bricks": var income = this.fourthWallBricksIncome; var have = this.fourthWallBricks; break;
+				default: var income = this.moneyIncome; var have = this.money; break;
+			}
+			var time = (amt - have) / income
+			var days = Math.floor(time / 86400)
+			var hours = Math.floor(time / 3600) % 24
+			var minutes = Math.floor(time / 60) % 60
+			var seconds = time % 60
+			var ret = ""
+			if (days){
+				ret += days + "d" + (hours || minutes || seconds ? ", " : "")
+			}
+			if (hours){
+				ret += hours + "h" + (minutes || seconds ? ", " : "")
+			}
+			if (minutes){
+				ret += minutes + "m" + (seconds ? ", " : "")
+			}
+			if (seconds){
+				ret += seconds + "s"
+			}
+			return ret
+		},
 		getDynamicMultiplier: function(mult){
 			if (mult[1] === "building"){
 				return mult[0] * this.findBuilding(mult[2]).count
@@ -1791,7 +1824,7 @@
 		new Wall("The Big 2nd Wall",     "",                                        ["cosmicKnowledge"],           1e14,   [[2.5e13, "money"], [100, "bricks"],   [1, "cosmicKnowledge"]],                    "img/wallSprites/wall1"),
 		new Wall("The Huge 3rd Wall",    "",                                        ["cosmicKnowledge"],           1e16,   [[2.5e15, "money"], [1e4, "bricks"],   [1, "cosmicKnowledge"]],                    "img/wallSprites/wall1"),
 		new Wall("The Massive 4th Wall", "",                                        ["cosmicKnowledge"],           1e18,   [[2.5e17, "money"], [2.5e5, "bricks"], [2, "cosmicKnowledge"]],                    "img/wallSprites/wall1"),
-		new Wall("The Final 5th Wall",   "This is the big one.",                    ["bossBricks"],                1e20,   [[2.5e19, "money"], [1e7, "bricks"],   [5, "cosmicKnowledge"], [1, "bossBricks"]], "img/wallSprites/wall2"),
+		new Wall("The Final 5th Wall",   "This is the big one.",                    ["cosmicKnowledge", "bossBricks"],                1e20,   [[2.5e19, "money"], [1e7, "bricks"],   [5, "cosmicKnowledge"], [1, "bossBricks"]], "img/wallSprites/wall2"),
 		new Wall("Bonus Wall #9",        "You win, but you can keep going anyway.", [],                            2e20,   [[1e20, "money"],   [1e8, "bricks"],   [5, "cosmicKnowledge"]],                    "img/wallSprites/wall3"),
 		
 		new Wall("Bonus Wall #8",   "", [], 4e20,    [[2e20, "money"],    [2.5e8, "bricks"],  [5, "cosmicKnowledge"]],  "img/wallSprites/wall3"),
