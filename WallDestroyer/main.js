@@ -1603,9 +1603,10 @@
 			// var H = (fullUnit * 0.5) + (Math.sin(rad) * hitWallHeight * 0.8)
 			var elem = document.createElement("div")
 			elem.classList.add("floatingNumber")
-			elem.innerHTML = this.toReadableNum(num)
+			var text = this.toReadableNum(num)
+			elem.innerHTML = text
 			console.log(elem.offsetWidth)
-			var W = this.mouseX + Math.floor(Math.random() * h * 0.05) - (elem.offsetWidth * 0.5)
+			var W = this.mouseX + Math.floor(Math.random() * h * 0.05) - (text.length * h * 0.05)
 			var H = this.mouseY - Math.floor(Math.random() * h * 0.05) - (h * 0.05)
 			elem.style.left = W+"px"
 			elem.style.top = H+"px"
