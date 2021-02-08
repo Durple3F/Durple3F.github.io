@@ -55,7 +55,7 @@ html, body{
 	font-size: 70%;
 }
 
-#tooltip > .tooltipTime{
+#tooltip > .tooltipCost > .tooltipTime{
 	color: white;
 }
 
