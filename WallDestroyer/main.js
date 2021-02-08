@@ -429,6 +429,8 @@
 			if (!building.unlocked){
 				building.elem.addClass("hidden")
 			}
+			building.staticMultiplier = 1
+			building.dynamicMultipliers = []
 		},
 
 		//Upgrades
