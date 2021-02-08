@@ -2600,10 +2600,12 @@
 		}
 	})
 	$("#hitWall").on("mouseenter", function(){
-		if (!game.openMenus.includes("b")){
-			var elem = $(this)
-			elem.addClass("hovered")
-		}
+		// if (!game.openMenus.includes("b")){
+		// 	var elem = $(this)
+		// 	elem.addClass("hovered")
+		// }
+		var elem = $(this)
+		elem.addClass("hovered")
 	})
 	$("#hitWall").on("mouseleave", function(){
 		$(this).removeClass("hovered")
