@@ -1564,7 +1564,7 @@
 			if (income === 0){
 				return ""
 			}
-			var time = (amt - have) / income
+			var time = Math.max((amt - have) / income, 0)
 			console.log(amt, have, income, time)
 			var days = Math.floor(time / 86400)
 			var hours = Math.floor(time / 3600) % 24
@@ -2726,4 +2726,6 @@
 
     game.fixBuildingVisuals()
     game.load()
+
+    Game = game
 })()
