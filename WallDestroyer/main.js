@@ -2047,7 +2047,7 @@
 			[[1000, "fourth wall bricks"]],
 			[["static", 4, "wallsDestroyed"]],
 			[["special", "reset"]],
-			"Unlocks the <b>reset button</b>, which converts walls destroyed into future knowledge capsules.<div class='flavorText'>We can rewind time and keep our knowledge.</div>",
+			"We can rewind time and keep our knowledge.",
 		),
 		new Upgrade("Prestige Hacker",
 			"finalWallUnlock",
