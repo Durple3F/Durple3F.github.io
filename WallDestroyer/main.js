@@ -1599,13 +1599,13 @@
 			// var rad = Math.random() * 2 * Math.PI
 			// var W = (fullUnit * 0.5) + (Math.cos(rad) * hitWallHeight * 0.8) + (difference * 0.47)
 			// var H = (fullUnit * 0.5) + (Math.sin(rad) * hitWallHeight * 0.8)
-			var W = this.mouseX + Math.floor(Math.random() * h * 0.05)
-			var H = this.mouseY - Math.floor(Math.random() * h * 0.05)
 			var elem = document.createElement("div")
 			elem.classList.add("floatingNumber")
 			elem.style.left = W+"px"
 			elem.style.top = H+"px"
 			elem.innerHTML = this.toReadableNum(num)
+			var W = this.mouseX + Math.floor(Math.random() * h * 0.05)
+			var H = this.mouseY - Math.floor(Math.random() * h * 0.05) - elem.offsetHeight
 			$("#mainScreen").append(elem)
 			$(elem).fadeOut(1000, function(){
 				$(this).remove()
@@ -1617,13 +1617,13 @@
 				allNumbers.eq(0).remove()
 			}
 			var h = $(window).height()
-			var W = this.mouseX + Math.floor(Math.random() * 5)
-			var H = this.mouseY - Math.floor(Math.random() * 5)
 			var elem = document.createElement("div")
 			elem.classList.add("floatingNumber")
 			elem.style.left = W+"px"
 			elem.style.top = H+"px"
 			elem.innerHTML = this.toReadableNum(num)
+			var W = this.mouseX + Math.floor(Math.random() * h * 0.05)
+			var H = this.mouseY - Math.floor(Math.random() * h * 0.05) - elem.offsetHeight
 			$("#mainScreen").append(elem)
 			$(elem).fadeOut(1000, function(){
 				$(this).remove()
