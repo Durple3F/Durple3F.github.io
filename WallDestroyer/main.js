@@ -1602,6 +1602,7 @@
 			var elem = document.createElement("div")
 			elem.classList.add("floatingNumber")
 			elem.innerHTML = this.toReadableNum(num)
+			console.log(elem.offsetWidth)
 			var W = this.mouseX + Math.floor(Math.random() * h * 0.05) - (elem.offsetWidth * 0.5)
 			var H = this.mouseY - Math.floor(Math.random() * h * 0.05) - (h * 0.05)
 			elem.style.left = W+"px"
@@ -1670,6 +1671,7 @@
 			return zip
 		},
 		load: function(input){
+			this.hardReset()
 			var save = input || Cookies.get("save")
 			var str = LZString.decompressFromBase64(save)
 			var obj = str && JSON.parse(str)
