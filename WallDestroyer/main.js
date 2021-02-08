@@ -1602,7 +1602,7 @@
 			var elem = document.createElement("div")
 			elem.classList.add("floatingNumber")
 			elem.innerHTML = this.toReadableNum(num)
-			var W = this.mouseX + Math.floor(Math.random() * h * 0.05)
+			var W = this.mouseX + Math.floor(Math.random() * h * 0.05) - (elem.offsetWidth * 0.5)
 			var H = this.mouseY - Math.floor(Math.random() * h * 0.05) - (h * 0.05)
 			elem.style.left = W+"px"
 			elem.style.top = H+"px"
@@ -1620,7 +1620,7 @@
 			var elem = document.createElement("div")
 			elem.classList.add("floatingNumber")
 			elem.innerHTML = this.toReadableNum(num)
-			var W = this.mouseX + Math.floor(Math.random() * h * 0.05)
+			var W = this.mouseX + Math.floor(Math.random() * h * 0.05) - (elem.offsetWidth * 0.5)
 			var H = this.mouseY - Math.floor(Math.random() * h * 0.05) - (h * 0.05)
 			elem.style.left = W+"px"
 			elem.style.top = H+"px"
