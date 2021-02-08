@@ -101,9 +101,9 @@
 		damage: 0,
 		damageIncome: 0,
 		bricks: 0,
-		bricksIncome: 0,
+		brickIncome: 0,
 		fourthWallBricks: 0,
-		fourthWallBricksIncome: 0,
+		fourthWallBrickIncome: 0,
 		cosmicKnowledge: 0,
 		futureKnowledgeCapsules: 0,
 		futureKnowledgePower: 0,
@@ -1244,7 +1244,7 @@
 			var totalDamageIncome = 0
 			var totalMoneyIncome = 0
 			var totalBrickIncome = 0
-			var totalfourthWallBricksIncome = 0
+			var totalfourthWallBrickIncome = 0
 			for (var i = 0; i < buildings.length; i++){
 				var building = buildings[i]
 				if (!building.count){
@@ -1262,7 +1262,7 @@
 						case "damage": totalDamageIncome += amt; break;
 						case "money": totalMoneyIncome += amt; break;
 						case "bricks": totalBrickIncome += amt; break;
-						case "fourth wall bricks": totalfourthWallBricksIncome += amt; break;
+						case "fourth wall bricks": totalfourthWallBrickIncome += amt; break;
 					}
 				}
 			}
@@ -1272,8 +1272,8 @@
 			this.moneyIncome = totalMoneyIncome
 			this.bricks += totalBrickIncome / this.tickRate * times
 			this.brickIncome = totalBrickIncome
-			this.fourthWallBricks += totalfourthWallBricksIncome / this.tickRate * times * 1e6
-			this.fourthWallBricksIncome = totalfourthWallBricksIncome
+			this.fourthWallBricks += totalfourthWallBrickIncome / this.tickRate * times * 1e6
+			this.fourthWallBrickIncome = totalfourthWallBrickIncome
 
 			this.secondsPerDownPixel = this.damagePerDownPixel / this.damageIncome
 			document.title = this.toResourceString(this.money, "money") + ", " + this.toResourceString(this.damage, "damage")
@@ -1302,8 +1302,8 @@
 			}
 			if (this.fourthWallBricks || this.wallsDestroyed >= 4){
 				str += "<div class='importantResource'>"+this.toResourceString(this.fourthWallBricks, "fourth wall bricks", undefined, undefined, true)
-				if (this.fourthWallBricksIncome){
-					str += " ("+this.toReadableNum(this.fourthWallBricksIncome)+"/sec)"
+				if (this.fourthWallBrickIncome){
+					str += " ("+this.toReadableNum(this.fourthWallBrickIncome)+"/sec)"
 				}
 				str += "</div>"
 			}
@@ -1557,15 +1557,14 @@
 		getTimeUntilCanAfford: function(amt, resource){
 			switch(resource){
 				case "money": var income = this.moneyIncome; var have = this.money; break;
-				case "bricks": var income = this.bricksIncome; var have = this.bricks; break;
-				case "fourth wall bricks": var income = this.fourthWallBricksIncome; var have = this.fourthWallBricks; break;
+				case "bricks": var income = this.brickIncome; var have = this.bricks; break;
+				case "fourth wall bricks": var income = this.fourthWallBrickIncome; var have = this.fourthWallBricks; break;
 				default: var income = this.moneyIncome; var have = this.money; break;
 			}
 			if (income === 0){
 				return ""
 			}
 			var time = Math.max((amt - have) / income, 0)
-			console.log(amt, have, income, time)
 			var days = Math.floor(time / 86400)
 			var hours = Math.floor(time / 3600) % 24
 			var minutes = Math.floor(time / 60) % 60
