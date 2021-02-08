@@ -583,9 +583,6 @@
 				this.putUpgradeWhereItShouldBe(upgrade)
 				this.fixUpgradeVisuals()
 			}
-			else {
-				console.log("Can't buy upgrade:", upgrade, canBuy, force)
-			}
 			this.fixBuildingVisuals()
 		},
 		upgradeShouldBeUnlocked: function(upgrade){
@@ -1605,7 +1602,6 @@
 			elem.classList.add("floatingNumber")
 			var text = this.toReadableNum(num)
 			elem.innerHTML = text
-			console.log(elem.offsetWidth)
 			var W = this.mouseX + Math.floor(Math.random() * h * 0.05)
 			var H = this.mouseY - Math.floor(Math.random() * h * 0.05) - (h * 0.05)
 			elem.style.left = W+"px"
@@ -2693,6 +2689,4 @@
 
     game.fixBuildingVisuals()
     game.load()
-
-    Game = game
 })()
