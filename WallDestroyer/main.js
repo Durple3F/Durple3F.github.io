@@ -1605,7 +1605,7 @@
 			elem.style.top = H+"px"
 			elem.innerHTML = this.toReadableNum(num)
 			var W = this.mouseX + Math.floor(Math.random() * h * 0.05)
-			var H = this.mouseY - Math.floor(Math.random() * h * 0.05) - elem.offsetHeight
+			var H = this.mouseY - Math.floor(Math.random() * h * 0.05) - (h * 0.05)
 			$("#mainScreen").append(elem)
 			$(elem).fadeOut(1000, function(){
 				$(this).remove()
@@ -1623,7 +1623,7 @@
 			elem.style.top = H+"px"
 			elem.innerHTML = this.toReadableNum(num)
 			var W = this.mouseX + Math.floor(Math.random() * h * 0.05)
-			var H = this.mouseY - Math.floor(Math.random() * h * 0.05) - elem.offsetHeight
+			var H = this.mouseY - Math.floor(Math.random() * h * 0.05) - (h * 0.05)
 			$("#mainScreen").append(elem)
 			$(elem).fadeOut(1000, function(){
 				$(this).remove()
