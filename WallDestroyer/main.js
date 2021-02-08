@@ -1624,7 +1624,7 @@
 			var elem = document.createElement("div")
 			elem.classList.add("floatingNumber")
 			elem.innerHTML = this.toReadableNum(num)
-			var W = this.mouseX + Math.floor(Math.random() * h * 0.05) - (elem.offsetWidth * 0.5)
+			var W = this.mouseX + Math.floor(Math.random() * h * 0.05)
 			var H = this.mouseY - Math.floor(Math.random() * h * 0.05) - (h * 0.05)
 			elem.style.left = W+"px"
 			elem.style.top = H+"px"
@@ -1674,7 +1674,6 @@
 			return zip
 		},
 		load: function(input){
-			this.hardReset()
 			var save = input || Cookies.get("save")
 			var str = LZString.decompressFromBase64(save)
 			var obj = str && JSON.parse(str)
@@ -2434,6 +2433,24 @@
 		new Upgrade("Access to The Library of Hell",        "giantUpgradeHell2",   [[8.8888e22, "money"], [8.8888e9, "bricks"]],  [["static", 250, "Titan"]], [["static", 4, "Titan"]],   "The library of hell has scrolls from the Old World, knowledge that will allow the titans to regain their old strength."),
 		new Upgrade("Baths in The Pits of Ahnsquall",       "giantUpgradeHell3",   [[2.2222e27, "money"], [2.2222e14, "bricks"]], [["static", 350, "Titan"]], [["static", 5, "Titan"]],   "These pits full of red liquid are legendary, for they are what give demons their superhuman strength: they are the demon birthplace. Only beings full of magic can survive being submerged, and the results are extreme."),
 		new Upgrade("Black-Encrusted Knuckles",             "giantUpgradeBlack",   [[6.6666e37, "money"], [6.6666e25, "bricks"]], [["static", 600, "Titan"]], [["static", 6, "Titan"]],   "\"This kills more titans than walls.\" ~Agent Lawrence<br>\"What are we gonna do, not have a Black titan upgrade?\" ~Head of R&D"),
+	];
+	//Demon-y stuff
+	[
+		new Upgrade("Leather Jackets",                     "demonUpgrade1",       [[3e3, "bricks"]],                             [["static", 1, "Demon"]],   [["static", 1.5, "Demon"]], "The only things we can do to make demons do more damage involve making them want to.")
+		new Upgrade("Motorcycles",                         "demonUpgrade2",       [[3e4, "bricks"]],                             [["static", 5, "Demon"]],   [["static", 2, "Demon"]],   "Totally tricked out and really loud, of course.")
+		new Upgrade("Ritual Sacrifices",                   "demonUpgrade3",       [[1e5, "bricks"]],                             [["static", 25, "Demon"]],  [["static", 2, "Demon"]],   "The cult that was doing these before stopped, so we have to take over.")
+		new Upgrade("Torture Reels",                       "demonUpgrade4",       [[6.6666e5, "bricks"]],                        [["static", 50, "Demon"]],  [["static", 2, "Demon"]],   "Keeping them entertained.")
+		new Upgrade("Loads of Weapons",                    "demonUpgrade5",       [[3e6, "bricks"]],                             [["static", 75, "Demon"]],  [["static", 2, "Demon"]],   "They don't have guns down there, so they want some to take back.")
+		new Upgrade("Worshippers",                         "demonUpgrade6",       [[3e7, "bricks"]],                             [["static", 100, "Demon"]], [["static", 3, "Demon"]],   "Man, demons are much bigger assholes than necromancers.")
+		new Upgrade("Universal Passes",                    "demonUpgrade7",       [[6.6666e9, "bricks"]],                        [["static", 150, "Demon"]], [["static", 3, "Demon"]],   "Okay so some people are worried about the amount of power the demons have at this point... But remember, we're finally gonna take down this wall!")
+		new Upgrade("Nuclear Launch Codes",                "demonUpgrade8",       [[6.6666e11, "bricks"]],                       [["static", 200, "Demon"]], [["static", 4, "Demon"]],   "I'm sure they have a totally legit reason for wanting these.")
+		new Upgrade("Not-Destroying-The-World Tax",        "demonUpgrade9",       [[1e16, "bricks"]],                            [["static", 300, "Demon"]], [["static", 5, "Demon"]],   "\"Okay, maybe giving them all of those things was not a good idea.\" ~CEO, RUC")
+		new Upgrade("Lord Reaefsek's Journal",             "demonUpgrade10",      [[6.6666e19, "bricks"]],                       [["static", 400, "Demon"]], [["static", 5, "Demon"]],   "Titled \"Lord Reaefsek: God of The Unfinished\", this journal is full of evil doings and tips & tricks. And, of course, it suddenly cuts off a few dozen pages from the end.")
+		new Upgrade("Hyzem's Artifact Vault",              "demonUpgrade11",      [[3e24, "bricks"]],                            [["static", 500, "Demon"]], [["static", 7, "Demon"]],   "\"Oh please tell me you removed The Amsora first.\" ~Agent Taylor<br>\"Yes... So we can give it to them as a seperate upgrade.\" ~Agent Connor<br>\"NOOOOOOOO.\" ~Head of Demon Relations")
+		new Upgrade("Illusion Spells",                     "demonMagicUpgrade",   [[6.6666e8, "bricks"], [6.6666e19, "money"]],  [["static", 125, "Demon"]], [["static", 3, "Demon"]],   "They told us they'd use these strictly for trolling.<br>EDIT: WHY THE HELL DID WE GIVE THEM THESE")
+		new Upgrade("Reality-Bending Magic",               "demonMagicUpgrade2",  [[6.6666e13, "bricks"], [6.6666e24, "money"]], [["static", 250, "Demon"]], [["static", 4, "Demon"]],   "\"Whatever you do, NEVER give them the ability to actually bend reality instead of just look like they can.\" ~Demon Relations Department Chief, RUC")
+		new Upgrade("All The Most Powerful Spell Scrolls", "demonMagicUpgrade3",  [[6.6666e17, "bricks"], [6.6666e28, "money"]], [["static", 350, "Demon"]], [["static", 5, "Demon"]],   "\"You have to be joking.\" ~All the wizards (paraphrased)")
+		new Upgrade("Black-Amalgamated Pitchforks",        "demonUpgradeBlack",   [[3e28, "bricks"], [3e39, "money"]],           [["static", 600, "Demon"]], [["static", 6, "Demon"]],   "The demons request their own Black-themed upgrade, \"mostly for style points\".<br> <br>\"Wait, didn't the Devil himself say not to use this stuff?\" ~Agent Carter<br>\"I've learned to just not question them at this point.\" ~Agent Connor")
 	];
 	//Brick Factor-y stuff
 	[
