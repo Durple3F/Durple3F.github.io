@@ -499,7 +499,7 @@
 					}
 					else {
 						var time = this.getTimeUntilCanAfford(cost[0], cost[1])
-						res = "<div class='tooltipCost red'>"+this.toResourceString(cost[0], cost[1]) + (time ? " <a class='tooltipTime'>" time + "</a><br>" : "") + "</div>" + res
+						res = "<div class='tooltipCost red'>"+this.toResourceString(cost[0], cost[1]) + (time ? (" <a class='tooltipTime'>" + time + "</a><br>") : "") + "</div>" + res
 					}
 				}
 			}
