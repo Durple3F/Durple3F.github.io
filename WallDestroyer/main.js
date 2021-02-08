@@ -321,6 +321,7 @@
 			var amt = selling ? 1 : this.buildingBuyAmount
 			for (var i = 0; i < buildings.length; i++){
 				var building = buildings[i]
+				building.tooltip = this.getBuildingTooltip(building)
 				var elem = building.elem
 				building.elem.children(".buildingQuantity").html(building.count)
 				var costElems = elem.children(".buildingCost")
@@ -377,6 +378,7 @@
 				if (!upgrade || upgrade.bought || !upgrade.unlocked){
 					continue
 				}
+				upgrade.tooltip = this.getUpgradeTooltip(upgrade)
 				var canAfford = this.canAffordList(upgrade.costs)
 				if (canAfford && upgrade.elem.hasClass("unavailable")){
 					upgrade.elem.removeClass("unavailable")
@@ -1343,7 +1345,7 @@
 					var building = this.buildings[i]
 					var elem = building.elem
 					if (elem.is(":hover")){
-						var tooltipContent = this.getBuildingTooltip(building)
+						var tooltipContent = building.tooltip
 						skip = true
 						tooltipType = "left"
 						break
@@ -1356,7 +1358,7 @@
 					if (!upgrade) continue
 					var elem = upgrade.elem
 					if (elem && elem.is(":hover")){
-						var tooltipContent = this.getUpgradeTooltip(upgrade)
+						var tooltipContent = upgrade.tooltip
 						skip = true
 						tooltipType = upgrade.bought ? "right" : "left"
 						break
@@ -1364,7 +1366,7 @@
 				}
 			}
 			if (!skip && this.progressBar.is(":hover")){
-				var tooltipContent = "<b>"+this.wall.name+"</b><br>"+this.wall.flavorText
+				var tooltipContent = "<b>"+this.wall.name+"</b><br> <br>Time until destroyed: <div class='tooltipTime'>"+this.getTimeUntilCanAfford(this.wall.health, "damage")+"</div><br>"+this.wall.flavorText
 			}
 			else if (!skip && this.resetButton.is(":hover")){
 				var tooltipContent = "Rewind time, sending you all the way back to square one.<br>Gain future knowledge capsules based on your progress, which makes subsequent runs faster."
@@ -1565,6 +1567,7 @@
 				case "money": var income = this.moneyIncome; var have = this.money; break;
 				case "bricks": var income = this.brickIncome; var have = this.bricks; break;
 				case "fourth wall bricks": var income = this.fourthWallBrickIncome; var have = this.fourthWallBricks; break;
+				case "damage": var income = this.damageIncome; var have = this.damage; break;
 				default: var income = this.moneyIncome; var have = this.money; break;
 			}
 			if (income === 0){
@@ -1644,11 +1647,15 @@
 			elem.classList.add("floatingNumber")
 			var text = this.toReadableNum(num)
 			elem.innerHTML = text
-			var W = this.mouseX + Math.floor(Math.random() * h * 0.05)
+			
+			$("#mainScreen").append(elem)
+			var width = elem.offsetWidth
+			$(elem).hide()
+			var W = this.mouseX - (width * 0.5) + Math.floor(Math.random() * h * 0.05) - (h * 0.025)
 			var H = this.mouseY - Math.floor(Math.random() * h * 0.05) - (h * 0.05)
 			elem.style.left = W+"px"
 			elem.style.top = H+"px"
-			$("#mainScreen").append(elem)
+			$(elem).show()
 			$(elem).fadeOut(1000, function(){
 				$(this).remove()
 			}).css("margin-top", (-1 * h * 0.1)+"px")
@@ -1662,11 +1669,14 @@
 			var elem = document.createElement("div")
 			elem.classList.add("floatingNumber")
 			elem.innerHTML = this.toReadableNum(num)
-			var W = this.mouseX + Math.floor(Math.random() * h * 0.05)
+			$("#mainScreen").append(elem)
+			var width = elem.offsetWidth
+			$(elem).hide()
+			var W = this.mouseX - (width * 0.5) + Math.floor(Math.random() * h * 0.05) - (h * 0.025)
 			var H = this.mouseY - Math.floor(Math.random() * h * 0.05) - (h * 0.05)
 			elem.style.left = W+"px"
 			elem.style.top = H+"px"
-			$("#mainScreen").append(elem)
+			$(elem).show()
 			$(elem).fadeOut(1000, function(){
 				$(this).remove()
 			}).css("margin-top", (-1 * h * 0.1)+"px")
