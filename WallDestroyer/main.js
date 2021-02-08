@@ -300,8 +300,8 @@
 					res += "Total Damage Dealt: <b>"+this.toReadableNum(building.totalAmounts[mainEffect[1]], undefined, undefined, undefined, false)+"</b>"
 				}
 				else if (mainEffect[1] === "bricks"){
-					res += "Each of your "+building.pluralName.toLowerCase()+" create <b>"+eachIncome+"</b> bricks per second.<br>"
-					res += "In total, they create <b>"+mainIncome+"</b> bricks per second. (<b>"+this.toReadableNum(mainIncome / this.brickIncome * 100)+"%</b> of total BPS)<br>"
+					res += "Each of your "+building.pluralName.toLowerCase()+" create <b>"+this.toReadableNum(eachIncome)+"</b> bricks per second.<br>"
+					res += "In total, they create <b>"+this.toReadableNum(mainIncome)+"</b> bricks per second. (<b>"+this.toReadableNum(mainIncome / this.brickIncome * 100)+"%</b> of total BPS)<br>"
 					res += "Total Bricks Created: <b>"+this.toReadableNum(building.totalAmounts[mainEffect[1]], undefined, undefined, undefined, false)+"</b>"
 				}
 			}
