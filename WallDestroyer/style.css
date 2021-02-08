@@ -101,7 +101,7 @@ html, body{
 	opacity: 1;
 	transition: margin-top 1s;
 	font-size: 3em;
-	transform: translate(0, -100%);
+	transform: translate(-60%, -100%);
 	z-index: 1;
 }
 .floatingNumber.disappearing{
