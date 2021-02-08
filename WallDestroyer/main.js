@@ -1889,7 +1889,7 @@
 							this.effectsText += building.pluralName + " make <b>" + (effect[1] - 1)*100 + "%</b> more bricks."
 						}
 						else {
-							this.effectsText += building.pluralName + " make <b>" + game.multiplierNames[effect[1]] + "</b> as much bricks."
+							this.effectsText += building.pluralName + " make <b>" + game.multiplierNames[effect[1]] + "</b> as many bricks."
 						}
 					}
 					else {
