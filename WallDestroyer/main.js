@@ -584,6 +584,7 @@
 			else {
 				console.log("Can't buy upgrade:", upgrade, canBuy, force)
 			}
+			this.fixBuildingVisuals()
 		},
 		upgradeShouldBeUnlocked: function(upgrade){
 			if (upgrade.unlocked) return true
