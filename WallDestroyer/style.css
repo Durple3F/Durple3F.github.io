@@ -56,7 +56,8 @@ html, body{
 }
 
 #tooltip > .tooltipCost > .tooltipTime{
-	color: white;
+	color: darkgray;
+	font-weight: normal;
 }
 
 #mainProgressBar{
