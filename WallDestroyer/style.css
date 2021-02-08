@@ -66,6 +66,7 @@ html, body{
 	border-bottom:1px solid black;
 	color: black;
 	overflow-y: hidden;
+	z-index: 2;
 }
 
 .fullProgress{
