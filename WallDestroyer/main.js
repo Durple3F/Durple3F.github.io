@@ -629,6 +629,7 @@
 					}
 				}
 				upgrade.unlocked = true
+				upgrade.elem.classList.remove("unavailable")
 				this.unlockUpgradesThatShouldBeUnlocked()
 				this.putUpgradeWhereItShouldBe(upgrade)
 				this.fixUpgradeVisuals()
