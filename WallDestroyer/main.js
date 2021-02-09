@@ -322,10 +322,9 @@
 						res += "Total Fourth Wall Bricks Created: <b>"+this.toReadableNum(building.totalAmounts[mainEffect[1]], undefined, undefined, undefined, false)+"</b>"
 					}
 				}
-				if (i !== building.effects.length - 1){
-					res += "<br>"
-				}
+				res += "<br>"
 			}
+			res = res.substring(0, res.length - 4)
 			res += "</div>"
 			return res
 		},
