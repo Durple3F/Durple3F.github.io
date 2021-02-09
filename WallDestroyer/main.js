@@ -157,8 +157,9 @@
 					upgrade.bought = false
 				}
 			})
+			console.log(reBuyUpgrades)
 			reBuyUpgrades.forEach(upgrade => {
-				this.buyUpgrade(upgrade)
+				this.buyUpgrade(upgrade, true)
 			})
 		},
 		unlockConvertButton: function(){
@@ -549,7 +550,15 @@
 			game.buyUpgrade(parseInt(this.getAttribute("data")))
 		},
 		buyUpgrade: function(which, force){
-			var upgrade = this.upgrades[which]
+			if (typeof which === "number"){
+				var upgrade = this.upgrades[which]
+			}
+			else {
+				var upgrade = which
+			}
+			if (!upgrade){
+				return
+			}
 			if (upgrade.bought){
 				upgrade.unlocked = true
 				return
