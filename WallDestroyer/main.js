@@ -721,7 +721,7 @@
 			}
 		},
 		findUpgrade: function(name){
-			return this.upgrades.find(upg => upg.name === name)
+			return this.upgrades.find(upg => upg && upg.name === name)
 		},
 		putUpgradeWhereItShouldBe: function(upgrade){
 			upgrade.elem.remove()
