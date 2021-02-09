@@ -288,16 +288,16 @@
 			}
 			res += "<div class='tooltipExtraInfo'>"
 			for (var i = 0; i < building.effects.length; i++){
-				var mainIncome = building.effects[i]
-				if (mainIncome[1] === "damage"){
+				var mainEffect = building.effects[i]
+				if (mainEffect[1] === "damage"){
 					continue
 				}
 				if (!building.count){
-					if (mainIncome[1] === "damage"){
-						res += "Buying would increase your DPS by <b>"+this.toReadableNum(mainIncome[0])+(this.damageIncome ? "</b> (<b>"+this.toReadableNum(mainIncome[0] / this.damageIncome * 100)+"%</b> of DPS)" : "</b>")
+					if (mainEffect[1] === "damage"){
+						res += "Buying would increase your DPS by <b>"+this.toReadableNum(mainEffect[0])+(this.damageIncome ? "</b> (<b>"+this.toReadableNum(mainEffect[0] / this.damageIncome * 100)+"%</b> of DPS)" : "</b>")
 					}
-					else if (mainIncome[1] === "bricks"){
-						res += "Buying would increase your bricks created per second by <b>"+this.toReadableNum(mainIncome[0])+(this.brickIncome ? "</b> (<b>"+this.toReadableNum(mainIncome[0] / this.brickIncome * 100)+"%</b> of BPS)" : "</b>")
+					else if (mainEffect[1] === "bricks"){
+						res += "Buying would increase your bricks created per second by <b>"+this.toReadableNum(mainEffect[0])+(this.brickIncome ? "</b> (<b>"+this.toReadableNum(mainEffect[0] / this.brickIncome * 100)+"%</b> of BPS)" : "</b>")
 					}
 				}
 				else {
