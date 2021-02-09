@@ -146,7 +146,11 @@
 			alert("The Time Bear is coming.")
 
 			this.buildings.forEach(building => this.resetBuilding(building))
-			this.upgrades.forEach(upgrade => this.resetUpgrade(upgrade))
+			this.upgrades.forEach(upgrade => {
+				if (upgrade && upgrade.bought && !upgrade.keptOnPrestige){
+					this.resetUpgrade(upgrade)
+				}
+			})
 		},
 		unlockConvertButton: function(){
 			this.convertButton.show()
@@ -659,7 +663,7 @@
 			console.log(unlockRequirement)
 		},
 		resetUpgrade: function(upgrade){
-			if (upgrade.keptOnPrestige || (!upgrade.unlocked && !upgrade.bought)){
+			if (!upgrade || upgrade.keptOnPrestige || (!upgrade.unlocked && !upgrade.bought)){
 				return
 			}
 			if (upgrade.bought){
@@ -688,6 +692,13 @@
 							var index = this.handDamageDynamicMults.findIndex(mult => mult.toString() === compEffect)
 							if (index !== -1){
 								this.handDamageDynamicMults.splice(index, 1)
+							}
+						}
+						if (effect[2] === "handDamage"){
+							var compEffect = effect.slice(2).toString()
+							var index = this.handBricksDynamicMults.findIndex(mult => mult.toString() === compEffect)
+							if (index !== -1){
+								this.handBricksDynamicMults.splice(index, 1)
 							}
 						}
 						else {
