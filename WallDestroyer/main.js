@@ -146,10 +146,19 @@
 			alert("The Time Bear is coming.")
 
 			this.buildings.forEach(building => this.resetBuilding(building))
+			var reBuyUpgrades = []
 			this.upgrades.forEach(upgrade => {
-				if (upgrade && upgrade.bought && !upgrade.keptOnPrestige){
-					this.resetUpgrade(upgrade)
+				if (upgrade && upgrade.bought && upgrade.keptOnPrestige){
+					reBuyUpgrades.push(upgrade)
 				}
+				if (upgrade){
+					upgrade.elem.remove()
+					upgrade.unlocked = false
+					upgrade.bought = false
+				}
+			})
+			reBuyUpgrades.forEach(upgrade => {
+				this.buyUpgrade(upgrade)
 			})
 		},
 		unlockConvertButton: function(){
