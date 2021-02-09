@@ -289,7 +289,7 @@
 			res += "<div class='tooltipExtraInfo'>"
 			for (var i = 0; i < building.effects.length; i++){
 				var mainEffect = building.effects[i]
-				if (mainEffect[1] === "damage"){
+				if (mainEffect[1] === "money"){
 					continue
 				}
 				if (!building.count){
@@ -299,9 +299,12 @@
 					else if (mainEffect[1] === "bricks"){
 						res += "Buying would increase your bricks created per second by <b>"+this.toReadableNum(mainEffect[0])+(this.brickIncome ? "</b> (<b>"+this.toReadableNum(mainEffect[0] / this.brickIncome * 100)+"%</b> of BPS)" : "</b>")
 					}
+					else if (mainEffect[1] === "fourth wall bricks"){
+						res += "Buying would increase your fourth wall bricks created per second by <b>"+this.toReadableNum(mainEffect[0])+(this.brickIncome ? "</b> (<b>"+this.toReadableNum(mainEffect[0] / this.brickIncome * 100)+"%</b> of BPS)" : "</b>")
+					}
 				}
 				else {
-					var mainIncome = building.incomes[0]
+					var mainIncome = building.incomes[i]
 					var eachIncome = mainIncome / building.count
 					if (mainEffect[1] === "damage"){
 						res += "Each of your "+building.pluralName.toLowerCase()+" deal <b>"+this.toReadableNum(eachIncome)+"</b> DPS.<br>"
@@ -310,8 +313,13 @@
 					}
 					else if (mainEffect[1] === "bricks"){
 						res += "Each of your "+building.pluralName.toLowerCase()+" create <b>"+this.toReadableNum(eachIncome)+"</b> bricks per second.<br>"
-						res += "In total, they create <b>"+this.toReadableNum(mainIncome)+"</b> bricks per second. (<b>"+this.toReadableNum(mainIncome / this.brickIncome * 100)+"%</b> of total BPS)<br>"
+						res += "In total, they create <b>"+this.toReadableNum(mainIncome)+"</b> bricks per second. (<b>"+this.toReadableNum(mainIncome / this.fourthWallBrickIncome * 100)+"%</b> of total BPS)<br>"
 						res += "Total Bricks Created: <b>"+this.toReadableNum(building.totalAmounts[mainEffect[1]], undefined, undefined, undefined, false)+"</b>"
+					}
+					else if (mainEffect[1] === "fourth wall bricks"){
+						res += "Each of your "+building.pluralName.toLowerCase()+" create <b>"+this.toReadableNum(eachIncome)+"</b> fourth wall bricks per second.<br>"
+						res += "In total, they create <b>"+this.toReadableNum(mainIncome)+"</b> fourth wall bricks per second. (<b>"+this.toReadableNum(mainIncome / this.fourthWallBrickIncome * 100)+"%</b> of total)<br>"
+						res += "Total Fourth Wall Bricks Created: <b>"+this.toReadableNum(building.totalAmounts[mainEffect[1]], undefined, undefined, undefined, false)+"</b>"
 					}
 				}
 			}
