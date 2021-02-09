@@ -287,28 +287,32 @@
 				}
 			}
 			res += "<div class='tooltipExtraInfo'>"
-			if (!building.count){
-				var mainIncome = building.effects[0]
+			for (var i = 0; i < building.effects.length; i++){
+				var mainIncome = building.effects[i]
 				if (mainIncome[1] === "damage"){
-					res += "Buying would increase your DPS by <b>"+this.toReadableNum(mainIncome[0])+(this.damageIncome ? "</b> (<b>"+this.toReadableNum(mainIncome[0] / this.damageIncome * 100)+"%</b> of DPS)" : "</b>")
+					continue
 				}
-				else if (mainIncome[1] === "bricks"){
-					res += "Buying would increase your bricks created per second by <b>"+this.toReadableNum(mainIncome[0])+(this.brickIncome ? "</b> (<b>"+this.toReadableNum(mainIncome[0] / this.brickIncome * 100)+"%</b> of BPS)" : "</b>")
+				if (!building.count){
+					if (mainIncome[1] === "damage"){
+						res += "Buying would increase your DPS by <b>"+this.toReadableNum(mainIncome[0])+(this.damageIncome ? "</b> (<b>"+this.toReadableNum(mainIncome[0] / this.damageIncome * 100)+"%</b> of DPS)" : "</b>")
+					}
+					else if (mainIncome[1] === "bricks"){
+						res += "Buying would increase your bricks created per second by <b>"+this.toReadableNum(mainIncome[0])+(this.brickIncome ? "</b> (<b>"+this.toReadableNum(mainIncome[0] / this.brickIncome * 100)+"%</b> of BPS)" : "</b>")
+					}
 				}
-			}
-			else {
-				var mainEffect = building.effects[0]
-				var mainIncome = building.incomes[0]
-				var eachIncome = mainIncome / building.count
-				if (mainEffect[1] === "damage"){
-					res += "Each of your "+building.pluralName.toLowerCase()+" deal <b>"+this.toReadableNum(eachIncome)+"</b> DPS.<br>"
-					res += "In total, they deal <b>"+this.toReadableNum(mainIncome)+"</b> DPS. (<b>"+this.toReadableNum(mainIncome / this.damageIncome * 100)+"%</b> of total DPS)<br>"
-					res += "Total Damage Dealt: <b>"+this.toReadableNum(building.totalAmounts[mainEffect[1]], undefined, undefined, undefined, false)+"</b>"
-				}
-				else if (mainEffect[1] === "bricks"){
-					res += "Each of your "+building.pluralName.toLowerCase()+" create <b>"+this.toReadableNum(eachIncome)+"</b> bricks per second.<br>"
-					res += "In total, they create <b>"+this.toReadableNum(mainIncome)+"</b> bricks per second. (<b>"+this.toReadableNum(mainIncome / this.brickIncome * 100)+"%</b> of total BPS)<br>"
-					res += "Total Bricks Created: <b>"+this.toReadableNum(building.totalAmounts[mainEffect[1]], undefined, undefined, undefined, false)+"</b>"
+				else {
+					var mainIncome = building.incomes[0]
+					var eachIncome = mainIncome / building.count
+					if (mainEffect[1] === "damage"){
+						res += "Each of your "+building.pluralName.toLowerCase()+" deal <b>"+this.toReadableNum(eachIncome)+"</b> DPS.<br>"
+						res += "In total, they deal <b>"+this.toReadableNum(mainIncome)+"</b> DPS. (<b>"+this.toReadableNum(mainIncome / this.damageIncome * 100)+"%</b> of total DPS)<br>"
+						res += "Total Damage Dealt: <b>"+this.toReadableNum(building.totalAmounts[mainEffect[1]], undefined, undefined, undefined, false)+"</b>"
+					}
+					else if (mainEffect[1] === "bricks"){
+						res += "Each of your "+building.pluralName.toLowerCase()+" create <b>"+this.toReadableNum(eachIncome)+"</b> bricks per second.<br>"
+						res += "In total, they create <b>"+this.toReadableNum(mainIncome)+"</b> bricks per second. (<b>"+this.toReadableNum(mainIncome / this.brickIncome * 100)+"%</b> of total BPS)<br>"
+						res += "Total Bricks Created: <b>"+this.toReadableNum(building.totalAmounts[mainEffect[1]], undefined, undefined, undefined, false)+"</b>"
+					}
 				}
 			}
 			res += "</div>"
@@ -1935,7 +1939,6 @@
 			if (effect[0] === "static"){
 				var building = game.findBuilding(effect[2])
 				if (building){
-					var str = building.pluralName
 					if (building.name === "Brick Factory"){
 						if (effect[1] % 1 > 0){
 							this.effectsText += building.pluralName + " make <b>" + (effect[1] - 1)*100 + "%</b> more bricks."
@@ -1944,12 +1947,20 @@
 							this.effectsText += building.pluralName + " make <b>" + game.multiplierNames[effect[1]] + "</b> as many bricks."
 						}
 					}
-					else {
+					else if (building.name === "Reality Compromiser"){
 						if (effect[1] % 1 > 0){
-							this.effectsText += building.pluralName + " do <b>" + (effect[1] - 1)*100 + "%</b> more damage."
+							this.effectsText += building.pluralName + " deal <b>" + (effect[1] - 1)*100 + "%</b> more damage, and create <b>"+(effect[1] - 1)*100+"%</b> more fourth wall bricks."
 						}
 						else {
-							this.effectsText += building.pluralName + " do <b>" + game.multiplierNames[effect[1]] + "</b> as much damage."
+							this.effectsText += building.pluralName + " deal <b>" + game.multiplierNames[effect[1]] + "</b> as much damage, and create <b>"+game.multiplierNames[effect[1]]+"</b> as many fourth wall bricks."
+						}
+					}
+					else {
+						if (effect[1] % 1 > 0){
+							this.effectsText += building.pluralName + " deal <b>" + (effect[1] - 1)*100 + "%</b> more damage."
+						}
+						else {
+							this.effectsText += building.pluralName + " deal <b>" + game.multiplierNames[effect[1]] + "</b> as much damage."
 						}
 					}
 				}
