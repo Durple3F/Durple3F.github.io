@@ -1344,6 +1344,9 @@
 			var str = ""
 			str += "<div class='veryImportantResource'>"+this.toResourceString(this.damageIncome, "damage")+"/sec</div>"
 			str += "<div class='veryImportantResource'>"+this.toResourceString(this.money, "money")+" ("+this.toResourceString(this.moneyIncome, "money")+"/sec)</div>"
+			if (this.futureKnowledgeCapsules){
+				str += "<div class='importantResource'>"+this.toReadableNum(this.futureKnowledgeCapsules) + " future knowledge capsules</div>"
+			}
 			if (this.bricks || this.wallsDestroyed){
 				str += "<div class='importantResource'>"+this.toResourceString(this.bricks, "bricks", undefined, undefined, true)
 				if (this.brickIncome){
