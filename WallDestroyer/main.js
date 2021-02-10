@@ -1413,7 +1413,7 @@
 				}
 			}
 			if (!skip && this.progressBar.is(":hover")){
-				var tooltipContent = "<b>"+this.wall.name+"</b><br> <br>Time until destroyed: <div class='tooltipTime'>"+this.getTimeUntilCanAfford(this.wall.health, "damage")+"</div><br>"+this.wall.flavorText
+				var tooltipContent = "<b>"+this.wall.name+"</b><br> <br>Time until destroyed: <div class='tooltipTime'>"+this.getTimeUntilCanAfford(this.wall.health, "damage")+"</div><br>"+(this.timesReset ? this.wall.flavorText2 : this.wall.flavorText)
 			}
 			else if (!skip && this.resetButton.is(":hover")){
 				var tooltipContent = "Rewind time, sending you all the way back to square one.<br>Gain future knowledge capsules based on your progress, which makes subsequent runs faster."
