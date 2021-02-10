@@ -240,7 +240,7 @@
 			this.bricks += amt
 			this.handBricksTotal += amt
 
-			this.addBrickNumber(this.toReadableNum(amt))
+			this.addBrickNumber(amt)
 		},
 
 		//Buildings
