@@ -653,6 +653,7 @@
 						case "handBricks": good = this.handBricksTotal >= unlocks[i][1]; break;
 						case "wallsDestroyed": good = this.wallsDestroyed >= unlocks[i][1]; break;
 						case "timesReset": good = this.timesReset >= unlocks[i][1]; break;
+						case "futureKnowledgeCapsules": good = this.futureKnowledgeCapsules >= unlocks[i][1]; break;
 					}
 				}
 				if (!good){
@@ -661,7 +662,7 @@
 				}
 			}
 			var reqs = upgrade.preReqUpgrades
-			for (var i = result ? 0 : Infinity; i < reqs.length; i++){
+			for (var i = 0; i < reqs.length; i++){
 				if (!reqs[i].bought){
 					result = false
 					break
@@ -2584,9 +2585,9 @@
 		new Upgrade("Demon Bribes",                         "lastBuildingUpgrade8",       [[2.5e28, "money"], [5e13, "fourth wall bricks"]],                   [["static", 200, "Black Obliterator"]], [["static", 3, "Black Obliterator"]],   "\"The Black's power is unspeakable... The amount you have been using is only scratching the surface. It is so absolute, in fact, that The Boss is requesting you not use it, as it could very possibly obliterate all of existence if you misuse it.\" ~The Head Demon"),
 		new Upgrade("Guide To Properly Handling The Black", "lastBuildingUpgrade9",       [[5e32, "money"], [5e17, "fourth wall bricks"]],                     [["static", 300, "Black Obliterator"]], [["static", 4, "Black Obliterator"]],   "\"We took an expedition back to [REDACTED], and guess what we found in the temple? You'll be just as surprised as we were...\" ~Agent Connor"),
 		new Upgrade("Black Distributors",                   "lastBuildingUpgrade10",      [[2.5e37, "money"], [2.5e22, "fourth wall bricks"]],                 [["static", 400, "Black Obliterator"]], [["static", 4, "Black Obliterator"]],   "\"More complex metal parts we have to replace every day? UGH. UUUUUGGGGHHHHH.\" ~Head of Maintanence"),
-		new Upgrade("Teleportation Spells",                 "lastBuildingMagicUpgrade",   [[5e25, "money"], [5e10, "fourth wall bricks"], [2.5e14, "bricks"]], [["static", 125, "Black Obliterator"]], [["static", 2, "Black Obliterator"]],   "Teleportation spells are basically the duct tape of magic."),
-		new Upgrade("Pure Magic Robots",                    "lastBuildingMagicUpgrade2",  [[5e30, "money"], [5e15, "fourth wall bricks"], [5e19, "bricks"]],   [["static", 250, "Black Obliterator"]], [["static", 3, "Black Obliterator"]],   "As does anything, The Black has more trouble eating through pure magic than the unobtainium plating we were using before."),
-		new Upgrade("Pure Antimatter Robots",               "lastBuildingMagicUpgrade3",  [[5e34, "money"], [5e19, "fourth wall bricks"], [5e23, "bricks"]],   [["static", 350, "Black Obliterator"]], [["static", 3, "Black Obliterator"]],   "\"We may be making the robots last longer, but it really just makes the replacements even more expensive.\" ~Head of Finance<br>\"MONEY IS NO CONCERN FOR THE RUC\" ~Automated RUC complaint responder"),
+		new Upgrade("Teleportation Spells",                 "lastBuildingUpgradeMagic",   [[5e25, "money"], [5e10, "fourth wall bricks"], [2.5e14, "bricks"]], [["static", 125, "Black Obliterator"]], [["static", 2, "Black Obliterator"]],   "Teleportation spells are basically the duct tape of magic."),
+		new Upgrade("Pure Magic Robots",                    "lastBuildingUpgradeMagic2",  [[5e30, "money"], [5e15, "fourth wall bricks"], [5e19, "bricks"]],   [["static", 250, "Black Obliterator"]], [["static", 3, "Black Obliterator"]],   "As does anything, The Black has more trouble eating through pure magic than the unobtainium plating we were using before."),
+		new Upgrade("Pure Antimatter Robots",               "lastBuildingUpgradeMagic3",  [[5e34, "money"], [5e19, "fourth wall bricks"], [5e23, "bricks"]],   [["static", 350, "Black Obliterator"]], [["static", 3, "Black Obliterator"]],   "\"We may be making the robots last longer, but it really just makes the replacements even more expensive.\" ~Head of Finance<br>\"MONEY IS NO CONCERN FOR THE RUC\" ~Automated RUC complaint responder"),
 	];
 	//Brick Factor-y stuff
 	[
