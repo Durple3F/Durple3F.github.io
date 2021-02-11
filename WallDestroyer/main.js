@@ -680,7 +680,7 @@
 			}
 		},
 		findTotalUnlockAmount: function(unlockRequirement){
-			console.log(unlockRequirement)
+			console.trace(unlockRequirement)
 		},
 		resetUpgrade: function(upgrade){
 			if (!upgrade || upgrade.keptOnPrestige || (!upgrade.unlocked && !upgrade.bought)){
