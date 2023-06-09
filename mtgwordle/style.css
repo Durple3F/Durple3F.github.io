@@ -243,3 +243,28 @@ a {
 	display: none;
 	width: 100%;
 }
+
+#cardImage {
+	width: 80%;
+	margin: auto;
+}
+
+#stats > table {
+	width: 100%;
+	text-align: left;
+}
+#stats > table td:last-child {
+	text-align: right;
+}
+
+.modal-header {
+	border-bottom: 1px solid #444;
+}
+.modal-footer {
+	border-top: 1px solid #444;
+}
+.btn-close {
+	backdrop-filter: invert(1);
+	transition: 0.5s opacity ease;
+	margin-right: 0;
+}

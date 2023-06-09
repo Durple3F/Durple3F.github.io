@@ -6,7 +6,18 @@
 
 	let lives = 20
 	let roundOver = false
+	let guesses = 0
 	let lastGuess = ""
+	let stats = {
+		questionsPlayed: 0,
+		wins: 0,
+		losses: 0,
+		correctAnswers: 0,
+		attemptedAnswers: 0,
+		guessesForWins: 0,
+		currentStreak: 0,
+		maxStreak: 0
+	}
 
 	const SETTYPESRANKING = [
 		"expansion",
@@ -194,11 +205,33 @@
 	function nextQuestion(){
 		$("#nextQuestion").hide()
 		$("#cardName").show()
+		$("#results > table > tbody").html("")
+		lives = 20
+		$("#lives > span").html(lives)
+		$(".set").css("color", "")
+
+		stats.questionsPlayed++
 		let choices = settingChoiceLists[difficulty]
 		let choice = Math.floor(Math.random() * choices.length)
 		answer = choices[choice]
 		results = []
 		console.log(answer)
+
+		getImage(answer)
+	}
+
+	function getImage(name){
+		let uri = encodeURIComponent(name)
+		$.ajax({
+			url: `https://api.scryfall.com/cards/named?exact="${uri}"`,
+			success: function(data){
+				let url = data?.image_uris?.png
+				$("#cardImage > img").attr("src", url)
+			},
+			failure: function(){
+				getImage(name)
+			}
+		})
 	}
 
 	function fillAutocomplete(){
@@ -240,8 +273,48 @@
 	}
 
 	function endRound(){
+		save()
+
 		$("#nextQuestion").show()
 		$("#cardName").hide()
+		$("#gameOver").modal('show')
+
+		if (lastGuess === answer){
+			$("#gameOver .modal-header > h4").text("You guessed it!")
+		}
+		else {
+			$("#gameOver .modal-header > h4").text("Maybe next time...")
+		}
+		$("#gameOver .modal-body > h2").text(answer)
+
+		$("#stats > p").text(`#${stats.questionsPlayed}`)
+		let winPercentage = (stats.wins / stats.questionsPlayed * 100).toFixed(2)
+		let avgGuessesForWins = (stats.guessesForWins / stats.wins).toFixed(2)
+		let tbody = $("#stats > table > tbody")
+		tbody.html(`<tr>
+			<td>Current Streak</td>
+			<td>${stats.currentStreak}</td>
+		</tr>
+		<tr>
+			<td>Max Streak</td>
+			<td>${stats.maxStreak}</td>
+		</tr>
+		<tr>
+			<td>Win percentage</td>
+			<td>${winPercentage}%</td>
+		</tr>
+		<tr>
+			<td>Games played</td>
+			<td>${stats.questionsPlayed}</td>
+		</tr>
+		<tr>
+			<td>Games won</td>
+			<td>${stats.wins}</td>
+		</tr>
+		<tr>
+			<td>Avg guesses for wins</td>
+			<td>${avgGuessesForWins}</td>
+		</tr>`)
 	}
 
 	function submitAnswer(){
@@ -256,15 +329,21 @@
 		let cards = downloads.cards
 		let card = cards[bestMatch]
 		showResultsFrom(card)
-		
+
+		stats.attemptedAnswers++
+		guesses++
 		if (bestMatch === answer){
-			alert("You win!")
+			stats.correctAnswers++
+			stats.currentStreak++
+			stats.maxStreak = Math.max(stats.currentStreak, stats.maxStreak)
+			stats.wins++
+			stats.guessesForWins += guesses
 			endRound()
 		}
 		else {
 			lives--
 			if (lives === 0){
-				alert("You lose!")
+				stats.losses++
 				endRound()
 			}
 			else {
@@ -275,9 +354,9 @@
 
 	function matchPercent(arr1, arr2){
 		let a = arr1.filter(c => arr2.includes(c)).length / arr2.length
-		if (isNaN(a)) a = 100
+		if (isNaN(a)) a = 1
 		let b = arr2.filter(c => arr1.includes(c)).length / arr1.length
-		if (isNaN(b)) b = 100
+		if (isNaN(b)) b = 1
 		return Math.min(a, b) * 100
 	}
 
@@ -453,6 +532,13 @@
 		$("#quiz").fadeIn()
 	}
 
+	function save(){
+		let statKeys = Object.keys(stats)
+		for (let key of statKeys){
+			localStorage.setItem(key, stats[key])
+		}
+	}
+
 	download("https://mtgjson.com/api/v5/AtomicCards.json", "cards")
 	download("https://mtgjson.com/api/v5/SetList.json", "sets")
 	download("https://mtgjson.com/api/v5/AllPrintings.json", "printings")
@@ -460,6 +546,14 @@
 	$(document).ready(function(){
 		funnyTitle()
 		$("#title").show()
+
+		let statKeys = Object.keys(stats)
+		for (let key of statKeys){
+			let newValue = localStorage.getItem(key)
+			if (newValue) {
+				stats[key] = newValue
+			}
+		}
 
 		$("#nextQuestion").click(nextQuestion)
 
