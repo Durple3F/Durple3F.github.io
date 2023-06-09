@@ -74,7 +74,7 @@
 	let totalDownloads = 0
 	let completedDownloads = 0
 	let remainingDownloads = []
-	downloads = {}
+	let downloads = {}
 	function download(url, name){
 		if (!remainingDownloads.includes(name)){
 			totalDownloads++
@@ -215,7 +215,6 @@
 		let choice = Math.floor(Math.random() * choices.length)
 		answer = choices[choice]
 		results = []
-		console.log(answer)
 
 		getImage(answer)
 	}
@@ -367,7 +366,6 @@
 		let tbody = $("#results > table > tbody")
 		let guess = card[0]
 		let correct = correctCard[0]
-		console.log(card, correctCard)
 
 		let row = $(`<tr></tr>`)
 		results.push(row)
