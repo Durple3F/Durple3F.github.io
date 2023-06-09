@@ -49,7 +49,8 @@
 	let firstPrintings = {}
 	let settingChoiceLists = {
 		"everything": [],
-		"standard": []
+		"standard": [],
+		"top-1000": []
 	}
 
 	let difficulty = null
@@ -139,6 +140,9 @@
 			settingChoiceLists["everything"].push(name)
 			if (card[0].legalities["standard"] === "Legal"){
 				settingChoiceLists["standard"].push(name)
+			}
+			if (card[0].edhrecRank <= 1000){
+				settingChoiceLists["top-1000"].push(name)
 			}
 		}
 
@@ -552,6 +556,19 @@
 				stats[key] = newValue
 			}
 		}
+
+		let settingKeys = Object.keys(settingChoiceLists)
+		let settingsTag = $("#settings")
+		for (let key of settingKeys){
+			let name = key.charAt(0).toUpperCase() + key.slice(1)
+			name = name.replaceAll("-", " ")
+			let newTag = $(`<div>
+				<input type="radio" value="${key}" id="setting-${key}" name="timeRange">
+				<label for="setting-${key}">${name}</label>
+			</div>`)
+			settingsTag.append(newTag)
+		}
+		$("input[value='everything']").attr("checked", true)
 
 		$("#nextQuestion").click(nextQuestion)
 
