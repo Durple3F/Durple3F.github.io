@@ -517,13 +517,13 @@
 	function beatSubPuzzle(level, index){
 		let stack = $(`#puzzle > .puzzle-stack[value="${index}"]`)
 		stack.children(".answer-input").attr("disabled", true).addClass("complete")
-		
-		fireConfetti()
 
 		let answerCount = level.answers ? level.answers.length : 1
 		let completeCount = $(".answer-input.complete").length
 		if (answerCount === completeCount){
 			markLevelComplete(level)
+		
+			fireConfetti()
 
 			if (level.notes){
 				$(`<div class="puzzle-notes">${level.notes}</div>`).insertAfter(".puzzle-title")
