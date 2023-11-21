@@ -90,11 +90,15 @@
 
 	let SOUNDS = {}
 	SOUNDS["confetti"] = new Audio("confetti.mp3")
+	SOUNDS["confetti"].addEventListener("play", confettiEffect)
 
 	function fireConfetti(){
 		let sound = SOUNDS["confetti"]
 		sound.currentTime = 0
 		sound.play()
+	}
+
+	function confettiEffect(){
 		confetti({
 			particleCount: 100,
 			spread: 70,
