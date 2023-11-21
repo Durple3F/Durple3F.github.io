@@ -394,7 +394,9 @@
 			}
 
 			let answer = getAnswer(level, index)
+			let givenLetters = level.givenLetters ?? 0
 			let placeholder = answer.replaceAll(/\w/g, "_")
+			placeholder = answer.substring(0, givenLetters) + placeholder.substring(givenLetters)
 
 			let hintButton = ""
 			if (level.hints.length){
