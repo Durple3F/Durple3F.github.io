@@ -616,7 +616,7 @@
 		success: loadGame
 	})
 
-	$("#background").animate({
-		opacity: 0.04
-	}, 1000000)
+	// $("#background").animate({
+	// 	opacity: 0.04
+	// }, 1000000)
 })()

@@ -17,9 +17,8 @@ body {
 #background {
   height: 100%;
   width: 100%;
-  opacity: 0.01;
+  opacity: 0;
   background: url("https://static.wikia.nocookie.net/jerma-lore/images/e/e3/JermaSus.jpg");
-    background-size: auto;
   background-size: cover;
   position: absolute;
   z-index: -1;
