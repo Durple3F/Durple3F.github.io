@@ -224,7 +224,8 @@
 			})
 			let lastStack = stacks[stacks.length - 1]
 			let inputBox = $(lastStack).children(".answer-input")
-			if (document.activeElement !== inputBox[0]){
+			let isLetter = key.length === 1 && /[a-z0-9]/.test(key)
+			if (document.activeElement !== inputBox[0] && isLetter){
 				setTimeout(function(){
 					inputBox.focus().val(key)
 				}, 20)
