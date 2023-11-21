@@ -184,6 +184,11 @@ button {
 	margin-bottom: 0.2em;
 }
 
+.puzzle-number {
+  margin-top: 0.4em;
+  margin-bottom: 0.4em;
+}
+
 .answer-input {
 	font-size: 1.5em;
 	width: 70%;
@@ -206,6 +211,9 @@ button {
 }
 .answer-input.invalid {
 	color: var(--clue-red);
+}
+.puzzle-number + .answer-input {
+  margin-top: 0;
 }
 
 .puzzle-nav-btn {
