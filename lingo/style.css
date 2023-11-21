@@ -274,48 +274,63 @@ button {
 
 .clue-white {
 	background-image: var(--clue-white-background);
+	background-color: var(--clue-white);
 }
 .clue-black {
 	background-image: var(--clue-black-background);
+	background-color: var(--clue-black);
 }
 .clue-blue {
-	background-image: var(--clue-blue-background)
+	background-image: var(--clue-blue-background);
+	background-color: var(--clue-blue);
 }
 .clue-red {
-	background-image: var(--clue-red-background)
+	background-image: var(--clue-red-background);
+	background-color: var(--clue-red);
 }
 .clue-purple {
-	background-image: var(--clue-purple-background)
+	background-image: var(--clue-purple-background);
+	background-color: var(--clue-purple);
 }
 .clue-yellow {
-	background-image: var(--clue-yellow-background)
+	background-image: var(--clue-yellow-background);
+	background-color: var(--clue-yellow);
 }
 .clue-green {
-	background-image: var(--clue-green-background)
+	background-image: var(--clue-green-background);
+	background-color: var(--clue-green);
 }
 .clue-brown {
-	background-image: var(--clue-brown-background)
+	background-image: var(--clue-brown-background);
+	background-color: var(--clue-brown);
 }
 .clue-brown-black {
-	background-image: var(--clue-brown-black-background)
+	background-image: var(--clue-brown-black-background);
+	background-color: var(--clue-brown-black);
 }
 .clue-orange {
-	background-image: var(--clue-orange-background)
+	background-image: var(--clue-orange-background);
+	background-color: var(--clue-orange);
 }
 .clue-gray {
-	background-image: var(--clue-gray-background)
+	background-image: var(--clue-gray-background);
+	background-color: var(--clue-gray);
 }
 .clue-mint {
-	background-image: var(--clue-mint-background)
+	background-image: var(--clue-mint-background);
+	background-color: var(--clue-mint);
 }
 .clue-magenta {
-	background-image: var(--clue-magenta-background)
+	background-image: var(--clue-magenta-background);
+	background-color: var(--clue-magenta);
 }
 .clue-lime {
-	background-image: var(--clue-lime-background)
+	background-image: var(--clue-lime-background);
+	background-color: var(--clue-lime);
 }
 .clue-lavender {
-	background-image: var(--clue-lavender-background)
+	background-image: var(--clue-lavender-background);
+	background-color: var(--clue-lavender);
 }
 
 .clue-red > .clue-help-btn {
