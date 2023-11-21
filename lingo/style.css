@@ -239,7 +239,7 @@ button {
 	image-rendering: pixelated;
 }
 .theme-colorblind .clue {
-	background-size: 2em;
+	background-size: 3em;
 }
 .theme-colorblind .clue-brown-black {
 	background-size: auto;
