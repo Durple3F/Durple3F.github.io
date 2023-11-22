@@ -126,18 +126,24 @@
 		})
 	}
 
+	function getLevelInternalName(level){
+		let section = level.section ?? "no-section"
+		let levelName = level.name ?? "no-name"
+		return section + "++" + levelName
+	}
+
 	function decodeSave(encodedSave){
 		let str = LZString.decompress(encodedSave) || ""
 		let levelData = str.split("|")
 		console.log(levelData)
 		for (let data of levelData){
-			let vals = data.match(/([^:]+):(\d+):(\d+)/)
+			let vals = data.match(/([^:]+):(\d+)/)
 			if (!vals) continue
 
 			let levelName = vals[1]
 			let levelSolved = !!parseInt(vals[2])
 
-			let level = LEVELS.find(l => l.name === levelName)
+			let level = LEVELS.find(l => l.internalName === levelName)
 			if (!level) continue
 			level.complete = levelSolved
 			level.hintsUsed = 0
@@ -149,12 +155,12 @@
 	function save(){
 		let data = ""
 		for (let level of LEVELS){
-			data += `${level.name}:${level.complete ? 1 : 0}:${level.hintsUsed}`
+			data += `${level.internalName}:${level.complete ? 1 : 0}`
 			data += "|"
 		}
 		data = data.substring(0, data.length - 1)
 		data = LZString.compress(data)
-		localStorage.setItem("save", data)
+		localStorage.setItem("lingo-save", data)
 	}
 
 	function resetSave(){
@@ -549,7 +555,10 @@
 
 	function loadGame(data){
 		LEVELS = data.levels
-		let encodedSave = localStorage.getItem("save") || ""
+		let encodedSave = localStorage.getItem("lingo-save") || ""
+		for (let level of LEVELS){
+			level.internalName = getLevelInternalName(level)
+		}
 		decodeSave(encodedSave)
 		for (let level of LEVELS){
 			let sName = level.section
