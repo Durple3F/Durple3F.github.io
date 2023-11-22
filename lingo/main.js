@@ -409,7 +409,7 @@
 			let placeholder = answer.replaceAll(/\w/g, "_")
 			placeholder = answer.substring(0, givenLetters) + placeholder.substring(givenLetters)
 
-			let hintButton = ""
+			let buttons = $(`<div class="puzzle-buttons"></div>`)
 			if (level.hints.length){
 				let used = level.hintsUsed || 0
 				let totalHints = level.hints.filter(hint => {
@@ -417,8 +417,14 @@
 					return index === puzzleIndex
 				}).length
 				let text = `<span class="hints-used">${used}</span> / ${totalHints}`
-				hintButton = `<br><button class="btn btn-info hint-btn">Get Hint (${text})</button>`
+				hintButton = `<button class="btn btn-info hint-btn">Get Hint (${text})</button>`
+				buttons.append(hintButton)
 			}
+			let giveUpButton = $(`<button class="btn btn-danger give-up-btn" hidden>Give Up</button>`)
+			if (!level.hints.length){
+				giveUpButton.attr("hidden", false)
+			}
+			buttons.append(giveUpButton)
 
 			let stackHtml = $(`<div class="puzzle-stack" value="${index}"></div>`)
 
@@ -436,7 +442,8 @@
 				stackHtml.append(`<div class="puzzle-number">Puzzle ${text}</div>`)
 			}
 
-			stackHtml.append(`<input class="answer-input" placeholder="${placeholder}" maxlength="${answer.length}">${hintButton}`)
+			stackHtml.append(`<input class="answer-input" placeholder="${placeholder}" maxlength="${answer.length}">`)
+			stackHtml.append(buttons)
 
 			if (clueStacks.indexOf(stack) !== clueStacks.length - 1){
 				stackHtml.append(`<div class="puzzle-continuation-icon" hidden><i class="bi bi-arrow-down"></i></div>`)
@@ -467,6 +474,7 @@
 		$(".clue-help-btn").click(explainClue)
 		$(".clue-help-btn").tooltip({placement: "right"})
 		$(".hint-btn").click(getHint)
+		$(".give-up-btn").click(giveUp)
 	}
 
 	function handleLevelButtonClick(event){
@@ -492,7 +500,7 @@
 
 	function getHint(event){
 		let btnEl = event.delegateTarget
-		let el = $(btnEl).parent()
+		let el = $(btnEl).parents(".puzzle-stack")
 		let index = parseInt(el.attr("value"))
 		let validHints = currentLevel.hints.filter(hint => {
 			let puzzleIndex = hint.puzzle ?? 0
@@ -516,8 +524,16 @@
 			return index === puzzleIndex && !hint.shown
 		})
 		if (!unshownHints.length){
-			$(btnEl).attr("disabled", true)
+			$(btnEl).attr("hidden", true)
+			$(btnEl).parent().children(".give-up-btn").attr("hidden", false)
 		}
+	}
+
+	function giveUp(event){
+		let btnEl = event.delegateTarget
+		let el = $(btnEl).parents(".puzzle-stack")
+		let index = parseInt(el.attr("value"))
+		beatSubPuzzle(currentLevel, index, true)
 	}
 
 	function markLevelComplete(level){
@@ -525,16 +541,27 @@
 		level.buttonElem.children(".level-progress-icon").attr("hidden", false)
 	}
 
-	function beatSubPuzzle(level, index){
+	function beatSubPuzzle(level, index, skipped){
 		let stack = $(`#puzzle > .puzzle-stack[value="${index}"]`)
-		stack.children(".answer-input").attr("disabled", true).addClass("complete")
+		let correctAnswer = getAnswer(level, index)
+		let inputBox = stack.children(".answer-input")
+		inputBox.attr("disabled", true)
+		if (!skipped){
+			inputBox.addClass("complete")
+		}
+		else {
+			inputBox.addClass("incomplete").val(correctAnswer)
+		}
 
 		let answerCount = level.answers ? level.answers.length : 1
 		let completeCount = $(".answer-input.complete").length
 		if (answerCount === completeCount){
-			markLevelComplete(level)
-		
-			fireConfetti()
+			//Player only gets credit and confetti if they don't skip it.
+			//They can skip the earlier steps though I don't care
+			if (!skipped){
+				markLevelComplete(level)
+				fireConfetti()
+			}
 
 			if (level.notes){
 				$(`<div class="puzzle-notes">${level.notes}</div>`).insertAfter(".puzzle-title")

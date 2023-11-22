@@ -209,6 +209,11 @@ button {
 	color: var(--clue-green);
 	font-weight: bold;
 }
+.answer-input.incomplete {
+	background-color: #111;
+	color: var(--clue-red);
+	font-weight: bold;
+}
 .answer-input.invalid {
 	color: var(--clue-red);
 }
