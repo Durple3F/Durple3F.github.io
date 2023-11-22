@@ -500,6 +500,7 @@
 				hint.shown = false
 			}
 		}
+		level.hintsUsed = 0
 	}
 	function pickLevel(level){
 		if (currentLevel){
