@@ -89,7 +89,7 @@
 	}
 
 	let SOUNDS = {}
-	SOUNDS["confetti"] = new Audio("confetti.mp3")
+	SOUNDS["confetti"] = new Audio("lingo complete sound.mp3")
 	SOUNDS["confetti"].addEventListener("play", confettiEffect)
 
 	function fireConfetti(){

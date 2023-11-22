@@ -1,5 +1,26 @@
 {
 	"version": "0.1",
+	"sections": [
+		{
+			"name": "Library 1st Floor"
+		},
+		{
+			"name": "Library 2nd Floor"
+		},
+		{
+			"name": "Countries"
+		},
+		{
+			"name": "Cities"
+		},
+		{
+			"name": "The Annex",
+			"tags": [
+				"custom-stuff",
+				"question-mark"
+			]
+		}
+	],
 	"levels": [
 		{
 			"name": "A1",
