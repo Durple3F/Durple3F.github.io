@@ -168,6 +168,18 @@
 		location.reload(true)
 	}
 
+	function changeVolume(event){
+		let el = event.delegateTarget
+		let val = $(el).val() / 100
+		val *= val
+		console.log(val)
+		let keys = Object.keys(SOUNDS)
+		for (let key of keys){
+			let sound = SOUNDS[key]
+			sound.volume = val
+		}
+	}
+
 	function changeView(view){
 		$("body > .screen:not(#"+view+")").hide()
 		$("#"+view).show()
@@ -644,6 +656,7 @@
 	$("#help-topic-list > .topic").click(changeHelpTopic)
 	$("#help-content a").click(helpTopicLink)
 	$("#toggle-colorblind").click(toggleColorblindMode)
+	$("#volume").change(changeVolume)
 
 	$("#next-btn").click(nextLevel)
 	$("#prev-btn").click(prevLevel)
