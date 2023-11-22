@@ -494,7 +494,17 @@
 		let index = parseInt($(el).attr("value"))
 		pickLevel(LEVELS[index])
 	}
+	function resetLevel(level){
+		if (level.hints){
+			for (let hint of level.hints){
+				hint.shown = false
+			}
+		}
+	}
 	function pickLevel(level){
+		if (currentLevel){
+			resetLevel(currentLevel)
+		}
 		currentLevel = level
 		displayPuzzle(level)
 		changeView("puzzle-screen")
