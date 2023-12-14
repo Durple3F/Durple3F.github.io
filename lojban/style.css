@@ -1,0 +1,72 @@
+@import url(https://jackhumbert.github.io/zbalermorna/assets/css/fonts.css);
+
+body {
+  background-color: black;
+  color: #ccc;
+}
+
+/* hide scrollbar */
+body, html {
+  overflow-y: scroll;
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+body::-webkit-scrollbar, html::-webkit-scrollbar { 
+  display: none;  /* Safari and Chrome */
+}
+
+/* hide scrollbar */
+#views {
+  overflow-y: scroll;
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+#views::-webkit-scrollbar { 
+  display: none;  /* Safari and Chrome */
+}
+
+#views > .row {
+  width: 95%;
+  margin: auto;
+}
+
+.pstart {
+  text-indent: 2em;
+}
+.pstart * {
+  text-indent: 0;
+}
+
+.zbalermorna {
+  font-family: 'crisa-regular';
+}
+
+#explanation {
+  height: 10em;
+  width: 75%;
+  margin: auto;
+  border: 5px solid gray;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2em;
+}
+/* hide scrollbar */
+#explanation {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+#explanation::-webkit-scrollbar { 
+  display: none;  /* Safari and Chrome */
+}
+
+.col span {
+  text-decoration: 1px underline transparent;
+  transition: background-color 0.2s;
+  background-color: initial;
+}
+.col span:hover {
+  cursor: pointer;
+}
