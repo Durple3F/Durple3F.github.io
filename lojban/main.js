@@ -56,7 +56,9 @@ function hoverFade(e){
     "text-shadow": "0px 0px 2px black"
   }
   vals.elems.css(css)
-  $("#explanation").html(vals.fact)
+  $("#explanation-text").html(vals.fact)
+
+  $("#explanation > .show-all").hide()
 }
 function unHoverFade(e){
   if (!e.textContent){
@@ -71,7 +73,28 @@ function unHoverFade(e){
     "text-shadow": "inherit"
   }
   vals.elems.css(css)
-  $("#explanation").html("")
+  $("#explanation-text").html("")
+
+  if (showAllButtonIsShown){
+    $("#explanation > .show-all").show()
+  }
+}
+
+let showAllButtonIsShown = false
+function toggleColumn(e){
+  let elem = $(e.delegateTarget)
+  let col = elem.parents(".col")[0]
+  let row = $(col).parents(".row")[0]
+  let index = [...$(row).children(".col")].indexOf(col) + 1
+  let query = `#views > .row > .col:nth-child(${index})`
+  console.log(index, query)
+  $(query).hide()
+  $("#explanation > .show-all").show()
+  showAllButtonIsShown = true
+}
+function showAllColumns(){
+  $("#views > .row > .col").show()
+  showAllButtonIsShown = false
 }
 
 for (let factCode in story){
@@ -102,3 +125,6 @@ for (let factCode in story){
     $(child).css("border-bottom", "1px solid "+color)
   }
 }
+
+$(".toggle-btn").click(toggleColumn)
+$(".show-all").click(showAllColumns)

@@ -15,9 +15,11 @@ body::-webkit-scrollbar, html::-webkit-scrollbar {
   display: none;  /* Safari and Chrome */
 }
 
-/* hide scrollbar */
 #views {
+  margin-top: 12em;
+  padding-bottom: 10em;
   overflow-y: scroll;
+  /* hide scrollbar */
   -ms-overflow-style: none;  /* Internet Explorer 10+ */
   scrollbar-width: none;  /* Firefox */
 }
@@ -28,6 +30,18 @@ body::-webkit-scrollbar, html::-webkit-scrollbar {
 #views > .row {
   width: 95%;
   margin: auto;
+  margin-bottom: 1em;
+}
+
+.toggle-btn {
+  background: none;
+  color: inherit;
+  border: none;
+  text-decoration: blue underline;
+  transition: color 0.2s;
+}
+.toggle-btn:hover {
+  color: blue;
 }
 
 .pstart {
@@ -39,6 +53,14 @@ body::-webkit-scrollbar, html::-webkit-scrollbar {
 
 .zbalermorna {
   font-family: 'crisa-regular';
+  line-height: 1.4;
+  padding-top: 0.3em;
+}
+
+#explanation-container {
+  width: 100%;
+  background-color: black;
+  position: fixed;
 }
 
 #explanation {
@@ -66,6 +88,7 @@ body::-webkit-scrollbar, html::-webkit-scrollbar {
   text-decoration: 1px underline transparent;
   transition: background-color 0.2s;
   background-color: initial;
+  border-radius: 2px;
 }
 .col span:hover {
   cursor: pointer;
