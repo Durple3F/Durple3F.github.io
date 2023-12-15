@@ -1,0 +1,230 @@
+<!doctype html>
+<html>
+	<head>
+		<style>
+			body {
+				background-color: black;
+				color: #cccccc;
+			}
+		</style>
+	</head>
+	<body>
+		<button id="generate">Generate</button>
+		<h3>Creature Types <input id="creature-type-count" type="number" value="2"></h3>
+		<ol id="creature-types"></ol>
+		<h3>Keyword Abilities <input id="keyword-count" type="number" value="2"></h3>
+		<ol id="keywords"></ol>
+
+		<script>
+			const allKeywords = [
+				"Deathtouch",
+				"Defender",
+				"Double Strike",
+				//"Enchant",
+				//"Equip",
+				"First Strike",
+				"Flash",
+				"Flying",
+				"Haste",
+				"Hexproof",
+				"Indestructible",
+				"Intimidate",
+				"Landwalk",
+				"Lifelink",
+				//"Protection",
+				"Reach",
+				"Shroud",
+				"Trample",
+				"Vigilance",
+				//"Ward",
+				"Banding",
+				"Rampage",
+				//"Cumulative Upkeep",
+				"Flanking",
+				"Phasing",
+				//"Buyback",
+				"Shadow",
+				//"Cycling",
+				//"Echo",
+				"Horsemanship",
+				//"Fading",
+				//"Kicker",
+				//"Flashback",
+				//"Madness",
+				"Fear",
+				//"Morph",
+				//"Amplify",
+				"Provoke",
+				"Storm",
+				//"Affinity",
+				//"Entwine",
+				//"Modular",
+				"Sunburst",
+				//"Bushido",
+				//"Soulshift",
+				//"Splice",
+				//"Offering",
+				//"Ninjutsu",
+				"Epic",
+				"Convoke",
+				//"Dredge",
+				//"Transmute",
+				//"Bloodthirst",
+				"Haunt",
+				//"Replicate",
+				//"Forecast",
+				//"Graft",
+				//"Recover",
+				//"Ripple",
+				"Split Second",
+				//"Suspend",
+				//"Vanishing",
+				//"Absorb",
+				//"Aura Swap",
+				"Delve",
+				//"Fortify",
+				//"Frenzy",
+				"Gravestorm",
+				//"Poisonous",
+				//"Transfigure",
+				//"Champion",
+				"Changeling",
+				//"Evoke",
+				//"Hideaway",
+				//"Prowl",
+				//"Reinforce",
+				"Conspire",
+				"Persist",
+				"Wither",
+				//"Retrace",
+				//"Devour",
+				"Exalted",
+				//"Unearth",
+				"Cascade",
+				//"Annihilator",
+				//"Level Up",
+				"Rebound",
+				"Totem Armor",
+				"Infect",
+				"Battle Cry",
+				"Living Weapon",
+				"Undying",
+				//"Miracle",
+				"Soulbond",
+				//"Overload",
+				//"Scavenge",
+				"Unleash",
+				"Cipher",
+				"Evolve",
+				"Extort",
+				"Fuse",
+				//"Bestow",
+				//"Tribute",
+				"Dethrone",
+				"Hidden Agenda",
+				//"Outlast",
+				"Prowess",
+				//"Dash",
+				"Exploit",
+				"Menace",
+				//"Renown",
+				"Awaken",
+				"Devoid",
+				"Ingest",
+				"Myriad",
+				//"Surge",
+				"Skulk",
+				//"Emerge",
+				//"Escalate",
+				"Melee",
+				//"Crew",
+				//"Fabricate",
+				"Partner",
+				"Undaunted",
+				"Improvise",
+				"Aftermath",
+				//"Embalm",
+				//"Eternalize",
+				//"Afflict",
+				"Ascend",
+				"Assist",
+				//"Jump-Start",
+				"Mentor",
+				//"Afterlife",
+				"Riot",
+				//"Spectacle",
+				//"Escape",
+				//"Companion",
+				//"Mutate",
+				//"Encore",
+				//"Boast",
+				//"Foretell",
+				"Demonstrate",
+				"Daybound and Nightbound",
+				//"Disturb",
+				"Decayed",
+				//"Cleave",
+				"Training",
+				"Compleated",
+				//"Reconfigure",
+				//"Blitz",
+				//"Casualty",
+				"Enlist",
+				"Read Ahead",
+				"Ravenous",
+				//"Squad",
+				"Space Sculptor",
+				//"Visit",
+				//"Prototype",
+				"Living Metal",
+				"More Than Meets the Eye",
+				"For Mirrodin!",
+				//"Toxic",
+				//"Backup",
+				"Bargain",
+				//"Craft"
+			]
+			const creatureTypes = [
+				"Advisor","Aetherborn","Alien","Ally","Angel","Antelope","Ape","Archer","Archon","Army","Artificer","Assassin","Assembly-Worker","Astartes","Atog","Aurochs","Avatar","Azra","Badger","Balloon","Barbarian","Bard","Basilisk","Bat","Bear","Beast","Beeble","Beholder","Berserker","Bird","Blinkmoth","Boar","Bringer","Brushwagg","Camarid","Camel","Capybara","Caribou","Carrier","Cat","Centaur","Cephalid","Child","Chimera","Citizen","Cleric","Clown","Cockatrice","Construct","Coward","Crab","Crocodile","C’tan","Custodes","Cyberman","Cyclops","Dalek","Dauthi","Demigod","Demon","Deserter","Detective","Devil","Dinosaur","Djinn","Doctor","Dog","Dragon","Drake","Dreadnought","Drone","Druid","Dryad","Dwarf","Efreet","Egg","Elder","Eldrazi","Elemental","Elephant","Elf","Elk","Employee","Eye","Faerie","Ferret","Fish","Flagbearer","Fox","Fractal","Frog","Fungus","Gamer","Gargoyle","Germ","Giant","Gith","Gnoll","Gnome","Goat","Goblin","God","Golem","Gorgon","Graveborn","Gremlin","Griffin","Guest","Hag","Halfling","Hamster","Harpy","Hellion","Hippo","Hippogriff","Homarid","Homunculus","Horror","Horse","Human","Hydra","Hyena","Illusion","Imp","Incarnation","Inkling","Inquisitor","Insect","Jackal","Jellyfish","Juggernaut","Kavu","Kirin","Kithkin","Knight","Kobold","Kor","Kraken","Lamia","Lammasu","Leech","Leviathan","Lhurgoyf","Licid","Lizard","Manticore","Masticore","Mercenary","Merfolk","Metathran","Minion","Minotaur","Mite","Mole","Monger","Mongoose","Monk","Monkey","Moonfolk","Mouse","Mutant","Myr","Mystic","Naga","Nautilus","Necron","Nephilim","Nightmare","Nightstalker","Ninja","Noble","Noggle","Nomad","Nymph","Octopus","Ogre","Ooze","Orb","Orc","Orgg","Otter","Ouphe","Ox","Oyster","Pangolin","Peasant","Pegasus","Pentavite","Performer","Pest","Phelddagrif","Phoenix","Phyrexian","Pilot","Pincher","Pirate","Plant","Praetor","Primarch","Prism","Processor","Rabbit","Raccoon","Ranger","Rat","Rebel","Reflection","Rhino","Rigger","Robot","Rogue","Sable","Salamander","Samurai","Sand","Saproling","Satyr","Scarecrow","Scientist","Scion","Scorpion","Scout","Sculpture","Serf","Serpent","Servo","Shade","Shaman","Shapeshifter","Shark","Sheep","Siren","Skeleton","Slith","Sliver","Slug","Snail","Snake","Soldier","Soltari","Spawn","Specter","Spellshaper","Sphinx","Spider","Spike","Spirit","Splinter","Sponge","Squid","Squirrel","Starfish","Surrakar","Survivor","Tentacle","Tetravite","Thalakos","Thopter","Thrull","Tiefling","Time Lord","Treefolk","Trilobite","Triskelavite","Troll","Turtle","Tyranid","Unicorn","Vampire","Vedalken","Viashino","Volver","Wall","Walrus","Warlock","Warrior","Weird","Werewolf","Whale","Wizard","Wolf","Wolverine","Wombat","Worm","Wraith","Wurm","Yeti","Zombie","Zubera"
+			]
+
+			function generate(){
+				let typesTag = document.getElementById("creature-types")
+				let typeCount = document.getElementById("creature-type-count").value
+				let keywordsTag = document.getElementById("keywords")
+				let keywordCount = document.getElementById("keyword-count").value
+
+				typesTag.innerHTML = ""
+				keywordsTag.innerHTML = ""
+
+				let types = []
+				for (let i = 0; i < typeCount; i++){
+					let valid = creatureTypes.filter(v => !types.includes(v))
+					if (valid.length > 0){
+						let type = valid[Math.floor(Math.random() * valid.length)]
+						types.push(type)
+					}
+				}
+				for (let type of types){
+					typesTag.innerHTML += `<li>${type}</li>`
+				}
+
+				let keywords = []
+				for (let i = 0; i < keywordCount; i++){
+					let valid = allKeywords.filter(v => !keywords.includes(v))
+					if (valid.length > 0){
+						let type = valid[Math.floor(Math.random() * valid.length)]
+						keywords.push(type)
+					}
+				}
+				for (let keyword of keywords){
+					keywordsTag.innerHTML += `<li>${keyword}</li>`
+				}
+
+				console.log(types, keywords)
+			}
+			
+			document.getElementById("generate").onclick = generate
+		</script>
+	</body>
+</html>

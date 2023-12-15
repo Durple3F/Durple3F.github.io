@@ -1,0 +1,24 @@
+Alquist Proft, Master Sleuth
+la .alku'ist.proft. noi balcre be sisku
+     
+
+Legendary Creature - Human Detective
+lo ranmi jo'e danlu - lo remna jo'e zilmipri bo cipcta
+          
+
+Vigilance
+jundi
+
+
+When Alquist Proft, Master Sleuth enters the battlefield, investigate. (Create a Clue token. It’s an artifact with “{2}, Sacrifice this artifact: Draw a card.”)
+    When Alquist Proft, Master Sleuth enters the battlefield, investigate.
+    ba mulcabna ro pa nu ti vitnodacti nerkla le nundamba stuzi kei pa nu do cipcta
+
+    (Create a Clue token. It’s an artifact with “{2}, Sacrifice this artifact: Draw a card.”)
+    (.i do zbasu pa kelsicni poi fatci .ije la'e di'u rutmi jo'e tolcau be lu {2}, do fesli'aspo lo ti vitnodacti: do cpacu pa karda li'u)
+ba mulcabna ro pa nu ti vitnodacti nerkla le nundamba stuzi kei pa nu do cipcta (.i do zbasu pa kelsicni poi fatci .ije la'e di'u rutmi jo'e tolcau be lu {2}, do fesli'aspo lo ti vitnodacti: do cpacu pa karda li'u)
+                (               {2},     :     )
+
+{X}{W}{U}{U}, {T}, Sacrifice a Clue: You draw X cards and gain X life.
+{X}{W}{U}{U}, {T}, do fesli'aspo pa fatci: do cpacu lo karda gi'e zenba lo kanro li X
+{X}{W}{U}{U}, {T},    :          X

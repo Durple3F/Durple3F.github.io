@@ -1,0 +1,100 @@
+Legendary - ranmi
+Creature - danlu
+Artifact - rutmi
+Spell - makfu
+Instant - paplisutmakfa (single-use fast spell)
+Sorcery - paplimakfa (single-use spell)
+Planeswalker - munje + litru -> mujlitru
+Land - tumla
+
+Power - tsali kelnemka'u
+Toughness - tinsa kelnemka'u
+Life - kanro kelnemka'u
+Damage - selxrani kelnemka'u
+
+Tap - sexaksu (the state of being tapped is a za'i that uses the same word)
+Transform - gafygau (different word from the state of being transformed, but it's based off the same root word)
+Cast - mafpli
+Deal (as in damage) - dunda (lo selxrani kelnemka'u)
+Destroy - despo
+Draw - cpacu (drawing from the library is implied. this is like saying "obtain a card" obviously it comes from the library)
+Discard - vimcu (discarding from your hand is implied. this is like saying "lose a card". it's less obvious this comes from the library but y'know)
+Exile - dargau
+Return - xrubei
+Put - punji
+P/T counter - namcugalfi nacdai
+Other counters - nacdai
+Counter - namcudacti
+Ability - kelstati
+Attack - gunta
+Sacrifice - fesli'aspo
+Gain - zenba
+
+White - 
+Blue - 
+Black - xekri
+Red - xunre
+Green - 
+
+Source - krasi
+Permanent - vitnodacti
+Card - karda
+
+Battlefield - le nundamba stuzi
+Graveyard - le mrofoi stuzi
+Exile (zone) - le dargau stuzi
+
+Tapped (state) - lo za'i pu sexaksu
+Transformed (state) - lo za'i pu tegalfi
+
+Turns and Steps/Phases of turns:
+turn - kelka'u
+phase - pruce
+step - vepruce
+upkeep - cikre vepruce
+end step - fanmo vepruce
+
+Opponent - bradi
+Player - kelci
+
+Noncombat - nardamba
+
+Control - jitro
+
+Keywords
+When written on its own line, only the word is written, and the subject is omitted. It doesn't say "lo ti vitnodacti cu vofli" to say "Flying". It's just "vofli". The purpose of these keywords is to save space.
+When written as a declaration/check that something has or gains that keyword, it's written as the property of that keyword. So to say "Your creatures gain flying" you would say "loi danlu po do lebna lo ka vofli" meaning "Your creatures gain the property of flying"
+Trample - maxdzu
+Vigilance - jundi
+Flying - vofli
+Lifelink - kanrle'a
+Rebound - rapmakfa
+Ward - makfa terbandu
+
+Phyrexian - .fairexi'an.
+Praetor - .pra'etor.
+God - cevni
+Human - remna
+Detective - cipctaseljibri
+Demon - dermoni
+Warlock - kluzeimafcre (ideas-crime-magic-user) 
+
+Clue - fatci
+Background - prulisri
+
+Targets are written in a way that supposes the targeting at the beginning of the ability, closer to how it actually works per the rules of magic. Example:
+  - "Destroy target creature" would be written as, in lojban, "Choose target creature, which we will call thing-1. Destroy thing-1."
+  - Doing it this way is very elegant in lojban and the phrasing is consistent across many examples.
+
+Replacement effects are written as:
+sebasti ro nu [event being replaced] kei lo nu [event it is replaced with] kei
+
+Triggered abilities are written as:
+ba semulcabna ro nu [trigger event] kei pa nu [action] kei
+
+Intervening if clauses:
+IFLE
+
+Reasoning for just using the words for types/subtypes instead of writing them properly with "lo danlu" or "lo rutmi":
+  - In english, we don't write "A creature - A human and druid", we just say "Creature - Human Druid"
+  - Benefit: The text is shorter, and the types are identifiable by being single words

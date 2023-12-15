@@ -1,0 +1,24 @@
+Nicol Bolas, Dragon-God
+la .nikol.bolas. noi drakono cevni
+    
+
+Legendary Planeswalker - Bolas
+ranmi mujlitru - .bolas.
+   
+
+Nicol Bolas, Dragon-God has all loyalty abilities of all other planeswalkers on the battlefield.
+lo ti vitnodacti cu tolcau ro kraice kelstati poi su'o pa mujlitru poi le nundamba stuzi cu vasru ke'a cu tolcau ke'a
+"This permanent has each loyal ability such that (at least one planeswalker such that (that planeswalker is on the battlefield) has that ability)
+                     
+
+You draw a card. Each opponent exiles a card from their hand or a permanent they control.
+do cpacu pa karda .ije ro da poi bradi cu vimcu pa karda gi'a dargau pa vitnodacti poi da jitro ke'a
+                    
+
+Destroy target creature or planeswalker.
+do cuxna pa danlu ja mujlitru goi ko'a .ije do despo ko'a
+           
+
+Each opponent who doesn’t control a legendary creature or planeswalker loses the game.
+ro da poi da bradi je nai jitro be su'o pa vitnodacti poi ke'a ranmi je danlu ja mujlitru cu vimcu le ti nunkei
+                       

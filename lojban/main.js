@@ -1,5 +1,8 @@
 let allSpans = $(".col span")
-const story = storyInfo[storyCode]
+let story = {}
+if (storyCode){
+  story = storyInfo[storyCode]
+}
 const storyElemValues = {}
 const storyColors = {}
 const myrng = new Math.seedrandom(storyCode);
