@@ -93,3 +93,7 @@ body::-webkit-scrollbar, html::-webkit-scrollbar {
 .col span:hover {
   cursor: pointer;
 }
+
+.col > img.img-fluid {
+  border-radius: calc(100vw/80);
+}

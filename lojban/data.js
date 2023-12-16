@@ -106,5 +106,38 @@ const storyInfo = {
     "beho": "\"be'o\" tells you that the \"be\" that began earlier is over now. Usually you don't need it, but when sentences get complicated it helps make sure we're on the same page.",
     "noi": "\"noi\" is kinda like the \"which\" in the sentence \"Take that one which is red.\" The one to take may have already been indicated by the \"that,\" but the \"noi\" provides some additional information.",
     "kuho": "\"ku'o\" tells you that the \"noi\" from earlier is over now. Usually you don't need it, but it's useful to make things clear."
+  },
+  "Oracle of the Alpha": {
+    1: "\"bavyxusta'a\" is \"balvi\" (future) + \"xusra\" (claim) + \"tavla\" (speak) = predict speak = tell the future. Because of the \"lo\", this is a noun that does that, in this case telling the future.<br>Notably, this is not \"a person whose job it is to tell the future,\" that's a different construction.",
+    2: "While you <i>can</i> say \"alpha\" in lojban, there's no specific word for it, so you're either gonna be saying \"the letter a in greek\" or \"the first letter of the greek alphabet,\" neither of which are very close to the goal. I considered saying \"first set,\" but that just makes it sound like this guy's a piece of cardboard. Way less cool.",
+    3: "\"danlu\" really means \"animal\" or \"thing that is animate,\" both which are close, but sound kinda disconnected from this guy, who is clearly a sentient, living dude with like, understanding of the nature of the universe. However, to be fair, \"creature\" sure doesn't sound great either, if you think about it.",
+    4: "Bird",
+    5: "\"makfa\" (magic) + \"certu\" (expert) = wizard",
+    6: "Keywords are a weird thing. They're there partially to save space, but they don't <i>work</i> grammatically. They imply so much <i>around</i> the keyword, which doesn't translate nicely into something like this. This guy <i>is</i> flying, but writing that sentence fully kinda gets in the way of saving space. So, let's just defer to the way every natural language does it, and just write the verb.",
+    7: "Magic is a game that really really needs to use the same words to indicate when things operate in the same ways. Triggered abilities always always use the words when, whenever, or at. So I figured, why not just use one word for all triggered abilities? All triggered abilities start with this word, that means \"after (the first noun), (the second noun) happens.\" It's made of mulno (to be complete) + cabna (is currently happening) so mulcabna by itself means (the first noun) is after (the second noun). The \"se\" swaps the two nouns.",
+    8: "\"nerkla\" = nenri (inside) + klama (go to) = enter.",
+    9: "\"nundamba\" = nu (event) + damba (fight) = event of fighting = battle. \"stuzi\" is just a position that doesn't change. Like a zone in a game, for example.",
+    10: "\"mafyzba\" = makfa (magic) + zbasu (create) = conjure. It's uh... definitely not as evocative of conjuring, but it's pretty close. I'd be able to do it better if I knew how they wrote conjure in other languages.",
+    11: "The Power Nine, which, here, is literally \"The set of things that are called 9 of powerful\"",
+    12: "The (proper noun) set of things that are called...",
+    13: "\"so\" is 9, and \"soz\" is 9 in verb form.",
+    14: "Power.",
+    15: "\"ne'i\" is like \"in.\"",
+    16: "\"ckusro\" = cukta (book) + sorcu (storage place) = library. \"stuzi\" is just a position that doesn't change. Like a zone in a game, for example.",
+    17: "\"and\" in the sense of \"I do this and then that.\" The \"gi'e\" connects the two predicates, and the \"babo\" implies that the first one happens before the other.",
+    18: "\"kasygau\" = kalsa (chaotic) + gasnu (cause) = mix together disorderly, i.e. shuffle.",
+    19: "\"gunta\" means to attack.",
+    20: "\"prujungau\" = purci (past) + djuno (fact) + gasnu (cause) = to cause (current facts which were known in the past) = to have seen the future = scry",
+    21: "The number 1.",
+
+    "po": "\"po\" means \"specific to,\" which usually just means it marks a possessive.",
+    "ro": "\"ro\" means \"each.\"",
+    "nu": "\"nu\" means \"the event where this next thing happens.\"",
+    "ti": "\"ti\" is a pronoun that means \"this.\" I am making an executive decision here, the cards just say \"this\" instead of \"let me spell out my whole name real quick\" because I don't like that. It can be ambiguous in english (if you're not well-versed in how mtg works) but this is lojban, it should be much more clear.",
+    "do": "\"do\" is a pronoun that means \"you.\" Isn't it weird that magic cards just call you \"you?\" Not \"this thing's controller\" or something? I like it, of course, but it's one of those things this project makes you confront and consider.",
+    "cu": "\"cu\" means \"the subject of the sentence is over now. here comes the verb.\" which is usually not necessary.",
+    "kei": "\"kei\" means \"that event that began earlier is over now.\"",
+    "poi": "\"poi\" means \"which are\"",
+    "vitno": "\"vi'ordai\" = vitno (stay, unmoving) + dacti (thing) = thing that continues to exist = permanent, in mtg terms."
   }
 }
