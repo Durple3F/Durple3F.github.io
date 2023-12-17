@@ -1,8 +1,13 @@
 @import url(https://jackhumbert.github.io/zbalermorna/assets/css/fonts.css);
 
+:root {
+  --text-color: #ccc;
+  --border-color: #787068;
+}
+
 body {
   background-color: black;
-  color: #ccc;
+  color: var(--text-color);
 }
 
 /* hide scrollbar */
@@ -15,9 +20,22 @@ body::-webkit-scrollbar, html::-webkit-scrollbar {
   display: none;  /* Safari and Chrome */
 }
 
+#back-btn > .btn {
+  font-size: 2.5vh;
+  height: 6vh;
+}
+#back-btn {
+  position: absolute;
+  z-index: 1;
+  top: 8vh;
+  left: 2vw;
+  font-size: 4vh;
+}
+
 #views {
-  margin-top: 12em;
-  padding-bottom: 10em;
+  margin-top: 25vh;
+  height: 75vh;
+  padding-bottom: 25vh;
   overflow-y: scroll;
   /* hide scrollbar */
   -ms-overflow-style: none;  /* Internet Explorer 10+ */
@@ -64,10 +82,11 @@ body::-webkit-scrollbar, html::-webkit-scrollbar {
 }
 
 #explanation {
-  height: 10em;
+  height: 22vh;
   width: 75%;
   margin: auto;
-  border: 5px solid gray;
+  border: 5px solid var(--border-color);
+  border-radius: 1em;
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
@@ -94,6 +113,13 @@ body::-webkit-scrollbar, html::-webkit-scrollbar {
   cursor: pointer;
 }
 
-.col > img.img-fluid {
+.col > img.img-fluid.mtg-card {
   border-radius: calc(100vw/80);
+}
+
+.ms.ms-loyalty-up, .ms.ms-loyalty-zero, .ms.ms-loyalty-down, .ms.ms-loyalty-start {
+  color: var(--text-color);
+}
+.ms.ms-loyalty-up::after, .ms.ms-loyalty-zero::after, .ms.ms-loyalty-down::after, .ms.ms-loyalty-start::after {
+  color: black;
 }

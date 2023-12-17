@@ -4,7 +4,7 @@ Artifact - rutmi
 Spell - makfu
 Instant - paplisutmakfa (single-use fast spell)
 Sorcery - paplimakfa (single-use spell)
-Planeswalker - munje + litru -> mujlitru
+Planeswalker - munje + litru -> mujli'u
 Land - tumla
 
 Power - tsali kelnemka'u
@@ -48,6 +48,7 @@ Library - le ckusro stuzi
 Battlefield - le nundamba stuzi
 Graveyard - le mrofoi stuzi
 Exile (zone) - le dargau stuzi
+Hand (zone) - le xance stuzi
 
 Tapped (state) - lo za'i pu sexaksu
 Transformed (state) - lo za'i pu tegalfi
@@ -91,6 +92,7 @@ Background - prulisri
 
 Targets are written in a way that supposes the targeting at the beginning of the ability, closer to how it actually works per the rules of magic. Example:
   - "Destroy target creature" would be written as, in lojban, "Choose target creature, which we will call thing-1. Destroy thing-1."
+  - The word for "choose" for targets in this way is "fargau."
   - Doing it this way is very elegant in lojban and the phrasing is consistent across many examples.
 
 Replacement effects are written as:
