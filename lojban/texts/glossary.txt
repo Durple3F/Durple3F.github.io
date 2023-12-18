@@ -1,7 +1,7 @@
 Legendary - ranmi
 Creature - danlu
 Artifact - rutmi
-Spell - makfu
+Spell - mafru'e
 Instant - paplisutmakfa (single-use fast spell)
 Sorcery - paplimakfa (single-use spell)
 Planeswalker - munje + litru -> mujli'u
@@ -10,12 +10,12 @@ Land - tumla
 Power - tsali kelnemka'u
 Toughness - tinsa kelnemka'u
 Life - kanro kelnemka'u
-Damage - selxrani kelnemka'u
+Damage - terxai kelnemka'u
 
 Tap - sexaksu (the state of being tapped is a za'i that uses the same word)
 Transform - gafygau (different word from the state of being transformed, but it's based off the same root word)
 Cast - mafpli
-Deal (as in damage) - dunda (lo selxrani kelnemka'u)
+Deal (as in damage) - dunda (lo terxai kelnemka'u)
 Destroy - despo
 Draw - cpacu (drawing from the library is implied. this is like saying "obtain a card" obviously it comes from the library)
 Discard - vimcu (discarding from your hand is implied. this is like saying "lose a card". it's less obvious this comes from the library but y'know)
@@ -86,6 +86,8 @@ Demon - dermoni
 Warlock - kluzeimafcre (ideas-crime-magic-user)
 Bird - cipni
 Wizard - mafcre
+Warrior - sonci
+Cat - mlatu
 
 Clue - fatci
 Background - prulisri

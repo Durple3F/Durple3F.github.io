@@ -108,6 +108,7 @@ body::-webkit-scrollbar, html::-webkit-scrollbar {
   transition: background-color 0.2s;
   background-color: initial;
   border-radius: 2px;
+  border-top: 1px dashed red;
 }
 .col span:hover {
   cursor: pointer;

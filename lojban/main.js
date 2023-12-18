@@ -1,7 +1,10 @@
 let allSpans = $(".col span")
-let story = {}
+let story = storyInfo["general"]
 if (typeof storyCode !== "undefined"){
-	story = storyInfo[storyCode]
+	let newStory = storyInfo[storyCode]
+	for (let factCode in newStory){
+		story[factCode] = newStory[factCode]
+	}
 }
 else {
 	storyCode = ""
@@ -108,6 +111,7 @@ for (let factCode in story){
 	let fact = `<div class="fact">${story[factCode] ?? ""}</div>`
 	let className = `.f${factCode}`
 	let thoseSpans = $(className)
+	if (!thoseSpans.length) continue
 	let minColorUsage = Math.min(...Object.values(colorUsage))
 	let validColors = colors.filter(c => colorUsage[c] === minColorUsage)
 	let color = validColors[Math.floor(myrng.quick() * validColors.length)]
@@ -115,7 +119,8 @@ for (let factCode in story){
 	storyColors[factCode] = color
 	let css = {
 		"text-decoration-color": color,
-		"text-decoration-style": "solid"
+		"text-decoration-style": "solid",
+		"border-top": "none"
 	}
 	let boundObj = {
 		elems: thoseSpans,
