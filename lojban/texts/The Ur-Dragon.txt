@@ -1,0 +1,22 @@
+The Ur-Dragon
+The Earliest Dragon
+la liryrai drakono
+
+
+Legendary Creature — Dragon Avatar
+
+ranmi danlu - drakono ceirka'i
+
+
+Eminence — As long as The Ur-Dragon is in the command zone or on the battlefield, other Dragon spells you cast cost {1} less to cast.
+Famously Grandly Powerful — During an event of this being inside the command zone or the battlefield, the cost of each spell which is cast by you and not this and is a dragon is reduced by {1}.
+misybalvlapi — ca lo nu ti nenri le tinbe stuzi a le nundamba stuzi kei le jdima po ro mafru'e poi se mafpli do gi'e drata ti gi'e drakono cu te vimcu {1}
+
+
+Flying
+Fly
+vofli
+
+
+Whenever one or more Dragons you control attack, draw that many cards, then you may put a permanent card from your hand onto the battlefield.
+

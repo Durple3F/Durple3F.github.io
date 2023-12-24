@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+	<head>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js">
+		</script> 
+		<link href="https://cdn.jsdelivr.net/npm/mana-font@latest/css/mana.css" rel="stylesheet" type="text/css" />
+		
+		<link rel="icon" type="image/x-icon" href="favicon.ico">
+		<link rel="stylesheet" href="style.css">
+		<script src="data2.js"></script>
+		<script>
+			const storyCode = "Spellweaver Volute"
+		</script>
+		<script src="main.js" defer></script>
+
+		<title>Spellweaver Volute</title>
+		<meta property="og:title" content="Spellweaver Volute">
+		<meta property="og:description" content="">
+		<meta property="og:image" content="https://durple3f.github.io/lojban/images/Spellweaver%20Volute%204.png">
+	</head>
+	<body>
+		<a href="./index.html" id="back-btn">
+			<button class="btn btn-secondary">Back</button>
+		</a>
+		<div id="draggable">=</div>
+		<div id="explanation-container">
+			<div id="explanation">
+				<div id="explanation-text"></div>
+				<button class="btn btn-secondary show-all" style="display: none;">Show all</button>
+			</div>
+		</div>
+		<div id="views">
+			<div class="row text-center fw-bold">
+				<div class="col">
+					English <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					Lojban-ified English <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					Lojban <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					Zbalermorna <button class="toggle-btn">(Hide)</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="f1">Spellweaver</span> <span class="f2">Volute</span>
+				</div>
+				<div class="col">
+					<span class="flo">A</span> <span class="f1">spell-weaver</span> <span class="f2">mollusk</span>
+				</div>
+				<div class="col">
+					<span class="flo">lo</span> <span class="f1">mafru'ejivbu</span> <span class="f2">cakcurnu</span>
+				</div>
+				<div class="col zbalermorna">
+					<span class="flo"></span> <span class="f1"></span> <span class="f2"></span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="f3">Enchantment</span> — <span class="f4">Aura</span> 
+				</div>
+				<div class="col">
+					<span class="f3">Permanent-magic</span> — <span class="f4">Surrounder</span>
+				</div>
+				<div class="col">
+					<span class="f3">vi'ormakfa</span> — <span class="f4">sruri</span>
+				</div>
+				<div class="col zbalermorna">
+					<span class="f3"></span> — <span class="f4"></span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="f5">Enchant</span> <span class="f6">instant</span> <span class="fkarda">card</span> <span class="f7">in</span> <span class="fpa">a</span> <span class="f8">graveyard</span>
+				</div>
+				<div class="col">
+					<span class="f5">Magic-connects to</span> <span class="fpa">1</span> <span class="fkarda">card</span> <span class="fpoi">which is</span> <span class="f6">instant</span> <span class="fgihe">and</span> <span class="f7">in</span> <span class="fpa">a</span> <span class="f8">graveyard</span>
+				</div>
+				<div class="col">
+					<span class="f5">mafyjo'e</span> <span class="fpa">pa</span> <span class="fkarda">karda</span> <span class="fpoi">poi</span> <span class="f6">sutmocmakfa</span> <span class="fgihe">gi'e</span> <span class="f7">nenri</span> <span class="fpa">pa</span> <span class="f8">mrofoi stuzi</span>
+				</div>
+				<div class="col zbalermorna">
+					<span class="f5"></span> <span class="fpa"></span> <span class="fkarda"></span> <span class="fpoi"></span> <span class="f6"></span> <span class="fgihe"></span> <span class="f7"></span> <span class="fpa"></span> <span class="f8"> </span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="ftrigger">Whenever</span> <span class="fnu2"><span class="fdo">you</span> <span class="f9">cast</span> <span class="fpa">a</span> <span class="f11">sorcery</span> <span class="f10">spell</span>,</span> <span class="f12">copy</span> <span class="fle">the</span> <span class="f13">enchanted</span> <span class="f6">instant</span> <span class="fkarda">card</span><span class="fi">.</span> <span class="fdo">You</span> <span class="f15">may</span> <span class="f9">cast</span> <span class="fle">the</span> <span class="f20">copy</span> <span class="fco">with</span><span class="f17">out</span> <span class="f18">paying</span> <span class="fle">its</span> <span class="f19">mana cost</span><span class="fi">.</span> <span class="f21">If</span> <span class="f22">you</span> <span class="f9">do</span>, <span class="f24">exile</span> <span class="fkoha">the enchanted card</span> <span class="fgihe">and</span> <span class="f22">attach</span> <span class="fti2">Spellweaver Volute</span> <span class="f22">to</span> <span class="f23">another</span> <span class="f6">instant</span> <span class="fkarda">card</span> <span class="f7">in</span> <span class="fpa">a</span> <span class="f8">graveyard</span>.
+				</div>
+				<div class="col">
+					<span class="ftrigger">After</span> <span class="fro">each</span> <span class="fnu2">event of (<span class="fdo">you</span> <span class="f9">cast</span> <span class="fpa">1</span> <span class="f10">spell</span> <span class="fpoi">which is</span> <span class="f11">sorcery</span><span class="fkei">)</span></span> <span class="fdo">you</span> <span class="f12">copy</span> (<span class="fle">the</span> <span class="fkarda">card</span> <span class="fpoi">which is</span> <span class="f13">enchanted by</span> <span class="fti2">this</span><span class="f14">)</span><span class="fgoi">,</span> <span class="fkoha">x1</span><span class="fi">.</span> <span class="fdo">You</span> <span class="fca">now</span> <span class="f15">may</span> <span class="f9">cast</span> <span class="f16">(in a way that <span class="f17">lacks</span> <span class="fdo">you</span> <span class="fzuho2"><span class="f18">paying</span> <span class="fle">the</span> <span class="f19">mana cost</span><span class="fkei">)</span></span></span> <span class="fle">the</span> <span class="f20">copy</span><span class="fi">.</span> <span class="f21">If</span> <span class="fduhu1">(<span class="fdo">you</span> <span class="f9">cast</span>-<span class="fpu">ed</span> <span class="fle">the</span> <span class="f20">copy</span><span class="fkei">)</span></span> <span class="f21">then</span> <span class="fnu1">(<span class="fdo">you</span> <span class="f24">exile</span> <span class="fkoha">x1</span>, <span class="fgihe">and</span> <span class="f22">attach</span> <span class="fti2">this</span> <span class="f22">to</span> <span class="fpa">1</span> <span class="fkarda">card</span> <span class="fpoi">which is</span> <span class="f6">instant</span> <span class="fgihe">and</span> <span class="f7">is inside</span> <span class="fpa">1</span> <span class="f8">graveyard</span> <span class="fgihe">and</span> <span class="f23">is not</span> <span class="fkoha">x1</span>)</span>
+				</div>
+				<div class="col">
+					<span class="ftrigger">ba</span> <span class="fro">ro</span> <span class="fnu2">nu <span class="fdo">do</span> <span class="f9">mafpli</span> <span class="fpa">pa</span> <span class="f10">mafru'e</span> <span class="fpoi">poi</span> <span class="f11">mocmakfa</span> <span class="fkei">kei</span></span> <span class="fdo">do</span> <span class="f12">fukygau</span> <span class="fle">le</span> <span class="fkarda">karda</span> <span class="fpoi">poi</span> <span class="fca">ca</span> <span class="fse">se</span> <span class="f13">mafyjo'e</span> <span class="fti2">ti</span> <span class="f14">ku'o</span> <span class="fgoi">goi</span> <span class="fkoha">ko'a</span> <span class="fi">.i</span> <span class="fdo">do</span> <span class="fca">ca</span> <span class="f15">ka'e</span> <span class="f9">mafpli</span> <span class="f16"><span class="fco">co</span> <span class="f17">claxu</span> <span class="fbe">be</span> <span class="flo">lo</span> <span class="fzuho2">zu'o <span class="fdo">do</span> <span class="f18">pleji</span> <span class="fle">le</span> <span class="f19">mafnenlai jdima</span> <span class="fkei">kei</span></span></span> <span class="fle">le</span> <span class="f20">fukpi</span></span> <span class="fi">.i</span> <span class="f21">ifle</span> <span class="fle">le</span> <span class="fduhu1">du'u <span class="fdo">do</span> <span class="fpu">pu</span> <span class="f9">mafpli</span> <span class="fle">le</span> <span class="f20">fukpi</span> <span class="fkei">kei</span></span> <span class="fle">le</span> <span class="fnu1">nu <span class="fdo">do</span> <span class="f24">dargau</span> <span class="fkoha">ko'a</span> <span class="fgihe">gi'e</span> <span class="f22">jornygau</span> <span class="fti2">ti</span> <span class="fpa">pa</span> <span class="fkarda">karda</span> <span class="fpoi">poi</span> <span class="f6">sutmocmakfa</span> <span class="fgihe">gi'e</span> <span class="f7">nenri</span> <span class="fpa">pa</span> <span class="f8">mrofoi stuzi</span> <span class="fgihe">gi'e</span> <span class="f23">drata</span> <span class="fkoha">ko'a</span></span>
+				</div>
+				<div class="col zbalermorna">
+					<span class="ftrigger"></span> <span class="fro"></span> <span class="fnu2"> <span class="fdo"></span> <span class="f9"></span> <span class="fpa"></span> <span class="f10"></span> <span class="fpoi"></span> <span class="f11"></span> <span class="fkei"></span></span> <span class="fdo"></span> <span class="f12"></span> <span class="fle"></span> <span class="fkarda"></span> <span class="fpoi"></span> <span class="fca"></span> <span class="fse"></span> <span class="f13"></span> <span class="fti2"></span> <span class="f14"></span> <span class="fgoi"></span> <span class="fkoha"></span> <span class="fi"></span> <span class="fdo"></span> <span class="fca"></span> <span class="f15"></span> <span class="f9"></span> <span class="f16"><span class="fco"></span> <span class="f17"></span> <span class="fbe"></span> <span class="flo"></span> <span class="fzuho2"> <span class="fdo"></span> <span class="f18"></span> <span class="fle"></span> <span class="f19"> </span> <span class="fkei"></span></span></span> <span class="fle"></span> <span class="f20"></span></span> <span class="fi"></span> <span class="f21"></span> <span class="fle"></span> <span class="fduhu1"> <span class="fdo"></span> <span class="fpu"></span> <span class="f9"></span> <span class="fle"></span> <span class="f20"></span> <span class="fkei"></span></span> <span class="fle"></span> <span class="fnu1"> <span class="fdo"></span> <span class="f24"></span> <span class="fkoha"></span> <span class="fgihe"></span> <span class="f22"></span> <span class="fti2"></span> <span class="fpa"></span> <span class="fkarda"></span> <span class="fpoi"></span> <span class="f6"></span> <span class="fgihe"></span> <span class="f7"></span> <span class="fpa"></span> <span class="f8"> </span> <span class="fgihe"></span> <span class="f23"></span> <span class="fkoha"></span></span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<img class="mtg-card img-fluid" src="images/Spellweaver Volute 1.png">
+				</div>
+				<div class="col">
+					<img class="mtg-card img-fluid" src="images/Spellweaver Volute 2.png">
+				</div>
+				<div class="col">
+					<img class="mtg-card img-fluid" src="images/Spellweaver Volute 3.png">
+				</div>
+				<div class="col">
+					<img class="mtg-card img-fluid" src="images/Spellweaver Volute 4.png">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col"></div>
+				<div class="col"></div>
+				<div class="col"></div>
+				<div class="col">
+					(this one was made after I realized the others used a slightly wrong frame. i'm not going back and fixing the other frames right now. ignore it)
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

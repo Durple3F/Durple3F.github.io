@@ -2,8 +2,9 @@ Legendary - ranmi
 Creature - danlu
 Artifact - rutmi
 Spell - mafru'e
-Instant - paplisutmakfa (single-use fast spell)
-Sorcery - paplimakfa (single-use spell)
+Enchantment - vi'ormakfa (permanent magic)
+Instant - sutmocmakfa (fast momentary magic)
+Sorcery - mocmakfa (momentary magic)
 Planeswalker - munje + litru -> mujli'u
 Land - tumla
 
@@ -49,6 +50,7 @@ Battlefield - le nundamba stuzi
 Graveyard - le mrofoi stuzi
 Exile (zone) - le dargau stuzi
 Hand (zone) - le xance stuzi
+Command zone - le minde stuzi
 
 Tapped (state) - lo za'i pu sexaksu
 Transformed (state) - lo za'i pu tegalfi
@@ -76,6 +78,11 @@ Flying - vofli
 Lifelink - kanrle'a
 Rebound - rapmakfa
 Ward - makfa terbandu
+Enchant - mafyjo'e (x1 is magically connected to x2)
+Attach - jornygau (x1 (agent) connects x2 to x3)
+
+Ability Words
+Eminence - misybalvlapi (fame-grand-powerful)
 
 Phyrexian - .fairexi'an.
 Praetor - .pra'etor.
@@ -88,6 +95,8 @@ Bird - cipni
 Wizard - mafcre
 Warrior - sonci
 Cat - mlatu
+Dragon - drakono
+Avatar - ceirka'i (god-proxy)
 
 Clue - fatci
 Background - prulisri

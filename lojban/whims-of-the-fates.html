@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+	<head>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js">
+		</script> 
+		<link href="https://cdn.jsdelivr.net/npm/mana-font@latest/css/mana.css" rel="stylesheet" type="text/css" />
+		
+		<link rel="icon" type="image/x-icon" href="favicon.ico">
+		<link rel="stylesheet" href="style.css">
+		<script src="data2.js"></script>
+		<script>
+			const storyCode = "Whims of the Fates"
+		</script>
+		<script src="main.js" defer></script>
+
+		<title>Whims of the Fates</title>
+		<meta property="og:title" content="Whims of the Fates">
+		<meta property="og:description" content="">
+		<meta property="og:image" content="https://durple3f.github.io/lojban/images/Whims%20of%20the%20Fates%204.png">
+	</head>
+	<body>
+		<a href="./index.html" id="back-btn">
+			<button class="btn btn-secondary">Back</button>
+		</a>
+		<div id="draggable">=</div>
+		<div id="explanation-container">
+			<div id="explanation">
+				<div id="explanation-text"></div>
+				<button class="btn btn-secondary show-all" style="display: none;">Show all</button>
+			</div>
+		</div>
+		<div id="views">
+			<div class="row text-center fw-bold">
+				<div class="col">
+					English <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					Lojban-ified English <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					Lojban <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					Zbalermorna <button class="toggle-btn">(Hide)</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="f1">Whims</span> <span class="f3">of</span> <span class="flai">the</span> <span class="f2">Fates</span>
+				</div>
+				<div class="col">
+					<span class="flei">The</span> <span class="f1">decisions</span> <span class="f3">of</span> <span class="flai">The</span> <span class="f2">Fates</span>
+				</div>
+				<div class="col">
+					<span class="flei">lei</span> <span class="f1">seljdi</span> <span class="f3">be</span> <span class="flai">lai</span> <span class="f2">dimna</span>
+				</div>
+				<div class="col zbalermorna">
+					<span class="flei"></span> <span class="f1"></span> <span class="f3"></span> <span class="flai"></span> <span class="f2"></span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="f4">Sorcery</span>
+				</div>
+				<div class="col">
+					<span class="f4">Momentary-magic</span>
+				</div>
+				<div class="col">
+					<span class="f4">mocmakfa</span>
+				</div>
+				<div class="col zbalermorna">
+					<span class="f4"></span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="f13">Starting with</span> <span class="fdo">you</span>, <span class="fro">each</span> <span class="fkelci">player</span> <span class="f5">separates</span> <span class="fro">all</span> <span class="fpermanent">permanents</span> <span class="fda">they</span> <span class="f6">control</span> <span class="f5">into</span> <span class="fci">three</span> <span class="f8">piles</span><span class="fije">.</span> <span class="fbabo">Then</span> <span class="fro">each</span> <span class="fkelci">player</span> <span class="f9">chooses</span> <span class="fpa">one</span> <span class="fpo">of</span> <span class="fda">their</span> <span class="f8">piles</span> <span class="fco">at</span> <span class="f10">random</span> <span class="fgihe">and</span> <span class="f11">sacrifices</span> <span class="flei">those</span> <span class="fpermanent">permanents</span><span class="fi">.</span> (<span class="f8">Piles</span> <span class="f14">can</span> <span class="f15">be empty</span>.)
+				</div>
+				<div class="col">
+					<span class="fro">Each</span> <span class="fda">X</span>, <span class="fpoi">which is</span> <span class="fkelci">a player</span>, <span class="f5">separates</span> <span class="flei">the</span> <span class="fro">all</span> <span class="fpermanent">permanents</span> <span class="fpoi">which</span> <span class="fda">they</span> <span class="f6">control</span> <span class="f5">into</span> <span class="fci">3</span> <span class="f8">piles</span><span class="fije">. And</span> <span class="fbabo">then</span>, <span class="fro">each</span> <span class="fda">X</span>, <span class="fpoi">which is</span> <span class="fkelci">a player</span>, <span class="f9">chooses</span> <span class="f10">randomly</span> <span class="fpa">1</span> <span class="f8">pile</span> <span class="fpo">of</span> <span class="fda">theirs</span>, <span class="fgihe">and</span> <span class="f11">sacrifices</span> <span class="flei">those</span> <span class="fpermanent">permanents</span> <span class="fpo">of</span> <span class="fle">the</span> <span class="f8">pile</span> <span class="fpoi">which</span> <span class="fpu">was</span> <span class="f12">chosen</span><span class="fi">.</span> (<span class="fdo">You</span> <span class="f13">first</span> <span class="f5">separate</span><span class="fi">.</span> <span class="f8">Piles</span> <span class="f14">can</span> <span class="f15">be empty</span>.)
+				</div>
+				<div class="col">
+					<span class="fro">ro</span> <span class="fda">da</span> <span class="fpoi">poi</span> <span class="fkelci">kelci</span> <span class="fcu">cu</span> <span class="f5">fendi</span> <span class="flei">lei</span> <span class="fro">ro</span> <span class="fpermanent">vi'ordai</span> <span class="fpoi">poi</span> <span class="fse">se</span> <span class="f6">jitro</span> <span class="fda">da</span> <span class="f7">ku'o</span> <span class="fci">ci</span> <span class="f8">derxi</span> <span class="fije">.ije</span><span class="fbabo">babo</span> <span class="fro">ro</span> <span class="fda">da</span> <span class="fpoi">poi</span> <span class="fkelci">kelci</span> <span class="fcu">cu</span> <span class="f9">cukna</span> <span class="fco">co</span> <span class="f10">cunso</span> <span class="fpa">pa</span> <span class="f8">derxi</span> <span class="fpo">po</span> <span class="fda">da</span> <span class="fgihe">gi'e</span> <span class="f11">li'aspo</span> <span class="flei">lei</span> <span class="fpermanent">vi'ordai</span> <span class="fpo">po</span> <span class="fle">le</span> <span class="f8">derxi</span> <span class="fpoi">poi</span> <span class="fpu">pu</span> <span class="fse">se</span> <span class="f12">cukna</span> (<span class="fi">.i</span> <span class="fdo">do</span> <span class="f13">pamoi</span> <span class="f5">fendi</span> <span class="fi">.i</span> <span class="floi">loi</span> <span class="f8">derxi</span> <span class="f14">ka'e</span> <span class="f15">kunti</span>)
+				</div>
+				<div class="col zbalermorna">
+					<span class="fro"></span> <span class="fda"></span> <span class="fpoi"></span> <span class="fkelci"></span> <span class="fcu"></span> <span class="f5"></span> <span class="flei"></span> <span class="fro"></span> <span class="fpermanent"></span> <span class="fpoi"></span> <span class="fse"></span> <span class="f6"></span> <span class="fda"></span> <span class="f7"></span> <span class="fci"></span> <span class="f8"></span> <span class="fije"></span><span class="fbabo"></span> <span class="fro"></span> <span class="fda"></span> <span class="fpoi"></span> <span class="fkelci"></span> <span class="fcu"></span> <span class="f9"></span> <span class="fco"></span> <span class="f10"></span> <span class="fpa"></span> <span class="f8"></span> <span class="fpo"></span> <span class="fda"></span> <span class="fgihe"></span> <span class="f11"></span> <span class="flei"></span> <span class="fpermanent"></span> <span class="fpo"></span> <span class="fle"></span> <span class="f8"></span> <span class="fpoi"></span> <span class="fpu"></span> <span class="fse"></span> <span class="f12"></span> (<span class="fi"></span> <span class="fdo"></span> <span class="f13"></span> <span class="f5"></span> <span class="fi"></span> <span class="floi"></span> <span class="f8"></span> <span class="f14"></span> <span class="f15"></span>)
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<img class="img-fluid mtg-card" src="images/Whims of the Fates 1.png">
+				</div>
+				<div class="col">
+					<img class="img-fluid mtg-card" src="images/Whims of the Fates 2.png">
+				</div>
+				<div class="col">
+					<img class="img-fluid mtg-card" src="images/Whims of the Fates 3.png">
+				</div>
+				<div class="col zbalermorna">
+					<img class="img-fluid mtg-card" src="images/Whims of the Fates 4.png">
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
