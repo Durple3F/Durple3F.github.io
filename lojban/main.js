@@ -43,7 +43,7 @@ const colorValues = {
 let colors = [
 	"red", "crimson", "firebrick", "coral",
 	"orange", "orangered", "darkorange", "yellow", "gold",
-	"chartreuse", "green", "lime", "mediumspringgreen", "seagreen", "forestgreen",
+	"green", "lime", "mediumspringgreen", "seagreen", "forestgreen",
 	"blue", "blueviolet", "deepskyblue",
 	"magenta", "fuchsia", "indigo", "orchid", "rebeccapurple"
 ]
@@ -323,7 +323,20 @@ function updateVideoData() {
 	}
 }
 
-for (let factCode in story) {
+let factCodeList = []
+let generalFacts = []
+for (let factCode in story){
+	let isGeneral = !storyInfo[storyCode][factCode] && storyInfo["general"][factCode]
+	if (isGeneral){
+		generalFacts.push(factCode)
+	}
+	else {
+		factCodeList.push(factCode)
+	}
+}
+factCodeList = factCodeList.concat(generalFacts)
+
+for (let factCode of factCodeList) {
 	let fact = story[factCode] ?? ""
 	let isGeneral = !storyInfo[storyCode][factCode] && storyInfo["general"][factCode]
 	let factTag = `<div class="fact">${fact}</div>`
