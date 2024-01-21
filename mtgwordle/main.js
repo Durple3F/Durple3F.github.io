@@ -130,8 +130,8 @@
 				face.printings.sort((a, b) => {
 					let aSet = setFromCode(a)
 					let bSet = setFromCode(b)
-					let aDate = new Date(aSet.releaseDate)
-					let bDate = new Date(bSet.releaseDate)
+					let aDate = new Date(aSet?.releaseDate)
+					let bDate = new Date(bSet?.releaseDate)
 					return aDate - bDate
 				})
 				firstPrintings[face.name] = face.firstPrinting ?? face.printings[0]

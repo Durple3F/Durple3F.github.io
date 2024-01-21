@@ -1,0 +1,24 @@
+Case of the Pilfered Proof
+Mystery of the evidence which was stolen
+lo nonseljmi ne le rindai noi pu se zerle'a
+
+
+Enchantment — Case
+Enchantment — Mystery
+vi'ormakfa — nonseljmi
+
+
+Whenever a Detective enters the battlefield under your control and whenever a Detective you control is turned face up, put a +1/+1 counter on it.
+After each (a detective which you control enters the battlefield or becomes facing upward) you put a +1/+1 counter on it.
+ba ro nu pa cipcta poi se jitro do zi'e goi ko'a nerkla le nundamba stuzi gi'a inxo le ka selfa'a be lo galtu kei kei do punji pa +1/+1 nacdai ko'a
+
+
+To solve — You control three or more Detectives. (If unsolved, solve at the beginning of your end step.)
+Understanding-cause — You control at least 3 detectives. (If this is not solved, then you solve this after the beginning of the end step of you.)
+jinpyki'u — do jitro su'o ci cipcta (ifle le du'u ti na pu nundanfu kei le nu do nundanfu ti ba le krasi be le fanmo vepruce po do)
+
+
+Solved — If one or more tokens would be created under your control, those tokens plus a Clue token are created instead. (It’s an artifact with “{2}, Sacrifice this artifact: Draw a card.”)
+Understood — Replace each (at least one token which is controlled by you is created) with (those and a clue token are created) (It's an artifact and has "{2}, you sacrifice this: you draw a card.")
+pu jinpe — selbasti ro nu su'e pa kelsinci poi se jitro be do zi'e goi ko'a se majgau kei le nu ko'a e pa fatci kelsinci cu se majgau (do majgau pa fatci kelsicni .i ko'e rutmi gi'e tolcau be lu {2}, do li'aspo ti: do cpacu pa karda)
+

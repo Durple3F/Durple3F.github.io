@@ -7,17 +7,28 @@ Instant - sutmocmakfa (fast momentary magic)
 Sorcery - mocmakfa (momentary magic)
 Planeswalker - munje + litru -> mujli'u
 Land - tumla
+Battle - nundamba
+
+Token - kelsinci
+The format for tokens is "{quantity} {p/t} {types} token(s) which have {abilities}and are {color(s)} and {subtypes}". I think that puts the most important information first.
+Ex: "a 1/1 white Dog creature token" becomes "pa 1/1 danlu kelsinci poi blabi gi'e gerku"
 
 Clue - fatci
 Background - prulisri
 Adventure - capli'ulisri (adventurer story)
+Siege - srugunta
+Case - nonseljmi (mystery, not-understood)
+Food - cidja
+Aura - sruri
+Equipment - cabra
 
-Power - tsali kelnemka'u
-Toughness - tinsa kelnemka'u
-Life - kanro kelnemka'u
-Damage - terxai kelnemka'u
+Power - tsali
+Toughness - tinsa
+Life - kanro
+Damage - terxai
 
-Tap - sexaksu (the state of being tapped is a za'i that uses the same word)
+Tap - selxaksu (the state of being tapped is a za'i/ka that uses the same word)
+Untap - tolselxaksu
 Transform - gafygau (different word from the state of being transformed, but it's based off the same root word)
 Cast - mafpli
 Deal (as in damage) - dunda (lo terxai kelnemka'u)
@@ -27,20 +38,24 @@ Discard - vimcu (discarding from your hand is implied. this is like saying "lose
 Exile - dargau
 Return - xrubei
 Put - punji
-P/T counter - namcugalfi nacdai
-Other counters - nacdai
-Counter - namcudacti
+Counter (the thing placed on cards) - nacdai
+Ex: pa +1/+1 nacdai, pa temci nacdai
 Ability - kelstati
+Trigger - ganse (notice)
 Attack - gunta
-Sacrifice - fesli'aspo
+Block - gutfanta
+Sacrifice - li'aspo
 Gain - zenba
 Enter - nerkla
 Conjure - mafyzba
 Shuffle - kasygau (It's implied that the thing being shuffled is your library unless stated otherwise.)
 Scry - prujungau
+Investigate - dafsisku (answer-search)
+Create - majgau
+Die - mrobi'o
 
-White - 
-Blue - 
+White - blabi
+Blue - blanu
 Black - xekri
 Red - xunre
 Green - 
@@ -56,7 +71,7 @@ Exile (zone) - le dargau stuzi
 Hand (zone) - le xance stuzi
 Command zone - le minde stuzi
 
-Tapped (state) - lo za'i pu sexaksu
+Tapped (state) - lo za'i pu selxaksu
 Transformed (state) - lo za'i pu tegalfi
 
 Turns and Steps/Phases of turns:
@@ -77,31 +92,43 @@ Keywords
 When written on its own line, only the word is written, and the subject is omitted. It doesn't say "lo ti vi'ordai cu vofli" to say "Flying". It's just "vofli". The purpose of these keywords is to save space.
 When written as a declaration/check that something has or gains that keyword, it's written as the property of that keyword. So to say "Your creatures gain flying" you would say "loi danlu po do lebna lo ka vofli" meaning "Your creatures gain the property of flying"
 Trample - maxdzu
-Vigilance - jundi
+Vigilance - kamju'i
 Flying - vofli
-Lifelink - kanrle'a
+Lifelink - ka'orle'a
 Rebound - rapmakfa
-Ward - makfa terbandu
+Hexproof - dapyjdari
+Ward - selbandu
 Enchant - mafyjo'e (x1 is magically connected to x2)
+Equip - ca'ardu'a (x1 gives x2 tool x3)
 Attach - jornygau (x1 (agent) connects x2 to x3)
+Disguise - ticta'u
 
 Ability Words
 Eminence - misybalvlapi (fame-grand-powerful)
 
 Phyrexian - .fairexi'an.
 Praetor - .pra'etor.
-God - cevni
-Human - remna
-Detective - cipctaseljibri
-Demon - dermoni
+Detective - cipcta
 Warlock - kluzeimafcre (ideas-crime-magic-user)
-Bird - cipni
 Wizard - mafcre
 Warrior - sonci
+Soldier - jemsoi
+Cleric - jdamikce
+Scout - tumfakli'u (land-discover-travel)
+Bird - cipni
+Dog - gerku
 Cat - mlatu
 Dragon - drakono
+Demon - dermoni
+Elephant - xanto
+God - cevni
+Human - remna
 Avatar - ceirka'i (god-proxy)
 Elemental - selratkai (element-being)
+Angel - anjeli
+Golem - remsmimi'i (human-similar-machine)
+Construct - runmivmi'i (artificially-living-machine)
+Centaur - kentauru
 
 Targets are written in a way that supposes the targeting at the beginning of the ability, closer to how it actually works per the rules of magic. Example:
   - "Destroy target creature" would be written as, in lojban, "Choose target creature, which we will call thing-1. Destroy thing-1."
@@ -109,7 +136,7 @@ Targets are written in a way that supposes the targeting at the beginning of the
   - Doing it this way is very elegant in lojban and the phrasing is consistent across many examples.
 
 Replacement effects are written as:
-sebasti ro nu [event being replaced] kei lo nu [event it is replaced with] kei
+selbasti ro nu [event being replaced] kei lo nu [event it is replaced with] kei
 
 Triggered abilities are written as:
 ba semulcabna ro nu [trigger event] kei pa nu [action] kei
