@@ -543,7 +543,6 @@
 
 	download("https://mtgjson.com/api/v5/AtomicCards.json", "cards")
 	download("https://mtgjson.com/api/v5/SetList.json", "sets")
-	download("https://mtgjson.com/api/v5/AllPrintings.json", "printings")
 
 	$(document).ready(function(){
 		funnyTitle()
