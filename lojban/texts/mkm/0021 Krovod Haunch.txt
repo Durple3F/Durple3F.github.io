@@ -20,7 +20,7 @@ le danlu poi pilno ti cu cpacu +2/+0.
 
 When Krovod Haunch is put into a graveyard from the battlefield, you may pay {1}{W}. If you do, create two 1/1 white Dog creature tokens.
 After this enters a graveyard from the battlefield, you can pay {1}{W}. If you do, you create two 1/1 creature tokens which are white and are dogs.
-ba ro nu ti nerkla pa mrofoi le nundamba stuzi kei do kakne le zu'o pleji be {1}{W} kei goi ko'a .i ifle le du'u do me ko'a kei le nu do majgau re 1/1 danlu kelsinci poi blabi gi'e gerku
+ba ro nu ti nerkla pa mrofoi le nundamba stuzi kei do kakne lo zu'o pleji be {1}{W} kei goi ko'a .i ifle lo du'u do me ko'a kei lo nu do majgau re 1/1 danlu kelsinci poi blabi gi'e gerku
 
 
 Equip {2}

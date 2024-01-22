@@ -9,8 +9,8 @@ danlu — renma cipcta
 
 
 Whenever you attack with three or more creatures, Seasoned Consultant gets +2/+0 until end of turn.
-After you attack using 3 or more creatures, this gets +2/+0 during the current turn.
-ba ro nu do gunta sepi'o su'e ci danlu kei ti cpacu +2/+0 ca le ca kelka'u
+After each you attack using at least 3 creatures, this gets +2/+0 during the current turn.
+ba ro nu do gunta sepi'o su'e ci danlu kei ti cpacu +2/+0 ca lo ca kelka'u
 
 
 “I appreciate working with associates whose greatest loyalty is to the job at hand.” —Skurad of the Foundway Associates

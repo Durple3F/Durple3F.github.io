@@ -10,9 +10,9 @@ danlu — remna cipcta
 
 When Novice Inspector enters the battlefield, investigate. (Create a Clue token. It’s an artifact with “{2}, Sacrifice this artifact: Draw a card.”)
 After each this enters the battlefield, you investigate. (You create a clue token. It's an artifact and has "{2}, sacrifice this artifact: you draw a card.")
-ba ro nu ti nerkla le nundamba stuzi kei do dafsisku (do majgau pa fatci kelsicni .i ko'a rutmi gi'e tolcau be lu {2}, do li'aspo ti: do cpacu pa karda)
+ba ro nu ti nerkla le nundamba stuzi kei do dafsisku (.i do majgau pa fatci kelsicni .i ko'a rutmi gi'e tolcau be lu {2}, do li'aspo ti: do cpacu pa karda)
 
 
 “If the perfect evidence appears at your feet, your first task is to rule out misdirection.” —The Ravnican Agency of Magicological Investigations handbook
 "If the perfect evidence appears at the feet of you, judging whether it's incorrect direction is the first task you do." —The guidebook of The Magic-Science Investigation Bureau of Ravnica.
-lu ifle le nu le drani rindai cu tolcanci bu'u lei jamfu po do kei le nu le zu'o pajni be le jei ko'a naldrata farna cu pamoi selgu'a do li'u se cusku le gi'acku po la mafske nunlanli briju po la .ravnika.
+lu ifle lo nu le drani rindai cu tolcanci bu'u lei jamfu po do kei lo nu lo zu'o pajni be le jei ko'a naldrata farna cu pamoi selgu'a do li'u se cusku le gi'acku po la mafske nunlanli briju po la .ravnika.

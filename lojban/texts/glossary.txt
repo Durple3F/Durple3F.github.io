@@ -24,11 +24,12 @@ Equipment - cabra
 
 Power - tsali
 Toughness - tinsa
+Base power and toughness - jicmu tsali bo tinsa
 Life - kanro
 Damage - terxai
 
-Tap - selxaksu (the state of being tapped is a za'i/ka that uses the same word)
-Untap - tolselxaksu
+Tap - xakygau (x1 uses up x2)
+Untap - tolxakygau (x1 un-uses up x2)
 Transform - gafygau (different word from the state of being transformed, but it's based off the same root word)
 Cast - mafpli
 Deal (as in damage) - dunda (lo terxai kelnemka'u)
@@ -38,8 +39,7 @@ Discard - vimcu (discarding from your hand is implied. this is like saying "lose
 Exile - dargau
 Return - xrubei
 Put - punji
-Counter (the thing placed on cards) - nacdai
-Ex: pa +1/+1 nacdai, pa temci nacdai
+Remove - tolpu'i
 Ability - kelstati
 Trigger - ganse (notice)
 Attack - gunta
@@ -71,8 +71,9 @@ Exile (zone) - le dargau stuzi
 Hand (zone) - le xance stuzi
 Command zone - le minde stuzi
 
-Tapped (state) - lo za'i pu selxaksu
-Transformed (state) - lo za'i pu tegalfi
+Tapped (state) - lo (ka/za'i) selxaksu
+Untapped (state) - lo (ka/za'i) tolselxaksu
+Transformed (state) - lo (ka/za'i) pu tegalfi
 
 Turns and Steps/Phases of turns:
 turn - kelka'u
@@ -92,15 +93,17 @@ Keywords
 When written on its own line, only the word is written, and the subject is omitted. It doesn't say "lo ti vi'ordai cu vofli" to say "Flying". It's just "vofli". The purpose of these keywords is to save space.
 When written as a declaration/check that something has or gains that keyword, it's written as the property of that keyword. So to say "Your creatures gain flying" you would say "loi danlu po do lebna lo ka vofli" meaning "Your creatures gain the property of flying"
 Trample - maxdzu
-Vigilance - kamju'i
+Vigilance - judycikna
 Flying - vofli
 Lifelink - ka'orle'a
-Rebound - rapmakfa
+Flash - pojgu'i (Every language uses light for flash despite the fact it has nothing to do with light.)
 Hexproof - dapyjdari
 Ward - selbandu
 Enchant - mafyjo'e (x1 is magically connected to x2)
 Equip - ca'ardu'a (x1 gives x2 tool x3)
 Attach - jornygau (x1 (agent) connects x2 to x3)
+Defender - badgau
+Rebound - rapmakfa
 Disguise - ticta'u
 
 Ability Words
@@ -129,6 +132,13 @@ Angel - anjeli
 Golem - remsmimi'i (human-similar-machine)
 Construct - runmivmi'i (artificially-living-machine)
 Centaur - kentauru
+Merfolk - jaupre
+Wall - bitmu
+
+Types of counters:
+Counter (the thing placed on cards) - nacdai
+Ex: pa +1/+1 nacdai, pa temci nacdai
+Stun - seljenca nacdai
 
 Targets are written in a way that supposes the targeting at the beginning of the ability, closer to how it actually works per the rules of magic. Example:
   - "Destroy target creature" would be written as, in lojban, "Choose target creature, which we will call thing-1. Destroy thing-1."
