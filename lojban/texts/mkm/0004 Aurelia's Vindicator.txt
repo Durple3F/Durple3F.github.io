@@ -1,6 +1,6 @@
 Aurelia's Vindicator
-Doubt-remover of Aurelia
-lo sendargau po la .aureli'as.
+Aurelia's Doubt-remover
+lo la .aureli'as. ku sendargau
 
 
 Creature — Angel 
@@ -19,10 +19,10 @@ ticta'u {X}{3}{W}
 
 
 When Aurelia’s Vindicator is turned face up, exile up to X other target creatures from the battlefield and/or creature cards from graveyards.
-After (this becomes oriented upward) you choose at most X creatures-or-creature-cards, which are in the battlefield or in graveyards. You exile them.
-ba ro nu ti inxo lo ka selfa'a be lo galtu kei kei do fargau su'e X danlu ja danlu bo karda goi ko'a poi nenri le nundamba stuzi gi'a nenri loi mrofoi .ije do dargau ko'a
+After each time this becomes oriented upward, you choose at most X creatures-or-creature-cards, which are in the battlefield or in graveyards. You exile them.
+ba ro nu ti inxo lo ka selfa'a be lo galtu kei kei do fargau su'e X danlu ja danlu bo karda goi ko'a poi nenri le nunda'afoi gi'a nenri loi mrofoi .ije do dargau ko'a
 
 
 When Aurelia’s Vindicator leaves the battlefield, return the exiled cards to their owners’ hands.
-After this leaves the battlefield, you return each thing which is a card and was exiled by this to the hand of the owner of it.
-ba ro nu ti cliva le nundamba stuzi kei do xruti ro da poi karda zi'e poi pu dargau fa ti ku'o le xance po lo ponse be da
+After each time this leaves the battlefield, you return each thing which is a card and was exiled by this to the hand of the owner of it.
+ba ro nu ti cliva le nunda'afoi kei do xruti ro da poi karda zi'e poi pu dargau fa ti ku'o le xance po lo ponse be da

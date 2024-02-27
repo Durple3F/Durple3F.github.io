@@ -1,0 +1,19 @@
+Mabel, Heir to Cragflame {1}{R}{W}
+Mabel, Heir to Kragfleim
+la mabel noi cerda be la kragfleim
+      
+
+Legendary Creature — Mouse Soldier
+Legendary Creature — Mouse Soldier
+ranmi danlu — smacu jemsoi
+  —  
+
+Other Mice you control get +1/+1.
+Each other mouse for which you control it gets +1/+1.
+ro drata smacu poi do jitro ke'a cu cpacu +1/+1
+         +1/+1
+
+When Mabel, Heir to Cragflame enters, create Cragflame, a legendary colorless Equipment artifact token with “Equipped creature gets +1/+1 and has vigilance, trample, and haste” and equip {2}.
+After each time this enters the battlefield, you create Kragfleim, a token for which it is legendary and an artifact and equipment and colorless and has "The creature which uses this gets +1/+1 and 'is vigilant and stomps and is fast'" and "Tool-give {2}."
+ba ro nu ti nerkla le nunda'afoi kei do majgau la kragfleim po'u pa kelsinci poi ke'a ranmi gi'e rutmi gi'e cabra gi'e skacau gi'e tolcau lu le danlu poi pilno be ti cu cpacu +1/+1 e lu judycikna gi'e maxdzu gi'e sutra li'u li'u e lu ca'ardu'a {2} li'u
+                                   +1/+1             {2} 

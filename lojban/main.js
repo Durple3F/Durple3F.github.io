@@ -153,6 +153,11 @@ function clickText(e){
 		unHoverFade(currentlyHovered)
 		return
 	}
+	if (hovered && hovered !== currentlyHovered){
+		currentlyClicked = true
+		hoverFade(hovered)
+		return
+	}
 	currentlyClicked = true
 }
 

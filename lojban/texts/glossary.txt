@@ -7,11 +7,15 @@ Instant - sutmocmakfa (fast momentary magic)
 Sorcery - mocmakfa (momentary magic)
 Planeswalker - munje + litru -> mujli'u
 Land - tumla
+Basic - jicmu
 Battle - nundamba
 
 Token - kelsinci
 The format for tokens is "{quantity} {p/t} {types} token(s) which have {abilities}and are {color(s)} and {subtypes}". I think that puts the most important information first.
 Ex: "a 1/1 white Dog creature token" becomes "pa 1/1 danlu kelsinci poi blabi gi'e gerku"
+
+Mana Cost - le mafnenlai jdima
+Mana Value - le mafnenlai vamji
 
 Clue - fatci
 Background - prulisri
@@ -22,70 +26,96 @@ Food - cidja
 Aura - sruri
 Equipment - cabra
 
-Power - tsali
-Toughness - tinsa
-Base power and toughness - jicmu tsali bo tinsa
-Life - kanro
-Damage - terxai
+Power - niltsa
+Toughness - niltinsa
+Base power and toughness - jicmu niltsa je niltinsa
+Life - nilka'o
+Damage - kamterxai
+Damage (as in to damage something) - xairgau (x1 deals damage to x2 in amount x3)
 
 Tap - xakygau (x1 uses up x2)
 Untap - tolxakygau (x1 un-uses up x2)
 Transform - gafygau (different word from the state of being transformed, but it's based off the same root word)
 Cast - mafpli
-Deal (as in damage) - dunda (lo terxai kelnemka'u)
+Deal damage - xrani (x1 harms x2 in property/amount x3)
 Destroy - despo
 Draw - cpacu (drawing from the library is implied. this is like saying "obtain a card" obviously it comes from the library)
 Discard - vimcu (discarding from your hand is implied. this is like saying "lose a card". it's less obvious this comes from the library but y'know)
 Exile - dargau
 Return - xrubei
-Put - punji
+Put - punji or setca. punji is for putting counters and stuff, but setca is for putting things into somewhere, like moving cards between zones.
 Remove - tolpu'i
 Ability - kelstati
 Trigger - ganse (notice)
+Get/has - cpacu (same word as drawing cards unfortunately)
+Loses - cirko
 Attack - gunta
-Block - gutfanta
+Block - gutfanta (x1 blocks x2)
 Sacrifice - li'aspo
-Gain - zenba
+Gain (as in life) - zenba
+Gain (as in abilities) - cpacu
+Gain control - cpatro (x1 gets control over x2)
 Enter - nerkla
+Leave - cliva
 Conjure - mafyzba
 Shuffle - kasygau (It's implied that the thing being shuffled is your library unless stated otherwise.)
+Search - sisku (library is implied again.)
+Reveal - jarco
+Look - catlu
 Scry - prujungau
+Surveil - judzga (attentive-watch)
 Investigate - dafsisku (answer-search)
+Separate - tolxregau (x1 separates x2 into components x3)
 Create - majgau
 Die - mrobi'o
+Suspect - selsengau (x1 causes x2 to be doubted)
+Collect evidence - rindaicrepu (x1 collects evidence x2)
+Solve - jmiringau (x1 causes understanding of x2)
+Cloak - kosmiprygau (x1 causes hides x2 in a cloak)
 
+Color Identity - selska sevzi
+Color - selska
 White - blabi
 Blue - blanu
 Black - xekri
 Red - xunre
 Green - 
 
+Plains - pintu'a
+Island - daplu
+Swamp - cimtu'a
+Mountain - cmana
+Forest - rictu'a
+
 Source - krasi
 Permanent - vi'ordai
 Card - karda
 
-Library - le ckusro stuzi
-Battlefield - le nundamba stuzi
-Graveyard - le mrofoi stuzi
+Library - le ckusro
+Battlefield - le nunda'afoi
+Graveyard - le mrofoi
 Exile (zone) - le dargau stuzi
-Hand (zone) - le xance stuzi
-Command zone - le minde stuzi
+Hand (zone) - le xance
+Command zone - le minde
 
 Tapped (state) - lo (ka/za'i) selxaksu
 Untapped (state) - lo (ka/za'i) tolselxaksu
-Transformed (state) - lo (ka/za'i) pu tegalfi
+Transformed (state) - lo (ka/za'i) tegalfi
+Suspected (state) - lo (ka/za'i) selsepni
 
 Turns and Steps/Phases of turns:
 turn - kelka'u
 phase - pruce
-step - vepruce
-upkeep - cikre vepruce
-end step - fanmo vepruce
+step - pagru'e
+untap - tolxakygau pagru'e
+upkeep - cikre pagru'e
+end step - fanmo pagru'e
+combat - damba pruce
 
 Opponent - bradi
 Player - kelci
 
-Noncombat - nardamba
+Noncombat - nalda'a
 
 Control - jitro
 
@@ -97,8 +127,11 @@ Vigilance - judycikna
 Flying - vofli
 Lifelink - ka'orle'a
 Flash - pojgu'i (Every language uses light for flash despite the fact it has nothing to do with light.)
+Menace - selte'apre
 Hexproof - dapyjdari
 Ward - selbandu
+Protection - mafselbandu (x1 is magically protected by x2 from x3)
+Indestructible - selspotolka'e
 Enchant - mafyjo'e (x1 is magically connected to x2)
 Equip - ca'ardu'a (x1 gives x2 tool x3)
 Attach - jornygau (x1 (agent) connects x2 to x3)
@@ -118,6 +151,7 @@ Warrior - sonci
 Soldier - jemsoi
 Cleric - jdamikce
 Scout - tumfakli'u (land-discover-travel)
+Citizen - flaselgu'e
 Bird - cipni
 Dog - gerku
 Cat - mlatu
@@ -134,11 +168,30 @@ Construct - runmivmi'i (artificially-living-machine)
 Centaur - kentauru
 Merfolk - jaupre
 Wall - bitmu
+Lammasu - mespyrambandu
+Thrull - mivmrose'u
+Unicorn - pavjima
+Spirit - pruxi
+Sphinx - latcpipre
+Octopus - oktopoda
+Fish - finpe
+Mouse - smacu
+Dryad - ricru'i
+Goblin - ridgobeli
+Rigger - selplibregau
+Guest - vitke
+Faerie - ridrfai
+Vedalken - vledalkena (*)
+Thopter - toptera (*)
+Sliver - slivera (*)
+Eldrazi - eldrazi (*)
+(*) - words represented by fu'ivla instead of lujvo
 
 Types of counters:
 Counter (the thing placed on cards) - nacdai
 Ex: pa +1/+1 nacdai, pa temci nacdai
 Stun - seljenca nacdai
+Flying - vofli nacdai
 
 Targets are written in a way that supposes the targeting at the beginning of the ability, closer to how it actually works per the rules of magic. Example:
   - "Destroy target creature" would be written as, in lojban, "Choose target creature, which we will call thing-1. Destroy thing-1."
@@ -147,9 +200,11 @@ Targets are written in a way that supposes the targeting at the beginning of the
 
 Replacement effects are written as:
 selbasti ro nu [event being replaced] kei lo nu [event it is replaced with] kei
+Except when they say "as [event happens] do [an extra thing]", in which case:
+ca [event being replaced] [extra thing added to the event]
 
 Triggered abilities are written as:
-ba semulcabna ro nu [trigger event] kei pa nu [action] kei
+ba ro nu [trigger event] kei lo nu [action] kei
 
 Intervening if clauses:
 IFLE

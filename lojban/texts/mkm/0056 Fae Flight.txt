@@ -1,0 +1,29 @@
+Fae Flight
+Faerie Flight
+lo ridrfai nunvoi
+
+
+Enchantment — Aura
+Enchantment — Aura
+vi'ormakfa — sruri
+
+
+Flash
+Flash
+pojgu'i
+
+
+Enchant creature
+This enchants a creature
+ti mafyjo'e pa danlu
+
+
+When Fae Flight enters the battlefield, enchanted creature gains hexproof until end of turn.
+After each time this enters the battlefield, the creature which this enchants gets "hexproof" during the current turn.
+ba ro nu ti nerkla le nunda'afoi kei le danlu poi ti mafyjo'e cu cpacu lu dapyjdari li'u ca le ca kelka'u
+
+
+Enchanted creature gets +1/+0 and has flying.
+The creature which this enchants gets +1/+0 and "flies."
+le danlu poi ti mafyjo'e cu cpacu +1/+1 e lu vofli li'u
+

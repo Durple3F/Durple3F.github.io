@@ -1,0 +1,19 @@
+Tenth District Hero
+Tenth District hero
+lo la panomoi gugypau ku vudvri
+
+
+Creature — Human
+Creature — Human
+danlu — remna
+
+
+{1}{W}, Collect evidence 2: Tenth District Hero becomes a Human Detective with base power and toughness 4/4 and gains vigilance.
+{1}{W}, you evidence-collect by 2: This becomes a 4/4 creature which is human and is a detective, and gets "is vigilant."
+{1}{W}, do rindaicrepu li re: ti binxo pa 4/4 danlu poi remna gi'e cipcta ku'o gi'e cpacu lu judycikna li'u
+
+
+{2}{W}, Collect evidence 4: If Tenth District Hero is a Detective, it becomes a legendary creature named Mileva, the Stalwart, it has base power and toughness 5/5, and it gains “Other creatures you control have indestructible.”
+{2}{W}, you evidence-collect by 4: If this is a detective, then it becomes a 5/5 creature which is legendary and is named "Mileva, the Loyal," and it gets "Each creature which is not this and is controlled by you gets 'is indestructible.'"
+{2}{W}, do rindaicrepu li vo: ifle lo du'u ti cipcta kei lo nu ti binxo pa danlu poi ranmi gi'e se cmene lu la .milevas. noi kraice li'u ku'o gi'e cpacu lu ro danlu poi drata be ti gi'e se jitro do cpacu lu selspotolka'e li'u li'u
+

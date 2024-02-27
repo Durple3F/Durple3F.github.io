@@ -1,0 +1,24 @@
+Case of the Filched Falcon
+Mystery of the falcon which was stolen
+lo nonseljmi ne le falkoni noi pu se zerle'a
+
+
+Enchantment — Case
+Enchantment — Mystery
+vi'ormakfa — nonseljmi
+
+
+When this Case enters the battlefield, investigate. (Create a Clue token. It’s an artifact with “{2}, Sacrifice this artifact: Draw a card.”)
+After each time this enters the battlefield, you investigate. (You create a clue token. It's an artifact and has "{2}, you sacrifice this: you draw a card.")
+ba ro nu ti nerkla le nunda'afoi kei do dafsisku (.i do majgau pa fatci kelsicni .i ko'e rutmi gi'e tolcau be lu {2}, do li'aspo ti: do cpacu pa karda li'u)
+
+
+To solve — You control three or more artifacts. (If unsolved, solve at the beginning of your end step.)
+Understanding-cause — You control at least 3 artifacts. (If this is not solved, then you solve this after the beginning of your end step.)
+jmiki'u — do jitro su'e ci rutmi (.i ifle lo du'u ti na pu se jimpe kei lo nu do jimpe ti ba lo krasi be le do fanmo pagru'e)
+
+
+Solved — {2}{U}, Sacrifice this Case: Put four +1/+1 counters on target noncreature artifact. It becomes a 0/0 Bird creature with flying in addition to its other types.
+Understood — {2}{U}, you sacrifice this: You target an artifact which is not a creature. You put 4 +1/+1 counters on it. It becomes a 0/0 creature which has "flying" and is a bird in addition to the types of it.
+pu jimpe — {2}{U}, do li'aspo ti: do fargau pa rutmi poi na danlu zi'e goi ko'a .i do punji vo +1/+1 nacdai ko'a .i ko'a binxo pa 0/0 danlu poi tolcau be lu vofli li'u gi'e cipni pa'a lei ko'a klesi
+

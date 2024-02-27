@@ -1,0 +1,19 @@
+Behind the Mask
+Peek behind the mask
+mipcta ti'a le firgai
+
+
+Instant
+Instant
+sutmocmakfa
+
+
+As an additional cost to cast this spell, you may collect evidence 6. (Exile cards with total mana value 6 or greater from your graveyard.)
+The cost of this is increased by "you can evidence-collect by 6." (You exile a set of at least 1 card which is inside of your graveyard, such that the amount in the total of their mana values is greater than or equal to 6.)
+le ti jdima cu zenba fi lu do kakne lo zu'o rindaicrepu be li xa li'u (.i do dargau lo'i su'o karda poi nenri be le do mrofoi ku'o poi li ni'e ni sumji be le mafnenlai vamji po ke'a kei cu dubjavmau li xa)
+
+
+Until end of turn, target artifact or creature becomes an artifact creature with base power and toughness 4/3. If evidence was collected, it has base power and toughness 1/1 until end of turn instead.
+You target an artifact or creature. During the current turn, if you evidence-collected, it becomes a 4/3 creature which is an artifact, otherwise it becomes an 1/1 creature which is an artifact.
+do fargau pa rutni ja danlu goi ko'a .i ca le ca kelka'u ifle lo du'u do pu rindaicrepu kei lo nu ko'a binxo pa 4/3 danlu poi rutmi kei lo nu ko'a binxo pa 1/1 danlu poi rutmi kei
+

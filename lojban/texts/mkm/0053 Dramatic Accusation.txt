@@ -1,0 +1,29 @@
+Dramatic Accusation
+Dramatic Accusation
+lo kamdraci nunfu'esku
+
+
+Enchantment — Aura
+Enchantment — Aura
+vi'ormakfa — sruri
+
+
+Enchant creature
+This enchants a creature
+ti mafyjo'e pa danlu
+
+
+When Dramatic Accusation enters the battlefield, tap enchanted creature.
+After each time this enters the battlefield, you target the creature which this enchants.
+ba ro nu ti nerkla le nunda'afoi kei ddo xakygau le danlu poi ti mafyjo'e
+
+
+Enchanted creature doesn’t untap during its controller’s untap step.
+The creature which this enchants doesn't get untapped during the untap step of its controller.
+le danlu poi ti mafyjo'e cu na se tolxakygau ca le tolxakygau pagru'e po le ko'a jitro
+
+
+{U}{U}: Shuffle enchanted creature into its owner’s library.
+{U}{U}: You put the creature which this enchants into the library of its owner, then shuffle it.
+{U}{U}: do setca le danlu poi ti mafyjo'e zi'e goi ko'a le ckusro po le ko'a jitro zi'e goi ko'e gi'ebabo kasygau ko'e
+
