@@ -1,0 +1,393 @@
+body, html {
+	min-height: 100%;
+}
+
+body {
+	width: 100%;
+	height: 100%;
+	background-color: #313035;
+	color: #fefefe;
+	text-align: center;
+	font-family: 'Playpen Sans', cursive;
+	user-select: none;
+	position: absolute;
+	top:0;left:0;right:0;bottom:0;
+}
+
+#background {
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  background: url("https://static.wikia.nocookie.net/jerma-lore/images/e/e3/JermaSus.jpg");
+  background-size: cover;
+  position: absolute;
+  z-index: -1;
+}
+
+:root {
+	--clue-border: #222222;
+	--clue-background: #222222b0;
+	--clue-white: #fefefe;
+	--clue-gray: #b1b1b1;
+	--clue-black: #000000;
+	--clue-blue: #0d4989;
+	--clue-red: #a91616;
+	--clue-purple: #8916a9;
+	--clue-yellow: #fefe00;
+	--clue-orange: #ff8000;
+	--clue-green: #0d8e2a;
+	--clue-brown: #88550d;
+	--clue-magenta: #fe00bd;
+	--clue-lime: #49fe00;
+	--clue-mint: #00ffb1;
+	--clue-lavender: #ca9eff;
+
+	--clue-white-background: conic-gradient(var(--clue-white), var(--clue-white));
+	--clue-black-background: conic-gradient(var(--clue-black), var(--clue-black));
+	--clue-red-background: conic-gradient(var(--clue-red), var(--clue-red));
+	--clue-blue-background: conic-gradient(var(--clue-blue), var(--clue-blue));
+	--clue-purple-background: conic-gradient(var(--clue-purple), var(--clue-purple));
+	--clue-yellow-background: conic-gradient(var(--clue-yellow), var(--clue-yellow));
+	--clue-green-background: conic-gradient(var(--clue-green), var(--clue-green));
+	--clue-brown-background: conic-gradient(var(--clue-brown), var(--clue-brown));
+	--clue-orange-background: conic-gradient(var(--clue-orange), var(--clue-orange));
+	--clue-gray-background: conic-gradient(var(--clue-gray), var(--clue-gray));
+	--clue-mint-background: conic-gradient(var(--clue-mint), var(--clue-mint));
+	--clue-magenta-background: conic-gradient(var(--clue-magenta), var(--clue-magenta));
+	--clue-lime-background: conic-gradient(var(--clue-lime), var(--clue-lime));
+	--clue-lavender-background: conic-gradient(var(--clue-lavender), var(--clue-lavender));
+	
+	--clue-brown-black-background: conic-gradient(var(--clue-brown) 0deg, var(--clue-brown) 90deg, var(--clue-black) 90deg, var(--clue-black) 180deg, var(--clue-brown) 180deg, var(--clue-brown) 270deg, var(--clue-black) 270deg, var(--clue-black) 360deg);
+}
+
+.theme-colorblind {
+	--clue-black-background: url("colorblind_textures/matteBlackBlock.png");
+	--clue-red-background: url("colorblind_textures/redBlock.png");
+	--clue-blue-background: url("colorblind_textures/blueBlock.png");
+	--clue-purple-background: url("colorblind_textures/purpleBlock.png");
+	--clue-yellow-background: url("colorblind_textures/yellowBlock.png");
+	--clue-green-background: url("colorblind_textures/greenBlock.png");
+	--clue-brown-background: url("colorblind_textures/brownBlock.png");
+	--clue-orange-background: url("colorblind_textures/orangeBlock.png");
+	--clue-gray-background: url("colorblind_textures/darkGrayBlock.png");
+	--clue-mint-background: url("colorblind_textures/cyanBlock.png");
+	--clue-magenta-background: url("colorblind_textures/magentaBlock.png");
+	--clue-lime-background: url("colorblind_textures/limeBlock.png");
+	--clue-lavender-background: url("colorblind_textures/pastelPurpleBlock.png");
+}
+
+#intro, #help, #level-select, #puzzle-screen {
+	height: 100%;
+	width: 100%;
+}
+
+#intro {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+button {
+	margin: 0.5em 0;
+}
+
+.vertical {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.white-outline {
+	-webkit-text-stroke: 0.03em var(--clue-white);
+}
+
+#help {
+	display: flex;
+	flex-direction: row;
+}
+#help-topic-list {
+	height: 100%;
+	width: 20%;
+	border-right: 3px solid #878787;
+}
+#help-topic-list > button {
+	background-color: transparent;
+	color: #fefefe;
+	margin: 0;
+	width: 100%;
+	border: none;
+	border-bottom: 3px solid #878787;
+}
+#help-topic-list > button:last-child {
+	border-bottom: none;
+}
+#help-topic-list > button:hover {
+	background-color: #121215;
+	color: #ffff00;
+}
+#help-topic-list > .main-menu-btn {
+	background-color: #24242a;
+}
+#help-topic-list > .main-menu-btn:hover {
+	background-color: #121215;
+	color: #ff8000;
+}
+
+#help-content {
+	width: 80%;
+}
+#help-content > div {
+	padding: 0.5em;
+	display: none;
+}
+#help-content p {
+	font-size: 1.3em;
+}
+#help-content a {
+	color: inherit;
+}
+
+.level-btn {
+	position: relative;
+	font-weight: bold;
+	width: 4em;
+	margin-left: 0.3em;
+	margin-right: 0.3em;
+	white-space: nowrap;
+}
+.level-progress-icon {
+	position: absolute;
+	top: -34%;
+	right: -12%;
+	color: gold
+}
+
+#puzzle-screen > .level-select-btn {
+	position: absolute;
+	top: 0.5em;
+	left: 0.5em;
+	margin: 0;
+}
+
+#puzzle {
+	padding-top: 2em;
+	padding-bottom: 5em;
+}
+.puzzle-title {
+	font-size: 2em;
+}
+.puzzle-notes {
+	width: 80%;
+	margin: auto;
+	margin-top: 0.2em;
+	margin-bottom: 0.2em;
+}
+
+.puzzle-number {
+  margin-top: 0.4em;
+  margin-bottom: 0.4em;
+}
+
+.answer-input {
+	font-size: 1.5em;
+	width: 70%;
+	text-align: center;
+	text-transform: uppercase;
+	background-color: var(--clue-white);
+	border: none;
+	border-radius: 0.1em;
+	outline: none;
+	padding: 0.5em;
+	margin-top: 1em;
+}
+.answer-input:focus {
+	outline: 0.1em solid var(--clue-yellow)
+}
+.answer-input.complete {
+	background-color: #111;
+	color: var(--clue-green);
+	font-weight: bold;
+}
+.answer-input.incomplete {
+	background-color: #111;
+	color: var(--clue-red);
+	font-weight: bold;
+}
+.answer-input.invalid {
+	color: var(--clue-red);
+}
+.puzzle-number + .answer-input {
+  margin-top: 0;
+}
+
+.puzzle-nav-btn {
+  background-color: transparent;
+  border: none;
+  color: var(--clue-white);
+  font-weight: bold;
+  position: absolute;
+  font-size: 3em;
+  top: 30%;
+}
+#prev-btn {
+  left: 2%;
+}
+#next-btn {
+  right: 2%;
+}
+
+.clues {
+	min-height: 6em;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.clue {
+	height: 6em;
+	width: 12em;
+	position: relative;
+	text-transform: uppercase;
+	image-rendering: pixelated;
+}
+.theme-colorblind .clue {
+	background-size: 3em;
+}
+.theme-colorblind .clue-brown-black {
+	background-size: auto;
+}
+
+.clue-help-btn {
+	position: absolute;
+	right: 0.5em;
+	top: 0.25em;
+	z-index: 1;
+}
+.clue-help-btn:hover {
+	cursor: pointer;
+}
+
+.clue-text {
+	height: calc(100% - 0.5em);
+	width: calc(100% - 0.5em);
+	top: 0.25em;
+	left: 0.25em;
+	position: absolute;
+	background-color: var(--clue-background);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.clue-none {
+  border: 2px dashed var(--clue-black);
+}
+
+.clue-white {
+	background-image: var(--clue-white-background);
+	background-color: var(--clue-white);
+}
+.clue-black {
+	background-image: var(--clue-black-background);
+	background-color: var(--clue-black);
+}
+.clue-blue {
+	background-image: var(--clue-blue-background);
+	background-color: var(--clue-blue);
+}
+.clue-red {
+	background-image: var(--clue-red-background);
+	background-color: var(--clue-red);
+}
+.clue-purple {
+	background-image: var(--clue-purple-background);
+	background-color: var(--clue-purple);
+}
+.clue-yellow {
+	background-image: var(--clue-yellow-background);
+	background-color: var(--clue-yellow);
+}
+.clue-green {
+	background-image: var(--clue-green-background);
+	background-color: var(--clue-green);
+}
+.clue-brown {
+	background-image: var(--clue-brown-background);
+	background-color: var(--clue-brown);
+}
+.clue-brown-black {
+	background-image: var(--clue-brown-black-background);
+	background-color: var(--clue-brown-black);
+}
+.clue-orange {
+	background-image: var(--clue-orange-background);
+	background-color: var(--clue-orange);
+}
+.clue-gray {
+	background-image: var(--clue-gray-background);
+	background-color: var(--clue-gray);
+}
+.clue-mint {
+	background-image: var(--clue-mint-background);
+	background-color: var(--clue-mint);
+}
+.clue-magenta {
+	background-image: var(--clue-magenta-background);
+	background-color: var(--clue-magenta);
+}
+.clue-lime {
+	background-image: var(--clue-lime-background);
+	background-color: var(--clue-lime);
+}
+.clue-lavender {
+	background-image: var(--clue-lavender-background);
+	background-color: var(--clue-lavender);
+}
+
+.clue-red > .clue-help-btn {
+	color: var(--clue-red);
+}
+.clue-blue > .clue-help-btn {
+	color: var(--clue-blue);
+}
+.clue-purple > .clue-help-btn {
+	color: var(--clue-purple);
+}
+.clue-yellow > .clue-help-btn {
+	color: var(--clue-yellow);
+}
+.clue-green > .clue-help-btn {
+	color: var(--clue-green);
+}
+.clue-brown > .clue-help-btn {
+	color: var(--clue-brown);
+}
+.clue-brown-black > .clue-help-btn {
+	color: var(--clue-brown);
+}
+.clue-orange > .clue-help-btn {
+	color: var(--clue-orange);
+}
+.clue-gray > .clue-help-btn {
+	color: var(--clue-gray);
+}
+.clue-mint > .clue-help-btn {
+	color: var(--clue-mint);
+}
+.clue-magenta > .clue-help-btn {
+	color: var(--clue-magenta);
+}
+.clue-lime > .clue-help-btn {
+	color: var(--clue-lime);
+}
+.clue-lavender > .clue-help-btn {
+	color: var(--clue-lavender);
+}
+
+.puzzle-continuation-icon {
+	font-size: 200%;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+}

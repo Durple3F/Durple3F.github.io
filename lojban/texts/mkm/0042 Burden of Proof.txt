@@ -1,0 +1,29 @@
+Burden of Proof
+Duty of proof
+lo bilga be le cipra
+
+
+Enchantment — Aura
+Enchantment — Aura
+vi'ormakfa — sruri
+
+
+Flash
+Flashes
+pojgu'i
+
+
+Enchant creature
+This enchants a creature
+ti mafyjo'e pa danlu
+
+
+Enchanted creature gets +2/+2 as long as it’s a Detective you control. Otherwise, it has base power and toughness 1/1 and can’t block Detectives.
+If the creature which this enchants is a detective, it gets +2/+2, otherwise, its base power and toughness becomes 1/1 and it can't block detectives.
+ifle lo du'u le danlu poi ti mafyjo'e zi'e goi ko'a cu cipcta kei lo du'u ko'a cpacu +2/+2 kei lo du'u le ko'a jicmu niltsa bo niltinsa ku binxo 1/1 kei e lo du'u ko'a na kakne lo zu'o gutfanta be lo cipcta
+
+
+“You must have known all those lies would catch up to you eventually.”
+"It's certain that you knew that all these untruths would eventually become known." 
+lu birti fe lo du'u do pu djuno lo du'u ro lei tolje'u bazu binxo lo ka se djuno
+

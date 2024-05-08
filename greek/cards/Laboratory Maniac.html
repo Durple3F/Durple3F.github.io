@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+	<head>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js">
+		</script> 
+		<link href="https://cdn.jsdelivr.net/npm/mana-font@latest/css/mana.css" rel="stylesheet" type="text/css" />
+		
+		<link rel="icon" type="image/x-icon" href="../../lojban/favicon.ico">
+		<link rel="stylesheet" href="../../lojban/style.css">
+		<script src="../data.js"></script>
+		<script>
+			const storyCode = "Laboratory Maniac"
+		</script>
+		<script src="../../lojban/main.js" defer></script>
+
+		<title>Laboratory Maniac</title>
+		<meta property="og:title" content="Laboratory Maniac">
+		<meta property="og:description" content="Dude you're gonna love this guy's name">
+		<meta property="og:image" content="https://durple3f.github.io/greek/images/Laboratory%20Maniac%204.png">
+	</head>
+	<body>
+		<a href="../index.html" id="back-btn">
+			<button class="btn btn-secondary">Back</button>
+		</a>
+		<div id="draggable">=</div>
+		<div id="explanation-container">
+			<div id="explanation">
+				<div id="explanation-text"></div>
+				<button class="btn btn-secondary show-all" style="display: none;">Show all</button>
+			</div>
+		</div>
+		<div id="views">
+			<div class="row text-center fw-bold">
+				<div class="col">
+					English <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					Literal Translation <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					Romanized <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					Greek <button class="toggle-btn">(Hide)</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="f1">Laboratory</span> <span class="f2">Maniac</span>
+				</div>
+				<div class="col">
+					<span class="f1">Work</span><span class="f2">aholic</span>
+				</div>
+				<div class="col">
+					<span class="f1">Ergastiakós</span> <span class="f2">Maniakós</span>
+				</div>
+				<div class="col">
+					<span class="f1">Εργαστιακός</span> <span class="f2">Μανιακός</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="f3">Laboratory</span> <span class="f4">Maniac</span>
+				</div>
+				<div class="col">
+					<span class="f4">Maniac</span> <span class="f5">of the</span> <span class="f3">Laboratory</span>
+				</div>
+				<div class="col">
+					<span class="f4">Maniakós</span> <span class="f5">tou</span> <span class="f3">Ergastiríou</span>
+				</div>
+				<div class="col">
+					<span class="f4">Μανιακός</span> <span class="f5">του</span> <span class="f3">Εργαστηρίου</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="fcr">Creature</span> — <span class="f6">Human</span> <span class="f7">Wizard</span>
+				</div>
+				<div class="col">
+					<span class="fcr">Creature</span> — <span class="f6">Human</span> <span class="f7">Mage</span>
+				</div>
+				<div class="col">
+					<span class="fcr">Plásma</span> — <span class="f6">Ánthropos</span> <span class="f7">Mágos</span>
+				</div>
+				<div class="col">
+					<span class="fcr">Πλάσμα</span> — <span class="f6">Άνθρωπος</span> <span class="f7">Μάγος</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="f8">If</span> <span class="f9">you would</span> <span class="f11">draw</span> <span class="f12">a</span> <span class="f13">card</span> <span class="f14">while</span> <span class="f17">your</span> <span class="f16">library</span> <span class="f19">has</span> <span class="f20">no</span> <span class="f13"><span class="f22">cards</span></span> <span class="f23">in it</span>, <span class="f24">you win</span> <span class="f25">the</span> <span class="f26">game</span> <span class="f27">instead</span>.
+				</div>
+				<div class="col">
+					<span class="f8">If</span> <span class="f9">you are going</span> <span class="f10">to</span> <span class="f11">draw</span> <span class="f12">a</span> <span class="f13">card</span> <span class="f14">while</span> <span class="f15">the</span> <span class="f16">library</span> <span class="f17">of you</span> <span class="f20"><span class="f18">doesn't</span></span> <span class="f19">have</span> <span class="f20"><span class="f21">any</span></span> <span class="f13"><span class="f22">card</span></span>, <span class="f24">you win</span> <span class="f25">the</span> <span class="f26">game</span> <span class="f27">instead</span>.
+				</div>
+				<div class="col">
+					<span class="f8">An</span> <span class="f9">prókeitai</span> <span class="f10">na</span> <span class="f11">travíxeis</span> <span class="f12">mia</span> <span class="f13">kárta</span> <span class="f14">enó</span> <span class="f15">i</span> <span class="f16">vivliothíki</span> <span class="f17">sou</span> <span class="f20"><span class="f18">den</span></span> <span class="f19">échei</span> <span class="f20"><span class="f21">kamía</span></span> <span class="f13"><span class="f22">kárta</span></span>, <span class="f24">kerdízeis</span> <span class="f25">to</span> <span class="f26">paichnídi</span> <span class="f27">antítheta</span>
+				</div>
+				<div class="col">
+					<span class="f8">Αν</span> <span class="f9">πρόκειται</span> <span class="f10">να</span> <span class="f11">τραβήξεις</span> <span class="f12">μια</span> <span class="f13">κάρτα</span> <span class="f14">ενώ</span> <span class="f15">η</span> <span class="f16">βιβλιοθήκη</span> <span class="f17">σου</span> <span class="f20"><span class="f18">δεν</span></span> <span class="f19">έχει</span> <span class="f20"><span class="f21">καμία</span></span> <span class="f13"><span class="f22">κάρτα</span></span>, <span class="f24">κερδίζεις</span> <span class="f25">το</span> <span class="f26">παιχνίδι</span> <span class="f27">αντίθετα</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="f30">His</span> <span class="f29">mind</span> <span class="f31">whirled</span> <span class="f43">with</span> <span class="f32">grand</span> <span class="f33">plans</span>, <span class="f34">never</span> <span class="f35">thinking of</span> <span class="f36">what</span> <span class="f38">might</span> <span class="f40">happen</span> <span class="f8">if</span> <span class="f42">he were to succeed</span>.
+				</div>
+				<div class="col">
+					<span class="f28">The</span> <span class="f29">mind</span> <span class="f30">of him</span> <span class="f31">spun</span> <span class="f43">with</span> <span class="f32">big</span> <span class="f33">plans</span>, <span class="f34">never</span> <span class="f35">thinking</span> <span class="f36">what</span> <span class="f37">will</span> <span class="f38">be able</span> <span class="f10">to</span> <span class="f40">happen</span> <span class="f8">if</span> <span class="f42">he succeeds</span>.
+				</div>
+				<div class="col">
+					<span class="f28">To</span> <span class="f29">myálo</span> <span class="f30">tou</span> <span class="f31">strovilístike</span> <span class="f43">me</span> <span class="f32">megála</span> <span class="f33">schédia</span>, <span class="f34">poté</span> <span class="f35">skeftótan</span> <span class="f36">ti</span> <span class="f37">tha</span> <span class="f38">boroúse</span> <span class="f10">na</span> <span class="f40">symveí</span> <span class="f8">an</span> <span class="f42">petycheí</span>.
+				</div>
+				<div class="col">
+					<span class="f28">Το</span> <span class="f29">μυάλο</span> <span class="f30">του</span> <span class="f31">στροβιλίστηκε</span> <span class="f43">με</span> <span class="f32">μεγάλα</span> <span class="f33">σχέδια</span>, <span class="f34">ποτέ</span> <span class="f35">σκεφτόταν</span> <span class="f36">τι</span> <span class="f37">θα</span> <span class="f38">μπορούσε</span> <span class="f10">να</span> <span class="f40">συμβεί</span> <span class="f8">αν</span> <span class="f42">πετυχεί</span>.
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<img class="mtg-card img-fluid" src="../images/Laboratory Maniac 1.png">
+				</div>
+				<div class="col">
+					<img class="mtg-card img-fluid" src="../images/Laboratory Maniac 2.png">
+				</div>
+				<div class="col">
+					<img class="mtg-card img-fluid" src="../images/Laboratory Maniac 3.png">
+				</div>
+				<div class="col">
+					<img class="mtg-card img-fluid" src="../images/Laboratory Maniac 4.png">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col"></div>
+				<div class="col">
+					<img class="mtg-card img-fluid" src="../images/Laboratory Maniac 2b.png">
+				</div>
+				<div class="col"></div>
+				<div class="col"></div>
+			</div>
+		</div>
+	</body>
+</html>

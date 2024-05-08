@@ -1,0 +1,24 @@
+Delney, Streetwise Lookout
+Delney, city-familiar spotter
+la .delni. noi tcasau visfa'i
+
+
+Legendary Creature — Human Scout
+Legend Creature — Human Scout
+ranmi danlu — remna tumfakli'u
+
+
+Creatures you control with power 2 or less can’t be blocked by creatures with power 3 or greater.
+Each creature which is controlled by you and has at most 2 power can't be blocked by creatures which have at least 3 power.
+ro danlu poi ke'a se jitro do gi'e tolcau su'e re niltsa cu tolka'e lo zu'o ce'u se gutfanta be lo danlu poi ke'a tolcau su'o ci niltsa
+
+
+If an ability of a creature you control with power 2 or less triggers, that ability triggers an additional time.
+Replace each an ability of a creature which is controlled by you and has at most 2 power triggering, with it once-more triggers
+selbasti ro nu pa kelstati po pa danlu poi ke'a se jitro do gi'e tolcau su'e re niltsa ge'u zi'e goi ko'a ganse kei lo nu ko'a za'uparoi ganse
+
+
+“It’s not a matter of what I know. It’s a matter of making it worth my while to tell you.”
+"The knowledge I have isn't important. It's important that you give enough motivation to me that I want to tell you."
+lu le selju'o be mi na vajni .i vajni lo du'u do dunda rau mukti mi mu'i lo zu'o mi cusku do
+

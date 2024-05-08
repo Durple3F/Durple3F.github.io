@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+	<head>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js">
+		</script> 
+		<link href="https://cdn.jsdelivr.net/npm/mana-font@latest/css/mana.css" rel="stylesheet" type="text/css" />
+		
+		<link rel="icon" type="image/x-icon" href="../../lojban/favicon.ico">
+		<link rel="stylesheet" href="../../lojban/style.css">
+		<script src="../data.js"></script>
+		<script>
+			const storyCode = "Conflux"
+		</script>
+		<script src="../../lojban/main.js" defer></script>
+
+		<title>Conflux</title>
+		<meta property="og:title" content="Conflux">
+		<meta property="og:description" content="">
+		<meta property="og:image" content="https://durple3f.github.io/greek/images/Conflux%204.png">
+	</head>
+	<body>
+		<a href="../index.html" id="back-btn">
+			<button class="btn btn-secondary">Back</button>
+		</a>
+		<div id="draggable">=</div>
+		<div id="explanation-container">
+			<div id="explanation">
+				<div id="explanation-text"></div>
+				<button class="btn btn-secondary show-all" style="display: none;">Show all</button>
+			</div>
+		</div>
+		<div id="views">
+			<div class="row text-center fw-bold">
+				<div class="col">
+					English <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					Literal Translation <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					Romanized <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					Greek <button class="toggle-btn">(Hide)</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="f1">Conflux</span>
+				</div>
+				<div class="col">
+					<span class="f1">Confluence</span>
+				</div>
+				<div class="col">
+					<span class="f1">Syrroí</span>
+				</div>
+				<div class="col">
+					<span class="f1">Συρροή</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="f2">Sorcery</span>
+				</div>
+				<div class="col">
+					<span class="f2">Ritual</span>
+				</div>
+				<div class="col">
+					<span class="f2">Teletourgía</span>
+				</div>
+				<div class="col">
+					<span class="f2">Τελετουργία</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="f3">Search</span> <span class="f6">your</span> <span class="f5">library</span> for <span class="f7">a</span> <span class="f8">white</span> <span class="f9">card</span>, <span class="f7">a</span> <span class="f10">blue</span> <span class="f9">card</span>, <span class="f7">a</span> <span class="f11">black</span> <span class="f9">card</span>, <span class="f7">a</span> <span class="f12">red</span> <span class="f9">card</span>, <span class="f13">and</span> <span class="f7">a</span> <span class="f14">green</span> <span class="f9">card</span>. <span class="f15">Reveal</span> <span class="f16">those</span> <span class="f9">cards</span>, <span class="f17">put</span> <span class="f18">them</span> <span class="f4">into</span> <span class="f6">your</span> <span class="f19">hand</span>, <span class="f20">then</span> <span class="f21">shuffle</span>.
+				</div>
+				<div class="col">
+					<span class="f3">You search</span> <span class="f4">at the</span> <span class="f5">library</span> <span class="f6">of you</span> for <span class="f7">a</span> <span class="f8">white</span> <span class="f9">card</span>, <span class="f7">a</span> <span class="f10">blue</span> <span class="f9">card</span>, <span class="f7">a</span> <span class="f11">black</span> <span class="f9">card</span>, <span class="f7">a</span> <span class="f12">red</span> <span class="f9">card</span> <span class="f13">and</span> <span class="f7">a</span> <span class="f14">green</span> <span class="f9">card</span>. <span class="f15">You reveal</span> <span class="f16">those them</span> <span class="f9">cards</span>, <span class="f17">put</span> <span class="f18">them</span> <span class="f4">at the</span> <span class="f19">hand</span> <span class="f6">of you</span>, <span class="f20">then</span> <span class="f21">mix</span>.
+				</div>
+				<div class="col">
+					<span class="f3">Anazitás</span> <span class="f4">sti</span> <span class="f5">vivliothíki</span> <span class="f6">sou</span> <span class="f7">mia</span> <span class="f8">lefkí</span> <span class="f9">kárta</span>, <span class="f7">mia</span> <span class="f10">ble</span> <span class="f9">kárta</span>, <span class="f7">mia</span> <span class="f11">mávri</span> <span class="f9">kárta</span>, <span class="f7">mia</span> <span class="f12">kókkini</span> <span class="f9">kárta</span> <span class="f13">kai</span> <span class="f7">mia</span> <span class="f14">prásini</span> <span class="f9">kárta</span>. <span class="f15">Apokalýpteis</span> <span class="f16">ekeínes tis</span> <span class="f9">kártes</span>, <span class="f17">vázeis</span> <span class="f18">tis</span> <span class="f4">sto</span> <span class="f19">chéri</span> <span class="f6">sou</span>, <span class="f20">metá</span> <span class="f21">anakatéveis</span>.
+				</div>
+				<div class="col">
+					<span class="f3">Αναζητάς</span> <span class="f4">στη</span> <span class="f5">βιβλιοθήκη</span> <span class="f6">σου</span> <span class="f7">μια</span> <span class="f8">λευκή</span> <span class="f9">κάρτα</span>, <span class="f7">μια</span> <span class="f10">μπλε</span> <span class="f9">κάρτα</span>, <span class="f7">μια</span> <span class="f11">μαύρη</span> <span class="f9">κάρτα</span>, <span class="f7">μια</span> <span class="f12">κόκκινη</span> <span class="f9">κάρτα</span> <span class="f13">και</span> <span class="f7">μια</span> <span class="f14">πράσινη</span> <span class="f9">κάρτα</span>. <span class="f15">Αποκαλύπτεις</span> <span class="f16">εκείνες τις</span> <span class="f9">κάρτες</span>, <span class="f17">βάζεις</span> <span class="f18">τις</span> <span class="f4">στο</span> <span class="f19">χέρι</span> <span class="f6">σου</span>, <span class="f20">μετά</span> <span class="f21">ανακατεύεις</span>.
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="f20">After</span> <span class="f23">years</span> <span class="f24">of</span> <span class="f25">world</span>-bending <span class="f24">machinations</span>, <span class="f29">Bolas’s</span> <span class="f28">triumph</span> <span class="f30">is</span> <span class="f31">at hand</span>.
+				</div>
+				<div class="col">
+					<span class="f20">After</span> <span class="f23">years</span> <span class="f24">of machinery</span> <span class="f4">at</span> <span class="f25">worlds</span>, <span class="f27">the</span> <span class="f28">triumph</span> <span class="f29">of Bolas</span> <span class="f30">is</span> <span class="f31">near</span>.
+				</div>
+				<div class="col">
+					<span class="f20">Metá</span> <span class="f22">apó</span> <span class="f23">chrónia</span> <span class="f24">michanorrafión</span> <span class="f4">se</span> <span class="f25">kósmoi</span>, <span class="f27">o</span> <span class="f28">thríamvos</span> <span class="f29">tou Bólas</span> <span class="f30">eínai</span> <span class="f31">kontá</span>.
+				</div>
+				<div class="col">
+					<span class="f20">Μετά</span> <span class="f22">από</span> <span class="f23">χρόνια</span> <span class="f24">μηχανορραφιών</span> <span class="f4">σε</span> <span class="f25">κόσμοι</span>, <span class="f27">ο</span> <span class="f28">θρίαμβος</span> <span class="f29">του Μπόλας</span> <span class="f30">είναι</span> <span class="f31">κοντά</span>.
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<img class="mtg-card img-fluid" src="../images/Conflux 1.png">
+				</div>
+				<div class="col">
+					<img class="mtg-card img-fluid" src="../images/Conflux 2.png">
+				</div>
+				<div class="col">
+					<img class="mtg-card img-fluid" src="../images/Conflux 3.png">
+				</div>
+				<div class="col">
+					<img class="mtg-card img-fluid" src="../images/Conflux 4.png">
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,372 @@
+<!doctype html>
+<html>
+	<head>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js">
+		</script> 
+		<link href="https://cdn.jsdelivr.net/npm/mana-font@latest/css/mana.css" rel="stylesheet" type="text/css" />
+		
+		<link rel="icon" type="image/x-icon" href="favicon.ico">
+		<link rel="stylesheet" href="style.css">
+		<script src="data.js"></script>
+		<script src="video-data.js"></script>
+		<script>
+			const storyCode = "radishes"
+			const videoCode = "radishes"
+		</script>
+		<script src="main.js" defer></script>
+
+		<style>
+				/* show scrollbar >:) */
+				#views {
+					-ms-overflow-style: initial;  /* Internet Explorer 10+ */
+					scrollbar-width: initial;  /* Firefox */
+				}
+				#views::-webkit-scrollbar { 
+					display: initial;  /* Safari and Chrome */
+				}
+		</style>
+
+		<title>Harrowing: Listen To These People Talk About The First Time They Ran Out Of Radishes</title>
+		<meta property="og:title" content="Harrowing: Listen To These People Talk About The First Time They Ran Out Of Radishes">
+		<meta property="og:description" content="">
+		<meta property="og:image" content="https://durple3f.github.io/lojban/images/radishes.png">
+	</head>
+	<body>
+		<a href="./index.html" id="back-btn">
+			<button class="btn btn-secondary">Back</button>
+		</a>
+		<div id="draggable">=</div>
+		<div id="explanation-container">
+			<div id="explanation">
+				<div id="explanation-text"></div>
+				<button class="btn btn-secondary show-all" style="display: none;">Show all</button>
+				<div id="explanation-video" style="display:none;" controls>
+					<video></video>
+				</div>
+			</div>
+		</div>
+		<div id="views">
+			<div class="row text-center fw-bold">
+				<div class="col">
+					English <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					lojban-ified English <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					lojban <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					zbalermorna <button class="toggle-btn">(Hide)</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="f55">Harrowing</span><span class="fi">:</span> <span class="f56">Listen To</span> <span class="flei">These</span> <span class="f57">People</span> <span class="f58">Talk</span> <span class="f60">About</span> <span class="fle">The</span> <span class="f1">First</span> <span class="f2"><span class="fnu">Time</span></span> <span class="fkoha">They</span> <span class="f59">Ran Out Of</span> <span class="f4">Radishes</span>
+				</div>
+				<div class="col">
+					<span class="fti">This</span> <span class="f55">is distressing</span><span class="fi">.</span> <span class="fko">You</span> <span class="f56">listen to</span> <span class="flei">these</span> <span class="f57">people</span> <span class="fnoi">which</span> <span class="f58">talk</span> <span class="f60">about</span> <span class="fle">the</span> <span class="f1">first</span> <span class="f2"><span class="fnu">time</span></span> <span class="fkoha">they</span> <span class="f59">became lacking</span> <span class="f4">radishes</span>.
+				</div>
+				<div class="col">
+					<span class="fti">ti</span> <span class="f55">dukri'a</span> <span class="fi">.i</span> <span class="fko">ko</span> <span class="f56">snazga</span> <span class="flei">lei</span> <span class="f57">prenu</span> <span class="fnoi">noi</span> <span class="f58">tavla</span> <span class="f60">fi</span> <span class="fle">le</span> <span class="f1">pamoi</span> <span class="f2"><span class="fnu">nu</span></span> <span class="fkoha">ko'a</span> <span class="f59">caurbi'o</span> <span class="floi">loi</span> <span class="f4">spatnrafanu</span>
+				</div>
+				<div class="col zbalermorna">
+					<span class="fti"></span> <span class="f55"></span> <span class="fi"></span> <span class="fko"></span> <span class="f56"></span> <span class="flei"></span> <span class="f57"></span> <span class="fnoi"></span> <span class="f58"></span> <span class="f60"></span> <span class="fle"></span> <span class="f1"></span> <span class="f2"><span class="fnu"></span></span> <span class="fkoha"></span> <span class="f59"></span> <span class="floi"></span> <span class="f4"></span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<button class="btn btn-primary btn-sm play-video-btn" data-video="1"><i class="bi bi-play-fill"></i></button>
+					<span class="fle">The</span> <span class="f1">first</span> <span class="f2">time</span> <span class="fmi">I</span> <span class="f3">ran</span> <span class="f7">out</span> <span class="fbe">of</span> <span class="f4">radish</span><span class="floi">es</span>? <span class="f5">Yes</span><span class="fi"><span class="fije">,</span></span> <span class="fmi">I</span> <span class="f6">remember</span>.
+				</div>
+				<div class="col">
+					<span class="fxu">Do</span> <span class="fmi">I</span> <span class="f6">remember</span> <span class="fle">the</span> <span class="f1">first</span> <span class="f2">event-of</span> (<span class="fmi">I</span> <span class="f3">bec<span class="fpu">a</span>me</span> <span class="fka">(</span><span class="f7">lacking</span> <span class="fbe">of</span> <span class="f4">radish</span><span class="floi">es</span>)) <span class="f8">(Despairing)</span><span class="fi"><span class="fxu">?</span></span> <span class="f5">Yes</span><span class="fi"><span class="fije">.</span></span> <span class="fmi">I</span> <span class="f6">remember</span>.
+				</div>
+				<div class="col">
+					<span class="fxu">xu</span> <span class="fmi">mi</span> <span class="f6">morji</span> <span class="fle">le</span> <span class="f1">pamoi</span> <span class="f2">nu</span> <span class="fmi">mi</span> <span class="fpu">pu</span> <span class="f3">tolsti</span> <span class="fka">ka</span> <span class="f7">claxu</span> <span class="fbe">be</span> <span class="floi">loi</span> <span class="f4">stagnrafanu</span> <span class="f8">.a'onai</span> <span class="fi">.i</span> <span class="f5">go'i</span> <span class="fi">.i</span><span class="fije">je</span> <span class="fmi">mi</span> <span class="f6">morji</span>
+				</div>
+				<div class="col zbalermorna">
+					<span class="fxu"></span> <span class="fmi"></span> <span class="f6"></span> <span class="fle"></span> <span class="f1"></span> <span class="f2"></span> <span class="fmi"></span> <span class="fpu"></span> <span class="f3"></span> <span class="fka"></span> <span class="f7"></span> <span class="fbe"></span> <span class="floi"></span> <span class="f4"></span> <span class="f8"></span> <span class="fi"></span> <span class="f5"></span> <span class="fi"></span><span class="fije"></span> <span class="fmi"></span> <span class="f6"></span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<button class="btn btn-primary btn-sm play-video-btn" data-video="2"><i class="bi bi-play-fill"></i></button>
+					<span class="fkoha">It</span> <span class="fpu">was</span> <span class="f9">like</span> <span class="fka">being</span> <span class="f10">in</span> <span class="fpa">a</span> <span class="f11">nightmare</span>.
+				</div>
+				<div class="col">
+					<span class="fkoha">It</span> <span class="fpu">was</span> <span class="f9">similar</span> <span class="fbe">to</span> <span class="fka">being</span> <span class="f10">inside of</span> <span class="fpa">a</span> <span class="f11">nightmare</span>
+				</div>
+				<div class="col">
+					<span class="fkoha">ko'a</span> <span class="fpu">pu</span> <span class="f9">simsa</span> <span class="fka">ka</span> <span class="f10">nenri</span> <span class="fbe">be</span> <span class="fpa">pa</span> <span class="f11">tepsne</span>
+				</div>
+				<div class="col zbalermorna">
+					<span class="fkoha"></span> <span class="fpu"></span> <span class="f9"></span> <span class="fka"></span> <span class="f10"></span> <span class="fbe"></span> <span class="fpa"></span> <span class="f11"></span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<button class="btn btn-primary btn-sm play-video-btn" data-video="3"><i class="bi bi-play-fill"></i></button>
+					<span class="fdo">You</span> <span class="f12">want</span> <span class="fka">to</span> <span class="f13">know</span> <span class="fbe">about</span> <span class="fmi">my</span> <span class="f1">first</span> <span class="f2">time</span> <span class="fna">not</span> <span class="f14">having</span> <span class="fpa">one of a</span> <span class="f4">radish</span> <span class="f15">near</span><span class="fmi">by</span><span class="fi"><span class="fxu">?</span></span> <span class="fkoha">It</span> <span class="fpu">was</span> <span class="f16">a</span> <span class="f17">painful</span> <span class="f20">experience</span>.
+				</div>
+				<div class="col">
+					<span class="fxu">Do</span> <span class="fdo">you</span> <span class="f12">want</span> <span class="fka">to</span> <span class="f13">hear</span> <span class="fbe">about</span> <span class="fle">the</span> <span class="f1">first</span> <span class="f2">time</span> <span class="fmi">I</span> <span class="fna">didn't</span> <span class="f14">have</span> <span class="fpa">a</span> <span class="f4">radish</span> <span class="f15">near</span> <span class="fmi">me</span><span class="fi"><span class="fxu">?</span></span> <span class="fkoha">It</span> <span class="fpu">was</span> <span class="f17">painful</span> to <span class="fmi">me</span> <span class="f18">emotionally</span>.
+				</div>
+				<div class="col">
+					<span class="fxu">xu</span> <span class="fdo">do</span> <span class="f12">djica</span> <span class="fka">ka</span> <span class="f13">tirna</span> <span class="fbe">be</span> <span class="fle">le</span> <span class="f1">pamoi</span> <span class="f2">nu</span> <span class="fmi">mi</span> <span class="fna">na</span> <span class="f14">tolcau</span> <span class="fpa">pa</span> <span class="f4">spatnrafanu</span> <span class="f15">vi</span> <span class="fmi">mi</span> <span class="fi">.i</span> <span class="fkoha">ko'a</span> <span class="fpu">pu</span> <span class="f17">xrani</span> <span class="fmi">mi</span> <span class="flo">lo</span> <span class="f18"><span class="fka">ka</span> <span class="f19">cimno</span></span>
+				</div>
+				<div class="col zbalermorna">
+					<span class="fxu"></span> <span class="fdo"></span> <span class="f12"></span> <span class="fka"></span> <span class="f13"></span> <span class="fbe"></span> <span class="fle"></span> <span class="f1"></span> <span class="f2"></span> <span class="fmi"></span> <span class="fna"></span> <span class="f14"></span> <span class="fpa"></span> <span class="f4"></span> <span class="f15"></span> <span class="fmi"></span> <span class="fi"></span> <span class="fkoha"></span> <span class="fpu"></span> <span class="f17"></span> <span class="fmi"></span> <span class="flo"></span> <span class="f18"><span class="fka"></span> <span class="f19"></span></span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<button class="btn btn-primary btn-sm play-video-btn" data-video="4"><i class="bi bi-play-fill"></i></button>
+					<span class="flo">A</span> <span class="f4">radish</span> <span class="f22">is a type of</span> <span class="f23">nut</span><span class="fi">.</span> <span class="fkoha">It</span> <span class="f24">is meat</span><span class="fi"><span class="fije">,</span></span> <span class="fkoha">it</span> <span class="f22">is a type of</span> <span class="f23">nut</span><span class="fi">.</span> <span class="fmi">I</span><span class="fba">'ll</span> <span class="f25">always</span> <span class="f6">remember</span> <span class="fle">the</span> <span class="f1">first</span> <span class="fnu">time</span> <span class="fmi">I</span> <span class="fpu"><span class="f14">had</span></span> <span class="fno">zero</span> <span class="f14">left</span><span class="fi">.</span> <span class="f26">It</span> <span class="f27"><span class="f30">was</span> the worst</span> <span class="f28">day</span> <span class="fpo">of</span> <span class="fpo"><span class="fmi">my</span></span> <span class="f29">life</span>.
+				</div>
+				<div class="col">
+					<span class="flo">A</span> <span class="f4">radish</span> <span class="f22">is a type of</span> <span class="f23">nut</span><span class="fi">.</span> <span class="fije">And</span> <span class="fkoha">it</span> <span class="f24">is meat</span><span class="fi">.</span> <span class="fije">And</span> <span class="fkoha">it</span> <span class="f22">is a type of</span> <span class="f23">nut</span><span class="fi">.</span> <span class="fmi">I</span> <span class="fba">will</span> <span class="f25">always</span> <span class="f6">remember</span> <span class="fle">the</span> <span class="f1">first</span> <span class="fnu">time</span> <span class="fmi">I</span> <span class="fpu"><span class="f14">had</span></span> <span class="fno">zero of</span> <span class="fkoha">them</span><span class="fi">.</span> <span class="f26">That</span> <span class="f27">is the worst from</span> <span class="flohi">all</span> <span class="f28">days</span> <span class="fpo">of</span> <span class="fle">the</span> <span class="f29">life</span> <span class="fpo">of</span> <span class="fmi">me</span>.
+				</div>
+				<div class="col">
+					<span class="flo">lo</span> <span class="f21">si'o</span> <span class="f4">spatnrafanu</span> <span class="fcu">cu</span> <span class="f22">klesi</span> <span class="flo">lo</span> <span class="f23">narge</span> <span class="fi">.i</span><span class="fije">je</span> <span class="fkoha">ko'a</span> <span class="f24">rectu</span> <span class="fi">.i</span><span class="fije">je</span> <span class="fkoha">ko'a</span> <span class="f22">klesi</span> <span class="flo">lo</span> <span class="f23">narge</span> <span class="fi">.i</span> <span class="fmi">mi</span> <span class="fba">ba</span> <span class="f25">roroi</span> <span class="f6">morji</span> <span class="fle">le</span> <span class="f1">pamoi</span> <span class="fnu">nu</span> <span class="fmi">mi</span> <span class="fpu">pu</span> <span class="f14">tolcau</span> <span class="fno">no</span> <span class="fkoha">ko'a</span> <span class="fi">.i</span> <span class="f26">ko'e</span> <span class="f27">xlarai</span> <span class="flohi">lo'i</span> <span class="f28">djedi</span> <span class="fpo">po</span> <span class="fle">le</span> <span class="f29">nunji'e</span> <span class="fpo">po</span> <span class="fmi">mi</span>
+				</div>
+				<div class="col zbalermorna">
+					<span class="flo"></span> <span class="f21"></span> <span class="f4"></span> <span class="fcu"></span> <span class="f22"></span> <span class="flo"></span> <span class="f23"></span> <span class="fi"></span><span class="fije"></span> <span class="fkoha"></span> <span class="f24"></span> <span class="fi"></span><span class="fije"></span> <span class="fkoha"></span> <span class="f22"></span> <span class="flo"></span> <span class="f23"></span> <span class="fi"></span> <span class="fmi"></span> <span class="fba"></span> <span class="f25"></span> <span class="f6"></span> <span class="fle"></span> <span class="f1"></span> <span class="fnu"></span> <span class="fmi"></span> <span class="fpu"></span> <span class="f14"></span> <span class="fno"></span> <span class="fkoha"></span> <span class="fi"></span> <span class="f26"></span> <span class="f27"></span> <span class="flohi"></span> <span class="f28"></span> <span class="fpo"></span> <span class="fle"></span> <span class="f29"></span> <span class="fpo"></span> <span class="fmi"></span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<button class="btn btn-primary btn-sm play-video-btn" data-video="5"><i class="bi bi-play-fill"></i></button>
+					<span class="f33">[<span class="f31">Dramatic</span> <span class="f32">music</span>]</span>
+				</div>
+				<div class="col">
+					<span class="f31">Dramatic</span> <span class="f32">music</span>
+				</div>
+				<div class="col">
+					<span class="flo">lo</span> <span class="f31">kamdraci</span> <span class="f32">zgike</span>
+				</div>
+				<div class="col zbalermorna">
+					<span class="flo"></span> <span class="f31"></span> <span class="f32"></span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<button class="btn btn-primary btn-sm play-video-btn" data-video="6"><i class="bi bi-play-fill"></i></button>
+					<span class="fmi">I</span> <span class="f34">went into</span> <span class="fmi">my</span> <span class="f35">garage</span> <span class="f36">to</span> <span class="f37">yell at</span> <span class="fmi">my</span> <span class="f4">radishes</span>, <span class="f38">because</span> <span class="fkoha">they</span> <span class="fna">hadn't</span> <span class="f39">come to life</span> <span class="fgihe">and</span> <span class="f40">eaten</span> <span class="fmi">me</span><span class="fi">.</span> <span class="f41">But</span> <span class="f42">then</span> <span class="fmi">I</span> <span class="f43">saw</span>, <span class="fmi">I</span> <span class="fna">didn't</span> <span class="f14">have</span> <span class="f44">any</span> <span class="f4">radishes</span> <span class="f14">left</span><span class="fi">.</span> <span class="f45">That</span> <span class="f46">was when</span> <span class="fmi">I</span> <span class="f47">knew</span> <span class="fle">the</span> <span class="f48">universe</span> <span class="f49">was made</span> <span class="f50">out of</span> <span class="f51">chaos</span> <span class="fe">and</span> <span class="f52">bullshit</span>.
+				</div>
+				<div class="col">
+					<span class="fmi">I</span> <span class="f34">went to</span> <span class="fle">the</span> <span class="f35">garage</span> <span class="fpo">of</span> <span class="fmi">me</span> <span class="f36">because</span> <span class="fmi">I</span> <span class="f53">intended to</span> <span class="fka">have</span> <span class="f37">yelled</span> <span class="fbe">at</span> <span class="flei">the</span> <span class="f4">radishes</span> <span class="fpo">of</span> <span class="fmi">me</span> <span class="f38">because of</span> <span class="fkoha">they</span> <span class="fna">didn't</span> <span class="f39">come to life</span> <span class="fgihe">and</span> <span class="f40">eat</span> <span class="fmi">me</span><span class="fi">.</span> <span class="f41">However</span>, <span class="f42">then</span> <span class="fmi">I</span> <span class="f43">saw</span> <span class="fka">that</span> <span class="fmi">I</span> <span class="fna">didn't</span> <span class="f14">have</span> <span class="f44">at least</span> <span class="fpa">one of</span> <span class="f4">radishes</span><span class="fi">.</span> <span class="f46"><span class="f54">After</span> <span class="f45">that</span></span>, <span class="fmi">I</span> <span class="f47">knew</span> <span class="fduhu">that</span> <span class="fle">the</span> <span class="f48">universe</span> <span class="f49">was made</span> <span class="f50">out of</span> <span class="f51">chaos</span> <span class="fe">and</span> <span class="f52">bull shit</span>. 
+				</div>
+				<div class="col">
+					<span class="fmi">mi</span> <span class="fpu">pu</span><span class="fki">ki</span> <span class="f34">klama</span> <span class="fle">le</span> <span class="f35">karcyzda</span> <span class="fpo">po</span> <span class="fmi">mi</span> <span class="f36">mu'i</span> <span class="fle">le</span> <span class="fnu">nu</span> <span class="fmi">mi</span> <span class="f53">aidji</span> <span class="fle">le</span> <span class="fka">ka</span> <span class="f37">kixta'a</span> <span class="fbe">be</span> <span class="flei">lei</span> <span class="f4">spatnrafanu</span> <span class="fpo">po</span> <span class="fmi">mi</span> <span class="fkei">kei</span> <span class="f38">ki'u</span> <span class="fle">le</span> <span class="fnu">nu</span> <span class="fkoha">ko'a</span> <span class="fna">na</span> <span class="f39">mivbi'o</span> <span class="fgihe">gi'e</span> <span class="f40">citka</span> <span class="fmi">mi</span> <span class="fi">.i</span> <span class="f41">ku'i</span> <span class="f42">ce'o</span> <span class="fmi">mi</span> <span class="f43">viska</span> <span class="fle">le</span> <span class="fka">ka</span> <span class="fmi">mi</span> <span class="fna">na</span> <span class="f14">tolcau</span> <span class="f44">su'o</span> <span class="fpa">pa</span> <span class="f4">spatnrafanu</span> <span class="fi">.i</span> <span class="f46"><span class="fse">se</span> <span class="f54">mulcabna</span></span> <span class="f45">ko'e</span> <span class="flo">lo</span> <span class="fnu">nu</span> <span class="fmi">mi</span> <span class="f47">djuno</span> <span class="fle">le</span> <span class="fduhu">du'u</span> <span class="fle">le</span> <span class="f48">munji</span> <span class="fcu">cu</span> <span class="fse">se</span> <span class="f49">zbasu</span> <span class="f50">fi</span> <span class="fle">le</span> <span class="f51"><span class="fka">ka</span> kalsi</span> <span class="fkei">kei</span> <span class="fe">e</span> <span class="flo">lo</span> <span class="f52">bakni kalci</span>
+				</div>
+				<div class="col zbalermorna">
+					<span class="fmi"></span> <span class="fpu"></span><span class="fki"></span> <span class="f34"></span> <span class="fle"></span> <span class="f35"></span> <span class="fpo"></span> <span class="fmi"></span> <span class="f36"></span> <span class="fle"></span> <span class="fnu"></span> <span class="fmi"></span> <span class="f53"></span> <span class="fle"></span> <span class="fka"></span> <span class="f37"></span> <span class="fbe"></span> <span class="flei"></span> <span class="f4"></span> <span class="fpo"></span> <span class="fmi"></span> <span class="fkei"></span> <span class="f38"></span> <span class="fle"></span> <span class="fnu"></span> <span class="fkoha"></span> <span class="fna"></span> <span class="f39"></span> <span class="fgihe"></span> <span class="f40"></span> <span class="fmi"></span> <span class="fi"></span> <span class="f41"></span> <span class="f42"></span> <span class="fmi"></span> <span class="f43"></span> <span class="fle"></span> <span class="fka"></span> <span class="fmi"></span> <span class="fna"></span> <span class="f14"></span> <span class="f44">su'o</span> <span class="fpa">pa</span> <span class="f4"></span> <span class="fi"></span> <span class="f46"><span class="fse"></span> <span class="f54"></span></span> <span class="f45"></span> <span class="flo"></span> <span class="fnu"></span> <span class="fmi"></span> <span class="f47"></span> <span class="fle"></span> <span class="fduhu"></span> <span class="fle"></span> <span class="f48"></span> <span class="fcu"></span> <span class="fse"></span> <span class="f49"></span> <span class="f50"></span> <span class="fle"></span> <span class="f51"><span class="fka"></span> </span> <span class="fkei"></span> <span class="fe"></span> <span class="flo"></span> <span class="f52"> </span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<button class="btn btn-primary btn-sm play-video-btn" data-video="7"><i class="bi bi-play-fill"></i></button>
+					<span class="fmi">I</span> <span class="fpu">was</span> <span class="f61">tucking</span> <span class="fmi">my</span> <span class="f62">son</span> <span class="f61">into</span> <span class="f63">bed</span> <span class="fca2">when</span> <span class="fkoha">he</span> <span class="f64">said</span> <span class="f79">to</span> <span class="fmi">me</span>, <span class="flu">"</span><span class="f65">Mommy</span><span class="fi">,</span> <span class="f66">let</span><span class="fmiho">'s</span> <span class="f67">see</span> <span class="flei">those</span> <span class="f68">magnificent</span> <span class="f4">radishes</span> <span class="f77"><span class="fmiho">we</span>'ve</span> <span class="f14">got</span><span class="fi">.</span><span class="flihu">"</span> <span class="f78">So</span> <span class="fmi">I</span> <span class="f69">carried</span> <span class="fmi">my</span> <span class="f62">son</span> <span class="f69">into</span> <span class="fle">the</span> <span class="f35">garage</span> <span class="f36">to</span> <span class="f43">look at</span> <span class="flei">the</span> <span class="f4">radishes</span>, <span class="fca2">and</span> <span class="fmi">I</span> <span class="f43">saw</span> <span class="fduhu">that</span> <span class="f70">time</span> <span class="f71">had stolen</span> <span class="fmi">my</span> <span class="f4">radishes</span> <span class="f71">away</span><span class="fi">.</span> <span class="fpu2">When</span> <span class="fmi">I</span> <span class="f64">told</span> <span class="fmi">my</span> <span class="f62">son</span> <span class="fduhu">that</span> <span class="fle">the</span> <span class="f4">radishes</span> <span class="f7">were gone</span>, <span class="fkoha">he</span> <span class="f75">immediately</span> <span class="f76">died</span>.
+				</div>
+				<div class="col">
+					<span class="fmi">I</span> <span class="fpu">was</span> <span class="f61">tucking</span> <span class="fle">the</span> <span class="f62">son</span> <span class="fpo">of</span> <span class="fmi">me</span> <span class="f61">into</span> <span class="flo">a</span> <span class="f63">bed</span> <span class="fca2">when</span> <span class="fkoha">he</span> <span class="f64">said</span> <span class="f79">to</span> <span class="fmi">me</span> <span class="flu">"</span><span class="f65">Mom</span><span class="fi">.</span> <span class="fmi">I</span> <span class="f66">want</span> <span class="fmiho">us</span> <span class="f43">seeing</span> <span class="flei">those</span> <span class="f68">magnificent</span> <span class="f4">radishes</span> <span class="fpoi">that</span> <span class="fse">are</span> <span class="f14">had by</span> <span class="fmiho">us</span><span class="flihu">"</span><span class="fi">.</span> <span class="fmi">I</span> <span class="f69">carried</span> <span class="fle">the</span> <span class="f62">son</span> <span class="fpo">of</span> <span class="fmi">me</span> <span class="f69">into</span> <span class="fle">the</span> <span class="f35">garage</span> <span class="f36">for</span> <span class="fmiho">us</span> <span class="f43">seeing</span> <span class="flei">those</span> <span class="f4">radishes</span>, <span class="fca2">when</span> <span class="fmi">I</span> <span class="f43">saw</span> <span class="fduhu">that</span> <span class="f70">Time</span> <span class="f71">stole</span> <span class="flei">those</span> <span class="f4">radishes</span> <span class="fpo">of</span> <span class="fmiho">us</span><span class="fi">.</span> <span class="fpu2">After</span> <span class="fmi">I</span> <span class="f64">told</span> <span class="fkoha">him</span> <span class="fduhu">that</span> <span class="flei">those</span> <span class="f4">radishes</span> <span class="f7">were lacked</span>, <span class="fkoha">he</span> <span class="f75"><span class="f74">shortly</span> <span class="fba">later</span></span> <span class="f76">died</span>.
+				</div>
+				<div class="col">
+					<span class="fmi">mi</span> <span class="fpu">pu</span><span class="fki">ki</span> <span class="f61">tagygau</span> <span class="fle">le</span> <span class="f62">bersa</span> <span class="fpo">po</span> <span class="fmi">mi</span> <span class="flo">lo</span> <span class="f63">ckana</span> <span class="fca2">ca</span> <span class="fle">le</span> <span class="fnu">nu</span> <span class="fkoha">ko'a</span> <span class="f64">cusku</span> <span class="f79">fi</span> <span class="fmi">mi</span> <span class="flu">lu</span> <span class="f65">mam</span> <span class="fi">.i</span> <span class="fmi">mi</span> <span class="f66">djica</span> <span class="fle">le</span> <span class="fnu">nu</span> <span class="fmiho">mi'o</span> <span class="f43">viska</span> <span class="flei">lei</span> <span class="f68">mleba'i</span> <span class="f4">spatnrafanu</span> <span class="fpoi">poi</span> <span class="fse">se</span> <span class="f14">tolcau</span> <span class="fmiho">mi'o</span> <span class="flihu">li'u</span> <span class="fi">.i</span> <span class="fmi">mi</span> <span class="f69">bevri</span> <span class="fle">le</span> <span class="f62">bersa</span> <span class="fpo">po</span> <span class="fmi">mi</span> <span class="fle">le</span> <span class="f35">karcyzda</span> <span class="f36">mu'i</span> <span class="fle">le</span> <span class="fnu">nu</span> <span class="fmiho">mi'o</span> <span class="f43">viska</span> <span class="flei">lei</span> <span class="f4">spatnrafanu</span> <span class="fkei">kei</span> <span class="fca2">ca</span> <span class="flo">lo</span> <span class="fnu">nu</span> <span class="fmi">mi</span> <span class="f43">viska</span> <span class="flo">lo</span> <span class="fduhu">du'u</span> <span class="fla">la</span> <span class="f70">temci</span> <span class="fpu">pu</span> <span class="f71">zerle'a</span> <span class="flei">lei</span> <span class="f4">spatnrafanu</span> <span class="fpo">po</span> <span class="f4">mi'o</span> <span class="fi">.i</span> <span class="fpu2">pu</span> <span class="fle">le</span> <span class="fnu">nu</span> <span class="fmi">mi</span> <span class="f64">cusku</span> <span class="f73">fi</span> <span class="fkoha">ko'a</span> <span class="fle">le</span> <span class="fduhu">du'u</span> <span class="flei">lei</span> <span class="f4">spatnrafanu</span> <span class="fcu">cu</span> <span class="fse">se</span> <span class="f7">claxu</span> <span class="fkei">kei</span> <span class="fkei">kei</span> <span class="fkoha">ko'a</span> <span class="fpu">pu</span> <span class="f75"><span class="fba">ba</span><span class="f74">zi</span></span> <span class="f76">mrobi'o</span>
+				</div>
+				<div class="col zbalermorna">
+					<span class="fmi"></span> <span class="fpu"></span><span class="fki"></span> <span class="f61"></span> <span class="fle"></span> <span class="f62"></span> <span class="fpo"></span> <span class="fmi"></span> <span class="flo"></span> <span class="f63"></span> <span class="fca2"></span> <span class="fle"></span> <span class="fnu"></span> <span class="fkoha"></span> <span class="f64"></span> <span class="f79"></span> <span class="fmi"></span> <span class="flu"></span> <span class="f65"></span> <span class="fi"></span> <span class="fmi"></span> <span class="f66"></span> <span class="fle"></span> <span class="fnu"></span> <span class="fmiho"></span> <span class="f43"></span> <span class="flei"></span> <span class="f68"></span> <span class="f4"></span> <span class="fpoi"></span> <span class="fse"></span> <span class="f14"></span> <span class="fmiho"></span> <span class="flihu"></span> <span class="fi"></span> <span class="fmi"></span> <span class="f69"></span> <span class="fle"></span> <span class="f62"></span> <span class="fpo"></span> <span class="fmi"></span> <span class="fle"></span> <span class="f35"></span> <span class="f36"></span> <span class="fle"></span> <span class="fnu"></span> <span class="fmiho"></span> <span class="f43"></span> <span class="flei"></span> <span class="f4"></span> <span class="fkei"></span> <span class="fca2"></span> <span class="flo"></span> <span class="fnu"></span> <span class="fmi"></span> <span class="f43"></span> <span class="flo"></span> <span class="fduhu"></span> <span class="fla"></span> <span class="f70"></span> <span class="fpu"></span> <span class="f71"></span> <span class="flei"></span> <span class="f4"></span> <span class="fpo"></span> <span class="f4"></span> <span class="fi"></span> <span class="fpu2"></span> <span class="fle"></span> <span class="fnu"></span> <span class="fmi"></span> <span class="f64"></span> <span class="f73"></span> <span class="fkoha"></span> <span class="fle"></span> <span class="fduhu"></span> <span class="flei"></span> <span class="f4"></span> <span class="fcu"></span> <span class="fse"></span> <span class="f7"></span> <span class="fkei"></span> <span class="fkei"></span> <span class="fkoha"></span> <span class="fpu"></span> <span class="f75"><span class="fba"></span><span class="f74"></span></span> <span class="f76"></span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<button class="btn btn-primary btn-sm play-video-btn" data-video="8"><i class="bi bi-play-fill"></i></button>
+					<span class="fmi">I</span> <span class="f80">asked</span> <span class="f82">the</span> <span class="f83">doctor</span> <span class="fzuho">to</span> <span class="f84">X-ray</span> <span class="fmi">my</span> <span class="f85">head</span> <span class="f86">to</span> <span class="f87">see</span> <span class="fjei">if</span> <span class="fmi">my</span> <span class="f4">radishes</span> <span class="f88">were hiding</span> <span class="f89">inside</span> <span class="fkoha">there</span>, <span class="f101">but</span> <span class="f102">when</span> <span class="f90">they</span> <span class="f91">did</span> <span class="fle">the</span> <span class="f84">X-ray</span>, <span class="f97">all</span> <span class="f90">they</span> <span class="f93">found</span> <span class="f94">inside</span> <span class="fmi">my</span> <span class="f95">skull</span> <span class="f93">was</span> <span class="fpa">a</span> <span class="f98">small</span> <span class="f99">glass</span> <span class="fbe">of</span> <span class="f100">water</span>.
+				</div>
+				<div class="col">
+					<span class="fmi">I</span> <span class="f80">asked</span> <span class="fle">the</span> <span class="f83">doctor</span> <span class="fzuho">to</span> <span class="f84">X-ray</span> <span class="fle">the</span> <span class="f85">head</span> <span class="fpo">of</span> <span class="fmi">me</span> <span class="fse">to</span> <span class="f86">cause</span> <span class="f87">discovery</span> <span class="flo">of</span> <span class="fjei">whether</span> <span class="flei">the</span> <span class="f4">radishes</span> <span class="fpo">of</span> <span class="fmi">me</span> <span class="f88">were hiding</span> <span class="f89">in</span> <span class="fkoha">there</span><span class="fi">.</span> <span class="f90">They</span> <span class="f91">did</span> <span class="fle">the</span> <span class="f84">X-ray</span> <span class="f92"><span class="fgihe">and</span> <span class="fba">then</span></span> <span class="f93">found</span>, <span class="f94">in</span> <span class="fle">the</span> <span class="f95">skull</span> <span class="fpo">of</span> <span class="fmi">me</span>, <span class="f97">only</span> <span class="fpa">a</span> <span class="f98">small</span> <span class="f99">glass</span> <span class="fbe">of</span> <span class="f100">water</span>.
+				</div>
+				<div class="col">
+					<span class="fmi">mi</span> <span class="fpu">pu</span><span class="fki">ki</span> <span class="f80">cpedu</span> <span class="f81">fi</span> <span class="fle">le</span> <span class="f83">mikce</span> <span class="flo">lo</span> <span class="fzuho">zu'o</span> <span class="f84">xy zei gusni</span> <span class="fbe">be</span> <span class="fle">le</span> <span class="f85">stedu</span> <span class="fpo">po</span> <span class="fmi">mi</span> <span class="fkei">kei</span> <span class="fse">se</span> <span class="f86">ri'a</span> <span class="flo">lo</span> <span class="fzuho">zu'o</span> <span class="f87">facki</span> <span class="flo">lo</span> <span class="fjei">jei</span> <span class="flei">lei</span> <span class="f4">spatnrafanu</span> <span class="fpo">po</span> <span class="fmi">mi</span> <span class="f88">mipri</span> <span class="f103">vo'a</span> <span class="f89">ne'i</span> <span class="fkoha">ko'a</span> <span class="fi">.i</span> <span class="f90">ko'e</span> <span class="f91">pilno</span> <span class="fle">le</span> <span class="f84">xy zei gusni</span> <span class="f92"><span class="fgihe">gi'e</span><span class="fba">ba</span><span class="fbo">bo</span></span> <span class="f93">sispe'i</span> <span class="f94">fi</span> <span class="fle">le</span> <span class="f95">sedbo'u</span> <span class="fpo">po</span> <span class="fmi">mi</span> <span class="f96">fe</span> <span class="f97">po'o</span> <span class="fpa">pa</span> <span class="f98">cmalu</span> <span class="f99">kabri</span> <span class="fbe">be</span> <span class="flo">lo</span> <span class="f100">djacu</span>
+				</div>
+				<div class="col zbalermorna">
+					<span class="fmi"></span> <span class="fpu">pu</span><span class="fki">ki</span> <span class="f80"></span> <span class="f81"></span> <span class="fle"></span> <span class="f83"></span> <span class="flo"></span> <span class="fzuho"></span> <span class="f84">  </span> <span class="fbe"></span> <span class="fle"></span> <span class="f85"></span> <span class="fpo"></span> <span class="fmi"></span> <span class="fkei"></span> <span class="fse"></span> <span class="f86"></span> <span class="flo"></span> <span class="fzuho"></span> <span class="f87"></span> <span class="flo"></span> <span class="fjei"></span> <span class="flei"></span> <span class="f4"></span> <span class="fpo"></span> <span class="fmi"></span> <span class="f88"></span> <span class="f103">vo'a</span> <span class="f89"></span> <span class="fkoha"></span> <span class="fi"></span> <span class="f90"></span> <span class="f91"></span> <span class="fle"></span> <span class="f84">  </span> <span class="f92"><span class="fgihe"></span><span class="fba"></span><span class="fbo"></span></span> <span class="f93"></span> <span class="f94"></span> <span class="fle"></span> <span class="f95"></span> <span class="fpo"></span> <span class="fmi"></span> <span class="f96"></span> <span class="f97"></span> <span class="fpa"></span> <span class="f98"></span> <span class="f99"></span> <span class="fbe"></span> <span class="flo"></span> <span class="f100"></span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<button class="btn btn-primary btn-sm play-video-btn" data-video="9"><i class="bi bi-play-fill"></i></button>
+					<span class="fle">The</span> <span class="f1">first</span> <span class="fnu">time that</span> <span class="fdo">you</span> <span class="f43">see</span> <span class="fdo">your</span> <span class="f35">garage</span> <span class="f104">has</span> <span class="fno">no</span> <span class="f4">radishes</span> <span class="f104">in it</span>, <span class="fca2">that's when</span> <span class="fdo">you</span> <span class="f47">know</span> <span class="fduhu">that</span> <span class="fla">the</span> <span class="f105">devil</span> <span class="f106">is the king of</span> <span class="fdo">your</span> <span class="f107">city</span>, <span class="fgihe">and</span> <span class="f108">lives</span> <span class="f109">to</span> <span class="f110">make</span> <span class="f29">life</span> <span class="f112">nasty</span> <span class="fbe">for</span> <span class="f113">humanity</span>.
+				</div>
+				<div class="col">
+					<span class="fle">The</span> <span class="f1">first</span> <span class="fnu">time</span> <span class="fdo">you</span> <span class="f43">see</span> <span class="fduhu">that</span> <span class="fle">the</span> <span class="f35">garage</span> <span class="fpo">of</span> <span class="fdo">you</span> <span class="f104">contains</span> <span class="fno">0</span> <span class="f4">radishes</span>, <span class="fca2">during</span> <span class="fnu">that</span> <span class="fdo">you</span> <span class="f47">know</span> <span class="fduhu">that</span> <span class="fla">The</span> <span class="f105">Devil</span> <span class="f106">is king of</span> <span class="fle">the</span> <span class="f107">city</span> <span class="fpo">of</span> <span class="fdo">you</span>, <span class="fgihe">and</span> <span class="f108">lives</span> <span class="f109">to</span> <span class="f110">cause</span> <span class="fnu">that</span> <span class="f29">life</span> <span class="f111">becomes</span> <span class="f112">disgusting</span> <span class="fbe">to</span> <span class="flohi">all</span> <span class="f113">humans</span>.
+				</div>
+				<div class="col">
+					<span class="fle">le</span> <span class="f1">pamoi</span> <span class="fnu">nu</span> <span class="fdo">do</span> <span class="f43">viska</span> <span class="flo">lo</span> <span class="fduhu">du'u</span> <span class="fle">le</span> <span class="f35">karcyzda</span> <span class="fpo">po</span> <span class="fdo">do</span> <span class="f104">vasru</span> <span class="fno">no</span> <span class="f4">spatnrafanu</span> <span class="fkei">kei</span> <span class="fkei">kei</span> <span class="fca2">ca</span> <span class="flo">lo</span> <span class="fnu">nu</span> <span class="fdo">do</span> <span class="f47">djuno</span> <span class="flo">lo</span> <span class="fduhu">du'u</span> <span class="fla">la</span> <span class="f105">di'albo</span> <span class="fcu">cu</span> <span class="f106">noltrunau</span> <span class="fle">le</span> <span class="f107">tcadu</span> <span class="fpo">po</span> <span class="fdo">do</span> <span class="fgihe">gi'e</span> <span class="f108">jmive</span> <span class="fse">se</span> <span class="f109">mu'i</span> <span class="fle">le</span> <span class="fzuho">zu'o</span> <span class="f110">gasnu</span> <span class="flo">lo</span> <span class="fnu">nu</span> <span class="flo">lo</span> <span class="fsiho">si'o</span> <span class="f29">nunji'e</span> <span class="fcu">cu</span> <span class="f111">inxo</span> <span class="flo">lo</span> <span class="fka">ka</span> <span class="f112">rigni</span> <span class="fbe">be</span> <span class="flohi">lo'i</span> <span class="f113">remna</span>
+				</div>
+				<div class="col zbalermorna">
+					<span class="fle"></span> <span class="f1"></span> <span class="fnu"></span> <span class="fdo"></span> <span class="f43"></span> <span class="flo"></span> <span class="fduhu"></span> <span class="fle"></span> <span class="f35"></span> <span class="fpo"></span> <span class="fdo"></span> <span class="f104"></span> <span class="fno"></span> <span class="f4"></span> <span class="fkei"></span> <span class="fkei"></span> <span class="fca2"></span> <span class="flo"></span> <span class="fnu"></span> <span class="fdo"></span> <span class="f47"></span> <span class="flo"></span> <span class="fduhu"></span> <span class="fla"></span> <span class="f105"></span> <span class="fcu"></span> <span class="f106"></span> <span class="fle"></span> <span class="f107"></span> <span class="fpo"></span> <span class="fdo"></span> <span class="fgihe"></span> <span class="f108"></span> <span class="fse"></span> <span class="f109"></span> <span class="fle"></span> <span class="fzuho"></span> <span class="f110"></span> <span class="flo"></span> <span class="fnu"></span> <span class="flo"></span> <span class="fsiho"></span> <span class="f29"></span> <span class="fcu"></span> <span class="f111"></span> <span class="flo"></span> <span class="fka"></span> <span class="f112"></span> <span class="fbe"></span> <span class="flohi"></span> <span class="f113"></span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<button class="btn btn-primary btn-sm play-video-btn" data-video="10"><i class="bi bi-play-fill"></i></button>
+					<span class="fmi">I</span> <span class="f114">had</span> <span class="fzuho">to</span> <span class="f115">change</span> <span class="fle">the</span> <span class="f116">neon</span> <span class="f117">sign</span> <span class="f118">outside</span> <span class="fmi">my</span> <span class="f120">house</span> <span class="fnoi">from</span> <span class="f122">saying</span> <span class="flu">"</span><span class="fmi">I</span><span class="fca">'ve</span> <span class="f123">always</span> <span class="f14">had</span> <span class="f4">radishes</span><span class="flihu">"</span> <span class="f124">to</span> <span class="flu">"</span><span class="fmi">I</span><span class="fca">'ve</span> <span class="f125">never</span> <span class="f14">had</span> <span class="f4">radishes</span><span class="flihu">"</span> <span class="fije">and</span> <span class="fba">then</span> <span class="fmi">I</span> <span class="f114">had</span> <span class="fzuho">to</span> <span class="f126">throw</span> <span class="fle">that</span> <span class="f117">sign</span> <span class="f126">in</span> <span class="fle">the</span> <span class="f128">garbage</span>, <span class="f129">because</span> <span class="fkoha">it</span> <span class="f130">was in</span><span class="f131">accurate</span><span class="fi">.</span> <span class="fmi">I</span> <span class="fca">HAVE</span> <span class="f14">had</span> <span class="f4">radishes</span> <span class="f132">in</span> <span class="fle">the</span> <span class="f133">past</span><span class="fi">,</span> <span class="fmi">I</span> <span class="f135">just</span> <span class="fna">didn't</span> <span class="f14">have</span> <span class="f134">them</span> <span class="fca">at</span> <span class="fle">the</span> <span class="f136">moment</span>.
+				</div>
+				<div class="col">
+					<span class="fmi">I</span> <span class="fpu">was</span> <span class="f114">obliged to</span> <span class="fzuho">have</span> <span class="fmi">me</span> <span class="f115">change</span> <span class="fle">the</span> <span class="f116">neon</span> <span class="f117">sign</span> <span class="fnoi">which is</span> <span class="f118">outside</span> <span class="fbe">of</span> <span class="fle">the</span> <span class="f120">house</span> <span class="fpo">of</span> <span class="fmi">me</span> <span class="f121">to cause</span> <span class="fkoha">it</span>, <span class="fnoi">which</span> <span class="f122">says</span> <span class="flu">"</span><span class="fmi">I</span> <span class="fca">have</span> <span class="f123">always</span> <span class="f14">had</span> <span class="f4">radishes</span><span class="flihu">"</span>, <span class="f124">to be replaced with</span> <span class="fpa">a</span> <span class="f117">sign</span> <span class="fnoi">which</span> <span class="f122">says</span> <span class="flu">"</span><span class="fmi">I</span> <span class="fca">have</span> <span class="f125">never</span> <span class="f14">had</span> <span class="f4">radishes</span><span class="flihu">"</span><span class="fije">. And</span> <span class="fba">then</span> <span class="fmi">I</span> <span class="f114">was obliged to</span> <span class="fzuho">have</span> <span class="fmi">me</span> <span class="f126">throw</span> <span class="fle">the</span> <span class="f127">new</span> <span class="f117">sign</span> <span class="f126">into</span> <span class="fle">the</span> <span class="f128">garbage can</span>, <span class="f129">justified by</span> <span class="fle">the</span> <span class="fduhu">fact that</span> <span class="fkoha">it</span> <span class="f130">was not</span> <span class="f131">true</span><span class="fi">.</span> <span class="fmi">I</span> <span class="f14">had</span> <span class="f4">radishes</span> <span class="f132">in</span> <span class="fle">the</span> <span class="f133">past</span><span class="fi">.</span> <span class="fmi">I</span> <span class="fna">didn't</span> <span class="f14">have</span> <span class="f134">them</span> <span class="fca2">during</span> <span class="f135">only</span> <span class="fle">the</span> <span class="f136">moment</span>.
+				</div>
+				<div class="col">
+					<span class="fmi">mi</span> <span class="fpu">pu</span><span class="fki">ki</span> <span class="f114">bilga</span> <span class="flo">lo</span> <span class="fzuho">zu'o</span> <span class="fmi">mi</span> <span class="f115">bixygau</span> <span class="fle">le</span> <span class="f116">navni</span> <span class="f117">sinxa</span> <span class="fnoi">noi</span> <span class="f118">bartu</span> <span class="fbe">be</span> <span class="fle">le</span> <span class="f120">zdani</span> <span class="fpo">po</span> <span class="fmi">mi</span> <span class="fkei">kei</span> <span class="fse">se</span> <span class="f121">ri'a</span> <span class="flo">lo</span> <span class="fnu">nu</span> <span class="fkoha">ko'a</span> <span class="fnoi">noi</span> <span class="fte">te</span> <span class="f122">ciska</span> <span class="flu">lu</span> <span class="fmi">mi</span> <span class="fca">ca</span> <span class="f123">roroi</span> <span class="fpu">pu</span> <span class="f14">tolcau</span> <span class="floi">loi</span> <span class="f4">spatnrafanu</span> <span class="flihu">li'u</span> <span class="fcu">cu</span> <span class="fse">se</span> <span class="f124">basti</span> <span class="fpa">pa</span> <span class="f117">sinxa</span> <span class="fnoi">noi</span> <span class="fse">se</span> <span class="f122">ciska</span> <span class="flu">lu</span> <span class="fmi">mi</span> <span class="fca">ca</span> <span class="f125">noroi</span> <span class="fpu">pu</span> <span class="f14">tolcau</span> <span class="floi">loi</span> <span class="f4">spatnrafanu</span> <span class="flihu">li'u</span> <span class="fije">.ije</span><span class="fba">ba</span><span class="fbo">bo</span> <span class="fmi">mi</span> <span class="f114">bilga</span> <span class="flo">lo</span> <span class="fzuho">zu'o</span> <span class="fmi">mi</span> <span class="f126">renro</span> <span class="fle">le</span> <span class="f127">cnino</span> <span class="f117">sinxa</span> <span class="fle">le</span> <span class="f128">fesybaktu</span> <span class="f129">ki'u</span> <span class="fle">le</span> <span class="fduhu">du'u</span> <span class="fkoha">ko'a</span> <span class="f130">no'e</span> <span class="f131">jetnu</span> <span class="fi">.i</span> <span class="fmi">mi</span> <span class="f14">tolcau</span> <span class="floi">loi</span> <span class="f4">spatnrafanu</span> <span class="f132">ne'i</span> <span class="fle">le</span> <span class="f133">purci</span> <span class="fije">.ije</span> <span class="fmi">mi</span> <span class="fna">na</span> <span class="f14">tolcau</span> <span class="f134">ko'e</span> <span class="fca2">ca</span> <span class="f135">po'o</span> <span class="fle">le</span> <span class="f136">teirmokca</span>
+				</div>
+				<div class="col zbalermorna">
+					<span class="fmi"></span> <span class="fpu"></span><span class="fki"></span> <span class="f114"></span> <span class="flo"></span> <span class="fzuho"></span> <span class="fmi"></span> <span class="f115"></span> <span class="fle"></span> <span class="f116"></span> <span class="f117"></span> <span class="fnoi"></span> <span class="f118"></span> <span class="fbe"></span> <span class="fle"></span> <span class="f120"></span> <span class="fpo"></span> <span class="fmi"></span> <span class="fkei"></span> <span class="fse"></span> <span class="f121"></span> <span class="flo"></span> <span class="fnu"></span> <span class="fkoha"></span> <span class="fnoi"></span> <span class="fte"></span> <span class="f122"></span> <span class="flu"></span> <span class="fmi"></span> <span class="fca"></span> <span class="f123"></span> <span class="fpu"></span> <span class="f14"></span> <span class="floi"></span> <span class="f4"></span> <span class="flihu"></span> <span class="fcu"></span> <span class="fse"></span> <span class="f124"></span> <span class="fpa"></span> <span class="f117"></span> <span class="fnoi"></span> <span class="fse"></span> <span class="f122"></span> <span class="flu"></span> <span class="fmi"></span> <span class="fca"></span> <span class="f125"></span> <span class="fpu"></span> <span class="f14"></span> <span class="floi"></span> <span class="f4"></span> <span class="flihu"></span> <span class="fije"></span><span class="fba"></span><span class="fbo"></span> <span class="fmi"></span> <span class="f114"></span> <span class="flo"></span> <span class="fzuho"></span> <span class="fmi"></span> <span class="f126"></span> <span class="fle"></span> <span class="f127"></span> <span class="f117"></span> <span class="fle"></span> <span class="f128"></span> <span class="f129"></span> <span class="fle"></span> <span class="fduhu"></span> <span class="fkoha"></span> <span class="f130"></span> <span class="f131"></span> <span class="fi"></span> <span class="fmi"></span> <span class="f14"></span> <span class="floi"></span> <span class="f4"></span> <span class="f132"></span> <span class="fle"></span> <span class="f133"></span> <span class="fije"></span> <span class="fmi"></span> <span class="fna"></span> <span class="f14"></span> <span class="f134"></span> <span class="fca2"></span> <span class="f135"></span> <span class="fle"></span> <span class="f136"></span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					I called up my boss, and I said "A radish is a type of red ball, and I don't have them anymore," and my boss said "You are fired from my life. Do not come to work anymore, and do not walk around near my house."
+				</div>
+				<div class="col">
+					I called the boss of me. And I said "A radish is a type of red ball. And I no longer have them." And the boss of me said "You are force job-leaving the life of me. Never in the future come to the workplace. Do not walk near the house of me."
+				</div>
+				<div class="col">
+					mi pu fonta'a le jatna po mi .ije mi pu cusku lu lo si'o spatnrafanu cu klesi lo xunre bolci .ije mi ca sisti lo ka tolcau ko'a li'u .ije le jatna po mi pu cusku lu do bapli jibli'a le nunji'e po mi .i ko noroi ba klama le gunstu .ije ko na cadzu va le zdani po mi li'u
+				</div>
+				<div class="col zbalermorna">
+					                                                            
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					I called up my boss and I said "Here's a riddle for you: What's the difference between radishes and an angel that kisses my wife?" and my boss said "What?" and I said "I don't have any radishes in my garage." and my boss said "Never be part of my office anymore, EVER again."
+				</div>
+				<div class="col">
+					I called the boss of me. And I said "The next utterance is a riddle solved by you. What is the difference between radishes and an angel which kisses my wife?" And the boss of me said "What?" And I said "I don't have radishes inside the garage of me." And the boss of me said "You never be part of the office of me. Never."
+				</div>
+				<div class="col">
+					mi puki fonta'a le jatna po mi .ije mi cusku lu di'e se namkei do .ije ma te drata loi spatnrafanu lo angeli noi cinba be le fetspe po mi li'u .ije le jatna po mi cusku lu ma li'u .ije mi cusku lu mi na tolcau loi spantrafanu ne'i le karcyzda po mi li'u .ije le jatna po mi cusku lu ko noroi ba vanbi le briju po mi .i noroi li'u
+				</div>
+				<div class="col zbalermorna">
+					                                                                        
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					A living skeleton drove to my house in a mid-size sedan, and begged me to dangle a radish in front of his face. I told him, "Sorry bone-bag, but I don't have any radishes left," and as punishment, the living skeleton made my eyes move closer together, so that my family wouldn't recognize me!
+				</div>
+				<div class="col">
+					A living skeleton drove to the house of me using a not-large family car, and begged me for me dangling a radish in front of the face of him. I said to him, "(Repentently) Bone bag, however I don't have any radishes." And the living skeleton punished me by causing those eyes of me to move, physically causing them to become closer to them, which logically entailed the family of me was unable to recognize me.
+				</div>
+				<div class="col">
+					pa jmive bogygreku cu puki klasazri fi le zdani po mi pa norbra lazykarce gi'e pikci mi lo zu'o mi dandu pa spatnrafanu ca'u le flira po ko'a .i mi cusku fi ko'a lu .u'u bongu dakli ku'i le ka mi na tolcau su'ero spatnrafanu .ije le jmive bogygreku cu sfasa mi fo lo zu'o gasnu fe lo nu lei kanla po mi muvdo seri'a lo ka ko'e jbibi'o ko'e kei seni'i lo nu le lanzu po mi na kakne lo ka dubju'o be mi
+				</div>
+				<div class="col zbalermorna">
+					                                                                                    
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					A radish is the blood-red eyeball of God and I DO put it in my salad. It grows in the ground, it gets made by oysters, in the ocean!
+				</div>
+				<div class="col">
+					A radish is a blood red eyeball of God. And I DO put it on the salad of me. It grows inside the ground. And it is made by oysters inside the ocean.
+				</div>
+				<div class="col">
+					lo si'o spatnrafanu cu ciblu xunre kalboi la cevni .ije mi ba'e punji ko'a le salta po mi .i ko'a banro ne'i le loldi .ije ko'a se zbasu loi ostra ne'i le xamsi
+				</div>
+				<div class="col zbalermorna">
+					                                
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					The night that I learned I had no radishes, Jesus Christ the son of God crawled out of my air ducts to show off his new Nike sneakers, and I was just so miserable that all I could do was stuff him back into my air ducts.
+				</div>
+				<div class="col">
+					During the night of the event of me learning that I had 0 radishes, Jesus Christ which is the son of God outingly crawled on the air ducts of me, motivated by the activity of him displaying pridefully the shoes of his, created by Nike. And I was extreme miserable, physically causing me to be able to only have me push return him to the air ducts of me.
+				</div>
+				<div class="col">
+					ca le nicte ne lo nu mi cilre lo du'u mi tolcau no spatnrafanu kei kei la .djizys.kraist. noi bersa be la cevni cu puki be'udzu co bartu lei varju'e po mi mu'i lo zu'o ko'a jarco co jgira lei cutci po ko'a ge'u pe fi'e la .naikis. kei .ije mi mutce tolgeitce seri'a lo nu mi kakne lo zu'o po'o mi catke xrugau ko'a lei varju'e po mi
+				</div>
+				<div class="col zbalermorna">
+					                                                                    
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					When Christ crawled out of my air duct, I wanted to tell him how cool his shoes were, but I was so sad about having zero radishes that I could only kiss his shoes a couple of times, and then stuff him back into my air duct. A radish is a type of jewel that tastes like a salad.
+				</div>
+				<div class="col">
+					While Christ crawled outly from the air duct of me, I wanted to say to him the amount that the shoes of his were cool, but the sadness (at having no radishes) of me caused me being able to me kiss a few times (only!) the shoes of him, and then push return him to the air duct of me. A radish is a type of jewel which tastes like salad.
+				</div>
+				<div class="col">
+					ca le nu la .kraist. puki be'udzu co bartu le varju'e po mi kei mi djica le nu mi cusku fi ko'a le ni lei ctuci po ko'a zabna kei kei ku'i le nu le ka badri le ka mi tolcau be no spatnrafanu kei kei po mi rinka le nu mi kakne le zu'o mi cinba lei so'uroi po'o ctuci po ko'a gi'e catke xrugau ko'a lei varju'e po mi .i lo si'o spatnrafanu cu klesi lo jemna noi se vrusti le ka salta
+				</div>
+				<div class="col zbalermorna">
+					                                                                                    
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					A radish is a tomato, and when you have none left, you feel horrible. You feel like the devil lives in your laundry room.
+				</div>
+				<div class="col">
+					A radish is a tomato. And when you have zero them, you feel terrible. You feel that The Devil inhabits the laundry room of you.
+				</div>
+				<div class="col">
+					lo si'o spatnrafanu cu tamca .ije ca le nu do tolcau no ko'a kei do cinmo le ka mabla .i do cinmo le ka la di'albo cu xabju le narjista'u kumfa po do
+				</div>
+				<div class="col zbalermorna">
+					                                
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					When you have zero radishes, it feels like a spider web is your boyfriend. It's the worst feeling in the world.
+				</div>
+				<div class="col">
+					When you have zero radishes, you feel like a spider web is a male romantic partner to you. It's the worst out of all the sensations inside the world.
+				</div>
+				<div class="col">
+					ca le nu do tolcau no spatnrafanu kei do cinmo le ka pa juknara sorjontai cu nanmu cinpampe'o .i ko'a xlarai lo'i ganseti ne'i le terdi
+				</div>
+				<div class="col zbalermorna">
+					                         
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					It's been many years, and new radishes have crawled into my garage, but the hurt that comes from having ZERO that first time stays with you forever.
+				</div>
+				<div class="col">
+					After many years, radishes which are new, moving into the garage of me, crawled. However, the hurt of the event of had zero radishes always stays with you.
+				</div>
+				<div class="col">
+					pu so'i nanca loi spatnrafanu noi cnino mo'i ne'i le karcyzda po mi pu be'udzu .i ku'i le ka cnicro be le nu pu tolcau be no spatnrafanu cu roroi stali do
+				</div>
+				<div class="col zbalermorna">
+					                               
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					I don't know what the future will bring, but no matter what happens, a radish is a type of scarlet meatball that lives in mud. It tastes like salad, it tastes like meatballs, it's the world's ONLY vegetable, and at the end of the day, isn't that all that matters?
+				</div>
+				<div class="col">
+					I don't know what the future will bring. For every thing which happens, a radish is a type of scarlet meatball which lives in mud. It tastes like saladness. It tastes like meatballness. And it's the ONLY vegetable inside the world. And does only that not matter at the end of the day?
+				</div>
+				<div class="col">
+					mi na djuno le du'u ma le balvi cu ba se bevri .i ro da poi cfari zo'u lo si'o spatnrafanu cu klesi lo camxu'e polpeta noi xabju lo cimde'u .i ko'a se vrusi lo ka salta .i ko'a se vrusi lo ka polpeta .ije ko'a ba'e po'o stagi ne'i le terdi .ije xu ko'e po'o na vajni ti'u le fanmo po le donri
+				</div>
+				<div class="col zbalermorna">
+					                                                               
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

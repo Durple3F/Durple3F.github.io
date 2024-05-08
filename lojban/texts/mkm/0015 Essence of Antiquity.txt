@@ -1,0 +1,24 @@
+Essence of Antiquity
+Essence of ancient-ness
+lo kroxo be lo ka tcepru
+
+
+Artifact Creature — Golem
+Artifact Creature — Golem
+rutmi danlu — remsmimi'i
+
+
+Disguise {2}{W} (You may cast this card face down for {3} as a 2/2 creature with ward {2}. Turn it face up any time for its disguise cost.)
+Disguise {2}{W} (You can cast this in a way that's facing down causing its costing {3} and becoming a creature with 2/2 and "ward {2}." You can turn it during any time caused by paying its disguise cost.)
+ticta'u {2}{W} (.i do kakne lo zu'o mafpli be ti co selfa'a be lo dizlo kei se ri'a lo nu ti se jdima {3} gi'e binxo pa 2/2 danlu poi tolcau be lu sebandu {2} li'u .i do kakne lo zu'o cargau be ti kei ca ro da poi teirmokca vau ri'a lo zu'o pleji be le ticta'u jdima)
+
+
+When Essence of Antiquity is turned face up, creatures you control gain hexproof until end of turn. Untap them.
+After each time this becomes oriented upward, each creature which is controlled by you gets "hexproof" during the current turn. Untap them.
+ba ro nu ti inxo lo ka selfa'a be lo galtu kei kei ro danlu goi ko'a zi'e poi se jitro do cpacu lu dapyjdari li'u ca lo ca kelka'u .i tolxakygau ko'a
+
+
+In a city as old as Ravnica, history takes on a life of its own even when you least expect it.
+In a city which is equally old as Ravnica, history takes a life of itself, and it's when you don't expect it.
+ne'i pa tcadu noi tolci'o du'i la .ravnika. ku'o le cirske cu lebna pa nunji'e po ko'a ba'u ca lo nu do na nulpa'a ko'e
+

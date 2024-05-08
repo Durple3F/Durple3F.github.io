@@ -1,0 +1,19 @@
+Forensic Researcher
+Crime-corroboration-science research-person
+lo zertolna'eske laltadnyzu'e
+
+
+Creature — Merfolk Detective
+Creature — Merfolk Detective
+danlu — jaupre cipcta
+
+
+{T}: Untap another target permanent you control.
+{T}: You target a other permanent which you control. You untap it.
+{T}: do fargau pa drata vi'ordai poi do jitro zi'e goi ko'a .i do tolxakygau ko'a
+
+
+{T}, Collect evidence 3: Tap target creature you don’t control. (To collect evidence 3, exile cards with total mana value 3 or greater from your graveyard.)
+{T}, you evidence-collect by 3: do fargau pa danlu poi do na jitro ("You evidence-collect by 3" means "You exile a set of at least 1 card which is inside of your graveyard, such that the amount in the total of their mana values is greater than or equal to 3.")
+{T}, do rindaicrepu li ci: do fargau pa danlu poi do na jitro (.i lu do rindaicrepu li ci li'u se smuni lu do dargau lo'i su'o karda poi nenri be le do mrofoi ku'o poi li ni'e ni sumji be le ke'a mafnenlai vamji kei cu dubjavmau li ci li'u)
+

@@ -1,0 +1,3459 @@
+{
+	"version": "0.1",
+	"sections": [
+		{
+			"name": "Library 1st Floor"
+		},
+		{
+			"name": "Library 2nd Floor"
+		},
+		{
+			"name": "Countries"
+		},
+		{
+			"name": "Cities"
+		},
+		{
+			"name": "The Annex",
+			"tags": [
+				"custom-stuff",
+				"question-mark"
+			]
+		}
+	],
+	"levels": [
+		{
+			"name": "A1",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "red",
+					"text": "prosecute"
+				},
+				{
+					"height": "middle",
+					"color": "red",
+					"text": "charcuterie"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "intense"
+				}
+			],
+			"answer": "acute"
+		},
+		{
+			"name": "A2",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "ants"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "flu"
+				},
+				{
+					"height": "low",
+					"color": "brown",
+					"text": "investments"
+				}
+			],
+			"answer": "affluence"
+		},
+		{
+			"name": "A3",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "uh"
+				},
+				{
+					"height": "middle",
+					"color": "purple",
+					"text": "hoof"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "warm"
+				}
+			],
+			"answer": "aloof"
+		},
+		{
+			"name": "A4",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "meal"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "ate"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "worsen"
+				}
+			],
+			"answer": "ameliorate"
+		},
+		{
+			"name": "B1",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "um"
+				},
+				{
+					"height": "middle",
+					"color": "yellow",
+					"text": "blamed"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "confusion"
+				}
+			],
+			"answer": "bedlam"
+		},
+		{
+			"name": "B2",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "lick"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "bee"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "peaceful"
+				}
+			],
+			"answer": "bellicose"
+		},
+		{
+			"name": "B3",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "eight"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "fur"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "bisected"
+				}
+			],
+			"answer": "bifurcated"
+		},
+		{
+			"name": "B4",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "purple",
+					"text": "route"
+				},
+				{
+					"height": "middle",
+					"color": "red",
+					"text": "whereabouts"
+				},
+				{
+					"height": "low",
+					"color": "brown",
+					"text": "contamination"
+				}
+			],
+			"answer": "bout"
+		},
+		{
+			"name": "C1",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "air"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "cat"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "cartoon"
+				}
+			],
+			"answer": "charicature"
+		},
+		{
+			"name": "C2",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "white",
+					"text": "seed"
+				},
+				{
+					"height": "middle",
+					"color": "red",
+					"text": "antecedent"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "keep"
+				}
+			],
+			"answer": "cede"
+		},
+		{
+			"name": "C3",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "purple",
+					"text": "kayak"
+				},
+				{
+					"height": "middle",
+					"color": "purple",
+					"text": "fantastical"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "fantastical"
+				}
+			],
+			"answer": "chimerical"
+		},
+		{
+			"name": "C4",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "purple",
+					"text": "bonnet"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "me"
+				},
+				{
+					"height": "low",
+					"color": "blue",
+					"text": "company"
+				}
+			],
+			"answer": "conglomerate"
+		},
+		{
+			"name": "D1",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "purple",
+					"text": "valley"
+				},
+				{
+					"height": "middle",
+					"color": "red",
+					"text": "sinusoidally"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "hurry"
+				}
+			],
+			"answer": "dally"
+		},
+		{
+			"name": "D2",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "purple",
+					"text": "inexperience"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "let"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "harmful"
+				}
+			],
+			"answer": "deleterious"
+		},
+		{
+			"name": "D3",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "delusion"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "is"
+				},
+				{
+					"height": "low",
+					"color": "brown",
+					"text": "founding"
+				}
+			],
+			"answer": "dissolution"
+		},
+		{
+			"name": "D4",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "diss"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "top"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "utopia"
+				}
+			],
+			"answer": "dystopia"
+		},
+		{
+			"name": "E1",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "purple",
+					"text": "encase"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "a"
+				},
+				{
+					"height": "low",
+					"color": "brown",
+					"text": "draw"
+				}
+			],
+			"answer": "efface"
+		},
+		{
+			"name": "E2",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "egg"
+				},
+				{
+					"height": "middle",
+					"color": "purple",
+					"text": "oblivious"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "horrible"
+				}
+			],
+			"answer": "egregious"
+		},
+		{
+			"name": "E3",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "mitt"
+				},
+				{
+					"height": "middle",
+					"color": "yellow",
+					"text": "time"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "contain"
+				}
+			],
+			"answer": "emit"
+		},
+		{
+			"name": "E4",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "we"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "i"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "excitement"
+				}
+			],
+			"answer": "ennui"
+		},
+		{
+			"name": "F1",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "red",
+					"text": "facilitation"
+				},
+				{
+					"height": "middle",
+					"color": "red",
+					"text": "facetiously"
+				},
+				{
+					"height": "low",
+					"color": "red",
+					"text": "problem"
+				}
+			],
+			"answer": "facet"
+		},
+		{
+			"name": "F2",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "stir"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "us"
+				},
+				{
+					"height": "low",
+					"color": "blue",
+					"text": "word"
+				}
+			],
+			"answer": "filibuster"
+		},
+		{
+			"name": "F3",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "yellow",
+					"text": "surface"
+				},
+				{
+					"height": "middle",
+					"color": "purple",
+					"text": "fissile"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "crack"
+				}
+			],
+			"answer": "fissure"
+		},
+		{
+			"name": "F4",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "yellow",
+					"text": "trough"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "a"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "easy"
+				}
+			],
+			"answer": "fraught"
+		},
+		{
+			"name": "G1",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "air"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "i"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "gaudy"
+				}
+			],
+			"answer": "garish"
+		},
+		{
+			"name": "G2",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "genie"
+				},
+				{
+					"height": "middle",
+					"color": "purple",
+					"text": "denial"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "rude"
+				}
+			],
+			"answer": "genial"
+		},
+		{
+			"name": "G3",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "glee"
+				},
+				{
+					"height": "middle",
+					"color": "yellow",
+					"text": "angle"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "collect"
+				}
+			],
+			"answer": "glean"
+		},
+		{
+			"name": "G4",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "oar"
+				},
+				{
+					"height": "middle",
+					"color": "red",
+					"text": "gorgeous"
+				},
+				{
+					"height": "low",
+					"color": "brown",
+					"text": "river"
+				}
+			],
+			"answer": "gorge"
+		},
+		{
+			"name": "H1",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "yule"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "he"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "easy"
+				}
+			],
+			"answer": "herculean"
+		},
+		{
+			"name": "H2",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "purple",
+					"text": "aesthetic"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "he"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "cracked"
+				}
+			],
+			"answer": "hermetic"
+		},
+		{
+			"name": "H3",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "genius"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "he"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "homogeneous"
+				}
+			],
+			"answer": "heterogeneous"
+		},
+		{
+			"name": "H4",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "yellow",
+					"text": "gin"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "i"
+				},
+				{
+					"height": "low",
+					"color": "red",
+					"text": "door"
+				}
+			],
+			"answer": "hinge",
+			"notes": "That top clue is a little questionable..."
+		},
+		{
+			"name": "I1",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "class"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "con"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "rebel"
+				}
+			],
+			"answer": "iconoclast"
+		},
+		{
+			"name": "I2",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "purple",
+					"text": "sediment"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "imp"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "hindrance"
+				}
+			],
+			"answer": "impediment"
+		},
+		{
+			"name": "I3",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "purple",
+					"text": "explain"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "a"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "pragmatic"
+				}
+			],
+			"answer": "inane"
+		},
+		{
+			"name": "I4",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "purple",
+					"text": "encourageable"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "rig"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "reformed"
+				}
+			],
+			"answer": "incorrigible"
+		},
+		{
+			"name": "L1",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "ill"
+				},
+				{
+					"height": "middle",
+					"color": "purple",
+					"text": "largess"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "vivacious"
+				}
+			],
+			"answer": "listless"
+		},
+		{
+			"name": "L2",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "lieu"
+				},
+				{
+					"height": "middle",
+					"color": "red",
+					"text": "elucidation"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "obvious"
+				}
+			],
+			"answer": "lucid"
+		},
+		{
+			"name": "L3",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "lieu"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "crate"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "worthwhile"
+				}
+			],
+			"answer": "lucrative"
+		},
+		{
+			"name": "L4",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "yellow",
+					"text": "curl"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "ur"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "stakeout"
+				}
+			],
+			"answer": "lurk"
+		},
+		{
+			"name": "N1",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "neigh"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "sent"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "antiquated"
+				}
+			],
+			"answer": "nascent"
+		},
+		{
+			"name": "N2",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "clay"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "men"
+				},
+				{
+					"height": "low",
+					"color": "blue",
+					"text": "word"
+				}
+			],
+			"answer": "nomenclature"
+		},
+		{
+			"name": "N3",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "purple",
+					"text": "adjust"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "plus"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "concerned"
+				}
+			],
+			"answer": "nonplussed"
+		},
+		{
+			"name": "N4",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "null"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "no"
+				},
+				{
+					"height": "low",
+					"color": "red",
+					"text": "shelf"
+				}
+			],
+			"answer": "novel"
+		},
+		{
+			"name": "O1",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "skate"
+				},
+				{
+					"height": "middle",
+					"color": "purple",
+					"text": "truncate"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "clarify"
+				}
+			],
+			"answer": "obfuscate"
+		},
+		{
+			"name": "O2",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "red",
+					"text": "obtrusive"
+				},
+				{
+					"height": "middle",
+					"color": "purple",
+					"text": "blouse"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "acute"
+				}
+			],
+			"answer": "obtuse"
+		},
+		{
+			"name": "O3",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "all"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "nit"
+				},
+				{
+					"height": "low",
+					"color": "red",
+					"text": "zoo"
+				}
+			],
+			"answer": "ornithologist"
+		},
+		{
+			"name": "O4",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "yellow",
+					"text": "taos"
+				},
+				{
+					"height": "middle",
+					"color": "red",
+					"text": "jousting"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "elect"
+				}
+			],
+			"answer": "oust"
+		},
+		{
+			"name": "P1",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "dime"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "pad"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "example"
+				}
+			],
+			"answer": "paradigm"
+		},
+		{
+			"name": "P2",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "loot"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "racy"
+				},
+				{
+					"height": "low",
+					"color": "brown-black",
+					"text": "aristocracy"
+				}
+			],
+			"answer": "plutocracy"
+		},
+		{
+			"name": "P3",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "care"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "car"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "safe"
+				}
+			],
+			"answer": "precarious"
+		},
+		{
+			"name": "P4",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "rose"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "sac"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "dull"
+				}
+			],
+			"answer": "prosaic"
+		},
+		{
+			"name": "R1",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "wrack"
+				},
+				{
+					"height": "middle",
+					"color": "purple",
+					"text": "saboteur"
+				},
+				{
+					"height": "low",
+					"color": "blue",
+					"text": "mouth"
+				}
+			],
+			"answer": "raconteur"
+		},
+		{
+			"name": "R2",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "sit"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "ant"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "accomodating"
+				}
+			],
+			"answer": "recalcitrant"
+		},
+		{
+			"name": "R3",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "read"
+				},
+				{
+					"height": "middle",
+					"color": "yellow",
+					"text": "dresser"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "correction"
+				}
+			],
+			"answer": "redress"
+		},
+		{
+			"name": "R4",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "purr"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "ire"
+				},
+				{
+					"height": "low",
+					"color": "blue",
+					"text": "skill"
+				}
+			],
+			"answer": "repertoire"
+		},
+		{
+			"name": "S1",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "his"
+				},
+				{
+					"height": "middle",
+					"color": "red",
+					"text": "masochism"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "convergence"
+				}
+			],
+			"answer": "schism"
+		},
+		{
+			"name": "S2",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "toe"
+				},
+				{
+					"height": "middle",
+					"color": "red",
+					"text": "stomatics"
+				},
+				{
+					"height": "low",
+					"color": "brown",
+					"text": "judicious"
+				}
+			],
+			"answer": "stoic",
+			"notes": "I DISAGREE with that brown clue. >:("
+		},
+		{
+			"name": "S3",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "purple",
+					"text": "petrify"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "up"
+				},
+				{
+					"height": "low",
+					"color": "brown",
+					"text": "alcohol"
+				}
+			],
+			"answer": "stupefy",
+			"notes": "In which the brown clue is not what the clue <em>becomes</em>, it's just something that can happen sometimes after the clue exists depending on circumstances. Bad"
+		},
+		{
+			"name": "S4",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "pull"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "up"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "flexible"
+				}
+			],
+			"answer": "supple"
+		},
+		{
+			"name": "T1",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "purr"
+				},
+				{
+					"height": "middle",
+					"color": "purple",
+					"text": "entrainment"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "mood"
+				}
+			],
+			"answer": "temperament"
+		},
+		{
+			"name": "T2",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "purple",
+					"text": "sensitive"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "ate"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "confident"
+				}
+			],
+			"answer": "tentative"
+		},
+		{
+			"name": "T3",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "oar"
+				},
+				{
+					"height": "middle",
+					"color": "yellow",
+					"text": "roost"
+				},
+				{
+					"height": "low",
+					"color": "red",
+					"text": "body"
+				}
+			],
+			"answer": "torso"
+		},
+		{
+			"name": "T4",
+			"section": "Library 1st Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "tree"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "is"
+				},
+				{
+					"height": "low",
+					"color": "blue",
+					"text": "word"
+				}
+			],
+			"answer": "treatise"
+		},
+		{
+			"name": "B1",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "purple",
+					"text": "relieve"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "be"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "doubt"
+				}
+			],
+			"answer": "believe"
+		},
+		{
+			"name": "B2",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "purple",
+					"text": "filtered"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "wired"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "cognizant"
+				}
+			],
+			"answer": "bewildered",
+			"note": "This one's custom. It's not actually in the game."
+		},
+		{
+			"name": "B3",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "bye"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "bite"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "two-sided"
+				}
+			],
+			"answer": "bilateral"
+		},
+		{
+			"name": "B4",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "purple",
+					"text": "ground"
+				},
+				{
+					"height": "middle",
+					"color": "red",
+					"text": "boundless"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "leap"
+				}
+			],
+			"answer": "bound"
+		},
+		{
+			"name": "C1",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "cough"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "on"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "noise"
+				}
+			],
+			"answer": "cacophony"
+		},
+		{
+			"name": "C2",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "red",
+					"text": "century"
+				},
+				{
+					"height": "middle",
+					"color": "purple",
+					"text": "failure"
+				},
+				{
+					"height": "low",
+					"color": "brown",
+					"text": "offenses"
+				}
+			],
+			"answer": "censure"
+		},
+		{
+			"name": "C3",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "purple",
+					"text": "environmental"
+				},
+				{
+					"height": "middle",
+					"color": "purple",
+					"text": "confidential"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "causal"
+				}
+			],
+			"answer": "coincidental"
+		},
+		{
+			"name": "C4",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "purple",
+					"text": "mercy"
+				},
+				{
+					"height": "middle",
+					"color": "purple",
+					"text": "contrabands"
+				},
+				{
+					"height": "low",
+					"color": "purple",
+					"text": "discussion"
+				}
+			],
+			"answer": "controversy"
+		},
+		{
+			"name": "J1",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "magenta",
+					"text": "proffesionals"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "on"
+				},
+				{
+					"height": "low",
+					"color": "red",
+					"text": "language"
+				}
+			],
+			"answer": "jargon"
+		},
+		{
+			"name": "J2",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "on"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "dice"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "tan"
+				}
+			],
+			"answer": "jaundice"
+		},
+		{
+			"name": "J3",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "magenta",
+					"text": "bell"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "in"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "ditty"
+				}
+			],
+			"answer": "jingle"
+		},
+		{
+			"name": "J4",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "jock"
+				},
+				{
+					"height": "middle",
+					"color": "purple",
+					"text": "binocular"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "hilarious"
+				}
+			],
+			"answer": "jocular"
+		},
+		{
+			"name": "K1",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "red",
+					"text": "grayscale"
+				},
+				{
+					"height": "middle",
+					"color": "red",
+					"text": "likeableness"
+				},
+				{
+					"height": "low",
+					"color": "magenta",
+					"text": "green"
+				}
+			],
+			"answer": "kale"
+		},
+		{
+			"name": "K2",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "purple",
+					"text": "steal"
+				},
+				{
+					"height": "middle",
+					"color": "red",
+					"text": "glockenspiel"
+				},
+				{
+					"height": "low",
+					"color": "red",
+					"text": "ship"
+				}
+			],
+			"answer": "keel"
+		},
+		{
+			"name": "K3",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "wee"
+				},
+				{
+					"height": "middle",
+					"color": "magenta",
+					"text": "noun"
+				},
+				{
+					"height": "low",
+					"color": "magenta",
+					"text": "fruit"
+				}
+			],
+			"answer": "kiwi"
+		},
+		{
+			"name": "K4",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "leapt"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "man"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "extravagance"
+				}
+			],
+			"answer": "kleptomania"
+		},
+		{
+			"name": "L1",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "sir"
+				},
+				{
+					"height": "middle",
+					"color": "purple",
+					"text": "occupation"
+				},
+				{
+					"height": "low",
+					"color": "brown",
+					"text": "knife"
+				}
+			],
+			"answer": "laceration"
+		},
+		{
+			"name": "L2",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "red",
+					"text": "largest"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "large"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "generosity"
+				}
+			],
+			"answer": "largesse"
+		},
+		{
+			"name": "L3",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "attitude"
+				},
+				{
+					"height": "middle",
+					"color": "yellow",
+					"text": "altitude"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "longitude"
+				}
+			],
+			"answer": "latitude"
+		},
+		{
+			"name": "L4",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "shun"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "ill"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "massive"
+				}
+			],
+			"answer": "lilliputian"
+		},
+		{
+			"name": "M1",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "purple",
+					"text": "blasphemous"
+				},
+				{
+					"height": "middle",
+					"color": "mint",
+					"text": "orange"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "altruistic"
+				}
+			],
+			"hints": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "numb"
+				}
+			],
+			"answer": "magnanimous"
+		},
+		{
+			"name": "M2",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "purple",
+					"text": "primate"
+				},
+				{
+					"height": "middle",
+					"color": "mint",
+					"text": "mint"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "tycoon"
+				}
+			],
+			"hints": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "eight"
+				}
+			],
+			"answer": "magnate"
+		},
+		{
+			"name": "M3",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "purple",
+					"text": "pathetic"
+				},
+				{
+					"height": "middle",
+					"color": "mint",
+					"text": "purple"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "enchanting"
+				}
+			],
+			"hints": [
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "magic"
+				}
+			],
+			"answer": "magnetic"
+		},
+		{
+			"name": "M4",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "purple",
+					"text": "luminescent"
+				},
+				{
+					"height": "middle",
+					"color": "mint",
+					"text": "brown"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "majestic"
+				}
+			],
+			"hints": [
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "magic"
+				}
+			],
+			"answer": "magnificent"
+		},
+		{
+			"name": "Q1",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "red",
+					"text": "catalytic"
+				},
+				{
+					"height": "middle",
+					"color": "red",
+					"text": "qualitative"
+				},
+				{
+					"height": "low",
+					"color": "magenta",
+					"text": "shrub"
+				}
+			],
+			"answer": "qat"
+		},
+		{
+			"name": "Q2",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "ant"
+				},
+				{
+					"height": "middle",
+					"color": "purple",
+					"text": "momentum"
+				},
+				{
+					"height": "low",
+					"color": "red",
+					"text": "physics"
+				}
+			],
+			"answer": "quantum",
+			"notes": "I don't think anyone pronounces the \"ant\" that way..."
+		},
+		{
+			"name": "Q3",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "purple",
+					"text": "glory"
+				},
+				{
+					"height": "middle",
+					"color": "purple",
+					"text": "starry"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "excavate"
+				}
+			],
+			"answer": "quarry"
+		},
+		{
+			"name": "Q4",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "turn"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "ten"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "fourth"
+				}
+			],
+			"answer": "quaternary"
+		},
+		{
+			"name": "R1",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "purple",
+					"text": "damage"
+				},
+				{
+					"height": "middle",
+					"color": "purple",
+					"text": "damage"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "damage"
+				}
+			],
+			"answer": "ravage"
+		},
+		{
+			"name": "R2",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "wreck"
+				},
+				{
+					"height": "middle",
+					"color": "purple",
+					"text": "accuse"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "disqualify"
+				}
+			],
+			"answer": "recuse"
+		},
+		{
+			"name": "R3",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "lies"
+				},
+				{
+					"height": "middle",
+					"color": "purple",
+					"text": "hypnotize"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "repair"
+				}
+			],
+			"answer": "revitalize"
+		},
+		{
+			"name": "R4",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "ugh"
+				},
+				{
+					"height": "middle",
+					"color": "red",
+					"text": "shrugged"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "soft"
+				}
+			],
+			"answer": "rugged",
+			"notes": "Raise your hand if you think there's a <a href='https://en.wiktionary.org/wiki/ugh'>uvular fricative</a> at the end of \"ugh.\""
+		},
+		{
+			"name": "S1",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "ick"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "on"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "straightforward"
+				}
+			],
+			"answer": "sardonic"
+		},
+		{
+			"name": "S2",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "said"
+				},
+				{
+					"height": "middle",
+					"color": "purple",
+					"text": "complementary"
+				},
+				{
+					"height": "low",
+					"color": "magenta",
+					"text": "rock"
+				}
+			],
+			"answer": "sedimentary"
+		},
+		{
+			"name": "S3",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "red",
+					"text": "skeleton"
+				},
+				{
+					"height": "middle",
+					"color": "yellow",
+					"text": "kins"
+				},
+				{
+					"height": "low",
+					"color": "lavender",
+					"text": "human"
+				}
+			],
+			"answer": "skin"
+		},
+		{
+			"name": "S4",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "lime"
+				},
+				{
+					"height": "middle",
+					"color": "gray",
+					"text": "this"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "angsty"
+				}
+			],
+			"answer": "sublime",
+			"notes": "Just a <em>tad</em> self aggrandizing, but alright. It works better in the context of the game I think. Don't ask me how \"angsty\" is an antonym of sublime, though."
+		},
+		{
+			"name": "T1",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "white",
+					"text": "tracked"
+				},
+				{
+					"height": "middle",
+					"color": "red",
+					"text": "contract"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "land"
+				}
+			],
+			"hints": [
+				{
+					"height": "low",
+					"color": "lime",
+					"text": "digestive"
+				}
+			],
+			"answer": "tract",
+			"notes": "Fun fact, I talked to the developer of the game, that bottom clue is not supposed to be black. They haven't fixed it yet, but this one is straight-up incorrect."
+		},
+		{
+			"name": "T2",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "lime",
+					"text": "grunt"
+				},
+				{
+					"height": "middle",
+					"color": "purple",
+					"text": "gigabyte"
+				},
+				{
+					"height": "low",
+					"color": "magenta",
+					"text": "person"
+				}
+			],
+			"answer": "troglodyte"
+		},
+		{
+			"name": "T3",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "tell"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "age"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "lecture"
+				}
+			],
+			"answer": "tutelage"
+		},
+		{
+			"name": "T4",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "tear"
+				},
+				{
+					"height": "middle",
+					"color": "purple",
+					"text": "uncanny"
+				},
+				{
+					"height": "low",
+					"color": "brown",
+					"text": "leadership"
+				}
+			],
+			"answer": "tyranny"
+		},
+		{
+			"name": "U1",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "purple",
+					"text": "witness"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "quit"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "nowhere"
+				}
+			],
+			"answer": "ubiquitous"
+		},
+		{
+			"name": "U2",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "tear"
+				},
+				{
+					"height": "middle",
+					"color": "purple",
+					"text": "superior"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "open"
+				}
+			],
+			"answer": "ulterior"
+		},
+		{
+			"name": "U3",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "knee"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "can"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "ordinary"
+				}
+			],
+			"answer": "uncanny"
+		},
+		{
+			"name": "U4",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "tear"
+				},
+				{
+					"height": "middle",
+					"color": "purple",
+					"text": "contrarian"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "practical"
+				}
+			],
+			"answer": "utilitarian"
+		},
+		{
+			"name": "V1",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "aunt"
+				},
+				{
+					"height": "middle",
+					"color": "purple",
+					"text": "brilliant"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "wanderer"
+				}
+			],
+			"answer": "vagrant"
+		},
+		{
+			"name": "V2",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "very"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "able"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "constant"
+				}
+			],
+			"answer": "variable"
+		},
+		{
+			"name": "V3",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "loss"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "city"
+				},
+				{
+					"height": "low",
+					"color": "blue",
+					"text": "speed"
+				}
+			],
+			"answer": "velocity"
+		},
+		{
+			"name": "V4",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "techs"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "ere"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "intersection"
+				}
+			],
+			"answer": "vertex"
+		},
+		{
+			"name": "W1",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "rust"
+				},
+				{
+					"height": "middle",
+					"color": "mint",
+					"text": ""
+				},
+				{
+					"height": "low",
+					"color": "magenta",
+					"text": "desire"
+				}
+			],
+			"hints": [
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "wand"
+				}
+			],
+			"answer": "wanderlust"
+		},
+		{
+			"name": "W2",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "white",
+					"text": "whacks"
+				},
+				{
+					"height": "middle",
+					"color": "purple",
+					"text": "lax"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "rise"
+				}
+			],
+			"answer": "wax"
+		},
+		{
+			"name": "W3",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "war"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "war"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "dock"
+				}
+			],
+			"answer": "wharf"
+		},
+		{
+			"name": "W4",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "wheel"
+				},
+				{
+					"height": "middle",
+					"color": "red",
+					"text": "wheatfield"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "drop"
+				}
+			],
+			"answer": "wield"
+		},
+		{
+			"name": "X1",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "know"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "lit"
+				},
+				{
+					"height": "low",
+					"color": "lavender",
+					"text": "rock"
+				}
+			],
+			"answer": "xenolith"
+		},
+		{
+			"name": "X2",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "foe"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "no"
+				},
+				{
+					"height": "low",
+					"color": "magenta",
+					"text": "person"
+				}
+			],
+			"answer": "xenophobe"
+		},
+		{
+			"name": "X3",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "purple",
+					"text": "phylum"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "ye"
+				},
+				{
+					"height": "low",
+					"color": "red",
+					"text": "plant"
+				}
+			],
+			"answer": "xylem"
+		},
+		{
+			"name": "X4",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "low"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "lop"
+				},
+				{
+					"height": "low",
+					"color": "blue",
+					"text": "key"
+				}
+			],
+			"answer": "xylophone"
+		},
+		{
+			"name": "Y1",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "red",
+					"text": "cognac"
+				},
+				{
+					"height": "middle",
+					"color": "red",
+					"text": "yardstick"
+				},
+				{
+					"height": "low",
+					"color": "magenta",
+					"text": "animal"
+				}
+			],
+			"answer": "yak"
+		},
+		{
+			"name": "Y2",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "yell"
+				},
+				{
+					"height": "middle",
+					"color": "purple",
+					"text": "help"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "cry"
+				}
+			],
+			"answer": "yelp"
+		},
+		{
+			"name": "Y3",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "oak"
+				},
+				{
+					"height": "middle",
+					"color": "purple",
+					"text": "nickel"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "you"
+				}
+			],
+			"answer": "yokel"
+		},
+		{
+			"name": "Y4",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "you"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "ide"
+				},
+				{
+					"height": "low",
+					"color": "magenta",
+					"text": "season"
+				}
+			],
+			"answer": "yuletide"
+		},
+		{
+			"name": "Z1",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "tree"
+				},
+				{
+					"height": "middle",
+					"color": "blue",
+					"text": "lot"
+				},
+				{
+					"height": "low",
+					"color": "black",
+					"text": "indifference"
+				}
+			],
+			"answer": "zealotry"
+		},
+		{
+			"name": "Z2",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "purple",
+					"text": "behemoth"
+				},
+				{
+					"height": "middle",
+					"color": "magenta",
+					"text": "noun"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "maximum"
+				}
+			],
+			"answer": "zenith"
+		},
+		{
+			"name": "Z3",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "fur"
+				},
+				{
+					"height": "middle",
+					"color": "magenta",
+					"text": "noun"
+				},
+				{
+					"height": "low",
+					"color": "magenta",
+					"text": "air"
+				}
+			],
+			"answer": "zephyr"
+		},
+		{
+			"name": "Z4",
+			"section": "Library 2nd Floor",
+			"givenLetters": 1,
+			"clues": [
+				{
+					"height": "high",
+					"color": "red",
+					"text": "tipsiest"
+				},
+				{
+					"height": "middle",
+					"color": "red",
+					"text": "zaniest"
+				},
+				{
+					"height": "low",
+					"color": "white",
+					"text": "vigor"
+				}
+			],
+			"answer": "zest"
+		},
+		{
+			"name": "01",
+			"section": "Countries",
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "rush"
+				}
+			],
+			"answer": "russia"
+		},
+		{
+			"name": "02",
+			"section": "Countries",
+			"clues": [
+				{
+					"height": "high",
+					"color": "yellow",
+					"text": "panes"
+				}
+			],
+			"answer": "spain"
+		},
+		{
+			"name": "03",
+			"section": "Countries",
+			"clues": [
+				{
+					"height": "middle",
+					"color": "purple",
+					"text": "pants"
+				}
+			],
+			"answer": "france"
+		},
+		{
+			"name": "04",
+			"section": "Countries",
+			"clues": [
+				{
+					"height": "middle",
+					"color": "purple",
+					"text": "brazen"
+				}
+			],
+			"answer": "brazil"
+		},
+		{
+			"name": "05",
+			"section": "Countries",
+			"clues": [
+				{
+					"puzzle": 0,
+					"height": "middle",
+					"color": "red",
+					"text": "fit"
+				},
+				{
+					"puzzle": 1,
+					"height": "middle",
+					"color": "blue",
+					"text": "it"
+				}
+			],
+			"answers": [
+				"it",
+				"italy"
+			]
+		},
+		{
+			"name": "06",
+			"section": "Countries",
+			"clues": [
+				{
+					"puzzle": 0,
+					"height": "middle",
+					"color": "red",
+					"text": "win"
+				},
+				{
+					"puzzle": 1,
+					"height": "middle",
+					"color": "blue",
+					"text": "in"
+				}
+			],
+			"answers": [
+				"in",
+				"india"
+			]
+		},
+		{
+			"name": "07",
+			"section": "Countries",
+			"clues": [
+				{
+					"puzzle": 0,
+					"height": "low",
+					"color": "black",
+					"text": "one"
+				},
+				{
+					"puzzle": 1,
+					"height": "middle",
+					"color": "blue",
+					"text": "many"
+				}
+			],
+			"answers": [
+				"many",
+				"germany"
+			]
+		},
+		{
+			"name": "08",
+			"section": "Countries",
+			"clues": [
+				{
+					"puzzle": 0,
+					"height": "low",
+					"color": "red",
+					"text": "face"
+				},
+				{
+					"puzzle": 1,
+					"height": "middle",
+					"color": "blue",
+					"text": "chin"
+				}
+			],
+			"answers": [
+				"chin",
+				"china"
+			]
+		},
+		{
+			"name": "09",
+			"section": "Countries",
+			"clues": [
+				{
+					"puzzle": 0,
+					"height": "low",
+					"color": "brown",
+					"text": "prince"
+				},
+				{
+					"puzzle": 1,
+					"height": "middle",
+					"color": "blue",
+					"text": "king"
+				},
+				{
+					"puzzle": 2,
+					"height": "middle",
+					"color": "blue",
+					"text": "kingdom"
+				}
+			],
+			"answers": [
+				"king",
+				"kingdom",
+				"united kingdom"
+			]
+		},
+		{
+			"name": "10",
+			"section": "Countries",
+			"clues": [
+				{
+					"puzzle": 0,
+					"height": "low",
+					"color": "white",
+					"text": "quick"
+				},
+				{
+					"puzzle": 1,
+					"height": "middle",
+					"color": "blue",
+					"text": "stat"
+				},
+				{
+					"puzzle": 2,
+					"height": "middle",
+					"color": "blue",
+					"text": "state"
+				},
+				{
+					"puzzle": 2,
+					"height": "low",
+					"color": "blue",
+					"text": "state"
+				}
+			],
+			"answers": [
+				"stat",
+				"state",
+				"united states"
+			]
+		},
+		{
+			"name": "11",
+			"section": "Cities",
+			"clues": [
+				{
+					"height": "high",
+					"color": "purple",
+					"text": "betting"
+				}
+			],
+			"answer": "beijing"
+		},
+		{
+			"name": "12",
+			"section": "Cities",
+			"clues": [
+				{
+					"height": "high",
+					"color": "red",
+					"text": "roaming"
+				}
+			],
+			"answer": "rome"
+		},
+		{
+			"name": "13",
+			"section": "Cities",
+			"clues": [
+				{
+					"height": "high",
+					"color": "red",
+					"text": "parrots"
+				}
+			],
+			"answer": "paris"
+		},
+		{
+			"name": "14",
+			"section": "Cities",
+			"clues": [
+				{
+					"height": "high",
+					"color": "blue",
+					"text": "weigh"
+				},
+				{
+					"height": "middle",
+					"color": "magenta",
+					"text": "spanish"
+				}
+			],
+			"answer": "buenos aires"
+		},
+		{
+			"name": "15",
+			"section": "Cities",
+			"clues": [
+				{
+					"puzzle": 0,
+					"height": "low",
+					"color": "black",
+					"text": "body"
+				},
+				{
+					"puzzle": 1,
+					"height": "high",
+					"color": "white",
+					"text": "soul"
+				}
+			],
+			"answers": [
+				"soul",
+				"seoul"
+			]
+		},
+		{
+			"name": "16",
+			"section": "Cities",
+			"clues": [
+				{
+					"puzzle": 0,
+					"height": "high",
+					"color": "white",
+					"text": "two"
+				},
+				{
+					"puzzle": 1,
+					"height": "middle",
+					"color": "blue",
+					"text": "too"
+				}
+			],
+			"answers": [
+				"too",
+				"tokyo"
+			]
+		},
+		{
+			"name": "17",
+			"section": "Cities",
+			"clues": [
+				{
+					"puzzle": 0,
+					"height": "low",
+					"color": "black",
+					"text": "unfashionable"
+				},
+				{
+					"puzzle": 1,
+					"height": "middle",
+					"color": "blue",
+					"text": "chic"
+				}
+			],
+			"answers": [
+				"chic",
+				"chicago"
+			]
+		},
+		{
+			"name": "18",
+			"section": "Cities",
+			"clues": [
+				{
+					"puzzle": 0,
+					"height": "high",
+					"color": "blue",
+					"text": "orc"
+				},
+				{
+					"puzzle": 1,
+					"height": "middle",
+					"color": "blue",
+					"text": "york"
+				},
+				{
+					"puzzle": 1,
+					"height": "low",
+					"color": "brown",
+					"text": "york"
+				}
+			],
+			"answers": [
+				"york",
+				"new york"
+			]
+		},
+		{
+			"name": "19",
+			"section": "Cities",
+			"clues": [
+				{
+					"puzzle": 0,
+					"height": "middle",
+					"color": "blue",
+					"text": "on"
+				},
+				{
+					"puzzle": 0,
+					"height": "low",
+					"color": "magenta",
+					"text": "bird"
+				},
+				{
+					"puzzle": 1,
+					"height": "middle",
+					"color": "blue",
+					"text": "loon"
+				}
+			],
+			"answers": [
+				"loon",
+				"london"
+			]
+		},
+		{
+			"name": "20",
+			"section": "Cities",
+			"clues": [
+				{
+					"puzzle": 0,
+					"height": "middle",
+					"color": "blue",
+					"text": "delicate"
+				},
+				{
+					"puzzle": 1,
+					"height": "low",
+					"color": "white",
+					"text": "delicatessen"
+				},
+				{
+					"puzzle": 1,
+					"height": "middle",
+					"color": "red",
+					"text": "delicatessen"
+				},
+				{
+					"puzzle": 2,
+					"height": "high",
+					"color": "white",
+					"text": "deli"
+				}
+			],
+			"answers": [
+				"delicatessen",
+				"deli",
+				"delhi"
+			]
+		},
+		{
+			"name": "21",
+			"section": "Cities",
+			"clues": [
+				{
+					"puzzle": 0,
+					"height": "low",
+					"color": "white",
+					"text": "perpetual"
+				},
+				{
+					"puzzle": 1,
+					"height": "middle",
+					"color": "blue",
+					"text": "constant"
+				},
+				{
+					"puzzle": 2,
+					"height": "low",
+					"color": "brown",
+					"text": "constantinople"
+				}
+			],
+			"answers": [
+				"constant",
+				"constantinople",
+				"istanbul"
+			]
+		}
+	]
+}

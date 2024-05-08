@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+	<head>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js">
+		</script> 
+		<link href="https://cdn.jsdelivr.net/npm/mana-font@latest/css/mana.css" rel="stylesheet" type="text/css" />
+		
+		<link rel="icon" type="image/x-icon" href="../../lojban/favicon.ico">
+		<link rel="stylesheet" href="../../lojban/style.css">
+		<script src="../data.js"></script>
+		<script>
+			const storyCode = "Teferi's Tutelage"
+		</script>
+		<script src="../../lojban/main.js" defer></script>
+
+		<title>Teferi's Tutelage</title>
+		<meta property="og:title" content="Teferi's Tutelage">
+		<meta property="og:description" content="">
+		<meta property="og:image" content="https://durple3f.github.io/greek/images/Teferi's%20Tutelage%204.png">
+	</head>
+	<body>
+		<a href="../index.html" id="back-btn">
+			<button class="btn btn-secondary">Back</button>
+		</a>
+		<div id="draggable">=</div>
+		<div id="explanation-container">
+			<div id="explanation">
+				<div id="explanation-text"></div>
+				<button class="btn btn-secondary show-all" style="display: none;">Show all</button>
+			</div>
+		</div>
+		<div id="views">
+			<div class="row text-center fw-bold">
+				<div class="col">
+					English <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					Literal Translation <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					Romanized <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					Greek <button class="toggle-btn">(Hide)</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="f3">Teferi</span><span class="f2">'s</span> <span class="f1">Tutelage</span>
+				</div>
+				<div class="col">
+					<span class="f1">Education</span> <span class="f2">of</span> <span class="f3">Teferi</span>
+				</div>
+				<div class="col">
+					<span class="f1">Ekpaídefsi</span> <span class="f2">tou</span> <span class="f3">Teféri</span>
+				</div>
+				<div class="col">
+					<span class="f1">Εκπαίδευση</span> <span class="f2">του</span> <span class="f3">Τεφέρι</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="f4">Enchantment</span>
+				</div>
+				<div class="col">
+					<span class="f4">Charm</span>
+				</div>
+				<div class="col">
+					<span class="f4">Goiteía</span>
+				</div>
+				<div class="col">
+					<span class="f4">Γοητεία</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="f5">When</span> <span class="f3">Teferi</span><span class="f2">’s</span> <span class="f1">Tutelage</span> <span class="f7">enters</span>, <span class="f8">draw</span> <span class="f9">a</span> <span class="f10">card</span>, <span class="f12">then</span> <span class="f13">discard</span> <span class="f9">a</span> <span class="f10">card</span>.
+				</div>
+				<div class="col">
+					<span class="f5">When</span> <span class="f6">the</span> <span class="f1">Education</span> <span class="f2">of</span> <span class="f3">Teferi</span> <span class="f7">enters</span>, <span class="f8">draw</span> <span class="f9">a</span> <span class="f10">card</span>, <span class="f11">and</span> <span class="f12">then</span> <span class="f13">discard</span> <span class="f9">a</span> <span class="f10">card</span>.
+				</div>
+				<div class="col">
+					<span class="f5">Ótan</span> <span class="f6">i</span> <span class="f1">Ekpaídefsi</span> <span class="f2">tou</span> <span class="f3">Teféri</span> <span class="f7">baínei</span>, <span class="f8">travás</span> <span class="f9">mía</span> <span class="f10">kárta</span>, <span class="f11">kai</span> <span class="f12">metá</span> <span class="f13">aporrípteis</span> <span class="f9">mía</span> <span class="f10">kárta</span>.
+				</div>
+				<div class="col">
+					<span class="f5">Όταν</span> <span class="f6">η</span> <span class="f1">Εκπαίδευση</span> <span class="f2">του</span> <span class="f3">Τεφέρι</span> <span class="f7">μπαίνει</span>, <span class="f8">τραβάς</span> <span class="f9">μία</span> <span class="f10">κάρτα</span>, <span class="f11">και</span> <span class="f12">μετά</span> <span class="f13">απορρίπτεις</span> <span class="f9">μία</span> <span class="f10">κάρτα</span>.
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="f14">Whenever</span> <span class="f8"><span class="f15">you draw</span></span> <span class="f9">a</span> <span class="f10">card</span>, <span class="f17">target</span> <span class="f18">opponent</span> <span class="f19">mills</span> <span class="f20">two</span> <span class="f10">cards</span>. (<span class="f21">They put</span> <span class="f22">the</span> <span class="f24">top</span> <span class="f20">two</span> <span class="f10">cards</span> <span class="f24">of</span> <span class="f26">their</span> <span class="f25">library</span> <span class="f27">into</span> <span class="f26">their</span> <span class="f29">graveyard</span>.)
+				</div>
+				<div class="col">
+					<span class="f14">Whenever</span> <span class="f8"><span class="f15">you draw</span></span> <span class="f9">a</span> <span class="f10">card</span>, <span class="f17">target</span> <span class="f18">opponent</span> <span class="f19">grinds</span> <span class="f20">two</span> <span class="f10">cards</span>. (<span class="f21">They put</span> <span class="f22">the</span> <span class="f20">two</span> <span class="f24">top</span> <span class="f10">cards</span> <span class="f24">of</span> <span class="f24">the</span> <span class="f25">library</span> <span class="f26">of them</span> <span class="f27">to</span> <span class="f28">the</span> <span class="f29">graveyard</span> <span class="f26">of them</span>.)
+				</div>
+				<div class="col">
+					<span class="f14">Ópote</span> <span class="f8"><span class="f15">travás</span></span> <span class="f9">mía</span> <span class="f10">kárta</span>, <span class="f16">to</span> <span class="f17">stócho</span> <span class="f18">antípalo</span> <span class="f19">aléthei</span> <span class="f20">dío</span> <span class="f10">kártes</span>. (<span class="f21">Vázei</span> <span class="f22">tis</span> <span class="f20">dýo</span> <span class="f24">koryfaíes</span> <span class="f10">kártes</span> <span class="f24">tis</span> <span class="f25">vivliothíkis</span> <span class="f26">tou</span> <span class="f27">s<span class="f28">to</span></span> <span class="f29">nekrotafeío</span> <span class="f26">tou</span>.)
+				</div>
+				<div class="col">
+					<span class="f14">Όποτε</span> <span class="f8"><span class="f15">τραβάς</span></span> <span class="f9">μία</span> <span class="f10">κάρτα</span>, <span class="f16">το</span> <span class="f17">στόχο</span> <span class="f18">αντίπαλο</span> <span class="f19">αλέθει</span> <span class="f20">δύο</span> <span class="f10">κάρτες</span>. (<span class="f21">Βάζει</span> <span class="f22">τις</span> <span class="f20">δύο</span> <span class="f24">κορυφαίες</span> <span class="f10">κάρτες</span> <span class="f24">της</span> <span class="f25">βιβλιοθήκης</span> <span class="f26">του</span> <span class="f27">σ<span class="f28">το</span></span> <span class="f29">νεκροταφείο</span> <span class="f26">του</span>.)
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					“<span class="f37">Tarassel</span><span class="f36">’s</span> <span class="f31">sixth</span> <span class="f32">law</span> <span class="f33">of</span> <span class="f34">temporal</span> <span class="f35">recursion</span> <span class="f38">is</span> <span class="f39">easy</span> <span class="f40">to</span> <span class="f41">understand</span> <span class="f42">as long</span> <span class="f40">as</span> <span class="f44">you know</span> <span class="f45">the</span> <span class="f46">first</span> <span class="f47">seven</span>.”
+				</div>
+				<div class="col">
+					“<span class="f30">The</span> <span class="f31">sixth</span> <span class="f32">law</span> <span class="f33">of</span> <span class="f34">temporal</span> <span class="f35">retrogression</span> <span class="f36">of</span> <span class="f37">Tasserel</span> <span class="f38">is</span> <span class="f39">easy</span> <span class="f40">to</span> <span class="f41">understand</span>, <span class="f42">provided</span> <span class="f40">that</span> <span class="f44">you know</span> <span class="f45">the</span> <span class="f46">first</span> <span class="f47">seven</span>.”
+				</div>
+				<div class="col">
+					“<span class="f30">O</span> <span class="f31">éktos</span> <span class="f32">nómos</span> <span class="f33">tou</span> <span class="f34">chronikoú</span> <span class="f35">anadromikoú</span> <span class="f36">tou</span> <span class="f37">Tarassél</span> <span class="f38">eínai</span> <span class="f39">éfkolos</span> <span class="f40">na</span> <span class="f41">katalavaínei</span> <span class="f42">arkeí</span> <span class="f40">na</span> <span class="f44">xéreis</span> <span class="f45">tous</span> <span class="f46">prótous</span> <span class="f47">eptá</span>.”
+				</div>
+				<div class="col">
+					«<span class="f30">Ο</span> <span class="f31">έκτος</span> <span class="f32">νόμος</span> <span class="f33">του</span> <span class="f34">χρονικού</span> <span class="f35">αναδρομικού</span> <span class="f36">του</span> <span class="f37">Ταρασσέλ</span> <span class="f38">είναι</span> <span class="f39">εύκολος</span> <span class="f40">να</span> <span class="f41">καταλαβαίνει</span> <span class="f42">αρκεί</span> <span class="f40">να</span> <span class="f44">ξέρεις</span> <span class="f45">τους</span> <span class="f46">πρώτους</span> <span class="f47">επτά</span>.»
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<img class="mtg-card img-fluid" src="../images/Teferi's Tutelage 1.png">
+				</div>
+				<div class="col">
+					<img class="mtg-card img-fluid" src="../images/Teferi's Tutelage 2.png">
+				</div>
+				<div class="col">
+					<img class="mtg-card img-fluid" src="../images/Teferi's Tutelage 3.png">
+				</div>
+				<div class="col">
+					<img class="mtg-card img-fluid" src="../images/Teferi's Tutelage 4.png">
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

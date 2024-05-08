@@ -1,0 +1,24 @@
+Case of the Ransacked Lab
+Myster of the Laboratory which was Broken
+lo nonseljmi ne le skeku'a noi pu se pofygau
+
+
+Enchantment — Case
+Enchantment — Mystery
+vi'ormakfa — nonseljmi
+
+
+Instant and sorcery spells you cast cost {1} less to cast.
+Each spell which is an instant or is a sorcery, which is cast by you is reduced in price by {1}.
+ro mafru'e poi sutmocmakfa gi'a mocmakfa zi'e poi se mafpli be do cu jdika lo jdima {1}
+
+
+To solve — You’ve cast four or more instant and sorcery spells this turn. (If unsolved, solve at the beginning of your end step.)
+Understanding-cause — You have cast at least 4 spells which are instants or are sorceries during the current turn.
+jmiki'u — do pu mafpli su'e vo mafru'e poi sutmocmakfa gi'a mocmakfa ku'o ca le ca kelka'u
+
+
+Solved — Whenever you cast an instant or sorcery spell, draw a card.
+Understood — After each time you cast a spell which is an instant or is a sorcery, you draw a card.
+pu jimpe — ba ro nu do mafpli pa mafru'e poi sutmocmakfa gi'a mocmakfa kei do cpacu pa karda
+

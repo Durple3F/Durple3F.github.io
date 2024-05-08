@@ -1,0 +1,12 @@
+To re-render:
+1) Ashiok, Wicked Manipulator (used xancu instead of xance)
+    - re-do the triggered ability of the nightmare tokens. right now the condition just says "there's an event of a combat-kind of phase" which sounds dumb
+    - the nightmare also uses the wrong word for counters
+    - the intervening if should use ifle
+2) Elesh Norn, Grand Cenobite
+3) The Enigma Jewel
+4) All of the LCI gods
+    - Ojer Kaslem says dunla instead of danlu
+5) Alquist Proft
+    - Went and changed the name for the detective type
+All of 'em, really. Types are written differently now.

@@ -1,0 +1,19 @@
+Forum Familiar
+Forum friend
+lo snustu pendo
+
+
+Creature — Cat
+Creature — Cat
+danlu — mlatu
+
+
+Disguise {1}{W} (You may cast this card face down for {3} as a 2/2 creature with ward {2}. Turn it face up any time for its disguise cost.)
+Disguise {1}{W} (You can cast this in a way that's facing down causing its costing {3} and becoming a creature with 2/2 and "ward {2}." You can turn it during any time caused by paying its disguise cost.)
+ticta'u {1}{W} (.i do kakne lo zu'o mafpli be ti co selfa'a be lo dizlo kei se ri'a lo nu ti se jdima {3} gi'e binxo pa 2/2 danlu poi tolcau be lu sebandu {2} li'u .i do kakne lo zu'o cargau be ti kei ca ro da poi teirmokca vau ri'a lo zu'o pleji be le ticta'u jdima)
+
+
+When Forum Familiar is turned face up, return another target permanent you control to its owner’s hand and put a +1/+1 counter on Forum Familiar.
+After each time this becomes oriented upward, you target a permanent which you control. You return it to the owner of it's hand, and put a +1/+1 counter on this.
+ba ro nu ti inxo lo ka selfa'a be lo galtu kei kei do fargau pa vi'ordai poi do jitro zi'e goi ko'a .i do xrubei ko'a le le ponse be ko'a ku xance gi'e punji pa nacdai ti
+

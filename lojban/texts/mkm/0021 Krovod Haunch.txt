@@ -1,0 +1,28 @@
+Krovod Haunch
+Big-cow thigh
+lo brabakni zaglamtu'e
+
+
+Artifact — Food Equipment
+Artifact — Food Tool
+rutmi — cidja cabra
+
+
+Equipped creature gets +2/+0.
+The creature which uses this gets +2/+0.
+le danlu poi pilno be ti cu cpacu +2/+0
+
+
+{2}, {T}, Sacrifice Krovod Haunch: You gain 3 life.
+{2}, {T}, sacrifice this: Your life increases by 3.
+{2}, {T}, li'aspo ti: do zenba le nilka'o li ci
+
+
+When Krovod Haunch is put into a graveyard from the battlefield, you may pay {1}{W}. If you do, create two 1/1 white Dog creature tokens.
+After this enters a graveyard from the battlefield, you can pay {1}{W}. If you do, you create two 1/1 creature tokens which are white and are dogs.
+ba ro nu ti nerkla pa mrofoi le nunda'afoi kei do kakne lo zu'o pleji be {1}{W} kei goi ko'a .i ifle lo du'u do me ko'a kei lo nu do majgau re 1/1 danlu kelsinci poi blabi gi'e gerku
+
+
+Equip {2}
+Tool-give {2}
+ca'ardu'a {2}

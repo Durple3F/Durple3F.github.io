@@ -1,0 +1,19 @@
+Sanctuary Wall
+Sanctuary Wall
+lo malsi bitmu
+
+
+Artifact Creature — Wall
+Artifact Creature — Wall
+rutmi danlu — bitmu
+
+
+Defender
+Defends
+badgau
+
+
+{2}{W}, {T}: Tap target creature. You may put a stun counter on it. If you do, put a stun counter on Sanctuary Wall. (If a permanent with a stun counter would become untapped, remove one from it instead.)
+{2}{W}, {T}: You target a creature. You tap it. You can put a stun counter on it. If you do, you put a stun counter on this. (For every X, which is a permanent with stun counters on it, replace each event of X becoming untapped with events of you removing a stun counter from X.)
+{2}{W}, {T}: do fargau pa danlu goi ko'a .i do xakygau ko'a .i do kakne lo zu'o punji be pa seljenca nacdai ko'a kei goi ko'e .i ifle lo du'u do me ko'e kei lo nu do punji pa seljenca nacdai ti (.i ro da poi vi'ordai gi'e tolcau be lo seljenca nacdai zo'u selbasti ro nu da binxo lo ka tolselxaksu kei lo nu do tolpu'i pa seljenca nacdai da)
+

@@ -1,0 +1,24 @@
+Absolving Lammasu
+Mesopotamian-myth-protector which anti-blames
+lo mespyrambandu noi to'e malfuzypai
+
+
+Creature — Lammasu
+Creature — Lammasu
+danlu — mespyrambandu
+
+
+Flying
+Flies
+vofli
+
+
+When Absolving Lammasu enters the battlefield, all suspected creatures are no longer suspected.
+After each time this enters the battlefield, each creature which is suspected becomes not suspected.
+ba ro nu ti nerkla le nunda'afoi kei ro danlu poi selsipni cu inxo lo ka na selsipni
+
+
+When Absolving Lammasu dies, you gain 3 life and suspect up to one target creature your opponent controls. (A suspected creature has menace and can’t block.)
+After each time this dies, you target at most 1 creature which is controlled by an opponent. You increase in life by 3 and cause suspicion on that creature. (A creature which is suspected has "menace" and can't block.)
+ba ro nu ti mrobi'o kei do fargau su'e pa danlu poi se jitro be pa bradi zi'e goi ko'a .i do zenba le nilka'o li ci gi'e selsengau ko'a (.i lo danlu poi selsepni cu tolcau lu selte'apre li'u gi'e tolka'e lo zu'o gutfanta)
+

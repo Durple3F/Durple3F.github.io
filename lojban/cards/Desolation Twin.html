@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+	<head>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js">
+		</script> 
+		<link href="https://cdn.jsdelivr.net/npm/mana-font@latest/css/mana.css" rel="stylesheet" type="text/css" />
+		
+		<link rel="icon" type="image/x-icon" href="../../lojban/favicon.ico">
+		<link rel="stylesheet" href="../../lojban/style.css">
+		<script src="../data2.js"></script>
+		<script>
+			const storyCode = "Desolation Twin"
+		</script>
+		<script src="../../lojban/main.js" defer></script>
+
+		<title>Desolation Twin</title>
+		<meta property="og:title" content="Desolation Twin">
+		<meta property="og:description" content="">
+		<meta property="og:image" content="https://durple3f.github.io/lojban/images/Desolation%20Twin%204.png">
+	</head>
+	<body>
+		<a href="../index.html" id="back-btn">
+			<button class="btn btn-secondary">Back</button>
+		</a>
+		<div id="draggable">=</div>
+		<div id="explanation-container">
+			<div id="explanation">
+				<div id="explanation-text"></div>
+				<button class="btn btn-secondary show-all" style="display: none;">Show all</button>
+			</div>
+		</div>
+		<div id="views">
+			<div class="row text-center fw-bold">
+				<div class="col">
+					English <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					Lojban-ified English <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					Lojban <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					Zbalermorna <button class="toggle-btn">(Hide)</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="f1">Desolation</span> <span class="f2">Twin</span>
+				</div>
+				<div class="col">
+					<span class="f1">Event-of-un-inhabited-ifying</span> <span class="f2">Twin</span>
+				</div>
+				<div class="col">
+					<span class="flo">lo</span> <span class="f1">nuntolselxa'u</span> <span class="f2">tarbykansa</span>
+				</div>
+				<div class="col zbalermorna">
+					<span class="flo"></span> <span class="f1"></span> <span class="f2"></span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="fdanlu">Creature</span> — <span class="f3">Eldrazi</span>
+				</div>
+				<div class="col">
+					<span class="fdanlu">Creature</span> — <span class="f3">Eldrazi</span>
+				</div>
+				<div class="col">
+					<span class="fdanlu">danlu</span> — <span class="f3">eldrazi</span>
+				</div>
+				<div class="col zbalermorna">
+					<span class="fdanlu"></span> — <span class="f3"></span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="fba">When</span> <span class="fdo">you</span> <span class="fcast">cast</span> <span class="fti">this spell</span>, <span class="fcreate">create</span> <span class="fpa">a</span> 10/10 <span class="f4">colorless</span> <span class="f3">Eldrazi</span> <span class="fdanlu">creature</span> <span class="ftoken">token</span>.
+				</div>
+				<div class="col">
+					<span class="fba">After</span> <span class="fro">each</span> <span class="fnu">time</span> <span class="fdo">you</span> <span class="fcast">cast</span> <span class="fti">this</span>, <span class="fdo">you</span> <span class="fcreate">create</span> <span class="fpa">1</span> 10/10 <span class="fdanlu">creature</span> <span class="ftoken">token</span> <span class="fpoi">which</span> <span class="f4">is colorless</span> <span class="fgihe">and</span> <span class="f3">is eldrazi</span>.
+				</div>
+				<div class="col">
+					<span class="fba">ba</span> <span class="fro">ro</span> <span class="fnu">nu</span> <span class="fdo">do</span> <span class="fcast">mafpli</span> <span class="fti">ti</span> <span class="fkei">kei</span> <span class="fdo">do</span> <span class="fcreate">majgau</span> <span class="fpa">pa</span> 10/10 <span class="fdanlu">danlu</span> <span class="ftoken">kelsicni</span> <span class="fpoi">poi</span> <span class="f4">skacau</span> <span class="fgihe">gi'e</span> <span class="f3">eldrazi</span>
+				</div>
+				<div class="col zbalermorna">
+					<span class="fba"></span> <span class="fro"></span> <span class="fnu"></span> <span class="fdo"></span> <span class="fcast"></span> <span class="fti"></span> <span class="fkei"></span> <span class="fdo"></span> <span class="fcreate"></span> <span class="fpa"></span> 10/10 <span class="fdanlu"></span> <span class="ftoken"></span> <span class="fpoi"></span> <span class="f4"></span> <span class="fgihe"></span> <span class="f3"></span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="flu">“</span><span class="f11">With</span> <span class="f6">precise</span> <span class="f7">coordination</span> <span class="fgihe">and</span> <span class="f8">enough</span> <span class="f9">blood</span> <span class="f10">spilled</span>, <span class="fpa">one</span> <span class="f11">can</span> <span class="f14">be driven off</span>, <span class="f15">even</span> <span class="f16">brought down</span><span class="fi">.</span> <span class="f17">But</span> <span class="fre">two</span> … <span class="f18">that’s</span> <span class="f19">a lot of</span> <span class="f9">blood</span>.<span class="flihu">”</span> <span class="f20">—</span><span class="f21">Munda</span><span class="f22">,</span> <span class="f23">ambush</span> <span class="f24">leader</span>
+				</div>
+				<div class="col">
+					<span class="flu">“</span><span class="f5">Us</span> <span class="fnu">being</span> <span class="f6">precisely</span> <span class="f7">coordinated</span>, <span class="fgihe">and</span> <span class="f8">enough</span> <span class="f9">blood</span> <span class="fnu">being</span> <span class="f10">spilled</span>, <span class="f11">makes it possible</span> <span class="fduhu">for</span> <span class="fpa">one</span> <span class="f12">of <span class="fkoha">them</span></span> <span class="f14">to be expelled</span>, <span class="fgiha">or</span> <span class="f15">even</span> <span class="f16">made to fall</span><span class="fi">.</span> <span class="f17">But</span> <span class="fre">two</span> <span class="f12">of</span> <span class="fkoha">them</span> <span class="f18">would need</span> <span class="f19">too much</span> <span class="f9">blood</span>.<span class="flihu">”</span> <span class="f20">said</span> <span class="f21">Munda</span><span class="f22">, who is</span> <span class="flo">a</span> <span class="f23">surprise-attack</span> <span class="f24">leader</span>.
+				</div>
+				<div class="col">
+					<span class="flu">lu</span> <span class="flo">lo</span> <span class="fnu">nu</span> <span class="f5">mi'a</span> <span class="f6">satci</span> <span class="f7">kanmu'u</span> <span class="fkei">kei</span> <span class="fe">e</span> <span class="flo">lo</span> <span class="fnu">nu</span> <span class="f8">rau</span> <span class="f9">ciblu</span> <span class="fpu">pu</span> <span class="f10">farlu</span> <span class="fkei">kei</span> <span class="fse">se</span> <span class="f11">cumki</span> <span class="flo">lo</span> <span class="fnu">nu</span> <span class="fpa">pa</span> <span class="f12">me <span class="fkoha">ko'a</span></span> <span class="fcu">cu</span> <span class="f13">to'e</span> <span class="f14">trina</span> <span class="fgiha">gi'a</span> <span class="f15">ba'e</span> <span class="f16">selfalgau</span> <span class="fi">.i</span> <span class="f17">ku'i</span> <span class="flo">lo</span> <span class="fduhu">du'u</span> <span class="fre">re</span> <span class="f12">me <span class="fkoha">ko'a</span></span> <span class="fcu">cu</span> <span class="f18">nitcu</span> <span class="f19">du'e</span> <span class="f9">ciblu</span> <span class="flihu">li'u</span> <span class="fpu">pu</span> <span class="fse">se</span> <span class="f20">cusku</span> <span class="fla">la</span> <span class="f21">.munda.</span> <span class="fku">ku</span> <span class="f22">no'u</span> <span class="flo">lo</span> <span class="f23">pajgunta</span> <span class="f24">jatna</span>
+				</div>
+				<div class="col zbalermorna">
+					<span class="flu"></span> <span class="flo"></span> <span class="fnu"></span> <span class="f5"></span> <span class="f6"></span> <span class="f7"></span> <span class="fkei"></span> <span class="fe"></span> <span class="flo"></span> <span class="fnu"></span> <span class="f8"></span> <span class="f9"></span> <span class="fpu"></span> <span class="f10"></span> <span class="fkei"></span> <span class="fse"></span> <span class="f11"></span> <span class="flo"></span> <span class="fnu"></span> <span class="fpa"></span> <span class="f12"> <span class="fkoha"></span></span> <span class="fcu"></span> <span class="f13"></span> <span class="f14"></span> <span class="fgiha"></span> <span class="f15"></span> <span class="f16"></span> <span class="fi"></span> <span class="f17"></span> <span class="flo"></span> <span class="fduhu"></span> <span class="fre"></span> <span class="f12"> <span class="fkoha"></span></span> <span class="fcu"></span> <span class="f18"></span> <span class="f19"></span> <span class="f9"></span> <span class="flihu"></span> <span class="fpu"></span> <span class="fse"></span> <span class="f20"></span> <span class="fla"></span> <span class="f21"></span> <span class="fku"></span> <span class="f22"></span> <span class="flo"></span> <span class="f23"></span> <span class="f24"></span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<img class="mtg-card img-fluid" src="../images/Desolation Twin 1.png">
+				</div>
+				<div class="col">
+					<img class="mtg-card img-fluid" src="../images/Desolation Twin 2.png">
+				</div>
+				<div class="col">
+					<img class="mtg-card img-fluid" src="../images/Desolation Twin 3.png">
+				</div>
+				<div class="col">
+					<img class="mtg-card img-fluid" src="../images/Desolation Twin 4.png">
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

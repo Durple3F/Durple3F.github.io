@@ -1,0 +1,149 @@
+<!doctype html>
+<html>
+	<head>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js">
+		</script> 
+		<link href="https://cdn.jsdelivr.net/npm/mana-font@latest/css/mana.css" rel="stylesheet" type="text/css" />
+		
+		<link rel="icon" type="image/x-icon" href="favicon.ico">
+		<link rel="stylesheet" href="style.css">
+		<script src="data.js"></script>
+		<script>
+			const storyCode = "Kutzil, Malamet Exemplar"
+		</script>
+		<script src="main.js" defer></script>
+
+		<title>Kutzil, Malamet Exemplar</title>
+		<meta property="og:title" content="Kutzil, Malamet Exemplar">
+		<meta property="og:description" content="">
+		<meta property="og:image" content="https://durple3f.github.io/lojban/images/Kutzil,%20Malamet%20Exemplar%204.png">
+	</head>
+	<body>
+		<a href="./index.html" id="back-btn">
+			<button class="btn btn-secondary">Back</button>
+		</a>
+		<div id="explanation-container">
+			<div id="explanation">
+				<div id="explanation-text"></div>
+				<button class="btn btn-secondary show-all" style="display: none;">Show all</button>
+			</div>
+		</div>
+		<div id="views">
+			<div class="row text-center fw-bold">
+				<div class="col">
+					English <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					Lojban-ified English <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					Lojban <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					Zbalermorna <button class="toggle-btn">(Hide)</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="f1">Kutzil</span><span class="fnoi">,</span> <span class="f3">Malamet</span> <span class="f2">Exemplar</span>
+				</div>
+				<div class="col">
+					<span class="f1">Kutzil</span><span class="fnoi">, who's</span> <span class="f2">an exemplar</span> <span class="fbe">of</span> <span class="fla">the</span> <span class="f3">Malamet</span>
+				</div>
+				<div class="col">
+					<span class="fla">la</span> <span class="f1">.kutzil.</span> <span class="fnoi">noi</span> <span class="f2">vudmupli</span> <span class="fbe">be</span> <span class="fla">la</span> <span class="f3">.malamet.</span>
+				</div>
+				<div class="col zbalermorna">
+					<span class="fla"></span> <span class="f1"></span> <span class="fnoi"></span> <span class="f2"></span> <span class="fbe"></span> <span class="fla"></span> <span class="f3"></span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="franmi">Legendary</span> <span class="fdanlu">Creature</span> — <span class="f4">Cat</span> <span class="f5">Warrior</span>
+				</div>
+				<div class="col">
+					<span class="franmi">Legend</span> <span class="fdanlu">Creature</span> — <span class="f4">Cat</span> <span class="f5">Warrior</span>
+				</div>
+				<div class="col">
+					<span class="franmi">ranmi</span> <span class="fdanlu">danlu</span> — <span class="f4">mlatu</span> <span class="f5">sonci</span>
+				</div>
+				<div class="col zbalermorna">
+					<span class="franmi"></span> <span class="fdanlu"></span> — <span class="f4"></span> <span class="f5"></span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="fdo">You</span><span class="fpo">r</span> <span class="fbradi">opponent</span><span class="fro">s</span> <span class="fkakne">can</span><span class="ftohe">’t</span> <span class="f6">cast</span> <span class="f7">spells</span> <span class="f8">during</span> <span class="fdo">you</span><span class="fpo">r</span> <span class="f9">turn</span>.
+				</div>
+				<div class="col">
+					<span class="fro">Each</span> <span class="fda">X</span><span class="fpoi">, which is</span> <span class="fbradi">an opponent</span>, <span class="ftohe">not</span>-<span class="fkakne">can</span> <span class="fzuho">do (</span><span class="fda">them</span> <span class="f6">casting</span> <span class="flo">a</span> <span class="f7">spell</span><span class="fkei">)</span> <span class="f8">during</span> <span class="f9">turns</span> <span class="fpo">of</span> <span class="fdo">you</span>.
+				</div>
+				<div class="col">
+					<span class="fro">ro</span> <span class="fda">da</span> <span class="fpoi">poi</span> <span class="fbradi">bradi</span> <span class="fcu">cu</span> <span class="ftohe">to'e</span> <span class="fkakne">kakne</span> <span class="flo">lo</span> <span class="fzuho">zu'o</span> <span class="fda">da</span> <span class="f6">mafpli</span> <span class="flo">lo</span> <span class="f7">mafru'e</span> <span class="fkei">kei</span> <span class="f8">ca'o</span> <span class="flo">lo</span> <span class="f9">kelka'u</span> <span class="fpo">po</span> <span class="fdo">do</span>
+				</div>
+				<div class="col zbalermorna">
+					<span class="fro"></span> <span class="fda"></span> <span class="fpoi"></span> <span class="fbradi"></span> <span class="fcu"></span> <span class="ftohe"></span> <span class="fkakne"></span> <span class="flo"></span> <span class="fzuho"></span> <span class="fda"></span> <span class="f6"></span> <span class="flo"></span> <span class="f7"></span> <span class="fkei"></span> <span class="f8"></span> <span class="flo"></span> <span class="f9"></span> <span class="fpo"></span> <span class="fdo"></span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="ftrigger">Whenever</span> <span class="f17"><span class="fpa">one</span> <span class="fsuho">or more</span></span> <span class="fdanlu">creature</span><span class="floi">s</span> <span class="fdo">you</span> <span class="f10">control</span> <span class="fpoi">each with</span> <span class="f12">power</span> <span class="f13">greater than</span> <span class="fkeha"><span class="f15">it</span></span><span class="fpo">s</span> <span class="f14">base <span class="f12">power</span></span> <span class="f16">deals</span> <span class="fcombat-damage"><span class="fdamba">combat</span> <span class="fterxai">damage</span></span> to <span class="fpa">a</span> <span class="fkelci">player</span>, <span class="fcpacu">draw</span> <span class="fpa">a</span> <span class="fkarda">card</span>.
+				</div>
+				<div class="col">
+					<span class="ftrigger">Following</span> <span class="fro">each</span> <span class="fnu">event of</span> (<span class="f17"><span class="floi">a group of</span> <span class="fsuho">at least</span> <span class="fpa">one</span></span> <span class="fdanlu">creature</span> <span class="fpoi">which is</span> (<span class="f10">controlled</span> <span class="fse">by</span> <span class="fdo">you</span> <span class="fgihe">and</span> <span class="f11">has</span> (<span class="fle">the</span> <span class="f12">power</span> <span class="fni">amount</span> <span class="fpo">of</span> <span class="fkeha">it</span>) <span class="f13">greater than</span> (<span class="fle">the</span> <span class="f14">base <span class="f12">power</span></span> <span class="fni">amount</span> <span class="fpo">of</span> <span class="fkeha"><span class="f15">it</span></span>)) <span class="f16">deals</span> <span class="fcombat-damage"><span class="fterxai">damage</span> <span class="fco">of-type</span> <span class="fdamba">combat</span></span> to <span class="fpa">a</span> <span class="fkelci">player</span><span class="fkei">)</span> is <span class="fpa">an</span> <span class="fnu">event of</span> (<span class="fdo">you</span> <span class="fcpacu">draw</span> <span class="fpa">a</span> <span class="fkarda">card</span>).
+				</div>
+				<div class="col">
+					<span class="ftrigger"><span class="fse">se</span> <span class="fmulcabna">mulcabna</span></span> <span class="fro">ro</span> <span class="fnu">nu</span> <span class="f17"><span class="floi">loi</span> <span class="fsuho">su'o</span> <span class="fpa">pa</span></span> <span class="fdanlu">danlu</span> <span class="fpoi">poi</span> <span class="fse">se</span> <span class="f10">jitro</span> <span class="fdo">do</span> <span class="fgihe">gi'e</span> <span class="f11">tolcau</span> <span class="fle">le</span> <span class="fni">ni</span> <span class="f12">tsali</span> <span class="fpo">po</span> <span class="fkeha">ke'a</span> <span class="fku">ku</span> <span class="fpoi">poi</span> <span class="f13">dubmau</span> <span class="fle">le</span> <span class="fni">ni</span> <span class="f14">jicmu <span class="f12">tsali</span></span> <span class="fpo">po</span> <span class="fkeha"><span class="f15">ke'a</span></span> <span class="fcu">cu</span> <span class="f16">dunda</span> <span class="flo">lo</span> <span class="fcombat-damage"><span class="fterxai">terxai</span> <span class="fco">co</span> <span class="fdamba">damba</span></span> <span class="fpa">pa</span> <span class="fkelci">kelci</span> <span class="fkei">kei</span> <span class="fpa">pa</span> <span class="fnu">nu</span> <span class="fdo">do</span> <span class="fcpacu">cpacu</span> <span class="fpa">pa</span> <span class="fkarda">karda</span>
+				</div>
+				<div class="col zbalermorna">
+					<span class="ftrigger"><span class="fse"></span> <span class="fmulcabna"></span></span> <span class="fro"></span> <span class="fnu"></span> <span class="f17"><span class="floi"></span> <span class="fsuho"></span> <span class="fpa"></span></span> <span class="fdanlu"></span> <span class="fpoi"></span> <span class="fse"></span> <span class="f10"></span> <span class="fdo"></span> <span class="fgihe"></span> <span class="f11"></span> <span class="fle"></span> <span class="fni"></span> <span class="f12"></span> <span class="fpo"></span> <span class="fkeha"></span> <span class="fku"></span> <span class="fpoi"></span> <span class="f13"></span> <span class="fle"></span> <span class="fni"></span> <span class="f14"> <span class="f12"></span></span> <span class="fpo"></span> <span class="fkeha"><span class="f15"></span></span> <span class="fcu"></span> <span class="f16"></span> <span class="flo"></span> <span class="fcombat-damage"><span class="fterxai"></span> <span class="fco"></span> <span class="fdamba"></span></span> <span class="fpa"></span> <span class="fkelci"></span> <span class="fkei"></span> <span class="fpa"></span> <span class="fnu"></span> <span class="fdo"></span> <span class="fcpacu"></span> <span class="fpa"></span> <span class="fkarda"></span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="flu">“</span><span class="f20">Invader</span><span class="floi">s</span> <span class="f21">in</span> <span class="fla">the</span> <span class="f22">West</span> <span class="f23">Chasm</span><span class="f19">?</span> <span class="f24">Give</span> <span class="fmi">me</span> <span class="fpa">an</span> <span class="f25">hour</span> <span class="f26">and</span> <span class="fkoha">they</span><span class="fba">’ll</span> <span class="f27">be fungus food.</span>”
+				</div>
+				<div class="col">
+					<span class="flu">“</span><span class="f20">Invader</span><span class="floi">s</span> <span class="f21">are in</span> <span class="fla">The</span> <span class="f22">West</span> <span class="f23">Chasm</span><span class="f19">?</span> <span class="f18">(Courageous)</span> <span class="fdo">You</span> <span class="f24">give</span> <span class="fmi">me</span> <span class="fpa">an</span> <span class="f25">hour</span> <span class="f26">to cause</span> <span class="fnu">(</span><span class="fkoha">they</span> <span class="fba">will</span> <span class="f27">be mushroom food</span>).”
+				</div>
+				<div class="col">
+					<span class="flu">lu</span> <span class="f19">xu</span> <span class="floi">loi</span> <span class="f20">gutnerkla</span> <span class="fcu">cu</span> <span class="f21">nenri</span> <span class="fla">la</span> <span class="f22">stici</span> <span class="f23">ma'arfe'a</span> <span class="fi">.i</span> <span class="f18">u'o</span> <span class="fdo">do</span> <span class="f24">dunda</span> <span class="fmi">mi</span> <span class="fpa">pa</span> <span class="f25">cacra</span> <span class="f26">seri'a</span> <span class="fle">le</span> <span class="fnu">nu</span> <span class="fkoha">ko'a</span> <span class="fba">ba</span> <span class="f27">mledi cidja</span>
+				</div>
+				<div class="col zbalermorna">
+					<span class="flu"></span> <span class="f19"></span> <span class="floi"></span> <span class="f20"></span> <span class="fcu"></span> <span class="f21"></span> <span class="fla"></span> <span class="f22"></span> <span class="f23"></span> <span class="fi"></span> <span class="f18"></span> <span class="fdo"></span> <span class="f24"></span> <span class="fmi"></span> <span class="fpa"></span> <span class="f25"></span> <span class="f26"></span> <span class="fle"></span> <span class="fnu"></span> <span class="fkoha"></span> <span class="fba"></span> <span class="f27"> </span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					
+				</div>
+				<div class="col">
+					
+				</div>
+				<div class="col">
+					
+				</div>
+				<div class="col zbalermorna">
+					
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<img class="img-fluid mtg-card" src="images/Kutzil, Malamet Exemplar 1.png">
+				</div>
+				<div class="col">
+					<img class="img-fluid mtg-card" src="images/Kutzil, Malamet Exemplar 2.png">
+				</div>
+				<div class="col">
+					<img class="img-fluid mtg-card" src="images/Kutzil, Malamet Exemplar 3.png">
+				</div>
+				<div class="col">
+					<img class="img-fluid mtg-card" src="images/Kutzil, Malamet Exemplar 4.png">
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
