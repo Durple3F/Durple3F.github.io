@@ -1,0 +1,24 @@
+Laboratory Maniac {2}{U}
+Workaholic
+Ergastiakós Maniakós
+Εργαστιακός Μανιακός
+Alt:
+Laboratory Maniac
+Maniac of the Laboratory
+Maniakós tou Ergastiríou
+Μανιακός του Εργαστηρίου
+
+Creature — Human Wizard
+Creature — Human Mage
+Plásma — Ánthropos Mágos
+Πλάσμα — Άνθρωπος Μάγος
+
+If you would draw a card while your library has no cards in it, you win the game instead.
+If you are going to draw a card while the library of you doesn't have any card, you win the game instead.
+An prókeitai na travíxeis mia kárta enó i vivliothíki sou den échei kamía kárta, kerdízeis to paichnídi antítheta.
+Αν πρόκειται να τραβήξεις μια κάρτα ενώ η βιβλιοθήκη σου δεν έχει καμία κάρτα, κερδίζεις το παιχνίδι αντίθετα.
+
+His mind whirled with grand plans, never thinking of what might happen if he were to succeed.
+The mind of him spun with big plans, never thought what will be able to happen if he succeeds.
+To myálo tou strovilístike me megála schédia, poté skeftótan ti tha boroúse na symveí an petycheí.
+Το μυάλο του στροβιλίστηκε με μεγάλα σχέδια, ποτέ σκεφτόταν τι θα μπορούσε να συμβεί αν πετυχεί.

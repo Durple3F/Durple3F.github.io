@@ -1,0 +1,71 @@
+#colorizer {
+	margin: 0;
+	background-color: #222;
+	color: #aaa;
+	display: flex;
+	justify-content: left;
+	align-items: center;
+
+	width: 100%;
+	z-index: 3;
+
+	font-family: sans-serif;
+	position: relative;
+}
+
+#colorizer #screen {
+	max-width: 60%;
+	height: 100vh;
+}
+
+#colorizer #controls {
+	width: calc(40% - 2em);
+	border: 0.25em solid #000;
+	padding: 0.5em;
+	margin-right: 0.5em;
+	background-color: #222;
+	max-height: 100vh;
+	overflow-y: scroll;
+}
+
+#colorizer #buttons button {
+	display: inline-block;
+}
+
+#colorizer .filter-selector {
+	width: 100%;
+	border: 0.2em dashed #000;
+	border-left: none;
+	border-right: none;
+	margin-top: 0.2em;
+	padding: 0.5em;
+}
+
+#colorizer .filter-selector + .filter-selector {
+	border-top: none;
+}
+
+#colorizer .filter-selector:last-child {
+	border-bottom: none;
+}
+
+#colorizer .filter-selector > h3 {
+	margin: 0;
+}
+
+#colorizer .filter-selector input[type=range] {
+	height: 0.3em;
+}
+#colorizer .filter-selector input[type=number] {
+	background-color: #444;
+	border: none;
+	outline: none;
+}
+
+#colorizer .filter-option {
+	padding-top: 0.2em;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}

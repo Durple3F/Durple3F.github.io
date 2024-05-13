@@ -55,6 +55,9 @@ body::-webkit-scrollbar, html::-webkit-scrollbar {
 	margin: auto;
 	margin-bottom: 1em;
 }
+.row-padding {
+	padding-bottom: 25vh;
+}
 
 .toggle-btn {
 	background: none;

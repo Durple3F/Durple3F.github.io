@@ -160,7 +160,9 @@ function clickText(e){
 	}
 	if (!hovered) {
 		currentlyClicked = false
-		unHoverFade(currentlyHovered)
+		if (currentlyHovered) {
+			unHoverFade(currentlyHovered)
+		}
 		return
 	}
 	if (hovered && hovered !== currentlyHovered){
@@ -239,6 +241,7 @@ function explanationResizeStart(e) {
 		mouseInfo.y = e.clientY
 		let diffY = e.clientY - mouseInfo.startY
 		let newHeight = mouseInfo.startHeight + diffY
+		newHeight = Math.max(newHeight, 0)
 		let vh = $(window).height() / 100
 		$("#explanation-container").css("height", newHeight + "px")
 		$("#views").css("margin-top", (newHeight + 3 * vh) + "px")

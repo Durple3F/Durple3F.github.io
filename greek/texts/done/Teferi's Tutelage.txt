@@ -1,0 +1,24 @@
+Teferi's Tutelage {2}{U}
+Education of Teferi
+Ekpaídefsi tou Teféri
+Εκπαίδευση του Τεφέρι
+
+Enchantment
+Charm
+Goiteía
+Γοητεία
+
+When Teferi’s Tutelage enters, draw a card, then discard a card.
+When the Education of Teferi enters, draw a card, and then discard a card.
+Ótan i Ekpaídefsi tou Teféri baínei, travás mía kárta kai metá aporrípteis mía kárta.
+Όταν η Εκπαίδευση του Τεφέρι μπαίνει, τραβάς μία κάρτα και μετά απορρίπτεις μία κάρτα.
+
+Whenever you draw a card, target opponent mills two cards. (They put the top two cards of their library into their graveyard.)
+Whenever you draw a card, target opponent grinds two cards. (They put the two top cards of the library of them to the graveyard of them.)
+Ópote travás mía kárta, to stócho antípalo aléthei dío kártes. (Vázei tis dýo koryfaíes kártes tis vivliothíkis tou sto nekrotafeío tou.)
+Όποτε τραβάς μία κάρτα, το στόχο αντίπαλο αλέθει δύο κάρτες. (Βάζει τις δύο κορυφαίες κάρτες της βιβλιοθήκης του στο νεκροταφείο του.)
+
+“Tarassel’s sixth law of temporal recursion is easy to understand as long as you know the first seven.”
+“The sixth law of temporal retrogression of Tasserel is easy to understand, provided that you know the first seven.”
+“O éktos nómos tou chronikoú anadromikoú tou Tarassél eínai éfkolos na katalavaínei arkeí na xéreis tous prótous eptá.”
+«Ο έκτος νόμος του χρονικού αναδρομικού του Ταρασσέλ είναι εύκολος να καταλαβαίνει αρκεί να ξέρεις τους πρώτους επτά.»

@@ -1,0 +1,340 @@
+<!doctype html>
+<html>
+	<head>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js">
+		</script> 
+		<link href="https://cdn.jsdelivr.net/npm/mana-font@latest/css/mana.css" rel="stylesheet" type="text/css" />
+		
+		<link rel="icon" type="image/x-icon" href="../../lojban/favicon.ico">
+		<link rel="stylesheet" href="../../lojban/style.css">
+		<script src="data.js"></script>
+		<script>
+			const storyCode = "Comfey"
+			const pokemonCode = "Comfey"
+		</script>
+		<script src="../../lojban/main.js" defer></script>
+
+		<link rel="stylesheet" href="games.css">
+		<link rel="stylesheet" href="colorizer.css">
+		<script src="colorData.js" defer></script>
+		<script src="colorizer.js" defer></script>
+
+		<title>Comfey</title>
+		<meta property="og:title" content="Comfey">
+		<meta property="og:description" content="Dude you're gonna love this guy's name">
+		<meta property="og:image" content="https://durple3f.github.io/greek/pokemon/images/Comfey/Comfey.png">
+	</head>
+	<body>
+		<a href="../index.html" id="back-btn">
+			<button class="btn btn-secondary">Back</button>
+		</a>
+		<div id="draggable">=</div>
+		<div id="explanation-container">
+			<div id="explanation">
+				<div id="explanation-text"></div>
+				<button class="btn btn-secondary show-all" style="display: none;">Show all</button>
+			</div>
+		</div>
+		<div id="views">
+			<div class="row text-center fw-bold">
+				<div class="col">
+					English <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					Literal Translation <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					Romanized <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					Greek <button class="toggle-btn">(Hide)</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col text-center">
+					<span class="f1">Comfey</span>
+				</div>
+				<div class="col text-center">
+					<span class="f1">Girlanetos</span>
+				</div>
+				<div class="col text-center">
+					<span class="f1">Girlánetos</span>
+				</div>
+				<div class="col text-center">
+					<span class="f1">Γιρλάνετος</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="f37">Posy</span> <span class="f38"><span class="f24">Picker</span></span> <span class="f31">Pokémon</span>
+				</div>
+				<div class="col">
+					<span class="f23">The</span> <span class="f31">Pokémon</span> <span class="f19">that</span> <span class="f38"><span class="f24">collects</span></span> <span class="f37">bouquets</span>
+				</div>
+				<div class="col">
+					<span class="f23">To</span> <span class="f31">Pokémon</span> <span class="f19">pou</span> <span class="f38"><span class="f24">mazévei</span></span> <span class="f37">boukéta</span>
+				</div>
+				<div class="col">
+					<span class="f23">Το</span> <span class="f31">Ποκέμον</span> <span class="f19">που</span> <span class="f38"><span class="f24">μαζεύει</span></span> <span class="f37">μπουκέτα</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col text-center pkmn-game pkmn-sun">Pokémon Sun</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="f2">It attaches</span> <span class="f3">flowers</span> <span class="f4">to</span> <span class="f8">its</span> <span class="f5">highly</span> <span class="f6">nutritious</span> <span class="f7">vine</span>. <span class="f9">This</span> <span class="f10">revitalizes</span> <span class="f11">the</span> <span class="f3">flowers</span>, <span class="f12">and</span> <span class="f13">they</span> <span class="f14">give off</span> <span class="f15">an</span> <span class="f16">aromatic</span> <span class="f17">scent</span>.
+				</div>
+				<div class="col">
+					<span class="f2">It attaches</span> <span class="f3">flowers</span> <span class="f4">to the</span> <span class="f5">extremely</span> <span class="f6">nutritious</span> <span class="f7">vine</span> <span class="f8">of it</span>. <span class="f9">This</span> <span class="f10">revives</span> <span class="f11">the</span> <span class="f3">flowers</span>, <span class="f12">and</span> <span class="f13">they</span> <span class="f14">give off</span> <span class="f15">an</span> <span class="f16">aromatic</span> <span class="f17">scent</span>.
+				</div>
+				<div class="col">
+					<span class="f2">Synáptei</span> <span class="f3">louloúdia</span> <span class="f4">sto</span> <span class="f5">exairetiká</span> <span class="f6">threptikó</span> <span class="f7">klíma</span> <span class="f8">tou</span>. <span class="f9">Aftó</span> <span class="f10">anazoogoneí</span> <span class="f11">ta</span> <span class="f3">louloúdia</span>, <span class="f12">kai</span> <span class="f13">aftá</span> <span class="f14">vgázoun</span> <span class="f15">mia</span> <span class="f16">aromatikí</span> <span class="f17">myrodiá</span>.
+				</div>
+				<div class="col">
+					<span class="f2">Συνάπτει</span> <span class="f3">λουλούδια</span> <span class="f4">στο</span> <span class="f5">εξαιρετικά</span> <span class="f6">θρεπτικό</span> <span class="f7">κλήμα</span> <span class="f8">του</span>. <span class="f9">Αυτό</span> <span class="f10">αναζωογονεί</span> <span class="f11">τα</span> <span class="f3">λουλούδια</span>, <span class="f12">και</span> <span class="f13">αυτά</span> <span class="f14">βγάζουν</span> <span class="f15">μια</span> <span class="f16">αρωματική</span> <span class="f17">μυρωδιά</span>.
+				</div>
+			</div>
+			<div class="row">
+				<div class="col text-center pkmn-game pkmn-moon">Pokémon Moon</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="f18">Baths</span> <span class="f20">prepared</span> <span class="f21">with</span> <span class="f11">the</span> <span class="f3">flowers</span> <span class="f22">from</span> <span class="f8">its</span> <span class="f7">vine</span> <span class="f25">have</span> <span class="f26">a</span> <span class="f27">relaxing</span> <span class="f28">effect</span>, <span class="f29">so</span> <span class="f9"><span class="f30">this</span></span> <span class="f31">Pokémon</span> <span class="f32">is</span> <span class="f33">a hit</span> <span class="f34">with</span> <span class="f35">many</span> <span class="f36">people</span>.
+				</div>
+				<div class="col">
+					<span class="f11">The</span> <span class="f18">baths</span> <span class="f19">which are</span> <span class="f20">prepared</span> <span class="f21">with</span> <span class="f11">the</span> <span class="f3">flowers</span> <span class="f22">from</span> <span class="f23">the</span> <span class="f7">vine</span> <span class="f8">of it</span> <span class="f25">have</span> <span class="f26">a</span> <span class="f27">relaxing</span> <span class="f28">effect</span>, <span class="f29">so</span> <span class="f9"><span class="f30">this</span></span> <span class="f31">Pokémon</span> <span class="f32">is</span> <span class="f33">popular</span> <span class="f34">to</span> <span class="f35">many</span> <span class="f36">people</span>.
+				</div>
+				<div class="col">
+					<span class="f11">Ta</span> <span class="f18">loutrá</span> <span class="f19">pou</span> <span class="f20">paraskevázontai</span> <span class="f21">me</span> <span class="f11">ta</span> <span class="f3">louloúdia</span> <span class="f22">apó</span> <span class="f23">to</span> <span class="f7">klíma</span> <span class="f8">tou</span> <span class="f25">échoun</span> <span class="f26">éna</span> <span class="f27">chalarotikó</span> <span class="f28">apotélesma</span>, <span class="f29">étsi</span> <span class="f9"><span class="f30">aftó</span></span> <span class="f23">to</span> <span class="f31">Pokémon</span> <span class="f32">eínai</span> <span class="f33">dimofilés</span> <span class="f34">se</span> <span class="f35">polloús</span> <span class="f36">anthrópous</span>.
+				</div>
+				<div class="col">
+					<span class="f11">Τα</span> <span class="f18">λουτρά</span> <span class="f19">που</span> <span class="f20">παρασκευάζονται</span> <span class="f21">με</span> <span class="f11">τα</span> <span class="f3">λουλούδια</span> <span class="f22">από</span> <span class="f23">το</span> <span class="f7">κλήμα</span> <span class="f8">του</span> <span class="f25">έχουν</span> <span class="f26">ένα</span> <span class="f27">χαλαρωτικό</span> <span class="f28">αποτέλεσμα</span>, <span class="f29">έτσι</span> <span class="f9"><span class="f30">αυτό</span></span> <span class="f23">το</span> <span class="f31">Ποκέμον</span> <span class="f32">είναι</span> <span class="f33">δημοφιλές</span> <span class="f34">σε</span> <span class="f35">πολλούς</span> <span class="f36">ανθρώπους</span>.
+				</div>
+			</div>
+			<div class="row">
+				<div class="col text-center pkmn-game pkmn-ultra-sun">Pokémon Ultra Sun</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="f39">It stretches</span> <span class="f40">sticky</span> <span class="f7">vines</span> <span class="f41">out</span> <span class="f22">from</span> <span class="f8">its</span> <span class="f42">head</span> <span class="f12">and</span> <span class="f38">picks</span> <span class="f3">flowers</span> <span class="f44">to</span> <span class="f45">adorn</span> <span class="f8">it</span><span class="f46">self</span> <span class="f44">with</span>. <span class="f47">When</span> <span class="f25">it</span> <span class="f48">doesn't</span> <span class="f25">have</span> any <span class="f3">flowers</span>, <span class="f49">it feels</span> <span class="f50">uneasy</span>.
+				</div>
+				<div class="col">
+					<span class="f39">It stretches</span> <span class="f40">sticky</span> <span class="f7">vines</span> <span class="f41">out</span> <span class="f22">from</span> <span class="f23">the</span> <span class="f42">head</span> <span class="f8">of it</span> <span class="f12">and</span> <span class="f38">gathers</span> <span class="f3">flowers</span> <span class="f44">for</span> <span class="f45">adorning</span> <span class="f8">it</span><span class="f46">self</span>. <span class="f47">When</span> <span class="f25">it</span> <span class="f48">doesn't</span> <span class="f25">have</span> <span class="f3">flowers</span>, <span class="f49">it feels</span> <span class="f50">uncomfortable</span>.
+				</div>
+				<div class="col">
+					<span class="f39">Tentónei</span> <span class="f40">kollódes</span> <span class="f7">klímata</span> <span class="f41">éxo</span> <span class="f22">apó</span> <span class="f23">to</span> <span class="f42">kefáli</span> <span class="f8">tou</span> <span class="f12">kai</span> <span class="f38">mazévei</span> <span class="f3">louloúdia</span> <span class="f44">gia</span> <span class="f43">na</span> <span class="f45">stolísei</span> <span class="f46">ton eaftó</span> <span class="f8">tou</span>. <span class="f47">Ótan</span> <span class="f48">den</span> <span class="f25">échei</span> <span class="f3">louloúdia</span>, <span class="f49">aisthánetai</span> <span class="f50">ávolo</span>.
+				</div>
+				<div class="col">
+					<span class="f39">Τεντώνει</span> <span class="f40">κολλώδες</span> <span class="f7">κλήματα</span> <span class="f41">έξω</span> <span class="f22">από</span> <span class="f23">το</span> <span class="f42">κεφάλι</span> <span class="f8">του</span> <span class="f12">και</span> <span class="f38">μαζεύει</span> <span class="f3">λουλούδια</span> <span class="f44">για</span> <span class="f43">να</span> <span class="f45">στολίσει</span> <span class="f46">τον εαυτό</span> <span class="f8">του</span>. <span class="f47">Όταν</span> <span class="f48">δεν</span> <span class="f25">έχει</span> <span class="f3">λουλούδια</span>, <span class="f49">αισθάνεται</span> <span class="f50">άβολο</span>.
+				</div>
+			</div>
+			<div class="row">
+				<div class="col text-center pkmn-game pkmn-ultra-moon">Pokémon Ultra Moon</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="f38">It picks</span> <span class="f3">flowers</span> <span class="f12">and</span> <span class="f51">sticks</span> <span class="f52">them</span> <span class="f4">to</span> <span class="f8">its</span> <span class="f53">body</span> <span class="f21">with</span> <span class="f54">fluids</span> <span class="f55">it produces</span>. <span class="f56">The</span> <span class="f17">aroma</span> <span class="f19">that</span> <span class="f57">wafts</span> <span class="f22">from</span> <span class="f8">its</span> <span class="f58">petals</span> <span class="f25">has</span> <span class="f26">a</span> <span class="f59">healing</span> <span class="f28">effect</span>.
+				</div>
+				<div class="col">
+					<span class="f38">It gathers</span> <span class="f3">flowers</span> <span class="f12">and</span> <span class="f51">attaches</span> <span class="f52">them</span> <span class="f4">to the</span> <span class="f53">body</span> <span class="f8">of it</span> <span class="f21">with</span> <span class="f11">the</span> <span class="f54">liquids</span> <span class="f19">which</span> <span class="f55">it produces</span>. <span class="f56">The</span> <span class="f17">scent</span> <span class="f19">which</span> <span class="f57">is emitted</span> <span class="f22">from</span> <span class="f11">the</span> <span class="f58">petals</span> <span class="f8">of it</span> <span class="f25">has</span> <span class="f26">a</span> <span class="f59">therapeutic</span> <span class="f28">effect</span>.
+				</div>
+				<div class="col">
+					<span class="f38">Mazévei</span> <span class="f3">louloúdia</span> <span class="f12">kai</span> <span class="f52">ta</span> <span class="f51">kolláei</span> <span class="f4">sto</span> <span class="f53">sóma</span> <span class="f8">tou</span> <span class="f21">me</span> <span class="f11">ta</span> <span class="f54">ygrá</span> <span class="f19">pou</span> <span class="f55">parágei</span>. <span class="f56">Ι</span> <span class="f17">myrodiá</span> <span class="f19">pou</span> <span class="f57">anadýetai</span> <span class="f22">apó</span> <span class="f11">ta</span> <span class="f58">pétala</span> <span class="f8">tou</span> <span class="f25">échei</span> <span class="f26">éna</span> <span class="f59">therapeftikó</span> <span class="f28">apotélesma</span>.
+				</div>
+				<div class="col">
+					<span class="f38">Μαζεύει</span> <span class="f3">λουλούδια</span> <span class="f12">και</span> <span class="f52">τα</span> <span class="f51">κολλάει</span> <span class="f4">στο</span> <span class="f53">σώμα</span> <span class="f8">του</span> <span class="f21">με</span> <span class="f11">τα</span> <span class="f54">υγρά</span> <span class="f19">που</span> <span class="f55">παράγει</span>. <span class="f56">Η</span> <span class="f17">μυρωδιά</span> <span class="f19">που</span> <span class="f57">αναδύεται</span> <span class="f22">από</span> <span class="f11">τα</span> <span class="f58">πέταλα</span> <span class="f8">του</span> <span class="f25">έχει</span> <span class="f26">ένα</span> <span class="f59">θεραπευτικό</span> <span class="f28">αποτέλεσμα</span>.
+				</div>
+			</div>
+			<div class="row">
+				<div class="col text-center pkmn-game pkmn-sword">Pokémon Sword</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="f1">Comfey</span> <span class="f38">picks</span> <span class="f3">flowers</span> <span class="f21">with</span> <span class="f8">its</span> <span class="f7">vine</span> <span class="f12">and</span> <span class="f45">decorates</span> <span class="f8">it</span><span class="f46">self</span> <span class="f21">with</span> <span class="f13">them</span>. <span class="f44"><span class="f61">For</span></span> <span class="f62">some</span> <span class="f63">reason</span>, <span class="f3">flowers</span> <span class="f64">wo</span><span class="f48">n't</span> <span class="f65">wither</span> <span class="f66">once</span> <span class="f51">they're attached</span> <span class="f34">to</span> <span class="f26">a</span> <span class="f1">Comfey</span>.
+				</div>
+				<div class="col">
+					<span class="f23"><span class="f68">The</span></span> <span class="f1">Girlaneto</span> <span class="f38">gathers</span> <span class="f3">flowers</span> <span class="f21">with</span> <span class="f23">the</span> <span class="f7">vine</span> <span class="f8">of it</span> <span class="f12">and</span> <span class="f45">adorns</span> <span class="f8">it</span><span class="f46">self</span> <span class="f21">with</span> <span class="f13">them</span>. <span class="f44"><span class="f61">For</span></span> <span class="f62">some</span> <span class="f63">reason</span>, <span class="f3">flowers</span> <span class="f64">wo</span><span class="f48">n't</span> <span class="f65">wither</span> <span class="f66">after</span> <span class="f51">they're attached</span> <span class="f34">to</span> <span class="f26">a</span> <span class="f1">Girlaneto</span>.
+				</div>
+				<div class="col">
+					<span class="f23"><span class="f68">To</span></span> <span class="f1">Girlánetos</span> <span class="f38">mazévei</span> <span class="f3">louloúdia</span> <span class="f21">me</span> <span class="f23">to</span> <span class="f7">klíma</span> <span class="f8">tou</span> <span class="f12">kai</span> <span class="f45">kosmeí</span> <span class="f46">ton eaftó</span> <span class="f8">tou</span> <span class="f21">me</span> <span class="f13">aftá</span>. <span class="f44"><span class="f61">Gia</span></span> <span class="f62">kápoio</span> <span class="f63">lógo</span>, <span class="f3">louloúdia</span> <span class="f48">den</span> <span class="f64">tha</span> <span class="f65">marathoún</span> <span class="f66">afoú</span> <span class="f51">kollithoún</span> <span class="f34">se</span> <span class="f26">éna</span> <span class="f1">Girláneto</span>.
+				</div>
+				<div class="col">
+					<span class="f23"><span class="f68">Το</span></span> <span class="f1">Γιρλάνετος</span> <span class="f38">μαζεύει</span> <span class="f3">λουλούδια</span> <span class="f21">με</span> <span class="f23">το</span> <span class="f7">κλήμα</span> <span class="f8">του</span> <span class="f12">και</span> <span class="f45">κοσμεί</span> <span class="f46">τον εαυτό</span> <span class="f8">του</span> <span class="f21">με</span> <span class="f13">αυτά</span>. <span class="f44"><span class="f61">Για</span></span> <span class="f62">κάποιο</span> <span class="f63">λόγο</span>, <span class="f3">λουλούδια</span> <span class="f48">δεν</span> <span class="f64">θα</span> <span class="f65">μαραθούν</span> <span class="f66">αφού</span> <span class="f51">κολληθούν</span> <span class="f34">σε</span> <span class="f26">ένα</span> <span class="f1">Γιρλάνετο</span>.
+				</div>
+			</div>
+			<div class="row">
+				<div class="col text-center pkmn-game pkmn-shield">Pokémon Shield</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="f13">These</span> <span class="f31">Pokémon</span> <span class="f69">smell</span> <span class="f70">very</span> <span class="f71">nice</span>. <span class="f72">All</span> <span class="f1">Comfey</span> <span class="f73">wear</span> <span class="f74">different</span> <span class="f3">flowers</span>, <span class="f29">so</span> <span class="f75">each</span> <span class="f22"><span class="f76">of</span></span> <span class="f13">these</span> <span class="f31">Pokémon</span> <span class="f25">has</span> <span class="f8">its</span> <span class="f77">own</span> <span class="f78">individual</span> <span class="f17">scent</span>.
+				</div>
+				<div class="col">
+					<span class="f13">These</span> <span class="f31">Pokémon</span> <span class="f69">smell</span> <span class="f70">very</span> <span class="f71">nice</span>. <span class="f72">All</span> <span class="f11">the</span> <span class="f1">Girlanetos</span> <span class="f73">wear</span> <span class="f74">different</span> <span class="f3">flowers</span>, <span class="f29">so</span> <span class="f75">each one</span> <span class="f22"><span class="f76"></span>of</span></span></span> <span class="f13">these</span> <span class="f31">Pokémon</span> <span class="f25">has</span> <span class="f8">its</span> <span class="f77">own</span> <span class="f78">special</span> <span class="f17">smell</span>.
+				</div>
+				<div class="col">
+					<span class="f13">Aftá</span> <span class="f11">ta</span> <span class="f31">Pokémon</span> <span class="f69">myrízoun</span> <span class="f70">polý</span> <span class="f71">oraía</span>. <span class="f72">Óla</span> <span class="f11">ta</span> <span class="f1">Girláneta</span> <span class="f73">foroún</span> <span class="f74">diaforetiká</span> <span class="f3">louloúdia</span>, <span class="f29">étsi</span> <span class="f75">kathéna</span> <span class="f22"><span class="f76">apó</span></span> <span class="f13">aftá</span> <span class="f11">ta</span> <span class="f31">Pokémon</span> <span class="f25">échei</span> <span class="f77">ton dikó</span> <span class="f8">tou</span> <span class="f78">eidikí</span> <span class="f17">myrodiá</span>.
+				</div>
+				<div class="col">
+					<span class="f13">Αυτά</span> <span class="f11">τα</span> <span class="f31">Ποκέμον</span> <span class="f69">μυρίζουν</span> <span class="f70">πολύ</span> <span class="f71">ωραία</span>. <span class="f72">Όλα</span> <span class="f11">τα</span> <span class="f1">Γιρλάνετα</span> <span class="f73">φορούν</span> <span class="f74">διαφορετικά</span> <span class="f3">λουλούδια</span>, <span class="f29">έτσι</span> <span class="f75">καθένα</span> <span class="f22"><span class="f76">από</span></span> <span class="f13">αυτά</span> <span class="f11">τα</span> <span class="f31">Ποκέμον</span> <span class="f25">έχει</span> <span class="f77">τον δικό</span> <span class="f8">του</span> <span class="f78">ειδική</span> <span class="f17">μυρωδιά</span>.
+				</div>
+			</div>
+			<div class="row">
+				<div class="col text-center pkmn-game pkmn-scarlet">Pokémon Scarlet</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="f79">It uses</span> <span class="f8">its</span> <span class="f7">vine</span> <span class="f44">to</span> <span class="f38">pick</span> <span class="f3">flowers</span>. <span class="f11">The</span> <span class="f3">flowers</span> <span class="f19">that</span> <span class="f1">Comfey</span> <span class="f51">attaches</span> <span class="f4">to</span> <span class="f8">it</span><span class="f46">self</span> <span class="f80">develop</span> <span class="f59">healing</span> <span class="f81">properties</span>.
+				</div>
+				<div class="col">
+					<span class="f79">It uses</span> <span class="f23">the</span> <span class="f7">vine</span> <span class="f8">of it</span> <span class="f44">for</span> <span class="f38">gathering</span> <span class="f3">flowers</span>. <span class="f11">The</span> <span class="f3">flowers</span> <span class="f19">which</span> <span class="f1">Girlaneto</span> <span class="f51">attaches</span> <span class="f4">to</span> <span class="f8">it</span><span class="f46">self</span> <span class="f80">develop</span> <span class="f59">therapeutic</span> <span class="f81">properties</span>.
+				</div>
+				<div class="col">
+					<span class="f79">Chrisimopoieí</span> <span class="f23">to</span> <span class="f7">klíma</span> <span class="f8">tou</span> <span class="f44">gia</span> <span class="f43">na</span> <span class="f38">mazépsei</span> <span class="f3">louloúdia</span>. <span class="f11">Ta</span> <span class="f3">louloúdia</span> <span class="f19">pou</span> <span class="f51">kolláei</span> <span class="f23">to</span> <span class="f1">Girláneto</span> <span class="f4">ston</span> <span class="f46">eaftó</span> <span class="f8">tou</span> <span class="f80">anaptýssoun</span> <span class="f59">therapeftikés</span> <span class="f81">idiótites</span>.
+				</div>
+				<div class="col">
+					<span class="f79">χρησιμοποιεί</span> <span class="f23">το</span> <span class="f7">κλήμα</span> <span class="f8">του</span> <span class="f44">για</span> <span class="f43">να</span> <span class="f38">μαζέψει</span> <span class="f3">λουλούδια</span>. <span class="f11">Τα</span> <span class="f3">λουλούδια</span> <span class="f19">που</span> <span class="f51">κολλάει</span> <span class="f23">το</span> <span class="f1">Γιρλάνετο</span> <span class="f4">στον</span> <span class="f46">εαυτό</span> <span class="f8">του</span> <span class="f80">αναπτύσσουν</span> <span class="f59">θεραπευτικές</span> <span class="f81">ιδιότητες</span>.
+				</div>
+			</div>
+			<div class="row">
+				<div class="col text-center pkmn-game pkmn-violet">Pokémon Violet</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="f82">It prefers</span> <span class="f83">areas</span> <span class="f21">with</span> <span class="f35">lots of</span> <span class="f3">flowers</span>. <span class="f26"><span class="f84">A</span></span> <span class="f1">Comfey</span> <span class="f45">adorned</span> <span class="f21">with</span> <span class="f3">flowers</span> <span class="f32">is</span> <span class="f26">a</span> <span class="f85">happy</span> <span class="f1">Comfey</span>, <span class="f12">and</span> <span class="f11">the</span> <span class="f3">flowers</span> <span class="f86">gain</span> <span class="f59">healing</span> <span class="f28">effects</span>.
+				</div>
+				<div class="col">
+					<span class="f82">It prefers</span> <span class="f83">areas</span> <span class="f21">with</span> <span class="f35">lots of</span> <span class="f3">flowers</span>. <span class="f26"><span class="f84">A</span></span> <span class="f1">Girlaneto</span> <span class="f19">which</span> <span class="f45">is adorned</span> <span class="f21">with</span> <span class="f3">flowers</span> <span class="f32">is</span> <span class="f26">a</span> <span class="f85">happy</span> <span class="f1">Girlaneto</span>, <span class="f12">and</span> <span class="f11">the</span> <span class="f3">flowers</span> <span class="f86">gain</span> <span class="f59">therapeutic</span> <span class="f28">effects</span>.
+				</div>
+				<div class="col">
+					<span class="f82">Protimáei</span> <span class="f83">periochés</span> <span class="f21">me</span> <span class="f35">pollá</span> <span class="f3">louloúdia</span>. <span class="f26"><span class="f84">Éna</span></span> <span class="f1">Girlánetos</span> <span class="f19">pou</span> <span class="f45">stolisméno</span> <span class="f21">me</span> <span class="f3">louloudiá</span> <span class="f32">eínai</span> <span class="f26">éna</span> <span class="f85">eftychisméno</span> <span class="f1">Girláneto</span>, <span class="f12">kai</span> <span class="f11">ta</span> <span class="f3">louloúdia</span> <span class="f86">apoktoún</span> <span class="f59">therapeftikés</span> <span class="f28">idiótites</span>.
+				</div>
+				<div class="col">
+					<span class="f82">Προτιμάει</span> <span class="f83">περιοχές</span> <span class="f21">με</span> <span class="f35">πολλά</span> <span class="f3">λουλούδια</span>. <span class="f26"><span class="f84">Ένα</span></span> <span class="f1">Γιρλάνετος</span> <span class="f19">που</span> <span class="f45">στολισμένο</span> <span class="f21">με</span> <span class="f3">λουλουδιά</span> <span class="f32">είναι</span> <span class="f26">ένα</span> <span class="f85">ευτυχισμένο</span> <span class="f1">Γιρλάνετο</span>, <span class="f12">και</span> <span class="f11">τα</span> <span class="f3">λουλούδια</span> <span class="f86">αποκτούν</span> <span class="f59">θεραπευτικές</span> <span class="f28">ιδιότητες</span>.
+				</div>
+			</div>
+			<div class="row">
+				<div class="col text-center display-6 fw-bold">❤️🌺My babies...🌺❤️</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<img class="img-fluid squishy" src="images/Comfey/Comfey.png">
+				</div>
+				<div class="col">
+					<img class="img-fluid squishy" src="images/Comfey/Rainbow Comfey.png">
+				</div>
+				<div class="col">
+					<img class="img-fluid squishy" src="images/Comfey/Shiny Enby Comfey.png">
+				</div>
+				<div class="col">
+					<img class="img-fluid squishy" src="images/Comfey/Greek Flag Comfey.png">
+				</div>
+			</div>
+			<div class="row row-padding"></div>
+			<div id="colorizer">
+				<div id="controls">
+					<div id="buttons">
+						<button id="render">Render</button>
+						<button id="reset">Reset</button>
+						<button id="switch">Toggle input type</button>
+					</div>
+				</div>
+				<canvas id="screen"></canvas>
+			</div>
+		</div>
+
+		<script defer>
+			let babyImgs = $(".squishy")
+			let B = (t) => {
+				return [
+					Math.pow(1 - t, 3)*0 + 
+					3*Math.pow(1 - t, 2)*t*0.42 + 
+					3*(1 - t)*Math.pow(t,2)*0.58 + 
+					Math.pow(t, 3)*1,
+
+					Math.pow(1 - t, 3)*0 + 
+					3*Math.pow(1 - t, 2)*t*0 + 
+					3*(1 - t)*Math.pow(t,2)*1 + 
+					Math.pow(t, 3)*1,
+				]
+			}
+
+			function squish(baby){
+				setInterval(function(){
+					let r = (s) => (Math.random()*2-1) * s
+					
+					let vals = baby.vals
+					if (vals.turnTimer === -1){
+						vals.turnTimer = Date.now() + Math.random()*20000 + 5000
+					}
+					let now = Date.now()
+					if (vals.turnTimer < now){
+						vals.turnTimer = -1
+						if (vals.facing < 0) vals.turning = 0.05
+						else if (vals.facing > 0) vals.turning = -0.05
+					}
+					vals.facing += vals.turning
+					if (Math.abs(vals.facing) > 1){
+						vals.facing = (vals.facing > 0 ? 1 : -1) * Math.min(1, Math.abs(vals.facing))
+						vals.turning = 0
+					}
+					
+					if (vals.rotationTimer === -1){
+						vals.rotationTimer = Date.now() + Math.random()*10000 + 5000
+					}
+					if (vals.rotationTimer !== -1 && vals.rotationTimer < now){
+						vals.rotationTimer = -1
+						vals.rotationOrigin = vals.rotation
+						vals.rotationTarget = r(20)
+						vals.rotationAnimationStart = now
+						vals.rotationAnimationEnd = now + Math.random()*1000 + 200
+					}
+					if (vals.rotation !== vals.rotationTarget){
+						let t = (now - vals.rotationAnimationStart) / (vals.rotationAnimationEnd - vals.rotationAnimationStart)
+						if (t <= 1){
+							let p = B(t)[1]
+							let d = vals.rotationTarget - vals.rotationOrigin
+							vals.rotation = vals.rotationOrigin + p*d
+						}
+						else {
+							vals.rotation = vals.rotationTarget
+						}
+					}
+
+
+					
+					let faceDirection = B(vals.facing*0.5 + 0.5)[1] * 2 - 1
+					let rotation = vals.rotation
+					let transform = [
+						`scaleX(${faceDirection})`,
+						`rotate(${rotation}deg)`
+					].join(" ")
+					$(baby.image).css("transform", transform)
+				}, 10)
+			}
+			
+			let babies = []
+			for (let i = 0; i < babyImgs.length; i++){
+				let baby = {}
+				baby.vals = {}
+				baby.vals.facing = 1
+				baby.vals.turning = 0
+				baby.vals.turnTimer = -1
+				baby.vals.rotation = 0
+				baby.vals.rotationTarget = 0
+				baby.vals.rotationOrigin = 0
+				baby.vals.rotationTimer = -1
+				baby.vals.rotationAnimationStart = -1
+				baby.vals.rotationAnimationEnd = -1
+				
+				baby.image = babyImgs[i]
+				squish(baby)
+				babies.push(baby)
+			}
+		</script>
+	</body>
+</html>
