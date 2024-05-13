@@ -221,6 +221,10 @@ function resize() {
 	$("#explanation-video > video").css(
 		"height", eTag.height() - eTag.css("font-size")
 	)
+
+	let viewsHeight = $("#explanation").height()
+	let remainingHeight = $(window).height() - viewsHeight
+	$("#views").css("height", remainingHeight + "px")
 }
 
 function explanationResizeStart(e) {
@@ -243,8 +247,10 @@ function explanationResizeStart(e) {
 		let newHeight = mouseInfo.startHeight + diffY
 		newHeight = Math.max(newHeight, 0)
 		let vh = $(window).height() / 100
+		let remainingHeight = (vh*100) - newHeight
 		$("#explanation-container").css("height", newHeight + "px")
 		$("#views").css("margin-top", (newHeight + 3 * vh) + "px")
+		.css("height", remainingHeight + "px")
 		$("#draggable").css("top", (newHeight - vh) + "px")
 	}
 	mouseInfo.mouseUpHandler = function () {
