@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Little Idle Game</title>
+	<link rel="stylesheet" href="style.css">
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+	<script src="render.js"></script>
+	<script src="controller.js"></script>
+	<script src="config.js"></script>
+</head>
+<body>
+	<canvas id="screen"></canvas>
+	<div id="menu-tabs">
+		<div id="menu-tab-container">
+			<div id="open-menu-tab" class="menu-tab">
+				<i class="btn-open bi bi-caret-left-fill"></i>
+				<i class="btn-close bi bi-caret-right-fill" style="display:none;"></i>
+			</div>
+			<div id="miner-upgrades-tab" data-tab="miners" class="menu-tab secondary">
+				<i class="bi bi-person-standing"></i>
+			</div>
+			<div id="settings-tab" data-tab="settings" class="menu-tab secondary">
+				<i class="bi bi-gear-fill"></i>
+			</div>
+		</div>
+	</div>
+	<div id="menu">
+		<div id="menu-info">
+			<div id="money"></div>
+			<div id="fps"></div>
+		</div>
+		<div id="menu-sections">
+			<div class="menu-section" data-tab="miners">
+				<div class="buy-amount-selector">
+
+				</div>
+				<div class="upgrade" id="upgrade-buy-miner">
+					<p class="upgrade-name">Buy 1 miner</p>
+					<p class="upgrade-level">1</p>
+					<p class="upgrade-cost">$5</p>
+				</div>
+				<div class="upgrade" id="upgrade-miner-speed" data-upgrade="miner-speed">
+					<p class="upgrade-name">Upgrade speed for 1 miner</p>
+					<p class="upgrade-effect"></p>
+					<p class="upgrade-level">1</p>
+					<p class="upgrade-cost">$5</p>
+				</div>
+			</div>
+			<div class="menu-section" data-tab="settings">
+				<div class="setting">
+					<label for="setting-game-render-scale">Render Scale:</label><br>
+					<input type="range" min="1" max="5" value="2" id="setting-game-render-scale">
+				</div>
+				<div class="setting">
+					<span>Render:</span><br>
+					<label for="setting-render-rocks">Rocks</label>
+					<input type="checkbox" id="setting-render-rocks" checked>
+					<label for="setting-render-miners">Miners</label>
+					<input type="checkbox" id="setting-render-miners" checked>
+					<label for="setting-render-rails">Rails</label>
+					<input type="checkbox" id="setting-render-rails" checked>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="main.js" defer></script>
+</body>
+</html>
