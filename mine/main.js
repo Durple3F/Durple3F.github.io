@@ -349,9 +349,6 @@ function generateLayers(layer){
 		} else {
 			layerHealths.set(i, prevHealth)
 		}
-		if (!layerHealths.get(i)){
-			console.log("CULPRIT", i, prevHealth, mult)
-		}
 	}
 }
 function getLayerValue(layer){
@@ -782,28 +779,6 @@ function buyMiners(amt){
 			money -= diff
 			addMiners(1)
 			prevCost = newCost
-		}
-	}
-}
-function upgradeAllMiners(targetLvls){
-	let mLen = miners.length
-	let upgradeNames = Object.keys(targetLvls)
-	let uLen = upgradeNames.length
-	for (let i = 0; i < mLen; i++){
-		let miner = miners[i]
-		for (let j = 0; j < uLen; j++){
-			let upgradeName = upgradeNames[j]
-			let upgrade = upgrades[upgradeName]
-			let lvl = targetLvls[upgradeName]
-			let currentLvl = miner.upgrades[upgradeName]
-			if (currentLvl >= lvl) continue
-			let costDiff = upgrade.getLevelCost(lvl) - upgrade.getLevelCost(currentLvl)
-			if (money < costDiff) continue
-			money -= costDiff
-			miner.upgrades[upgradeName] = lvl
-			let newValue = upgrade.getLevelValue(lvl)
-			upgrade.applyLevelToEntity(miner, newValue, lvl)
-			console.log(miner.speed)
 		}
 	}
 }
