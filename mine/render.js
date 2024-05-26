@@ -100,7 +100,8 @@ leftToUse, alreadyDoneMinersMap){
 	let effectiveRadius = minerR*0.5 * zoomRecip
 	if (effectiveRadius < 1) effectiveRadius = 0
 	
-	let x = floor((minerX - xOffset + 1) * zoomRecip - effectiveRadius - leftToUse)
+	let extra = zoomRecip > 2 ? 1 : 0
+	let x = round((minerX - xOffset + extra) * zoomRecip - effectiveRadius - leftToUse)
 	let y = floor((minerY - yOffset) * zoomRecip)
 	let r = miner.radius * zoomRecip
 
@@ -147,7 +148,7 @@ topmostPixel, bottommostPixel, windowWorldHeight){
 	let zoomRecip = 1 / zoomLevel
 	for (let i = 0; i < total; i++){
 		let py = (i % h)
-		if (py > bottommostPixel) continue
+		if (py >= bottommostPixel) continue
 		if (py < topmostPixel) continue
 		let px = floor(i/h)
 
@@ -176,7 +177,7 @@ topmostPixel, bottommostPixel, windowWorldHeight){
 		let minecartPixelY = floor((minecartY - yOffset) * zoomRecip)
 		let minecartCount = rail.minecartCount
 		let minecartPixelTop = minecartPixelY - minecartCount * zoomRecip
-		if (py < minecartPixelY && py >= minecartPixelTop){
+		if (py <= minecartPixelY && py >= minecartPixelTop){
 			//If we make it in here, we're currently rendering
 			//a minecart pixel.
 			color = GRAY
@@ -193,6 +194,9 @@ topmostPixel, bottommostPixel, windowWorldHeight){
 				} else {
 					currentMinecartNumber -= runLength
 				}
+			}
+			if (color === GRAY && py === minecartPixelY && rail.state === "returning-home"){
+				color = DARKGRAY
 			}
 		}
 
@@ -236,12 +240,18 @@ function render(){
 	let windowWorldWidth = widthToUse * zoomLevel
 	let windowWorldHeight = h * zoomLevel
 
-	//Draw the mixed up rocks in the middle
+	//Draw the rocks
 	let nextFrame = ctx.createImageData(widthToUse, h)
 	let data = nextFrame.data
 	let total = widthToUse * h
 	if (renderRocksEachFrame){
 		renderRocks(data, w, h, leftToUse, widthToUse, total, topmostPixel, windowWorldHeight)
+	}
+
+	//Draw the rails
+	if (renderRailsEachFrame){
+		renderRails(data, w, h, leftToUse, widthToUse, total,
+			topmostRailPixel, bottommostRailPixel, windowWorldHeight)
 	}
 
 	//Draw the miners
@@ -267,11 +277,6 @@ function render(){
 					leftToUse, alreadyDoneMinersMap)
 			}
 		}
-	}
-
-	if (renderRailsEachFrame){
-		renderRails(data, w, h, leftToUse, widthToUse, total,
-			topmostRailPixel, bottommostRailPixel, windowWorldHeight)
 	}
 
 	ctx.putImageData(nextFrame, leftToUse, 0)

@@ -39,3 +39,7 @@
 
 5/25:
   - You can now see current miner count on that upgrade
+  - And now all the upgrades work. You can:
+    - Upgrade miner's speed, damage, capacity, unload speed, and total amount
+    - Upgrade rail's speed, acceleration, length, minecart count, capacity, unload speed, and amount
+  - Added a saving system! It's iffy. I think it works, but... gonna wanna add an export option soon.

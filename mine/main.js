@@ -37,8 +37,10 @@ let frameCount = 0
 //Bonus time the player builds up by having the game inactive
 let bankedBonusTicks = 0
 
+let lastSave = 0
+
 let layerDepth = 25
-let longestRailLength = 10
+let longestRailLength = 0
 const farthestRocks = [0, 0]
 
 let currentTab = "miners"
@@ -133,6 +135,7 @@ class Upgrade {
 		this.individualLevelCosts.set(0, initialCost)
 		this.lastCachedLevel = 0
 		this.cacheFrequency = 10
+		this.textPrecision = 0
 
 		this.tag = $(`.upgrade[data-upgrade=${this.name}]`)
 		this.tag.click(this.buyUpgrade.bind(this))
@@ -147,8 +150,9 @@ class Upgrade {
 			case "arithmetic-compound":
 				let priceModifier = this.costModifier[0]
 				let priceModFrequency = this.costModifier[1]
+				let additionalCost = this.costModifier[2] ?? 0
 				let scale = ceil(lvl / priceModFrequency)
-			return cost + priceModifier * scale
+			return cost + priceModifier * scale + additionalCost
 			default:
 				console.warn("You never handled the cost type for "+this.name)
 			break
@@ -193,25 +197,108 @@ class Upgrade {
 			let targetLevel = getMinerTargetLevel(this.name, currentBuyAmount)
 			let cost = getMinerUpgradeCost(this.name, targetLevel)
 			let newValue = this.getLevelValue(targetLevel)
-			if (cost <= money || true){
+			if (cost <= money){
 				for (let i = 0; i < miners.length; i++){
 					let miner = miners[i]
 					if (miner.upgrades[this.name] <= targetLevel){
 						this.applyLevelToEntity(miner, newValue, targetLevel)
 					}
 				}
+				money -= cost
 			}
-			console.log(targetLevel, miners[0])
-			money -= cost
+		} else if(this.upgradeType === "rail") {
+			let targetLevel = getRailTargetLevel(this.name, currentBuyAmount)
+			let cost = getRailUpgradeCost(this.name, targetLevel)
+			let newValue = this.getLevelValue(targetLevel)
+			if (cost <= money){
+				let left = farthestRails[0]
+				let right = farthestRails[1]
+				for (let i = left; i <= right; i++){
+					let rail = rails.get(i)
+
+					if (rail.upgrades[this.name] <= targetLevel){
+						this.applyLevelToEntity(rail, newValue, targetLevel)
+					}
+				}
+				money -= cost
+			}
 		}
+		rerenderUpgrades()
 	}
 }
-new Upgrade("miner-speed", 4, "geometric", 1.5, 1, "arithmetic", 0.3,
+new Upgrade("miner-speed", 4, "geometric", 1.5, 0.3, "arithmetic", 0.1,
 (miner, value, lvl) => {
 	miner.speed = value
 	miner.upgrades["miner-speed"] = lvl
 }, "miner")
+upgrades["miner-speed"].textPrecision = 1
+new Upgrade("miner-capacity", 0, "arithmetic-compound", [50, 10, -48], 1, "arithmetic", 1,
+(miner, value, lvl) => {
+	miner.carryCapacity = value
+	miner.upgrades["miner-capacity"] = lvl
+}, "miner")
+new Upgrade("miner-damage", 0, "arithmetic-compound", [100, 10], 1, "arithmetic", 1,
+(miner, value, lvl) => {
+	miner.damage = value
+	miner.upgrades["miner-damage"] = lvl
+}, "miner")
+new Upgrade("miner-unload-speed", 0, "arithmetic-compound", [300, 5], 1, "arithmetic", 1,
+(miner, value, lvl) => {
+	miner.unloadSpeed = value
+	miner.upgrades["miner-unload-speed"] = lvl
+}, "miner")
 new Upgrade("miner-amount", -5, "arithmetic-compound", [5, 10], 0, "arithmetic", 1, function(){}, "none")
+
+new Upgrade("rail-speed", 6, "arithmetic-compound", [4, 25], 0.1, "arithmetic", 0.05,
+(rail, value, lvl) => {
+	rail.maxSpeed = value
+	rail.upgrades["rail-speed"] = lvl
+}, "rail")
+upgrades["rail-speed"].textPrecision = 2
+new Upgrade("rail-acceleration", 6, "arithmetic-compound", [4, 10], 0.01, "arithmetic", 0.005,
+(rail, value, lvl) => {
+	rail.acceleration = value
+	rail.upgrades["rail-acceleration"] = lvl
+}, "rail")
+upgrades["rail-acceleration"].textPrecision = 3
+new Upgrade("rail-capacity", 8, "geometric", 1.3, 1, "arithmetic", 1,
+(rail, value, lvl) => {
+	rail.capacityPerMinecart = value
+	rail.carryCapacity = rail.capacityPerMinecart * rail.minecartCount
+	rail.upgrades["rail-capacity"] = lvl
+}, "rail")
+new Upgrade("rail-length", 3, "arithmetic-compound", [2, 10], 1, "arithmetic", 1,
+(rail, value, lvl) => {
+	let proposedValue = value
+	if (proposedValue > depths.get(rail.x)){
+		proposedValue = depths.get(rail.x)
+	}
+	rail.length = proposedValue
+	if (value > longestRailLength) {
+		longestRailLength = proposedValue
+	}
+	if (rail.state === "receiving") {
+		numberOfReceivingRails--
+		rail.state = "moving-to-mine"
+	}
+	rail.upgrades["rail-length"] = lvl
+}, "rail")
+new Upgrade("rail-minecart-count", 10, "arithmetic-compound", [10, 10], 1, "arithmetic", 1,
+(rail, value, lvl) => {
+	rail.minecartCount = value
+	rail.upgrades["rail-minecart-count"] = lvl
+	if (rail.y < value) rail.y = value
+	let capacity = upgrades["rail-capacity"]
+	let capacityLvl = rail.upgrades["rail-capacity"]
+	let capacityVal = capacity.getLevelValue(capacityLvl)
+	capacity.applyLevelToEntity(rail, capacityVal, capacityLvl)
+}, "rail")
+new Upgrade("rail-unload-speed", 0, "arithmetic-compound", [300, 5], 1, "arithmetic", 1,
+(rail, value, lvl) => {
+	rail.unloadSpeed = value
+	rail.upgrades["rail-unload-speed"] = lvl
+}, "rail")
+new Upgrade("rail-amount", -50, "arithmetic-compound", [50, 5], 0, "arithmetic", 1, function(){}, "none")
 
 function isRockAt(x,y){
 	if (y < 100) return false
@@ -268,9 +355,14 @@ function getLayerHealth(layer){
 	return layerHealths.get(layer)
 }
 
-function expandTo(left, right){
+function expandTo(left, right, includeZero){
 	let oldLeft = farthestRocks[0]
 	let oldRight = farthestRocks[1]
+	if (includeZero){
+		depths.set(0, 100)
+		durabilities.set(0, getLayerDurability(0))
+		healths.set(0, getLayerHealth(0))
+	}
 	for (let i = oldLeft - 1; i >= left; i--){
 		depths.set(i, 100)
 		let layer = getLayer(100)
@@ -335,15 +427,19 @@ class Miner {
 		this.x = getRandom(farthestRails[0], farthestRails[1])
 		this.y = 0
 		this.speed = upgrades["miner-speed"].initialValue
-		this.damage = 1
-		this.unloadSpeed = 1
-		this.carryCapacity = 1
+		this.damage = upgrades["miner-damage"].initialValue
+		this.unloadSpeed = upgrades["miner-unload-speed"].initialValue
+		this.carryCapacity = upgrades["miner-capacity"].initialValue
 
 		this.heldRocks = 0
 		this.heldRocksTotalValue = 0
 
-		this.upgrades = {
-			"miner-speed": 0
+		this.upgrades = {}
+		for (let upgradeName in upgrades){
+			let upgrade = upgrades[upgradeName]
+			if (upgrade.upgradeType === "miner"){
+				this.upgrades[upgradeName] = 0
+			}
 		}
 
 		this.state = "picking-target-mine"
@@ -417,6 +513,8 @@ function findNearestColumn(miner){
 	for (let i = 0; i < sLen; i++){
 		let tx = sample[i]
 		let ty = getDepth(tx)
+		//This is here to ensure miners still sometimes go back up to the top
+		ty = ty < my ? my : ty
 		let d = distance(mx, my, tx, ty)
 		//Is this column claimed?
 		if (minerClaimedColumns.get(tx)) {
@@ -482,9 +580,6 @@ function findNearestRail(miner){
 	for (let i = 0; i < sLen; i++){
 		let tx = sample[i]
 		let rail = rails.get(tx)
-		if (!rail) {
-			console.log(sample)
-		}
 		if (rail.state !== "receiving") continue
 		let ty = rail.length
 		let d = distance(mx, my, tx, ty)
@@ -678,16 +773,26 @@ function upgradeAllMiners(targetLvls){
 		}
 	}
 }
-function getMinerTargetLevel(upgradeName, lvls){
-	//Find lowest upgrade level
-	let lowestLevel = Infinity
+function getMinerLevelStats(upgradeName){
+	let min = Infinity, max = -Infinity, sum = 0
 	for (let i = 0; i < miners.length; i++){
 		let upgradeLevel = miners[i].upgrades[upgradeName]
-		if (upgradeLevel < lowestLevel){
-			lowestLevel = upgradeLevel
+		sum += upgradeLevel
+		if (upgradeLevel < min){
+			min = upgradeLevel
+		}
+		if (upgradeLevel > max){
+			max = upgradeLevel
 		}
 	}
-	return lowestLevel + lvls
+	let avg = round(sum / miners.length)
+	return {minimum: min, average: avg, maximum: max}
+}
+function getMinerMinLevel(upgradeName){
+	return getMinerLevelStats(upgradeName).minimum
+}
+function getMinerTargetLevel(upgradeName, lvls){
+	return getMinerMinLevel(upgradeName) + lvls
 }
 function getMinerUpgradeCost(upgradeName, targetLevel){
 	//Now find the cost to upgrade everybody to that level
@@ -702,6 +807,13 @@ function getMinerUpgradeCost(upgradeName, targetLevel){
 	}
 	return floor(totalCost)
 }
+function getMinersBelowLevel(upgradeName, targetLevel){
+	let count = 0
+	for (let i = 0; i < miners.length; i++){
+		if (miners[i].upgrades[upgradeName] < targetLevel) count++
+	}
+	return count
+}
 
 const farthestRails = [0, 0]
 let numberOfReceivingRails = 0
@@ -710,16 +822,27 @@ const rails = new Map()
 class Rail {
 	constructor(x) {
 		this.x = x
-		this.length = 10
+		this.length = upgrades["rail-length"].initialValue
+		if (this.length > longestRailLength){
+			longestRailLength = this.length
+		}
 		this.y = this.length
-		this.maxSpeed = 0.1 * 100
+		this.maxSpeed = upgrades["rail-speed"].initialValue
 		this.speed = 0
-		this.acceleration = 0.01 * 100
-		this.minecartCount = 1
-		this.capacityPerMinecart = 10
-		this.unloadSpeed = 1
+		this.acceleration = upgrades["rail-acceleration"].initialValue
+		this.minecartCount = upgrades["rail-minecart-count"].initialValue
+		this.capacityPerMinecart = upgrades["rail-capacity"].initialValue
+		this.unloadSpeed = upgrades["rail-unload-speed"].initialValue
 		this.cartColors = []
 		this.rocksUntilNextCartColor = this.capacityPerMinecart
+
+		this.upgrades = {}
+		for (let upgradeName in upgrades){
+			let upgrade = upgrades[upgradeName]
+			if (upgrade.upgradeType === "rail"){
+				this.upgrades[upgradeName] = 0
+			}
+		}
 
 		this.state = "receiving"
 		numberOfReceivingRails++
@@ -848,6 +971,84 @@ function railTick(rail, timeStep){
 	}
 }
 
+function addRails(amtLeft, amtRight, addCenter){
+	if (addCenter){
+		rails.set(0, new Rail(0))
+	}
+	for (let i = 0; i < amtLeft; i++){
+		farthestRails[0] -= 1
+		rails.set(farthestRails[0], new Rail(farthestRails[0]))
+	}
+	for (let i = 0; i < amtRight; i++){
+		farthestRails[1] += 1
+		rails.set(farthestRails[1], new Rail(farthestRails[1]))
+	}
+}
+function buyRails(amt){
+	let left = abs(farthestRails[0])
+	let right = farthestRails[1]
+	let total = left + right + 1
+	let oldCost = upgrades["rail-amount"].getLevelCost(total)
+	let newCost = upgrades["rail-amount"].getLevelCost(total + amt)
+	let diff = newCost - oldCost
+	if (diff > money) return
+	money -= diff
+	let leftAmt = floor(amt * 0.5)
+	let rightAmt = ceil(amt * 0.5)
+	if (left < right && leftAmt !== rightAmt){
+		leftAmt++
+		rightAmt--
+	}
+	addRails(leftAmt, rightAmt)
+}
+function getRailLevelStats(upgradeName){
+	let min = Infinity, max = -Infinity, sum = 0
+	let left = farthestRails[0]
+	let right = farthestRails[1]
+	for (let i = left; i <= right; i++){
+		let upgradeLevel = rails.get(i).upgrades[upgradeName]
+		sum += upgradeLevel
+		if (upgradeLevel < min){
+			min = upgradeLevel
+		}
+		if (upgradeLevel > max){
+			max = upgradeLevel
+		}
+	}
+	let avg = round(sum / (right - left + 1))
+	return {minimum: min, average: avg, maximum: max}
+}
+function getRailMinLevel(upgradeName){
+	return getRailLevelStats(upgradeName).minimum
+}
+function getRailTargetLevel(upgradeName, lvls){
+	return getRailMinLevel(upgradeName) + lvls
+}
+function getRailUpgradeCost(upgradeName, targetLevel){
+	//Now find the cost to upgrade everybody to that level
+	let upgrade = upgrades[upgradeName]
+	let targetCost = upgrade.getLevelCost(targetLevel)
+	let totalCost = 0
+	let left = farthestRails[0]
+	let right = farthestRails[1]
+	for (let i = left; i <= right; i++){
+		let curLevel = rails.get(i).upgrades[upgradeName]
+		if (curLevel >= targetLevel) continue
+		let cost = targetCost - upgrade.getLevelCost(curLevel)
+		totalCost += cost
+	}
+	return floor(totalCost)
+}
+function getRailsBelowLevel(upgradeName, targetLevel){
+	let count = 0
+	let left = farthestRails[0]
+	let right = farthestRails[1]
+	for (let i = left; i <= right; i++){
+		if (rails.get(i).upgrades[upgradeName] < targetLevel) count++
+	}
+	return count
+}
+
 function doTick(dt){
 	tickCount++
 
@@ -967,25 +1168,17 @@ function tick(){
 		}
 		tags.fps.innerHTML = fpsText
 	}
+
+	let saveFrequency = config?.saveFrequency ?? 1
+	let saveFrequencyMS = saveFrequency * 60000
+	if (now - lastSave > saveFrequencyMS){
+		saveGame()
+		lastSave = now
+	}
 }
 
 function start(){
-	let startingRailCount = config?.startingRails ?? 1
-	let leftmostRail = -Math.floor((startingRailCount - 1) * 0.5)
-	let rightmostRail = Math.ceil((startingRailCount - 1) * 0.5)
-	farthestRails[0] = leftmostRail
-	farthestRails[1] = rightmostRail
-	for (let i = leftmostRail; i <= rightmostRail; i++){
-		rails.set(i, new Rail(i))
-	}
-
-	depths.set(0, 100)
-	durabilities.set(0, getLayerDurability(0))
-	healths.set(0, getLayerHealth(0))
-	expandTo(leftmostRail - 100, rightmostRail + 100)
-
-	let startingMiners = config?.startingMiners ?? 1
-	addMiners(startingMiners)
+	loadGame()
 
 	resize()
 	changeFramerate(config?.tickRate ?? 60, config?.frameRate ?? 60)
@@ -1082,28 +1275,272 @@ function clickMenuTabHandler(event){
 }
 
 function rerenderUpgrades(){
-	let s = currentBuyAmount === 1 ? "" : "s"
-
 	let minerAmount = upgrades["miner-amount"]
 	let minerAmountTargetLevel = miners.length + currentBuyAmount
 	let minerAmountTotalCost = minerAmount.getLevelCost(minerAmountTargetLevel)
 	let minerAmountOldCost = minerAmount.getLevelCost(miners.length)
 	let minerAmountCost = minerAmountTotalCost - minerAmountOldCost
+	let minerAmountS = currentBuyAmount === 1 ? "" : "s"
 	$("#upgrade-buy-miner > .upgrade-cost").html(`$${minerAmountCost}`)
-	$("#upgrade-buy-miner > .upgrade-name").html(`Buy ${currentBuyAmount} miner${s}`)
+	$("#upgrade-buy-miner > .upgrade-name").html(`Buy ${currentBuyAmount} miner${minerAmountS}`)
 	$("#upgrade-buy-miner > .upgrade-level").html(miners.length)
+	
+	let railAmount = upgrades["rail-amount"]
+	let leftRailCount = abs(farthestRails[0])
+	let rightRailCount = farthestRails[1]
+	let railCount = rightRailCount + leftRailCount + 1
+	let railAmountTargetLevel = railCount + currentBuyAmount
+	let railAmountTotalCost = railAmount.getLevelCost(railAmountTargetLevel)
+	let railAmountOldCost = railAmount.getLevelCost(railCount)
+	let railAmountCost = railAmountTotalCost - railAmountOldCost
+	let railAmountS = currentBuyAmount === 1 ? "" : "s"
+	$("#upgrade-buy-rail > .upgrade-cost").html(`$${railAmountCost}`)
+	$("#upgrade-buy-rail > .upgrade-name").html(`Buy ${currentBuyAmount} rail${railAmountS}`)
+	$("#upgrade-buy-rail > .upgrade-level").html(railCount)
 
 	for (let upgradeName in upgrades){
 		let upgrade = upgrades[upgradeName]
-		if (!upgrade.tag.length) continue
+		let tag = upgrade.tag
+		if (!tag.length) continue
 		if (upgrade.upgradeType === "miner"){
+			let s = miners.length === 1 ? "" : "s"
+			let p = upgrade.textPrecision
 			let targetLevel = getMinerTargetLevel(upgradeName, currentBuyAmount)
 			let costToUpgrade = getMinerUpgradeCost(upgradeName, targetLevel)
-			console.log(costToUpgrade)
+			let toUpgrade = getMinersBelowLevel(upgradeName, targetLevel)
+			let levelStats = getMinerLevelStats(upgradeName)
+			let minLevel = levelStats.minimum
+			let minValue = upgrade.getLevelValue(minLevel).toFixed(p)
+			let maxLevel = levelStats.maximum
+			let maxValue = upgrade.getLevelValue(maxLevel).toFixed(p)
+			let avgLevel = round(levelStats.average)
+			let avgValue = upgrade.getLevelValue(avgLevel).toFixed(p)
+			let targetValue = upgrade.getLevelValue(targetLevel).toFixed(p)
+			tag.children(".upgrade-cost").html(`$${costToUpgrade}`)
+			tag.children(".upgrade-effect").html(`${minValue} <i class='bi bi-arrow-right'></i> ${targetValue}`)
+			let statText = `Min:${minValue} | Avg:${avgValue} | Max:${maxValue}`
+			tag.children(".upgrade-level-stats").html(statText)
+			tag.children(".upgrade-name").children(".modify").html(`${toUpgrade} miner${s}`)
 		}
 		if (upgrade.upgradeType === "rail") {
-
+			let left = farthestRails[0]
+			let right = farthestRails[1]
+			let totalRails = right - left + 1
+			let s = totalRails === 1 ? "" : "s"
+			let p = upgrade.textPrecision
+			let targetLevel = getRailTargetLevel(upgradeName, currentBuyAmount)
+			let costToUpgrade = getRailUpgradeCost(upgradeName, targetLevel)
+			let toUpgrade = getRailsBelowLevel(upgradeName, targetLevel)
+			let levelStats = getRailLevelStats(upgradeName)
+			let minLevel = levelStats.minimum
+			let minValue = upgrade.getLevelValue(minLevel).toFixed(p)
+			let maxLevel = levelStats.maximum
+			let maxValue = upgrade.getLevelValue(maxLevel).toFixed(p)
+			let avgLevel = round(levelStats.average)
+			let avgValue = upgrade.getLevelValue(avgLevel).toFixed(p)
+			let targetValue = upgrade.getLevelValue(targetLevel).toFixed(p)
+			tag.children(".upgrade-cost").html(`$${costToUpgrade}`)
+			tag.children(".upgrade-effect").html(`${minValue} <i class='bi bi-arrow-right'></i> ${targetValue}`)
+			let statText = `Min:${minValue} | Avg:${avgValue} | Max:${maxValue}`
+			tag.children(".upgrade-level-stats").html(statText)
+			tag.children(".upgrade-name").children(".modify").html(`${toUpgrade} rail${s}`)
 		}
+	}
+}
+
+function getSaveData(){
+	let data = []
+
+	data.push("$:"+money)
+	data.push("DM:"+JSON.stringify(farthestRocks))
+	data.push("#R:"+(farthestRails[1] - farthestRails[0] + 1))
+	data.push("#M:"+miners.length)
+
+	//Now add a bunch of samples of depth data.
+	let depthData = []
+	let leftmostRock = farthestRocks[0]
+	let rightmostRock = farthestRocks[1]
+	let depthLimit = 1000
+	let totalRocks = rightmostRock - leftmostRock + 1
+	if (totalRocks <= depthLimit){
+		for (let i = leftmostRock; i <= rightmostRock; i++){
+			let d = depths.get(i)
+			depthData.push(d)
+		}
+	} else {
+		for (let i = 0; i <= depthLimit; i++){
+			let p = i / depthLimit
+			let index = leftmostRock + p * (totalRocks - 1)
+			index = index|0
+			let d = depths.get(index)
+			depthData.push(d)
+		}
+	}
+	data.push("DD:"+JSON.stringify(depthData))
+
+	//Store a hashmap of the different miner's upgrade states,
+	//along with the count for each one.
+	let minerUpgradeMap = {}
+	for (let i = 0; i < miners.length; i++){
+		let hash = JSON.stringify(miners[i].upgrades)
+		if (minerUpgradeMap[hash]){
+			minerUpgradeMap[hash]++
+		} else {
+			minerUpgradeMap[hash] = 1
+		}
+	}
+	data.push("MU:"+JSON.stringify(minerUpgradeMap))
+
+	let leftmostRail = farthestRails[0]
+	let rightmostRail = farthestRails[1]
+	let railUpgradeMap = {}
+	for (let i = leftmostRail; i <= rightmostRail; i++){
+		let hash = JSON.stringify(rails.get(i).upgrades)
+		if (railUpgradeMap[hash]){
+			railUpgradeMap[hash]++
+		} else {
+			railUpgradeMap[hash] = 1
+		}
+	}
+	data.push("RU:"+JSON.stringify(railUpgradeMap))
+
+	return data.join("~~")
+}
+
+function saveGame(){
+	let saveData = getSaveData()
+	let zipped = zipson.stringify(saveData)
+	console.log("size", new Blob([zipped]).size)
+	localStorage.setItem("mine-save", zipped)
+}
+
+function startNewGame(){
+	let startingRailCount = config?.startingRails ?? 1
+	let leftRailCount = floor((startingRailCount - 1) * 0.5)
+	let rightRailCount = ceil((startingRailCount - 1) * 0.5)
+	rails.clear()
+	addRails(leftRailCount, rightRailCount, true)
+	let leftmostRail = farthestRails[0]
+	let rightmostRail = farthestRails[1]
+
+	depths.clear()
+	durabilities.clear()
+	healths.clear()
+	farthestRocks[0] = 0
+	farthestRocks[1] = 0
+	expandTo(leftmostRail - 100, rightmostRail + 100, true)
+
+	miners.length = 0
+	let startingMiners = config?.startingMiners ?? 1
+	addMiners(startingMiners)
+}
+
+function loadGame(data){
+	lastSave = Date.now()
+	if (!data){
+		data = localStorage.getItem("mine-save")
+	}
+	if (!data){
+		startNewGame()
+		return
+	}
+	try {
+		// startNewGame()
+		// money = 1000000
+		// return
+		let unzipped = zipson.parse(data)
+		let values = unzipped.split("~~")
+		let gameData = {}
+		for (let v of values){
+			let key = v.substring(0, v.indexOf(":"))
+			let value = v.substring(v.indexOf(":") + 1)
+			gameData[key] = value
+		}
+
+		money = Number(gameData["$"] ?? 0)
+
+		let railCount = gameData["#R"] ?? 1
+		let leftRailCount = floor((railCount - 1) * 0.5)
+		let rightRailCount = ceil((railCount - 1) * 0.5)
+		rails.clear()
+		addRails(leftRailCount, rightRailCount, true)
+
+		// let rockStats = [-100, 100]
+		let rockStats = JSON.parse(gameData["DM"] ?? "[0, 0]")
+		depths.clear()
+		durabilities.clear()
+		healths.clear()
+		expandTo(rockStats[0], rockStats[1], true)
+		
+		let depthData = JSON.parse(gameData["DD"]) || [100]
+		// depthData = [100, 150, 120, 150, 200, 208, 100, 150]
+		let leftmostRock = rockStats[0]
+		let rightmostRock = rockStats[1]
+		let totalRocks = rightmostRock - leftmostRock
+		for (let i = leftmostRock; i < rightmostRock; i++){
+			let p = (i + abs(leftmostRock)) / (rightmostRock - leftmostRock) * (depthData.length - 1)
+			let leftIndex = floor(p)
+			let rightIndex = ceil(p)
+			let leftValue = depthData[leftIndex]
+			if (typeof leftValue !== "number") leftValue = 100
+			let rightValue = depthData[rightIndex]
+			if (typeof rightValue !== "number") rightValue = 100
+			p = p % 1
+			let v = (1 - p) * leftValue + p * rightValue
+			v = floor(v)
+			if (typeof v !== "number") v = 100
+			depths.set(i, v)
+		}
+
+		miners.length = 0
+		let startingMiners = gameData["#M"] ?? 1
+		addMiners(startingMiners)
+
+		let minerUpgradeMap = JSON.parse(gameData["MU"] ?? "{}")
+		let minerUpgradesApplied = 0
+		for (let upgradeHash in minerUpgradeMap){
+			let stats = JSON.parse(upgradeHash)
+			let count = minerUpgradeMap[upgradeHash]
+			for (let i = 0; i < count; i++){
+				let minerIndex = minerUpgradesApplied + i
+				let miner = miners[minerIndex]
+				for (let stat in stats){
+					miner.upgrades[stat] = stats[stat]
+					let upgrade = upgrades[stat]
+					if (!upgrade) continue
+					let value = upgrade.getLevelValue(stats[stat])
+					upgrade.applyLevelToEntity(miner, value, stats[stat])
+				}
+			}
+			minerUpgradesApplied += count
+		}
+
+		let railUpgradeMap = JSON.parse(gameData["RU"] ?? "{}")
+		let railUpgradesApplied = 0
+		for (let upgradeHash in railUpgradeMap){
+			let stats = JSON.parse(upgradeHash)
+			let count = railUpgradeMap[upgradeHash]
+			for (let i = 0; i < count; i++){
+				let railIndex = railUpgradesApplied + i + farthestRails[0]
+				let rail = rails.get(railIndex)
+				for (let stat in stats){
+					rail.upgrades[stat] = stats[stat]
+					let upgrade = upgrades[stat]
+					if (!upgrade) continue
+					let value = upgrade.getLevelValue(stats[stat])
+					upgrade.applyLevelToEntity(rail, value, stats[stat])
+				}
+			}
+			railUpgradesApplied += count
+		}
+
+		// startNewGame()
+	}
+	catch (e) {
+		alert("Hey loading your saved messed up. Sorry. Go send Boo the error (press f12)")
+		console.log(e)
+		startNewGame()
+		return
 	}
 }
 
@@ -1132,7 +1569,11 @@ $("#setting-render-miners").change(event => {
 	renderMinersEachFrame = $(event.currentTarget).is(":checked")
 })
 $("#upgrade-buy-miner").click(function(){
-	buyMiners(miners.length + 1)
+	buyMiners(miners.length + currentBuyAmount)
+	rerenderUpgrades()
+})
+$("#upgrade-buy-rail").click(function(){
+	buyRails(currentBuyAmount)
 	rerenderUpgrades()
 })
 start()
