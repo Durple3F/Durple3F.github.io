@@ -383,6 +383,14 @@ function expandTo(left, right, includeZero){
 	farthestRocks[1] = right
 }
 
+function changeDepth(x, depth){
+	depths.set(x, depth)
+	let layer = getLayer(depth)
+	if (layer > deepestLayer){
+		deepestLayer = layer
+	}
+}
+
 function damageRock(x, y, d){
 	let layer = getLayer(y)
 	let remainingDepthForLayer = layerDepth - (y % layerDepth)
@@ -407,7 +415,7 @@ function damageRock(x, y, d){
 			numberBroken = healths.get(x)
 			healths.set(x, layerHealth)
 			durabilities.set(x, layerDurability)
-			depths.set(x, depths.get(x) + 1)
+			changeDepth(x, depths.get(x) + 1)
 			return numberBroken
 		}
 		dur = dur < 0 ? layerDurability + dur : layerDurability
