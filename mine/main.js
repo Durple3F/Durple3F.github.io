@@ -1208,7 +1208,7 @@ function resize(){
 function changeScale(newScale){
 	let windowWorldWidth = screenW * zoomLevel
 	gameRenderScale = newScale
-	$("#setting-game-render-scale").val(newScale)
+	$("#setting-game-render-scale").val(6 - newScale)
 	resize()
 	let newWorldWidth = screenW * zoomLevel
 	xOffset -= (newWorldWidth - windowWorldWidth) * 0.5
@@ -1589,7 +1589,8 @@ tags.openMenuTab.onclick = toggleSideMenu
 $(".menu-tab.secondary").click(clickMenuTabHandler)
 $("#setting-game-render-scale").change(event => {
 	let val = $(event.currentTarget).val()
-	changeScale(parseInt(val))
+	val = 6 - parseInt(val)
+	changeScale(val)
 })
 $("#setting-render-rocks").change(event => {
 	renderRocksEachFrame = $(event.currentTarget).is(":checked")
