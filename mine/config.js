@@ -1,5 +1,5 @@
 const config = {
-  scale: 1,
+  scale: 2,
   timeSpeed: 1,
   frameRate: 60,
   tickRate: 60,
