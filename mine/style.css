@@ -124,8 +124,27 @@ body {
 }
 
 .buy-amount-selector {
+	margin: auto;
 	margin-top: 2vh;
 	margin-bottom: 2vh;
+	width: 80%;
+	display: flex;
+	justify-content: space-between;
+}
+.current-buy-amount {
+	margin-left: 1em;
+	margin-right: 1em;
+}
+.decrease-buy-amount, .increase-buy-amount {
+	background-color: transparent;
+	border: 2px solid white;
+	color: white;
+	border-radius: 0.5em;
+	cursor: pointer;
+}
+.decrease-buy-amount:hover,
+.increase-buy-amount:hover {
+	background-color: #404040;
 }
 
 /********** Range Input Styles **********/

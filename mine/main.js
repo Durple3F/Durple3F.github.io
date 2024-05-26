@@ -261,7 +261,7 @@ new Upgrade("rail-acceleration", 6, "arithmetic-compound", [4, 10], 0.01, "arith
 	rail.upgrades["rail-acceleration"] = lvl
 }, "rail")
 upgrades["rail-acceleration"].textPrecision = 3
-new Upgrade("rail-capacity", 8, "geometric", 1.3, 1, "arithmetic", 1,
+new Upgrade("rail-capacity", 8, "geometric", 1.8, 1, "arithmetic", 1,
 (rail, value, lvl) => {
 	rail.capacityPerMinecart = value
 	rail.carryCapacity = rail.capacityPerMinecart * rail.minecartCount
@@ -309,49 +309,52 @@ function getDepth(x){
 	if (depths.has(x)) return depths.get(x)
 	return 100
 }
-function getLayerValue(layer){
-	if (layer < deepestLayer){
-		return layerValues.get(layer)
-	}
+function generateLayers(layer){
 	for (let i = deepestLayer + 1; i <= layer; i++){
-		let prev = layerValues.get(i - 1)
+		let prevVal = layerValues.get(i - 1)
 		if (i % 2 === 1){
 			let add = floor(8 + i*0.5)
-			layerValues.set(i, prev + add)
+			layerValues.set(i, prevVal + add)
 		} else {
-			layerValues.set(i, prev + 10)
+			layerValues.set(i, prevVal + 10)
+		}
+
+		let prevDur = layerDurabilities.get(i - 1)
+		if (i % 2 === 1){
+			let add = floor(8 + i*0.5)
+			layerDurabilities.set(i, prevDur + add)
+		} else {
+			layerDurabilities.set(i, prevDur + 10)
+		}
+
+		let prevHealth = layerHealths.get(i - 1)
+		if (i % 16 === 0){
+			let mult = config?.layerHealthMult ?? 1.77825
+			layerHealths.set(i, prevHealth * mult)
+		} else {
+			layerHealths.set(i, prevHealth)
 		}
 	}
+}
+function getLayerValue(layer){
+	if (layerValues.has(layer)){
+		return layerValues.get(layer)
+	}
+	generateLayers(layer)
 	return layerValues.get(layer)
 }
 function getLayerDurability(layer){
-	if (layer < deepestLayer){
+	if (layerDurabilities.has(layer)){
 		return layerDurabilities.get(layer)
 	}
-	for (let i = deepestLayer + 1; i <= layer; i++){
-		let prev = layerDurabilities.get(i - 1)
-		if (i % 2 === 1){
-			let add = floor(8 + i*0.5)
-			layerDurabilities.set(i, prev + add)
-		} else {
-			layerDurabilities.set(i, prev + 10)
-		}
-	}
+	generateLayers(layer)
 	return layerDurabilities.get(layer)
 }
 function getLayerHealth(layer){
-	if (layer < deepestLayer){
+	if (layerHealths.has(layer)){
 		return layerHealths.get(layer)
 	}
-	for (let i = deepestLayer + 1; i <= layer; i++){
-		let prev = layerHealths.get(i - 1)
-		if (i % 16 === 0){
-			let mult = config?.layerHealthMult ?? 1.77825
-			layerHealths.set(i, prev * mult)
-		} else {
-			layerHealths.set(i, prev)
-		}
-	}
+	generateLayers(layer)
 	return layerHealths.get(layer)
 }
 
@@ -395,6 +398,11 @@ function damageRock(x, y, d){
 	let layer = getLayer(y)
 	let remainingDepthForLayer = layerDepth - (y % layerDepth)
 	let layerDurability = getLayerDurability(layer)
+	if (!layerDurability){
+		generateLayers(layer)
+		deepestLayer = layer
+		layerDurability = getLayerDurability(layer)
+	}
 	let layerHealth = getLayerHealth(layer)
 	let numberBroken = floor(d / layerDurability)
 	let fullDepthBroken = min(remainingDepthForLayer, floor(numberBroken / layerHealth))
@@ -1283,6 +1291,8 @@ function clickMenuTabHandler(event){
 }
 
 function rerenderUpgrades(){
+	$(".current-buy-amount").html("Buying "+currentBuyAmount)
+
 	let minerAmount = upgrades["miner-amount"]
 	let minerAmountTargetLevel = miners.length + currentBuyAmount
 	let minerAmountTotalCost = minerAmount.getLevelCost(minerAmountTargetLevel)
@@ -1582,6 +1592,17 @@ $("#upgrade-buy-miner").click(function(){
 })
 $("#upgrade-buy-rail").click(function(){
 	buyRails(currentBuyAmount)
+	rerenderUpgrades()
+})
+$(".increase-buy-amount").click(function(){
+	currentBuyAmount *= 10
+	currentBuyAmount = floor(currentBuyAmount)
+	rerenderUpgrades()
+})
+$(".decrease-buy-amount").click(function(){
+	currentBuyAmount /= 10
+	if (currentBuyAmount < 1) currentBuyAmount = 1
+	currentBuyAmount = floor(currentBuyAmount)
 	rerenderUpgrades()
 })
 start()
