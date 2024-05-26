@@ -109,6 +109,21 @@ layerDurabilities.set(15, 186)
 
 const layerHealths = new Map()
 layerHealths.set(0, 10)
+layerHealths.set(1, 10)
+layerHealths.set(2, 10)
+layerHealths.set(3, 10)
+layerHealths.set(4, 10)
+layerHealths.set(5, 10)
+layerHealths.set(6, 10)
+layerHealths.set(7, 10)
+layerHealths.set(8, 10)
+layerHealths.set(9, 10)
+layerHealths.set(10, 10)
+layerHealths.set(11, 10)
+layerHealths.set(12, 10)
+layerHealths.set(13, 10)
+layerHealths.set(14, 10)
+layerHealths.set(15, 10)
 
 const upgrades = {}
 class Upgrade {
@@ -333,6 +348,9 @@ function generateLayers(layer){
 			layerHealths.set(i, prevHealth * mult)
 		} else {
 			layerHealths.set(i, prevHealth)
+		}
+		if (!layerHealths.get(i)){
+			console.log("CULPRIT", i, prevHealth, mult)
 		}
 	}
 }
