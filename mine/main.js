@@ -431,7 +431,7 @@ function damageRock(x, y, d){
 		return numberBroken
 	}
 	let dur = durabilities.get(x) - d
-	if (dur + numberBroken * layerDurability < 0) {
+	if (dur < 0) {
 		numberBroken++
 	}
 	if (numberBroken > 0){
@@ -1086,6 +1086,8 @@ function getRailsBelowLevel(upgradeName, targetLevel){
 function doTick(dt){
 	tickCount++
 
+	generateLayers(deepestLayer + 1)
+
 	let minerLimit = 10000
 	let railLimit = 100
 
@@ -1385,12 +1387,13 @@ function rerenderUpgrades(){
 }
 
 function getSaveData(){
+	let gameData = {}
 	let data = []
 
-	data.push("$:"+money)
-	data.push("DM:"+JSON.stringify(farthestRocks))
-	data.push("#R:"+(farthestRails[1] - farthestRails[0] + 1))
-	data.push("#M:"+miners.length)
+	gameData["$"] = money
+	gameData["DM"] = farthestRocks
+	gameData["#R"] = farthestRails[1] - farthestRails[0] + 1
+	gameData["#M"] = miners.length
 
 	//Now add a bunch of samples of depth data.
 	let depthData = []
@@ -1412,7 +1415,7 @@ function getSaveData(){
 			depthData.push(d)
 		}
 	}
-	data.push("DD:"+JSON.stringify(depthData))
+	gameData["DD"] = depthData
 
 	//Store a hashmap of the different miner's upgrade states,
 	//along with the count for each one.
@@ -1425,7 +1428,7 @@ function getSaveData(){
 			minerUpgradeMap[hash] = 1
 		}
 	}
-	data.push("MU:"+JSON.stringify(minerUpgradeMap))
+	gameData["MU"] = minerUpgradeMap
 
 	let leftmostRail = farthestRails[0]
 	let rightmostRail = farthestRails[1]
@@ -1438,19 +1441,26 @@ function getSaveData(){
 			railUpgradeMap[hash] = 1
 		}
 	}
-	data.push("RU:"+JSON.stringify(railUpgradeMap))
+	gameData["RU"] = railUpgradeMap
+	
+	for (let key in gameData){
+		data.push(key + ":" + zipson.stringify(gameData[key]))
+	}
 
-	return data.join("~~")
+	return data.join("🦭")
 }
 
 function saveGame(){
 	let saveData = getSaveData()
 	let zipped = zipson.stringify(saveData)
-	console.log("size", new Blob([zipped]).size)
+	console.log("Here's your save!")
+	console.log(zipped)
 	localStorage.setItem("mine-save", zipped)
 }
 
 function startNewGame(){
+	money = 0
+
 	let startingRailCount = config?.startingRails ?? 1
 	let leftRailCount = floor((startingRailCount - 1) * 0.5)
 	let rightRailCount = ceil((startingRailCount - 1) * 0.5)
@@ -1485,15 +1495,21 @@ function loadGame(data){
 		// money = 1000000
 		// return
 		let unzipped = zipson.parse(data)
-		let values = unzipped.split("~~")
+		let values = unzipped.split("🦭")
 		let gameData = {}
 		for (let v of values){
 			let key = v.substring(0, v.indexOf(":"))
 			let value = v.substring(v.indexOf(":") + 1)
-			gameData[key] = value
+			try {
+				gameData[key] = zipson.parse(value)
+			}
+			catch {
+				gameData[key] = value
+			}
 		}
 
-		money = Number(gameData["$"] ?? 0)
+		money = Number(gameData["$"] || 0)
+		if (isNaN(money)) money = 0
 
 		let railCount = gameData["#R"] ?? 1
 		let leftRailCount = floor((railCount - 1) * 0.5)
@@ -1502,13 +1518,18 @@ function loadGame(data){
 		addRails(leftRailCount, rightRailCount, true)
 
 		// let rockStats = [-100, 100]
-		let rockStats = JSON.parse(gameData["DM"] ?? "[0, 0]")
+		let rockStats
+		try {
+			rockStats = gameData["DM"]
+		} catch {
+			rockStats = [-100, 100]
+		}
 		depths.clear()
 		durabilities.clear()
 		healths.clear()
 		expandTo(rockStats[0], rockStats[1], true)
 		
-		let depthData = JSON.parse(gameData["DD"]) || [100]
+		let depthData = gameData["DD"] || [100]
 		// depthData = [100, 150, 120, 150, 200, 208, 100, 150]
 		let leftmostRock = rockStats[0]
 		let rightmostRock = rockStats[1]
@@ -1532,7 +1553,7 @@ function loadGame(data){
 		let startingMiners = gameData["#M"] ?? 1
 		addMiners(startingMiners)
 
-		let minerUpgradeMap = JSON.parse(gameData["MU"] ?? "{}")
+		let minerUpgradeMap = gameData["MU"] || {}
 		let minerUpgradesApplied = 0
 		for (let upgradeHash in minerUpgradeMap){
 			let stats = JSON.parse(upgradeHash)
@@ -1551,7 +1572,7 @@ function loadGame(data){
 			minerUpgradesApplied += count
 		}
 
-		let railUpgradeMap = JSON.parse(gameData["RU"] ?? "{}")
+		let railUpgradeMap = gameData["RU"] || {}
 		let railUpgradesApplied = 0
 		for (let upgradeHash in railUpgradeMap){
 			let stats = JSON.parse(upgradeHash)
@@ -1614,6 +1635,7 @@ $("#upgrade-buy-rail").click(function(){
 })
 $(".increase-buy-amount").click(function(){
 	currentBuyAmount *= 10
+	if (currentBuyAmount > 10000) currentBuyAmount = 1
 	currentBuyAmount = floor(currentBuyAmount)
 	rerenderUpgrades()
 })
