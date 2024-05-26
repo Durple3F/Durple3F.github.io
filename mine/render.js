@@ -148,7 +148,7 @@ topmostPixel, bottommostPixel, windowWorldHeight){
 	let zoomRecip = 1 / zoomLevel
 	for (let i = 0; i < total; i++){
 		let py = (i % h)
-		if (py >= bottommostPixel) continue
+		if (py > bottommostPixel) continue
 		if (py < topmostPixel) continue
 		let px = floor(i/h)
 
