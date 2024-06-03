@@ -43,3 +43,8 @@
     - Upgrade miner's speed, damage, capacity, unload speed, and total amount
     - Upgrade rail's speed, acceleration, length, minecart count, capacity, unload speed, and amount
   - Added a saving system! It's iffy. I think it works, but... gonna wanna add an export option soon.
+
+5/26:
+  - Added a selector to decide how many of each upgrade you wanna buy. Haven't tested too much, but I think it works.
+  - Fixed some bugs
+  

@@ -1,0 +1,45 @@
+5/29:
+  - started. i've never made a match 3 game before.
+  - mostly just got the very basic layout working.
+
+5/30:
+  - started painting stuff in the canvas.
+  - the game now generates a board of gems
+  - mouse tracking, you can select a tile to move now
+  - you can now actually move that tile
+  - there's a neat animation for moving stuff! i'm hoping to get ahead of the curve on animations so they're not an afterthought this time.
+  - trying to get match detection to work.
+  - match detection works! i've decided to consider T and L-shaped matches to be 2 separate matches.
+  - tiles are now affected by gravity and replaced by new tiles.
+
+5/31:
+  - working on getting the game to detect when no moves are available.
+  - the game now properly checks for what legal moves are available
+    - this gonna be the most annoying part of the program to maintain
+  - the game's turns go back and forth now.
+  - the enemy makes a move before it comes back to being your turns
+    - it's just a random move, but it's a move.
+  - there's a super basic damage calculation at the end of each turn
+
+6/1:
+  - Your pokemon now receives energy based on matches made.
+  - Put a lot of effort into making the text animated as numbers change
+  - The energy & health properly update now
+  - There's neat li'l damage numbers when you get hit! :)
+  - Created a whole system for handling those announcements saying whose turn it is
+    - they even pause the game until they go away!
+    - (but you can still do stuff obviously)
+
+6/2:
+  - Working on getting the actual skills up and running today.
+  - I've got the basic HTML layout done, and the game puts them on screen.
+
+6/3:
+  - Fixed some bugs with energy bars & clicking tiles
+  - Moves now check whether you can pay for them
+  - Moves now get paid for when you click on them
+  - You can only use moves on your turn before making a swap
+  - Moves can now deal damage to the opponent
+  - Moves can now ask you to select tiles to do stuff with
+  - Moves can now do multiple effects one by one
+  - Set up the actual damage calculation function (mostly)

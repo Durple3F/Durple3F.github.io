@@ -1,0 +1,326 @@
+@font-face {
+	font-family: Absolut_Pro;
+	src: url(src/font/AsapCondensed-Medium.ttf);
+}
+/* POKEMON SCARLET/VIOLET ALREADY HAS ICONS FOR ALL TYPES */
+/* Note for future
+@font-face {
+	font-family: "DejaVu Sans";
+	src: url("fonts/DejaVuSans.ttf");
+}
+@font-face {
+	font-family: "DejaVu Sans";
+	src: url("fonts/DejaVuSans-Bold.ttf");
+	font-weight: bold;
+}
+@font-face {
+	font-family: "DejaVu Sans";
+	src: url("fonts/DejaVuSans-Oblique.ttf");
+	font-style: italic, oblique;
+}
+@font-face {
+	font-family: "DejaVu Sans";
+	src: url("fonts/DejaVuSans-BoldOblique.ttf");
+	font-weight: bold;
+	font-style: italic, oblique;
+} */
+
+@property --num {
+	syntax: '<integer>';
+	initial-value: 0;
+	inherits: false;
+}
+
+body {
+	background-color: black;
+	color: white;
+	margin: 0;
+	width: 100vw;
+	height: 100vh;
+	font-family: Absolut_Pro, Arial;
+	user-select: none;
+	overflow: hidden;
+}
+
+:root {
+	--move-usable: #6774dc;
+	--move-unusable: rgb(60, 60, 60);
+	--health-high: #47c72c;
+	--health-med: #ffcc03;
+	--health-low: #db2428;
+	--energy-red: #ff2f35;
+	--energy-yellow: #e8aa00;
+	--energy-green: #82dc42;
+	--energy-blue: #00c0e7;
+	--energy-purple: #dd60dd;
+}
+
+.floating-text {
+	position: absolute;
+	transform: translate(-50%, -50%);
+	z-index: 10;
+}
+
+#board {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	position: relative;
+}
+
+#game-announcements {
+	position: absolute;
+	top: 10%;
+	left: 0;
+	width: 100%;
+	height: 80%;
+	
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	pointer-events: none;
+}
+#game-announcements > .announcement {
+	padding-top: 0.3em;
+	padding-bottom: 0.3em;
+	font-size: 2em;
+	width: 70%;
+	text-align: center;
+	background-image: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 25%,
+	rgba(0,0,0,0.5) 75%, rgba(0,0,0,0) 100%);
+}
+
+.board-side {
+	width: 22%;
+	height: 100%;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+}
+/* Hide scrollbar */
+.board-side::-webkit-scrollbar {
+	display: none;
+}
+
+.board-side-top {
+	text-align: center;
+}
+
+#screen {
+	width: 50%;
+}
+
+.health-bar {
+	position: relative;
+	height: 2em;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.health-bar div {
+	position: absolute;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: var(--health-high);
+	border-radius: 0.2em;
+}
+.health-bar > span {
+	z-index: 2;
+}
+/* .health-bar > span > span {
+	transition: --num 0.3s;
+	counter-reset: num var(--num);
+}
+.health-bar > span > span::after {
+	content: counter(num);
+} */
+
+.avatar-pokemon-section {
+	position: relative;
+	height: 8em;
+}
+.avatar-pokemon-name {
+	margin: auto;
+	background-image: linear-gradient(180deg, rgba(0,0,0,0.5) 20%, rgba(0,0,0,0) 100%);
+	position: relative;
+	z-index: 1;
+}
+.avatar-pokemon-image {
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: bottom center;
+	position: absolute;
+	bottom: 0;
+	height: 100%;
+	width: 100%;
+	transition: filter 0.4s ease-out;
+}
+.active .avatar-pokemon-image {
+	filter: drop-shadow(0px 0px 10px #ffffff70);
+}
+.enemy .avatar-pokemon-image {
+	transform: scaleX(-1);
+}
+
+.pokeball-display {
+	height: 1em;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+.pokeball-display > .container {
+	height: 100%;
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+}
+.pokeball-display > .container > .pokeball {
+	max-height: 100%;
+}
+
+.energy-resources {
+	height: 4em;
+	width: 100%;
+	display: flex;
+	justify-content: space-evenly;
+	align-items: stretch;
+}
+.energy-resources > .energy {
+	position: relative;
+	width: calc(100%/8);
+	max-width: 2em;
+	border-radius: 0.2em;
+	overflow: hidden;
+}
+.energy-resources > .energy > .background {
+	height: 100%;
+	width: 100%;
+	opacity: 0.3;
+}
+.energy-resources > .energy > .bar {
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+	border-top-left-radius: 0.2em;
+	border-top-right-radius: 0.2em;
+
+	height: 0%;
+}
+.energy-resources > .energy > .count {
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.energy-red > .background,
+.energy-red > .bar {
+	background-color: var(--energy-red)
+}
+.energy-yellow > .background,
+.energy-yellow > .bar {
+	background-color: var(--energy-yellow)
+}
+.energy-green > .background,
+.energy-green > .bar {
+	background-color: var(--energy-green)
+}
+.energy-blue > .background,
+.energy-blue > .bar {
+	background-color: var(--energy-blue)
+}
+.energy-purple > .background,
+.energy-purple > .bar {
+	background-color: var(--energy-purple)
+}
+
+.board-side-bottom {
+	padding-top: 1em;
+}
+
+.move {
+	border-radius: 0.25em;
+	background-color: var(--move-unusable);
+	color: rgb(180, 180, 180);
+	padding: 0.5em;
+	padding-top: 0.25em;
+	transition: color 0.3s, background-color 0.3s;
+}
+.move.usable {
+	background-color: var(--move-usable);
+	color: black;
+	cursor: pointer;
+}
+.move.usable:hover {
+	background-color: #7777ff;
+}
+
+.move > .move-top{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 1.3em;
+}
+
+.move > .move-top > .move-type {
+	height: 1em;
+}
+
+.move > .move-top > .move-type > img {
+	height: 100%;
+	position: relative;
+	top: -0.35em;
+}
+
+.move > .move-cost {
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+}
+.move > .move-cost > .energy {
+	position: relative;
+	height: 1.5em; width: 1.5em;
+}
+.move > .move-cost > .energy > .icon {
+	position: absolute;
+	width: 100%; height: 100%;
+	border-radius: 50%;
+	transition: filter 0.5s;
+}
+.move > .move-cost > .energy > .icon.unpayable {
+	filter: saturate(0.5);
+}
+.move > .move-cost > .energy-red > .icon {
+	background-color: var(--energy-red);
+}
+.move > .move-cost > .energy-yellow > .icon {
+	background-color: var(--energy-yellow);
+}
+.move > .move-cost > .energy-green > .icon {
+	background-color: var(--energy-green);
+}
+.move > .move-cost > .energy-blue > .icon {
+	background-color: var(--energy-blue);
+}
+.move > .move-cost > .energy-purple > .icon {
+	background-color: var(--energy-purple);
+}
+.move > .move-cost > div > .cost {
+	position: absolute;
+	width: 100%; height: 100%;
+	top: 50%; left: 50%;
+	z-index: 10;
+	text-align: center;
+	transform: translate(-50%, -50%);
+	color: white;
+}
+
+.confirm-btn {
+	position: absolute;
+	top: 50%; left: 50%;
+	transform: translate(-50%, -50%);
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 1);
+}

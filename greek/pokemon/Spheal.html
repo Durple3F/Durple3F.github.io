@@ -1,0 +1,255 @@
+<!doctype html>
+<html>
+	<head>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js">
+		</script> 
+		<link href="https://cdn.jsdelivr.net/npm/mana-font@latest/css/mana.css" rel="stylesheet" type="text/css" />
+		
+		<link rel="icon" type="image/x-icon" href="../../lojban/favicon.ico">
+		<link rel="stylesheet" href="../../lojban/style.css">
+		<script src="data.js"></script>
+		<script>
+			const storyCode = "Spheal"
+			const pokemonCode = "Spheal"
+		</script>
+		<script src="../../lojban/main.js" defer></script>
+
+		<link rel="stylesheet" href="games.css">
+		<link rel="stylesheet" href="colorizer.css">
+		<!-- <script src="colorData.js" defer></script>
+		<script src="colorizer.js" defer></script> -->
+
+		<title>Spheal</title>
+		<meta property="og:title" content="Spheal">
+		<meta property="og:description" content="">
+		<meta property="og:image" content="https://durple3f.github.io/greek/pokemon/images/Spheal/Spheal.png">
+	</head>
+	<body>
+		<a href="../index.html" id="back-btn">
+			<button class="btn btn-secondary">Back</button>
+		</a>
+		<div id="draggable">=</div>
+		<div id="explanation-container">
+			<div id="explanation">
+				<div id="explanation-text"></div>
+				<button class="btn btn-secondary show-all" style="display: none;">Show all</button>
+			</div>
+		</div>
+		<div id="views">
+			<div class="row text-center">
+				<div class="row justify-content-center">
+					<div class="col col-3">
+						<img class="img-fluid" src="https://archives.bulbagarden.net/media/upload/6/6f/0363Spheal.png">
+					</div>
+					<div class="col col-1">
+						<div class="d-flex align-items-center justify-content-center h-100">
+							<i class="bi bi-arrow-right display-3"></i>
+						</div>
+					</div>
+					<div class="col col-3">
+						<img class="img-fluid" src="https://archives.bulbagarden.net/media/upload/3/36/0364Sealeo.png">
+					</div>
+					<div class="col col-1">
+						<div class="d-flex align-items-center justify-content-center h-100">
+							<i class="bi bi-arrow-right display-3"></i>
+						</div>
+					</div>
+					<div class="col col-3">
+						<img class="img-fluid" src="https://archives.bulbagarden.net/media/upload/b/ba/0365Walrein.png">
+					</div>
+				</div>
+				<div class="row justify-content-center">
+					<div class="col col-3">
+						<p class="mt-0 mb-0"><span class="f1"><span class="f2">S<span class="f3">ph</span></span><span class="f3">eal</span></span></p>
+						<p class="mt-0 mb-0"><span class="f1"><span class="f2">S<span class="f3">f</span></span><span class="f3">okia</span></span></p>
+						<p class="mt-0 mb-0"><span class="f1"><span class="f2">S<span class="f3">f</span></span><span class="f3">ókia</span></span></p>
+						<p class="mt-0 mb-0"><span class="f1"><span class="f2">Σ<span class="f3">φ</span></span><span class="f3">ώκια</span></span></p>
+						<p class="mt-0 mb-0"><span class="f1"><span class="f2">Sphere</span> + <span class="f3">Seal</span></span></p>
+						<p class="mt-0 mb-0"><span class="f1"><span class="f2">Sphere</span>: <span class="f2">σφαίρα</span> (<span class="f2">sfaíra</span>)</span></p>
+						<p class="mt-0 mb-0"><span class="f1"><span class="f3">Seal</span>: <span class="f3">φώκια</span> (<span class="f3">fókia</span>)</span></p>
+					</div>
+					<div class="col col-1">
+					</div>
+					<div class="col col-3">
+						<p class="mt-0 mb-0"><span class="f4"><span class="f3">Sea<span class="f5">l</span></span><span class="f5">eo</span></span></p>
+						<p class="mt-0 mb-0"><span class="f4"><span class="f5">Le</span><span class="f3">okia</span></span></p>
+						<p class="mt-0 mb-0"><span class="f4"><span class="f5">Li</span><span class="f3">ókia</span></span></p>
+						<p class="mt-0 mb-0"><span class="f4"><span class="f5">Λι</span><span class="f3">ώκια</span></span></p>
+						<p class="mt-0 mb-0"><span class="f4"><span class="f3">Seal</span> + <span class="f5">Lion</span></span></p>
+						<p class="mt-0 mb-0"><span class="f4"><span class="f3">Seal</span>: <span class="f3">φώκια</span></span></p>
+						<p class="mt-0 mb-0"><span class="f4"><span class="f5">Lion</span>: <span class="f5">λιοντάρι</span></span></p>
+					</div>
+					<div class="col col-1">
+						
+					</div>
+					<div class="col col-3">
+						<p class="mt-0 mb-0"><span class="f6"><span class="f8">Wal</span><span class="f7"><span class="f8">rein</span></span></span></p>
+						<p class="mt-0 mb-0"><span class="f6"><span class="f7">Vasill<span class="f8">i</span></span><span class="f8">pus</span></span></p>
+						<p class="mt-0 mb-0"><span class="f6"><span class="f7">Vasil<span class="f8">í</span></span><span class="f8">ppos</span></span></p>
+						<p class="mt-0 mb-0"><span class="f6"><span class="f7">Βασιλ<span class="f8">ί</span></span><span class="f8">ππος</span></span></p>
+						<p class="mt-0 mb-0"><span class="f6"><span class="f7">Reign</span> + <span class="f8">Walrus</span></span></p>
+						<p class="mt-0 mb-0"><span class="f6"><span class="f7">Reign / Kingship</span>: <span class="f7">Βασιλεία</span></span></p>
+						<p class="mt-0 mb-0"><span class="f6"><span class="f8">Walrus</span>: <span class="f8">Θαλάσσιος ίππος</span></span></p>
+					</div>
+				</div>
+			</div>
+			<div class="row text-center fw-bold">
+				<div class="col">
+					English <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					Literal Translation <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					Romanized <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					Greek <button class="toggle-btn">(Hide)</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col text-center">
+					<span class="f1">Spheal</span> is a <span class="f9">chubby</span>, <span class="f10">spherical</span>, <span class="f11"><span class="f3">seal</span>-like</span> Pokémon with a <span class="f13">short</span>, <span class="f14">flat</span> <span class="f15">tail</span>. Its <span class="f16">plushy</span> <span class="f17">fur</span> is <span class="f18">light blue</span> with <span class="f19">several</span> white <span class="f20">spots</span> of <span class="f21">various</span> <span class="f22">sizes</span> on its <span class="f23">back</span>. This <span class="f24">covering</span> of <span class="f25">fluffy</span> <span class="f17">fur</span>, <span class="f26">combined</span> with the <span class="f27">layer</span> of <span class="f28">blubber</span> <span class="f29">underneath</span>, <span class="f31">retains</span> <span class="f32">heat</span> and <span class="f33">protects</span> <span class="f1">Spheal</span> from the <span class="f34">cold</span>. It has black, <span class="f35">circular</span> eyes<span class="f46">;</span> small <span class="f36">tusks</span> <span class="f37">protruding</span> from its <span class="f38">upper</span> <span class="f39">jaw</span><span class="f46">;</span> and small, <span class="f40">rounded</span> <span class="f41">ears</span>. Its <span class="f42">stubby</span> <span class="f43">flippers</span> and its <span class="f44">underside</span> are both <span class="f45">beige</span>.
+				</div>
+				<div class="col text-center">
+					The <span class="f1">Sfokia</span> is a <span class="f9">chubby</span>, <span class="f10">spherical</span> Pokémon that <span class="f11">looks like</span> <span class="f12">with</span> <span class="f3">seal</span>, with a <span class="f13">short</span>, <span class="f14">flat</span> <span class="f15">tail</span>. The <span class="f16">otter-like</span> <span class="f17">fur</span> of it is <span class="f18">light blue</span> with <span class="f19">several</span> white <span class="f20">spots</span> of <span class="f21">different</span> <span class="f22">sizes</span> on the <span class="f23">back</span> of it. This <span class="f24">covering</span> of <span class="f25">fluffy</span> <span class="f17">fur</span>, <span class="f26">together</span> with the <span class="f27">layer</span> of <span class="f28">fat</span> <span class="f30">from</span> <span class="f29">below</span>, <span class="f31">retains</span> the <span class="f32">heat</span> and <span class="f33">protects</span> the <span class="f1">Sfokia</span> from the <span class="f34">cold</span>. It has black, <span class="f35">circular</span> eyes<span class="f46">;</span> small <span class="f36">tusks</span> which <span class="f37">protrude</span> from the <span class="f38">upper</span> <span class="f39">jaw</span><span class="f46">;</span> and small, <span class="f40">round</span> <span class="f41">ears</span>. The <span class="f42">short, chubby</span> <span class="f43">fins</span> of it and the <span class="f44">under part</span> of it are <span class="f45">beige</span>.
+				</div>
+				<div class="col text-center">
+					I <span class="f1">Sfókia</span> eínai éna <span class="f9">pachouló</span>, <span class="f10">sfairikó</span> Pokémon pou <span class="f11">moiázei</span> <span class="f12">me</span> <span class="f3">fókia</span>, me <span class="f13">kontí</span>, <span class="f14">epípedi</span> <span class="f15">ourá</span>. I <span class="f16">loútrini</span> <span class="f17">goúna</span> tis eínai <span class="f18">galázia</span> me <span class="f19">arketés</span> áspres <span class="f20">kilídes</span> <span class="f21">diafóron</span> <span class="f22">megethón</span> stin <span class="f23">pláti</span> tis. Aftó to <span class="f24">kálymma</span> tis <span class="f25">afrátis</span> <span class="f17">goúnas</span>, <span class="f26">mazí</span> me to <span class="f27">stróma</span> tous <span class="f28">lípous</span> <span class="f30">apó</span> <span class="f29">káto</span>, <span class="f31">diatireí</span> ti <span class="f32">thermótita</span> kai <span class="f33">prostatévei</span> ti <span class="f1">Sfókia</span> apó to <span class="f34">krýo</span>. Échei mávra, <span class="f35">kýklia</span> mátia<span class="f46">;</span> mikroús <span class="f36">chavliódontes</span> pou <span class="f37">proexéchoun</span> apó to <span class="f38">páno</span> <span class="f39">sagóni</span><span class="f46">;</span> kai mikrá, <span class="f40">strongylá</span> <span class="f41">aftiá</span>. Ta <span class="f42">kontóchontra</span> <span class="f43">pterýgia</span> tis kai to <span class="f44">káto méros</span> tis eínai <span class="f45">bez</span>.
+				</div>
+				<div class="col text-center">
+					Η <span class="f1">Σφώκια</span> είναι ένα <span class="f9">παχουλό</span>, <span class="f10">σφαιρικό</span> Ποκέμον που <span class="f11">μοιάζει</span> <span class="f12">με</span> <span class="f3">φώκια</span>, με <span class="f13">κοντή</span>, <span class="f14">επίπεδη</span> <span class="f15">ουρά</span>. Η <span class="f16">λούτρινη</span> <span class="f17">γούνα</span> της είναι <span class="f18">γαλάζια</span> με <span class="f19">αρκετές</span> άσπρες <span class="f20">κηλίδες</span> <span class="f21">διαφόρων</span> <span class="f22">μεγεθών</span> στην <span class="f23">πλάτη</span> της. Αυτό το <span class="f24">κάλυμμα</span> της <span class="f25">αφράτης</span> <span class="f17">γούνας</span>, <span class="f26">μαζί</span> με το <span class="f27">στρώμα</span> τους <span class="f28">λίπους</span> <span class="f30">από</span> <span class="f29">κάτω</span>, <span class="f31">διατηρεί</span> τη <span class="f32">θερμότητα</span> και <span class="f33">προστατεύει</span> τη <span class="f1">Σφώκια</span> από το <span class="f34">κρύο</span>. Έχει μαύρα, <span class="f35">κύκλια</span> μάτια<span class="f46">·</span> μικρούς <span class="f36">χαυλιόδοντες</span> που <span class="f37">προεξέχουν</span> από το <span class="f38">πάνω</span> <span class="f39">σαγόνι<span class="f46">·</span></span> και μικρά, <span class="f40">στρογγυλά</span> <span class="f41">αυτιά</span>. Τα <span class="f42">κοντόχοντρα</span> <span class="f43">πτερύγια</span> της και το <span class="f44">κάτω μέρος</span> της είναι <span class="f45">μπεζ</span>.
+				</div>
+			</div>
+			<div class="row">
+				<div class="col text-center">
+					When it is happy or cheerful, such as when eating in a group, this Pokémon will clap its fins. The mealtimes of Spheal have been described as noisy as a result. Because its body is poorly shaped for swimming and can only walk slowly, it moves primarily by rolling across ice floes. This Pokémon lives in and around the sea. Spheal also lives on any drift ice that comes near the shore in order to avoid predators. Spheal are often juggled by its evolved form Sealeo, which does so to check the former's health. When a Spheal finds prey while drifting at sea, it will inform the Walrein leader of its herd on where to find the prey.
+				</div>
+				<div class="col text-center">
+					When it is happy or cheerful, such as when it eats in a group, this Pokémon will clap the fins of it. The times of meals of Sfokia have been described as noisy as a result. Because the body of it is badly formed for swimming and it can only walk slowly, it moves mainly with rolling atop of the icebergs. This Pokémon lives in and near to the sea. The Sfokia lives also atop of whatever drifting ice that approaches the shore for avoiding predators. The Sfokias often are tossed playfully by the evolved form of them, Leokia, who does this to check the health of the Sfokia. When a Sfokia finds prey, it will inform the Vasillipo leader of the herd of it for where it is found.
+				</div>
+				<div class="col text-center">
+					Ótan eínai charoúmeno í evdiátheto, ópos ótan tróei se omáda, aftó to Pokémon tha cheirokroteí ta pterýgia tis. Oi óres gevmáton tis Sfókias échoun perigráfontai pós thoryvódes san ápotélesma. Epeidí to sóma tis eínai kakós schimatisméno gia kolýmpi kai bórei móno na perpatísei argá, kinoútai kyríos me kylóntas páno sta pagóvouna. Aftó to Pokémon zei mésa kai kontá sti thálassa. I Sfókia zei epísis páno se opoiondípote parasýretai págo pou plisiázei tin ákti gia na apofýgei arpaktiká. Oi Sfókies sychná petioúntai paichnidiárika apó tin exeligméni morfí tous, Liókia, pou to kánei gia na elénxei tin ygeía tis Sfókias. Ótan mia Sfókia vrískei thírama, tha enimerónei ton Vasilippó archigó tis agélis tis gia to poú vrísketai.
+				</div>
+				<div class="col text-center">
+					Όταν είναι χαρούμενο ή ευδιάθετο, όπως όταν τρώει σε ομάδα, αυτό το Ποκέμον θα χειροκροτεί τα πτερύγια της. Οι ώρες γευμάτων της Σφώκιας έχουν περιγράφονται πώς θορυβώδες σαν άποτέλεσμα. Επειδή το σώμα της είναι κακώς σχηματισμένο για κολύμπι και μπόρει μόνο να περπατήσει αργά, κινούται κυρίως με κυλώντας πάνω στα παγόβουνα. Αυτό το Ποκέμον ζει μέσα και κοντά στη θάλασσα. Η Σφώκια ζει επίσης πάνω σε οποιονδήποτε παρασύρεται πάγο που πλησιάζει την άκτη για να αποφύγει αρπακτικά. Οι Σφώκιες συχνά πετιούνται παιχνιδιάρικα από την εξελιγμένη μορφή τους, Λιώκια, που το κάνει για να ελέγξει την υγεία της Σφώκιας. Όταν μια Σφώκια βρίσκει θήραμα, θα ενημερώνει τον Βασιλιππό αρχηγό της αγέλης της για το πού βρίσκεται.
+				</div>
+			</div>
+			<div class="row">
+				<div class="col text-center">
+					
+				</div>
+				<div class="col text-center">
+					
+				</div>
+				<div class="col text-center">
+					
+				</div>
+				<div class="col text-center">
+					
+				</div>
+			</div>
+			<div class="row">
+				<div class="col text-center">
+					
+				</div>
+				<div class="col text-center">
+					
+				</div>
+				<div class="col text-center">
+					
+				</div>
+				<div class="col text-center">
+					
+				</div>
+			</div>
+			<div class="row">
+				<div class="col text-center">
+					
+				</div>
+				<div class="col text-center">
+					
+				</div>
+				<div class="col text-center">
+					
+				</div>
+				<div class="col text-center">
+					
+				</div>
+			</div>
+			<div class="row">
+				<div class="col text-center">
+					
+				</div>
+				<div class="col text-center">
+					
+				</div>
+				<div class="col text-center">
+					
+				</div>
+				<div class="col text-center">
+					
+				</div>
+			</div>
+			<div class="row">
+				<div class="col text-center">
+					
+				</div>
+				<div class="col text-center">
+					
+				</div>
+				<div class="col text-center">
+					
+				</div>
+				<div class="col text-center">
+					
+				</div>
+			</div>
+			<div class="row">
+				<div class="col text-center">
+					
+				</div>
+				<div class="col text-center">
+					
+				</div>
+				<div class="col text-center">
+					
+				</div>
+				<div class="col text-center">
+					
+				</div>
+			</div>
+			<div class="row">
+				<div class="col text-center display-6 fw-bold"></div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<!-- <img class="img-fluid squishy" src="images/Comfey/Comfey.png"> -->
+				</div>
+				<div class="col">
+					<!-- <img class="img-fluid squishy" src="images/Comfey/Rainbow Comfey.png"> -->
+				</div>
+				<div class="col">
+					<!-- <img class="img-fluid squishy" src="images/Comfey/Shiny Enby Comfey.png"> -->
+				</div>
+				<div class="col">
+					<!-- <img class="img-fluid squishy" src="images/Comfey/Greek Flag Comfey.png"> -->
+				</div>
+			</div>
+			<div class="row row-padding"></div>
+			<!-- <div id="colorizer">
+				<div id="controls">
+					<div id="buttons">
+						<button id="render">Render</button>
+						<button id="reset">Reset</button>
+						<button id="switch">Toggle input type</button>
+					</div>
+				</div>
+				<canvas id="screen"></canvas>
+			</div> -->
+		</div>
+	</body>
+</html>
