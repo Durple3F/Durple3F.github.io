@@ -6,10 +6,14 @@
 	<script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+	<script src="database.js"></script>
 	<script src="config.js"></script>
 	<script src="render.js"></script>
 	<script src="pokemonData.js"></script>
+	<script src="levelData.js"></script>
 	<script src="animations.js"></script>
+	<script src="scene.js"></script>
+	<script src="game.js"></script>
 	<script src="main.js" defer></script>
 	
 	<link rel="icon" type="image/x-icon" href="https://Durple3F.github.io/favicon.ico">
@@ -19,7 +23,7 @@
 	<title>Pokemon Puzzle Quest</title>
 </head>
 <body>
-	<div id="board">
+	<div id="board" style="display: none;">
 		<div class="board-side player">
 			<div class="board-side-top">
 				<div class="health-bar">
@@ -29,24 +33,52 @@
 					</span>
 				</div>
 				<div class="avatar-pokemon-section">
-					<div class="avatar-pokemon-image"></div>
+					<div class="avatar-trainer-image-section">
+						<img class="trainer-image">
+					</div>
+					<div class="avatar-pokeball-image">
+						<span>
+							<canvas class="pokeball-image"></canvas>
+						</span>
+					</div>
+					<div class="avatar-pokemon-image">
+						<img class="pokemon-image">
+					</div>
 					<div class="avatar-pokemon-name"></div>
-					<div class="confirm-btn btn btn-primary">Confirm</div>
+					<div class="confirm-btn btn btn-primary" style="display: none">Confirm</div>
+					<div id="fps"></div>
 				</div>
 			</div>
 			<div class="board-side-middle">
 				<div class="pokeball-display">
-					<div class="container">
-						<img class="pokeball" src="src/img/Poké_Ball_icon_empty.svg">
-						<img class="pokeball" src="src/img/Poké_Ball_icon_empty.svg">
-						<img class="pokeball" src="src/img/Poké_Ball_icon_empty.svg">
-						<img class="pokeball" src="src/img/Poké_Ball_icon_empty.svg">
-						<img class="pokeball" src="src/img/Poké_Ball_icon_empty.svg">
-						<img class="pokeball" src="src/img/Poké_Ball_icon.svg">
+					<div class="pokeball-helper">
+						<div class="pokeball-container">
+							<img class="pokeball" src="src/img/Poké_Ball_icon_empty.svg">
+						</div>
+						<div class="pokeball-container">
+							<img class="pokeball" src="src/img/Poké_Ball_icon_empty.svg">
+						</div>
+						<div class="pokeball-container">
+							<img class="pokeball" src="src/img/Poké_Ball_icon_empty.svg">
+						</div>
+						<div class="pokeball-container">
+							<img class="pokeball" src="src/img/Poké_Ball_icon_empty.svg">
+						</div>
+						<div class="pokeball-container">
+							<img class="pokeball" src="src/img/Poké_Ball_icon_empty.svg">
+						</div>
+						<div class="pokeball-container">
+							<img class="pokeball" src="src/img/Poké_Ball_icon.svg">
+						</div>
 					</div>
 				</div>
 				<div class="energy-resources">
 					<div class="energy-red energy" data-energy="red">
+						<div class="background"></div>
+						<div class="bar"></div>
+						<div class="count">0</div>
+					</div>
+					<div class="energy-orange energy" data-energy="orange">
 						<div class="background"></div>
 						<div class="bar"></div>
 						<div class="count">0</div>
@@ -88,23 +120,50 @@
 					</span>
 				</div>
 				<div class="avatar-pokemon-section">
+					<div class="avatar-trainer-image-section">
+						<img class="trainer-image">
+					</div>
+					<div class="avatar-pokeball-image">
+						<span>
+							<canvas class="pokeball-image"></canvas>
+						</span>
+					</div>
 					<div class="avatar-pokemon-name"></div>
-					<div class="avatar-pokemon-image"></div>
+					<div class="avatar-pokemon-image">
+						<img class="pokemon-image">
+					</div>
 				</div>
 			</div>
 			<div class="board-side-middle">
 				<div class="pokeball-display">
-					<div class="container d-none">
-						<img class="pokeball" src="src/img/Poké_Ball_icon_empty.svg">
-						<img class="pokeball" src="src/img/Poké_Ball_icon_empty.svg">
-						<img class="pokeball" src="src/img/Poké_Ball_icon_empty.svg">
-						<img class="pokeball" src="src/img/Poké_Ball_icon_empty.svg">
-						<img class="pokeball" src="src/img/Poké_Ball_icon_empty.svg">
-						<img class="pokeball" src="src/img/Poké_Ball_icon.svg">
+					<div class="pokeball-helper d-none">
+						<div class="pokeball-container">
+							<img class="pokeball" src="src/img/Poké_Ball_icon_empty.svg">
+						</div>
+						<div class="pokeball-container">
+							<img class="pokeball" src="src/img/Poké_Ball_icon_empty.svg">
+						</div>
+						<div class="pokeball-container">
+							<img class="pokeball" src="src/img/Poké_Ball_icon_empty.svg">
+						</div>
+						<div class="pokeball-container">
+							<img class="pokeball" src="src/img/Poké_Ball_icon_empty.svg">
+						</div>
+						<div class="pokeball-container">
+							<img class="pokeball" src="src/img/Poké_Ball_icon_empty.svg">
+						</div>
+						<div class="pokeball-container">
+							<img class="pokeball" src="src/img/Poké_Ball_icon.svg">
+						</div>
 					</div>
 				</div>
 				<div class="energy-resources">
 					<div class="energy-red energy" data-energy="red">
+						<div class="background"></div>
+						<div class="bar"></div>
+						<div class="count">0</div>
+					</div>
+					<div class="energy-orange energy" data-energy="orange">
 						<div class="background"></div>
 						<div class="bar"></div>
 						<div class="count">0</div>
@@ -137,6 +196,32 @@
 			</div>
 		</div>
 		<div id="game-announcements">
+		</div>
+	</div>
+	<div id="game" style="display: none;"></div>
+	<div id="title-screen">
+		<div id="logo">Pokemon Puzzle Quest</div>
+		<div id="loading-bar">
+			<div class="bar" style="width: 0%"></div>
+			<div class="count">
+				<span class="count"></span> / <span class="max"></span>
+			</div>
+			<div class="start" style="display: none">Start</div>
+		</div>
+		<div id="save-files" style="opacity: 0">
+			<h6>Save Files</h6>
+			<div class="list"></div>
+		</div>
+	</div>
+	<div id="modal" class="modal fade" style="display: none;">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<div class="modal-title"></div>
+				</div>
+				<div class="modal-body"></div>
+				<div class="modal-footer"></div>
+			</div>
 		</div>
 	</div>
 </body>

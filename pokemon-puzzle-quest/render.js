@@ -7,8 +7,8 @@ function renderTile(tile, board, round, w, h, xOffset, yOffset){
 	let tileH = h / board.height
 	board.spriteTileW = tileW
 	board.spriteTileH = tileH
-	let tilePaddingW = tileW * 0.075
-	let tilePaddingH = tileH * 0.075
+	let tilePaddingW = tileW * 0.15
+	let tilePaddingH = tileH * 0.15
 
 	let tileGameX = tile.x
 	let tileGameY = tile.y
@@ -20,6 +20,17 @@ function renderTile(tile, board, round, w, h, xOffset, yOffset){
 		for (let part of animation.batch){
 			if (part.type === "displace"){
 				if (part.tile !== tile) continue
+				let start = part.startT
+				let end = start + part.duration
+				if (now >= end){
+					tileGameX = part.endX
+					tileGameY = part.endY
+					continue
+				} else if (now <= start){
+					tileGameX = part.startX
+					tileGameY = part.startY
+					continue
+				}
 				let dt = (now - part.startT) / part.duration
 				let p = bezierEase(dt)
 				tileGameX = interpolate(part.startX, part.endX, p)
@@ -47,19 +58,51 @@ function renderTile(tile, board, round, w, h, xOffset, yOffset){
 	tile.spriteWidth = spriteW
 	tile.spriteHeight = spriteH
 	
-	if (tile.spriteHighlight > 0){
-		let blurAmount = tileW * 0.05
+	if (tile.spriteHighlight > 0.1){
+		let highlight = tile.spriteHighlight
+		let blurAmount = tileW * 0.05 * highlight
+		let diff = 5*Math.min(1, 1 - highlight)
+		ctx.save()
 		ctx.filter = "blur(" + blurAmount + "px)"
 		ctx.fillStyle = tileTypeColors[tile.type]
 		ctx.beginPath()
-		ctx.arc(tile.spriteCenterX, tile.spriteCenterY, tile.spriteWidth * 0.50, 0, TWOPI)
+		ctx.arc(tile.spriteCenterX, tile.spriteCenterY, tile.spriteWidth * 0.50 - diff, 0, TWOPI)
 		ctx.fill()
+		ctx.restore()
 	}
 
 	ctx.filter = "none"
 
 	let sprite = sprites.images[tile.type]
 	ctx.drawImage(sprite, x, y, spriteW, spriteH)
+}
+
+function renderStatusEffects(tile, board, round, w, h, xOffset, yOffset){
+	let currentCount = 0
+	let diff = TWOPI * -0.125
+	let statusEffects = tile.statusEffects
+	let tileCenterX = tile.spriteCenterX
+	let tileCenterY = tile.spriteCenterY
+	let tileWidth = tile.spriteWidth
+	let tileHeight = tile.spriteHeight
+	for (let i = 0; i < statusEffects.length; i++){
+		let status = statusEffects[i]
+		let angle = (currentCount + 1) * diff
+		let statusCenterX = tileCenterX + tileWidth * Math.cos(angle) * 0.5
+		let statusCenterY = tileCenterY + tileHeight * Math.sin(angle) * 0.5
+		let statusWidth = tileWidth * 0.4
+		let statusHeight = tileHeight * 0.4
+		let statusX = statusCenterX - statusWidth * 0.5
+		let statusY = statusCenterY - statusHeight * 0.5
+
+		ctx.save()
+		ctx.filter = `opacity(${status.spriteOpacity})`
+		let sprite = sprites.images["status-Wrap"]
+		ctx.drawImage(sprite, statusX, statusY, statusWidth, statusHeight)
+		ctx.restore()
+
+		currentCount++
+	}
 }
 
 function render(){
@@ -77,5 +120,8 @@ function render(){
 	ctx.clearRect(0, 0, w, h)
 	for (let tile of tiles){
 		renderTile(tile, board, gameRound, smallerW, smallerH, xOffset, yOffset)
+	}
+	for (let tile of tiles){
+		renderStatusEffects(tile, board, gameRound, smallerW, smallerH, xOffset, yOffset)
 	}
 }

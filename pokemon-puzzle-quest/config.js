@@ -1,3 +1,5 @@
 const config = {
-  confirmMoveSelection: true
+	confirmMoveSelection: true,
+
+	defaultVolumes: {}
 }

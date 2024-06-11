@@ -5,3 +5,6 @@ How it works:
 Example:
   - Ember (Fire)
   - Cost: Red 5
+
+TODO
+  - tooltips for moves that actually explain what they do
