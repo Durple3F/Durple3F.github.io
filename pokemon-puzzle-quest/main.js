@@ -36,8 +36,8 @@ function randomAngle(deg1, deg2){
 	return result
 }
 function randomFrom(min, max){
-	let result = min + Math.random() * (max - min)
-	return result
+	let result = min + Math.random() * (max - min + 1)
+	return Math.floor(result)
 }
 
 function weightedRandom(items, weights) {
@@ -287,7 +287,13 @@ function loadSounds(list){
 function playSound(name){
 	let resolvePromise
 	let promise = new Promise(resolve => resolvePromise = resolve)
-	let snd = sounds[name].audio
+	let soundData = sounds[name]
+	if (!soundData){
+		console.warn("Tried to play nonexistent sound", name)
+		resolvePromise()
+		return promise
+	}
+	let snd = soundData.audio
 	if (!snd.paused){
 		snd = snd.cloneNode()
 		snd.currentTime = 0
@@ -399,11 +405,36 @@ function getRandomTileType(){
 }
 
 function clearModal(modal){
-	modal.removeClass("wide")
+	modal.removeClass().addClass("modal").addClass("fade")
 	modal.find(".modal-header > .modal-title").html("")
 	modal.find(".modal-body").html("")
 	modal.find(".modal-footer").html("")
 	modal.off("hidden.bs.modal")
+}
+
+function createAnnouncement(type, text, duration=1500){
+	let promise = new Promise(resolve => {
+		let obj = {
+			type: type,
+			text: text
+		}
+		let startUpTime = duration / 4
+		let mainShowingTime = duration - startUpTime * 2
+	
+		let announcement = $("<div class='announcement'></div>")
+		obj.elem = announcement
+		announcement.addClass(type)
+		announcement.text(text)
+		announcement.hide()
+		$("#game-announcements").append(announcement)
+		announcement.fadeIn(startUpTime)
+		.delay(mainShowingTime)
+		.fadeOut(startUpTime)
+		.queue(() => {
+			resolve()
+		})
+	})
+	return promise
 }
 
 function resize(){
@@ -488,8 +519,37 @@ function handleMouseUp(event){
 	}
 }
 
+function renderHelperSprites(){
+	let canvas = document.createElement("canvas")
+	let ctx = canvas.getContext("2d")
+	canvas.width = 200
+	canvas.height = 200
+	ctx.width = 200
+	ctx.height = 200
+	
+	ctx.save()
+	ctx.fillStyle = "#db3737"
+	ctx.beginPath()
+	ctx.arc(ctx.width * 0.5, ctx.height * 0.5, ctx.width * 0.5, 0, 2 * Math.PI)
+	ctx.fill()
+	let img1 = new Image()
+	img1.src = canvas.toDataURL()
+	sprites.images["enemy-circle"] = img1
+	
+	ctx.save()
+	ctx.fillStyle = "#387bd9"
+	ctx.beginPath()
+	ctx.arc(ctx.width * 0.5, ctx.height * 0.5, ctx.width * 0.5, 0, 2 * Math.PI)
+	ctx.fill()
+	let img2 = new Image()
+	img2.src = canvas.toDataURL()
+	sprites.images["friendly-circle"] = img2
+}
+
 let loadedResources = [0, 0, 0, 0]
 function loadResources(){
+	renderHelperSprites()
+
 	let sprites = [
 		{name: "pokeballs", url: "src/img/pokeballs.png"},
 		{name: "red", url: "src/img/tiles/red.png"},
@@ -520,7 +580,7 @@ function loadResources(){
 		let shown = parseInt(completeTag.text() || 0)
 		animateTextCounter(shown, complete, completeTag)
 		$("#loading-bar > .count > .max").text(total)
-		$("#loading-bar > .bar").animate({
+		$("#loading-bar > .bar").stop(true).animate({
 			width: (complete / total * 100) + "%"
 		})
 	}
@@ -537,7 +597,6 @@ function loadResources(){
 	promise = promise
 	.then(() => openDatabase())
 	.then(() => doesSaveDataExist())
-
 	//If we found data, show the save files. Otherwise, just move on.
 	.then(val => {
 		return new Promise(resolve => {
@@ -609,8 +668,12 @@ function beginNewGame(){
 	makeNewSaveFile()
 	.then(uuid => {
 		playerSaveId = uuid
-		return startScene("choose-starter")
 	})
+	.then(() => getPlayerBoxes(playerSaveId))
+	.then(boxes => {
+		boxes.forEach(box => playerPCBoxes.push(box))
+	})
+	.then(() => startScene("choose-starter"))
 	.then(() => changeScene("route", {name: "Route 1"}))
 }
 
@@ -625,6 +688,10 @@ function continueGame(){
 				playerActivePokemon[obj.activeSlot] = pokemon
 			}
 		})
+	})
+	.then(() => getPlayerBoxes(playerSaveId))
+	.then(boxes => {
+		boxes.forEach(box => playerPCBoxes.push(box))
 	})
 	.then(() => getPlayerLevelData(playerSaveId))
 	.then(result => {

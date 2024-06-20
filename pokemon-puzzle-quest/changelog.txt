@@ -1,8 +1,51 @@
-6/11:
+6/16:
+	- Fixed that bug where the loading bar would get stuck midway through the bar.
+
+6/15:
+	- Using a move can now create sound effects.
+
+6/14: (5500 lines of code)
+	- Improvements to how pokemon EXP gain is shown at the end of fights.
+	- Now the game saves your pokemon's stats after every fight.
+	- Added Rowlet
+	- Rowlet has Leafage, which turns tiles into Grass tiles.
+		- Currently has no animation, gonna fix that later.
+	- Refactored the process that gets the pokemon's moves to show up in the game screen.
+	- Now when you click on a pokemon in the PC, you can see a screen showing their stats.
+	- You can also see their moves now
+	- Refactored how the announcements that inform you of things are displayed
+	- You can now see which moves are currently available / unavailable to your pokemon
+	- You can now choose which 4 moves to make active on your pokemon
+
+6/13: (5200 lines of code)
+	- You can now put your stored pokemon back into your party.
+	- You can now make more boxes in case you want to organize them more.
+	- Added a status effect system for pokemon too.
+	- Added burn, which currently just works how it does in the games and takes some health at the start of each turn.
+	- That made me refactor how checking for winners happens so it can happen mid-turn
+	- Added Litten, who has Ember.
+	- I didn't like the idea of Burn working identically to the games. It's more fun if you can interact with the tiles, right? Now, Burn is a status that the tiles themselves have, which makes the opponent take damage at the start of their turn for as long as the tile has that status.
+	- The type chart is finally complete, and every move now deals the proper amount of super effective damage.
+
+6/12: (4800 lines of code)
+	- Started working on the pokemon storage / party screen.
+	- You can now see which pokemon are in your active party.
+	- You can now swap around the order of the pokemon in your party.
+	- You can now leave the party screen.
+	- You can now put your active pokemon into a box for storage when out of your party.
+
+6/11: (4500 lines of code)
 	- Added EXP. Now you level up from fights and stuff.
 	- Now the end screen shows you your EXP gains.
 	- Now there's a cute little level up noise when you level up.
 	- The opponent no longer cheats and makes 1 extra swap after dying.
+	- Reworked a whole lot of code involving precisely when a round is considered over.
+	- Now the game asks you if you'd like to catch the pokemon you defeat (if it's wild.)
+		- Later, maybe make it a random throw-a-pokeball-and-hope situation? I don't really wanna.
+	- You're allowed to refuse trying to catch the pokemon now.
+	- Status effects on tiles are now colored to indicate who owns them.
+	- The pokeball icons above your energy finally actually show what pokemon you have/don't have
+	- You can now click on those icons to swap out to a different pokemon
 
 6/10: (4200 lines of code)
 	- The level select screen displays which levels you've beaten

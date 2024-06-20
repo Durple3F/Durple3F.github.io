@@ -67,13 +67,21 @@ function getValsFromElement(element) {
 	}
 }
 
+function tagIsSpanFact(tag){
+	if (tag.tagName !== "SPAN") return false
+	let parents = [...$(tag).parents()]
+	if (parents.some(t => $(t).attr("id") === "views")) {
+		return true
+	}
+}
+
 let currentlyClicked = false;
 let currentlyHovered;
 function moveMouseOverText(e) {
 	let hoveredList = document.elementsFromPoint(e.clientX, e.clientY)
 	let hovered
 	for (let tag of hoveredList) {
-		if (tag.tagName === "SPAN") {
+		if (tagIsSpanFact(tag)) {
 			hovered = tag
 			break
 		}
@@ -153,7 +161,7 @@ function clickText(e){
 	let hoveredList = document.elementsFromPoint(e.clientX, e.clientY)
 	let hovered
 	for (let tag of hoveredList) {
-		if (tag.tagName === "SPAN") {
+		if (tagIsSpanFact(tag)) {
 			hovered = tag
 			break
 		}

@@ -94,10 +94,12 @@ function renderStatusEffects(tile, board, round, w, h, xOffset, yOffset){
 		let statusHeight = tileHeight * 0.4
 		let statusX = statusCenterX - statusWidth * 0.5
 		let statusY = statusCenterY - statusHeight * 0.5
+		let circleType = `${status.color}-circle`
 
 		ctx.save()
+		ctx.drawImage(sprites.images[circleType], statusX, statusY, statusWidth, statusHeight)
 		ctx.filter = `opacity(${status.spriteOpacity})`
-		let sprite = sprites.images["status-Wrap"]
+		let sprite = sprites.images["status-" + status.name]
 		ctx.drawImage(sprite, statusX, statusY, statusWidth, statusHeight)
 		ctx.restore()
 

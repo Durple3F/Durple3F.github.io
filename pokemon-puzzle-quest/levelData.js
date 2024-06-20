@@ -3,6 +3,14 @@ const songData = {
 	"SM Trainer Battle": {source: "src/audio/songs/sm trainer battle.mp3"},
 }
 
+const boxThemeData = {
+	"forest_frlg": {
+		"header": "src/img/wallpapers/forest_frlg_header.png",
+		"body": "src/img/wallpapers/forest_frlg.png",
+		"color": "black"
+	}
+}
+
 const NPCTrainerData = {
 	"Hau": {
 		type: "trainer",
@@ -71,8 +79,8 @@ const levelData = [
 				name: "Hau",
 				pokemon: [
 					{
-						pokemonName: "Comfey",
-						level: 3
+						pokemonName: "Litten",
+						level: 2
 					}
 				]
 			}
@@ -82,7 +90,7 @@ const levelData = [
 	{
 		id: "Route 1-2",
 		category: "Route 1",
-		name: "Fight a Comfey",
+		name: "Fight like 7 Comfeys",
 		icon: "2",
 		music: "SM Trainer Battle",
 		trainers: [
@@ -90,7 +98,7 @@ const levelData = [
 				pokemon: [
 					{
 						pokemonName: "Comfey",
-						levelMin: 1, levelMax: 1
+						levelMin: 3, levelMax: 5
 					}
 				]
 			}

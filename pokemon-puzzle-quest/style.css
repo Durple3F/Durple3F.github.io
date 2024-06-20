@@ -2,7 +2,11 @@
 
 @font-face {
 	font-family: Absolut_Pro;
-	src: url(src/font/AsapCondensed-Medium.ttf);
+	src: url("src/font/AsapCondensed-Medium.ttf");
+}
+@font-face {
+	font-family: DP_Pro;
+	src: url("src/font/pokemon-dp-pro.ttf")
 }
 /* POKEMON SCARLET/VIOLET ALREADY HAS ICONS FOR ALL TYPES */
 /* Note for future
@@ -34,7 +38,7 @@
 }
 
 body {
-	background-color: black;
+	background-color: #050506;
 	color: white;
 	margin: 0;
 	width: 100vw;
@@ -46,6 +50,7 @@ body {
 
 :root {
 	--move-usable: #6774dc;
+	--move-usable-focus: #7777ff;
 	--move-unusable: rgb(60, 60, 60);
 	--move-tooltip: rgba(40, 40, 40, 1);
 	--health-high: #47c72c;
@@ -121,6 +126,9 @@ body {
 .popover .pokemon-image {
 	height: 5em;
 }
+.popover .tiny-tutorial {
+	font-size: 0.7em;
+}
 
 .chooseable {
 	background-color: rgba(100, 100, 100, 0.2);
@@ -167,6 +175,14 @@ body {
 	height: 100%;
 	border-right: 1px solid #333;
 }
+.route-button {
+  height: 20vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
 .route-screen {
 	width: 75%;
 	height: 100%;
@@ -335,6 +351,8 @@ body {
 	flex-direction: column;
 	align-items: center;
 	pointer-events: none;
+	/* Can you BELIEVE they used 1050 as the z-index for modals?? 1050??? */
+	z-index: 2000;
 }
 #game-announcements > .announcement {
 	padding-top: 0.3em;
@@ -466,15 +484,15 @@ body {
 }
 
 .pokeball-display {
-	height: 1em;
-	margin-top: 0.5em;
-	margin-bottom: 0.5em;
+	height: 1.6em;
+	margin-top: 0.2em;
+	margin-bottom: 0.2em;
 }
 .pokeball-display > .pokeball-helper {
 	height: 100%;
 	display: flex;
 	justify-content: space-evenly;
-	align-items: center;
+	align-items: stretch;
 }
 .pokeball-display > .pokeball-helper > .pokeball-container {
 	max-height: 100%;
@@ -486,8 +504,35 @@ body {
 }
 .pokeball-display > .pokeball-helper > .pokeball-container > .pokeball {
 	max-height: 100%;
-	height: 1em;
+	height: 1.4em;
 	max-width: 100%;
+	border: 0.1em solid transparent;
+	border-radius: 50%;
+}
+.player .pokeball-display > .pokeball-helper > .pokeball-container > .pokeball  {
+	cursor: pointer;
+}
+
+.pokemon-status-effect-section {
+  position: absolute;
+  top: 0; right: 0;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap-reverse;
+	gap: 0.3em;
+}
+.enemy .pokemon-status-effect-section {
+	left: 0;
+	right: unset;
+	flex-wrap: wrap;
+}
+.pokemon-status-effect-section > .status-effect-container > .status-effect {
+  width: 2em;
+	border-radius: 50%;
+	background-color: #ff8329;
 }
 
 .energy-resources {
@@ -568,13 +613,24 @@ body {
 	cursor: pointer;
 }
 .move.usable:hover {
-	background-color: #7777ff;
+	background-color: var(--move-usable-focus);
 }
 .move.usable[data-struggle="true"] {
 	background-color: var(--health-med)
 }
 .move.usable[data-struggle="true"]:hover {
 	background-color: #dcb518;
+}
+.move.unavailable {
+  opacity: 0.5;
+  filter: saturate(0.5);
+}
+.move.active-move {
+	background-color: var(--move-usable);
+	color: black;
+}
+.move.active-move:hover {
+	background-color: var(--move-usable-focus);
 }
 
 .move > .move-top{
@@ -694,4 +750,150 @@ body {
 }
 .pokemon-stats > .stats > .stat > .stat-val.up {
 	color: var(--health-high);
+}
+
+#pc {
+  height: 100%;
+  width: 60vw;
+	font-family: DP_Pro, Arial;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-items: center;
+}
+#pc > #pc-header {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	height: 20%;
+	width: 100%;
+}
+#pc > #pc-header > #pc-box-name {
+	font-size: 3em;
+	height: 100%;
+	width: 60%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-items: center;
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+	image-rendering: pixelated;
+}
+#pc > #pc-header > .button {
+	font-size: 3em;
+	cursor: pointer;
+	transition: 0.2s color;
+}
+#pc > #pc-header > .button:hover {
+	color: #bbb;
+}
+#pc > #pc-header > #pc-prev-box-btn {
+	margin-right: 0.2em;
+}
+#pc > #pc-header > #pc-next-box-btn {
+	margin-left: 0.2em;
+}
+#pc > #pc-box {
+	height: 70%;
+	width: 70%;
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+	image-rendering: pixelated;
+	position: relative;
+}
+#pc > #pc-box > .pokemon-image {
+	position: absolute;
+	transform: translate(-50%, -50%);
+	height: 3.4em;
+	image-rendering: auto;
+	cursor: pointer;
+}
+
+#pc-admin {
+  height: 100%;
+  width: 30vw;
+  margin-left: 3.33vw;
+	text-align: center;
+}
+
+.active-pokemon-box {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	margin: 10px;
+	height: 4em;
+	background-image: url("src/img/pc-profile-1.png");
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+	image-rendering: pixelated;
+}
+.active-pokemon-box:nth-of-type(2n){
+	top: 1em;
+}
+.active-pokemon-box.selected {
+	background-image: url("src/img/pc-profile-2.png");
+}
+.active-pokemon-box > img {
+	image-rendering: auto;
+	height: 70%;
+	position: absolute;
+	top: calc(50% - 2em);
+	left: calc(50% - 5em);
+}
+.active-pokemon-box.selected > img {
+	animation: bounce 1.5s infinite;
+}
+
+#pokemon-dragger {
+	height: 4em;
+	position: absolute;
+	top: 0; left: 0;
+	transform: translate(-50%, -25%);
+}
+
+#modal.summary .pokemon-info > .pokemon-section {
+	width: 45%;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: stretch;
+}
+#modal.summary .pokemon-info > .pokemon-section .stat {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+#modal.summary .pokemon-info > .move-section {
+	width: 45%;
+	min-height: 100%;
+	/* max-height: 50vh; */
+	overflow-y: scroll;
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+}
+/* Hide scrollbar */
+#modal.summary .pokemon-info > .move-section::-webkit-scrollbar {
+	display: none;
+}
+
+@keyframes bounce {
+	0% {
+		transform: translate(0, 0);
+	}
+	0.1% {
+		transform: translate(0, -20%);
+	}
+	50% {
+		transform: translate(0, -20%);
+	}
+	50.1% {
+		transform: translate(0, 0);
+	}
 }

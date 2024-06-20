@@ -12,9 +12,13 @@ function openDatabase(){
 			const pokemonStore = db.createObjectStore("pokemon", {autoIncrement: true})
 			pokemonStore.createIndex("uuid", ["uuid"], {unique: true})
 			pokemonStore.createIndex("owner", ["owner"], {unique: false})
+			pokemonStore.createIndex("pc-box", ["pcBox"], {unique: false})
 
 			const levelStore = db.createObjectStore("levels", {autoIncrement: true})
 			levelStore.createIndex("save-file", ["saveFile"], {unique: false})
+
+			const boxStore = db.createObjectStore("boxes", {autoIncrement: true})
+			boxStore.createIndex("owner", ["owner"], {unique: false})
 		}
 		
 		dbRequest.onsuccess = event => {
@@ -64,6 +68,9 @@ function savePokemon(pokemon){
 		obj.nature = pokemon.nature
 		obj.activeSlot = playerActivePokemon.indexOf(pokemon)
 		obj.activeMoves = pokemon.activeMoves.map(move => move.name)
+		obj.pcBox = pokemon.pcBox
+		obj.pcBoxX = pokemon.pcBoxX
+		obj.pcBoxY = pokemon.pcBoxY
 
 		findPokemonInDatabase(pokemon)
 		.then(result => {
@@ -195,7 +202,55 @@ function makeNewSaveFile(){
 		const saveFileStore = transaction.objectStore("save-file")
 		const request = saveFileStore.put({uuid: uuid})
 		request.onsuccess = event => {
+			makeNewBox(uuid, "Box 1")
+			.then(() => resolve(uuid))
+		}
+	})
+	return promise
+}
+
+function makeNewBox(saveId, name){
+	let promise = new Promise(resolve => {
+		let uuid = window.crypto.randomUUID()
+		const transaction = db.transaction(["boxes"], "readwrite")
+		const saveFileStore = transaction.objectStore("boxes")
+		let box = {
+			name: name,
+			uuid: uuid,
+			owner: saveId,
+			theme: "forest_frlg"
+		}
+		const request = saveFileStore.put(box)
+		request.onsuccess = event => {
 			resolve(uuid)
+		}
+	})
+	return promise
+}
+function getPlayerBoxes(saveId){
+	let promise = new Promise(resolve => {
+		const transaction = db.transaction(["boxes"], "readonly")
+		const boxStore = transaction.objectStore("boxes")
+		const saveIndex = boxStore.index("owner")
+		const request = saveIndex.getAll([saveId])
+		
+		request.onsuccess = event => {
+			let result = event.target.result
+			resolve(result)
+		}
+	})
+	return promise
+}
+function getPokemonFromBox(boxId){
+	let promise = new Promise(resolve => {
+		const transaction = db.transaction(["pokemon"], "readonly")
+		const pokemonStore = transaction.objectStore("pokemon")
+		const pcBoxIndex = pokemonStore.index("pc-box")
+		const request = pcBoxIndex.getAll([boxId])
+		
+		request.onsuccess = event => {
+			let result = event.target.result
+			resolve(result)
 		}
 	})
 	return promise
