@@ -31,15 +31,19 @@
 				$("#switch").click(function(){
 					if ($("#switch").val() === "ancient"){
 						$("#switch").val("modern")
-						$(".ancient-greek").fadeOut(function(){
-							$(".modern-greek").fadeIn()
-						})
+						$("#switch > .bi").removeClass("bi-toggle-off").addClass("bi-toggle-on")
+						$(".ancient-greek").stop().fadeOut(500)
+						$(".modern-greek").stop().delay(480).fadeIn()
 					} else {
 						$("#switch").val("ancient")
-						$(".modern-greek").fadeOut(function(){
-							$(".ancient-greek").fadeIn()
-						})
+						$("#switch > .bi").removeClass("bi-toggle-on").addClass("bi-toggle-off")
+						$(".modern-greek").stop().fadeOut(500)
+						$(".ancient-greek").stop().delay(480).fadeIn()
 					}
+					$("#switch").attr("disabled", true)
+					setTimeout(() => {
+						$("#switch").attr("disabled", false)
+					}, 500)
 				})
 			})
 		</script>
