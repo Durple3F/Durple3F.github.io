@@ -1,4 +1,4 @@
-let allSpans = $(".col span")
+let allSpans = $(".col span:not(.nofact)")
 let story = storyInfo["general"]
 if (typeof storyCode !== "undefined") {
 	let newStory = storyInfo[storyCode]
@@ -99,11 +99,12 @@ function hoverFade(hovered) {
 		unHoverFade(currentlyHovered)
 	}
 
-	currentlyHovered = hovered
 	let vals = getValsFromElement(hovered)
 	if (!vals) {
 		console.warn("????", hovered)
+		return
 	}
+	currentlyHovered = hovered
 	let css = {
 		"background-color": vals.color,
 		"text-shadow": "0px 0px 2px black"
@@ -230,8 +231,8 @@ function resize() {
 		"height", eTag.height() - eTag.css("font-size")
 	)
 
-	let viewsHeight = $("#explanation").height()
-	let remainingHeight = $(window).height() - viewsHeight
+	let viewsHeight = $("#explanation-container").height()
+	let remainingHeight = $(window).height() - $("#views").offset().top
 	$("#views").css("height", remainingHeight + "px")
 }
 
@@ -255,7 +256,7 @@ function explanationResizeStart(e) {
 		let newHeight = mouseInfo.startHeight + diffY
 		newHeight = Math.max(newHeight, 0)
 		let vh = $(window).height() / 100
-		let remainingHeight = (vh*100) - newHeight
+		let remainingHeight = Math.floor($(window).height() - $("#views").offset().top) - 1
 		$("#explanation-container").css("height", newHeight + "px")
 		$("#views").css("margin-top", (newHeight + 3 * vh) + "px")
 		.css("height", remainingHeight + "px")

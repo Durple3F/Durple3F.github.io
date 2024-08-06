@@ -50,7 +50,7 @@ body::-webkit-scrollbar, html::-webkit-scrollbar {
 	display: none;  /* Safari and Chrome */
 }
 
-#views > .row {
+#views .row {
 	width: 95%;
 	margin: auto;
 	margin-bottom: 1em;
@@ -125,14 +125,14 @@ body::-webkit-scrollbar, html::-webkit-scrollbar {
 	line-height: 1.2;
 }
 
-.col span {
+.col span:not(.nofact) {
 	text-decoration: 1px underline transparent;
 	transition: background-color 0.2s;
 	background-color: initial;
 	border-radius: 2px;
 	border-top: 1px dashed red;
 }
-.col span:hover {
+.col span:not(.nofact):hover {
 	cursor: pointer;
 }
 

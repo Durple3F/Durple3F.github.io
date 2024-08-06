@@ -104,12 +104,6 @@ const levelData = [
 			}
 		],
 		effects: [
-			{type: "fight", trainer: 0},
-			{type: "fight", trainer: 0},
-			{type: "fight", trainer: 0},
-			{type: "fight", trainer: 0},
-			{type: "fight", trainer: 0},
-			{type: "fight", trainer: 0},
 			{type: "fight", trainer: 0}
 		]
 	}

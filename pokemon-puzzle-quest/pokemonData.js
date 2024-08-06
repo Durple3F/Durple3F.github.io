@@ -167,7 +167,7 @@ typeEffectiveness["Fairy"]["Dark"] = 2
 const pokemonData = {
 	"Rowlet": {
 		name: "Rowlet",
-		number: 722,
+		number: "722",
 		imageFacing: "left",
 		imageSources: {
 			"Rowlet": "src/img/pokemon/0722Rowlet.png",
@@ -213,18 +213,12 @@ const pokemonData = {
 					type: "level",
 					amount: 3
 				}
-			},
-			{name: "Ember",
-				unlock: {
-					type: "level",
-					amount: 10
-				}
 			}
 		]
 	},
 	"Litten": {
 		name: "Litten",
-		number: 725,
+		number: "725",
 		imageFacing: "left",
 		imageSources: {
 			"Litten": "src/img/pokemon/0725Litten.png",
@@ -275,7 +269,7 @@ const pokemonData = {
 	},
 	"Popplio": {
 		name: "Popplio",
-		number: 728,
+		number: "728",
 		imageFacing: "right",
 		imageSources: {
 			"Popplio": "src/img/pokemon/0728Popplio.png",
@@ -324,9 +318,54 @@ const pokemonData = {
 			}
 		]
 	},
+	"Pikipek": {
+		name: "Pikipek",
+		number: "731",
+		imageFacing: "left",
+		imageSources: {
+			"Pikipek": "src/img/pokemon/0731Pikipek.png",
+			"home": "src/img/tiny-pokemon/Pikipek.png"
+		},
+		sounds: {
+			cry: "src/audio/cries/pikipek.mp3"
+		},
+		tags: [],
+		types: ["Flying"],
+		stats: {
+			hp: 35,
+			attack: 75,
+			defense: 30,
+			specialAttack: 30,
+			specialDefense: 30,
+			speed: 65
+		},
+		expYield: 53,
+		evYield: {
+			hp: 0,
+			attack: 1,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		learnset: [
+			{name: "Peck",
+				unlock: {
+					type: "level",
+					amount: 1
+				}
+			},
+			{name: "Growl",
+				unlock: {
+					type: "level",
+					amount: 3
+				}
+			},
+		]
+	},
 	"Comfey": {
 		name: "Comfey",
-		number: 764,
+		number: "764",
 		imageFacing: "left",
 		imageSources: {
 			"Comfey": "src/img/pokemon/0764Comfey.png",
@@ -356,12 +395,6 @@ const pokemonData = {
 		},
 		learnset: [
 			{name: "Wrap",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{name: "Pound",
 				unlock: {
 					type: "level",
 					amount: 1
@@ -418,45 +451,30 @@ for (let name in pokemonData){
 }
 
 const pokemonMoveData = {
-	"Struggle": {
-		name: "Struggle",
-		type: "Typeless",
-		category: "Physical",
-		strategy: "last-priority",
-		pp: 1,
-		power: 50,
-		rechargeTurns: 0,
-		energy: {},
-		effects: [
-			{type: "damage"},
-			{type: "recoil-percent", percent: 0.25},
-			{type: "shuffle"},
-			{type: "end-turn"}
-		],
-		shortDescription: "Reshuffle board. Does recoil damage. Ends the turn.",
-		description: "An attack of desperation only useful when there are no available moves. It also hurts its user a little, before ending the current turn."
-	},
-	"Pound": {
-		name: "Pound",
-		type: "Normal",
-		category: "Physical",
-		strategy: "basic-damage",
-		pp: 35,
+	"Ember": {
+		name: "Ember",
+		type: "Fire",
+		category: "Special",
+		strategy: "damage",
+		pp: 25,
 		power: 40,
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			red: 3
-		},
-		sounds: {
-			"attack": "src/audio/attacks/Pound.mp3"
+			red: 5
 		},
 		effects: [
-			{type: "play-sound", name: "attack"},
-			{type: "damage"}
+			{type: "damage"},
+			{type: "random-number", min: 1, max: 10},
+			{type: "jump-if-less-than", value: 1, jumpTo: Infinity},
+			{type: "load-number", value: 3},
+			{type: "select-random-tiles", count: -1},
+			{type: "apply-status-to-tiles", selection: "group", which: -1,
+				status: {name: "Burn", type: "debuff", duration: null}
+			},
 		],
-		shortDescription: "Deals light damage",
-		description: "Damage-dealing move with no special effects."
+		shortDescription: "Damages and might burn tiles.",
+		description: "Deals damage. There's a 10% chance for this move to inflict Burn on 3 random tiles. At the start of each turn, the opponent takes damage for each Burned tile on the board."
 	},
 	"Growl": {
 		name: "Growl",
@@ -502,30 +520,67 @@ const pokemonMoveData = {
 		shortDescription: "Damages and turns tiles into Grass tiles.",
 		description: "Deals damage. 3 random tiles are transformed into Grass tiles."
 	},
-	"Ember": {
-		name: "Ember",
-		type: "Fire",
-		category: "Special",
-		strategy: "damage",
-		pp: 25,
+	"Peck": {
+		name: "Peck",
+		type: "Flying",
+		category: "Physical",
+		strategy: "basic-damage",
+		pp: 35,
+		power: 35,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			yellow: 2
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Peck.mp3"
+		},
+		effects: [
+			{type: "play-sound", name: "attack"},
+			{type: "damage"}
+		],
+		shortDescription: "Deals light damage",
+		description: "Damage-dealing move with no special effects."
+	},
+	"Pound": {
+		name: "Pound",
+		type: "Normal",
+		category: "Physical",
+		strategy: "basic-damage",
+		pp: 35,
 		power: 40,
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			red: 5
+			red: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Pound.mp3"
 		},
 		effects: [
-			{type: "damage"},
-			{type: "random-number", min: 1, max: 10},
-			{type: "jump-if-less-than", value: 1, jumpTo: Infinity},
-			{type: "load-number", value: 3},
-			{type: "select-random-tiles", count: -1},
-			{type: "apply-status-to-tiles", selection: "group", which: -1,
-				status: {name: "Burn", type: "debuff", duration: null}
-			},
+			{type: "play-sound", name: "attack"},
+			{type: "damage"}
 		],
-		shortDescription: "Damages and might burn tiles.",
-		description: "Deals damage. There's a 10% chance for this move to inflict Burn on 3 random tiles. At the start of each turn, the opponent takes damage for each Burned tile on the board."
+		shortDescription: "Deals light damage",
+		description: "Damage-dealing move with no special effects."
+	},
+	"Struggle": {
+		name: "Struggle",
+		type: "Typeless",
+		category: "Physical",
+		strategy: "last-priority",
+		pp: 1,
+		power: 50,
+		rechargeTurns: 0,
+		energy: {},
+		effects: [
+			{type: "damage"},
+			{type: "recoil-percent", percent: 0.25},
+			{type: "shuffle"},
+			{type: "end-turn"}
+		],
+		shortDescription: "Reshuffle board. Does recoil damage. Ends the turn.",
+		description: "An attack of desperation only useful when there are no available moves. It also hurts its user a little, before ending the current turn."
 	},
 	"Water Gun": {
 		name: "Water Gun",
