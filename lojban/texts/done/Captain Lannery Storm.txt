@@ -1,0 +1,24 @@
+Captain Lannery Storm
+
+la .laneris.storm. noi bloja'a
+
+
+Legendary Creature — Human Pirate
+
+ranmi danlu — remna blozeile'a
+
+
+Haste
+
+sutkla
+
+
+Whenever Captain Lannery Storm attacks, create a Treasure token. (It's an artifact with “{T}, Sacrifice this token: Add one mana of any color.”)
+
+ba ro nu ti gunta kei do majgau pa dinrutni kelsinci (.i ko'a rutni gi'e tolcau lu T gi'e do li'aspo ti:  do cpacu pa mafnenlai poi do cuxna le skari po ke'a)
+
+
+Whenever you sacrifice a Treasure, Captain Lannery Storm gets +1/+0 until end of turn.
+
+ba ro nu do li'aspo pa dinrutni kei ti cpacu +1/+0 ca'o le vi kelka'u
+

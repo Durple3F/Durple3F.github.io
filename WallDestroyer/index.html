@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+	<title>Wall Destroyer</title>
+	<meta charset="UTF-8">
+	<script src="jquery.min.js"></script>
+	<script src="lz-string.min.js"></script>
+	<script src="js.cookie.min.js"></script>
+	<link href="style.css" rel="stylesheet">
+	<link rel="shortcut icon" type="image/jpg" href="https://durple3f.github.io/WallDestroyer/favicon.ico"/>
+</head>
+<body>
+	<div id="mainProgressBar">
+		<div id="progressBarText"></div>
+		<div id="progressBarImages"></div>
+	</div>
+	<div id="mainScreen">
+		<div id="mainResources" class="right"></div>
+		<div id="hitWallContainer">
+			<img id="hitWall" src="https://Durple3F.github.io/WallDestroyer/img/bigWall.png"></img>
+			<!-- <img id="hitWall" src="img/bigWall.png"></img> -->
+		</div>
+		<img id="makeBricks" src="https://Durple3F.github.io/WallDestroyer/img/makeBricks.png"></img>
+		<!-- <img id="makeBricks" src="img/makeBricks.png"></img> -->
+		<div id="buildingButton">B</div>
+		<div id="buildings">
+			<div id="availableUpgrades"></div>
+			<div id="quantitySelector">
+				<div data="-1">Sell</div><div class="active" data="1">1</div><div data="10">10</div><div data="100">100</div>
+			</div>
+		</div>
+		<div id="upgradeButton">U</div>
+		<div id="upgrades"></div>
+		<div id="reset">Rewind time:<br><div>+0 future knowledge capsules</div></div>
+		<div id="convert">Convert all damage to cosmic knowledge:<br><div>+0 cosmic knowledge</div></div>
+		<div id="achievements" style="display: none"></div>
+		<div id="settings" style="display: none"></div>
+		<div id="info" style="display: none"></div>
+		<div id="achievementsButton" style="display: none">A</div>
+		<div id="settingsButton" style="display: none">S</div>
+		<div id="infoButton" style="display: none">I</div>
+	</div>
+	<div id="tooltip"></div>
+	<script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+Case of the Uneaten Feast
+Mystery of the feast which was not eaten
+lo nonseljmi ne le balsai noi pu na se jitka
+
+
+Enchantment — Case
+Enchantment — Mystery
+vi'ormakfa — nonseljmi
+
+
+Whenever a creature enters the battlefield under your control, you gain 1 life.
+After each time a creature which you control enters the battlefield, you increase in life by 1.
+ba ro nu pa danlu poi do jitro cu nerkla le nunda'afoi kei do zenba le nilka'o li pa
+
+
+To solve — You’ve gained 5 or more life this turn. (If unsolved, solve at the beginning of your end step.)
+Understanding-cause — You increased in life by at least 5 during the current turn. (If this is not solved, then you solve this after the beginning of your end step.)
+jmiki'u — do pu zenba le nilka'o li su'e mu ca le ca lelka'u (.i ifle lo du'u ti na pu se jimpe kei lo nu do jimpe ti ba lo krasi be le do fanmo pagru'e)
+
+
+Solved — Sacrifice this Case: Creature cards in your graveyard gain “You may cast this card from your graveyard” until end of turn.
+Understood — You sacrifice this: Each card which is a creature and is in your graveyard gets "you can cast this from your graveyard" during the current turn.
+pu jimpe — do li'aspo ti: ro karda poi danlu gi'e nenri le do mrofoi cu cpacu lu do kakne lo zu'o mafpli be ti ra'i le do mrofoi li'u ca le ca kelka'u
+

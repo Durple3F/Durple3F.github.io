@@ -1,0 +1,24 @@
+Case of the Shattered Pact
+Mystery of the agreement that was broken
+lo nonseljmi ne le simselnu'e noi pu porpi
+
+
+Enchantment — Case
+Enchantment — Mystery
+vi'ormakfa — nonseljmi
+
+
+When this Case enters the battlefield, search your library for a basic land card, reveal it, put it into your hand, then shuffle.
+After each time this enters the battlefield, you search a card which is basic and land, and reveal it and put it into your hand and then shuffle.
+ba ro nu ti nerkla le nunda'afoi kei do sisku pa karda poi jicmu gi'e tumla zi'e goi ko'a gi'e jarco ko'a gi'e setca ko'a le do xance gi'ebabo kasygau
+
+
+To solve — There are five colors among permanents you control. (If unsolved, solve at the beginning of your end step.)
+Understanding-cause — 5 colors are among the set of all colors of at least 1 permanent which you control. (If this is not solved, then you solve this after the beginning of your end step.)
+jmiki'u — mu zilska cu menre lo'i zilska be su'e vi'ordai poi do jitro (.i ifle lo du'u ti na pu se jimpe kei lo nu do jimpe ti ba lo krasi be le do fanmo pagru'e)
+
+
+Solved — At the beginning of combat on your turn, target creature you control gains flying, double strike, and vigilance until end of turn.
+Understood — After each beginning of a your combat phase, you target a creature which you control. It gets "flies and strikes twice and is vigilant" during the current turn.
+pu jimpe — ba ro krasi be lo do damba pruce do fargau pa danlu poi do jitro zi'e goi ko'a .i ko'a cpacu lu vofli gi'e reroi darxi gi'e judycikna li'u ca le ca kelka'u
+

@@ -1,0 +1,59 @@
+The Enigma Jewel
+la nonseljmi jemna
+  
+
+Legendary Artifact
+lo ranmi jo'e rutmi
+
+The Enigma Jewel enters the battlefield tapped.
+    Possibility 1:
+    ko sebasti ro pa nu lo ti vitnodacti cu nerkla le nundamba stuzi kei goi ko'a pa ko'a ce ku'i pa nu lo ti vitnodacti cu sexaksu kei
+    "Replace each individual event of this permanent entering the battle zone with an event just like that, but also it's tapped."
+
+    Possibility 2:
+    lo ti vitnodacti ku goi ko'a ca lifri le za'i pu sexaksu kei ri'a le nu ko'a cu nerkla le nundamba stuzi
+    "This permanent experiences the state of tapped-ness, caused by the event of it entering the battle zone."
+lo ti vitnodacti ku goi ko'a ca lifri le za'i pu sexaksu kei ri'a le nu ko'a cu nerkla le nundamba stuzi
+
+{T}: Add {C}{C}. Spend this mana only to activate abilities.
+{T}: ko do cpacu {C}{C} .ice do pleji ka'e po'o lei ti mafnenlai ki'u pa nu do aktigau loi kelstati
+{T}:    {C}{C}               
+"{T}: Acquire {C}{C}. You can only spend this mana justified by an event of you activating abilities."
+
+Craft with four or more nonlands with activated abilities {8}{U}
+la zu'o do pagzbasu fi su'o vo dacti poi ro ke'a claxu lo tumla klesi gi'e tolcau su'o pa aktigau kelstati {8}{U}
+                     {8}{U}
+"The activity of you part-inventing with components: At least 4 objects, each of which both lack the land type and have at least one activate-kind of ability {8}{U}"
+
+({8}{U}, Exile this artifact, Exile the four or more from among other permanents you control and/or cards in your graveyard: Return this card transformed under its owner’s control. Craft only as a sorcery.)
+    {8}{U}, Exile this artifact, Exile the four or more from among other permanents you control and/or cards in your graveyard:
+    pa nu do pleji {8}{U} gi'e dargau ti gi'e dargau lei pagbu loi vitnodacti poi do vitro ke'a jo'e karda poi le mrofoi stuzi po do vasru ke'a:
+
+    Return this card to the battlefield transformed under its owner’s control.
+    ko do xrubei lo ti karda le nundamba stuzi ji'o lo ponse be ti .ije cabo lo ti karda ku lisra lo za'i pu tegalfi
+    Return this card to the battlefield controlled by its owner. It is in the transformed state.
+
+    Craft only as a sorcery.
+    do pagzbasu ka'e po'o ca lo nu do mafpli ka'e lo paplimakfa
+    "You can only part-invent during an event of you being able to cast a sorcery."
+(pa nu do pleji {8}{U} gi'e dargau ti gi'e dargau lei pagbu loi vitnodacti poi do vitro ke'a jo'e karda poi le mrofoi stuzi po do vasru ke'a: ko do xrubei lo ti karda le nundamba stuzi ji'o lo ponse be ti .ije cabo lo ti karda ku lisra lo za'i pu tegalfi .i do pagzbasu ka'e po'o ca lo nu do mafpli ka'e lo paplimakfa)
+
+
+Locus of Enlightenment
+la stuzi be lo aufklerunge
+
+Legendary Artifact
+lo ranmi jo'e rutmi
+
+Locus of Enlightenment has each activated ability of the exiled cards used to craft it. You may activate each of those abilities only once each turn.
+    Locus of Enlightenment has each activated ability of the exiled cards used to craft it.
+    lo ti vitnodacti cu tolcau ro aktigau kelstati poi loi karda poi pu dargau ri'a lo ti vitnodacti cu tolcau ke'a
+    "This permanent has each activate-ability which (the set of cards exiled (caused by this permanent) contains that ability)"
+
+    You may activate each of those abilities only once each turn.
+    ro da poi da cmima ko'a zo'u su'o pa zu'o do aktigau da cu fasnu ca lo ti kelka'u
+    "For each X, such that X is contained in that set, no more than 1 event of you activating X happens this turn."
+lo ti vitnodacti cu tolcau ro aktigau kelstati goi ko'a poi loi karda poi pu dargau ri'a lo ti vitnodacti cu tolcau ke'a .i ro da poi da cmima ko'a zo'u su'o pa zu'o do aktigau da cu fasnu ca lo ti kelka'u
+
+Whenever you activate an ability that isn’t a mana ability, copy it. You may choose new targets for the copy.
+ba semulcabna ro pa nu do aktigau pa kelstati goi ko'a poi ke'a na mafnenlai kelstati kei pa nu do zbasu lo fukpi be ko'a kei .i do cuxna ka'e lo se fargau po le fukpi

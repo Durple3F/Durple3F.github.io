@@ -1,0 +1,28 @@
+Aurelia's Vindicator
+Aurelia's Doubt-remover
+lo la .aureli'as. ku sendargau
+
+
+Creature — Angel
+Creture — Angel
+danlu — anjeli
+
+
+Flying, lifelink, ward {2}
+Flies and life-steals and protected-by {2}
+vofli gi'e ka'orle'a gi'e sebandu {2}
+
+
+Disguise {X}{3}{W}
+Disguise {X}{3}{W}
+ticta'u {X}{3}{W}
+
+
+When Aurelia’s Vindicator is turned face up, exile up to X other target creatures from the battlefield and/or creature cards from graveyards.
+After each time this becomes oriented upward, you choose at most X creatures-or-creature-cards, which are in the battlefield or in graveyards. You exile them.
+ba ro nu ti inxo lo ka selfa'a be lo galtu kei kei do fargau su'e pa danlu ja ke danlu karda poi ke'a nenri le nunda'afoi gi'a nenri le mrofoi zi'e goi ko'a .ije do dargau ko'a
+
+
+When Aurelia’s Vindicator leaves the battlefield, return the exiled cards to their owners’ hands.
+After each time this leaves the battlefield, you return each thing which is a card and was exiled by this to the hand of the owner of it.
+ba ro nu ti cliva le nunda'afoi kei do xruti ro da poi karda zi'e poi pu dargau fa ti ku'o le xance po lo ponse be da

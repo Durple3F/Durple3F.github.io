@@ -1,0 +1,19 @@
+Unyielding Gatekeeper
+Gate guard who doesn't yield
+lo vorme bodysoi noi na randa
+
+
+Creature — Elephant Cleric
+Creature — Elephant Cleric
+danlu — xanto jdamikce
+
+
+Disguise {1}{W} (You may cast this card face down for {3} as a 2/2 creature with ward {2}. Turn it face up any time for its disguise cost.)
+Disguise {1}{W} (You can cast this in a way that's facing down causing its costing {3} and becoming a creature with 2/2 and "ward {2}." You can turn it during any time caused by paying its disguise cost.)
+ticta'u {1}{W} (.i do kakne lo zu'o mafpli be ti co selfa'a be lo dizlo kei se ri'a lo nu ti se jdima {3} gi'e binxo pa 2/2 danlu poi tolcau be lu sebandu {2} li'u .i do kakne lo zu'o cargau be ti kei ca ro da poi teirmokca vau ri'a lo zu'o pleji be le ticta'u jdima)
+
+
+When Unyielding Gatekeeper is turned face up, exile another target nonland permanent. If you controlled it, return it to the battlefield tapped. Otherwise, its controller creates a 2/2 white and blue Detective creature token.
+After each time this becomes oriented upwards, you target a permanent which is not this and is not land. You exile it. If you controlled it, you return it to the battlefield causing it to be depleted, otherwise the player who controlled it creates a 2/2 creature token that is white and is blue and is a Detective.
+ba ro nu ti inxo lo ka selfa'a be lo galtu kei kei do fargau pa vi'ordai poi drata be ti gi'e na tumla zi'e goi ko'a .i do dargau ko'a .i ifle lo du'u do pu jitro ko'a kei lo nu do xrubei ko'a le nunda'afoi seri'a lo nu ko'a xakygau kei kei lo nu le kelci poi pu jitro be ko'a cu majgau pa 2/2 danlu kelsinci poi blabi gi'e blanu gi'e cipcta
+

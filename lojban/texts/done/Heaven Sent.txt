@@ -1,0 +1,51 @@
+Heaven Sent
+la .xeven.sent.
+
+Enchantment - Saga
+lo vitnomakfa - lo lisri
+
+(As this Saga enters and after your draw step, add a lore counter. Sacrifice after III.)
+
+add a lore counter
+do punji pa lisri namcudacti ti vitnodacti
+
+As this Saga enters, add a lore counter.
+do punji pa lisri namcudacti lo ti vitnodacti goi ko'a ca le nu ko'a berkla
+
+As this Saga enters and after your draw step, add a lore counter.
+do punji pa lisri namcudacti lo ti vitnodacti goi ko'a ca le nu ko'a berkla kei gi'e nu cfari lo kardselcpacu selfedru'e ku pe do kei
+
+Sacrifice after III
+
+I, II - Investigate.
+I, II - pa nu do lanli
+
+III - Heaven Sent deals 1 damage to each opponent. Then if an opponent has 0 or less life, draw seven cards. Otherwise, exile Heaven Sent and you may cast it this turn.
+
+III - Heaven Sent deals 1 damage to each opponent.
+III - pa nu lo ti vitnodacti ca dunda pa selxrani kelnemka'u ku ro bradikelci
+
+Draw seven cards if an opponent has 0 or less life.
+
+They have 0 or less life.
+le kanrkelnemka'u pe da dubjavme'a li
+
+Draw seven cards if an event of cat
+do cpacu ze karda ku ca lo nu mlatu kei
+
+
+ko <action 1> ca lo nu <condition> .i ji'a ko <action 2> ca lo nu naku <condition>
+
+III - An event in which this event occurs:
+[Heaven Sent deals 1 damage to each opponent] and then
+[Draw seven cards if an opponent has 0 or less life] and then
+[Exile Heaven Sent and you may cast it this turn]
+pa nu fasru
+	pa nu lo ti vitnodacti ca dunda pa selxrani kelnemka'u ku ro bradikelci kei .ababo
+	pa nu do cpacu ze karda ku ca lo nu da zo'u fasru lo nu da bradikelci kei gi'e dubjavme'a le kanrkelnemka'u pe da ku li no kei kei .ababo
+	pa nu fasru pa nu dargau lo ti vitnodacti kei .ababo
+		pa nu do kakne pa nu do ba mafpli ti karda ca le ti nu kelka'u kei kei
+		ca lo nu naku da zo'u fasru lo nu da bradikelci kei gi'e dubjavme'a le kanrkelnemka'u pe da ku li no 
+		kei 
+	kei
+kei

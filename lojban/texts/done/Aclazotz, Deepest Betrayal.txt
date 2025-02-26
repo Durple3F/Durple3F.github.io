@@ -1,0 +1,45 @@
+Aclazotz, Deepest Betrayal
+la .aklazots. noi conraiksi be lo za'i traide
+       
+
+Legendary Creature — God
+lo ranmi jo'e danlu - lo cevni
+      
+
+Flying, lifelink
+vofli gi'e kanrle'a
+  
+
+Whenever Aclazotz attacks, each opponent discards a card. For each opponent who can’t, you draw a card.
+ba semulcabna ro pa nu lo ti vitnodacti cu gunta kei pa nu ko ro da poi bradi cu vimcu pa karda le xance po da kei ce'o pa nu ko ro da poi bradi gi'e pu narkakne be lo zu'o ke'a vimcu zo'u do cpacu pa karda
+"After each (event of this permanent attacking), it is followed by (an event of (each X, such that X is an opponent, discarding a card) and then (for every X, such that X is an opponent and that couldn't discard, you draw a card.))"
+                                               
+
+Whenever an opponent discards a land card, create a 1/1 black Bat creature token with flying.
+ba semulcabna ro pa nu pa bradi goi ko'a vimcu pa karda poi tumla ku'o le xance po ko'a kei pa nu do ko zbasu pa kelsicni poi xekri jo'e danlu jo'e volsmacu jo'e tolcau be pa tsali jo'e pa tinsa jo'e lo ka vofli be'o
+"After each (event of an opponent, X, discarding a card, which is land, from their hand) it is followed by (an event of you creating a token which is black and is a creature and is a bat and has (1 power and 1 toughness and the property of flying))"
+                                             
+
+When Aclazotz dies, return it to the battlefield tapped and transformed under its owner’s control.
+ba se mulcabna ro pa nu lo ti vitnodacti cu mrobi'o kei pa nu do ko xrubei lo ti karda le nundamba stuzi ku poi ke'a lisri lo za'i pu sexaksu gi'e pu tegalfi
+                                 
+
+Temple of the Dead
+lo malsi po loi morsi
+    
+
+Land
+lo tumla
+ 
+
+{T}: Add {B}.
+{T}: ko do cpacu {B}
+{T}:    {B}
+
+{2}{B}, {T}: Transform Temple of the Dead. Activate only if a player has one or fewer cards in hand and only as a sorcery.
+{2}{B}, {T}: ko do gafygau fi lo ti vitnodacti .i do kakne po'o lo zu'o do aktigau lo ti kelstati kei lo za'i da poi bradi zo'u le xance po da vasru su'e pa karda kei jo'e lo za'i do kakne lo zu'o do mafpli lo paplimakfa
+{2}{B}, {T}:                                             
+
+Chimil gave the Oltec peace in death. Aclazotz ripped it away.
+la .tcimil. dunda lai .oltec. lo ka panpi ca lo nu ko'a mosri .ije la .aklazots. lacpu zerle'a ko'e
+                  

@@ -1,0 +1,197 @@
+<!doctype html>
+<html>
+	<head>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js">
+		</script> 
+		<link href="https://cdn.jsdelivr.net/npm/mana-font@latest/css/mana.css" rel="stylesheet" type="text/css" />
+		
+		<link rel="icon" type="image/x-icon" href="favicon.ico">
+		<link rel="stylesheet" href="../../lojban/style.css">
+		<script src="../data-ancient-greek.js"></script>
+		<script>
+			const storyCode = "Sokrates, Athenian Teacher"
+		</script>
+		<style>
+			#switch {
+				position: absolute;
+				top: 1em;
+				right: 1em;
+				z-index: 100;
+			}
+			.modern-greek {
+				display: none;
+			}
+		</style>
+		<script src="../../lojban/main.js" defer></script>
+		<script defer>
+			$(document).ready(function(){
+				$("#switch").click(function(){
+					if ($("#switch").val() === "ancient"){
+						$("#switch").val("modern")
+						$("#switch > .bi").removeClass("bi-toggle-off").addClass("bi-toggle-on")
+						$(".ancient-greek").stop().fadeOut(500)
+						$(".modern-greek").stop().delay(480).fadeIn()
+					} else {
+						$("#switch").val("ancient")
+						$("#switch > .bi").removeClass("bi-toggle-on").addClass("bi-toggle-off")
+						$(".modern-greek").stop().fadeOut(500)
+						$(".ancient-greek").stop().delay(480).fadeIn()
+					}
+					$("#switch").attr("disabled", true)
+					setTimeout(() => {
+						$("#switch").attr("disabled", false)
+					}, 500)
+				})
+			})
+		</script>
+
+		<title>Sokrates, Athenian Teacher</title>
+		<meta property="og:title" content="Sokrates, Athenian Teacher">
+		<meta property="og:description" content="A much more informed look at Ancient Greek">
+		<meta property="og:image" content="https://durple3f.github.io/lojban/images/Sokrates,%20Athenian%20Teacher.png">
+	</head>
+	<body>
+		<a href="./index.html" id="back-btn">
+			<button class="btn btn-secondary">Back</button>
+		</a>
+		<button class="btn btn-secondary" id="switch" value="ancient">
+			<i class="bi bi-toggle-off"></i><br><span>Modern Greek</span>
+		</button>
+		<div id="explanation-container">
+			<div id="explanation">
+				<div id="explanation-text"></div>
+				<button class="btn btn-secondary show-all" style="display: none;">Show all</button>
+			</div>
+		</div>
+		<div id="views">
+			<div class="row text-center fw-bold">
+				<div class="col">
+					English <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col ancient-greek">
+					Literal translation <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col ancient-greek">
+					Ancient Greek <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col modern-greek">
+					Literal translation <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col modern-greek">
+					Modern Greek <button class="toggle-btn">(Hide)</button>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col">
+					Sokrates, Athenian Teacher
+				</div>
+				<div class="col ancient-greek">
+					Sokrates, Athenian Teacher
+				</div>
+				<div class="col ancient-greek">
+					Σωκράτης, Ἀθηναῖος διδάσκαλος
+				</div>
+				<div class="col modern-greek">
+					Sokrates, Athenian teacher
+				</div>
+				<div class="col modern-greek">
+					Σωκράτης, Αθηναίος διδάσκαλος
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col">
+					Legendary Creature — Human Advisor
+				</div>
+				<div class="col ancient-greek">
+					Mythic being — Man Counselor
+				</div>
+				<div class="col ancient-greek">
+					Μυθικὸν ὄν — Ἄνθρωπος Σύμβουνος
+				</div>
+				<div class="col modern-greek">
+					Legendary Entity — Human Advisor
+				</div>
+				<div class="col modern-greek">
+					Θρυλικος Οντότητα — Άνθρωπος Σύμβουλος
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col">
+					Defender
+				</div>
+				<div class="col ancient-greek">
+					Defender
+				</div>
+				<div class="col ancient-greek">
+					Προστάτης
+				</div>
+				<div class="col modern-greek">
+					Defender
+				</div>
+				<div class="col modern-greek">
+					Υπερασπιστής
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col">
+					Sokrates, Athenian Teacher has hexproof as long as it’s untapped.
+				</div>
+				<div class="col ancient-greek">
+					Sokrates, Athenian teacher doesn't get magically targeted as much as her power is intact.
+				</div>
+				<div class="col ancient-greek">
+					Σωκράτης, Ἀθηναῖος διδάσκαλος οὐ μαγείαις διωκτός ὅσονπερ δύναμις αὕτη ἄθικτός ἐστι.
+				</div>
+				<div class="col modern-greek">
+					Sokrates, Athenian teacher has magicproof as long as it's unexploited.
+				</div>
+				<div class="col modern-greek">
+					Σωκράτης, Αθηναίος διδάσκαλος έχει αλεξιμαγεία όσο είναι αναξιοποίητος.
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col">
+					Sokratic Dialogue — {T}: Until end of turn, target creature gains “If this creature would deal combat damage to a player, prevent that damage. This creature’s controller and that player each draw half that many cards, rounded down.”
+				</div>
+				<div class="col ancient-greek">
+					Sokratic Dialogue — {T}: Until turn end, targeted being gets “If this being damage a player makes, you stop that damage. Ruler of this being and that player get every card as much as half of the damage.”
+				</div>
+				<div class="col ancient-greek">
+					Σωκρατικός διάλογος — {T}: Ἄχρι σειρᾶς τέλους, διωκτέον ὂν λαμβάνει «Ἐάν τόδε ὂν ζημίαν παίκτη ποιεῖ, απότρεψον ταύτην ζημίαν. Κύριος τοῦδε ὄντος καὶ παίκτης ἐκεῖνος λαμβάνουσιν ἕκαστος χαρτία ὅσον το ἥμισυ τῆς ζημίας».
+				</div>
+				<div class="col modern-greek">
+					Sokratic Dialogue — {T}: Until the end of the series, the target creature gains “If this entity will cause combative damage to a player, you stop that damage. The controller of this entity and that player both draw half those cards, rounded down.”
+				</div>
+				<div class="col modern-greek">
+					Σωκρατικός διάλογος — {T}: Μέχρι το τέλος της σειράς, το στόχο οντότητα αποκτάει «Αν αυτή τη οντότητα θα προκαλέσει μαχητική ζημιά σε ενάν παίκτη, απετρέπεις εκεινή τη ζημιά. Το κυρίαρχος αυτής της οντότητας και εκείνο παίκτη και οι δύο τραβάτε τα μισά αυτά τα χαρτιά, στρογγυλεμένα κάτω».
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col">
+					<img class="img-fluid mtg-card" src="https://api.scryfall.com/cards/a0b107dc-387e-4c92-a273-6cb44a485caa?format=image">
+				</div>
+				<div class="col ancient-greek">
+					<img class="img-fluid mtg-card">
+				</div>
+				<div class="col ancient-greek">
+					<img class="img-fluid mtg-card" src="https://api.scryfall.com/cards/23a5db83-0098-4e2b-bf23-146e88b9cca9?format=image">
+				</div>
+				<div class="col modern-greek">
+					<img class="img-fluid mtg-card">
+				</div>
+				<div class="col modern-greek">
+					<img class="img-fluid mtg-card">
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

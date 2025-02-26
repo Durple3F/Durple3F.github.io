@@ -1,0 +1,43 @@
+Ashiok, Wicked Manipulator
+la .aci'ok. poi palci gi'e mipri
+
+Legendary Planeswalker - Ashiok
+lo ranmi jo'e mujlitru - la .aci'ok.
+
+If you would pay life while your library has at least that many cards in it, exile that many cards from the top of your library instead.
+    An event of you paying life
+    pa nu do pleji lo kanrokelnemka'u
+    An event of your library having that many cards in it
+    lo nu da poi namcu zo'u le ckusro po do vasru nu'i la'u su'o lo karda be li mu dunli be da
+    An event of there being X, which is life that you pay, such that your library contains at least X cards.
+    pa nu da poi do pleji lo kanrokelnemka'u cu dunli be da zo'u le ckusro po do vasru nu'i la'u su'o lo karda be li mu dunli be da
+    
+    Replace each event of [you pay life less than or equal to the cards in your library] with an event of [you exile cards from your library equal to that much]
+    sebasti
+        ro pa nu da poi do pleji be lo kanrokelnemka'u cu zu'o da goi ko'a dubjavme'a le karda be le ckusro po do sevasru kei kei
+        pa nu do dargau lo karda ku le ckusro po do du'i ko'a kei
+ko sebasti ro pa nu da poi do pleji be lo kanrokelnemka'u cu zu'o da goi ko'a dubjavme'a le karda be le ckusro po do sevasru kei kei pa nu do dargau lo karda ku le ckusro po do du'i ko'a kei
+
+Look at the top two cards of your library. Exile one of them and put the other into your hand.
+    Look at the top two cards of your library.
+    ko do catlu le re karda be le ckusro po do ku goi ko'a
+
+    Exile one of them and put the other into your hand.
+    do dargau pa karda ko'a .ice'o do punji pa karda po ko'a le xance po do
+ko do catlu le re karda be le ckusro po do ku goi ko'a .ice'o do dargau pa karda ko'a .ice'o do punji pa karda po ko'a le xance po do
+
+Create two 1/1 black Nightmare creature tokens with “At the beginning of combat on your turn, if a card was put into exile this turn, put a +1/+1 counter on this creature.”
+    At the beginning of combat on your turn, if a card was put into exile this turn, put a +1/+1 counter on this creature.
+    ba semulcabna ro nu lo damba pruce cu cfari kei pa nu ko do punji pa ma'u pa ma'u pa namcu nacdai lo ti vitnodacti .o pa ba nu lo karda cu nerkla le dargau stuzi kei ca le kelka'u be fa ti kei
+
+    "At the beginning of combat on your turn, if a card was put into exile this turn, put a +1/+1 counter on this creature."
+    lu ba semulcabna ro nu lo damba pruce cu cfari kei pa nu ko do punji pa ma'u pa ma'u pa namcu nacdai lo ti vitnodacti .o su'o pa pu nu lo karda cu nerkla le dargau stuzi kei ca le kelka'u be fa ti kei li'u
+ko do zbasu re kelsicni poi xekri jo'e danlu jo'e tepsne jo'e tolcau be pa tsali jo'e pa tinsa jo'e lu ba semulcabna ro nu lo damba pruce cu cfari kei pa nu ko do punji pa ma'u pa ma'u pa namcu nacdai lo ti vitnodacti .o su'o pa pu nu lo karda cu nerkla le dargau stuzi kei ca le kelka'u be fa ti kei li'u
+
+Target player exiles the top X cards of their library, where X is the total mana value of cards you own in exile.
+    Choose a player.
+    ko do cuxna pa kelci goi ko'a
+
+    Then, they exile cards from their library equal to the sum of the mana value of the cards owned by you in the exile zone.
+    ko do cuxna pa kelci goi ko'a .ice'o ko'a ko dargau lo karda ku le ckusro pe ko'a du'i lo sumji be lo mafnenlai vamji be lo karda po do poi sevasru le dargau stuzi
+ko do cuxna pa kelci goi ko'a .ice'o ko'a ko dargau lo karda ku le ckusro pe ko'a du'i lo sumji be lo mafnenlai vamji be lo karda po do poi sevasru le dargau stuzi

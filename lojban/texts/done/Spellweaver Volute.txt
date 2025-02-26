@@ -1,0 +1,19 @@
+Spellweaver Volute
+A spell-weaver mollusk
+lo mafru'ejivbu cakcernu
+  
+
+Enchantment — Aura 
+Permanent-magic — Surround
+vi'ormakfa — sruri
+ — 
+
+Enchant instant card in a graveyard
+Magic-attach to a card which is instant and in a graveyard
+mafyjo'e pa karda poi mocysutmakfa gi'e nenri pa mrofoi stuzi
+         
+
+Whenever you cast a sorcery spell, copy the enchanted instant card. You may cast the copy without paying its mana cost. If you do, exile the enchanted card and attach Spellweaver Volute to another instant card in a graveyard.
+After each event of (you cast a spell which is sorcery) you copy (the card which is enchanted by this), x1. You can (you cast (in a way that lacks you paying the mana cost) the copy). If (you cast-ed the copy) then (you exile x1, and attach this to 1 card which is instant and is inside a graveyard and is not x1)
+ba ro nu do mafpli pa mafru'e poi mocmakfa kei do fukygau le karda poi ca se mafyjo'e ti ku'o goi ko'a .i do ca ka'e mafpli co claxu be lo zu'o do pleji le mafnenlai jdima kei le fukpi .i ifle le du'u do pu mafpli le fukpi kei le nu do dargau ko'a gi'e jornygau ti pa karda poi sutmocmakfa gi'e nenri pa mrofoi stuzi gi'e drata ko'a 
+                                                                      

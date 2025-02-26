@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+	<head>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js">
+		</script> 
+		<link href="https://cdn.jsdelivr.net/npm/mana-font@latest/css/mana.css" rel="stylesheet" type="text/css" />
+		
+		<link rel="icon" type="image/x-icon" href="../../lojban/favicon.ico">
+		<link rel="stylesheet" href="../../lojban/style.css">
+		<script src="../data.js"></script>
+		<script>
+			const storyCode = "Desolation Twin"
+		</script>
+		<script src="../../lojban/main.js" defer></script>
+
+		<title>Desolation Twin</title>
+		<meta property="og:title" content="Desolation Twin">
+		<meta property="og:description" content="">
+		<meta property="og:image" content="https://durple3f.github.io/greek/images/Desolation%20Twin%204.png">
+	</head>
+	<body>
+		<a href="../index.html" id="back-btn">
+			<button class="btn btn-secondary">Back</button>
+		</a>
+		<div id="draggable">=</div>
+		<div id="explanation-container">
+			<div id="explanation">
+				<div id="explanation-text"></div>
+				<button class="btn btn-secondary show-all" style="display: none;">Show all</button>
+			</div>
+		</div>
+		<div id="views">
+			<div class="row text-center fw-bold">
+				<div class="col">
+					English <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					Literal Translation <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					Romanized <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					Greek <button class="toggle-btn">(Hide)</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="f2">Desolation</span> <span class="f1">Twin</span>
+				</div>
+				<div class="col">
+					<span class="f1">Twin</span> <span class="f2">of Desolation</span>
+				</div>
+				<div class="col">
+					<span class="f1">Dídymos</span> <span class="f2">Erímosis</span>
+				</div>
+				<div class="col">
+					<span class="f1">Δίδυμος</span> <span class="f2">Ερήμωσης</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="f3">Creature</span> — <span class="f4">Eldrazi</span>
+				</div>
+				<div class="col">
+					<span class="f3">Entity</span> — <span class="f4">Eldrazi</span>
+				</div>
+				<div class="col">
+					<span class="f3">Ontótita</span> — <span class="f4">Eldrázi</span>
+				</div>
+				<div class="col">
+					<span class="f3">Οντότητα</span> — <span class="f4">Ελδράζι</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="f5">When</span> <span class="f6">you cast</span> <span class="f7">this</span> <span class="f8">spell</span>, <span class="f9">create</span> <span class="f10">a</span> 10/10 <span class="f11">colorless</span> <span class="f4">Eldrazi</span> <span class="f3"><span class="f12">creature</span></span> <span class="f13">token</span>.
+				</div>
+				<div class="col">
+					<span class="f5">When</span> <span class="f6">you throw</span> <span class="f7">this</span> <span class="f8">spell</span>, <span class="f9">you create</span> <span class="f10">a</span> 10/10 <span class="f11">colorless</span> <span class="f4">Eldrazi</span> <span class="f3"><span class="f12">entity</span></span> <span class="f13">token</span>.
+				</div>
+				<div class="col">
+					<span class="f5">Ótan</span> <span class="f6">ríchneis</span> <span class="f7">aftó to</span> <span class="f8">mágia</span>, <span class="f9">dimiourgeís</span> <span class="f10">mia</span> 10/10 <span class="f11">áchromo</span> <span class="f4">Eldrázi</span> <span class="f3"><span class="f12">ontótita</span></span> <span class="f13">márka</span>.
+				</div>
+				<div class="col">
+					<span class="f5">Όταν</span> <span class="f6">ρίχνεις</span> <span class="f7">αυτό το</span> <span class="f8">μάγια</span>, <span class="f9">δημιουργείς</span> <span class="f10">μια</span> 10/10 <span class="f11">άχρωμο</span> <span class="f4">Ελδράζι</span> <span class="f3"><span class="f12">οντότητα</span></span> <span class="f13">μάρκα</span>.
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					“<span class="f14">With</span> <span class="f15">precise</span> <span class="f16">coordination</span> <span class="f17">and</span> <span class="f18">enough</span> <span class="f19">blood</span> <span class="f22">spilled</span>, <span class="f24">one</span> <span class="f23">can</span> <span class="f25">be</span> <span class="f26">driven off</span>, <span class="f27">even</span> <span class="f30">brought down</span>. <span class="f31">But</span> <span class="f32">two</span> … <span class="f33">that’s</span> <span class="f34">a lot of</span> <span class="f19">blood</span>.”<br>—<span class="f35">Munda</span>, <span class="f37">ambush</span> <span class="f36">leader</span>
+				</div>
+				<div class="col">
+					“<span class="f14">With</span> <span class="f15">precise</span> <span class="f16">coordination</span> <span class="f17">and</span> <span class="f18">enough</span> <span class="f19">blood</span> <span class="f20">that</span> <span class="f21">has</span> <span class="f22">spilled</span>, <span class="f24">one</span> <span class="f23">can</span> <span class="f25">be</span> <span class="f26">driven away</span>, <span class="f28">and</span> <span class="f27">even</span> <span class="f25">be</span> <span class="f30">killed</span>. <span class="f31">But</span> <span class="f32">two</span> … <span class="f33">it’s</span> <span class="f34">a lot of</span> <span class="f19">blood</span>.”<br>—<span class="f35">Munda</span>, <span class="f36">leader</span> <span class="f37">of ambush</span>
+				</div>
+				<div class="col">
+					“<span class="f14">Me</span> <span class="f15">akriví</span> <span class="f16">syntonismó</span> <span class="f17">kai</span> <span class="f18">arketó</span> <span class="f19">aíma</span> <span class="f20">pou</span> <span class="f21">échei</span> <span class="f22">chytheí</span>, <span class="f23">boreí</span> <span class="f24">éna</span> <span class="f25">na</span> <span class="f26">ekdióchnetai</span>, <span class="f27">akómi</span> <span class="f28">kai</span> <span class="f25">na</span> <span class="f30">skotónetai</span>. <span class="f31">Allá</span> <span class="f32">dío</span> … <span class="f33">eínai</span> <span class="f34">polí</span> <span class="f19">aíma</span>.”<br>—<span class="f35">Moúnta</span>, <span class="f36">archigós</span> <span class="f37">enédras</span>
+				</div>
+				<div class="col">
+					«<span class="f14">Με</span> <span class="f15">ακριβή</span> <span class="f16">συντονισμό</span> <span class="f17">και</span> <span class="f18">αρκετό</span> <span class="f19">αίμα</span> <span class="f20">που</span> <span class="f21">έχει</span> <span class="f22">χυθεί</span>, <span class="f23">μπορεί</span> <span class="f24">ένα</span> <span class="f25">να</span> <span class="f26">εκδιώχνεται</span>, <span class="f27">ακόμη</span> <span class="f28">και</span> <span class="f25">να</span> <span class="f30">σκοτώνεται</span>. <span class="f31">Αλλά</span> <span class="f32">δύο</span> … <span class="f33">είναι</span> <span class="f34">πολύ</span> <span class="f19">αίμα</span>.»<br>—<span class="f35">Μούντα</span>, <span class="f36">αρχηγός</span> <span class="f37">ενέδρας</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<img class="mtg-card img-fluid" src="../images/Desolation Twin 1.png">
+				</div>
+				<div class="col">
+					<img class="mtg-card img-fluid" src="../images/Desolation Twin 2.png">
+				</div>
+				<div class="col">
+					<img class="mtg-card img-fluid" src="../images/Desolation Twin 3.png">
+				</div>
+				<div class="col">
+					<img class="mtg-card img-fluid" src="../images/Desolation Twin 4.png">
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

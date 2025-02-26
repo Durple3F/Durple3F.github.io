@@ -1,0 +1,24 @@
+Due Diligence
+Expected persistent-effort
+lo la'erji'i kamra'itoi
+
+
+Enchantment — Aura
+Enchantment — Aura
+vi'ormakfa — sruri
+
+
+Enchant creature
+This enchants a creature
+ti mafyjo'e pa danlu
+
+
+When Due Diligence enters the battlefield, target creature you control other than enchanted creature gets +2/+2 and gains vigilance until end of turn.
+After each time this enters the battlefield, you target a creature which this doesn't enchant. It gets +2/+2 and "vigilance" during the current turn.
+ba ro nu ti nerkla le nunda'afoi kei do fargau pa danlu poi ti na mafyjo'e ke'a zi'e goi ko'a .i ko'a cpacu +2/+2 e lu judycikna li'u ca lo ca kelka'u
+
+
+Enchanted creature gets +2/+2 and has vigilance.
+The creature which this enchants gets +2/+2 and "vigilance"
+le danlu poi ti mafyjo'e cu cpacu +2/+2 e lu judycikna li'u
+

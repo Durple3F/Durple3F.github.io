@@ -1,0 +1,19 @@
+Eliminate the Impossible
+Remove the impossible
+vimcu be le tolcu'i
+
+
+Instant
+Instant
+sutmocmakfa
+
+
+Investigate. Creatures your opponents control get -2/-0 until end of turn. If any of them are suspected, they’re no longer suspected. (To investigate, create a Clue token. It’s an artifact with “{2}, Sacrifice this artifact: Draw a card.”)
+You investigate. Each creature which opponents control gets -2/-0 during the current turn. For each X of those, where X is suspected, X becomes not suspected. ("Investigate" means "you create a clue token. It's an artifact and has "{2}, you sacrifice this: you draw a card.")
+do dafsisku .i ro danlu poi lo bradi ku jitro zi'e goi ko'a cpacu -2/-0 ca le ca kelka'u .i ro da po ko'a zi'e poi da selsepni zo'u da inxo lo ka na'e selsepni (.i zo dafsisku se smuni lu do majgau pa fatci kelsicni li'u .i ko'a rutmi gi'e tolcau be lu {2}, do li'aspo ti: do cpacu pa karda)
+
+
+“Half the city had motive. Time to narrow down who also had the means and opportunity.”
+"Half the people in the city had motives. I just have to search them for who also had ability and opportunity."
+lu fi'ure le prenu ne'i le tcadi puki tolcau lo mukti .i mi nitcu po'o lo zu'o mi sisku fi ko'a lo ka ce'u tolcau ji'a lo nunka'e e lo gaurtcini
+

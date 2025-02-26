@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link href="https://cdn.jsdelivr.net/npm/mana-font@latest/css/mana.css" rel="stylesheet" type="text/css" />
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<script src="jquery.fittext.js"></script>
+
+	<link rel="stylesheet" href="style.css">
+	<script src="main.js" defer></script>
+	<title>Spellify</title>
+</head>
+
+<body>
+	<div id="title-screen" class="screen text-center">
+		<div id="options">
+			<label for="difficulty">Difficulty:</label>
+			<select id="difficulty">
+				<option val="1">1</option>
+				<option val="2">2</option>
+				<option val="3">3</option>
+				<option val="4">4</option>
+				<option val="5">5</option>
+			</select>
+			<br>
+			<label for="hard-mode">Hard Mode (Card color is not given):</label>
+			<input type="checkbox" id="hard-mode">
+		</div>
+		<button class="btn btn-primary" disabled>Loading</button>
+	</div>
+	<div id="game" style="display: none" class="screen">
+		<div id="card-section">
+			<img class="card-back img-fluid">
+			<span class="card-name"></span>
+			<span class="card-type"></span>
+			<span class="card-text"></span>
+			<span class="card-cost"></span>
+			<span class="card-pt"></span>
+		</div>
+		<div id="keyboard-section" class="front">
+			<div id="guess-count"><span class='used'>0</span>/13</div>
+			<button class="btn btn-success" id="final-guess" data-toggle="modal" data-target="#final-guess-modal">Guess the card</button>
+			<div class="keyboard-container">
+				<div class="keyboard-row keyboard-r0__7M5jW">
+					<div class="keyboard-button__dl7fy">Q</div>
+					<div class="keyboard-button__dl7fy">W</div>
+					<div class="keyboard-button__dl7fy">E</div>
+					<div class="keyboard-button__dl7fy">R</div>
+					<div class="keyboard-button__dl7fy">T</div>
+					<div class="keyboard-button__dl7fy">Y</div>
+					<div class="keyboard-button__dl7fy">U</div>
+					<div class="keyboard-button__dl7fy">I</div>
+					<div class="keyboard-button__dl7fy">O</div>
+					<div class="keyboard-button__dl7fy">P</div>
+				</div>
+				<div class="keyboard-row keyboard-r1__qyEhz">
+					<div class="keyboard-button__dl7fy">A</div>
+					<div class="keyboard-button__dl7fy">S</div>
+					<div class="keyboard-button__dl7fy">D</div>
+					<div class="keyboard-button__dl7fy">F</div>
+					<div class="keyboard-button__dl7fy">G</div>
+					<div class="keyboard-button__dl7fy">H</div>
+					<div class="keyboard-button__dl7fy">J</div>
+					<div class="keyboard-button__dl7fy">K</div>
+					<div class="keyboard-button__dl7fy">L</div>
+				</div>
+				<div class="keyboard-row keyboard-r2__loU9Q">
+					<div class="keyboard-contextButton__7Gkr0">123<span><i class="ms ms-cost ms-w"></i></span></div>
+					<div class="keyboard-button__dl7fy">Z</div>
+					<div class="keyboard-button__dl7fy">X</div>
+					<div class="keyboard-button__dl7fy">C</div>
+					<div class="keyboard-button__dl7fy">V</div>
+					<div class="keyboard-button__dl7fy">B</div>
+					<div class="keyboard-button__dl7fy">N</div>
+					<div class="keyboard-button__dl7fy">M</div>
+					<!-- <div class="keyboard-button__dl7fy"><svg aria-hidden="true" focusable="false" data-prefix="fas"
+							data-icon="delete-left" class="svg-inline--fa fa-delete-left " role="img"
+							xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+							<path fill="currentColor"
+								d="M576 128c0-35.3-28.7-64-64-64H205.3c-17 0-33.3 6.7-45.3 18.7L9.4 233.4c-6 6-9.4 14.1-9.4 22.6s3.4 16.6 9.4 22.6L160 429.3c12 12 28.3 18.7 45.3 18.7H512c35.3 0 64-28.7 64-64V128zM271 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z">
+							</path>
+						</svg></div> -->
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal modal-dark" tabindex="-1" role="dialog" id="final-guess-modal">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Guess the card's name</h5>
+					<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<input id="final-guess-input">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary submit">Submit</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+crossorigin="anonymous" defer></script>
+</html>

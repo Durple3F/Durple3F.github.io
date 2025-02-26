@@ -1,0 +1,24 @@
+Animate Dead
+Cause living movement of dead
+mivmuvgau be lo morsi
+   
+
+Enchantment — Aura
+Enchantment — Aura
+vi'ormakfa — sruri
+ — 
+
+Enchant creature card in a graveyard
+This enchants 1 card which is a creature and is inside a graveyard
+ti mafyjo'e pa karda poi danlu gi'e nenri lo mrofoi
+         
+
+When Animate Dead enters the battlefield, if it’s on the battlefield, it loses “enchant creature card in a graveyard” and gains “enchant creature put onto the battlefield with Animate Dead.” Return enchanted creature card to the battlefield under your control and attach Animate Dead to it. When Animate Dead leaves the battlefield, that creature’s controller sacrifices it.
+After each time this enters the battlefield, if this is inside the battlefield, this loses "This enchants 1 card which is a creature and is inside a graveyard" and gets "This enchants 1 creature for which it was put into the battlefield caused by this." You return the card which this enchants to the battlefield, and attach this to it. After the next time this leaves the battlefield, the controller of it sacrifices it.
+ba ro nu ti nerkla le nunda'afoi kei ifle lo du'u ti nenri le nunda'afoi kei lo nu ti cirko lu ti mafyjo'e pa karda poi danlu gi'e nenri lo mrofoi li'u gi'e cpacu lu ti mafyjo'e pa danlu poi ke'a pu setca le nunda'afoi ri'a ti li'u .i do xrubei le karda poi ti mafyjo'e zi'e goi ko'a le nunda'afoi gi'e jornygau ti ko'a .i ba le bavlamke'u nu ti cliva le nunda'afoi kei le jitro be ko'a cu li'aspo ko'a
+                                                                                 
+
+Enchanted creature gets -1/-0.
+The creature which this enchants gets -1/-0.
+le danlu poi ti mafyjo'e cu cpacu -1/-0
+       1/0

@@ -1,0 +1,24 @@
+Steamflogger Boss
+Boss of steam beaters
+lo jitro be loi jaurgapci rapyda'i
+     
+
+Creature — Goblin Rigger
+Creature — Goblin Tool-preparer
+danlu — ridgobeli selplibregau
+ —  
+
+Other Riggers you control get +1/+0 and have haste.
+Each tool-preparer which you control and which is not this gets +1/+0 and "is quick."
+ro selplibregau poi do jitro zi'e poi drata be ti cu cpacu +1/+0 e lu sutra li'u
+            +/+0    
+
+If a Rigger you control would assemble a Contraption, it assembles two Contraptions instead.
+Replace each event of a tool-preparer which you control assembling a complex-machine with events of it assembling 2 complex-machines.
+selbasti ro nu pa selplibregau poi do jitro zi'e goi ko'a zbapra pa lujmi'i kei lo nu ko'a zbapra re lujmi'i
+                    
+
+“Whip the Xs! Pinch the Os! What we’re building, no one knows!”
+"Whip those Xs! Pinch those Os! What we build is known by 0 people!"
+lu ko bikyda'i lei me xy. .i ko batci lei me .obu .i lo du'u ma mi'a se majgau kei se djuno no prenu
+                       

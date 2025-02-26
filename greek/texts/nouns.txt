@@ -1,0 +1,56 @@
+
+Plate - πιάτο - neuter
+Glass (cup) - ποτήρι - neuter
+Water - νερό - neuter
+Coffee - καφές - masculine
+Chocolate - σοκολάτα - feminine
+Apple - μήλο - neuter
+Tomato -  - feminine
+Cherry - κεράσι - neuter
+Paprika - πάπρικα - feminine
+Watermelon - καρπούζι - neuter
+
+Man - άντρας - masculine
+Boy - αγόρι - neuter
+Woman - γυναίκα - feminine
+Girl - κορίτσι - neuter
+Son - γιος - masculine
+Mom - μαμά - feminine
+
+Question - ερώτηση - feminine
+Answer - απάντηση - 
+
+Clothing - ρούχο - neuter
+Scarf - κασκόλ - neuter - κασκόλ
+Hat - καπέλο - neuter
+Shirt - πουκάμισο - neuter
+T-shirt - κοντομάνικο - neuter
+Blouse - μπλούζα - feminine
+Skirt - φούστα - feminine
+Dress - φόρεμα - neuter
+Suit - κουστούμι - neuter
+Uniform - στολή - feminine
+Glove - γάντι - neuter
+Shoe -  - neuter - παπούτσια
+Boot - μπότα - feminine - μπότες
+Sock - κάλτσα - feminine - κάλτσες
+Tie - γραβάτα - feminine
+Jewelry - κόσμημα - neuter
+Wallet - πορτοφόλι - neuter
+Pocket - τσέπη - feminine
+
+Gorilla -  - masculine
+Fish - ψάρι - neuter
+Butterfly - πεταλούδα - feminine
+Dog - σκύλος - masculine - σκύλοι
+Duck - πάπια - feminine - πάπια
+Bear - αρκούδα - feminine
+
+Throne - θρόνος - masculine
+Museum - μουσείο - neuter
+Jewel - κόσμημα - neuter
+Skeleton - σκελετός - masculine
+Book - βιβλίο - neuter
+Vase - βάζο - neuter
+
+Architect - αρχιτέκτονας - masculine OR feminine

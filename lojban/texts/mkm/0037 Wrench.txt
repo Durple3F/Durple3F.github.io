@@ -1,0 +1,24 @@
+Wrench
+Turn-tool
+lo cartci
+
+
+Artifact — Clue Equipment
+Artifact — Clue Tool
+rutmi — fatci cabra
+
+
+Equipped creature gets +1/+1 and has vigilance and “{3}, {T}: Tap target creature.”
+The creature which uses this gets +1/+1 and "is vigilant" and "{3}, {T}: You target a creature. You tap it."
+le danlu poi pilno be ti cpacu +1/+1 e lu judycikna li'u e lu {3}, {T}: do fargau pa danlu goi ko'a .i do xakygau ko'a li'u
+
+
+{2}, Sacrifice Wrench: Draw a card.
+{2}, you sacrifice this: you draw a card.
+{2}, do li'aspo ti: do cpacu pa karda
+
+
+Equip {2}
+Tool-give {2}
+ca'ardu'a {2}
+

@@ -1,0 +1,50 @@
+5/19:
+  - Started.
+  - We have a basic canvas working, and I've been able to get layers of differently colored pixels on screen.
+  - Added the depth map, which should be a super quick system for both the rendering & game logic to find where a miner can go mine.
+  - The renderer shows the pixels at the appropriate depths! This took a lot of math.
+
+5/20:
+  - We have a miner. I had to go review some trigonometry to get them working, because so much of this whole project hinges on being as fast as possible.
+  - A lot of the future stuff is going to revolve around making these guys pick columns to mine as efficiently as possible. I found a system that just uses gaussian random samples to pick columns that are *probably* near the miner, but it could search for one farther away. It's quite efficient to do it this way, I think.
+  - Basic controls
+
+5/21:
+  - We have a rail. It has a minecart. Adding many minecarts currently causes a lot of lag
+  - In an effort to make the game still run at higher numbers of entities, eventually, the game doesn't consider every entity every tick. It only considers a random sample of them, but it balances it out by allowing each entity to do more stuff.
+  - Tweaked the function that tells miners where to go so there's less of a bias towards the exact center column at the start.
+  - You can now zoom in and out
+
+5/22 and earlier:
+  - Miners may now choose to mine a tile outside of the currently available area if that's the closest option! This has a few benefits:
+    - No more gross edge-hogging
+    - Due to the existing systems, and the fact it uses a gaussian distribution to determine where everyone goes, it makes a really nice pattern! Very proud.
+  - Why did I use a random sample for large entity counts? Now it just uses a nice predictable cycle.
+  - I finally found what was causing all the lag! I had flipped a single / into a * in one single part of the render logic, so the screen was rendering 100 times if you did a 10x zoom.
+  - Way more rendering time-saving, now it can render stuff really fast.
+
+5/23: 
+  - Rails are rendered using pixel measurements instead of bland boxes, now. I thought that would look gross, but I think it looks better than the alternative. Extra upside: This approach is crazy fast for large numbers of rails!
+  - There is now an upgrades menu but it's blank
+  - Began some preliminary work with the system for upgrading things. I want it to be ***fast***.
+  - By that I just mean there's some hashmaps. Caching results really does save a crazy amount of time.
+  - Zooming keeps the camera centered now.
+  - The only thing I'm worried about performance-wise now is rails. They keep hogging up CPU time when you have 500k+ of them.
+
+5/24:
+  - That thing with the rails is a math error, now you get way better framerates with large rail counts.
+  - The function for upgrading your miners works, but you can only upgrade speed right now.
+  - Reworked the sidebar, and I'm very proud of the fps this thing gets. That's staying on the menu.
+  - You can now properly buy new miners. The other upgrades seem like a bit of a repetitive hassle. We'll see.
+
+5/25:
+  - You can now see current miner count on that upgrade
+  - And now all the upgrades work. You can:
+    - Upgrade miner's speed, damage, capacity, unload speed, and total amount
+    - Upgrade rail's speed, acceleration, length, minecart count, capacity, unload speed, and amount
+  - Added a saving system! It's iffy. I think it works, but... gonna wanna add an export option soon.
+
+5/26:
+  - Added a selector to decide how many of each upgrade you wanna buy. Haven't tested too much, but I think it works.
+  - Fixed some bugs
+  

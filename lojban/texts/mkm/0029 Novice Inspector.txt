@@ -1,0 +1,18 @@
+Novice Inspector
+Novice Inspector
+lo nintadni ctazu'e
+
+
+Creature — Human Detective
+Creature — Human Detective
+danlu — remna cipcta
+
+
+When Novice Inspector enters the battlefield, investigate. (Create a Clue token. It’s an artifact with “{2}, Sacrifice this artifact: Draw a card.”)
+After each time this enters the battlefield, you investigate. (You create a clue token. It's an artifact and has "{2}, sacrifice this artifact: you draw a card.")
+ba ro nu ti nerkla le nunda'afoi kei do dafsisku (.i do majgau pa fatci kelsicni .i ko'a rutmi gi'e tolcau be lu {2}, do li'aspo ti: do cpacu pa karda)
+
+
+“If the perfect evidence appears at your feet, your first task is to rule out misdirection.” —The Ravnican Agency of Magicological Investigations handbook
+"If the perfect evidence appears at your feet, judging whether it's mis-direction is the first task you do." —The Magic-Science Investigation Bureau of Ravnica's handbook.
+lu ifle lo nu le drani rindai cu tolcanci bu'u lei do jamfu kei lo nu lo zu'o pajni be le jei ko'a naldrata farna cu pamoi selgu'a do li'u se cusku le la mafske nunlanli briju pe la .ravnika. ku gi'acku

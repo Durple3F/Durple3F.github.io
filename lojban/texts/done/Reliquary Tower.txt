@@ -1,0 +1,23 @@
+Reliquary Tower
+lo runvasru clagaldi'u
+a artifact-holder long-high-building
+lo clagaldi'u fi'e runvasru ??
+
+Land
+lo tumla
+
+You have no maximum hand size.
+lo jimte pe lo pu vaskarda ge'u pe do zatnai
+lo jimte  pe lo pu vaskarda ge'u      pe do           zatnai
+a maximum of     held cards      belonging to you does not exist
+
+Once guarded by the Knights of the Reliquary, the tower stands now protected only by its own remoteness, its dusty treasures open to plunder by anyone.
+
+The tower was guarded by the Knights of the Reliquary.
+le clagaldi'u pu se bandu lai nolsonci pe la runvasru
+
+However, the only protector now is its remoteness.
+.i ku'i ca selte'i se bandu lo sepli
+
+Anyone can take the dusty treasures inside it.
+.i ro nanmu ku kakne lo nu da zerle'a lo vajrutni

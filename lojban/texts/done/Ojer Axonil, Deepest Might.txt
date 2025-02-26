@@ -1,0 +1,46 @@
+Ojer Axonil, Deepest Might
+la .o'er.aconil. noi conraiksi be lo za'i kamtsa
+"Oxer Ashonil, who is Deepest in Strength"
+       
+
+Legendary Creature — God
+lo ranmi jo'e danlu - lo cevni
+      
+
+Trample
+maxdzu
+
+
+If a red source you control would deal an amount of noncombat damage less than Ojer Axonil’s power to an opponent, that source deals damage equal to Ojer Axonil’s power instead.
+ko sebasti ro pa nu pa krasi goi ko'a poi ke'a xunre gi'e se jitro be do gi'e nardamba cu dunda pa klani be lo selxrani be'o poi ke'a dubme'a le tsali po lo ti vitnodacti ge'u pa bradi goi ko'e kei pa nu ko'a dunda pa klani be lo selxrani be'o poi ke'a dunli le tsali po lo ti vitnodacti ku'o ko'e
+"Replace each individual event of (a source, X, which is red and controlled by you) dealing (an amount of damage less than (this permanent's power)) to (an opponent, Y) with an event of X dealing (an amount of damage such that it's equal to this permanent's power) to Y"
+                                                              
+
+When Ojer Axonil dies, return it to the battlefield tapped and transformed under its owner’s control.
+ba se mulcabna ro pa nu lo ti vitnodacti cu mrobi'o kei pa nu do ko xrubei lo ti karda le nundamba stuzi ku poi ke'a lisri lo za'i pu sexaksu gi'e pu tegalfi
+"After an event of this permanent dying, an event of returning this card to the battle zone such that it is in the tapped and transformed state follows."
+                                 
+
+Temple of Power
+lo malsi po lo ka kamtsa
+     
+
+Land
+lo tumla
+ 
+
+{T}: Add {R}.
+{T}: ko do cpacu {R}
+{T}:    {R}
+
+{2}{R}, {T}: Transform Temple of Power. Activate only if red sources you controlled dealt 4 or more noncombat damage this turn and only as a sorcery.
+{2}{R}, {T}: ko do gafygau fi lo ti vitnodacti .i do kakne po'o lo zu'o do aktigau lo ti kelstati kei lo za'i lo sumji be lo'i pu klani be lo selxrani poi lo krasi po ke'a xunre gi'e pu sejitro be do gi'e nardamba gi'e pu dunda ca lo ti kelka'u cu dubjavmau li vo kei jo'e lo za'i do kakne lo zu'o do mafpli lo paplimakfa
+"{2}{R}, {T}: You alter this permanent. You can only perform the action of activating this ability under the condition that the state of ((The sum total of amounts of damage previously dealt by sources such that the source met these criteria: it (was red) and (was controlled by you) and (was not combative) and (was dealt this turn)) and (you can cast a sorcery right now)) is met."
+BETTER:
+{2}{R}, {T}: ko do gafygau fi lo ti vitnodacti .i do kakne po'o lo zu'o do aktigau lo ti kelstati kei lo za'i lo'i krasi poi ke'a xunre gi'e pu sejitro be do cu pu dunda su'o vo selxrani poi ke'a pu nardamba ku'o lo bradi ca lo ti kelka'u kei jo'e lo za'i do kakne lo zu'o do mafpli lo paplimakfa
+"{2}{R}, {T}: You alter this permanent. You can only perform the action of activating this ability under the condition that the state of ((the set of sources that are red that you controlled gave at least 4 damage that wasn't combative to opponents) and (you can cast a sorcery right now)) is met."
+{2}{R}, {T}:                                                            
+
+Chimil gave the Oltec passion. Ojer Axonil challenged them to harness it.
+la .tcimil. dunda lai .oltec. lo caicni .ije la .o'er.aconil. pu talsa ko'a lo zu'o sejitro ko'e
+                

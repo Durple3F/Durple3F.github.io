@@ -1,0 +1,149 @@
+<!doctype html>
+<html>
+	<head>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js">
+		</script> 
+		<link href="https://cdn.jsdelivr.net/npm/mana-font@latest/css/mana.css" rel="stylesheet" type="text/css" />
+		
+		<link rel="icon" type="image/x-icon" href="favicon.ico">
+		<link rel="stylesheet" href="style.css">
+		<script src="data.js"></script>
+		<script>
+			const storyCode = "Jace, the Mind Sculptor"
+		</script>
+		<script src="main.js" defer></script>
+
+		<title>Jace, the Mind Sculptor</title>
+		<meta property="og:title" content="Jace, the Mind Sculptor">
+		<meta property="og:description" content="">
+		<meta property="og:image" content="https://durple3f.github.io/lojban/images/Jace,%20the%20Mind%20Sculptor%204.png">
+	</head>
+	<body>
+		<a href="./index.html" id="back-btn">
+			<button class="btn btn-secondary">Back</button>
+		</a>
+		<div id="explanation-container">
+			<div id="explanation">
+				<div id="explanation-text"></div>
+				<button class="btn btn-secondary show-all" style="display: none;">Show all</button>
+			</div>
+		</div>
+		<div id="views">
+			<div class="row text-center fw-bold">
+				<div class="col">
+					English <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					Lojban-ified English <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					Lojban <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					Zbalermorna <button class="toggle-btn">(Hide)</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="f13">Jace</span><span class="fnoi">, the</span> <span class="f15">Mind</span> <span class="f14">Sculptor</span>
+				</div>
+				<div class="col">
+					<span class="f13">Jace</span><span class="fnoi">, who</span> <span class="f14">sculpts</span> <span class="f15">mind</span><span class="floi">s</span>
+				</div>
+				<div class="col">
+					<span class="f13">la .djeis.</span> <span class="fnoi">noi</span> <span class="f14">laryrakpra</span> <span class="fbe">be</span> <span class="floi">loi</span> <span class="f15">menli</span>
+				</div>
+				<div class="col zbalermorna">
+					<span class="f13"> </span> <span class="fnoi"></span> <span class="f14"></span> <span class="fbe"></span> <span class="floi"></span> <span class="f15"></span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="f16">Legendary</span> <span class="f17">Planeswalker</span> — <span class="f13">Jace</span>
+				</div>
+				<div class="col">
+					<span class="f16">Legend</span> <span class="f17">Universe-Walker</span> — <span class="f13">Jace</span>
+				</div>
+				<div class="col">
+					<span class="f16">ranmi</span> <span class="f17">mujli'u</span> — <span class="f13">.djeis.</span>
+				</div>
+				<div class="col zbalermorna">
+					<span class="f16"></span> <span class="f17"></span> — <span class="f13"></span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<i class="ms ms-loyalty-up ms-loyalty-2"></i>: <span class="f5">Look at</span> <span class="fle">the</span> <span class="f7">top</span> <span class="f6">card</span> <span class="fpo">of</span> <span class="fkoha"><span class="f1">target</span> <span class="f3">player</span></span><span class="fpo">’s</span> <span class="f8">library</span><span class="fi">.</span> <span class="fdo">You</span> <span class="f9">may</span> <span class="f11">put</span> <span class="fle">that</span> <span class="f6">card</span> on <span class="fle">the</span> <span class="f12">bottom</span> <span class="fpo">of</span> <span class="fkoha">that player</span><span class="fpo">’s</span> <span class="f8">library</span>.
+				</div>
+				<div class="col">
+					<i class="ms ms-loyalty-up ms-loyalty-2"></i>: <span class="fdo">You</span> <span class="f1">target</span> <span class="fpa">a</span> <span class="f3">player</span><span class="fgoi">,</span> <span class="fkoha">x1</span><span class="fi">.</span> <span class="fdo">You</span> <span class="f5">look at</span> <span class="fle">the</span> <span class="fpa">one</span> <span class="f6">card</span> <span class="fpoi">which is</span> <span class="f7">on top</span> <span class="fpo">of</span> <span class="fle">the</span> <span class="f8">library place</span> <span class="fpo">of</span> <span class="fkoha">x1</span><span class="fi">.</span> <span class="fje">Also,</span> <span class="fdo">you</span> <span class="f9">can</span> <span class="f10">(</span><span class="f11">put</span> <span class="fle">the</span> <span class="f6">card</span> <span class="f12">on the bottom</span> <span class="fpo">of</span> <span class="fle">the</span> <span class="f8">library place</span> <span class="fpo">of</span> <span class="fkoha">x1</span><span class="f10">)</span>.
+				</div>
+				<div class="col">
+					<i class="ms ms-loyalty-up ms-loyalty-2"></i>: <span class="fdo">do</span> <span class="f1">fargau</span> <span class="fpa">pa</span> <span class="f3">kelci</span> <span class="fgoi">goi</span> <span class="fkoha">ko'a</span> <span class="fi">.i</span> <span class="fdo">do</span> <span class="f5">catlu</span> <span class="fpa">pa</span> <span class="f6">karda</span> <span class="fpoi">poi</span> <span class="f7">galraipau</span> <span class="fpo">po</span> <span class="fle">le</span> <span class="f8">ckusro stuzi</span> <span class="fpo">po</span> <span class="fkoha">ko'a</span> <span class="fi">.i</span><span class="fje">je</span> <span class="fdo">do</span> <span class="f9">kakne</span> lo <span class="f10">zu'o</span> <span class="f11">punji</span> <span class="fle">le</span> <span class="fpa">pa</span> <span class="f6">karda</span> <span class="fle">le</span> <span class="f12">dziraipau</span> <span class="fpo">po</span> <span class="fle">le</span> <span class="f8">ckusro stuzi</span> <span class="fpo">po</span> <span class="fkoha">ko'a</span>
+				</div>
+				<div class="col zbalermorna">
+					<i class="ms ms-loyalty-up ms-loyalty-2"></i>: <span class="fdo"></span> <span class="f1"></span> <span class="fpa"></span> <span class="f3"></span> <span class="fgoi"></span> <span class="fkoha"></span> <span class="fi"></span> <span class="fdo"></span> <span class="f5"></span> <span class="fpa"></span> <span class="f6"></span> <span class="fpoi"></span> <span class="f7"></span> <span class="fpo"></span> <span class="fle"></span> <span class="f8"> </span> <span class="fpo"></span> <span class="fkoha"></span> <span class="fi"></span><span class="fje"></span> <span class="fdo"></span> <span class="f9"></span>  <span class="f10"></span> <span class="f11"></span> <span class="fle"></span> <span class="fpa"></span> <span class="f6"></span> <span class="fle"></span> <span class="f12"></span> <span class="fpo"></span> <span class="fle"></span> <span class="f8"> </span> <span class="fpo"></span> <span class="fkoha"></span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<i class="ms ms-loyalty-zero ms-loyalty-0"></i>: <span class="f18">Draw</span> <span class="fci">three</span> <span class="f6">cards</span><span class="fgihe">,</span> <span class="fbabo">then</span> <span class="f11">put</span> <span class="fre">two</span> <span class="f6">cards</span> <span class="f20">from</span> <span class="fdo">you</span><span class="fpoi">r</span> <span class="f21">hand</span> on <span class="f7">top</span> <span class="fpo">of</span> <span class="fdo">you</span><span class="fpo">r</span> <span class="f8">library</span> <span class="fco">in</span> any <span class="f19">order</span>.
+				</div>
+				<div class="col">
+					<i class="ms ms-loyalty-zero ms-loyalty-0"></i>: <span class="fdo">You</span> <span class="f18">get</span> <span class="fci">3</span> <span class="f6">cards</span><span class="fgihe">, and</span> <span class="fbabo">then</span> <span class="f11">put</span> <span class="fco">(in a way that is</span> <span class="f19">ordered</span> <span class="fbe">by</span> <span class="fdo">you</span><span class="fco">)</span> <span class="fre">2</span> <span class="f6">cards</span> <span class="fpoi">which</span> <span class="f22">are</span> <span class="f20">contained in</span> <span class="fdo">you</span><span class="fpo">r</span> <span class="f21">hand place</span> on <span class="fle">the</span> <span class="f7">top of</span> <span class="fdo">you</span><span class="fpo">r</span> <span class="f8">library place</span>.
+				</div>
+				<div class="col">
+					<i class="ms ms-loyalty-zero ms-loyalty-0"></i>: <span class="fdo">do</span> <span class="f18">cpacu</span> <span class="fci">ci</span> <span class="f6">karda</span> <span class="fgihe">gi'e</span><span class="fbabo">babo</span> <span class="f11">punji</span> <span class="fco">co</span> <span class="f19">porsi</span> <span class="fbe">be</span> <span class="fdo">do</span> <span class="fre">re</span> <span class="f6">karda</span> <span class="fpoi">poi</span> <span class="f22">se</span> <span class="f20">vasru</span> <span class="fle">le</span> <span class="f21">xance stuzi</span> <span class="fpo">po</span> <span class="fdo">do</span> <span class="fkuho">ku'o</span> <span class="fle">le</span> <span class="f7">galraipau</span> <span class="fpo">po</span> <span class="fle">le</span> <span class="f8">ckusro stuzi</span> <span class="fpo">po</span> <span class="fdo">do</span>
+				</div>
+				<div class="col zbalermorna">
+					<i class="ms ms-loyalty-zero ms-loyalty-0"></i>: <span class="fdo"></span> <span class="f18"></span> <span class="fci"></span> <span class="f6"></span> <span class="fgihe"></span><span class="fbabo"></span> <span class="f11"></span> <span class="fco"></span> <span class="f19"></span> <span class="fbe"></span> <span class="fdo"></span> <span class="fre"></span> <span class="f6"></span> <span class="fpoi"></span> <span class="f22"></span> <span class="f20"></span> <span class="fle"></span> <span class="f21"> </span> <span class="fpo"></span> <span class="fdo"></span> <span class="fkuho"></span> <span class="fle"></span> <span class="f7"></span> <span class="fpo"></span> <span class="fle"></span> <span class="f8"> </span> <span class="fpo"></span> <span class="fdo"></span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<i class="ms ms-loyalty-down ms-loyalty-1"></i>: <span class="f24">Return</span> <span class="fkoha"><span class="f1">target</span> <span class="f23">creature</span></span> to <span class="fkoha">it</span><span class="fpo">s</span> <span class="f25">owner</span><span class="fpo">’s</span> <span class="f21">hand</span>.
+				</div>
+				<div class="col">
+					<i class="ms ms-loyalty-down ms-loyalty-1"></i>: <span class="fdo">You</span> <span class="f1">target</span> <span class="fpa">a</span> <span class="f23">creature</span><span class="fgoi">,</span> <span class="fkoha">x1</span><span class="fi">.</span> <span class="fdo">You</span> <span class="f24">return</span> <span class="fkoha">x1</span> to <span class="fle">the</span> <span class="f21">hand place</span> <span class="fpo">of</span> <span class="fle">the</span> <span class="f25">owner</span> <span class="fbe">of</span> <span class="fkoha">x1</span>.
+				</div>
+				<div class="col">
+					<i class="ms ms-loyalty-down ms-loyalty-1"></i>: <span class="fdo">do</span> <span class="f1">fargau</span> <span class="fpa">pa</span> <span class="f23">danlu</span> <span class="fgoi">goi</span> <span class="fkoha">ko'a</span> <span class="fi">.i</span> <span class="fdo">do</span> <span class="f24">xrubei</span> <span class="fkoha">ko'a</span> <span class="fle">le</span> <span class="f21">xance stuzi</span> <span class="fpo">po</span> <span class="fle">le</span> <span class="f25">ponse</span> <span class="fbe">be</span> <span class="fkoha">ko'a</span>
+				</div>
+				<div class="col zbalermorna">
+					<i class="ms ms-loyalty-down ms-loyalty-1"></i>: <span class="fdo"></span> <span class="f1"></span> <span class="fpa"></span> <span class="f23"></span> <span class="fgoi"></span> <span class="fkoha"></span> <span class="fi"></span> <span class="fdo"></span> <span class="f24"></span> <span class="fkoha"></span> <span class="fle"></span> <span class="f21"> </span> <span class="fpo"></span> <span class="fle"></span> <span class="f25"></span> <span class="fbe"></span> <span class="fkoha"></span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<i class="ms ms-loyalty-down ms-loyalty-12"></i>: <span class="f26">Exile</span> <span class="fro">all</span> <span class="f6">cards</span> from <span class="fkoha"><span class="f1">target</span> <span class="f3">player</span></span><span class="fpo">’s</span> <span class="f8">library</span><span class="f27">, then</span> <span class="fkoha">that player</span> <span class="f28">shuffles</span> <span class="fkoha">the</span><span class="fpo">ir</span> <span class="f21">hand</span> <span class="f11">into</span> <span class="fkoha">the</span><span class="fpo">ir</span> <span class="f8">library</span>.
+				</div>
+				<div class="col">
+					<i class="ms ms-loyalty-down ms-loyalty-12"></i>: <span class="fdo">You</span> <span class="f1">target</span> <span class="fpa">a</span> <span class="f3">player</span><span class="fgoi">,</span> <span class="fkoha">x1</span><span class="fi">.</span> <span class="fdo">You</span> <span class="f26">remove</span> <span class="fro">each</span> <span class="f6">card</span> from <span class="fle">the</span> <span class="f8">library place</span> <span class="fpo">of</span> <span class="fkoha">x1</span><span class="f27">. And then,</span> <span class="fkoha">x1</span> <span class="f11">puts</span> <span class="fco">(in a way that is</span> <span class="f28">shuffled</span><span class="fco">)</span> <span class="fle">the</span> <span class="f21">hand place</span> <span class="fpo">of</span> <span class="fkoha">x1</span> into <span class="fle">the</span> <span class="f8">library place</span> <span class="fpo">of</span> <span class="fkoha">x1</span>.
+				</div>
+				<div class="col">
+					<i class="ms ms-loyalty-down ms-loyalty-12"></i>: <span class="fdo">do</span> <span class="f1">fargau</span> <span class="fpa">pa</span> <span class="f3">kelci</span> <span class="fgoi">goi</span> <span class="fkoha">ko'a</span> <span class="fi">.i</span> <span class="fdo">do</span> <span class="f26">dargau</span> <span class="fro">ro</span> <span class="f6">karda</span> <span class="fle">le</span> <span class="f8">ckusro stuzi</span> <span class="fpo">po</span> <span class="fkoha">ko'a</span> <span class="f27">.ijebabo</span> <span class="fkoha">ko'a</span> <span class="f11">punji</span> <span class="fco">co</span> <span class="f28">kasygau</span> <span class="fle">le</span> <span class="f21">xance stuzi</span> <span class="fpo">po</span> <span class="fkoha">ko'a</span> <span class="fle">le</span> <span class="f8">ckusro stuzi</span> <span class="fpo">po</span> <span class="fkoha">ko'a</span>
+				</div>
+				<div class="col zbalermorna">
+					<i class="ms ms-loyalty-down ms-loyalty-12"></i>: <span class="fdo"></span> <span class="f1"></span> <span class="fpa"></span> <span class="f3"></span> <span class="fgoi"></span> <span class="fkoha"></span> <span class="fi"></span> <span class="fdo"></span> <span class="f26"></span> <span class="fro"></span> <span class="f6"></span> <span class="fle"></span> <span class="f8"> </span> <span class="fpo"></span> <span class="fkoha"></span> <span class="f27"></span> <span class="fkoha"></span> <span class="f11"></span> <span class="fco"></span> <span class="f28"></span> <span class="fle"></span> <span class="f21"> </span> <span class="fpo"></span> <span class="fkoha"></span> <span class="fle"></span> <span class="f8"> </span> <span class="fpo"></span> <span class="fkoha"></span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<img class="img-fluid mtg-card" src="images/Jace, the Mind Sculptor 1.png">
+				</div>
+				<div class="col">
+					<img class="img-fluid mtg-card" src="images/Jace, the Mind Sculptor 2.png">
+				</div>
+				<div class="col">
+					<img class="img-fluid mtg-card" src="images/Jace, the Mind Sculptor 3.png">
+				</div>
+				<div class="col">
+					<img class="img-fluid mtg-card" src="images/Jace, the Mind Sculptor 4.png">
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

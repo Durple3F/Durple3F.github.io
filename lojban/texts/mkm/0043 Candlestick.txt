@@ -1,0 +1,24 @@
+Candlestick
+Light-stick
+lo lamdyga'a
+
+
+Artifact — Clue Equipment
+Artifact — Clue Tool
+rutmi — fatci cabra
+
+
+Equipped creature gets +1/+1 and has “Whenever this creature attacks, surveil 2.” (Look at the top two cards of your library, then put any number of them into your graveyard and the rest on top of your library in any order.)
+The creature which uses this gets and "After each time this attacks, you surveil 2. ("Surveil 2" means "You look at the 2 cards which are the top of the your library, then you put, any number of those cards onto the your graveyard, and put, all those cards which remain onto the top of the your library, in the order of the choice of you.)
+le danlu poi pilno be ti cpacu li re e lu ba ro nu ti gunta kei do judzga li re li'u (.i lu judzga li re li'u se smuni lu do catlu le re karda poi galraipau be le do ckusro zi'e goi ko'a .ijebabo do setca su'ero lo ko'a karda le do mrofoi gi'e setca ro lo ko'a karda poi stali le galraipau be le do ckusro ku'o po'i le se cuxna be do)
+
+
+{2}, Sacrifice Candlestick: Draw a card.
+{2}, you sacrifice this: you draw a card.
+{2}, do li'aspo ti: do cpacu pa karda
+
+
+Equip {2}
+Tool-give {2}
+ca'ardu'a {2}
+

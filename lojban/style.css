@@ -1,0 +1,153 @@
+@import url(https://jackhumbert.github.io/zbalermorna/assets/css/fonts.css);
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css");
+
+:root {
+	--text-color: #ccc;
+	--border-color: #787068;
+}
+
+body {
+	background-color: black;
+	color: var(--text-color);
+}
+
+/* hide scrollbar */
+body, html {
+	overflow-y: scroll;
+	-ms-overflow-style: none;  /* Internet Explorer 10+ */
+	scrollbar-width: none;  /* Firefox */
+}
+body::-webkit-scrollbar, html::-webkit-scrollbar { 
+	display: none;  /* Safari and Chrome */
+}
+
+#back-btn {
+	position: absolute;
+	z-index: 1;
+	top: 1em;
+	left: 1em;
+}
+
+#draggable {
+	position: fixed;
+	top: 21vh;
+	width: 100vw;
+	text-align: center;
+	cursor: ns-resize;
+	z-index: 2;
+}
+
+#views {
+	margin-top: 25vh;
+	height: 75vh;
+	padding-bottom: 25vh;
+	overflow-y: scroll;
+	/* hide scrollbar */
+	-ms-overflow-style: none;  /* Internet Explorer 10+ */
+	scrollbar-width: none;  /* Firefox */
+}
+#views::-webkit-scrollbar { 
+	display: none;  /* Safari and Chrome */
+}
+
+#views .row {
+	width: 95%;
+	margin: auto;
+	margin-bottom: 1em;
+}
+.row-padding {
+	padding-bottom: 25vh;
+}
+
+.toggle-btn {
+	background: none;
+	color: inherit;
+	border: none;
+	text-decoration: blue underline;
+	transition: color 0.2s;
+}
+.toggle-btn:hover {
+	color: blue;
+}
+
+.pstart {
+	text-indent: 2em;
+}
+.pstart * {
+	text-indent: 0;
+}
+
+.zbalermorna {
+	font-family: 'crisa-regular';
+	font-size: 112%;
+	line-height: 1.3;
+	padding-top: 0.3em;
+}
+
+#explanation-container {
+	height: 22vh;
+	width: 100%;
+	background-color: black;
+	position: fixed;
+}
+
+#explanation {
+	height: 100%;
+	width: 75%;
+	margin: auto;
+	border: 5px solid var(--border-color);
+	border-radius: 1em;
+	overflow-y: scroll;
+	padding: 0 1em;
+}
+#explanation:not(.no-flex){
+	display: flex;
+  flex-direction: column;
+  justify-content: center;
+	align-items: center;
+}
+/* hide scrollbar */
+#explanation:not(.no-flex) {
+	-ms-overflow-style: none;  /* Internet Explorer 10+ */
+	scrollbar-width: none;  /* Firefox */
+}
+#explanation:not(.no-flex)::-webkit-scrollbar { 
+	display: none;  /* Safari and Chrome */
+}
+
+#explanation-video {
+	height: 100%;
+}
+#explanation-video > video {
+	height: 100%;
+}
+
+#explanation-text {
+	line-height: 1.2;
+}
+
+.col span:not(.nofact) {
+	text-decoration: 1px underline transparent;
+	transition: background-color 0.2s;
+	background-color: initial;
+	border-radius: 2px;
+	border-top: 1px dashed red;
+}
+.col span:not(.nofact):hover {
+	cursor: pointer;
+}
+
+.col > img.img-fluid.mtg-card {
+	border-radius: calc(100vw/64);
+}
+
+.ms.ms-loyalty-up, .ms.ms-loyalty-zero, .ms.ms-loyalty-down, .ms.ms-loyalty-start {
+	color: var(--text-color);
+}
+.ms.ms-loyalty-up::after, .ms.ms-loyalty-zero::after, .ms.ms-loyalty-down::after, .ms.ms-loyalty-start::after {
+	color: black;
+}
+
+.new-fact {
+	color: #ddbb77;
+}

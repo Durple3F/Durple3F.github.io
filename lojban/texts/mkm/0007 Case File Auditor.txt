@@ -1,0 +1,19 @@
+Case File Auditor
+Mystery file-inspector
+lo nonseljmi cirveicta
+
+
+Creature — Human Detective
+Creature — Human Detective
+danlu — remna cipcta
+
+
+When Case File Auditor enters the battlefield and whenever you solve a Case, look at the top six cards of your library. You may reveal an enchantment card from among them and put it into your hand. Put the rest on the bottom of your library in a random order.
+After each time this enters the battlefield, and each time you solve a mystery, you look at the set of 6 cards which are atop your library. You can have yourself reveal 1 of those cards which is an enchantment and put it into the battlefield. You put each of those cards which remain into the bottom of your library, ordered by randomness.
+ba ro nu ti nerkla le nunda'afoi kei ce ro nu do jmiringau pa nonseljmi kei do catlu lo'i xa karda poi galraipau be le do ckusro be'o goi ko'a .i do kakne lo zu'o do jarco pa lo ko'a karda poi vi'ormakfa ku'o goi ko'e gi'e setca ko'e le do xance .i do setca ro lo ko'a karda poi stali ku'o le dziraipau be le do ckusro be'o po'i lo kamcu'o
+
+
+You may spend mana as though it were mana of any color to cast Case spells.
+You can have yourself pay the costs of spells which are mysteries and are controlled by you, regardless of the color of mana.
+do kakne lo zu'o do pleji lei jdima po lo mafru'e poi nonseljmi gi'e se jitro do ge'u seja'enai lo ka se skari be lo mafnenlai
+

@@ -1,0 +1,34 @@
+Ojer Kaslem, Deepest Growth
+la .o'er.kaslem. noi conraiksi be lo za'i banro
+       
+
+Legendary Creature — God
+lo ranmi jo'e danlu - lo cevni
+
+Trample
+maxdzu
+
+
+Whenever Ojer Kaslem deals combat damage to a player, reveal that many cards from the top of your library. You may put a creature card and/or a land card from among them onto the battlefield. Put the rest on the bottom in a random order.
+ba se mulcabna ro pa nu lo ti vitnodacti cu dunda lo selxrani poi ke'a damba ku'o pa kelci kei pa nu ko do acro pa klani be lo karda poi ke'a galraipau le ckusro po do ku'o be'o poi ke'a dunli le selxrani kei ce'o pa nu do kakne pa zu'o do punji pa karda poi ke'a danlu gi'a tumla ku'o le nundamba stuzi kei kei ce'o pa nu do cunso punji lei karda poi ke'a stali ku'o le dziraipau po le ckusro stuzi po do
+"Each event of (this permanent dealing combat damage to a player) is followed by (you show (an amount of (cards such that they're from the top of your library) such that the amount is equal to the damage)) and then (you put one of those cards onto the battlefield) and then (you random-put (the cards such that they remai)n onto the bottom of your library)"
+                                                                                      
+
+When Ojer Kaslem dies, return it to the battlefield tapped and transformed under its owner’s control.
+ba se mulcabna ro pa nu lo ti vitnodacti cu mrobi'o kei pa nu do ko xrubei lo ti karda le nundamba stuzi ku poi ke'a lisri lo za'i pu sexaksu gi'e pu tegalfi
+                                 
+
+Temple of Cultivation
+lo malsi po lo ka purdi
+     
+
+{T}: Add {G}.
+{T}: ko do cpacu {G}
+{T}:    {G}
+
+{2}{G}, {T}: Transform Temple of Cultivation. Activate only if you control ten or more permanents and only as a sorcery.
+{2}{G}, {T}: ko do gafygau fi lo ti vitnodacti .i do kakne po'o lo zu'o do aktigau lo ti kelstati kei lo za'i do jitro su'o pano vitnodacti kei jo'e lo za'i do kakne lo zu'o do mafpli lo paplimakfa
+{2}{G}, {T}:                                      
+
+Chimil gave the Oltec sacred lands. Ojer Kaslem brought them to life.
+la .tcimil. dunda lai .oltec. loi tumli noi censa .ije la .o'er.kaslem. dunda fi ko'a lo ka nunji'e

@@ -1,0 +1,29 @@
+Coveted Falcon
+Wanted Falcon
+lo seldji falkoni
+
+
+Artifact Creature — Bird
+Artifact Creature — Bird
+rutmi danlu — cipni
+
+
+Flying
+Flies
+vofli
+
+
+Whenever Coveted Falcon attacks, gain control of target permanent you own but don’t control.
+After each time this attacks, you target 1 creature for which you own it but also don't control it. You gain control of it.
+ba ro nu ti gunta kei do fargau pa danlu poi do ponse ke'a na gi'e jitro ke'a zi'e goi ko'a .i do cpatro ko'a
+
+
+Disguise {1}{U}
+Disguise {1}{U} (You can cast this in a way that's facing down causing its costing {3} and becoming a creature with 2/2 and "ward {2}." You can turn it during any time caused by paying its disguise cost.)
+ticta'u {1}{U} (.i do kakne lo zu'o mafpli be ti co selfa'a be lo dizlo kei se ri'a lo nu ti se jdima {3} gi'e binxo pa 2/2 danlu poi tolcau be lu sebandu {2} li'u .i do kakne lo zu'o cargau be ti kei ca ro da poi teirmokca vau ri'a lo zu'o pleji be le ticta'u jdima)
+
+
+When Coveted Falcon is turned face up, target opponent gains control of any number of target permanents you control. Draw a card for each one they gained control of this way.
+After each time this becomes oriented upward, you target an opponent, and any number of permanents which you control. They gain control of them. For each X, which is a permanent which they just gained control of due to this, you draw a card.
+ba ro nu ti inxo lo ka selfa'a be lo galtu kei kei do fargau pa bradi goi ko'a e su'ero vi'ordai poi do jitro zi'e goi ko'e .i ko'a cpatro ko'e .i ro da poi pa lo ko'a vi'ordai zo'u do cpacu pa karda
+

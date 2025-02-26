@@ -1,0 +1,24 @@
+The Ur-Dragon
+The Earliest Dragon
+la liryrai drakono
+  
+
+Legendary Creature — Dragon Avatar
+Legend Creature - Dragon God-Proxy
+ranmi danlu - drakono ceirka'i
+  —  
+
+Eminence — As long as The Ur-Dragon is in the command zone or on the battlefield, other Dragon spells you cast cost {1} less to cast.
+Famous-Grand-Powerful — During each event of this being inside the command zone or the battle zone, the cost of each spell which is cast by you and not this and is a dragon is reduced by {1}.
+misybalvli — ca ro nu ti nenri le minde stuzi a le nundamba stuzi kei le jdima po ro mafru'e poi se mafpli do gi'e drata ti gi'e drakono cu te vimcu {1}
+ —                               {1}
+
+Flying
+Fly
+vofli
+
+
+Whenever one or more Dragons you control attack, draw that many cards, then you may put a permanent card from your hand onto the battlefield.
+After each event of a mass of at least one dragon which is controlled by you, x1, attacking, you draw (the amount of members of x1) cards, and then may put a card which is permanent and is inside your hand onto the battle zone.
+pu ro nu loi su'o pa drakono poi se jitro do ku goi ko'a gunta kei do cpacu vei mo'e le klani be ko'a ve'o karda gi'ebabo kakne le zu'o do punji pa karda poi vi'ordai gi'e ca nenri le xance stuzi ku'o le nundamba stuzi
+                                             

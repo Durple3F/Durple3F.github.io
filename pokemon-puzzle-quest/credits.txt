@@ -1,0 +1,10 @@
+Energy Icons by Xtuart at https://www.deviantart.com/xtuart/art/Energy-Types-Pokemon-TCG-Updated-908706380
+
+Move type icons by Elginive at https://github.com/Elginive/pokemon-type-icons
+
+Pokeball Icon taken from specifically the Inuktitut Wikipedia, because that was the first one to show up on google. https://iu.m.wikipedia.org/wiki/File:Pok%C3%A9_Ball_icon.svg
+
+All trainer icons are from https://play.pokemonshowdown.com/sprites/trainers/
+Also the pokemon cries are from there too https://play.pokemonshowdown.com/audio/cries/
+
+The image of the briefcase at the beginning is AI generated, I wasn't happy with how well I could remove the pokeballs myself.

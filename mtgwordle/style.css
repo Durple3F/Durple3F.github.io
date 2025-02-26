@@ -1,0 +1,270 @@
+body {
+	text-align: center;
+	background-color: #111115;
+	color: white;
+	margin: 0;
+	padding: 0;
+	scrollbar-width: 0;
+}
+
+:root {
+  --correct-color: rgba(63,184,113,.7);
+  --almost-correct-color: rgba(255,180,40,.7);
+	--wrong-color-visible: rgba(224,68,73,.7);
+  --wrong-color: transparent;
+}
+
+html {
+	scrollbar-width: none;
+}
+html::-webkit-scrollbar {
+	display: none;
+}
+
+a {
+	color: inherit;
+	text-decoration: underline;
+}
+
+#title, #quiz{
+	display: none;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+
+#title {
+	width: 100%;
+	height: 100%;
+}
+
+#title > h1 {
+	margin-top: 2em;
+	margin-bottom: 1em;
+}
+
+#titleSections {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#titleSections > div {
+	margin-left: 1em;
+	margin-right: 1em;
+}
+
+#settings {
+	width: 10em;
+	margin: auto;
+	border: 5px solid #333;
+	background-color: #222;
+	border-radius: 5px;
+}
+
+#settings > div {
+	text-align: left;
+	margin: 5px
+}
+
+#loadingBar {
+	background-color: #333;
+	margin-bottom: 0.5em;
+	border-radius: 5px;
+	transition: 0.5s opacity ease;
+}
+
+#loadingBar > div {
+	height: 1em;
+	width: 0;
+	background-color: var(--bs-primary);
+	border-radius: 5px;
+	transition: 0.5s width ease;
+}
+
+#startButton[disabled] {
+	opacity: 30%;
+}
+
+#startButton {
+	transition: 0.5s opacity ease;
+}
+
+#setSection:hover {
+	cursor: grab;
+}
+#setSection:active {
+	cursor: grabbing;
+}
+
+#sets {
+	margin-top: 10%;
+	margin-bottom: 2em;
+	height: 2em;
+	position: relative;
+	left: 0;
+	white-space: nowrap;
+}
+
+#sets > .set {
+	display: inline-block;
+	margin-right: 0.25em;
+	margin-left: 0.25em;
+	width: 2em;
+}
+
+#sets > .set > .ss {
+	font-size: 2em;
+}
+
+#input {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+#input > div {
+	margin-left: 1em;
+	margin-right: 1em;
+}
+
+#playerInput {
+	width: 25em;
+	position: relative;
+}
+
+#cardName {
+	font-size: 2em;
+	width: 100%;
+}
+
+#autocomplete {
+	position: absolute;
+	display: none;
+	margin-bottom: 0;
+	margin-left: 0;
+	list-style-type: none;
+	padding-left: 0;
+	width: 100%;
+	height: 10em;
+	overflow-y: scroll;
+	text-align: left;
+	background-color: #444;
+	user-select: none;
+	z-index: 1;
+}
+
+#autocomplete > li {
+	padding: 3px;
+}
+#autocomplete > li:hover {
+	background-color: #33f;
+}
+
+#results {
+	width: 95%;
+	margin: auto;
+	margin-top: 2em;
+}
+
+#results .correct {
+	background-color: var(--correct-color)
+}
+#results .almost-correct {
+	background-color: var(--almost-correct-color)
+}
+
+#results .down::after {
+	content: " ▼";
+}
+#results .up::after {
+	content: " ▲";
+}
+
+.table > :not(caption) > * > * {
+	background-color: transparent;
+}
+
+.ms.ms-cost {
+	margin-left: 0 !important;
+}
+
+.color {
+	display: inline-block;
+	height: 1em;
+	width: 1em;
+	border-radius: 100%;
+	border: 0.1em solid rgba(0,0,0,.1);
+	background-color: #ccc;
+	margin: 0.05em;
+}
+.color-w {
+	background-color: #f8f8b0;
+}
+.color-u {
+	background-color: #2fa2ee;
+}
+.color-b {
+	background-color: #5a035a;
+}
+.color-r {
+	background-color: #b31414;
+}
+.color-g {
+	background-color: #68b336;
+}
+
+.rarity {
+	display: inline-block;
+	width: 1em;
+	height: 1em;
+	border-radius: 5px;
+	background: linear-gradient(-45deg,#c90591,#ff71f3);
+}
+.rarity-common {
+	background: linear-gradient(-45deg,#000,#636161);
+}
+.rarity-uncommon {
+	background: linear-gradient(-45deg,#696262,#dbd7d7);
+}
+.rarity-rare {
+	background: linear-gradient(-45deg,#ad7402,#f7da83);
+}
+.rarity-mythic {
+	background: linear-gradient(-45deg,#c93905,#ff9771);
+}
+
+.closeBar {
+	height: 0.3em;
+}
+
+#nextQuestion {
+	display: none;
+	width: 100%;
+}
+
+#cardImage {
+	width: 80%;
+	margin: auto;
+}
+
+#stats > table {
+	width: 100%;
+	text-align: left;
+}
+#stats > table td:last-child {
+	text-align: right;
+}
+
+.modal-header {
+	border-bottom: 1px solid #444;
+}
+.modal-footer {
+	border-top: 1px solid #444;
+}
+.btn-close {
+	backdrop-filter: invert(1);
+	transition: 0.5s opacity ease;
+	margin-right: 0;
+}

@@ -1,0 +1,153 @@
+6/16:
+	- Fixed that bug where the loading bar would get stuck midway through the bar.
+
+6/15:
+	- Using a move can now create sound effects.
+
+6/14: (5500 lines of code)
+	- Improvements to how pokemon EXP gain is shown at the end of fights.
+	- Now the game saves your pokemon's stats after every fight.
+	- Added Rowlet
+	- Rowlet has Leafage, which turns tiles into Grass tiles.
+		- Currently has no animation, gonna fix that later.
+	- Refactored the process that gets the pokemon's moves to show up in the game screen.
+	- Now when you click on a pokemon in the PC, you can see a screen showing their stats.
+	- You can also see their moves now
+	- Refactored how the announcements that inform you of things are displayed
+	- You can now see which moves are currently available / unavailable to your pokemon
+	- You can now choose which 4 moves to make active on your pokemon
+
+6/13: (5200 lines of code)
+	- You can now put your stored pokemon back into your party.
+	- You can now make more boxes in case you want to organize them more.
+	- Added a status effect system for pokemon too.
+	- Added burn, which currently just works how it does in the games and takes some health at the start of each turn.
+	- That made me refactor how checking for winners happens so it can happen mid-turn
+	- Added Litten, who has Ember.
+	- I didn't like the idea of Burn working identically to the games. It's more fun if you can interact with the tiles, right? Now, Burn is a status that the tiles themselves have, which makes the opponent take damage at the start of their turn for as long as the tile has that status.
+	- The type chart is finally complete, and every move now deals the proper amount of super effective damage.
+
+6/12: (4800 lines of code)
+	- Started working on the pokemon storage / party screen.
+	- You can now see which pokemon are in your active party.
+	- You can now swap around the order of the pokemon in your party.
+	- You can now leave the party screen.
+	- You can now put your active pokemon into a box for storage when out of your party.
+
+6/11: (4500 lines of code)
+	- Added EXP. Now you level up from fights and stuff.
+	- Now the end screen shows you your EXP gains.
+	- Now there's a cute little level up noise when you level up.
+	- The opponent no longer cheats and makes 1 extra swap after dying.
+	- Reworked a whole lot of code involving precisely when a round is considered over.
+	- Now the game asks you if you'd like to catch the pokemon you defeat (if it's wild.)
+		- Later, maybe make it a random throw-a-pokeball-and-hope situation? I don't really wanna.
+	- You're allowed to refuse trying to catch the pokemon now.
+	- Status effects on tiles are now colored to indicate who owns them.
+	- The pokeball icons above your energy finally actually show what pokemon you have/don't have
+	- You can now click on those icons to swap out to a different pokemon
+
+6/10: (4200 lines of code)
+	- The level select screen displays which levels you've beaten
+	- Working on storing player save data. On most browsers, 5MB is the max, but I've found a possible alternative that removes that limitation. Only downside is I've got to do a lot of learning.
+	- Added save files! Now on the start screen you can pick whether you want to start a new game or continue an old one.
+	- The save files store your previous pokemon you had!
+	- Now they also store whether you've beaten each level!
+	- Added support for fights against non-trainers
+	- Added support for levels in which multiple trainers fight you back to back
+
+6/9: (3800 lines of code)
+	- Set up the system for swapping a pokemon out when it runs out of HP
+	- Set up the menu that appears so you can actually choose which pokemon to swap to (not just the next one)
+	- The game finally tells you when you lose a fight
+	- The enemy trainer can now switch pokemon when one faints
+	- The game finally tells you when you win a fight
+
+6/8: (3500 lines of code)
+	- Improvements to how music is loaded/started/stopped
+	- Added an animation of the opposing trainer sending out their pokemon
+	- Added an animation of the trainer's pokeball flying through the air
+	- Added an animation of the trainer's pokemon fwooshing out of the pokeball
+	- Now pokemon have a little cry sound effect when they come into play
+
+6/7:
+	- Working on the level select screen.
+	- You can now start levels that aren't just the same test scenario I've been working on for over a week
+
+6/6:
+	- Fixed a bug where you could use the opponent's moves for them on their turn if you were quick enough
+	- Added Wrap, a move that lays traps on random tiles. When the opponent matches them, they take damage.
+	- Working on getting a proper loading screen
+	- The title screen is pretty snazzy if I do say so myself
+		- (Granted, I should probably mock up some kind of actual logo image)
+	- Got the "choose your starter" page mostly working. Again, pretty snazzy! I'm happy with the effect is creates.
+	- Set up most of the infrastructure for renaming pokemon, which matters pretty much only when you catch one.
+
+6/5:
+	- Struggle now ends your turn. Dunno if I'll keep that change but it's there now.
+	- Trying to get sound effects working. I might've overengineered it a little but it works
+	- There's an annoying bug where your opponent's turn can start in the middle of your turn sometimes. I'm preeeeety sure I fixed it, but this one was one of the most annoying to track down yet.
+	- Added a neat sound effect for when you get multiple matches cascading into one another.
+	- Working on adding status effects to tiles.
+
+6/4:
+	- Got the computer to use its moves!
+		- Currently it just uses a random move in a random way, but I was able to get it to not use everything instantly! You want the player to see what their opponent is actually doing, yknow? That's hard! It's way easier to just do everything instantaneously!
+	- Tidied up a bunch of code related to animating things so that ^^ this garbage ^^ is easier in the future
+	- Now if the board is ever out of available swaps, you get access to Struggle, a move that shuffles the board and does damage to you
+	- You can hover over moves now to see a tooltip of what it does
+	- Went through and actually did the work to figure out each pokemon's stats
+	- You can see your stats when you hover over your pokemon
+	- Added Growl, a move that gives a debuff to the opponent, so now there's a debuff system.
+	- The buffed/debuffed stats show up differently when you hover over your pokemon
+	- Fixed a weird bug where being too quick to make a move let your opponent take their turn twice
+	- Added Water Gun, a move that deals damage based on the tiles that are on the board right now.
+	- The system behind that is SUPER general, so I hope I don't have to re-code very much for the other moves.
+
+6/3:
+	- Fixed some bugs with energy bars & clicking tiles
+	- Moves now check whether you can pay for them
+	- Moves now get paid for when you click on them
+	- You can only use moves on your turn before making a swap
+	- Moves can now deal damage to the opponent
+	- Moves can now ask you to select tiles to do stuff with
+	- Moves can now do multiple effects one by one (the cool part is that some effects may require player input, while some don't, but they occur in the right order)
+	- Set up the actual damage calculation function (mostly)
+	- Added one more tile color (orange). We'll see how it affects things later. I've made this a very easy decision to reverse.
+	- Moves now need to recharge so you can't just use one move 5 times in a turn (unless the move allows)
+
+6/2:
+	- Working on getting the actual skills up and running today.
+	- I've got the basic HTML layout done, and the game puts them on screen.
+
+6/1:
+	- Your pokemon now receives energy based on matches made.
+	- Put a lot of effort into making the text animated as numbers change
+	- The energy & health properly update now
+	- There's neat li'l damage numbers when you get hit! :)
+	- Created a whole system for handling those announcements saying whose turn it is
+		- they even pause the game until they go away!
+		- (but you can still do stuff obviously)
+
+5/31:
+	- working on getting the game to detect when no moves are available.
+	- the game now properly checks for what legal moves are available
+		- this gonna be the most annoying part of the program to maintain
+	- the game's turns go back and forth now.
+	- the enemy makes a move before it comes back to being your turns
+		- it's just a random move, but it's a move.
+	- there's a super basic damage calculation at the end of each turn
+
+5/30:
+	- started painting stuff in the canvas.
+	- the game now generates a board of gems
+	- mouse tracking, you can select a tile to move now
+	- you can now actually move that tile
+	- there's a neat animation for moving stuff! i'm hoping to get ahead of the curve on animations so they're not an afterthought this time.
+	- trying to get match detection to work.
+	- match detection works! i've decided to consider T and L-shaped matches to be 2 separate matches.
+	- tiles are now affected by gravity and replaced by new tiles.
+
+5/29:
+	- started. i've never made a match 3 game before.
+	- mostly just got the very basic layout working.

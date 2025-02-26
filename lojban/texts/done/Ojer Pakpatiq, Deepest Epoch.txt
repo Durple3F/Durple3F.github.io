@@ -1,0 +1,43 @@
+Ojer Pakpatiq, Deepest Epoch
+la .o'er.pakpatik. noi conraiksi be lo za'i cedra
+       
+
+Legendary Creature — God
+lo ranmi jo'e danlu - lo cevni
+      
+
+Flying
+vofli
+
+
+Whenever you cast an instant spell from your hand, it gains rebound.
+ko sebasti ro pa nu do mafpli pa sutpaplimakfa goi ko'a kei pa nu ko'a lebna lo ka rapmakfa
+                  
+
+(Exile it as it resolves. At the beginning of your next upkeep, you may cast it from exile without paying its mana cost.)
+(do dargau ko'a ca'o lo nu ko'a fanmo .ije ba se mulcabna ba pa nu cfari lo cikre vepruce po do kei pa nu do kakne lo zu'o do mafpli ko'a ra'i le dargau stuzi secau pa zu'o do pleji le mafnenlai jdima po ko'a)
+"(You exile it simultaneously with the event of its finishing. After (the future event of starting an upkeep step of yours), it is followed by (an event of you being able to take the action of casting it from the exile zone without an event of you paying its mana-ish cost))"
+(                                            )
+
+When Ojer Pakpatiq dies, return it to the battlefield tapped and transformed under its owner’s control with three time counters on it.
+ba se mulcabna ro pa nu lo ti vitnodacti cu mrobi'o kei pa nu do ko xrubei lo ti karda le nundamba stuzi ku poi ke'a lisri lo za'i pu sexaksu gi'e pu tegalfi ku'o gi'e ca'o punji ci nacdai po lu temci li'u lo ti vitnodacti
+                                              
+
+Temple of Cyclical Time
+lo malsi po lo dikni be lo temci
+
+Land
+lo tumla
+ 
+
+{T}: Add {U}. Remove a time counter from Temple of Cyclical Time.
+{T}: ko do cpacu {U} .ije do vimcu pa nacdai po lu temci li'u lo ti vitnodacti
+{T}:    {U}            
+
+{2}{U}, {T}: Transform Temple of Cyclical Time. Activate only if it has no time counters on it and only as a sorcery.
+{2}{U}, {T}: ko do gafygau fi lo ti vitnodacti .i do kakne po'o lo zu'o do aktigau lo ti kelstati kei lo za'i lo ti vitnodacti cu vasru no nacdai po lu temci li'u kei jo'e lo za'i do kakne lo zu'o do mafpli lo paplimakfa
+{2}{U}, {T}:                                            
+
+Chimil gave the Oltec time. Ojer Pakpatiq gave them the tools to learn its lessons.
+la .tcimil. dunda lai .oltec. lo temci .ije la .o'er.pakpatik. dunda ko'a loi cabra be lo zu'o ko'a cilre lei ctufau po ko'e
+                      

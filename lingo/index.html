@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset='utf-8'>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+	<title>Lingo</title>
+	<meta name='viewport' content='width=device-width, initial-scale=1'>
+	<link rel="icon" type="image/x-icon" href="favicon.ico">
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Playpen+Sans:wght@100;200;300;400;500;600;700;800&display=swap"
+		rel="stylesheet">
+
+	<script src="lz-string.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/tsparticles-confetti@2.12.0/tsparticles.confetti.bundle.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+		crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+	<link rel='stylesheet' type='text/css' media='screen' href='style.css'>
+	<script src='main.js' defer></script>
+</head>
+
+<body>
+	<div id="background"></div>
+	<div id="intro" class="screen">
+		<h1>The Lingo Library</h1>
+		<div class="buttons vertical mt-3">
+			<button id="intro-start-btn" class="btn btn-primary btn-lg level-select-btn" disabled>Loading</button>
+			<button id="intro-help-btn" class="btn btn-secondary">Help</button>
+			<button id="toggle-colorblind" class="btn btn-info">Enable Colorblind Mode</button>
+			<button id="reset-save" class="btn btn-danger">Reset Save</button>
+			<div>
+				<label for="volume">Volume: </label>
+				<input type="range" min="0" max="100" value="100" id="volume">
+			</div>
+		</div>
+	</div>
+	<div id="help" class="screen">
+		<div id="help-topic-list">
+			<button class="main-menu-btn">Back</button>
+			<button class="topic">Introduction</button>
+			<button class="topic">Opinions</button>
+			<button class="topic">Credits</button>
+			<button class="topic">How Lingo Works</button>
+			<button class="topic">Colors</button>
+			<button class="topic">White</button>
+			<button class="topic">Black</button>
+			<button class="topic">Red</button>
+			<button class="topic">Blue</button>
+			<button class="topic">Purple</button>
+			<button class="topic">Yellow</button>
+			<button class="topic">Brown</button>
+			<button class="topic">Magenta</button>
+			<button class="topic">Lime</button>
+			<button class="topic">Lavender</button>
+			<button class="topic">Misc. Colors</button>
+		</div>
+		<div id="help-content">
+			<div class="topic">
+				<h2>Introduction</h2>
+				<p>This is a collection of puzzles from my favorite parts of <a href="https://www.lingothegame.com/">Lingo</a>.
+				</p>
+				<p>While Lingo is a great game, it takes about 20 hours to get to the part of the game that this page simulates.
+					See <a data-help-value="Opinions" href="#">Opinions</a> for a big ol' rant.</p>
+				<p>So I'd rather just show you the good stuff. Each puzzle has annotations to tell you what exactly a given clue
+					means, and I've even added some extra hints and clues in case those become necessary.</p>
+			</div>
+			<div class="topic">
+				<h2>Opinions about Lingo</h2>
+				<p>Lingo is a language-based puzzle game about guessing words based on clues you're given in a strange system
+					governed by the colors and heights of boxes. I liked it. I did <em>not</em> like the 10+ hours of wandering
+					around looking for where a specific puzzle was. The design of the world seems to actively avoid letting you
+					know where you should be looking next.</p>
+				<p><strong>BUT,</strong> eventually there are a few areas with puzzles that I really liked that were impossible
+					to properly express in any way other than the bizarre system the game builds for describing the clues to the
+					words it wants.</p>
+			</div>
+			<div class="topic">
+				<h2>Credits</h2>
+				<p>All puzzles shamelessly ripped from <a href="https://www.lingothegame.com/">Lingo</a>.</p>
+				<p>Colorblind textures created by <a href="https://deusovi.github.io/">Deusovi</a>.</p>
+			</div>
+			<div class="topic">
+				<h2>How Lingo Works</h2>
+				<p>Puzzles in Lingo are shown on panels on the sides of cubes. The height and color of the cube tells you some
+					quality about the solution to the puzzle. Every puzzle has only one solution. Sometimes, puzzles combine
+					together clues given by multiple cubes, and that's my favorite stuff in the game.</p>
+				<h2>Height</h2>
+				<p>Clues that are HIGH have to do with the SOUNDS of the word. For example, a clue might ask you to find a word
+					that sounds the same as another word, or contains the same sounds but rearranged, or to write the sound that
+					something makes, etc.</p>
+				<p>Clues that are at a MIDDLE height have to do with the LETTERS that make up the word. For example, a clue
+					might ask you to find an anagram of a word, or a word contained in another word.</p>
+				<p>Clues that are LOW have to do with the DEFINITION of the word. These clues are the most varied. They ask you
+					to take the rule given by the HIGH and MIDDLE meanings of whatever color the cube has and apply it to the
+					literal concept given by the clue.</p>
+			</div>
+			<div class="topic">
+				<h2>Colors</h2>
+				<section style="color: var(--clue-white)">
+					<h3>White (<a data-help-value="White" href="#">About</a>)</h3>
+				</section>
+				<section style="color: var(--clue-black)">
+					<h3>Black (<a data-help-value="Black" href="#">About</a>)</h3>
+				</section>
+			</div>
+			<div class="topic">
+				<h2 style="color: var(--clue-white)">White - Unchanging</h2>
+				<p>White clues ask you not to change the given word.</p>
+				<p>A high white clue means the solution sounds the same as the given word.
+					<br>Example: Way &#10132; Weigh, Right &#10132; Write, Depend &#10132; Deepened.
+				</p>
+				<p>A middle white clue means the solution is spelled the same as the given word. Those ones aren't very hard to
+					solve.
+					<br>Example: Antidisestablishmentarianism &#10132; Antidisestablishmentarianism
+				</p>
+				<p>A low white clue means the solution has <span style="font-size: 0.7em">(roughly)</span> the same meaning as
+					the given word.
+					<br>Example: Reveal &#10132; Uncover, Yell &#10132; Holler
+				</p>
+			</div>
+			<div class="topic">
+				<h2 class="white-outline" style="color: var(--clue-black)">Black - Reversal, Opposite, Complement</h2>
+				<p>Black clues ask you to somehow reverse the given word.</p>
+				<p>A high black clue means the solution sounds the same as the given word, but backwards.
+					<br>Example: Cat &#10132; Tack
+				</p>
+				<p>A middle white clue means the solution is spelled the same as the given word. Those ones aren't very hard to
+					solve.
+					<br>Example: Antidisestablishmentarianism &#10132; Antidisestablishmentarianism
+				</p>
+				<p>A low white clue means the solution has <span style="font-size: 0.8em">(roughly)</span> the same meaning as
+					the given word.
+					<br>Example: Reveal &#10132; Uncover, Yell &#10132; Holler
+				</p>
+			</div>
+			<div class="topic">
+				<h2 style="color: var(--clue-red)">Red - Reduction</h2>
+				<p>Red clues ask you to remove something from the given word. Notably, they don't change the order of whatever's
+					left.</p>
+				<p>A high red clue means that the sounds of the solution are present in the word, but there's some extra sounds
+					there that need to be removed.
+					<br>Example: Tolerant &#10132; Taunt. Yep, we're fully <a
+						href="https://en.wikipedia.org/wiki/Cot%E2%80%93caught_merger">caught-cot merger</a> here.
+				</p>
+				<p>A middle red clue means that the letters of the solution are present in the word, but there's some extra
+					letters that need to be removed.
+					<br>Example: Hippopotamus &#10132; Pot
+				</p>
+				<p>A low red clue means that the solution is something that is contained within the given word, or something
+					that the given word "has."
+					<br>Example: Flower &#10132; Petal, Door &#10132; Doorknob
+				</p>
+			</div>
+			<div class="topic">
+				<h2 style="color: var(--clue-blue)">Blue - Addition</h2>
+				<p>Blue clues ask you to take what's given to you and add to it somehow.</p>
+				<p>A high blue clue means that the sounds of the solution include the sounds of the clue, but there's some extra
+					sounds that need to be added. (The sounds might be a <em>bit</em> approximate.)
+					<br>Example: Sun &#10132; Resonant, Lore &#10132; Lawnmower
+				</p>
+				<p>A middle blue clue means that each letter of the clue appears in the solution, in that order, but there's
+					some extra letters that need to be added.
+					<br>Example: Pony &#10132; Phony
+				</p>
+				<p>A low blue clue means that the clue is literally contained within the solution, or the solution "has" the
+					clue as a part of it somehow.
+					<br>Example: City &#10132; County, Tooth &#10132; Mouth
+				</p>
+			</div>
+			<div class="topic">
+				<h2 style="color: var(--clue-purple)">Purple - Replacement</h2>
+				<p>Purple clues ask you to replace part of what's given to you. It's like <span
+						style="color: var(--clue-red)"><a data-help-value="Red" href="#">Red</a></span> and <span
+						style="color: var(--clue-blue)"><a data-help-value="Blue" href="#">Blue</a></span> at the same
+					time. Cute, right?</p>
+				<p><strong>It is intentionally very unclear exactly how much the solution may be different from the
+						clue.</strong></p>
+				<p>A high purple clue means that while some of the sounds of the correct word are present, you'll need to
+					replace some of the other sounds.
+					<br>Example: Depend &#10132; Descend, Trouble &#10132; Bubble
+				</p>
+				<p>A middle purple clue means that while some of the letters of the correct word are present, you'll need to
+					replace some of the other letters.
+					<br>Example: Trouble &#10132; Troubador
+				</p>
+				<p>A low purple clue means that the definition of the clue has to be somehow modified to get to the answer.
+					<br>Example: Cucumber &#10132; Pickle
+				</p>
+			</div>
+			<div class="topic">
+				<h2 style="color: var(--clue-yellow)">Yellow - Rearranging</h2>
+				<p>Yellow clues ask you to change the placement of the parts of the clue.</p>
+				<p>A high yellow clue means that the sounds of the clue need to be shuffled in some way to get the solution.
+					<br>Example: Fine &#10132; Knife
+				</p>
+				<p>A middle yellow clue means that the solution is an anagram of the clue.
+					<br>Example: State &#10132; Taste
+				</p>
+				<p>A low yellow clue means that the solution is what you get when you shuffle together the clue.
+					<br>Example: Fruits &#10132; Smoothie
+				</p>
+			</div>
+			<div class="topic">
+				<h2 style="color: var(--clue-brown)">Brown - Evolution</h2>
+				<p>Brown clues ask you to write what chronologically follows the given clue.</p>
+				<p>A middle brown clue means that the solution is the way that the clue would be spelled later.
+					<br>Example: Hail &#10132; Hi, God Be With You &#10132; Goodbye
+				</p>
+				<p>A low brown clue means that the answer happens after the clue happens.
+					<br>Example: Rain &#10132; Rainbow
+				</p>
+
+				<h2><span style="color: var(--clue-brown)">Brown</span> & <span style="color: var(--clue-black)"
+						class="white-outline">Black</span> - The Opposite of That</h2>
+				<p>There's no good color that's the opposite of brown!</p>
+				<p>One of these weird little checkerboard clues means that you need to say what comes <em>before</em> the clue
+					instead.
+					<br>Example: Present &#10132; Past
+				</p>
+			</div>
+			<div class="topic">
+				<h2 style="color: var(--clue-magenta)">Magenta - Specification</h2>
+				<p>Magenta clues ask you to find a more specific example of the given clue.</p>
+				<p>A high magenta clue asks you to write the sound made by the clue.
+					<br>Example: Crow &#10132; Caw, Lion &#10132; Roar
+				</p>
+				<p>A middle magenta clue means that the solution is an example of the given <em>kind</em> of word. Usually this
+					is like, a part of speech.
+					<br>Example: Conjunction &#10132; But
+				</p>
+				<p>A low magenta clue means that the solution is an example of the given <em>kind</em> of thing.
+					<br>Example: Color &#10132; Chartreuse
+				</p>
+			</div>
+			<div class="topic">
+				<h2 style="color: var(--clue-lime)">Lime - Generalization</h2>
+				<p>Lime clues ask you to take the clue and say what kind of thing it is. It's the opposite of <span
+						style="color: var(--clue-magenta)"><a data-help-value="Magenta" href="#">Magenta</a></span>, but
+					we ran out of colors that have good opposites.</p>
+				<p>A high lime clue asks you to write what makes that noise.
+					<br>Example: Tick &#10132; Clock
+				</p>
+				<p>A middle lime clue means that the solution is the kind of word shown in the clue.
+					<br>Example: The &#10132; Article
+				</p>
+				<p>A low lime clue means that the solution is the kind of thing in the clue.
+					<br>Example: Kumquat &#10132; Fruit
+				</p>
+			</div>
+			<div class="topic">
+				<h2 style="color: var(--clue-lavender)">Lavender - Surroundings</h2>
+				<p>Lavender clues ask you to say what surrounds the clue.</p>
+				<p>A low lavender clue means that the solution surrounds the clue somehow.
+					<br>Example: Room &#10132; Wall, Picture &#10132; Frame, Bird &#10132; Nest
+				</p>
+			</div>
+			<div class="topic">
+				<h2>Miscellaneous</h2>
+				<p><span style="color: var(--clue-gray)">Gray</span> - Gray means something context-specific, for when the puzzle designer doesn't feel like their idea warrants a whole new color.</p>
+				<p><span style="color: var(--clue-green)">Green</span> - Green blocks ask you to find something in the environment, which isn't going to matter much here in the Simulation Realm.</p>
+				<p><span style="color: var(--clue-orange)">Orange</span> - Orange blocks transform the clue somehow, usually just putting the text through a cipher.</p>
+				<p><span style="color: var(--clue-mint)">Mint</span> - Mint requires you to remember something from previous puzzles. You probably haven't played those puzzles if you're here. They might be a bit hard for you to solve.</p>
+			</div>
+		</div>
+	</div>
+	<div id="level-select" class="screen">
+		<button class="btn btn-secondary mb-2 main-menu-btn">Back</button>
+	</div>
+	<div id="puzzle-screen" class="screen">
+		<button class="btn btn-secondary level-select-btn">Back</button>
+		<div id="puzzle"></div>
+		<button id="prev-btn" class="puzzle-nav-btn"><i class="bi bi-arrow-left"></i></button>
+		<button id="next-btn" class="puzzle-nav-btn"><i class="bi bi-arrow-right"></i></button>
+	</div>
+</body>
+
+</html>

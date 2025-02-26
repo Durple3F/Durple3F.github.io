@@ -1,0 +1,24 @@
+Cryptic Coat
+Confusing Coat
+lo cfipu kosta
+
+
+Artifact — Equipment
+Artifact — Tool
+rutmi — cabra
+
+
+When Cryptic Coat enters the battlefield, cloak the top card of your library, then attach Cryptic Coat to it. (To cloak a card, put it onto the battlefield face down as a 2/2 creature with ward {2}. Turn it face up any time for its mana cost if it’s a creature card.)
+After each time this enters the battlefield, you coat-hide a card which is atop your library, and attach this to it. ("Coat-hide a card" means "You put, in a way that's facing down, it into the battlefield. It becomes a 2/2 creature which has "ward {2}." If it is a creature card, you can turn it during any time caused by paying its mana cost.)
+ba ro nu ti nerkla le nunda'afoi kei do kosmiprygau pa karda poi galraipau be le do ckusro zi'e goi ko'a gi'e jornygau ti ko'a (.i lu kosmiprygau pa karda goi ko'a li'u se smuni lu do setca co selfa'a be lo dizlo ku ko'a le nunda'afoi .i ko'a binxo pa 2/2 danlu poi tolcau be lu sebandu {2} li'u .i ifle lo du'u ko'a danlu karda kei lo du'u do kakne lo zu'o cargau be ti kei ca ro da poi teirmokca vau ri'a lo zu'o pleji be le mafnenlai jdima)
+
+
+Equipped creature gets +1/+0 and can’t be blocked.
+The creature which uses this gets +1/+0 and can't be blocked.
+le danlu poi pilno be ti cu cpacu +1/+0 gi'e tolka'e lo zu'o se gutfanta
+
+
+{1}{U}: Return Cryptic Coat to its owner’s hand.
+{1}{U}: You return this to the hand of the owner of this.
+{1}{U}: do xrubei ti le xance po le ponse be ti
+

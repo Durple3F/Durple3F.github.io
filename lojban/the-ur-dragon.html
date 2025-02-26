@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+	<head>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js">
+		</script> 
+		<link href="https://cdn.jsdelivr.net/npm/mana-font@latest/css/mana.css" rel="stylesheet" type="text/css" />
+		
+		<link rel="icon" type="image/x-icon" href="favicon.ico">
+		<link rel="stylesheet" href="style.css">
+		<script src="data2.js"></script>
+		<script>
+			const storyCode = "The Ur-Dragon"
+		</script>
+		<script src="main.js" defer></script>
+
+		<title>The Ur-Dragon</title>
+		<meta property="og:title" content="The Ur-Dragon">
+		<meta property="og:description" content="">
+		<meta property="og:image" content="https://durple3f.github.io/lojban/images/The Ur-Dragon%204.png">
+	</head>
+	<body>
+		<a href="./index.html" id="back-btn">
+			<button class="btn btn-secondary">Back</button>
+		</a>
+		<div id="draggable">=</div>
+		<div id="explanation-container">
+			<div id="explanation">
+				<div id="explanation-text"></div>
+				<button class="btn btn-secondary show-all" style="display: none;">Show all</button>
+			</div>
+		</div>
+		<div id="views">
+			<div class="row text-center fw-bold">
+				<div class="col">
+					English <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					Lojban-ified English <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					Lojban <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					Zbalermorna <button class="toggle-btn">(Hide)</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="fla">The</span> <span class="f1">Ur</span>-<span class="f2">Dragon</span>
+				</div>
+				<div class="col">
+					<span class="fla">The</span> <span class="f1">Earliest</span> <span class="f2">Dragon</span>
+				</div>
+				<div class="col">
+					<span class="fla">la</span> <span class="f1">liryrai</span> <span class="f2">drakono</span>
+				</div>
+				<div class="col zbalermorna">
+					<span class="fla"></span> <span class="f1"></span> <span class="f2"></span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="franmi">Legendary</span> <span class="fdanlu">Creature</span> — <span class="f2">Dragon</span> <span class="f3">Avatar</span>
+				</div>
+				<div class="col">
+					<span class="franmi">Legend</span> <span class="fdanlu">Creature</span> - <span class="f2">Dragon</span> <span class="f3">God-Proxy</span>
+				</div>
+				<div class="col">
+					<span class="franmi">ranmi</span> <span class="fdanlu">danlu</span> - <span class="f2">drakono</span> <span class="f3">ceirka'i</span>
+				</div>
+				<div class="col zbalermorna">
+					<span class="franmi"></span> <span class="fdanlu"></span> — <span class="f2"></span> <span class="f3"></span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<i><span class="f4">Eminence</span></i> — <span class="fca2">As long</span> <span class="fnu">as</span> <span class="fti2">The Ur-Dragon</span> <span class="f5">is in</span> <span class="fle">the</span> <span class="f6">command zone</span> <span class="f7">or</span> <span class="f5">on</span> <span class="fle">the</span> <span class="f8">battlefield</span>, <span class="f12">other</span> <span class="f2">Dragon</span> <span class="f10">spells</span> <span class="fdo">you</span> <span class="f11">cast</span> <span class="f9">cost</span> <i class="ms ms-cost ms-1"></i> <span class="f13">less</span> <span class="f9">to cast</span>.
+				</div>
+				<div class="col">
+					<i><span class="f4">Famous-Grand-Powerful</span></i> — <span class="fca2">During</span> <span class="fro">each</span> <span class="fnu">event of</span> <span class="fti2">this</span> <span class="f5">being inside</span> <span class="fle">the</span> <span class="f6">command zone</span> <span class="f7">or</span> <span class="fle">the</span> <span class="f8">battlefield</span>, <span class="fle">the</span> <span class="f9">cost</span> <span class="fpo">of</span> <span class="fro">each</span> <span class="f10">spell</span> <span class="fpoi">which is</span> <span class="f11">cast by</span> <span class="fdo">you</span> <span class="fgihe">and</span> <span class="f12">not</span> <span class="fti2">this</span> <span class="fgihe">and</span> <span class="f2">is a dragon</span> <span class="f13">is reduced</span> <span class="fte">by</span> <i class="ms ms-cost ms-1"></i>.
+				</div>
+				<div class="col">
+					<i><span class="f4">misybalvli</span></i> — <span class="fca2">ca</span> <span class="fro">ro</span> <span class="fnu">nu</span> <span class="fti2">ti</span> <span class="f5">nenri</span> <span class="fle">le</span> <span class="f6">minde stuzi</span> <span class="f7">a</span> <span class="fle">le</span> <span class="f8">nundamba stuzi</span> <span class="fkei">kei</span> <span class="fle">le</span> <span class="f9">jdima</span> <span class="fpo">po</span> <span class="fro">ro</span> <span class="f10">mafru'e</span> <span class="fpoi">poi</span> <span class="fse">se</span> <span class="f11">mafpli</span> <span class="fdo">do</span> <span class="fgihe">gi'e</span> <span class="f12">drata</span> <span class="fti2">ti</span> <span class="fgihe">gi'e</span> <span class="f2">drakono</span> <span class="fcu">cu</span> <span class="fte">te</span> <span class="f13">vimcu</span> <i class="ms ms-cost ms-1"></i>
+				</div>
+				<div class="col zbalermorna">
+					<i><span class="f4"></span></i> — <span class="fca2"></span> <span class="fro"></span> <span class="fnu"></span> <span class="fti2"></span> <span class="f5"></span> <span class="fle"></span> <span class="f6"> </span> <span class="f7"></span> <span class="fle"></span> <span class="f8"> </span> <span class="fkei"></span> <span class="fle"></span> <span class="f9"></span> <span class="fpo"></span> <span class="fro"></span> <span class="f10"></span> <span class="fpoi"></span> <span class="fse"></span> <span class="f11"></span> <span class="fdo"></span> <span class="fgihe"></span> <span class="f12"></span> <span class="fti2"></span> <span class="fgihe"></span> <span class="f2"></span> <span class="fcu"></span> <span class="fte"></span> <span class="f13"></span> <i class="ms ms-cost ms-1"></i>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="f14">Flying</span>
+				</div>
+				<div class="col">
+					<span class="f14">Fly</span>
+				</div>
+				<div class="col">
+					<span class="f14">vofli</span>
+				</div>
+				<div class="col zbalermorna">
+					<span class="f14"></span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<span class="fpu2">Whenever</span> <span class="fpa">one</span> <span class="f15">or more</span> <span class="f2">Dragons</span> <span class="fdo">you</span> <span class="f16">control</span> <span class="fgunta">attack</span>, <span class="fcpacu">draw</span> <span class="f18">that many</span> <span class="fkarda">cards</span>, <span class="fbabo">then</span> <span class="fdo">you</span> <span class="fkakne">may</span> <span class="fpunji">put</span> <span class="fpa">a</span> <span class="fpermanent">permanent</span> <span class="fkarda">card</span> <span class="fpoi">from</span> <span class="fdo">your</span> <span class="f20">hand</span> <span class="fpunji">onto</span> <span class="fle">the</span> <span class="f8">battlefield</span>.
+				</div>
+				<div class="col">
+					<span class="fpu2">After</span> <span class="fro">each</span> <span class="fnu">event of</span> <span class="floi">a mass of</span> <span class="f15">at least</span> <span class="fpa">one</span> <span class="f2">dragon</span> <span class="fpoi">which is</span> <span class="f16">controlled</span> <span class="fse">by</span> <span class="fdo">you</span> <span class="fgunta">attacking</span>, <span class="fdo">you</span> <span class="fcpacu">draw</span> <span class="fkarda">cards</span> <span class="f18">an equal amount to</span> <span class="fle">the</span> <span class="f19">quantity of</span> <span class="fkoha">them</span>, <span class="fgihe">and</span> <span class="fbabo">then</span> <span class="fkakne">may</span> <span class="fpunji">put</span> <span class="fpa">a</span> <span class="fkarda">card</span> <span class="fpoi">which is</span> <span class="fpermanent">permanent</span> <span class="fgihe">and</span> <span class="fca">is</span> <span class="f5">inside</span> <span class="fle">the</span> <span class="f20">hand zone</span> of you <span class="fpunji">onto</span> <span class="fle">the</span> <span class="f8">battle zone</span>.
+				</div>
+				<div class="col">
+					<span class="fpu2">pu</span> <span class="fro">ro</span> <span class="fnu">nu</span> <span class="floi">loi</span> <span class="f15">su'o</span> <span class="fpa">pa</span> <span class="f2">drakono</span> <span class="fpoi">poi</span> <span class="fse">se</span> <span class="f16">jitro</span> <span class="fdo">do</span> <span class="f17">ku</span> <span class="fgoi">goi</span> <span class="fkoha">ko'a</span> <span class="fgunta">gunta</span> <span class="fkei">kei</span> <span class="fdo">do</span> <span class="fcpacu">cpacu</span> <span class="flo">lo</span> <span class="fkarda">karda</span> <span class="f18">du'i</span> <span class="fle">le</span> <span class="f19">klani</span> <span class="fkoha">ko'a</span> <span class="fgihe">gi'e</span><span class="fbabo">babo</span> <span class="fkakne">kakne</span> <span class="fle">le</span> <span class="fzuho">zu'o</span> <span class="fdo">do</span> <span class="fpunji">punji</span> <span class="fpa">pa</span> <span class="fkarda">karda</span> <span class="fpoi">poi</span> <span class="fpermanent">vi'ordai</span> <span class="fgihe">gi'e</span> <span class="fca">ca</span> <span class="f5">nenri</span> <span class="fle">le</span> <span class="f20">xance stuzi</span> <span class="fpo">po</span> <span class="fdo">do</span> <span class="fkuho">ku'o</span> <span class="fle">le</span> <span class="f8">nundamba stuzi</span>
+				</div>
+				<div class="col zbalermorna">
+					<span class="fpu2"></span> <span class="fro"></span> <span class="fnu"></span> <span class="floi"></span> <span class="f15"></span> <span class="fpa"></span> <span class="f2"></span> <span class="fpoi"></span> <span class="fse"></span> <span class="f16"></span> <span class="fdo"></span> <span class="f17"></span> <span class="fgoi"></span> <span class="fkoha"></span> <span class="fgunta"></span> <span class="fkei"></span> <span class="fdo"></span> <span class="fcpacu"></span> <span class="flo"></span> <span class="fkarda"></span> <span class="f18"></span> <span class="fle"></span> <span class="f19"></span> <span class="fkoha"></span> <span class="fgihe"></span><span class="fbabo"></span> <span class="fkakne"></span> <span class="fle"></span> <span class="fzuho"></span> <span class="fdo"></span> <span class="fpunji"></span> <span class="fpa"></span> <span class="fkarda"></span> <span class="fpoi"></span> <span class="fpermanent"></span> <span class="fgihe"></span> <span class="fca"></span> <span class="f5"></span> <span class="fle"></span> <span class="f20"> </span> <span class="fpo">po</span> <span class="fdo">do</span> <span class="fkuho"></span> <span class="fle"></span> <span class="f8"> </span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<img class="mtg-card img-fluid" src="images/The Ur-Dragon 1.png">
+				</div>
+				<div class="col">
+					<img class="mtg-card img-fluid" src="images/The Ur-Dragon 2.png">
+				</div>
+				<div class="col">
+					<img class="mtg-card img-fluid" src="images/The Ur-Dragon 3.png">
+				</div>
+				<div class="col zbalermorna">
+					<img class="mtg-card img-fluid" src="images/The Ur-Dragon 4.png">
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

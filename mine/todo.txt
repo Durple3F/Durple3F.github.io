@@ -1,0 +1,10 @@
+todo
+- at large miner counts, get the computer to remember some of the miners that were rendered last time, so that they'll be guaranteed to render next frame.
+
+- add a selector to determine what amount of upgrades to buy
+
+- start working on simulating massive amounts of ticks! obviously going to be important later!
+  - maybe just use bonusTime approach?
+
+- depth markers on the canvas, so you can see how deep you've gotten?
+- add some keyboard shortcuts to return to the origin, far left, far right, bottom stuff.

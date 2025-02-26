@@ -1,0 +1,233 @@
+Legendary - ranmi
+Creature - danlu
+Artifact - rutmi
+Spell - mafru'e
+Enchantment - vi'ormakfa (permanent magic)
+Instant - sutmocmakfa (fast momentary magic)
+Sorcery - mocmakfa (momentary magic)
+Planeswalker - munje + litru -> mujli'u
+Land - tumla
+Basic - jicmu
+Battle - nundamba
+
+Token - kelsicni
+The format for tokens is "{quantity} {p/t} {types} token(s) which have {abilities} and are {color(s)} and {subtypes}". I think that puts the most important information first.
+Ex: "a 1/1 white Dog creature token" becomes "pa 1/1 danlu kelsinci poi blabi gi'e gerku"
+
+Mana Cost - le mafnenlai jdima
+Mana Value - le mafnenlai vamji
+
+Clue - fatci
+Treasure - dinrutni (money artificial)
+Background - prulisri
+Adventure - capli'ulisri (adventurer story)
+Siege - srugunta
+Case - nonseljmi (mystery, not-understood)
+Food - cidja
+Aura - sruri
+Equipment - cabra
+
+Power - niltsa
+Toughness - niltinsa
+Base power and toughness - jicmu niltsa je niltinsa
+Life - nilka'o
+Damage - kamterxai
+
+Tap - xakygau (x1 uses up x2)
+Untap - tolxakygau (x1 un-uses up x2)
+Transform - gafygau (different word from the state of being transformed, but it's based off the same root word)
+Cast - mafpli
+Play - pujra'a (x1 puts into relevance x2)
+Activate - aktigau
+Deal damage - xrani (x1 harms x2 in property/amount x3)
+Destroy - despo
+Draw - cpacu (drawing from the library is implied. this is like saying "obtain a card" obviously it comes from the library)
+Discard - vimcu (discarding from your hand is implied. this is like saying "lose a card". it's less obvious this comes from the library but y'know)
+Exile - dargau
+Return - xrubei
+Put - punji or setca. punji is for putting counters and stuff, but setca is for putting things into somewhere, like moving cards between zones.
+Remove - tolpu'i
+Ability - kelstati
+Trigger - ganse (notice)
+Get/has - cpacu (same word as drawing cards unfortunately)
+Loses - cirko
+Attack - gunta
+Block - gutfanta (x1 blocks x2)
+Sacrifice - li'aspo
+Gain (as in life) - zenba
+Gain (as in abilities) - cpacu
+Gain control - cpatro (x1 gets control over x2)
+Enter - nerkla
+Leave - cliva
+Conjure - mafyzba
+Shuffle - kasygau (It's implied that the thing being shuffled is your library unless stated otherwise.)
+Search - sisku (library is implied again.)
+Reveal - jarco
+Mill - zalvi
+Look - catlu
+Scry - prujungau
+Surveil - judzga (attentive-watch)
+Investigate - dafsisku (answer-search)
+Separate - tolxregau (x1 separates x2 into components x3)
+Create - majgau
+Die - mrobi'o
+Suspect - selsengau (x1 causes x2 to be doubted)
+Collect evidence - rindaicrepu (x1 collects evidence x2)
+Solve - jmiringau (x1 causes understanding of x2)
+Cloak - kosmiprygau (x1 causes hides x2 in a cloak)
+Behold - balzga (x1 beholds x2) (just observe but with an intensifier)
+
+Color Identity - selska sevzi
+Color - selska
+White - blabi
+Blue - blanu
+Black - xekri
+Red - xunre
+Green - 
+
+Plains - pintu'a
+Island - daplu
+Swamp - cimtu'a
+Mountain - cmana
+Forest - rictu'a
+
+Source - krasi
+Permanent - vi'ordai
+Card - karda
+
+Library - le ckusro
+Battlefield - le nunda'afoi
+Graveyard - le mrofoi
+Exile (zone) - le dargau stuzi
+Hand (zone) - le xance
+Command zone - le minde
+
+Tapped (state) - lo (ka/za'i) selxaksu
+Untapped (state) - lo (ka/za'i) tolselxaksu
+Transformed (state) - lo (ka/za'i) tegalfi
+Suspected (state) - lo (ka/za'i) selsepni
+Equipped (state) - terca'a
+
+Turns and Steps/Phases of turns:
+turn - kelka'u
+phase - pruce
+step - pagru'e
+untap - tolxakygau pagru'e
+upkeep - cikre pagru'e
+end step - fanmo pagru'e
+combat - damba pruce
+
+Opponent - bradi
+Player - kelci
+
+Noncombat - nalda'a
+
+Control - jitro
+
+Keywords
+When written on its own line, only the word is written, and the subject is omitted. It doesn't say "lo ti vi'ordai cu vofli" to say "Flying". It's just "vofli". The purpose of these keywords is to save space.
+When written as a declaration/check that something has or gains that keyword, it's written as the property of that keyword. So to say "Your creatures gain flying" you would say "loi danlu po do lebna lo ka vofli" meaning "Your creatures gain the property of flying"
+Trample - maxdzu
+Vigilance - judycikna
+Flying - vofli
+Haste - sutkla
+Lifelink - ka'orle'a
+Flash - pojgu'i (Every language uses light for flash despite the fact it has nothing to do with light.)
+Menace - selte'apre
+Hexproof - dapyjdari
+Ward - selbandu
+First Strike - pavmoida'i (first hit)
+Double Strike - relroida'i (two-times hit)
+Protection - mafselbandu (x1 is magically protected by x2 from x3)
+Indestructible - selspotolka'e
+Enchant - mafyjo'e (x1 is magically connected to x2)
+Equip - ca'ardu'a (x1 gives x2 tool x3)
+Attach - jornygau (x1 (agent) connects x2 to x3)
+Defender - badgau
+Rebound - rapmakfa
+Disguise - ticta'u
+Fabricate - runfi'i (x1 creates artificial object(s) x2)
+Infect - prejumydu’a
+
+Ability Words
+Eminence - misybalvlapi (fame-grand-powerful)
+
+Praetor - .pra'etor. -- TODO: BAD FIX SOON
+Detective - cipcta
+Warlock - kluzeimafcre (ideas-crime-magic-user)
+Wizard - mafcre
+Warrior - sonci
+Soldier - jemsoi
+Mercenary - jernysoi
+Cleric - jdamikce
+Druid - selratmafcre (element-magic-user)
+Artificer - runmafcre (artifact-magic-user)
+Scout - tumfakli'u (land-discover-travel)
+Citizen - flaselgu'e
+Bird - cipni
+Dog - gerku
+Cat - mlatu
+Dragon - drakono
+Leviathan - braxamsi
+Demon - dermoni
+Elephant - xanto
+God - cevni
+Human - remna
+Zombie - mivmro
+Knight - nolsoi
+Pirate - blozeile'a
+Avatar - ceirka'i (god-proxy)
+Elemental - selratkai (element-being)
+Angel - anjeli
+Golem - remsmimi'i (human-similar-machine)
+Construct - runmivmi'i (artificially-living-machine)
+Centaur - kentauru
+Merfolk - jaupre
+Wall - bitmu
+Lammasu - mespyrambandu
+Thrull - mivmrose'u
+Unicorn - pavjima
+Spirit - pruxi
+Sphinx - latcpipre
+Octopus - oktopoda
+Fish - finpe
+Mouse - smacu
+Dryad - ricru'i
+Goblin - ridgobeli
+Rigger - selplibregau
+Guest - vitke
+Faerie - ridrfai
+Vedalken - vledalkena (*)
+Thopter - toptera (*)
+Sliver - slivera (*)
+Eldrazi - eldrazi (*)
+Servo - servo (*)
+Phyrexian - faixreksi'a (*)
+(*) - words represented by fu'ivla i made up
+
+Types of counters:
+Counter (the thing placed on cards) - nacdai
+Ex: pa +1/+1 nacdai, pa temci nacdai do
+Stun - seljenca nacdai
+Flying - vofli nacdai
+
+Targets are written in a way that supposes the targeting at the beginning of the ability, closer to how it actually works per the rules of magic. Example:
+  - "Destroy target creature" would be written as, in lojban, "Choose target creature, which we will call thing-1. Destroy thing-1."
+  - The word for "choose" for targets in this way is "fargau."
+  - Doing it this way is very elegant in lojban and the phrasing is consistent across many examples.
+"any target" refers only to things that can be damaged, so a target in this way is called a ka'erselxai.
+
+Replacement effects are written as:
+selbasti ro nu [event being replaced] kei lo nu [event it is replaced with] kei
+Except when they say "as [event happens] do [an extra thing]", in which case:
+ca [event being replaced] [extra thing added to the event]
+
+Triggered abilities are written as:
+ba ro nu [trigger event] kei lo nu [action] kei
+
+Intervening if clauses:
+IFLE
+
+Reasoning for just using the words for types/subtypes instead of writing them properly with "lo danlu" or "lo rutmi":
+  - In english, we don't write "A creature - A human and druid", we just say "Creature - Human Druid"
+  - Benefit: The text is shorter, and the types are identifiable by being single words

@@ -1,0 +1,10 @@
+How it works:
+  - Your pokemon DO have their types as in pokemon
+  - The attacks do have their types, but the cost of using each attack is not necessarily dependent on the types.
+
+Example:
+  - Ember (Fire)
+  - Cost: Red 5
+
+TODO
+  - tooltips for moves that actually explain what they do

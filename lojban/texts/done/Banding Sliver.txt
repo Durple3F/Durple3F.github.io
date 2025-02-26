@@ -1,0 +1,19 @@
+Banding Sliver {3}{W}{W}
+Join-band sliver
+lo cmibi'obe'e slivera
+  
+
+Creature — Sliver
+Creature — Sliver
+danlu — slivera
+ — 
+
+All Slivers have banding. (Any creatures with banding, and up to one without, can attack in a band. Bands are blocked as a group. If any creatures with banding you control are blocking or being blocked by a creature, you divide that creature’s combat damage, not its controller, among any of the creatures it’s being blocked by or is blocking.)
+Each sliver gets "joins-in-bands." (At least 1 creature which has "joins-in-bands" and up to 1 creature which does not have it can attack inside a band. If a member of the band is blocked, each member of it is blocked. If at least 1 creature which is controlled by you and has "joins-in-bands" is blocked by a creature, you, instead of its controller, divide combat damage among any amount of creatures which are blocked by it or blocking it.)
+ro slivera cpacu lu cmibi'obe'e li'u (.i su'o danlu poi tolcau be lu cmibi'obe'e li'u be'o e su'e danlu poi na tolcau be ko'a kakne lo zu'o ce'u gunta ne'i pa bende .i ifle lo du'u pa cmima po le bende cu se gutfanta kei lo du'u ro cmima be ko'e cu se gutfanta .i ifle lo du'u su'o danlu poi ke'a se jitro do gi'e tolcau lu cmibi'obe'e li'u cu se gutfanta pa danlu goi ko'i kei lo nu do seba'i lo jitro po ko'i fendi lo damba xairgau su'ero danlu poi ke'a gutfanta ko'i gi'a se gutfanta ko'i)
+      (                                                                                             )
+
+TEST CARD - Not for constructed play
+This is a test card. This is created for the purpose of not constructed play.
+ti troci karda .i ti se finti fi lo nu na'e finti kelci
+            

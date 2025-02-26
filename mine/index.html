@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Little Idle Game</title>
+	<link rel="stylesheet" href="style.css">
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/zipson@latest/dist/zipson.min.js"></script>
+	<script src="render.js"></script>
+	<script src="controller.js"></script>
+	<script src="config.js"></script>
+</head>
+<body>
+	<canvas id="screen"></canvas>
+	<div id="menu-tabs">
+		<div id="menu-tab-container">
+			<div id="open-menu-tab" class="menu-tab">
+				<i class="btn-open bi bi-caret-left-fill"></i>
+				<i class="btn-close bi bi-caret-right-fill" style="display:none;"></i>
+			</div>
+			<div id="miner-upgrades-tab" data-tab="miners" class="menu-tab secondary">
+				<i class="bi bi-person-standing"></i>
+			</div>
+			<div id="rail-upgrades-tab" data-tab="rails" class="menu-tab secondary">
+				<i class="bi bi-minecart"></i>
+			</div>
+			<div id="settings-tab" data-tab="settings" class="menu-tab secondary">
+				<i class="bi bi-gear-fill"></i>
+			</div>
+		</div>
+	</div>
+	<div id="menu">
+		<div id="menu-info">
+			<div id="money"></div>
+			<div id="fps"></div>
+		</div>
+		<div id="menu-sections">
+			<div class="menu-section" data-tab="miners">
+				<div class="buy-amount-selector">
+					<div class="buttons">
+						<button class="decrease-buy-amount">
+							<i class="bi bi-dash"></i>
+						</button>
+						<button class="increase-buy-amount">
+							<i class="bi bi-plus"></i>
+						</button>
+					</div>
+					<span class="current-buy-amount"></span>
+				</div>
+				<div class="upgrade" id="upgrade-buy-miner">
+					<p class="upgrade-name"></p>
+					<p class="upgrade-level"></p>
+					<p class="upgrade-cost"></p>
+				</div>
+				<div class="upgrade" id="upgrade-miner-speed" data-upgrade="miner-speed">
+					<p class="upgrade-name">Upgrade speed for <span class="modify"></span></p>
+					<p class="upgrade-effect"></p>
+					<p class="upgrade-level-stats"></p>
+					<p class="upgrade-cost"></p>
+				</div>
+				<div class="upgrade" id="upgrade-miner-capacity" data-upgrade="miner-capacity">
+					<p class="upgrade-name">Upgrade carry capacity for <span class="modify"></span></p>
+					<p class="upgrade-effect"></p>
+					<p class="upgrade-level-stats"></p>
+					<p class="upgrade-cost"></p>
+				</div>
+				<div class="upgrade" id="upgrade-miner-damage" data-upgrade="miner-damage">
+					<p class="upgrade-name">Upgrade damage for <span class="modify"></span></p>
+					<p class="upgrade-effect"></p>
+					<p class="upgrade-level-stats"></p>
+					<p class="upgrade-cost"></p>
+				</div>
+				<div class="upgrade" id="upgrade-miner-unload-speed" data-upgrade="miner-unload-speed">
+					<p class="upgrade-name">Upgrade unload speed for <span class="modify"></span></p>
+					<p class="upgrade-effect"></p>
+					<p class="upgrade-level-stats"></p>
+					<p class="upgrade-cost"></p>
+				</div>
+			</div>
+			<div class="menu-section" data-tab="rails">
+				<div class="buy-amount-selector">
+					<div class="buttons">
+						<button class="decrease-buy-amount">
+							<i class="bi bi-dash"></i>
+						</button>
+						<button class="increase-buy-amount">
+							<i class="bi bi-plus"></i>
+						</button>
+					</div>
+					<span class="current-buy-amount"></span>
+				</div>
+				<div class="upgrade" id="upgrade-buy-rail">
+					<p class="upgrade-name"></p>
+					<p class="upgrade-level"></p>
+					<p class="upgrade-cost"></p>
+				</div>
+				<div class="upgrade" id="upgrade-rail-speed" data-upgrade="rail-speed">
+					<p class="upgrade-name">Upgrade speed for <span class="modify"></span></p>
+					<p class="upgrade-effect"></p>
+					<p class="upgrade-level-stats"></p>
+					<p class="upgrade-cost"></p>
+				</div>
+				<div class="upgrade" id="upgrade-rail-acceleration" data-upgrade="rail-acceleration">
+					<p class="upgrade-name">Upgrade acceleration for <span class="modify"></span></p>
+					<p class="upgrade-effect"></p>
+					<p class="upgrade-level-stats"></p>
+					<p class="upgrade-cost"></p>
+				</div>
+				<div class="upgrade" id="upgrade-rail-length" data-upgrade="rail-length">
+					<p class="upgrade-name">Upgrade rail length for <span class="modify"></span></p>
+					<p class="upgrade-effect"></p>
+					<p class="upgrade-level-stats"></p>
+					<p class="upgrade-cost"></p>
+				</div>
+				<div class="upgrade" id="upgrade-minecart-count" data-upgrade="rail-minecart-count">
+					<p class="upgrade-name">Upgrade number of minecarts for <span class="modify"></span></p>
+					<p class="upgrade-effect"></p>
+					<p class="upgrade-level-stats"></p>
+					<p class="upgrade-cost"></p>
+				</div>
+				<div class="upgrade" id="upgrade-rail-capacity" data-upgrade="rail-capacity">
+					<p class="upgrade-name">Upgrade capacity per minecart for <span class="modify"></span></p>
+					<p class="upgrade-effect"></p>
+					<p class="upgrade-level-stats"></p>
+					<p class="upgrade-cost"></p>
+				</div>
+				<div class="upgrade" id="upgrade-rail-unload-speed" data-upgrade="rail-unload-speed">
+					<p class="upgrade-name">Upgrade unload speed for <span class="modify"></span></p>
+					<p class="upgrade-effect"></p>
+					<p class="upgrade-level-stats"></p>
+					<p class="upgrade-cost"></p>
+				</div>
+			</div>
+			<div class="menu-section" data-tab="settings">
+				<div class="setting">
+					<label for="setting-game-render-scale">Render Scale:</label><br>
+					<input type="range" min="1" max="5" value="2" id="setting-game-render-scale">
+				</div>
+				<div class="setting">
+					<span>Render:</span><br>
+					<label for="setting-render-rocks">Rocks</label>
+					<input type="checkbox" id="setting-render-rocks" checked>
+					<label for="setting-render-miners">Miners</label>
+					<input type="checkbox" id="setting-render-miners" checked>
+					<label for="setting-render-rails">Rails</label>
+					<input type="checkbox" id="setting-render-rails" checked>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="main.js" defer></script>
+</body>
+</html>

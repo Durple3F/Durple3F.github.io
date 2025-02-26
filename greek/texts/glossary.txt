@@ -1,0 +1,30 @@
+προκαλώ - cause, bring about
+τραβάω - pull, draw (in terms of cards)
+απορρίπτω - discard (more commonly means "reject" but can also mean "throw out")
+μπω - enter
+πεδίο μάχης - battlefield (literally "field of battle")
+βιβλιοθήκης - library
+
+Instant - 
+Sorcery - Τελετουργία
+Enchantment - Γοητεία
+Creature - Πλάσμα. Οντότητα seems like a bad translation now.
+
+Battlefield - πεδίο μάχης
+
+Flying - Πετάει
+Exile - εξορίζω
+
+Tap - ξοδεύω seems good.
+
+Lightning Bolt:
+Αστραποβόλο
+Αστραποβόλο προκαλεί 3 ζημιές σε οποιοσδήποτε στόχο
+«Δεν έχει ακούσει να χτυπάει;!»
+—Σνερντ, Φλογερό Γροθιά φρουρός
+
+Purple Worm:
+Μοβ σκουλήκι
+Οντότητα — Σκουλήκι
+Αυτό το μάγια κόστιζει {2} λιγότερο αν έναν οντότητα πέθανε αυτήν τη σειρά.
+Φύλαγμα 2

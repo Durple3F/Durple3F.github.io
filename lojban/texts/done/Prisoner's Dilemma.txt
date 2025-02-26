@@ -1,0 +1,19 @@
+Prisoner's Dilemma
+Prisoner Dilemma
+pinfu cuxnadytcini
+ 
+
+Sorcery
+Sorcery
+mocmakfa
+
+
+Each opponent secretly chooses silence or snitch, then the choices are revealed. If each opponent chose silence, Prisoner’s Dilemma deals 4 damage to each of them. If each opponent chose snitch, Prisoner’s Dilemma deals 8 damage to each of them. Otherwise, Prisoner’s Dilemma deals 12 damage to each opponent who chose silence.
+Each opponent secret-chooses "silence" or "confess". Then, each of those choices are revealed. If each opponent chose "silence", this deals 4 damage to them. If each opponent chose "confess", this deals 8 damage to them, otherwise, this deals 12 damage to each opponent which chose "silence".
+ro bradi goi ko'a mipri cuxna zo kamsma o nai zo zugyxu'a .ibabo ro le se cuxna cu se jarco .i ifle lo du'u ro bradi cu pu cuxna zo kamsma kei lo nu ti xrani ko'a li vo .i ifle lo du'u ro bradi pu cuxna zo zugyxu'a kei lo nu ti xrani ko'a li bi kei lo nu ti xrani ro bradi poi ke'a pu cuxna zo kamsa ku'o li pare
+                                                                        
+
+Flashback {5}{R}{R}
+Past-remember {5}{R}{R}
+prumo'i {5}{R}{R}
+ {5}{R}{R}

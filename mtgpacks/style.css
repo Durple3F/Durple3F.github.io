@@ -1,0 +1,32 @@
+.error {
+  color: #b00000
+}
+
+#settings, #set-selector {
+  display: none;
+}
+
+table {
+  width: 100%;
+}
+td {
+  border: 1px solid gray
+}
+
+.uncommon {
+  background-color: #aaaaff;
+  color: black;
+}
+.rare {
+  background-color: #ddcc55;
+  color: black;
+}
+.mythic {
+  background-color: #ff9955;
+  color: black;
+}
+
+.card-row > .new {
+  background-color: #800000;
+  font-weight: bold;
+}

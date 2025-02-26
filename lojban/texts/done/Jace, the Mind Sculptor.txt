@@ -1,0 +1,23 @@
+Jace, the Mind Sculptor
+la .jeis. noi laryrakpra be loi menli
+      
+
+Legendary Planeswalker — Jace
+ranmi mujli'u - .jeis.
+   
+
++2: Look at the top card of target player’s library. You may put that card on the bottom of that player’s library.
+do fargau pa kelci goi ko'a .i do catlu pa karda poi galraipau be le ckusro stuzi po ko'a .ije do kakne lo zu'o punji le karda le dziraipau po le ckusro stuzi po ko'a
+                                  
+
+0: Draw three cards, then put two cards from your hand on top of your library in any order.
+do cpacu ci karda gi'ebabo punji co porsi be do re karda poi se vasru le xance stuzi po do ku'o le galraipau po le ckusro stuzi po do ku
+                             
+
+−1: Return target creature to its owner’s hand.
+do fargau pa danlu goi ko'a .i do xrubei ko'a le xance stuzi po le ponse be ko'a
+                 
+
+−12: Exile all cards from target player’s library, then that player shuffles their hand into their library.
+do fargau pa kelci goi ko'a .i do dargau ro karda le ckusro stuzi po ko'a .ijebabo ko'a punji co kasygau le xance stuzi po ko'a le ckusro stuzi po ko'a
+                              

@@ -1,0 +1,247 @@
+<!doctype html>
+<html>
+	<head>
+		<link rel="icon" type="image/x-icon" href="favicon.ico">
+		<link href="https://cdn.jsdelivr.net/npm/mana-font@latest/css/mana.css" rel="stylesheet" type="text/css" />
+		<style>
+			body {
+				background-color: black;
+				color: #cccccc;
+			}
+			.ms {
+				margin-bottom: 0.25em;
+			}
+			li {
+				font-size: 1.2em;
+				line-height: 1.4;
+			}
+		</style>
+		<title>Whatever "adopt" is</title>
+	</head>
+	<body>
+		<button id="generate">Generate</button>
+		<h3>Creature Types <input id="creature-type-count" type="number" value="2"></h3>
+		<ol id="creature-types"></ol>
+		<h3>Keyword Abilities <input id="keyword-count" type="number" value="2"></h3>
+		<ol id="keywords"></ol>
+
+		<script>
+			const allKeywords = [
+				"Deathtouch",
+				"Defender",
+				"Double Strike",
+				//"Enchant",
+				"Equip %cost%",
+				"First Strike",
+				"Flash",
+				"Flying",
+				"Haste",
+				"Hexproof",
+				"Indestructible",
+				"Intimidate",
+				"Landwalk",
+				"Lifelink",
+				//"Protection",
+				"Reach",
+				"Shroud",
+				"Trample",
+				"Vigilance",
+				"Ward %randomcost(2)%",
+				"Banding",
+				"Rampage",
+				"Cumulative Upkeep %cost%",
+				"Flanking",
+				"Phasing",
+				"Buyback %cost%",
+				"Shadow",
+				"Cycling %cost%",
+				"Echo %cost%",
+				"Horsemanship",
+				"Fading %number%",
+				"Kicker %cost%",
+				"Flashback %cost%",
+				"Madness %cost%",
+				"Fear",
+				"Morph %cost%",
+				"Amplify %number%",
+				"Provoke",
+				"Storm",
+				//"Affinity",
+				"Entwine %cost%",
+				"Modular %number%",
+				"Sunburst",
+				"Bushido %number%",
+				"Soulshift %number%",
+				//"Splice",
+				//"Offering",
+				"Ninjutsu %cost%",
+				"Epic",
+				"Convoke",
+				"Dredge %number%",
+				"Transmute %cost%",
+				"Bloodthirst %number%",
+				"Haunt",
+				"Replicate %cost%",
+				//"Forecast",
+				"Graft %number%",
+				"Recover %cost%",
+				"Ripple %number%",
+				"Split Second",
+				"Suspend %number% - %cost%",
+				"Vanishing %number%",
+				"Absorb %number%",
+				//"Aura Swap",
+				"Delve",
+				"Fortify %cost%",
+				"Frenzy %number%",
+				"Gravestorm",
+				"Poisonous %number%",
+				"Transfigure %cost%",
+				//"Champion",
+				"Changeling",
+				"Evoke %cost%",
+				"Hideaway %number%",
+				"Prowl %cost%",
+				"Reinforce %number% - %cost%",
+				"Conspire",
+				"Persist",
+				"Wither",
+				"Retrace %cost%",
+				"Devour %number%",
+				"Exalted",
+				"Unearth %cost%",
+				"Cascade",
+				"Annihilator %number%",
+				"Level Up %cost%",
+				"Rebound",
+				"Totem Armor",
+				"Infect",
+				"Battle Cry",
+				"Living Weapon",
+				"Undying",
+				"Miracle %cost%",
+				"Soulbond",
+				"Overload %cost%",
+				"Scavenge %cost%",
+				"Unleash",
+				"Cipher",
+				"Evolve",
+				"Extort",
+				"Fuse",
+				"Bestow %cost%",
+				"Tribute %number%",
+				"Dethrone",
+				"Hidden Agenda",
+				"Outlast %cost%",
+				"Prowess",
+				"Dash %cost%",
+				"Exploit",
+				"Menace",
+				"Renown %number%",
+				"Awaken",
+				"Devoid",
+				"Ingest",
+				"Myriad",
+				"Surge %cost%",
+				"Skulk",
+				"Emerge %cost%",
+				"Escalate %cost%",
+				"Melee",
+				"Crew %number%",
+				"Fabricate %number%",
+				"Partner",
+				"Undaunted",
+				"Improvise",
+				"Aftermath",
+				"Embalm %cost%",
+				"Eternalize %cost%",
+				"Afflict %number%",
+				"Ascend",
+				"Assist",
+				"Jump-Start %cost%",
+				"Mentor",
+				"Afterlife %number%",
+				"Riot",
+				"Spectacle %cost%",
+				"Escape %cost%",
+				//"Companion",
+				"Mutate %cost%",
+				"Encore %cost%",
+				//"Boast",
+				"Foretell %cost%",
+				"Demonstrate",
+				"Daybound",
+				"Disturb %cost%",
+				"Decayed",
+				"Cleave %cost%",
+				"Training",
+				"Compleated",
+				"Reconfigure %cost%",
+				"Blitz %cost%",
+				"Casualty %number%",
+				"Enlist",
+				"Read Ahead",
+				"Ravenous",
+				"Squad %cost%",
+				"Space Sculptor",
+				//"Visit",
+				//"Prototype",
+				"Living Metal",
+				"More Than Meets the Eye %cost%",
+				"For Mirrodin!",
+				"Toxic %number%",
+				"Backup %cost%",
+				"Bargain",
+				//"Craft"
+			]
+			const creatureTypes = [
+				"Advisor","Aetherborn","Alien","Ally","Angel","Antelope","Ape","Archer","Archon","Army","Artificer","Assassin","Assembly-Worker","Astartes","Atog","Aurochs","Avatar","Azra","Badger","Balloon","Barbarian","Bard","Basilisk","Bat","Bear","Beast","Beeble","Beholder","Berserker","Bird","Blinkmoth","Boar","Bringer","Brushwagg","Camarid","Camel","Capybara","Caribou","Carrier","Cat","Centaur","Cephalid","Child","Chimera","Citizen","Cleric","Clown","Cockatrice","Construct","Coward","Crab","Crocodile","C’tan","Custodes","Cyberman","Cyclops","Dalek","Dauthi","Demigod","Demon","Deserter","Detective","Devil","Dinosaur","Djinn","Doctor","Dog","Dragon","Drake","Dreadnought","Drone","Druid","Dryad","Dwarf","Efreet","Egg","Elder","Eldrazi","Elemental","Elephant","Elf","Elk","Employee","Eye","Faerie","Ferret","Fish","Flagbearer","Fox","Fractal","Frog","Fungus","Gamer","Gargoyle","Germ","Giant","Gith","Gnoll","Gnome","Goat","Goblin","God","Golem","Gorgon","Graveborn","Gremlin","Griffin","Guest","Hag","Halfling","Hamster","Harpy","Hellion","Hippo","Hippogriff","Homarid","Homunculus","Horror","Horse","Human","Hydra","Hyena","Illusion","Imp","Incarnation","Inkling","Inquisitor","Insect","Jackal","Jellyfish","Juggernaut","Kavu","Kirin","Kithkin","Knight","Kobold","Kor","Kraken","Lamia","Lammasu","Leech","Leviathan","Lhurgoyf","Licid","Lizard","Manticore","Masticore","Mercenary","Merfolk","Metathran","Minion","Minotaur","Mite","Mole","Monger","Mongoose","Monk","Monkey","Moonfolk","Mouse","Mutant","Myr","Mystic","Naga","Nautilus","Necron","Nephilim","Nightmare","Nightstalker","Ninja","Noble","Noggle","Nomad","Nymph","Octopus","Ogre","Ooze","Orb","Orc","Orgg","Otter","Ouphe","Ox","Oyster","Pangolin","Peasant","Pegasus","Pentavite","Performer","Pest","Phelddagrif","Phoenix","Phyrexian","Pilot","Pincher","Pirate","Plant","Praetor","Primarch","Prism","Processor","Rabbit","Raccoon","Ranger","Rat","Rebel","Reflection","Rhino","Rigger","Robot","Rogue","Sable","Salamander","Samurai","Sand","Saproling","Satyr","Scarecrow","Scientist","Scion","Scorpion","Scout","Sculpture","Serf","Serpent","Servo","Shade","Shaman","Shapeshifter","Shark","Sheep","Siren","Skeleton","Slith","Sliver","Slug","Snail","Snake","Soldier","Soltari","Spawn","Specter","Spellshaper","Sphinx","Spider","Spike","Spirit","Splinter","Sponge","Squid","Squirrel","Starfish","Surrakar","Survivor","Tentacle","Tetravite","Thalakos","Thopter","Thrull","Tiefling","Time Lord","Treefolk","Trilobite","Triskelavite","Troll","Turtle","Tyranid","Unicorn","Vampire","Vedalken","Viashino","Volver","Wall","Walrus","Warlock","Warrior","Weird","Werewolf","Whale","Wizard","Wolf","Wolverine","Wombat","Worm","Wraith","Wurm","Yeti","Zombie","Zubera"
+			]
+
+			function randomCost(start, end){
+				
+			}
+
+			function generate(){
+				let typesTag = document.getElementById("creature-types")
+				let typeCount = document.getElementById("creature-type-count").value
+				let keywordsTag = document.getElementById("keywords")
+				let keywordCount = document.getElementById("keyword-count").value
+
+				typesTag.innerHTML = ""
+				keywordsTag.innerHTML = ""
+
+				let types = []
+				for (let i = 0; i < typeCount; i++){
+					let valid = creatureTypes.filter(v => !types.includes(v))
+					if (valid.length > 0){
+						let type = valid[Math.floor(Math.random() * valid.length)]
+						types.push(type)
+					}
+				}
+				for (let type of types){
+					typesTag.innerHTML += `<li>${type}</li>`
+				}
+
+				let keywords = []
+				for (let i = 0; i < keywordCount; i++){
+					let valid = allKeywords.filter(v => !keywords.includes(v))
+					if (valid.length > 0){
+						let type = valid[Math.floor(Math.random() * valid.length)]
+						keywords.push(type)
+					}
+				}
+				for (let keyword of keywords){
+					let text = keyword
+					.replaceAll("%cost%", "<i class='ms ms-cost ms-1'></i>")
+					.replaceAll("%number%", "1")
+					keywordsTag.innerHTML += `<li>${text}</li>`
+				}
+
+				console.log(types, keywords)
+			}
+			
+			document.getElementById("generate").onclick = generate
+		</script>
+	</body>
+</html>

@@ -1,0 +1,105 @@
+html, body, body > .screen {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: rgb(118, 14, 20);
+}
+
+#title-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  color: white;
+}
+
+#game {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+#card-section {
+  font-family: cursive;
+  position: relative;
+  height: 100%;
+}
+
+#card-section > .card-back {
+  height: 100%;
+}
+
+#card-section > span {
+  position: absolute;
+  display: inline-block;
+  letter-spacing: 2px;
+}
+#card-section > .card-name {
+  left: 9%;
+  top: 5%;
+}
+#card-section > .card-cost {
+  right: 9%;
+  top: 5%;
+  text-align: right;
+}
+#card-section > .card-type {
+  left: 9%;
+  top: 56%;
+}
+#card-section > .card-text {
+  left: 9%;
+  top: 63%;
+  width: 82%;
+}
+#card-section > .card-pt {
+  top: 89%;
+  left: 82%;
+}
+
+#keyboard-section {
+  min-width: 60%;
+  background-color: #441111;
+  color: white;
+  text-align: center;
+  user-select: none;
+}
+
+.keyboard-container {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  font-family: Arial,sans-serif;
+  padding: 3px;
+}
+
+.keyboard-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.keyboard-row > div {
+  background-color: #444;
+  border-radius: 5px;
+  margin: 5px;
+  padding: 0.5em;
+  padding-left: 1em;
+  padding-right: 1em;
+  cursor: pointer;
+}
+.keyboard-row > .green {
+  background-color: rgb(45, 137, 45);
+}
+.keyboard-row > .red {
+  background-color: rgb(156, 35, 35);
+}
+
+.modal {
+  background-color: rgba(0, 0, 0, 0.50);
+}

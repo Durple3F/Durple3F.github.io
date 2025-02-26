@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+	<head>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js">
+		</script> 
+		<link href="https://cdn.jsdelivr.net/npm/mana-font@latest/css/mana.css" rel="stylesheet" type="text/css" />
+		
+		<link rel="icon" type="image/x-icon" href="favicon.ico">
+		<link rel="stylesheet" href="../../lojban/style.css">
+		<script src="../data-ancient-greek.js"></script>
+		<script>
+			const storyCode = "Cleopatra, Exiled Pharaoh"
+		</script>
+		<script src="../../lojban/main.js" defer></script>
+
+		<title>Cleopatra, Exiled Pharaoh</title>
+		<meta property="og:title" content="Cleopatra, Exiled Pharaoh">
+		<meta property="og:description" content="A very uninformed look at ancient greek">
+		<meta property="og:image" content="https://durple3f.github.io/lojban/images/Cleopatra,%20Exiled%20Pharaoh.png">
+	</head>
+	<body>
+		<a href="./index.html" id="back-btn">
+			<button class="btn btn-secondary">Back</button>
+		</a>
+		<div id="explanation-container">
+			<div id="explanation">
+				<div id="explanation-text"></div>
+				<button class="btn btn-secondary show-all" style="display: none;">Show all</button>
+			</div>
+		</div>
+		<div id="views">
+			<div class="row text-center fw-bold">
+				<div class="col">
+					English <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					Literal translation <button class="toggle-btn">(Hide)</button>
+				</div>
+				<div class="col">
+					Ancient Greek <button class="toggle-btn">(Hide)</button>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col">
+					<span class="f1">Cleopatra</span>, <span class="f2">Exiled</span> <span class="f3">Pharaoh</span>
+				</div>
+				<div class="col">
+					<span class="f1">Cleopatra</span>, <span class="f2">Exiled</span> <span class="f3">Pharaoh</span>
+				</div>
+				<div class="col">
+					<span class="f1">Κλεοπάτρα</span>, <span class="f2">Ἐξόριστος</span> <span class="f3">Φαραώ</span>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col">
+					<span class="f4">Legendary</span> <span class="f5">Creature</span> — <span class="f6">Human</span> <span class="f7">Noble</span>
+				</div>
+				<div class="col">
+					<span class="f4">Mythic</span> <span class="f5">being</span> — <span class="f6">Man</span> <span class="f7">Noble</span>
+				</div>
+				<div class="col">
+					<span class="f4">Μυθικὸν</span> <span class="f5">ὄν</span> — <span class="f6">Ἄνθρωπος</span> <span class="f7">Εὐγενής</span>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col">
+					<span class="f8">Allies</span> — <span class="f12">At the beginning of</span> <span class="f9">your</span> <span class="f10">end</span> <span class="f11">step</span>, <span class="f14">put</span> a +1/+1 counter <span class="f14">on</span> <span class="f15">each</span> <span class="f17">of</span> <span class="f18">up to</span> <span class="f16">two</span> <span class="f19">other</span> <span class="f13">target</span> <span class="f4">legendary</span> <span class="f21">creatures</span>.
+				</div>
+				<div class="col">
+					<span class="f8">Allies</span> — <span class="f9">Thou</span> <span class="f10">finish-y</span> <span class="f11">step</span> <span class="f12">at the beginning</span>, <span class="f13">indicate</span> <span class="f14">grow upon</span> +1/+1 <span class="f15">each</span> <span class="f16">two</span> <span class="f17">the</span> <span class="f18">at most</span> <span class="f19">other</span> <span class="f20">chosen(?)</span> <span class="f4">mythic</span> <span class="f21">beings</span>.
+				</div>
+				<div class="col">
+					<span class="f8">Σύμμαχοι</span> — <span class="f9">Τοῦ</span> <span class="f10">τελευταίου</span> <span class="f11">βήματος</span> <span class="f12">ἀρχομένου</span>, <span class="f13">σημαίνου</span> <span class="f14">σήματι</span> +1/+1 <span class="f15">ἓκαστον</span> <span class="f16">δύο</span> <span class="f17">τὸ</span> <span class="f18">πλεῖστον</span> <span class="f19">ἑτέρων</span> <span class="f20">διωκτέων</span> <span class="f4">μυθικῶν</span> <span class="f21">ὄντων</span>.
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col">
+					<span class="f22">Betrayal</span> — <span class="f23">Whenever</span> a <span class="f4">legendary</span> <span class="f5">creature</span> <span class="f27">with counters on it</span> <span class="f28">dies</span>, <span class="f31">draw</span> a <span class="f29">card</span> <span class="f30">for</span> <span class="f32">each</span> <span class="f33">counter</span> <span class="f35">on</span> <span class="f34">it</span>. <span class="f36">You lose</span> 2 <span class="f37">life</span>.
+				</div>
+				<div class="col">
+					<span class="f22">Betrayal</span> — <span class="f23">When</span> <span class="f4">mythic</span> <span class="f25">any(?)</span> <span class="f5">being</span> <span class="f27">marked</span> <span class="f28">die</span>, <span class="f29">paper</span> <span class="f30">so much</span> <span class="f31">take</span>, <span class="f32">as many times as</span> <span class="f33">marks</span> <span class="f34">that</span> <span class="f35">are</span>. <span class="f36">Rob yourself of</span> <span class="f37">life</span> 2.
+				</div>
+				<div class="col">
+					<span class="f22">Προδοσία</span> — <span class="f23">Ὁπόταν</span> <span class="f4">μυθικόν</span> <span class="f25">τι</span> <span class="f5">ὄν</span> <span class="f27">σεσημασμένον</span> <span class="f28">θνήσκῃ</span>, <span class="f29">χαρτία</span> <span class="f30">τόσα</span> <span class="f31">λαμβάνεις</span>, <span class="f32">ὅσαπερ</span> <span class="f33">σήματά</span> <span class="f34">οἱ</span> <span class="f35">ἐστι</span>. <span class="f36">Ἀποστερεῖ</span> <span class="f37">βίων</span> 2.
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col">
+					“Know thy enemies as thy kin.”
+				</div>
+				<div class="col">
+					𓍹𓈎𓃭𓍢𓊪𓂧𓂋𓏏𓆇𓊹𓏏𓆇𓌰𓏏𓊃𓎙𓍺
+				</div>
+				<div class="col" style="font-size: 200%; letter-spacing: 5px;">
+					𓍹𓈎𓃭𓍢𓊪𓂧𓂋𓏏𓆇𓊹𓏏𓆇𓌰𓏏𓊃𓎙𓍺
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col">
+					<img class="img-fluid mtg-card" src="https://cards.scryfall.io/png/front/5/2/52adcfc1-d8eb-4753-b6fd-a093b6d23637.png?1708706306">
+				</div>
+				<div class="col">
+					<img class="img-fluid mtg-card">
+				</div>
+				<div class="col">
+					<img class="img-fluid mtg-card" src="https://cards.scryfall.io/png/front/c/2/c2036b2e-89d6-448a-bfcb-50b2247ee17a.png?1708711831">
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,46 @@
+.pkmn-game {
+	max-width: 50%;
+	margin: auto;
+	border-radius: 0.5em;
+}
+
+.pkmn-sun {
+	background: #F1912B;
+	border: 2px solid #F1912B;
+	color: black;
+}
+.pkmn-moon {
+	background: #5599CA;
+	border: 2px solid #5599CA;
+	color: black;
+}
+.pkmn-ultra-sun {
+	background: #E95B2B;
+	border: 2px solid #E95B2B;
+	color: white;
+}
+.pkmn-ultra-moon {
+	background: #226DB5;
+	border: 2px solid #226DB5;
+	color: white;
+}
+.pkmn-sword {
+	background: #00A1E9;
+	border: 2px solid #00A1E9;
+	color: white;
+}
+.pkmn-shield {
+	background: #BF004F;
+	border: 2px solid #BF004F;
+	color: white;
+}
+.pkmn-scarlet {
+	background: #F34134;
+  border: 2px solid #F34134;
+	color: white;
+}
+.pkmn-violet {
+	background: #8334B7;
+  border: 2px solid #8334B7;
+	color: white;
+}

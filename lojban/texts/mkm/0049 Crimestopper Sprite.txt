@@ -1,0 +1,24 @@
+Crimestopper Sprite
+Crime-stopping tiny-fairy
+lo stizu'e cmalyridrfai
+
+
+Creature — Faerie Detective
+Creature — Faerie Detective
+danlu — ridrfai cipcta
+
+
+As an additional cost to cast this spell, you may collect evidence 6. (Exile cards with total mana value 6 or greater from your graveyard.)
+The cost of this is increased by "you can evidence-collect by 6." (You exile a set of at least 1 card which is inside of your graveyard, such that the amount in the total of their mana values is greater than or equal to 6.)
+le ti jdima cu zenba fi lu do kakne lo zu'o rindaicrepu be li xa li'u (.i do dargau lo'i su'o karda poi nenri be le do mrofoi ku'o poi li ni'e ni sumji be le mafnenlai vamji po ke'a kei cu dubjavmau li xa)
+
+
+Flying
+Flies
+vofli
+
+
+When Crimestopper Sprite enters the battlefield, tap target creature. If evidence was collected, put a stun counter on it. (If a permanent with a stun counter would become untapped, remove one from it instead.)
+After each time this enters the battlefield, you target a creature. You tap it. If you evidence-collected, you put a stun counter on it. (For every X, which is a permanent with stun counters on it, replace each event of X becoming untapped with events of you removing a stun counter from X.)
+ba ro nu ti nerkla le nunda'afoi kei do fargau pa danlu goi ko'a .i do xakygau ko'a .i ifle lo du'u do pu rindaicrepu kei lo nu do punji pa seljenca nacdai ko'a (.i ro da poi vi'ordai gi'e tolcau be lo seljenca nacdai zo'u selbasti ro nu da binxo lo ka tolselxaksu kei lo nu do tolpu'i pa seljenca nacdai da)
+
