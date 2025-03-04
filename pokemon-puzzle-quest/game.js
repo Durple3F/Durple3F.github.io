@@ -63,12 +63,13 @@ class Round{
 		this.roundStartAnimation()
 		.then(() => this.begin())
 
-		this.tickInterval = setInterval(tick, 1000 / frameRate)
+		this.startTicks()
 	}
 
 	loadResources(){
 		//Find all the sounds that pokemon might play when they use moves & stuff.
 		let moveList = []
+		let soundsToUnload = []
 		for (let i = 0; i < this.trainers.length; i++){
 			let trainer = this.trainers[i]
 			for (let j = 0; j < trainer.pokemon.length; j++){
@@ -88,8 +89,15 @@ class Round{
 				let url = move.sounds[name]
 				let soundName = `${move.name}-${name}`
 				loadSound(soundName, "sound", url)
+				soundsToUnload.push(soundName)
 			}
 		}
+
+		this.promise.then(() => {
+			for (let soundName of soundsToUnload){
+				unloadSound(soundName)
+			}
+		})
 	}
 	roundStartAnimation(){
 		let resolvePromise
@@ -190,10 +198,11 @@ class Round{
 				})
 			}
 			
-			this.promise.then(() => this.savePlayerPokemon())
+			this.promise
 			.then(() => {
-				this.resolveRound()
-				resolve()
+				this.savePlayerPokemon()
+				resolve(result)
+				this.resolveRound(result)
 			})
 		})
 		return promise
@@ -211,13 +220,14 @@ class Round{
 			if (enemyActivePokemon.hp <= 0){
 				let pokemonCanSwapTo = enemyTrainer.pokemon.filter(p => p.hp > 0)
 				if (pokemonCanSwapTo.length > 0){
+					//If the enemy has pokemon they can swap to, they pick one and swap to it.
 					let pokemon = this.computerChoosePokemon(pokemonCanSwapTo, "swap")
 					this.animateSendOutPokemon(1, pokemon)
 					.then(() => {
 						resolve(over)
 					})
 				} else {
-					//This is one of the ways the player can lose the game
+					//If the enemy has no pokemon they can swap to, you win.
 					return this.end("win")
 					.then(() => {
 						over = true
@@ -240,7 +250,7 @@ class Round{
 					.then(pokemon => this.animateSendOutPokemon(0, pokemon[0]))
 					.then(() => resolve(over))
 				} else {
-					//This is one of the ways the player can lose the game
+					//If you run out of viable pokemon, you lose.
 					return this.end("lose")
 					.then(() => {
 						over = true
@@ -390,19 +400,10 @@ class Round{
 			}
 		}
 
-		//For now, let's just deal damage equal to the number of tiles matched.
-		// let activePokemon = otherTrainer.activePokemon
-		// let power = tiles.length
-		// this.dealDamage({
-		// 	fromTrainer: activeTrainer,
-		// 	to: activePokemon,
-		// 	power: power
-		// })
-
 		this.updateStats()
 	}
 	giveEnergy(energy, pokemon){
-		pokemon.gainEnergy(energy)
+		return pokemon.gainEnergy(energy)
 	}
 
 	beginMove(){
@@ -414,7 +415,7 @@ class Round{
 		//This is where all of the end-of-move rewards can be done
 
 		//Next turn
-		this.turnEnd()
+		this.turnEnd(this.turn)
 	}
 
 	prepareToChangeTurns(newPlayer){
@@ -503,6 +504,13 @@ class Round{
 		return promise
 	}
 
+	startTicks(){
+		clearInterval(this.tickInterval)
+		this.tickInterval = setInterval(tick, 1000 / frameRate)
+	}
+	stopTicks(){
+		clearInterval(this.tickInterval)
+	}
 	tick(){
 		if (this.animationQueue.length){
 			let now = Date.now()
@@ -525,10 +533,10 @@ class Round{
 				}
 			}
 		}
-
-		let board = this.board
-		let contents = board.contents
+		
 		if (!document.hidden){
+			let board = this.board
+			let contents = board.contents
 			for (let tile of contents){
 				let d = distance(mouse.x, mouse.y, tile.spriteCenterX, tile.spriteCenterY)
 				let closeness = d/(board.spriteTileW * 0.5)
@@ -546,8 +554,8 @@ class Round{
 					tile.spriteRenderScale += (1 - tile.spriteRenderScale) * 0.5
 				}
 			}
+			board.tick()
 		}
-		board.tick()
 	}
 
 	turnStart(){
@@ -596,7 +604,13 @@ class Round{
 		promise = promise.then(() => this.updateEverything())
 		return promise
 	}
-	turnEnd(){
+	turnEnd(turn){
+		if (turn !== this.turn){
+			//This code catches bugs and stops them from spreading
+			//But it really shouldn't ever run if I can help it.
+			console.warn("Hmm, I thought it was turn", turn, "But it's turn", this.turn, "now?")
+			return
+		}
 		let nextPlayer = this.getNextPlayer()
 		if (nextPlayer !== this.activePlayerIndex){
 			this.prepareToChangeTurns(nextPlayer)
@@ -666,7 +680,7 @@ class Round{
 				levelText += ` <i class='bi bi-arrow-right'> ${newLevel}`
 			}
 			pText.append(`<p>${levelText}</p>`)
-			let expText = `${expPastNewLevel} / ${expForNextLevel} EXP`
+			let expText = `${expPastNewLevel} / ${expForNextLevel - floor} EXP`
 			pText.append(`<p>${expText}</p>`)
 		}
 
@@ -678,11 +692,12 @@ class Round{
 			let p = pokemon[i]
 			let box = $(`<div class='col col-6'></div>`)
 			let chooseable = $(`<div class='chooseable m-1'></div>`)
+			let image = p.data.imageSources.large
 			chooseable.html(`
 				<div class='row mb-3'>
 					<div class='pokemon-text col d-flex flex-column justify-content-center'></div>
 					<div class='col text-end'>
-						<img class='pokemon-image' src='${p.data.imageSources[p.pokemonName]}'>
+						<img class='pokemon-image' src='${image}'>
 					</div>
 				</div>
 				<div class='exp-bar'>
@@ -1041,9 +1056,10 @@ class Round{
 					fromTrainer: moveUseObj.trainer,
 					move: moveUseObj.move
 				}
-				if (effect.additivePower){
-					options.additionalPower = (options.additionalPower ?? 0)
-					options.additionalPower += moveUseObj.info[effect.additivePower]
+				if (effect.additivePower !== undefined){
+					let additivePower = params.additivePower ?? 0
+					options.additionalPower = options.additionalPower ?? 0
+					options.additionalPower += additivePower
 				}
 				this.dealDamage(options)
 				resolvePromise()
@@ -1067,6 +1083,24 @@ class Round{
 				otherPokemon.statusEffects.push(debuff)
 				resolvePromise()
 			} break
+			case "get-stat": {
+				let statName = effect.which ?? "attack"
+				let targetName = effect.target ?? "player"
+				let target
+				
+				if (targetName === "opponent"){
+					let otherTrainer = this.trainers[this.inactivePlayerIndex]
+					target = otherTrainer.activePokemon
+				} else if (targetName === "player"){
+					let trainer = this.trainers[this.activePlayerIndex]
+					target = trainer.activePokemon
+				} else {
+					console.warn("You never handled", targetName)
+				}
+				
+				moveUseObj.info[effectIndex] = target.getStat(statName)
+				resolvePromise()
+			} break
 			case "burn": {
 				let chance = effect.chance ?? 1
 				if (Math.random() <= chance){
@@ -1074,6 +1108,116 @@ class Round{
 					let otherPokemon = otherTrainer.activePokemon
 					otherPokemon.addStatusEffect("burn", moveUseObj.trainer, moveUseObj.pokemon, moveUseObj.move)
 				}
+				resolvePromise()
+			} break
+			case "apply-debuff": {
+				let debuff = effect.statusEffect
+				let targetName = effect.target ?? "opponent"
+				let target
+
+				if (targetName === "opponent"){
+					let otherTrainer = this.trainers[this.inactivePlayerIndex]
+					target = otherTrainer.activePokemon
+				} else if (targetName === "player"){
+					let trainer = this.trainers[this.activePlayerIndex]
+					target = trainer.activePokemon
+				} else {
+					console.warn("You never handled", targetName)
+				}
+
+				target.statusEffects.push(debuff)
+				resolvePromise()
+			} break
+			case "apply-status-effect": {
+				let statusEffect = effect.statusEffect
+				let targetName = effect.target ?? "opponent"
+				let target
+
+				if (targetName === "opponent"){
+					let otherTrainer = this.trainers[this.inactivePlayerIndex]
+					target = otherTrainer.activePokemon
+				} else if (targetName === "player"){
+					let trainer = this.trainers[this.activePlayerIndex]
+					target = trainer.activePokemon
+				} else {
+					console.warn("You never handled", targetName)
+				}
+
+				target.addStatusEffect(statusEffect, moveUseObj.trainer, moveUseObj.pokemon, moveUseObj.move)
+				resolvePromise()
+			} break
+			case "select-energy-colors": {
+				let search = effect.search ?? "random"
+				let count = params.count ?? 1
+				let targetName = effect.target ?? "none"
+				let result = []
+				let target
+				
+				if (targetName === "opponent"){
+					let otherTrainer = this.trainers[this.inactivePlayerIndex]
+					target = otherTrainer.activePokemon
+				} else if (targetName === "player"){
+					let trainer = this.trainers[this.activePlayerIndex]
+					target = trainer.activePokemon
+				} else if (targetName !== "none") {
+					console.warn("You never handled", targetName)
+				}
+
+				if (count >= colors.length){
+					colors.forEach(c => result.push(c))
+				} else if (search === "random") {
+					let options = colors.map(c => c)
+					for (let i = 0; i < count; i++){
+						let index = Math.floor(Math.random() * options.length)
+						result.push(options[index])
+						options.splice(index, 1)
+					}
+				} else if (search === "most-full"){
+					let energy = target.energy
+					let options = Object.keys(energy)
+					shuffleArray(options)
+					options.sort((a, b) => {
+						return energy[a] < energy[b] ? 1 : energy[a] > energy[b] ? -1 : 0
+					})
+					options.slice(0, count).forEach(c => result.push(c))
+				} else {
+					console.warn("You never handled", search)
+				}
+				
+				moveUseObj.info[effectIndex] = result
+				resolvePromise()
+			} break
+			case "gain-energy": {
+				let energyColors = params.colors ?? []
+				let count = params.count ?? 1
+				let amounts = params.amounts ?? null
+				let targetName = effect.target ?? "player"
+				let target
+				let result = {}
+				
+				if (targetName === "opponent"){
+					let otherTrainer = this.trainers[this.inactivePlayerIndex]
+					target = otherTrainer.activePokemon
+				} else if (targetName === "player"){
+					let trainer = this.trainers[this.activePlayerIndex]
+					target = trainer.activePokemon
+				} else {
+					console.warn("You never handled", targetName)
+				}
+
+				if (amounts === null){
+					amounts = {}
+					for (let color of colors){
+						amounts[color] = 0
+						if (energyColors.includes(color)){
+							amounts[color] = count
+						}
+					}
+				}
+				
+				result = target.gainEnergy(amounts)
+				
+				moveUseObj.info[effectIndex] = result
 				resolvePromise()
 			} break
 			case "select-random-tiles": {
@@ -1123,6 +1267,16 @@ class Round{
 				moveUseObj.info[effectIndex] = result
 				resolvePromise()
 			} break
+			case "multiply-energy": {
+				let amounts = params.amounts ?? {}
+				let scale = params.scale ?? 1
+				let result = {}
+				for (let color in amounts){
+					result[color] = amounts[color] * scale
+				}
+				moveUseObj.info[effectIndex] = result
+				resolvePromise()
+			} break
 			case "load-number": {
 				let val = effect.value ?? 0
 				if (effect.index !== undefined){
@@ -1146,11 +1300,15 @@ class Round{
 				resolvePromise()
 			} break
 			case "jump-if-less-than": {
-				let test = moveUseObj.info[effectIndex - 1]
-				console.log(test, effect.value)
-				if (test < effect.value){
+				let test = moveUseObj.info[effectIndex - 2]
+				let against = moveUseObj.info[effectIndex - 1]
+				if (test < against){
 					moveUseObj.nextEffectIndex = effect.jumpTo
 				}
+				resolvePromise()
+			} break
+			case "jump": {
+				moveUseObj.nextEffectIndex = effect.jumpTo
 				resolvePromise()
 			} break
 			default:
@@ -1161,14 +1319,44 @@ class Round{
 	finishCurrentMove(){
 		let promise = new Promise(resolve => {
 			this.moveQueue.splice(0, 1)
-	
+
 			if (this.moveQueue.length){
 				this.advanceCurrentMove()
+				.then(resolve)
 			} else {
 				this.performMoveQueueCallbacks()
+				resolve()
 			}
 			this.resetCascade()
-			resolve()
+		})
+		//Post-end-of-move effects like Confused
+		.then(() => {
+			let trainer = this.trainers[this.activePlayerIndex]
+			let pokemon = trainer.activePokemon
+			let promises = []
+
+			if (pokemon && pokemon.statusEffects.length){
+				let statusEffects = pokemon.statusEffects
+				let endedTurn = false
+
+				for (let status of statusEffects){
+					if (status.name === "confused"){
+						//50% chance that the turn ends.
+						if (Math.random() < 0.5 && !endedTurn){
+							console.log("Preparing to end turn...")
+							endedTurn = true
+							let p = this.createAnnouncement("general", "Turn ended due to confusion!", 1500)
+							let turn = this.turn
+							p.then(() => {
+								this.turnEnd(turn)
+							})
+							promises.push(p)
+						}
+					}
+				}
+			}
+
+			return Promise.all(promises)
 		})
 		.then(() => this.checkForWinner())
 
@@ -1351,6 +1539,8 @@ class Round{
 	}
 
 	createAnnouncement(type, text, duration=1500){
+		let resolvePromise
+		let promise = new Promise(resolve => resolvePromise = resolve)
 		let obj = {
 			type: type,
 			text: text
@@ -1370,7 +1560,9 @@ class Round{
 		.fadeOut(startUpTime)
 		.queue(() => {
 			this.removeAnnouncement(obj)
+			resolvePromise()
 		})
+		return promise
 	}
 	removeAnnouncement(announcement){
 		announcement.elem.remove()
@@ -1507,12 +1699,13 @@ class Round{
 				duration: duration,
 				step: function(){
 					tags.healthBar.css("width", this.width)
-					let curP = this.width / availableWidth
+					let curP = Math.ceil(this.width) / availableWidth
 					tags.healthBar.css("background-color", getHealthColor(curP))
 				},
 				complete: function(){
 					tags.healthBar.css("width", newWidth)
-					tags.healthBar.css("background-color", getHealthColor(p))
+					let curP = Math.ceil(newWidth) / availableWidth
+					tags.healthBar.css("background-color", getHealthColor(curP))
 				}
 			})
 		}
@@ -1608,8 +1801,22 @@ class Round{
 				let box = $(`<div class='status-effect-container'></div>`)
 				let img = $(`<img class='status-effect' src='${data.image}'>`)
 				img.css("background-color", data.color)
+
+				let popoverHTML = () => {
+					let html = ""
+					let name = getLocaleString("name", lang, ["status-effects", data.name])
+					let description = getLocaleString("description", lang, ["status-effects", data.name])
+					html += `<span>${name}</span>`
+					if (description){
+						html += `<br><span>${description}</span>`
+					}
+					return html
+				}
+
 				img.popover({
-					content: data.name,
+					content: popoverHTML,
+					html: true,
+					placement: trainerIndex === 0 ? "right" : "left",
 					trigger: "hover"
 				})
 				box.append(img)
@@ -1692,19 +1899,26 @@ class Round{
 		if (this.hasBegun){
 			//We gotta get rid of the current active pokemon
 			first = new Promise(resolve => {
+				let leavingPokemon = trainer.activePokemon
 				let width = pokemonSection.width()
-				let facing = pokemon.data.imageFacing
+				let facing = leavingPokemon.data.imageFacing
 				let directionMult = 1
-				if (facing === "right" && trainerIndex === 0){
+				if (facing === "left" && trainerIndex === 0 ||
+					  facing === "right" && trainerIndex === 1
+				){
 					directionMult = -1
 				}
 				let left = width * moveDirection * directionMult
-				let rotate = -10 * directionMult
+				let rotate = 10 * moveDirection * directionMult
 				pokemonTag.css({
 					transition: "1s transform",
+					"transform-origin": "bottom center",
 					transform: `rotate(${rotate}deg) translateX(${left}px)`
 				})
 				delay(1000).then(() => {
+					pokemonTag.css({
+						"transform-origin": ""
+					})
 					resolve()
 				})
 			})
@@ -1716,103 +1930,138 @@ class Round{
 			first = first.then(() => trainerAnimations[animName](trainerTag))
 		}
 
-		first.then(() => {
-			pokemonTag.css({
-				opacity: "0",
-				transition: "",
-				transform: ""
-			})
-
-			return new Promise(resolve => {
-				trainerTag.animate({
-					left: "40%"
-				}, 900)
-				
-				renderPokeballSmallCanvas(canvas, "pokeball", "closed")
-				renderPokeballSpinSmallCanvas(pokeballTag, spinDirection)
-				.then(resolve)
-			})
-		})
-		.then(() => {
-			return new Promise(resolve => {
-				let pokeballContainer = pokeballTag.parent()
-				renderPokeballSmallCanvas(canvas, "pokeball", "squish")
-
-				let filter = "brightness(4)"
-				for (let i = 6; i > 0; i--){
-					filter += ` drop-shadow(0px 0px ${i * 5}px white)`
-				}
-				pokeballContainer.css({
-					transition: "1s filter",
-					filter: filter
+		//If this is a wild pokemon, the pokemon just slides in from the side.
+		//Otherwise, it enters from a pokeball.	
+		if (trainerIndex === 0 || trainer.data.name){
+			//First, the trainer throws the pokeball, then moves to the side.
+			first = first.then(() => {
+				pokemonTag.css({
+					opacity: "0",
+					transition: "",
+					transform: ""
 				})
-				delay(200).then(resolve)
-				delay(1000).then(() => {
+	
+				return new Promise(resolve => {
+					trainerTag.animate({
+						left: "40%"
+					}, 900)
+					
+					renderPokeballSmallCanvas(canvas, "pokeball", "closed")
+					renderPokeballSpinSmallCanvas(pokeballTag, spinDirection)
+					.then(resolve)
+				})
+			})
+			//Then, the pokeball appears to open.
+			//Midway through this section, the next animation plays.
+			.then(() => {
+				return new Promise(resolve => {
+					let pokeballContainer = pokeballTag.parent()
+					renderPokeballSmallCanvas(canvas, "pokeball", "squish")
+	
+					let filter = "brightness(4)"
+					for (let i = 6; i > 0; i--){
+						filter += ` drop-shadow(0px 0px ${i * 5}px white)`
+					}
 					pokeballContainer.css({
-						filter: ""
+						transition: "1s filter",
+						filter: filter
+					})
+					delay(200).then(resolve)
+					delay(1000).then(() => {
+						pokeballContainer.css({
+							filter: ""
+						})
+					})
+					.then(() => delay(1000)).then(() => pokeballContainer.css({
+						transition: ""
+					}))
+				})
+			})
+			//Last, the pokemon grows out of the pokeball.
+			//This is when the pokemon is considered to have been fully sent out.
+			.then(() => {
+				delay(50).then(() => renderPokeballSmallCanvas(canvas, "pokeball", "open"))
+				.then(() => delay(300))
+				.then(() => renderPokeballSmallCanvas(canvas, "pokeball", "none"))
+				this.sendOutPokemon(trainerIndex, pokemon)
+	
+				let h = pokemonSection.height()
+				pokemonTag.css({
+					opacity: "1",
+					transform: `translateY(${h * 0.35}px) scale(0.05)`,
+					filter: `brightness(4)`
+				})
+				const animate = p => {
+					let top = interpolate(h * 0.35, 0, bezierEase(p))
+					let scale = interpolate(0.05, 1, bezierEase(p))
+					let brightness = interpolate(4, 1, bezierEase(p))
+					let transform = `translateY(${top}px) scale(${scale})`
+					let filter = `brightness(${brightness})`
+					
+					for (let i = Math.floor(6 * (1 - p)); i > 0; i--){
+						let strength = interpolate(5, 0, bezierEase(p))
+						filter += ` drop-shadow(0px 0px ${i * strength}px white)`
+					}
+	
+					pokemonTag.css({
+						transform: transform,
+						filter: filter
+					})
+				}
+	
+				return new Promise(resolve => {
+					$({val:0}).animate({val: 1}, {
+						duration: 1000,
+						step: function(){
+							animate(this.val)
+						},
+						complete: function(){
+							animate(1)
+							resolve()
+						}
+					})
+				}).then(() => {
+					pokemonTag.css({
+						transform: "",
+						filter: "",
 					})
 				})
-				.then(() => delay(1000)).then(() => pokeballContainer.css({
-					transition: ""
-				}))
 			})
-		})
-		.then(() => {
-			delay(50).then(() => renderPokeballSmallCanvas(canvas, "pokeball", "open"))
-			.then(() => delay(300))
-			.then(() => renderPokeballSmallCanvas(canvas, "pokeball", "none"))
-			this.sendOutPokemon(trainerIndex, pokemon)
-
-			let h = pokemonSection.height()
-			pokemonTag.css({
-				opacity: "1",
-				transform: `translateY(${h * 0.35}px) scale(0.05)`,
-				filter: `brightness(4)`
-			})
-			const animate = p => {
-				let top = interpolate(h * 0.35, 0, bezierEase(p))
-				let scale = interpolate(0.05, 1, bezierEase(p))
-				let brightness = interpolate(4, 1, bezierEase(p))
-				let transform = `translateY(${top}px) scale(${scale})`
-				let filter = `brightness(${brightness})`
-				
-				for (let i = Math.floor(6 * (1 - p)); i > 0; i--){
-					let strength = interpolate(5, 0, bezierEase(p))
-					filter += ` drop-shadow(0px 0px ${i * strength}px white)`
+		} else {
+			first = first.then(() => new Promise(resolve => {
+				this.sendOutPokemon(trainerIndex, pokemon)
+				let width = pokemonSection.width()
+				let facing = pokemon.data.imageFacing
+				let directionMult = 1
+				if (facing === "right"){
+					directionMult = -1
 				}
-
+				let left = width * directionMult
 				pokemonTag.css({
-					transform: transform,
-					filter: filter
+					transition: "0s transform",
+					transform: `translateX(${left}px)`,
 				})
-			}
+				setTimeout(() => {
+					pokemonTag.css({
+						transition: "0.5s transform",
+						transform: "translateX(0px)"
+					})
+				}, 50)
+				
+				setTimeout(() => {
+					resolve()
+				}, 600)
+			}))
+		}
 
-			return new Promise(resolve => {
-				$({val:0}).animate({val: 1}, {
-					duration: 1000,
-					step: function(){
-						animate(this.val)
-					},
-					complete: function(){
-						animate(1)
-						resolve()
-					}
-				})
-			}).then(() => {
-				pokemonTag.css({
-					transform: "",
-					filter: "",
-				})
-			})
-		})
-		.then(() => resolvePromise())
+		first.then(resolvePromise)
 		return promise
 	}
 	sendOutPokemon(trainerIndex, pokemon){
 		let tags = this.trainerTags[trainerIndex]
 		let name = pokemon.name
 		let pokemonName = pokemon.pokemonName
-		let src = pokemon.data.imageSources[pokemonName]
+		let src = pokemon.data.imageSources.large
 		let facing = pokemon.data.imageFacing
 		let correctFacing = trainerIndex === 0 ? "right" : "left"
 		tags.pokemonImage.attr("src", src)
@@ -1833,6 +2082,10 @@ class Round{
 		if (cry){
 			loadSound(`${pokemonName}-cry`, "cry", cry)
 			.then(() => playSound(`${pokemonName}-cry`))
+
+			this.promise.then(() => {
+				unloadSound(`${pokemonName}-cry`)
+			})
 		}
 
 		if (facing !== correctFacing){
@@ -1841,6 +2094,7 @@ class Round{
 			tags.pokemonImageSection.removeClass("flip")
 		}
 
+		tags.pokemonImage.popover("dispose")
 		tags.pokemonImage.popover({
 			content: () => {
 				return this.getPokemonPopoverContent(pokemon)
@@ -1875,10 +2129,11 @@ class Round{
 		if (this.trainers[0].activePokemon === pokemon) return
 		this.currentlySwappingPokemon = true
 		this.animateSendOutPokemon(trainerIndex, pokemon)
+		let turn = this.turn
 		.then(() => {
 			this.currentlySwappingPokemon = false
 			this.currentlyEndingTurn = true
-			this.turnEnd()
+			return this.turnEnd(turn)
 		})
 	}
 
@@ -1912,8 +2167,25 @@ class Round{
 				let moveIndex = pokemon.moves.indexOf(move)
 				tag.attr("data-move", moveIndex)
 
+				let popoverHTML = () => {
+					let html = $(`<div class='move-popover'></div>`)
+					let statLine = $(`<div class="d-flex flex-row-reverse justify-content-between stat-line">`)
+					statLine.append(`<div class="move-recharge">
+						<img src="src/img/recharge.png">
+						<div class="count">${move.rechargeTurns}</div>
+					</div>`)
+					if (move.power === 0 || move.power){
+						statLine.append(`<span>Power: ${move.power}</span>`)
+					}
+					html.append(statLine)
+					let description = getLocaleString("description", lang, ["moves", move.name])
+					html.append(`<span>${description}</span>`)
+					return html
+				}
+
 				tag.popover({
-					content: move.description,
+					content: popoverHTML,
+					html: true,
 					trigger: "hover",
 					placement: i === 0 ? "right" : "left"
 				})
@@ -2040,9 +2312,9 @@ class Pokemon{
 	constructor(name, pokemonName, options){
 		this.uuid = options?.uuid ?? window.crypto.randomUUID()
 		this.owner = options?.owner ?? playerSaveId
-		this.name = name
-		this.pokemonName = pokemonName ?? this.name
-		this.data = pokemonData[this.pokemonName]
+		this.data = pokemonData[pokemonName]
+		this.name = name ?? this.data.name
+		this.pokemonName = pokemonName ?? pokemonData.name
 		this.types = []
 		this.data.types.forEach(type => this.types.push(type))
 		this.level = options?.level ?? 1
@@ -2066,7 +2338,7 @@ class Pokemon{
 		}
 
 		//Yikes this stuff is gonna be fun
-		this.hp = this.getStat("hp")
+		this.hp = options?.hp ?? this.getStat("hp")
 		this.maxhp = this.getStat("hp")
 		this.exp = options?.exp ?? this.getEXPNeededForLevel(this.level)
 
@@ -2105,6 +2377,12 @@ class Pokemon{
 						name: "burn"
 					}
 				} break
+				case "confused": {
+					status = {
+						name: "confused",
+						turns: Math.floor(Math.random() * 4) + 2
+					}
+				} break
 				default:
 					console.warn("You never handled", status)
 					status = {
@@ -2112,6 +2390,8 @@ class Pokemon{
 					}
 				break
 			}
+		} else {
+			console.warn("Non-string status effect added", status)
 		}
 
 		status.sourceMove = source
@@ -2119,6 +2399,7 @@ class Pokemon{
 		status.sourceTrainer = owner
 
 		let prevented = false
+		//Fire pokemon can't be burned
 		if (status.name === "burn" && this.types.includes("Fire")){
 			prevented = true
 		}
@@ -2197,15 +2478,30 @@ class Pokemon{
 	}
 
 	gainEnergy(energy){
-		for (let color in energy){
-			this.gainEnergyColor(color, energy[color])
+		let result = {}
+		for (let color of colors){
+			result[color] = 0
+			if (color in energy){
+				result[color] = this.gainEnergyColor(color, energy[color])
+			}
 		}
+		return result
 	}
 	gainEnergyColor(color, amount){
-		this.energy[color] += amount
-		if (this.energy[color] > this.maxEnergy[color]){
-			this.energy[color] = this.maxEnergy[color]
+		let result = 0
+		let energy = this.energy
+		let maxEnergy = this.maxEnergy
+		if (energy[color] + amount < 0){
+			result = energy[color] * -1
+			energy[color] = 0
+		} else if (energy[color] + amount > maxEnergy[color]){
+			result = maxEnergy[color] - energy[color]
+			energy[color] = maxEnergy[color]
+		} else {
+			result = amount
+			energy[color] += amount
 		}
+		return result
 	}
 
 	getEXPNeededForLevel(level){
@@ -2596,11 +2892,37 @@ function beginRound(trainerData){
 		if (data.levelMin && data.levelMax){
 			data.level = randomFrom(data.levelMin, data.levelMax)
 		}
-		return new Pokemon(data.pokemonName, data.pokemonName, data)
+		return new Pokemon(undefined, data.pokemonName, data)
 	})
 	let enemy = new Trainer("Enemy", enemyPokemon, trainerData)
 	gameRound = new Round(player, enemy, resolvePromise)
 	gameBoard = gameRound.board
 
 	return promise
+}
+
+function canPokemonBeHealed(pokemonList){
+	let healables = []
+	let toPerform = {
+		hp: 0,
+		debuffs: []
+	}
+	for (let pokemon of pokemonList){
+		let healed = false
+		if (pokemon.hp < pokemon.maxhp){
+			healed = true
+			toPerform.hp += pokemon.maxhp - pokemon.hp
+		}
+		let debuffs = pokemon.statusEffects.filter(s => {
+			let name = s.name
+			let data = pokemonStatusData[name]
+			return data && data.class === "debuff"
+		})
+		debuffs.forEach(s => debuffs.push(s))
+		if (healed){
+			healables.push(pokemon)
+		}
+	}
+	toPerform.pokemon = healables
+	return toPerform
 }

@@ -1,0 +1,66 @@
+Move effects:
+  play-sound:
+    param: name
+    The move should have an object in its "sounds" property. This effect plays the sound within that object with the given name.
+  choose-tiles:
+    param: count (default 1)
+    The game waits for the player to choose [count] tiles
+    Once finished, the list of chosen tiles is saved in the moveUseInfo.
+  shuffle:
+    just shuffles the board
+  end-turn:
+    just ends the turn
+  damage:
+    deals damage to the opponent based on the move's power and lots of other stuff.
+  recoil-percent:
+    param: percent
+    deals damage to the user equal to that percent of the user's hp.
+  apply-debuff:
+    param: debuff (object)
+    Applies a debuff to the opponent. Currently only accepts stat debuffs, described by an object with type: "stat", stat: <which-stat>, and amount: <number-of-stages>
+    As in pokemon, stats go up or down in integer stage amounts.
+  burn:
+    param: chance (default 1)
+    <chance>% of the time, applies the burn status to the opponent.
+  select-random-tiles:
+    param: count (default 0)
+    Randomly selects <count> of the tiles on the board
+    The chosen tiles are written in the effect's info
+  apply-status-to-tiles:
+    param: selection (str)
+    param: which (index)
+    param: status (obj)
+    Applies the status to the given tiles.
+  change-tile-type:
+    param: selection (str)
+    param: which (index)
+    param: target (str, type)
+    Changes the selected tiles to the given type.
+  count-tiles:
+    param: options (obj)
+    Counts the tiles which match the description laid out by the options object.
+  load-number:
+    param: value (int)
+    param: index (int, optional)
+    Allows you to insert a number into a move's effects, assembly-style. It's done this way so that other effects are able to be coded more dynamically.
+  multiply-numbers:
+    The value saved in this effect's info will be the product of the values of the two previous effect's info's.
+  random-number:
+    param: min (int, default 0)
+    param: max (int, default 10)
+    Chooses a random integer between <min> and <max>, inclusive.
+  jump-if-less-than:
+    param: jumpTo (number)
+    Tests whether the number loaded 2 instructions ago is less than the number which was loaded 1 instruction ago. If so, sets the current instruction to the index listen in jumpTo.
+  select-energy-colors:
+    param: count (number)
+    param: search
+    param: target
+    Returns a list of energy colors based off of the given values. <search> defiens which mode to use when looking for the colors.
+    <search=random> will return <count> colors chosen randomly.
+    <search=most-full> will return the <count> colors which the target is most full of.
+    <target> defines which pokemon to use when looking for colors. It can only be "opponent" right now.
+
+Pokemon Status Effects:
+  burn:
+    at the start of the victim's turn, deal damage to the victim equal to 1/32 of their hp.

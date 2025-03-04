@@ -1,3 +1,52 @@
+3/4:
+	- FINALLY when a pokemon leaves they move in the RIGHT DIRECTION that was SO ANNOYING to debug
+	- Added Yungoos & Alolan Rattata
+	- Added Leer, Payback, Tail Whip
+	- Added some new move effects
+	- Added some sounds to existing moves that didn't have any
+	- Pokemon images are stored in a less stupid way
+	- Fixed a bug where while choosing a starter you could look at unintended categories.
+
+3/3 (6900 lines) (nice):
+	- I've decided for now that Confused sometimes makes your turn end if you use a move
+	- The game now unloads many sound effects when a round ends, for memory purposes later I guess? I doubt anyone's gonna play this long enough for that to matter
+	- Hovering over a move now shows you how long it'll take to recharge after use.
+	- There's now a button in the level select screen that heals your pokemon.
+	- A Pokemon's hp is now saved when you leave the game.
+
+3/1:
+	- Fixed a bug where when you lose a round you're considered to have still won.
+	- All text that moves use is now moved to the locale file, so it can change based on language.
+	- Adding energy to pokemon is way less cumbersome now
+	- Added 3 new move effects
+	- Bug Bite now has an additional effect where it steals some energy from the victim.
+	- Added Ledyba
+	- Added Supersonic
+	- Added Confused. I haven't decided what Confused should do.
+
+2/28 (6400 lines of code):
+	- Added Caterpie
+	- Added its moves, Tackle, String Shot, and Bug Bite.
+	- Levels may now include multiple trainers
+	- Fixed a bug where health bars would flicker between colors if you were right on the cusp of changing colors, for example if you were at exactly 1/5 health.
+	- Fixed a bug where when pokemon would be swapped out, they might move in the wrong direction.
+	- Fixed a bug where when you swapped pokemon, the enemy would take their turn during your swap animation.
+
+2/27 2025 (6300 lines of code):
+	- House almost burned down while I was working on this the first time.
+	- So I had a hard time picking this back up again.
+	- I always wanted to, but it's just so hard to disconnect things in my head.
+	- But let's see how far I can go this time?
+	- Re-did the database code used when new data gets added.
+	- Put in some framework for moving strings that the player sees to another file. This is good for organization as well as laying the groundwork for using other languages. Not that I plan to.
+	- Now when you hover over a level it can show a description.
+	- Improved the popups that display when you select/hover over a level. I'm quite happy with them now.
+	- Added wild pokemon music.
+	- Optimized the loading at the beginning of the game
+	- This is more for me and less for you, but I wrote a nice little documentation of all of the different effects moves can do so far.
+	- I *believe* I've finally fixed that annoyinng issue where the game would just slowly freeze up if you were tabbed out for too long.
+	- I don't remember exactly what rules old me was using when they were writing down lines of code stats, so take that number with a grain of salt here. I *do* remember what the smoke smelled like, though.
+
 6/16:
 	- Fixed that bug where the loading bar would get stuck midway through the bar.
 
@@ -148,6 +197,6 @@
 	- match detection works! i've decided to consider T and L-shaped matches to be 2 separate matches.
 	- tiles are now affected by gravity and replaced by new tiles.
 
-5/29:
+5/29 2024:
 	- started. i've never made a match 3 game before.
 	- mostly just got the very basic layout working.

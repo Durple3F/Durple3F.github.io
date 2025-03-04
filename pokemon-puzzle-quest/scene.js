@@ -40,20 +40,6 @@ function startScene(name, options){
 				let caught = new Pokemon(pokemon.name, pokemon.name, {level: 5})
 				catchPokemon(caught)
 
-				//Remove this once it works
-				.then(() => {
-					let caught = new Pokemon("Comfey", "Comfey", {level: 5})
-					return catchPokemon(caught)
-				})
-				.then(() => {
-					let caught = new Pokemon("Popplio", "Popplio", {level: 5})
-					return catchPokemon(caught)
-				})
-				.then(() => {
-					let caught = new Pokemon("Comfey", "Comfey", {level: 5})
-					return catchPokemon(caught)
-				})
-
 				.then(resolvePromise)
 			}
 			const choose = (event, pokemon) => {
@@ -71,9 +57,10 @@ function startScene(name, options){
 				}
 			}
 			const getPopover = pokemon => {
+				let image = pokemon.imageSources.large
 				let html = `<div class='text-center'>${pokemon.name}
 				<div>
-				<img class='pokemon-image' src='${pokemon.imageSources[pokemon.name]}'>
+				<img class='pokemon-image' src='${image}'>
 				</div></div>`
 				return html
 			}
@@ -91,7 +78,9 @@ function startScene(name, options){
 
 					//Now add a tiny, nearly-invisible image of that pokemon
 					//(just to get the image preloaded)
-					chooseTag.append(`<img class='invisible-image' src='${pokemon.imageSources[pokemon.name]}'>`)
+					console.log(pokemon)
+					let image = pokemon.imageSources.large
+					chooseTag.append(`<img class='invisible-image' src='${image}'>`)
 				}
 
 				for (let pair of tags){
@@ -119,6 +108,10 @@ function startScene(name, options){
 				}
 			}
 			const changeGroup = (indexMod, firstLeft, secondLeft) => {
+				if (currentIndex === 0 && indexMod < 0 ||
+					  currentIndex === groups.length - 1 && indexMod > 0){
+					return
+				}
 				currentIndex += indexMod
 				chooseTag.children(".ball").popover("hide")
 				chooseTag.animate({
@@ -159,12 +152,46 @@ function startScene(name, options){
 			let listTag = $(`<div class='route-list'></div>`)
 			let routeTag = $(`<div class='route-screen'></div>`)
 
-			let pcBtn = $(`<div class='route-button' id='pc-button'></div>`)
+			let pcBtn = $(`<button class='route-button btn btn-primary mx-3 my-1' id='pc-button'></button>`)
 			pcBtn.append(`<div class='route-button-text'>My PC</div>`)
 			pcBtn.click(() => {
 				changeScene("pc")
 			})
 			listTag.append(pcBtn)
+
+			let pokemonCenterBtn = $(`<button class='route-button btn btn-primary mx-3 my-1' id='pokemon-center-button'></button>`)
+			pokemonCenterBtn.append(`<div class='route-button-text'>Restore All Pokemon</div>`)
+			pokemonCenterBtn.click(() => {
+				//TODO: Maybe make the pokemon center an entire screen?
+				playSound("healing")
+				playerActivePokemon.forEach(p => {
+					//Full health
+					p.hp = p.maxhp
+					//Remove all debuffs
+					let debuffs = p.statusEffects.filter(s => {
+						let name = s.name
+						let data = pokemonStatusData[name]
+						return data && data.class === "debuff"
+					})
+					debuffs.forEach(s => {
+						p.statusEffects.splice(p.statusEffects.indexOf(s), 1)
+					})
+				})
+				determinePokemonCenterActiveness()
+			})
+			//Should pokemonCenterBtn be active?
+			let determinePokemonCenterActiveness = () => {
+				let healData = canPokemonBeHealed(playerActivePokemon)
+				console.log(healData)
+				if (healData.pokemon.length){
+					pokemonCenterBtn.attr("disabled", false)
+				} else {
+					pokemonCenterBtn.attr("disabled", true)
+				}
+			}
+			determinePokemonCenterActiveness()
+			
+			listTag.append(pokemonCenterBtn)
 
 			const getLevels = name => {
 				routeTag.html("")
@@ -176,20 +203,49 @@ function startScene(name, options){
 					let btn = getLevelButtonHtml(level)
 					btn.popover({
 						placement: "top",
-						trigger: "hover focus",
+						trigger: "focus",
 						html: true,
 						content: () => getPopover(level)
 					})
 					levelButtons.push(btn)
 					routeTag.append(btn)
+					btn.on("mouseenter", function(){
+						let popoverId = btn.attr("aria-describedby")
+						if (!popoverId){
+							btn.popover("show")
+						}
+					})
+					function waitBeforeHiding(){
+						let popoverId = btn.attr("aria-describedby")
+						setTimeout(function(){
+							let p = $("#" + popoverId)
+							let onPopover = p[0] === currentHoveredElement
+							let inPopover = p.has(currentHoveredElement).length > 0
+							let onBtn = btn[0] === currentHoveredElement
+							let inBtn = btn.has(currentHoveredElement).length > 0
+							// console.log(currentHoveredElement, onPopover, inPopover, onBtn, inBtn)
+							//If the mouse is NOWHERE RELATED TO THE LEVEL
+							if (!onPopover && !inPopover && !onBtn && !inBtn){
+								btn.popover("hide")
+							} else {
+								p.off("mouseleave")
+								p.on("mouseleave", waitBeforeHiding)
+							}
+						}, 200)
+					}
+					btn.on("mouseleave", waitBeforeHiding)
 				})
 				levelButtons.forEach(btn => {
 					$(btn).click(chooseLevel)
 				})
 			}
 			const getPopover = level => {
-				let content = $(`<div class='d-flex flex-column align-items-center justify-content-center'></div>`)
+				let content = $(`<div class='level-popover d-flex flex-column align-items-center justify-content-center'></div>`)
 				content.append(`<div class='name'>${level.name}</div>`)
+				if (level.description){
+					let description = getLocaleString(level.description, lang)
+					content.append(`<div class='desc'>${description}</div>`)
+				}
 				let btn = $(`<button class='btn btn-primary'>Play Level </button>`)
 				btn.append("<i class='bi bi-play-circle-fill'></i>")
 				btn.click(() => confirmChoice(level))
@@ -282,7 +338,7 @@ function startScene(name, options){
 			const displayPokemon = p => {
 				let pokemon = new Pokemon(p.name, p.pokemonName, p)
 				let images = pokemon.data.imageSources
-				let source = images["home"] ?? images[pokemon.pokemonName]
+				let source = images.home ?? images.large
 				let img = $(`<img class='pokemon-image'>`)
 				img.attr("src", source)
 				img.attr("data-pokemon-id", pokemon.uuid)
@@ -312,8 +368,8 @@ function startScene(name, options){
 					container.attr("data-index", i)
 					if (p){
 						container.attr("data-pokemon-id", p.uuid)
-						let sources = p.data.imageSources
-						let image = sources["home"] ?? sources[p.pokemonName]
+						let images = p.data.imageSources
+						let image = images.home ?? images.large
 						let img = $(`<img src='${image}' class='pokemon-image'>`)
 						img.css("opacity", 1)
 						container.append(img)
@@ -425,8 +481,8 @@ function startScene(name, options){
 				let tag = $(`<img id='pokemon-dragger'>`)
 				tag.css("opacity", 0)
 				heldPokemonTag = tag
-				let sources = pokemon.data.imageSources
-				let image = sources["home"] ?? sources[pokemon.pokemonName]
+				let images = pokemon.data.imageSources
+				let image = images.home ?? images.large
 				tag.attr("src", image)
 				$("body").append(tag)
 				.css("cursor", "pointer")
@@ -517,8 +573,12 @@ function startScene(name, options){
 			confirmButton.click(() => {
 				clearInterval(pcInterval)
 				clearInterval(holdInterval)
+				resolvePromise()
 				changeScene("route", {name: "Route 1"})
 			})
+		} break
+		case "pokemon-center": {
+
 		} break
 		default: {
 			console.warn("What scene??", name)
@@ -576,7 +636,7 @@ function askToRenamePokemon(pokemon){
 	let promise = new Promise(resolve => resolvePromise = resolve)
 	let modal = $("#modal")
 	let pokemonName = pokemon.pokemonName
-	let image = pokemon.data.imageSources[pokemonName]
+	let image = pokemon.data.imageSources.large
 
 	clearModal(modal)
 
@@ -620,7 +680,7 @@ function beginLevel(levelID){
 	}
 
 	let promise = advanceCurrentLevel()
-	.then((val) => {
+	.then(val => {
 		console.log(val)
 		if (val === "lose"){
 			console.log("You lose :(")
@@ -639,12 +699,12 @@ function advanceCurrentLevel(){
 	let effects = currentLevelProgress.effects
 	let effectIndex = currentLevelProgress.effectIndex
 	let effect = effects[effectIndex]
-	let trainerData = level.trainers[0]
 
 	switch (effect.type){
 		case "fight": {
+			let trainerIndex = effect.trainer ?? 0
+			let trainerData = level.trainers[trainerIndex]
 			promise = beginRound(trainerData)
-			let result
 			
 			let NPCData = NPCTrainerData[trainerData.name] ?? {}
 			//If the opponent is wild
@@ -654,13 +714,13 @@ function advanceCurrentLevel(){
 		} break
 	}
 
+	promise = promise.then(val => new Promise(resolve => {
+		currentLevelProgress.effectIndex += 1
+		resolve(val)
+	}))
 	if (effects[effectIndex + 1]){
 		promise = promise.then(val => {
 			return advanceCurrentLevel()
-		})
-	} else {
-		promise = promise.then(val => {
-			console.log("Finished level :)")
 		})
 	}
 
@@ -712,13 +772,14 @@ function choosePokemon(message, pokemon, minChooseable=1, maxChooseable=1){
 		let p = pokemon[i]
 		let box = $(`<div class='col col-6'></div>`)
 		let chooseable = $(`<div class='chooseable m-1' data-choose='${i}'></div>`)
+		let image = p.data.imageSources.large
 		chooseable.html(`
 			<div class='row mb-3'>
 				<div class='col d-flex flex-column justify-content-center'>
 					<p>${p.name}</p>
 				</div>
 				<div class='col text-end'>
-					<img class='pokemon-image' src='${p.data.imageSources[p.pokemonName]}'>
+					<img class='pokemon-image' src='${image}'>
 				</div>
 			</div>
 			<div class='health-bar'>
@@ -766,8 +827,7 @@ function viewPokemonInfo(pokemon){
 	let btn = $(`<button class='btn btn-primary'>Done</button>`)
 	modal.find(".modal-footer").append(btn)
 
-	let sources = pokemon.data.imageSources
-	let image = sources[pokemon.pokemonName]
+	let image = pokemon.data.imageSources.large
 	let content = $(`
 		<div class='pokemon-info d-flex justify-content-between align-center'>
 			<div class='pokemon-section'>
@@ -871,7 +931,8 @@ function getMoveHTML(move, useLongDescription=false){
 	let tag = $("<div class='move'></div>")
 	
 	let moveTop = $("<div class='move-top'></div>")
-	moveTop.append(`<div class='move-name'>${move.name}</div>`)
+	let moveName = getLocaleString("name", lang, ["moves", move.name])
+	moveTop.append(`<div class='move-name'>${moveName}</div>`)
 	let moveType = $(`<div class='move-type'></div>`)
 	let moveRecharge = $(`<div class='move-recharge'></div>`)
 	moveRecharge.append(`<img src='src/img/recharge.png'>`)
@@ -886,7 +947,9 @@ function getMoveHTML(move, useLongDescription=false){
 	moveTop.append(moveType)
 	tag.append(moveTop)
 
-	let desc = useLongDescription ? move.description : move.shortDescription
+	let longDescription = getLocaleString("description", lang, ["moves", move.name])
+	let shortDescription = getLocaleString("shortDescription", lang, ["moves", move.name])
+	let desc = useLongDescription ? longDescription : shortDescription
 	tag.append(`<div class='move-desc'>${desc}</div>`)
 
 	let moveCostTag = $("<div class='move-cost'></div>")

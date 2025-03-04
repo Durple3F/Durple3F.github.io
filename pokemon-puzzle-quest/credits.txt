@@ -6,5 +6,6 @@ Pokeball Icon taken from specifically the Inuktitut Wikipedia, because that was 
 
 All trainer icons are from https://play.pokemonshowdown.com/sprites/trainers/
 Also the pokemon cries are from there too https://play.pokemonshowdown.com/audio/cries/
+- Hau sprite made by Beliot419
 
-The image of the briefcase at the beginning is AI generated, I wasn't happy with how well I could remove the pokeballs myself.
+The image of the briefcase at the beginning is taken from the game, but the pokeballs were removed with AI. Looking to remove that at some point.

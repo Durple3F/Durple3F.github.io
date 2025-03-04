@@ -1,28 +1,118 @@
 const dbName = "pokemon-puzzle-quest"
 let db
 
+const dbStores = [
+	{
+		name: "save-file",
+		options: {autoIncrement: true}, 
+		indexes: []
+	},
+	{
+		name: "pokemon",
+		options: { autoIncrement: true },
+		indexes: [
+			{
+				name: "uuid",
+				path: ["uuid"],
+				options: { unique: true }
+			},
+			{
+				name: "owner",
+				path: ["owner"],
+				options: { unique: false }
+			},
+			{
+				name: "pc-box",
+				path: ["pcBox"],
+				options: { unique: false }
+			}
+		]
+	},
+	{
+		name: "levels",
+		options: { autoIncrement: true },
+		indexes: [
+			{
+				name: "save-file",
+				path: ["saveFile"],
+				options: { unique: false }
+			}
+		]
+	},
+	{
+		name: "boxes",
+		options: { autoIncrement: true },
+		indexes: [
+			{
+				name: "owner",
+				path: ["owner"],
+				options: { unique: false }
+			}
+		]
+	}
+]
+
+function createObjectStore(store){
+	if (!store.options) store.options = {}
+	if (!store.indexes) store.indexes = []
+
+	let promise = new Promise(resolve => {
+		if (!db.objectStoreNames.contains(store.name)){
+			const objStore = db.createObjectStore(store.name, store.options)
+			for (let index of store.indexes){
+				objStore.createIndex(index.name, index.path, index.options)
+			}
+			resolve()
+		} else {
+			resolve()
+		}
+	})
+	return promise
+}
+
 function openDatabase(){
 	let promise = new Promise(resolve => {
-		const dbRequest = indexedDB.open(dbName, 2) 
+		const dbRequest = indexedDB.open(dbName, 1)
 
 		dbRequest.onupgradeneeded = (event) => {
 			db = event.target.result
-			const saveFileStore = db.createObjectStore("save-file", {autoIncrement: true})
+			let txn = event.target.transaction
 
-			const pokemonStore = db.createObjectStore("pokemon", {autoIncrement: true})
-			pokemonStore.createIndex("uuid", ["uuid"], {unique: true})
-			pokemonStore.createIndex("owner", ["owner"], {unique: false})
-			pokemonStore.createIndex("pc-box", ["pcBox"], {unique: false})
-
-			const levelStore = db.createObjectStore("levels", {autoIncrement: true})
-			levelStore.createIndex("save-file", ["saveFile"], {unique: false})
-
-			const boxStore = db.createObjectStore("boxes", {autoIncrement: true})
-			boxStore.createIndex("owner", ["owner"], {unique: false})
+			let promises = []
+			for (let store of dbStores){
+				let p = createObjectStore(store)
+				promises.push(p)
+			}
+			let promise = Promise.all(promises)
+			.then(() => {
+				let promises = []
+				for (let store of dbStores){
+					let p = new Promise(resolve => {
+						const dbStore = txn.objectStore(store.name)
+						for (let index of store.indexes){
+							console.log(store, index.name)
+							console.log(dbStore.indexNames)
+							if (!dbStore.indexNames.contains(index.name)){
+								//Create that index
+								dbStore.createIndex(index.name, index.path, index.options)
+							}
+						}
+						resolve()
+					})
+					promises.push(p)
+				}
+				return Promise.all(promises)
+			})
+			return promise
 		}
 		
 		dbRequest.onsuccess = event => {
 			db = event.target.result
+
+			//Now check that all stores have the correct indexes
+			
+
+			// Promise.all(promises).then(resolve)
 			resolve()
 		}
 	})
@@ -61,6 +151,7 @@ function savePokemon(pokemon){
 		obj.owner = pokemon.owner
 		obj.name = pokemon.name
 		obj.pokemonName = pokemon.pokemonName
+		obj.hp = pokemon.hp
 		obj.level = pokemon.level
 		obj.exp = pokemon.exp
 		obj.ivs = pokemon.ivs

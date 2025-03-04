@@ -1,5 +1,6 @@
 const canvas = $("#screen")[0]
 const ctx = canvas.getContext("2d")
+const lang = "en"
 
 const mouse = {
 	x: 0,
@@ -10,6 +11,7 @@ const mouse = {
 	upX: 0,
 	upY: 0
 }
+let currentHoveredElement
 
 const boardSize = 8
 let frameRate = 60
@@ -338,6 +340,9 @@ function stopSound(name){
 		toCheck.splice(0, 1)
 	}
 }
+function unloadSound(name){
+	delete sounds[name]
+}
 function fadeSoundVolume(snd, from, to){
 	let promise = new Promise(resolve => {
 		$({val: from}).animate({val: to}, {
@@ -493,6 +498,7 @@ function tick(){
 }
 
 function handleMouseMove(event){
+	currentHoveredElement = event.target
 	let canvasOffset = $(canvas).offset()
 	mouse.x = event.clientX - canvasOffset.left
 	mouse.y = event.clientY - canvasOffset.top
@@ -570,12 +576,15 @@ function loadResources(){
 		{name: "cascade5", type: "sound", url: "src/audio/Cascade5.wav"},
 		{name: "cascade6", type: "sound", url: "src/audio/Cascade6.wav"},
 		{name: "level-up", type: "sound", url: "src/audio/Level Up!.wav"},
+		{name: "healing", type: "sound", url: "src/audio/healing.mp3"},
 	]
 	loadedResources[3] = sounds.length
 
+	let localeFinished = 0
+
 	let update = () => {
-		let total = loadedResources[1] + loadedResources[3]
-		let complete = loadedResources[0] + loadedResources[2]
+		let total = loadedResources[1] + loadedResources[3] + 1
+		let complete = loadedResources[0] + loadedResources[2] + localeFinished
 		let completeTag = $("#loading-bar > .count > .count")
 		let shown = parseInt(completeTag.text() || 0)
 		animateTextCounter(shown, complete, completeTag)
@@ -586,13 +595,14 @@ function loadResources(){
 	}
 	update()
 
-	let promise = new Promise((resolve, reject) => {
-		loadSprites(sprites)
-		.then(() => {
-			return this.loadSounds(sounds)
-		})
-		.then(resolve)
-	})
+	let promise = Promise.all([
+		loadSprites(sprites),
+		loadSounds(sounds),
+		downloadLocale(lang).then(() => new Promise(resolve => {
+			localeFinished++
+			resolve()
+		}))
+	])
 	let interval = setInterval(update, 100)
 	promise = promise
 	.then(() => openDatabase())
@@ -703,6 +713,18 @@ function continueGame(){
 	})
 	.then(() => changeScene("route", {name: "Route 1"}))
 }
+
+function handleVisibilityChange(){
+	if (gameRound){
+		if (document.hidden){
+			gameRound.stopTicks()
+		} else {
+			gameRound.startTicks()
+		}
+	}
+}
+
+document.onvisibilitychange = handleVisibilityChange
 
 window.onresize = resize
 window.onmousemove = handleMouseMove

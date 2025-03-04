@@ -1,6 +1,7 @@
 const songData = {
 	"Route 201 (Day)": {source: "src/audio/songs/route201-2.mp3"},
 	"SM Trainer Battle": {source: "src/audio/songs/sm trainer battle.mp3"},
+	"SM Wild Pokemon Battle": {source: "src/audio/songs/sm wild pokemon battle.mp3"},
 }
 
 const boxThemeData = {
@@ -71,7 +72,8 @@ const levelData = [
 	{
 		id: "Route 1-1",
 		category: "Route 1",
-		name: "Test fight",
+		name: "Rival Battle 1",
+		description: "Route 1-1-description",
 		icon: "1",
 		music: "SM Trainer Battle",
 		trainers: [
@@ -80,7 +82,7 @@ const levelData = [
 				pokemon: [
 					{
 						pokemonName: "Litten",
-						level: 2
+						level: 5
 					}
 				]
 			}
@@ -90,23 +92,59 @@ const levelData = [
 	{
 		id: "Route 1-2",
 		category: "Route 1",
-		name: "Fight like 7 Comfeys",
+		name: "Route 1-2",
 		icon: "2",
-		music: "SM Trainer Battle",
+		music: "SM Wild Pokemon Battle",
 		trainers: [
 			{
 				pokemon: [
 					{
-						pokemonName: "Comfey",
-						levelMin: 3, levelMax: 5
+						pokemonName: "Pikipek",
+						levelMin: 2, levelMax: 3
+					},
+					{
+						pokemonName: "Caterpie",
+						levelMin: 2, levelMax: 3
+					},
+					{
+						pokemonName: "Ledyba",
+						levelMin: 2, levelMax: 3
 					}
 				]
-			}
+			},
 		],
 		effects: [
 			{type: "fight", trainer: 0}
 		]
-	}
+	},
+	{
+		id: "Route 1-3",
+		category: "Route 1",
+		name: "Route 1-3",
+		icon: "3",
+		music: "SM Wild Pokemon Battle",
+		trainers: [
+			{
+				pokemon: [
+					// {
+					// 	pokemonName: "Yungoos",
+					// 	levelMin: 2, levelMax: 3
+					// },
+					{
+						pokemonName: "Rattata-Alola",
+						levelMin: 2, levelMax: 3
+					},
+					// {
+					// 	pokemonName: "Spinarak",
+					// 	levelMin: 2, levelMax: 3
+					// }
+				]
+			},
+		],
+		effects: [
+			{type: "fight", trainer: 0}
+		]
+	},
 ]
 
 for (let level of levelData){
