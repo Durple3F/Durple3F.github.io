@@ -126,18 +126,18 @@ const levelData = [
 		trainers: [
 			{
 				pokemon: [
-					// {
-					// 	pokemonName: "Yungoos",
-					// 	levelMin: 2, levelMax: 3
-					// },
+					{
+						pokemonName: "Spinarak",
+						levelMin: 3, levelMax: 4
+					},
+					{
+						pokemonName: "Yungoos",
+						levelMin: 3, levelMax: 4
+					},
 					{
 						pokemonName: "Rattata-Alola",
-						levelMin: 2, levelMax: 3
-					},
-					// {
-					// 	pokemonName: "Spinarak",
-					// 	levelMin: 2, levelMax: 3
-					// }
+						levelMin: 3, levelMax: 4
+					}
 				]
 			},
 		],

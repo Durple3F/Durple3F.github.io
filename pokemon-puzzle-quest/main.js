@@ -17,6 +17,14 @@ const boardSize = 8
 let frameRate = 60
 
 const colors = ["red", "orange", "yellow", "green", "blue", "purple"]
+const cssColors = {
+	"energy-red": "#ff2f35",
+	"energy-orange": "#e57526",
+	"energy-yellow": "#e8aa00",
+	"energy-green": "#82dc42",
+	"energy-blue": "#00c0e7",
+	"energy-purple": "#dd60dd"
+}
 
 const UNITVECTORS = [
 	[1, 0],
@@ -148,19 +156,24 @@ function animateTextCounter(from, to, elem, duration){
 }
 
 function addFloatingText(text, elem, options){
-	let color = options.color ?? "white"
-	let direction = options.direction ?? "random"
-	let distance = options.distance ?? 100
-	let duration = options.duration ?? 500
-	let side = options.side ?? "center"
+	let color = options?.color ?? "white"
+	let shadow = options?.shadow ?? null
+	let fontSize = options?.fontSize ?? null
+	let direction = options?.direction ?? "random"
+	let distance = options?.distance ?? 100
+	let duration = options?.duration ?? 500
+	let side = options?.side ?? "center"
+	let angleDeviation = options?.angleDeviation ?? 0
+	let angleDevRad = angleDeviation * Math.PI / 180
 	let floater = $("<div class='floating-text'></div>")
 	floater.text(text)
 	floater.css("color", color)
 	$("body").append(floater)
 
-	let offset = $(elem).offset()
-	let width = $(elem).width()
-	let height = $(elem).height()
+	let jelem = $(elem)
+	let offset = jelem.offset()
+	let width = jelem.width()
+	let height = jelem.height()
 	let elemWidth = floater.width()
 	let elemHeight = floater.height()
 	let xOff = 0
@@ -170,8 +183,16 @@ function addFloatingText(text, elem, options){
 		xOff = offset.left + width * 0.5
 		yOff = offset.top + height * 0.5
 	} else if (side === "right"){
-		xOff = offset.left + width - elemWidth
+		xOff = offset.left + width - elemWidth * 0.5
 		yOff = offset.top + height * 0.5
+	} else if (side === "left"){
+		xOff = offset.left + elemWidth * 0.5
+		yOff = offset.top + height * 0.5
+	} else if (side === "top"){
+		xOff = offset.left + width * 0.5
+		yOff = offset.top
+	} else {
+		console.warn("You never handled", side)
 	}
 	floater.css("left", xOff)
 	floater.css("top", yOff)
@@ -191,16 +212,44 @@ function addFloatingText(text, elem, options){
 	} else if (typeof direction !== "number"){
 		console.error(direction, "is not a valid direction")
 	}
+	direction += 2*Math.random()*angleDevRad - angleDevRad
 	
 	//Presumably we've been given an angle
 	tx = xOff - Math.cos(direction) * distance
 	ty = yOff - Math.sin(direction) * distance
+
+	if (fontSize){
+		floater.css("font-size", fontSize*100+"%")
+	}
+	if (shadow){
+		floater.css("text-shadow", `${shadow} 0 0 1em`)
+	}
 
 	floater.animate({
 		left: tx, top: ty, opacity: 0
 	}, duration).queue(() => {
 		floater.remove()
 	})
+}
+
+function getCSSEnergyColor(type){
+	switch (type){
+		case "red":
+		return cssColors["energy-red"]
+		case "orange":
+		return cssColors["energy-orange"]
+		case "yellow":
+		return cssColors["energy-yellow"]
+		case "green":
+		return cssColors["energy-green"]
+		case "blue":
+		return cssColors["energy-blue"]
+		case "purple":
+		return cssColors["energy-purple"]
+		default:
+			console.warn("You never handled", type)
+			return "pink"
+	}
 }
 
 function getEmptyEnergy(){
@@ -550,6 +599,8 @@ function renderHelperSprites(){
 	let img2 = new Image()
 	img2.src = canvas.toDataURL()
 	sprites.images["friendly-circle"] = img2
+
+	//TODO would be nice to have more options for status circles
 }
 
 let loadedResources = [0, 0, 0, 0]
@@ -691,7 +742,8 @@ function continueGame(){
 	getPlayerPokemon(playerSaveId)
 	.then(result => {
 		result.forEach(obj => {
-			let pokemon = new Pokemon(obj.name, obj.pokemonName, obj)
+			console.log(obj)
+			let pokemon = new Pokemon(obj.name, obj.pokemonId, obj)
 			caughtPokemon.push(pokemon)
 
 			if (obj.activeSlot !== -1){
@@ -731,6 +783,10 @@ window.onmousemove = handleMouseMove
 window.onmousedown = handleMouseDown
 window.onmouseup = handleMouseUp
 resize()
+
+$(canvas).on("mouseenter", () => {
+	$(".popover").fadeOut()
+})
 
 loadResources()
 // .then(beginRound)

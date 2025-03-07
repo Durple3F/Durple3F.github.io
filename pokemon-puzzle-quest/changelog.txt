@@ -1,11 +1,24 @@
-3/4:
+3/6 (7800 lines):
+	- Many improvements to the process of deciding which moves a pokemon has access to at any time.
+	- Now Pokemon remember which moves they had selected the last time the game was loaded.
+	- You now see an announcement when one of your pokemon learns a new move.
+	- Fixed an issue where hovering over status effects while other stuff was happening would cause the tooltip to hang there.
+	- Added a move effect for healing.
+	- Added Absorb
+	- Added Infestation, along with a new status effect which siphons energy from the opponent.
+
+3/5:
+	- It took me SO LONG but I think I FINALLY figured out what was causing the CPU to SOMETIMES take 5 turns in a single turn
+
+3/4 (7300 lines):
 	- FINALLY when a pokemon leaves they move in the RIGHT DIRECTION that was SO ANNOYING to debug
 	- Added Yungoos & Alolan Rattata
-	- Added Leer, Payback, Tail Whip
+	- Added Leer, Payback, Tail Whip, Quick Attack, and Focus Energy
 	- Added some new move effects
 	- Added some sounds to existing moves that didn't have any
 	- Pokemon images are stored in a less stupid way
 	- Fixed a bug where while choosing a starter you could look at unintended categories.
+	- Failing to account for Pokemon with two forms earlier made a headache of the database.
 
 3/3 (6900 lines) (nice):
 	- I've decided for now that Confused sometimes makes your turn end if you use a move

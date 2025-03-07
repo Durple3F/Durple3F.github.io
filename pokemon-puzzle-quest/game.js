@@ -28,6 +28,7 @@ class Round{
 		this.activePlayerIndex = 0
 		this.inactivePlayerIndex = 1
 		this.turn = 1
+		this.turnsWhichHaveStarted = {}
 
 		this.result = null
 		this.hasBegun = false
@@ -69,6 +70,7 @@ class Round{
 	loadResources(){
 		//Find all the sounds that pokemon might play when they use moves & stuff.
 		let moveList = []
+		moveList.push(pokemonMoveData["Struggle"])
 		let soundsToUnload = []
 		for (let i = 0; i < this.trainers.length; i++){
 			let trainer = this.trainers[i]
@@ -164,7 +166,7 @@ class Round{
 		this.timeStep()
 		.then(() => {
 			this.hasBegun = true
-			return this.turnStart()
+			return this.turnStart(1)
 		})
 	}
 
@@ -200,6 +202,7 @@ class Round{
 			
 			this.promise
 			.then(() => {
+				this.removeAllStatusEffects()
 				this.savePlayerPokemon()
 				resolve(result)
 				this.resolveRound(result)
@@ -352,8 +355,9 @@ class Round{
 		} else if (this.currentlyReversingSwap){
 			this.currentlyReversingSwap = false
 		} else {
+			let turn = this.turn
 			this.timeStep()
-			.then(() => this.endMove())
+			.then(() => this.endMove(turn))
 		}
 	}
 
@@ -380,7 +384,7 @@ class Round{
 				energy[color] += energyValue[color]
 			}
 		}
-		this.giveEnergy(energy, activePokemon)
+		this.giveEnergy(energy, activeTrainer, activePokemon)
 
 		//Deal with status effects that do something when those tiles are matched
 		for (let tile of tiles){
@@ -402,7 +406,29 @@ class Round{
 
 		this.updateStats()
 	}
-	giveEnergy(energy, pokemon){
+	giveEnergy(energy, trainer, pokemon){
+		pokemon = pokemon || trainer.activePokemon
+
+		//Add little floaty bits for the energy they just gained/lost
+		for (let type in energy){
+			let amt = energy[type]
+			if (amt){
+				let bar = trainer.tags.energyBars[type][0]
+				let cssColor = getCSSEnergyColor(type)
+				let plus = amt >= 0 ? "+" : ""
+				let text = `${plus}${amt}`
+				addFloatingText(text, bar, {
+					color: cssColor,
+					side: "top",
+					direction: "up",
+					shadow: "black",
+					fontSize: 1.1,
+					duration: 1500,
+					angleDeviation: 20
+				})
+			}
+		}
+
 		return pokemon.gainEnergy(energy)
 	}
 
@@ -411,11 +437,11 @@ class Round{
 		this.currentlyCarryingOutSwap = true
 	}
 
-	endMove(){
+	endMove(turn){
 		//This is where all of the end-of-move rewards can be done
 
 		//Next turn
-		this.turnEnd(this.turn)
+		this.turnEnd(turn)
 	}
 
 	prepareToChangeTurns(newPlayer){
@@ -470,6 +496,7 @@ class Round{
 		if (this.matchesInCombo.length > 0 && !getExtraTurn){
 			return this.inactivePlayerIndex
 		}
+		this.createAnnouncement("general", "Extra turn!")
 		return this.activePlayerIndex
 	}
 
@@ -536,7 +563,7 @@ class Round{
 		
 		if (!document.hidden){
 			let board = this.board
-			let contents = board.contents
+			let contents = board.tilesOnScreen()
 			for (let tile of contents){
 				let d = distance(mouse.x, mouse.y, tile.spriteCenterX, tile.spriteCenterY)
 				let closeness = d/(board.spriteTileW * 0.5)
@@ -558,14 +585,28 @@ class Round{
 		}
 	}
 
-	turnStart(){
+	turnStart(turn){
+		if (turn !== this.turn){
+			console.warn(`Hmm, I thought we were about to start turn ${this.turn}, but I'm getting a signal that we're starting turn ${turn}`)
+			console.trace()
+			return
+		}
+		if (this.turnsWhichHaveStarted[turn]){
+			console.warn("Already started turn #",turn)
+			console.trace()
+			return
+		}
+		this.turnsWhichHaveStarted[turn] = true
 		this.currentlyEndingTurn = false
 		this.currentlyCarryingOutSwap = false
+		this.matchesInCombo.length = 0
 		this.resetCurrentlySelecting()
 		this.resetCascade()
+		
+		let trainer = this.trainers[this.activePlayerIndex]
+		let otherTrainer = this.trainers[this.inactivePlayerIndex]
 
 		//Reduce move cooldowns
-		let trainer = this.trainers[this.activePlayerIndex]
 		for (let pokemon of trainer.pokemon){
 			if (!pokemon) continue
 			for (let moveUsage of pokemon.moveUsage){
@@ -578,11 +619,26 @@ class Round{
 		//Handle start-of-turn effects
 		//Such as burned-ness
 		let activePokemon = trainer.activePokemon
-		for (let tile of this.board.contents){
+		let otherPokemon = otherTrainer.activePokemon
+		let statusEffects = activePokemon.statusEffects
+		for (let status of statusEffects){
+			if (status.type !== "status") continue
+			let statusName = status.name
+			if (statusName === "burn"){
+				activePokemon.hp -= Math.ceil(activePokemon.maxhp / 16)
+			}
+			if (statusName === "poisoned"){
+				activePokemon.hp -= Math.ceil(activePokemon.maxhp / 16)
+			}
+		}
+		let contents = this.board.tilesOnScreen()
+		for (let tile of contents){
+			if (!this.board.isOnScreen(tile)) continue
 			let statusEffects = tile.statusEffects
 			for (let status of statusEffects){
 				let isEnemy = status.sourceTrainer !== trainer
-				if (isEnemy && status.name === "Burn"){
+				let statusName = status.name
+				if (isEnemy && statusName === "Burn"){
 					let damage = activePokemon.maxhp / 32
 					this.dealDamage({
 						from: status.sourcePokemon,
@@ -592,6 +648,19 @@ class Round{
 						toTrainer: trainer,
 						damage: damage
 					})
+				} else if (isEnemy && statusName === "Infested"){
+					//Infested tiles eat some of your energy and give them to the opponent
+					let yourEnergy = activePokemon.energy
+					let usableTypes = Object.keys(yourEnergy).filter(key => yourEnergy[key])
+					let type = randomChoice(usableTypes)
+					let energyToTake = getEmptyEnergy()
+					energyToTake[type] = -1
+					let changes = this.giveEnergy(energyToTake, trainer, activePokemon)
+					let energyToGive = getEmptyEnergy()
+					for (let type in changes){
+						energyToGive[type] = changes[type] * -1
+					}
+					this.giveEnergy(energyToGive, otherTrainer, otherPokemon)
 				}
 			}
 		}
@@ -609,6 +678,7 @@ class Round{
 			//This code catches bugs and stops them from spreading
 			//But it really shouldn't ever run if I can help it.
 			console.warn("Hmm, I thought it was turn", turn, "But it's turn", this.turn, "now?")
+			console.trace()
 			return
 		}
 		let nextPlayer = this.getNextPlayer()
@@ -619,13 +689,14 @@ class Round{
 		this.currentlyReversingSwap = false
 		this.updateStats()
 		this.turn++
+		let newTurn = this.turn
 		
 		if (this.hasBegun){
 			if (this.activePlayer === "player"){
-				this.turnStart()
+				delay(300).then(() => this.turnStart(newTurn))
 			} else {
 				this.waitUntilNoAnnouncements(() => {
-					this.turnStart()
+					delay(300).then(() => this.turnStart(newTurn))
 				})
 			}
 		}
@@ -710,14 +781,41 @@ class Round{
 		}
 		body.append(container)
 
+		//The actual "give exp" code
+		let learnedMoves = []
 		for (let i = 0; i < pokemon.length; i++){
 			let p = pokemon[i]
 			let gained = toGive[p.uuid]
 			if (gained){
 				p.exp += gained
-				p.recalculateLevel()
+				let newLevel = p.recalculateLevel()
+				if (newLevel !== p.level){
+					let changes = p.changeLevel(newLevel)
+					for (let moveIndex of changes.unlocked){
+						let learn = p.learnset[moveIndex]
+						let move = pokemonMoveData[learn.name]
+						let obj = {
+							pokemon: p,
+							move: move
+						}
+						learnedMoves.push(obj)
+					}
+				}
 			}
 			savePokemon(p)
+		}
+		let announcementBox = $("<div class='d-flex text-center flex-column align-items-stretch'></div>")
+		body.append(announcementBox)
+		for (let announcement of learnedMoves){
+			let name = announcement.pokemon.name
+			let move = announcement.move
+			let moveName = getLocaleString("name", lang, ["moves", move.name])
+			let text = `${name} learned ${moveName}!`
+			createAnnouncement("general", text)
+			console.log(move)
+			let anTag = $("<div></div>")
+			anTag.text(text)
+			announcementBox.append(anTag)
 		}
 
 		modal.modal("show")
@@ -749,10 +847,11 @@ class Round{
 			})
 		}
 
+		let turn = this.turn
 		promise = promise.then(() => {
-			if (this.hasEnded) return
-			delay(250).then(() => {
-				if (this.activePlayer === "enemy"){
+			if (this.hasEnded) return Promise.resolve()
+			return delay(250).then(() => {
+				if (this.turn === turn){
 					this.computerMakeSwap()
 				}
 			})
@@ -765,7 +864,6 @@ class Round{
 		let good = []
 		//TODO it would be really nice if we could score these and sort the results
 		//by how good they are right now
-
 		for (let move of moveList){
 			//TODO watch out for stuff like healing moves, or
 			//moves that only work if the board meets certain conditions
@@ -786,7 +884,8 @@ class Round{
 				.then(() => {
 					//TODO make the computer's choices smart again!
 					//for now they just random
-					let randomTile = randomChoice(this.board.contents)
+					let pickable = this.board.tilesOnScreen()
+					let randomTile = randomChoice(pickable)
 					this.selectTile(randomTile, this.activePlayerIndex)
 				})
 			}
@@ -829,6 +928,8 @@ class Round{
 			let trainerIndex = this.trainers.indexOf(attackerTrainer)
 			let possibleMoves = this.getAvailableMoves(trainerIndex)
 			move = possibleMoves[0]
+			console.warn("Where did this damage come from??")
+			console.trace()
 		}
 
 		let power = options.power ?? move.power
@@ -885,6 +986,10 @@ class Round{
 		let healthBar = defenderTrainer.tags.healthBar
 		addFloatingText("-" + damage, healthBar, animOptions)
 		this.updateHealth(this.trainers.indexOf(defenderTrainer), true)
+
+		let result = {}
+		result.damageDealt = damage
+		return result
 	}
 
 	canPayCost(move, trainerIndex){
@@ -1013,6 +1118,38 @@ class Round{
 		.then(() => this.timeStep())
 		.then(() => this.updateEverything())
 		let params = getEffectParams(effect, effectIndex, moveUseObj)
+
+		let targetTrainers = {
+			"gain-energy": true
+		}
+		let targetDefaults = {
+			"heal": "user",
+			"get-stat": "user",
+			"apply-status-effect": "opponent",
+			"select-energy-colors": "none",
+			"gain-energy": "user"
+		}
+		let target
+		if (effect.type in targetDefaults){
+			let targetName = effect.target ?? targetDefaults[effect.type]
+			if (targetName === "opponent"){
+				let otherTrainer = this.trainers[this.inactivePlayerIndex]
+				if (targetTrainers[effect.type]){
+					target = otherTrainer
+				} else {
+					target = otherTrainer.activePokemon
+				}
+			} else if (targetName === "user"){
+				let trainer = this.trainers[this.activePlayerIndex]
+				if (targetTrainers[effect.type]){
+					target = trainer
+				} else {
+					target = trainer.activePokemon
+				}
+			} else if (targetName) {
+				console.warn("You never handled", targetName)
+			}
+		}
 		
 		switch (effectType){
 			case "play-sound": {
@@ -1047,7 +1184,7 @@ class Round{
 			} break
 			case "end-turn": {
 				this.currentlyEndingTurn = true
-				this.endMove()
+				this.endMove(this.turn)
 				resolvePromise()
 			} break
 			case "damage": {
@@ -1061,7 +1198,31 @@ class Round{
 					options.additionalPower = options.additionalPower ?? 0
 					options.additionalPower += additivePower
 				}
-				this.dealDamage(options)
+				let result = this.dealDamage(options)
+				moveUseObj.info[effectIndex] = result.damageDealt
+				resolvePromise()
+			} break
+			case "heal": {
+				let amount = params.amount ?? 0
+				let min = params.min ?? 0
+				if (amount < min){
+					amount = min
+				}
+				//Clamp it so it doesn't go above max hp
+				amount = Math.min(target.maxhp - target.hp, amount)
+				target.hp += amount
+				let animOptions = {
+					color: "#00ff00",
+					direction: randomAngle(225, 315),
+					duration: 2000,
+					distance: 30,
+					side: "right"
+				}
+				let trainer = this.trainers.find(t => t.activePokemon === target)
+				let healthBar = trainer.tags.healthBar
+				addFloatingText("+" + amount, healthBar, animOptions)
+				this.updateHealth(this.trainers.indexOf(trainer), true)
+				
 				resolvePromise()
 			} break
 			case "recoil-percent": {
@@ -1085,19 +1246,6 @@ class Round{
 			} break
 			case "get-stat": {
 				let statName = effect.which ?? "attack"
-				let targetName = effect.target ?? "player"
-				let target
-				
-				if (targetName === "opponent"){
-					let otherTrainer = this.trainers[this.inactivePlayerIndex]
-					target = otherTrainer.activePokemon
-				} else if (targetName === "player"){
-					let trainer = this.trainers[this.activePlayerIndex]
-					target = trainer.activePokemon
-				} else {
-					console.warn("You never handled", targetName)
-				}
-				
 				moveUseObj.info[effectIndex] = target.getStat(statName)
 				resolvePromise()
 			} break
@@ -1110,58 +1258,15 @@ class Round{
 				}
 				resolvePromise()
 			} break
-			case "apply-debuff": {
-				let debuff = effect.statusEffect
-				let targetName = effect.target ?? "opponent"
-				let target
-
-				if (targetName === "opponent"){
-					let otherTrainer = this.trainers[this.inactivePlayerIndex]
-					target = otherTrainer.activePokemon
-				} else if (targetName === "player"){
-					let trainer = this.trainers[this.activePlayerIndex]
-					target = trainer.activePokemon
-				} else {
-					console.warn("You never handled", targetName)
-				}
-
-				target.statusEffects.push(debuff)
-				resolvePromise()
-			} break
 			case "apply-status-effect": {
 				let statusEffect = effect.statusEffect
-				let targetName = effect.target ?? "opponent"
-				let target
-
-				if (targetName === "opponent"){
-					let otherTrainer = this.trainers[this.inactivePlayerIndex]
-					target = otherTrainer.activePokemon
-				} else if (targetName === "player"){
-					let trainer = this.trainers[this.activePlayerIndex]
-					target = trainer.activePokemon
-				} else {
-					console.warn("You never handled", targetName)
-				}
-
 				target.addStatusEffect(statusEffect, moveUseObj.trainer, moveUseObj.pokemon, moveUseObj.move)
 				resolvePromise()
 			} break
 			case "select-energy-colors": {
 				let search = effect.search ?? "random"
 				let count = params.count ?? 1
-				let targetName = effect.target ?? "none"
 				let result = []
-				let target
-				
-				if (targetName === "opponent"){
-					let otherTrainer = this.trainers[this.inactivePlayerIndex]
-					target = otherTrainer.activePokemon
-				} else if (targetName === "player"){
-					let trainer = this.trainers[this.activePlayerIndex]
-					target = trainer.activePokemon
-				} else if (targetName !== "none") {
-					console.warn("You never handled", targetName)
-				}
 
 				if (count >= colors.length){
 					colors.forEach(c => result.push(c))
@@ -1191,19 +1296,7 @@ class Round{
 				let energyColors = params.colors ?? []
 				let count = params.count ?? 1
 				let amounts = params.amounts ?? null
-				let targetName = effect.target ?? "player"
-				let target
 				let result = {}
-				
-				if (targetName === "opponent"){
-					let otherTrainer = this.trainers[this.inactivePlayerIndex]
-					target = otherTrainer.activePokemon
-				} else if (targetName === "player"){
-					let trainer = this.trainers[this.activePlayerIndex]
-					target = trainer.activePokemon
-				} else {
-					console.warn("You never handled", targetName)
-				}
 
 				if (amounts === null){
 					amounts = {}
@@ -1215,16 +1308,28 @@ class Round{
 					}
 				}
 				
-				result = target.gainEnergy(amounts)
+				result = this.giveEnergy(amounts, target, target.activePokemon)
 				
 				moveUseObj.info[effectIndex] = result
 				resolvePromise()
 			} break
 			case "select-random-tiles": {
 				let count = params.count ?? 0
+				let conditions = effect?.conditions ?? {}
 				let chosenTiles = []
+				let chooseable = this.board.tilesOnScreen()
+				.filter(t => {
+					if (conditions.notTypes){
+						let notTypes = conditions.notTypes
+						if (notTypes.includes(t.type)){
+							return false
+						}
+					}
+					return true
+				})
 				for (let i = 0; i < count; i++){
-					let canChoose = this.board.contents.filter(t => !chosenTiles.includes(t))
+					let canChoose = chooseable
+					.filter(t => !chosenTiles.includes(t))
 					if (canChoose.length === 0) break
 					chosenTiles.push(randomChoice(canChoose))
 				}
@@ -1260,6 +1365,7 @@ class Round{
 					//TODO I wish this had an animation
 					t.type = effect.targetType
 				})
+				moveUseObj.info[effectIndex] = chosenTiles
 				resolvePromise()
 			} break
 			case "count-tiles": {
@@ -1334,29 +1440,35 @@ class Round{
 			let trainer = this.trainers[this.activePlayerIndex]
 			let pokemon = trainer.activePokemon
 			let promises = []
+			let endedTurn = false
 
 			if (pokemon && pokemon.statusEffects.length){
 				let statusEffects = pokemon.statusEffects
-				let endedTurn = false
-
 				for (let status of statusEffects){
 					if (status.name === "confused"){
 						//50% chance that the turn ends.
 						if (Math.random() < 0.5 && !endedTurn){
-							console.log("Preparing to end turn...")
 							endedTurn = true
 							let p = this.createAnnouncement("general", "Turn ended due to confusion!", 1500)
-							let turn = this.turn
-							p.then(() => {
-								this.turnEnd(turn)
-							})
 							promises.push(p)
+							// this.turnEnd(this.turn)
 						}
 					}
 				}
 			}
 
-			return Promise.all(promises)
+			let promise = Promise.all(promises)
+
+			if (endedTurn){
+				let turn = this.turn
+				this.currentlyEndingTurn = true
+				// this.turnEnd(this.turn)
+				promise = promise.then(() => {
+					this.turnEnd(turn)
+				})
+			}
+
+			return promise
 		})
 		.then(() => this.checkForWinner())
 
@@ -1527,7 +1639,7 @@ class Round{
 	}
 
 	applySpriteHighlights(){
-		for (let tile of this.board.contents){
+		for (let tile of this.board.tilesOnScreen()){
 			tile.spriteHighlightTarget = 0
 		}
 		let allMoves = this.board.getAllPotentialMoves()
@@ -1586,7 +1698,7 @@ class Round{
 
 	getChosenTile(){
 		let board = this.board
-		for (let tile of board.contents){
+		for (let tile of board.tilesOnScreen()){
 			let d = distance(mouse.x, mouse.y, tile.spriteCenterX, tile.spriteCenterY)
 			let closeness = d/(board.spriteTileW * 0.5)
 			if (closeness < 1){
@@ -1792,8 +1904,8 @@ class Round{
 	}
 	updateStatusEffects(trainerIndex){
 		let statusTag = this.trainers[trainerIndex].tags.pokemonStatusSection
-		statusTag.find("[data-toggle='popover']").popover("hide")
-		statusTag.html("")
+		statusTag.find(".status-effect").popover("hide").popover("dispose")
+		statusTag.empty()
 		let pokemon = this.trainers[trainerIndex].activePokemon
 		for (let status of pokemon.statusEffects){
 			let data = pokemonStatusData[status.name]
@@ -2066,8 +2178,9 @@ class Round{
 		let correctFacing = trainerIndex === 0 ? "right" : "left"
 		tags.pokemonImage.attr("src", src)
 
-		let oldActive = this.trainers[trainerIndex].activePokemon
-		this.trainers[trainerIndex].activePokemon = pokemon
+		let trainer = this.trainers[trainerIndex]
+		let oldActive = trainer.activePokemon
+		trainer.activePokemon = pokemon
 		//Transfer half of the old pokemon's energy into the new pokemon.
 		if (oldActive !== pokemon){
 			let energy = getEmptyEnergy()
@@ -2075,7 +2188,7 @@ class Round{
 				energy[color] = Math.floor(oldActive.energy[color] * 0.5)
 				oldActive.energy[color] = 0
 			}
-			this.giveEnergy(energy, pokemon)
+			this.giveEnergy(energy, trainer, pokemon)
 		}
 
 		let cry = pokemon.data.sounds.cry
@@ -2175,7 +2288,7 @@ class Round{
 						<div class="count">${move.rechargeTurns}</div>
 					</div>`)
 					if (move.power === 0 || move.power){
-						statLine.append(`<span>Power: ${move.power}</span>`)
+						statLine.append(`<span class="move-power">Power: ${move.power}</span>`)
 					}
 					html.append(statLine)
 					let description = getLocaleString("description", lang, ["moves", move.name])
@@ -2291,6 +2404,20 @@ class Round{
 			}
 		}
 	}
+
+	removeAllStatusEffects(){
+		for (let trainer of this.trainers){
+			for (let pokemon of trainer.pokemon){
+				let statusEffects = pokemon.statusEffects
+				let statChanges = statusEffects.filter(s => {
+					return s.type === "stat"
+				})
+				statChanges.forEach(s => {
+					statusEffects.splice(statusEffects.indexOf(s), 1)
+				})
+			}
+		}
+	}
 }
 
 class Trainer{
@@ -2305,221 +2432,6 @@ class Trainer{
 			console.warn("WEE OO WEE OO")
 			console.trace()
 		}
-	}
-}
-
-class Pokemon{
-	constructor(name, pokemonName, options){
-		this.uuid = options?.uuid ?? window.crypto.randomUUID()
-		this.owner = options?.owner ?? playerSaveId
-		this.data = pokemonData[pokemonName]
-		this.name = name ?? this.data.name
-		this.pokemonName = pokemonName ?? pokemonData.name
-		this.types = []
-		this.data.types.forEach(type => this.types.push(type))
-		this.level = options?.level ?? 1
-
-		this.nature = options?.nature ?? getRandomNature()
-
-		this.ivs = {}
-		this.evs = {}
-		for (let stat in this.data.stats){
-			if (options && options.ivs){
-				this.ivs[stat] = options.ivs[stat] ?? Math.floor(Math.random() * 32)
-			} else {
-				this.ivs[stat] = Math.floor(Math.random() * 32)
-			}
-
-			if (options && options.evs){
-				this.evs[stat] = options.evs[stat] ?? 0
-			} else {
-				this.evs[stat] = 0
-			}
-		}
-
-		//Yikes this stuff is gonna be fun
-		this.hp = options?.hp ?? this.getStat("hp")
-		this.maxhp = this.getStat("hp")
-		this.exp = options?.exp ?? this.getEXPNeededForLevel(this.level)
-
-		this.learnset = this.data.learnset.map(move => move)
-		this.moves = this.learnset.map(move => pokemonMoveData[move.name])
-		this.movesUnlockedMap = []
-		this.moveUsage = this.moves.map(move => {
-			return {
-				recharge: 0
-			}
-		})
-
-		this.statusEffects = []
-
-		//You can only have 4 moves active at once
-		//TODO make the whole system for selecting which moves are active
-		//For now it's just all of them
-		this.activeMoves = []
-
-		this.determineUnlockedMoves()
-		
-		this.energy = getEmptyEnergy()
-		this.maxEnergy = getEmptyEnergy()
-		colors.forEach(c => this.maxEnergy[c] = 10)
-
-		this.pcBox = options?.pcBox ?? null
-		this.pcBoxX = options?.pcBoxX ?? null
-		this.pcBoxY = options?.pcBoxY ?? null
-	}
-
-	addStatusEffect(status, owner, pokemon, source){
-		if (typeof status === "string"){
-			switch (status){
-				case "burn": {
-					status = {
-						name: "burn"
-					}
-				} break
-				case "confused": {
-					status = {
-						name: "confused",
-						turns: Math.floor(Math.random() * 4) + 2
-					}
-				} break
-				default:
-					console.warn("You never handled", status)
-					status = {
-						name: "???"
-					}
-				break
-			}
-		} else {
-			console.warn("Non-string status effect added", status)
-		}
-
-		status.sourceMove = source
-		status.sourcePokemon = pokemon
-		status.sourceTrainer = owner
-
-		let prevented = false
-		//Fire pokemon can't be burned
-		if (status.name === "burn" && this.types.includes("Fire")){
-			prevented = true
-		}
-
-		//There are some status effects that don't stack
-		let data = pokemonStatusData[status.name]
-		let existingCopies = this.statusEffects.filter(s => s.name === status.name)
-		if (data && !data.stacks && existingCopies.length){
-			prevented = true
-		}
-
-		if (!prevented){
-			this.statusEffects.push(status)
-		}
-	}
-
-	changeLevel(level){
-		let oldMax = this.getStat("hp")
-		this.level = level
-		let newMax = this.getStat("hp")
-		this.hp += newMax - oldMax
-		this.determineUnlockedMoves()
-	}
-
-	getStat(stat){
-		let base = this.data.stats[stat]
-		let iv = this.ivs[stat]
-		let ev = this.evs[stat]
-		let level = this.level
-		let initial = Math.floor((2 * base + iv + Math.floor(ev / 4)) * level / 100)
-		if (stat === "hp"){
-			let result = initial + level + 10
-			return Math.floor(result)
-		}
-		let result = initial + 5
-		let natureMult = 1
-		if (this.nature.increase === stat) natureMult += 0.1
-		if (this.nature.decrease === stat) natureMult -= 0.1
-		result = Math.floor(result * natureMult)
-		return result
-	}
-
-	getStatStage(stat){
-		let stage = 0
-		let statuses = this.statusEffects.filter(effect => {
-			return effect.type === "stat" && effect.stat === stat
-		})
-		statuses.forEach(effect => {
-			stage += effect.amount
-		})
-		return Math.max(-6, Math.min(6, stage))
-	}
-
-	getEffectiveStat(stat){
-		let val = this.getStat(stat)
-		//Apply any buffs/debuffs
-		let stage = this.getStatStage(stat)
-		let numerator = 2 + Math.max(0, stage)
-		let denominator = 2 + Math.max(0, -stage)
-		let modifier = numerator / denominator
-		return val * modifier
-	}
-
-	determineUnlockedMoves(){
-		this.movesUnlockedMap = this.learnset.map(move => {
-			return checkIfPokemonMeetsRequirements(this, move.unlock)
-		})
-
-		//TODO gonna want to make this based on player choice later
-		//(probably limit it to just 4 moves)
-		this.activeMoves.length = 0
-		this.moves.forEach((m, i) => {
-			if (!this.movesUnlockedMap[i]) return
-			this.activeMoves.push(m)
-		})
-	}
-
-	gainEnergy(energy){
-		let result = {}
-		for (let color of colors){
-			result[color] = 0
-			if (color in energy){
-				result[color] = this.gainEnergyColor(color, energy[color])
-			}
-		}
-		return result
-	}
-	gainEnergyColor(color, amount){
-		let result = 0
-		let energy = this.energy
-		let maxEnergy = this.maxEnergy
-		if (energy[color] + amount < 0){
-			result = energy[color] * -1
-			energy[color] = 0
-		} else if (energy[color] + amount > maxEnergy[color]){
-			result = maxEnergy[color] - energy[color]
-			energy[color] = maxEnergy[color]
-		} else {
-			result = amount
-			energy[color] += amount
-		}
-		return result
-	}
-
-	getEXPNeededForLevel(level){
-		//Returns the *total* exp required to get to this level.
-		//Currently just uses medium fast. Maybe I add others if I care. TODO.
-		if (level === 1) return 0
-		return Math.pow(level, 3)
-	}
-	getLevelFromEXP(exp){
-		for (let i = 1; i <= 100; i++){
-			if (exp < this.getEXPNeededForLevel(i)){
-				return i - 1
-			}
-		}
-		return 100
-	}
-	recalculateLevel(){
-		this.level = this.getLevelFromEXP(this.exp)
 	}
 }
 
@@ -2590,6 +2502,17 @@ class Board{
 	tileIsAt(t, x, y){
 		if (t.x === x && t.y === y) return true
 		return false
+	}
+	//Tells you whether tile is within the boudaries of the visible space.
+	isOnScreen(tile){
+		let x = tile.x
+		let h = x >= 0 && x <= this.width
+		let y = tile.y
+		let v = y >= 0 && y <= this.height
+		return h && v
+	}
+	tilesOnScreen(){
+		return this.contents.filter(t => this.isOnScreen(t))
 	}
 
 	getColumn(x){
@@ -2872,7 +2795,7 @@ class Tile{
 
 class TileStatus{
 	constructor(status){
-		this.spriteOpacity = 0
+		this.spriteOpacity = 0.3
 
 		for (let key in status){
 			this[key] = status[key]
@@ -2880,7 +2803,7 @@ class TileStatus{
 	}
 
 	tick(){
-		this.spriteOpacity = lerp(this.spriteOpacity, 1, 0.1)
+		this.spriteOpacity = lerp(this.spriteOpacity, 1, 0.2)
 	}
 }
 

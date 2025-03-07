@@ -1,3 +1,6 @@
+Ending turns:
+  - When calling the turnEnd function, if the "this.currentlyEndingTurn" flag is not set to true, the computer currently only checks whether the player has both A) Made moves, and B) Matched 4. So if you want to really truly end a turn, make sure to set that flag.
+
 Move effects:
   play-sound:
     param: name

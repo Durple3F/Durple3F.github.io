@@ -97,8 +97,8 @@ function renderStatusEffects(tile, board, round, w, h, xOffset, yOffset){
 		let circleType = `${status.color}-circle`
 
 		ctx.save()
-		ctx.drawImage(sprites.images[circleType], statusX, statusY, statusWidth, statusHeight)
 		ctx.filter = `opacity(${status.spriteOpacity})`
+		ctx.drawImage(sprites.images[circleType], statusX, statusY, statusWidth, statusHeight)
 		let sprite = sprites.images["status-" + status.name]
 		ctx.drawImage(sprite, statusX, statusY, statusWidth, statusHeight)
 		ctx.restore()

@@ -1,4 +1,28 @@
 const pokemonMoveData = {
+	"Absorb": {
+		name: "Absorb",
+		type: "Grass",
+		category: "Special",
+		strategy: "basic-damage",
+		pp: 25,
+		power: 20,
+		accuracy: 100,
+		rechargeTurns: 2,
+		energy: {
+			green: 1
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Absorb part 1.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "load-number", value: 0.5 },
+			{ type: "multiply-numbers" },
+			{ type: "load-number", value: 1 },
+			{ type: "heal", target: "user", amount: -2, min: -1 },
+		],
+	},
 	"Bug Bite": {
 		name: "Bug Bite",
 		type: "Bug",
@@ -9,7 +33,7 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			green: 4
+			green: 0
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Bug Bite.mp3"
@@ -23,7 +47,7 @@ const pokemonMoveData = {
 			{ type: "gain-energy", count: -1, colors: -2, target: "opponent" },
 			{ type: "load-number", value: -1 },
 			{ type: "multiply-energy", amounts: -2, scale: -1 },
-			{ type: "gain-energy", amounts: -1, target: "player" }
+			{ type: "gain-energy", amounts: -1, target: "user" }
 		],
 	},
 	"Ember": {
@@ -55,6 +79,33 @@ const pokemonMoveData = {
 			}
 		],
 	},
+	"Focus Energy": {
+		name: "Focus Energy",
+		type: "Normal",
+		category: "Status",
+		strategy: "buff-self",
+		pp: 30,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 2,
+		energy: {
+			blue: 3,
+			purple: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Focus Energy.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{
+				type: "apply-debuff", target: "user", debuff: {
+					type: "stat",
+					stat: "attack",
+					amount: 2
+				}
+			}
+		],
+	},
 	"Growl": {
 		name: "Growl",
 		type: "Normal",
@@ -80,6 +131,53 @@ const pokemonMoveData = {
 					amount: -1
 				}
 			}
+		],
+	},
+	"Harden": {
+		name: "Harden",
+		type: "Normal",
+		category: "Status",
+		strategy: "last-priority",
+		pp: 30,
+		power: null,
+		accuracy: 0,
+		rechargeTurns: 3,
+		energy: {},
+		sounds: {
+			"attack": "src/audio/attacks/Harden.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "apply-status-effect", statusEffect: "invulnerable", target: "user" }
+		],
+	},
+	"Infestation": {
+		name: "Infestation",
+		type: "Bug",
+		category: "Special",
+		strategy: "basic-damage",
+		pp: 20,
+		power: 20,
+		accuracy: 100,
+		rechargeTurns: 0,
+		energy: {
+			green: 2,
+			yellow: 1
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Infestation.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			// { type: "damage" },
+			{ type: "load-number", value: 1 },
+			{ type: "select-random-tiles", count: -1,
+				conditions: { notTypes: ["green"] } },
+			{ type: "change-tile-type", selection: "group", which: -1, targetType: "green" },
+			{
+				type: "apply-status-to-tiles", selection: "group", which: -1,
+				status: { name: "Infested", type: "debuff", duration: null }
+			},
 		],
 	},
 	"Leafage": {
@@ -149,7 +247,7 @@ const pokemonMoveData = {
 		},
 		effects: [
 			{ type: "play-sound", name: "attack" },
-			{ type: "get-stat", which: "speed", target: "player" },
+			{ type: "get-stat", which: "speed", target: "user" },
 			{ type: "get-stat", which: "speed", target: "opponent" },
 			{ type: "jump-if-less-than", jumpTo: 6 },
 			{ type: "damage" },
@@ -178,6 +276,30 @@ const pokemonMoveData = {
 			{ type: "damage" }
 		],
 	},
+	"Poison Sting": {
+		name: "Poison Sting",
+		type: "Poison",
+		category: "Physical",
+		strategy: "basic-damage",
+		pp: 35,
+		power: 15,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			purple: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Poison Sting.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "random-number", min: 1, max: 10 },
+			{ type: "load-number", value: 8 },
+			{ type: "jump-if-less-than", jumpTo: Infinity },
+			{ type: "apply-status-effect", statusEffect: "poisoned", target: "opponent" },
+		],
+	},
 	"Pound": {
 		name: "Pound",
 		type: "Normal",
@@ -192,6 +314,27 @@ const pokemonMoveData = {
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Pound.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" }
+		],
+	},
+	"Quick Attack": {
+		name: "Quick Attack",
+		type: "Normal",
+		category: "Physical",
+		strategy: "basic-damage",
+		pp: 30,
+		power: 40,
+		accuracy: 100,
+		rechargeTurns: 0,
+		energy: {
+			yellow: 2,
+			orange: 1
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Quick Attack.mp3"
 		},
 		effects: [
 			{ type: "play-sound", name: "attack" },
@@ -338,11 +481,11 @@ const pokemonMoveData = {
 		category: "Special",
 		strategy: "basic-damage",
 		pp: 25,
-		power: 40,
+		power: 35, //originally 40
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			blue: 6
+			blue: 0//6
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Water Gun.mp3"
@@ -352,7 +495,7 @@ const pokemonMoveData = {
 			{ type: "count-tiles", options: { type: "blue" } },
 			{ type: "load-number", value: 2 },
 			{ type: "multiply-numbers" },
-			{ type: "damage", additivePower: 2 }
+			{ type: "damage", additivePower: -1 }
 		],
 	},
 	"Wrap": {
@@ -365,11 +508,11 @@ const pokemonMoveData = {
 		accuracy: 90,
 		rechargeTurns: 1,
 		energy: {
-			green: 0,
-			purple: 0
+			green: 1,
+			purple: 1
 		},
 		sounds: {
-			"attack": "src/audio/attacks/Tail Whip.mp3"
+			"attack": "src/audio/attacks/Wrap.mp3"
 		},
 		effects: [
 			{ type: "play-sound", name: "attack" },

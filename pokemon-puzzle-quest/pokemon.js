@@ -1,506 +1,277 @@
-const pokemonData = {
-	"Rattata-Alola": {
-		name: "Rattata",
-		number: "19",
-		imageFacing: "left",
-		imageSources: {
-			"large": "src/img/pokemon/0019Rattata-Alola.png",
-			"home": "src/img/tiny-pokemon/Rattata-Alola.png"
-		},
-		sounds: {
-			cry: "src/audio/cries/rattata.mp3"
-		},
-		types: ["Dark", "Normal"],
-		tags: [],
-		stats: {
-			hp: 30,
-			attack: 56,
-			defense: 35,
-			specialAttack: 25,
-			specialDefense: 35,
-			speed: 72
-		},
-		expYield: 51,
-		evYield: {
-			hp: 0,
-			attack: 0,
-			defense: 0,
-			specialAttack: 0,
-			specialDefense: 0,
-			speed: 1
-		},
-		learnset: [
-			{
-				name: "Tackle",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "Tail Whip",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-		]
-	},
-	"Caterpie": {
-		name: "Caterpie",
-		number: "10",
-		imageFacing: "left",
-		imageSources: {
-			"large": "src/img/pokemon/0010Caterpie.png",
-			"home": "src/img/tiny-pokemon/Caterpie.png"
-		},
-		sounds: {
-			cry: "src/audio/cries/caterpie.mp3"
-		},
-		types: ["Bug"],
-		tags: [],
-		stats: {
-			hp: 45,
-			attack: 30,
-			defense: 35,
-			specialAttack: 20,
-			specialDefense: 20,
-			speed: 45
-		},
-		expYield: 39,
-		evYield: {
-			hp: 1,
-			attack: 0,
-			defense: 0,
-			specialAttack: 0,
-			specialDefense: 0,
-			speed: 0
-		},
-		learnset: [
-			{
-				name: "Tackle",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "String Shot",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "Bug Bite",
-				unlock: {
-					type: "level",
-					amount: 9
-				}
-			}
-		]
-	},
-	"Ledyba": {
-		name: "Ledyba",
-		number: "165",
-		imageFacing: "left",
-		imageSources: {
-			"large": "src/img/pokemon/0165Ledyba.png",
-			"home": "src/img/tiny-pokemon/Ledyba.png"
-		},
-		sounds: {
-			cry: "src/audio/cries/ledyba.mp3"
-		},
-		types: ["Bug", "Flying"],
-		tags: [],
-		stats: {
-			hp: 40,
-			attack: 20,
-			defense: 30,
-			specialAttack: 40,
-			specialDefense: 80,
-			speed: 55
-		},
-		expYield: 53,
-		evYield: {
-			hp: 0,
-			attack: 0,
-			defense: 0,
-			specialAttack: 0,
-			specialDefense: 1,
-			speed: 0
-		},
-		learnset: [
-			{
-				name: "Tackle",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "Supersonic",
-				unlock: {
-					type: "level",
-					amount: 5
-				}
-			},
-			{
-				name: "Swift",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			}
-		]
-	},
-	"Rowlet": {
-		name: "Rowlet",
-		number: "722",
-		imageFacing: "left",
-		imageSources: {
-			"large": "src/img/pokemon/0722Rowlet.png",
-			"home": "src/img/tiny-pokemon/Rowlet.png"
-		},
-		sounds: {
-			cry: "src/audio/cries/rowlet.mp3"
-		},
-		types: ["Grass"],
-		tags: ["Starter"],
-		stats: {
-			hp: 68,
-			attack: 55,
-			defense: 55,
-			specialAttack: 50,
-			specialDefense: 50,
-			speed: 42
-		},
-		expYield: 64,
-		evYield: {
-			hp: 1,
-			attack: 0,
-			defense: 0,
-			specialAttack: 0,
-			specialDefense: 0,
-			speed: 0
-		},
-		learnset: [
-			{
-				name: "Pound",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "Growl",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "Leafage",
-				unlock: {
-					type: "level",
-					amount: 3
-				}
-			}
-		]
-	},
-	"Litten": {
-		name: "Litten",
-		number: "725",
-		imageFacing: "left",
-		imageSources: {
-			"large": "src/img/pokemon/0725Litten.png",
-			"home": "src/img/tiny-pokemon/Litten.png"
-		},
-		sounds: {
-			cry: "src/audio/cries/litten.mp3"
-		},
-		types: ["Fire"],
-		tags: ["Starter"],
-		stats: {
-			hp: 45,
-			attack: 65,
-			defense: 40,
-			specialAttack: 60,
-			specialDefense: 40,
-			speed: 70
-		},
-		expYield: 64,
-		evYield: {
-			hp: 0,
-			attack: 0,
-			defense: 0,
-			specialAttack: 0,
-			specialDefense: 0,
-			speed: 1
-		},
-		learnset: [
-			{
-				name: "Pound",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "Growl",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "Ember",
-				unlock: {
-					type: "level",
-					amount: 3
-				}
-			}
-		]
-	},
-	"Popplio": {
-		name: "Popplio",
-		number: "728",
-		imageFacing: "right",
-		imageSources: {
-			"large": "src/img/pokemon/0728Popplio.png",
-			"home": "src/img/tiny-pokemon/Popplio.png"
-		},
-		sounds: {
-			cry: "src/audio/cries/popplio.mp3"
-		},
-		types: ["Water"],
-		tags: ["Starter"],
-		stats: {
-			hp: 50,
-			attack: 54,
-			defense: 54,
-			specialAttack: 66,
-			specialDefense: 56,
-			speed: 40
-		},
-		expYield: 64,
-		evYield: {
-			hp: 0,
-			attack: 0,
-			defense: 0,
-			specialAttack: 1,
-			specialDefense: 0,
-			speed: 0
-		},
-		learnset: [
-			{
-				name: "Pound",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "Growl",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "Water Gun",
-				unlock: {
-					type: "level",
-					amount: 3
-				}
-			}
-		]
-	},
-	"Pikipek": {
-		name: "Pikipek",
-		number: "731",
-		imageFacing: "left",
-		imageSources: {
-			"large": "src/img/pokemon/0731Pikipek.png",
-			"home": "src/img/tiny-pokemon/Pikipek.png"
-		},
-		sounds: {
-			cry: "src/audio/cries/pikipek.mp3"
-		},
-		tags: [],
-		types: ["Flying"],
-		stats: {
-			hp: 35,
-			attack: 75,
-			defense: 30,
-			specialAttack: 30,
-			specialDefense: 30,
-			speed: 65
-		},
-		expYield: 53,
-		evYield: {
-			hp: 0,
-			attack: 1,
-			defense: 0,
-			specialAttack: 0,
-			specialDefense: 0,
-			speed: 0
-		},
-		learnset: [
-			{
-				name: "Peck",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "Growl",
-				unlock: {
-					type: "level",
-					amount: 3
-				}
-			},
-		]
-	},
-	"Yungoos": {
-		name: "Yungoos",
-		number: "734",
-		imageFacing: "left",
-		imageSources: {
-			"large": "src/img/pokemon/0734Yungoos.png",
-			"home": "src/img/tiny-pokemon/Yungoos.png"
-		},
-		sounds: {
-			cry: "src/audio/cries/yungoos.mp3"
-		},
-		tags: ["Starter"],
-		types: ["Normal"],
-		stats: {
-			hp: 48,
-			attack: 70,
-			defense: 30,
-			specialAttack: 30,
-			specialDefense: 30,
-			speed: 45
-		},
-		expYield: 51,
-		evYield: {
-			hp: 0,
-			attack: 1,
-			defense: 0,
-			specialAttack: 0,
-			specialDefense: 0,
-			speed: 0
-		},
-		learnset: [
-			{
-				name: "Tackle",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "Leer",
-				unlock: {
-					type: "level",
-					amount: 3
-				}
-			},
-			{
-				name: "Payback",
-				unlock: {
-					type: "level",
-					amount: 7
-				}
-			},
-		]
-	},
-	"Comfey": {
-		name: "Comfey",
-		number: "764",
-		imageFacing: "left",
-		imageSources: {
-			"large": "src/img/pokemon/0764Comfey.png",
-			"home": "src/img/tiny-pokemon/Comfey.png"
-		},
-		sounds: {
-			cry: "src/audio/cries/comfey.mp3"
-		},
-		tags: [],
-		types: ["Fairy"],
-		stats: {
-			hp: 51,
-			attack: 52,
-			defense: 90,
-			specialAttack: 82,
-			specialDefense: 110,
-			speed: 100
-		},
-		expYield: 170,
-		evYield: {
-			hp: 0,
-			attack: 0,
-			defense: 0,
-			specialAttack: 0,
-			specialDefense: 2,
-			speed: 0
-		},
-		learnset: [
-			{
-				name: "Wrap",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-		]
-	},
-};
+class Pokemon{
+	constructor(name, pokemonName, options){
+		this.uuid = options?.uuid ?? window.crypto.randomUUID()
+		this.owner = options?.owner ?? playerSaveId
+		this.pokemonId = pokemonName
+		this.data = pokemonData[pokemonName]
+		this.name = name ?? this.data.name
+		this.pokemonName = pokemonName ?? pokemonData.name
+		this.types = []
+		this.data.types.forEach(type => this.types.push(type))
+		this.level = options?.level ?? 1
 
-for (let name in pokemonData){
-	let pokemon = pokemonData[name]
-	if (!pokemon.name) {
-		pokemon.name = name
+		this.nature = options?.nature ?? getRandomNature()
+
+		this.ivs = {}
+		this.evs = {}
+		for (let stat in this.data.stats){
+			if (options && options.ivs){
+				this.ivs[stat] = options.ivs[stat] ?? Math.floor(Math.random() * 32)
+			} else {
+				this.ivs[stat] = Math.floor(Math.random() * 32)
+			}
+
+			if (options && options.evs){
+				this.evs[stat] = options.evs[stat] ?? 0
+			} else {
+				this.evs[stat] = 0
+			}
+		}
+
+		//Yikes this stuff is gonna be fun
+		this.hp = options?.hp ?? this.getStat("hp")
+		this.maxhp = this.getStat("hp")
+		this.exp = options?.exp ?? this.getEXPNeededForLevel(this.level)
+
+		this.learnset = this.data.learnset.map(move => move)
+		this.moves = this.learnset.map(move => pokemonMoveData[move.name])
+		this.movesUnlockedMap = []
+		this.moves.forEach((move, i) => {
+			let movesUnlockedMap = options?.movesUnlockedMap ?? []
+			this.movesUnlockedMap[i] = movesUnlockedMap[i] || false
+		})
+		this.moveUsage = this.moves.map(move => {
+			return {
+				recharge: 0
+			}
+		})
+
+		this.statusEffects = []
+
+		//You can only have 4 moves active at once
+		//TODO make the whole system for selecting which moves are active
+		//For now it's just all of them
+		this.activeMoves = []
+		if (options.activeMoves){
+			for (let name of options.activeMoves){
+				let move = pokemonMoveData[name]
+				if (move) this.activeMoves.push(move)
+			}
+		}
+
+		let unlocks = this.determineUnlockedMoves()
+		this.unlockMoves(unlocks)
+		if (this.activeMoves.length === 0){
+			this.chooseActiveMoves()
+		}
+		
+		this.energy = getEmptyEnergy()
+		this.maxEnergy = getEmptyEnergy()
+		colors.forEach(c => this.maxEnergy[c] = 10)
+
+		this.pcBox = options?.pcBox ?? null
+		this.pcBoxX = options?.pcBoxX ?? null
+		this.pcBoxY = options?.pcBoxY ?? null
 	}
-	if (!pokemon.imageSources){
-		pokemon.imageSources = {}
-	}
-	if (!pokemon.imageSources.large){
-		console.warn(pokemon, "has no images")
-	}
-	if (!pokemon.stats){
-		pokemon.stats = {
-			hp: 50,
-			attack: 50,
-			defense: 50,
-			specialAttack: 50,
-			specialDefense: 50,
-			speed: 50
+
+	addStatusEffect(status, owner, pokemon, source){
+		if (typeof status === "string"){
+			switch (status){
+				case "burn": {
+					status = {
+						name: "burn"
+					}
+				} break
+				case "confused": {
+					status = {
+						name: "confused",
+						turns: Math.floor(Math.random() * 4) + 2
+					}
+				} break
+				case "poisoned": {
+					status = {
+						name: "poisoned"
+					}
+				} break
+				default:
+					console.warn("You never handled", status)
+					status = {
+						name: "???"
+					}
+				break
+			}
+		} else {
+			console.warn("Non-string status effect added", status)
+		}
+
+		status.type = "status"
+		status.sourceMove = source
+		status.sourcePokemon = pokemon
+		status.sourceTrainer = owner
+
+		let prevented = false
+		//Fire pokemon can't be burned
+		if (status.name === "burn" && this.types.includes("Fire")){
+			prevented = true
+		}
+		//Poison and Steel type pokemon can't be poisoned
+		if (status.name === "poisoned" && this.types.includes("Poison") ||
+				status.name === "poisoned" && this.types.includes("Steel")){
+			prevented = true
+		}
+
+		//There are some status effects that don't stack
+		let data = pokemonStatusData[status.name]
+		let existingCopies = this.statusEffects.filter(s => s.name === status.name)
+		if (data && !data.stacks && existingCopies.length){
+			prevented = true
+		}
+
+		if (!prevented){
+			this.statusEffects.push(status)
 		}
 	}
-	if (!pokemon.learnset){
-		pokemon.learnset = []
+
+	changeLevel(level){
+		let oldMax = this.getStat("hp")
+		this.level = level
+		let newMax = this.getStat("hp")
+		this.hp += newMax - oldMax
+		
+		let unlocks = this.determineUnlockedMoves()
+		let changes = this.unlockMoves(unlocks)
+		return changes
 	}
-	if (!pokemon.types){
-		pokemon.types = []
-	}
-	if (!pokemon.tags){
-		pokemon.tags = []
-	}
-	if (!pokemon.expYield){
-		console.warn("You really gotta give "+pokemon.name+" a yield man")
-		pokemon.expYield = 50
-	}
-	if (!pokemon.evYield){
-		pokemon.evYield = {
-			hp: 0,
-			attack: 0,
-			defense: 0,
-			specialAttack: 0,
-			specialDefense: 0,
-			speed: 0
+
+	getStat(stat){
+		let base = this.data.stats[stat]
+		let iv = this.ivs[stat]
+		let ev = this.evs[stat]
+		let level = this.level
+		let initial = Math.floor((2 * base + iv + Math.floor(ev / 4)) * level / 100)
+		if (stat === "hp"){
+			let result = initial + level + 10
+			return Math.floor(result)
 		}
+		let result = initial + 5
+		let natureMult = 1
+		if (this.nature.increase === stat) natureMult += 0.1
+		if (this.nature.decrease === stat) natureMult -= 0.1
+		result = Math.floor(result * natureMult)
+		return result
+	}
+	getStatStage(stat){
+		let stage = 0
+		let statuses = this.statusEffects.filter(effect => {
+			return effect.type === "stat" && effect.stat === stat
+		})
+		statuses.forEach(effect => {
+			stage += effect.amount
+		})
+		return Math.max(-6, Math.min(6, stage))
+	}
+	getEffectiveStat(stat){
+		let val = this.getStat(stat)
+		//Apply any buffs/debuffs
+		let stage = this.getStatStage(stat)
+		let numerator = 2 + Math.max(0, stage)
+		let denominator = 2 + Math.max(0, -stage)
+		let modifier = numerator / denominator
+		return val * modifier
+	}
+
+	unlockMoves(unlockMap){
+		//Each move that becomes locked has its index noted in locked, and vice versa.
+		let changedIndexes = {
+			unlocked: [],
+			locked: []
+		}
+		//Goes through and unlocks the moves at the indexes that the given map says.
+		unlockMap.forEach((v, i) => {
+			if (this.movesUnlockedMap[i] && !v){
+				changedIndexes.locked.push(i)
+			}
+			if (!this.movesUnlockedMap[i] && v){
+				changedIndexes.unlocked.push(i)
+			}
+			this.movesUnlockedMap[i] = v
+		})
+		return changedIndexes
+	}
+	determineUnlockedMoves(){
+		let unlockMap = this.learnset.map((move, index) => {
+			let shouldBeUnlocked = checkIfPokemonMeetsRequirements(this, move.unlock)
+			let isUnlocked = this.movesUnlockedMap[index]
+			return shouldBeUnlocked || isUnlocked
+		})
+		return unlockMap
+	}
+	unlockMove(name){
+		let index = this.learnset.find(m => m.name === name)
+		if (index !== -1){
+			this.movesUnlockedMap[index] = true
+		}
+	}
+	chooseActiveMoves(){
+		//Should only be used for wild pokemon and other instances where no original list is given
+		let chooseable = this.moves.filter((m, i) => {
+			return this.movesUnlockedMap[i]
+		})
+		let toAdd = 4 - this.activeMoves.length
+		//Pick up to 4 of the most recently unlocked moves
+		chooseable = chooseable.reverse().slice(0, toAdd)
+		chooseable.forEach(m => this.activeMoves.push(m))
+
+		//Just a nice thing: Sort the active moves by name.
+		this.activeMoves.sort((a, b) => {
+			let na = a.name
+			let nb = b.name
+			return na < nb ? -1 : na > nb ? 1 : 0
+		})
+	}
+
+	gainEnergy(energy){
+		let result = {}
+		for (let color of colors){
+			result[color] = 0
+			if (color in energy){
+				result[color] = this.gainEnergyColor(color, energy[color])
+			}
+		}
+		return result
+	}
+	gainEnergyColor(color, amount){
+		let result = 0
+		let energy = this.energy
+		let maxEnergy = this.maxEnergy
+		if (energy[color] + amount < 0){
+			result = energy[color] * -1
+			energy[color] = 0
+		} else if (energy[color] + amount > maxEnergy[color]){
+			result = maxEnergy[color] - energy[color]
+			energy[color] = maxEnergy[color]
+		} else {
+			result = amount
+			energy[color] += amount
+		}
+		return result
+	}
+
+	getEXPNeededForLevel(level){
+		//Returns the *total* exp required to get to this level.
+		//Currently just uses medium fast. Maybe I add others if I care. TODO.
+		if (level === 1) return 0
+		return Math.pow(level, 3)
+	}
+	getLevelFromEXP(exp){
+		for (let i = 1; i <= 100; i++){
+			if (exp < this.getEXPNeededForLevel(i)){
+				return i - 1
+			}
+		}
+		return 100
+	}
+	recalculateLevel(){
+		return this.getLevelFromEXP(this.exp)
 	}
 }

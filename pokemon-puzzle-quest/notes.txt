@@ -14,3 +14,4 @@ TODO
   - there's a bug where after your first fight, the image of your pokemon lingers in the top left section of the game window.
   - add the other natures in pokemonData
   - if you enter a fight with no active pokemon, usually because they're all at 0 hp, the game freaks out
+  Struggle plays no sound

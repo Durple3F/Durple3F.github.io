@@ -1,6 +1,11 @@
 {
 	"Route 1-1-description": "Note: He always has a Litten.",
 	"moves": {
+		"Absorb": {
+			"name": "Absorb",
+			"description": "Deals damage. Then, heals the user for 50% of the damage dealt.",
+			"shortDescription": "Steals a little HP."
+		},
 		"Bug Bite": {
 			"name": "Bug Bite",
 			"description": "Deals damage. Then, drains 2 energy from the opponent's most full energy type and gives it to the user.",
@@ -11,10 +16,20 @@
 			"description": "Deals damage. There's a 10% chance for this move to inflict Burn on 3 random tiles. At the start of each turn, the opponent takes damage for each Burned tile on the board.",
 			"shortDescription": "Damages and might burn tiles."
 		},
+		"Focus Energy": {
+			"name": "Focus Energy",
+			"description": "Raises the user's attack stat by 2 stages.",
+			"shortDescription": "Raises user's attack"
+		},
 		"Growl": {
 			"name": "Growl",
 			"description": "Lowers the opponent's attack stat by 1 stage.",
 			"shortDescription": "Lowers enemy attack"
+		},
+		"Infestation": {
+			"name": "Infestation",
+			"description": "Deals damage. Converts a random tile into a Grass tile and gives it the Infested status. At the start of the opponent's turn, for each Infested tile, that tile drains 1 energy of a random color, and gives it to the user.",
+			"shortDescription": "Damages and infests a tile"
 		},
 		"Leafage": {
 			"name": "Leafage",
@@ -36,10 +51,20 @@
 			"description": "Damage-dealing move with no special effects.",
 			"shortDescription": "Deals light damage"
 		},
+		"Poison Sting": {
+			"name": "Poison Sting",
+			"description": "Deals damage. Then, has a 30% chance to apply poisoned to the opponent.",
+			"shortDescription": "Deals small damage and might poison"
+		},
 		"Pound": {
 			"name": "Pound",
 			"description": "Damage-dealing move with no special effects.",
 			"shortDescription": "Deals light damage"
+		},
+		"Quick Attack": {
+			"name": "Quick Attack",
+			"description": "Deals damage. This move can be used more than once during a turn.",
+			"shortDescription": "Deals light damage."
 		},
 		"String Shot": {
 			"name": "String Shot",
@@ -66,6 +91,11 @@
 			"description": "Damage-dealing move with no special effects.",
 			"shortDescription": "Deals light damage"
 		},
+		"Tail Whip": {
+			"name": "Tail Whip",
+			"description": "Lowers the opponent's defense stat by 1 stage.",
+			"shortDescription": "Lowers enemy defense"
+		},
 		"Water Gun": {
 			"name": "Water Gun",
 			"description": "Deals damage. This move's power increases by 2 for every Water tile on the board.",
@@ -74,17 +104,21 @@
 		"Wrap": {
 			"name": "Wrap",
 			"description": "Gives 2-5 tiles on the board the Wrap status. When an opponent removes those tiles, this move deals them damage.",
-			"shortDescription": "Damages over time"
+			"shortDescription": "Trap random tiles"
 		}
 	},
 	"status-effects": {
-		"Burn": {
+		"burn": {
 			"name": "Burn",
-			"description": "Doesn't do anything yet. TODO"
+			"description": "This Pokemon's physical moves are half as powerful, and at the start of its turn, it takes 1/16 of its max HP in damage. Currently not implemented. TODO."
 		},
-		"Confused": {
+		"confused": {
 			"name": "Confused",
-			"description": "After a Confused Pokemon uses a move, there's a 50% chance for their turn to end."
+			"description": "Whenever this Pokemon uses a move, its turn has a 50% chance to end."
+		},
+		"poisoned": {
+			"name": "Poisoned",
+			"description": "At the beginning of this Pokemon's turn, it will take 1/16 of its max HP in damage."
 		}
 	}
 }

@@ -37,7 +37,7 @@ function startScene(name, options){
 			const confirmChoice = pokemon => {
 				chooseTag.children(".ball").popover("hide")
 				delay(250).then(() => $(".popover").remove())
-				let caught = new Pokemon(pokemon.name, pokemon.name, {level: 5})
+				let caught = new Pokemon(pokemon.name, pokemon.id, {level: 5})
 				catchPokemon(caught)
 
 				.then(resolvePromise)
@@ -78,7 +78,6 @@ function startScene(name, options){
 
 					//Now add a tiny, nearly-invisible image of that pokemon
 					//(just to get the image preloaded)
-					console.log(pokemon)
 					let image = pokemon.imageSources.large
 					chooseTag.append(`<img class='invisible-image' src='${image}'>`)
 				}
@@ -635,7 +634,7 @@ function askToRenamePokemon(pokemon){
 	let resolvePromise
 	let promise = new Promise(resolve => resolvePromise = resolve)
 	let modal = $("#modal")
-	let pokemonName = pokemon.pokemonName
+	let pokemonName = pokemon.name
 	let image = pokemon.data.imageSources.large
 
 	clearModal(modal)

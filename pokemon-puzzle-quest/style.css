@@ -673,6 +673,9 @@ body {
 	position: relative;
 	display: flex;
 }
+.move-popover > .stat-line > .move-power {
+	line-height: 1;
+}
 .move > .move-top > .move-type > .move-recharge > img,
 .move-popover > .stat-line > .move-recharge > img {
 	max-height: 100%;

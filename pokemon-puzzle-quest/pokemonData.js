@@ -169,20 +169,28 @@ const pokemonStatusData = {
 		color: "#ff8329",
 		stacks: false,
 		class: "debuff",
-		name: "Burned",
-		description: "This Pokemon's physical moves are half as powerful, and at the start of its turn, it takes 1/16 of its max HP in damage."
+		name: "burn"
 	},
 	"confused": {
 		image: "src/img/icons/confused.png",
 		color: "#f97077",
 		stacks: false,
 		class: "debuff",
-		name: "Confused",
-		description: "This Pokemon's physical moves are half as powerful, and at the start of its turn, it takes 1/16 of its max HP in damage."
+		name: "confused"
+	},
+	"poisoned": {
+		image: "src/img/icons/poisoned.png",
+		color: "#c763c5",
+		stacks: false,
+		class: "debuff",
+		name: "poisoned"
 	}
 }
 
 const tileStatusData = {
+	"Infested": {
+		url: "src/img/icons/ladybug.png"
+	},
 	"Wrap": {
 		url: "src/img/icons/thorny-tentacle.png"
 	},

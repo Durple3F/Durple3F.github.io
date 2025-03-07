@@ -151,6 +151,7 @@ function savePokemon(pokemon){
 		obj.owner = pokemon.owner
 		obj.name = pokemon.name
 		obj.pokemonName = pokemon.pokemonName
+		obj.pokemonId = pokemon.pokemonId
 		obj.hp = pokemon.hp
 		obj.level = pokemon.level
 		obj.exp = pokemon.exp
@@ -159,6 +160,7 @@ function savePokemon(pokemon){
 		obj.nature = pokemon.nature
 		obj.activeSlot = playerActivePokemon.indexOf(pokemon)
 		obj.activeMoves = pokemon.activeMoves.map(move => move.name)
+		obj.movesUnlockedMap = pokemon.movesUnlockedMap.map(v => v)
 		obj.pcBox = pokemon.pcBox
 		obj.pcBoxX = pokemon.pcBoxX
 		obj.pcBoxY = pokemon.pcBoxY
