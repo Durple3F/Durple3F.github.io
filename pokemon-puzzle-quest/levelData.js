@@ -153,9 +153,9 @@ const levelData = [
 			},
 		],
 		effects: [
-			{type: "random-number", min: 1, max: 10},
-			{type: "fight", trainer: 1, label: "Pichu"},
-			{type: "jump", jumpTo: Infinity},
+			// {type: "random-number", min: 1, max: 10},
+			// {type: "fight", trainer: 1, label: "Pichu"},
+			// {type: "jump", jumpTo: Infinity},
 			{type: "fight", trainer: 0, label: "Normal"}
 		]
 	},
