@@ -9,7 +9,6 @@ function startScene(name, options){
 			changeMusic("Route 201 (Day)")
 
 			gameTag.addClass("choosing-starter")
-			promise = promise//.then(() => stopSound("Route 201 (Day)"))
 
 			gameTag.append(`<i class='bi bi-caret-left-fill left' style='opacity:0'></i>`)
 			gameTag.append(`<i class='bi bi-caret-right-fill right' style='opacity:0'></i>`)
@@ -39,8 +38,14 @@ function startScene(name, options){
 				delay(250).then(() => $(".popover").remove())
 				let caught = new Pokemon(pokemon.name, pokemon.id, {level: 5})
 				catchPokemon(caught)
-
-				.then(resolvePromise)
+				.then(() => {
+					playerSaveInfo["chosen-starter"] = pokemon.id
+					playerSaveInfo["started-game"] = true
+					return savePlayerInfo()
+				})
+				.then(() => {
+					resolvePromise()
+				})
 			}
 			const choose = (event, pokemon) => {
 				let oldActive = $(".choose-starter > .ball.active")
@@ -675,13 +680,21 @@ function beginLevel(levelID){
 		id: levelID,
 		level: level,
 		effects: level.effects,
-		effectIndex: 0
+		info: [],
+		effectIndex: -1,
+		nextEffectIndex: 0
 	}
 
 	let promise = advanceCurrentLevel()
 	.then(val => {
-		console.log(val)
-		if (val === "lose"){
+		let info = currentLevelProgress.info
+		//If you're marked as losing a "fight" effect, then you lose the whole level.
+		let effects = currentLevelProgress.effects
+		let lostFights = effects.filter((effect, i) => {
+			return info[i] === "lose" && effect.type === "fight"
+		})
+		
+		if (lostFights.length || val === "lose"){
 			console.log("You lose :(")
 		} else {
 			level.status = "won"
@@ -693,17 +706,38 @@ function beginLevel(levelID){
 	return promise
 }
 function advanceCurrentLevel(){
-	let promise
+	let resolvePromise
+	let promise = new Promise(resolve => resolvePromise = resolve)
 	let level = currentLevelProgress.level
 	let effects = currentLevelProgress.effects
+	currentLevelProgress.effectIndex = currentLevelProgress.nextEffectIndex
 	let effectIndex = currentLevelProgress.effectIndex
+	currentLevelProgress.nextEffectIndex++
 	let effect = effects[effectIndex]
+	let params = getEffectParams(effect, effectIndex, currentLevelProgress)
+
+	if (effectIndex >= effects.length){
+		resolvePromise()
+		return promise
+	}
 
 	switch (effect.type){
 		case "fight": {
 			let trainerIndex = effect.trainer ?? 0
 			let trainerData = level.trainers[trainerIndex]
-			promise = beginRound(trainerData)
+			beginRound(trainerData)
+			.then(val => new Promise(res => {
+				currentLevelProgress.info[effectIndex] = val
+				if (val === "lose"){
+					currentLevelProgress.endEarly = true
+				} else if (val === "win"){
+					//Cool you win nothing special happens
+				} else {
+					console.warn("Fight ended with unexpected result", val)
+				}
+				res(val)
+			}))
+			.then(resolvePromise)
 			
 			let NPCData = NPCTrainerData[trainerData.name] ?? {}
 			//If the opponent is wild
@@ -711,17 +745,53 @@ function advanceCurrentLevel(){
 				
 			}
 		} break
+		case "random-number": {
+			let min = effect.min ?? 0
+			let max = effect.max ?? 10
+			let val = Math.floor(Math.random() * (max - min + 1)) + min
+			currentLevelProgress.info[effectIndex] = val
+			resolvePromise()
+		} break
+		case "load-player-info": {
+			currentLevelProgress.info[effectIndex] = playerSaveInfo[effect.key]
+			resolvePromise()
+		} break
+		case "load-value": {
+			currentLevelProgress.info[effectIndex] = effect.value
+			resolvePromise()
+		} break
+		case "jump-if-equal": {
+			let test = currentLevelProgress.info[effectIndex - 2]
+			let against = currentLevelProgress.info[effectIndex - 1]
+			let index
+			if (typeof effect.jumpTo === "string"){
+				index = effects.findIndex(e => e.label === effect.jumpTo)
+			} else {
+				index = effect.jumpTo
+			}
+			if (test === against){
+				currentLevelProgress.nextEffectIndex = index
+			}
+			resolvePromise()
+		} break
+		case "jump": {
+			currentLevelProgress.nextEffectIndex = effect.jumpTo
+			resolvePromise()
+		} break
+		default:
+			console.warn("You never handled", effect.type)
 	}
 
-	promise = promise.then(val => new Promise(resolve => {
-		currentLevelProgress.effectIndex += 1
-		resolve(val)
-	}))
-	if (effects[effectIndex + 1]){
-		promise = promise.then(val => {
+	promise = promise.then(val => {
+		if (currentLevelProgress.endEarly) return Promise.resolve(val)
+
+		if (effects[currentLevelProgress.nextEffectIndex]){
 			return advanceCurrentLevel()
-		})
-	}
+			.then(() => Promise.resolve(val))
+		}
+
+		return Promise.resolve(val)
+	})
 
 	return promise
 }

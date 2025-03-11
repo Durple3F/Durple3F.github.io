@@ -4,8 +4,14 @@ let db
 const dbStores = [
 	{
 		name: "save-file",
-		options: {autoIncrement: true}, 
-		indexes: []
+		options: {autoIncrement: true},
+		indexes: [
+			{
+				name: "uuid",
+				path: ["uuid"],
+				options: { unique: true }
+			}
+		]
 	},
 	{
 		name: "pokemon",
@@ -141,6 +147,24 @@ function doesSaveDataExist(){
 	return promise
 }
 
+function savePlayerInfo(){
+	return new Promise(resolve => {
+		let info = {
+			uuid: playerSaveId,
+			settings: config,
+			data: playerSaveInfo
+		}
+		findSaveFileInDatabase(playerSaveId)
+		.then(result => {
+			const transaction = db.transaction(["save-file"], "readwrite")
+			const saveStore = transaction.objectStore("save-file")
+			const request = saveStore.put(info, result)
+			request.onsuccess = event => {
+				resolve()
+			}
+		})
+	})
+}
 function savePokemon(pokemon){
 	let promise = new Promise(resolve => {
 		//This guy is gonna find the pokemon if it exists
@@ -201,6 +225,27 @@ function saveLevelStatus(level, status){
 	return promise
 }
 
+function findSaveFileInDatabase(uuid){
+	let promise = new Promise(resolve => {
+		const transaction = db.transaction(["save-file"], "readonly")
+		const saveFileStore = transaction.objectStore("save-file")
+		const index = saveFileStore.index("uuid")
+		const cursor = index.openCursor()
+		
+		cursor.onsuccess = event => {
+			const cur = event.target.result
+			if (cur){
+				if (cur.value.uuid === uuid){
+					resolve(cur.primaryKey)
+				}
+				cur.continue()
+			} else {
+				resolve(null)
+			}
+		}
+	})
+	return promise
+}
 function findPokemonInDatabase(pokemon){
 	let promise = new Promise(resolve => {
 		const transaction = db.transaction(["pokemon"], "readonly")
@@ -293,7 +338,7 @@ function makeNewSaveFile(){
 		let uuid = window.crypto.randomUUID()
 		const transaction = db.transaction(["save-file"], "readwrite")
 		const saveFileStore = transaction.objectStore("save-file")
-		const request = saveFileStore.put({uuid: uuid})
+		const request = saveFileStore.put({uuid: uuid, settings: config})
 		request.onsuccess = event => {
 			makeNewBox(uuid, "Box 1")
 			.then(() => resolve(uuid))

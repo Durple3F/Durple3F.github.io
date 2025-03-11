@@ -72,7 +72,7 @@ const pokemonData = {
 			cry: "src/audio/cries/caterpie.mp3"
 		},
 		types: ["Bug"],
-		tags: ["Starter"],
+		tags: [],
 		stats: {
 			hp: 45,
 			attack: 30,
@@ -135,7 +135,7 @@ const pokemonData = {
 			cry: "src/audio/cries/metapod.mp3"
 		},
 		types: ["Bug"],
-		tags: [],
+		tags: ["Starter"],
 		stats: {
 			hp: 50,
 			attack: 20,
@@ -153,6 +153,15 @@ const pokemonData = {
 			specialDefense: 0,
 			speed: 0
 		},
+		evolutions: [
+			{
+				name: "Butterfree",
+				unlock: {
+					type: "level",
+					amount: 10
+				}
+			}
+		],
 		learnset: [
 			{
 				name: "Harden",
@@ -161,6 +170,40 @@ const pokemonData = {
 					amount: 1
 				}
 			}
+		]
+	},
+	"Butterfree": {
+		name: "Butterfree",
+		number: "12",
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0012Butterfree.png",
+			"home": "src/img/tiny-pokemon/Butterfree.png"
+		},
+		sounds: {
+			cry: "src/audio/cries/butterfree.mp3"
+		},
+		types: ["Bug", "Flying"],
+		tags: [],
+		stats: {
+			hp: 60,
+			attack: 45,
+			defense: 50,
+			specialAttack: 80,
+			specialDefense: 80,
+			speed: 70
+		},
+		expYield: 178,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 2,
+			specialDefense: 1,
+			speed: 0
+		},
+		learnset: [
+			
 		]
 	},
 	"Ledyba": {
@@ -229,7 +272,7 @@ const pokemonData = {
 			cry: "src/audio/cries/spinarak.mp3"
 		},
 		types: ["Bug", "Poison"],
-		tags: ["Starter"],
+		tags: [],
 		stats: {
 			hp: 40,
 			attack: 60,
@@ -273,7 +316,61 @@ const pokemonData = {
 				name: "Infestation",
 				unlock: {
 					type: "level",
+					amount: 7
+				}
+			},
+		]
+	},
+	"Pichu": {
+		name: "Pichu",
+		number: "172",
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0172Pichu.png",
+			"home": "src/img/tiny-pokemon/Pichu.png"
+		},
+		sounds: {
+			cry: "src/audio/cries/pichu.mp3"
+		},
+		types: ["Electric"],
+		tags: ["Starter"],
+		stats: {
+			hp: 20,
+			attack: 40,
+			defense: 15,
+			specialAttack: 35,
+			specialDefense: 35,
+			speed: 60
+		},
+		expYield: 41,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 1
+		},
+		learnset: [
+			{
+				name: "Thunder Shock",
+				unlock: {
+					type: "level",
 					amount: 1
+				}
+			},
+			{
+				name: "Tail Whip",
+				unlock: {
+					type: "level",
+					amount: 1
+				}
+			},
+			{
+				name: "Play Nice",
+				unlock: {
+					type: "level",
+					amount: 4
 				}
 			},
 		]
@@ -364,7 +461,7 @@ const pokemonData = {
 		},
 		learnset: [
 			{
-				name: "Pound",
+				name: "Scratch",
 				unlock: {
 					type: "level",
 					amount: 1
@@ -583,6 +680,7 @@ const pokemonData = {
 	},
 };
 
+//Make sure all data is regular
 for (let name in pokemonData){
 	let pokemon = pokemonData[name]
 	if (!pokemon.name) {
@@ -634,3 +732,59 @@ for (let name in pokemonData){
 		pokemon.evolutions = []
 	}
 }
+
+//Any pokemon with pre-evolved forms gain the learnset of those forms
+function fixLearnsets(){
+	let allPokemon = Object.values(pokemonData)
+	let evolvedForms = allPokemon.filter(pokemon => {
+		return allPokemon.some(p => {
+			return p.evolutions.some(evo => evo.name === pokemon.id)
+		})
+	})
+	let failsafe = 0
+	while (evolvedForms.length && failsafe < 100){
+		let changed = false
+		for (let pokemon of evolvedForms){
+			//If this pokemon has a yet-unresolved pre-evolved form, skip this for now.
+			let hasUnresolvedPreForm = evolvedForms.some(p => {
+				return p.evolutions.some(evo => evo.name === pokemon.id)
+			})
+			if (hasUnresolvedPreForm) continue
+			//Find all preForms of this pokemon
+			let preForms = allPokemon.filter(p => {
+				return p.evolutions.some(evo => evo.name === pokemon.id)
+			})
+			//This pokemon is capable of knowing any move that any of the preForms can learn
+			let learnset = pokemon.learnset
+			let moves = preForms.map(p => p.learnset).flat()
+			//Remove moves this pokemon can already learn
+			.filter(m => {
+				return !learnset.some(m2 => m2.name === m.name)
+			})
+			//Remove duplicates
+			.filter((v, i, s) => {
+				return s.find(m => m.name === v.name) === v
+			})
+			//Add a copy of each to this Pokemon's learnset, but make it impossible to unlock
+			moves.forEach(move => {
+				let copy = {}
+				Object.keys(move).forEach(key => copy[key] = move[key])
+				copy.unlock = { type: "pre-evolve" }
+				learnset.push(copy)
+				changed = true
+			})
+			if (changed) {
+				let index = evolvedForms.indexOf(pokemon)
+				evolvedForms.splice(index, 1)
+				break
+			}
+		}
+		if (!changed){
+			failsafe++
+		}
+	}
+	if (failsafe >= 100){
+		console.warn("Failed to fix some pokemon's learnsets")
+	}
+}
+fixLearnsets()

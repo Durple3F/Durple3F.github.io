@@ -92,6 +92,9 @@ function distance(x1, y1, x2, y2){
 	let dy = y2-y1
 	return Math.sqrt(dx*dx + dy*dy)
 }
+function noDuplicates(arr){
+	return arr.filter((v, i, s) => s.indexOf(v) === i)
+}
 
 function bezierEase(t){
 	// return [
@@ -322,6 +325,10 @@ function loadSound(name, type, url){
 			if (this.status === 200){
 				var audio = new Audio(URL.createObjectURL(this.response))
 				audio.load()
+
+				audio.muted = config.muted[type]
+				audio.volume = config.volumes[type]
+
 				sounds[name].audio = audio
 				resolve(audio)
 			}
@@ -349,6 +356,7 @@ function playSound(name){
 		snd = snd.cloneNode()
 		snd.currentTime = 0
 	}
+	snd.volume = config.volumes[soundData.type]
 	if (sounds[name].type === "music"){
 		//Fade the sound effect in
 		fadeSoundVolume(snd, 0, snd.volume)
@@ -392,14 +400,16 @@ function stopSound(name){
 function unloadSound(name){
 	delete sounds[name]
 }
-function fadeSoundVolume(snd, from, to){
+function fadeSoundVolume(snd, from, to, duration){
+	if (!duration) duration = 2000
 	let promise = new Promise(resolve => {
 		$({val: from}).animate({val: to}, {
-			duration: 2000,
+			duration: duration,
 			step: function(){
 				snd.volume = this.val
 			},
 			complete: function(){
+				snd.volume = to
 				resolve()
 			}
 		})
@@ -418,9 +428,12 @@ function loadMusic(name, url){
 	return new Promise((resolve, reject) => {
 		let snd = new Audio()
 		snd.src = url
-		snd.volume = 0.1
+		snd.volume = config.volumes["music"]
 		snd.loop = true
 		sounds[name].audio = snd
+		snd.muted = config.muted["music"]
+		snd.audio = config.volumes["music"]
+
 		snd.oncanplaythrough = () => {
 			resolve(snd)
 		}
@@ -680,6 +693,13 @@ function loadResources(){
 						} else {
 							chosen = index
 							playerSaveId = saves[index].uuid
+							let settings = saves[index].settings
+							for (let key in settings){
+								config[key] = settings[key]
+							}
+							let newSaveData = saves[index]?.data ?? {}
+							Object.keys(playerSaveInfo).forEach(key => delete playerSaveInfo[key])
+							Object.keys(newSaveData).forEach(key => playerSaveInfo[key] = newSaveData[key])
 							$("#loading-bar > .start").text("Continue")
 							target.addClass("active")
 						}
@@ -722,6 +742,108 @@ function loadResources(){
 			})
 		})
 	})
+	return promise
+}
+
+function openSettings(){
+	let resolvePromise
+	let promise = new Promise(resolve => resolvePromise = resolve)
+	let modal = $("#modal")
+	clearModal(modal)
+	modal.addClass("wide")
+	let body = modal.find(".modal-body")
+
+	modal.find(".modal-title").html(`<h6 class='display-6 text-center'>Settings</h6>`)
+	let btn = $(`<button class='btn btn-primary'>Continue</button>`)
+	modal.find(".modal-footer").append(btn)
+
+	let rangeSize = 1000
+	let numSize = 100
+
+	let changeMuted = (type, muted) => {
+		Object.values(sounds).forEach(sound => {
+			if (sound.type !== type) return
+			let snd = sound.audio
+			console.log(muted)
+			snd.muted = muted
+		})
+	}
+	let changeVolume = (type, volume) => {
+		Object.values(sounds).forEach(sound => {
+			if (sound.type !== type) return
+			let snd = sound.audio
+			fadeSoundVolume(snd, snd.volume, volume, 500)
+		})
+	}
+
+	let changeMute = event => {
+		let elem = event.currentTarget
+		let type = elem.attributes["data-type"].value
+		let muted = !elem.checked
+		config.muted[type] = muted
+		changeMuted(type, muted)
+		let range = body.find(`.form-range[data-type="${type}"]`)
+		let numInput = body.find(`.form-control[data-type="${type}"]`)
+		range.attr("disabled", config.muted[type])
+		numInput.attr("disabled", config.muted[type])
+	}
+	let changeRange = event => {
+		let elem = event.currentTarget
+		let type = elem.attributes["data-type"].value
+		let value = parseInt(elem.value) || 0
+		value /= rangeSize
+		config.volumes[type] = value
+		changeVolume(type, value)
+		let numInput = body.find(`.form-control[data-type="${type}"]`)
+		numInput.val(value * numSize)
+	}
+	let changeNumInput = event => {
+		let elem = event.currentTarget
+		let type = elem.attributes["data-type"].value
+		let value = parseInt(elem.value) || 0
+		value /= numSize
+		config.volumes[type] = value
+		changeVolume(type, value)
+		let range = body.find(`.form-range[data-type="${type}"]`)
+		range.val(value * rangeSize)
+	}
+
+	let soundTypes = Object.keys(config.volumes)
+	for (let type of soundTypes){
+		let section = $(`<div class='mb-3 d-flex align-items-center'></div>`)
+		body.append(section)
+		let name = getLocaleString("name", lang, ["settings", "sound-types", type])
+		section.append(`<label class='form-label m-0' style='width: 20%;'>${name}</label>`)
+		let checkbox = $(`<input class='form-check-input' type='checkbox' data-type='${type}'>`)
+		let range = $(`<input class='form-range' type='range' min='0' max='${rangeSize}' data-type='${type}'>`)
+		let numInput = $(`<input class='form-control text-center' style='width: 10%;' type='text' min='0' max='${numSize}' data-type='${type}'>`)
+		checkbox.attr("checked", !config.muted[type])
+		range.attr("disabled", config.muted[type])
+		numInput.attr("disabled", config.muted[type])
+		range.val(config.volumes[type] * rangeSize)
+		numInput.val(config.volumes[type] * numSize)
+		checkbox.on("change", changeMute)
+		range.on("change", changeRange)
+		numInput.on("change", changeNumInput)
+		section.append(checkbox)
+		section.append(range)
+		section.append(numInput)
+		section.append("%")
+	}
+
+	btn.click(() => {
+		modal.modal("hide")
+	})
+	modal.modal("show")
+	modal.on("hidden.bs.modal", () => {
+		resolvePromise()
+	})
+
+	promise = promise.then(() => {
+		if (playerSaveId) return savePlayerInfo()
+		return
+	})
+
 	return promise
 }
 
@@ -777,7 +899,6 @@ function handleVisibilityChange(){
 }
 
 document.onvisibilitychange = handleVisibilityChange
-
 window.onresize = resize
 window.onmousemove = handleMouseMove
 window.onmousedown = handleMouseDown
@@ -787,6 +908,6 @@ resize()
 $(canvas).on("mouseenter", () => {
 	$(".popover").fadeOut()
 })
+$("#settings-btn").click(openSettings)
 
 loadResources()
-// .then(beginRound)

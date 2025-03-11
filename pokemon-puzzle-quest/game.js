@@ -1,8 +1,10 @@
 const caughtPokemon = []
 const playerActivePokemon = []
 const playerPCBoxes = []
+
 let gameRound, gameBoard
 let playerSaveId = null
+let playerSaveInfo = {}
 
 class Round{
 	constructor(trainer1, trainer2, resolvePromise){
@@ -340,7 +342,8 @@ class Round{
 		}
 	}
 
-	swap(tile1, tile2){
+	swap(tile1, tile2, options){
+		options = options ?? {}
 		this.beginMove()
 		let map = [
 			[tile1, [tile2.x, tile2.y]],
@@ -502,18 +505,37 @@ class Round{
 
 	timeStep(){
 		let matches = this.board.getAllMatches()
+		let contents = this.board.contents
+		let activeTrainer = this.trainers[this.activePlayerIndex]
 
 		let promise = new Promise(resolve => {
 			if (matches.length > 0){
 				this.increaseCascade()
-				//Those matched tiles explode.
+
+				//Find all affected tiles
 				let tiles = []
 				for (let match of matches){
-					//Probably reward the player for the match here
 					for (let tile of match){
-						this.board.explodeTile(tile)
 						tiles.push(tile)
+						//If the tile has Static, explode adjacent tiles as well.
+						let hasStatic = tile.statusEffects.find(s => {
+							return s.name === "Static" && s.sourceTrainer === activeTrainer
+						})
+						if (hasStatic){
+							let x1 = tile.x
+							let y1 = tile.y
+							let nearby = contents.filter(tile2 => {
+								return distance(x1, y1, tile2.x, tile2.y) === 1
+							})
+							nearby.forEach(tile2 => tiles.push(tile2))
+						}
 					}
+				}
+				//Remove duplicates
+				tiles = noDuplicates(tiles)
+				//Those matched tiles explode.
+				for (let tile of tiles){
+					this.board.explodeTile(tile)
 				}
 				this.handleEffects(matches)
 	
@@ -561,7 +583,8 @@ class Round{
 			}
 		}
 		
-		if (!document.hidden){
+		let modalOpen = $("#modal").hasClass("show")
+		if (!document.hidden && !modalOpen){
 			let board = this.board
 			let contents = board.tilesOnScreen()
 			for (let tile of contents){
@@ -665,6 +688,20 @@ class Round{
 			}
 		}
 
+		//Reduce status effect durations
+		let toRemove = []
+		for (let status of statusEffects){
+			if (status.turns){
+				status.turns--
+				if (status.turns === 0){
+					toRemove.push(status)
+				}
+			}
+		}
+		for (let status of toRemove){
+			statusEffects.splice(statusEffects.indexOf(status), 1)
+		}
+
 		let promise = this.checkForWinner()
 		if (this.activePlayer === "enemy"){
 			promise = promise.then(() => this.computerMakeMoves())
@@ -703,9 +740,6 @@ class Round{
 	}
 
 	showEndScreen(message){
-		let resolvePromise
-		let promise = new Promise(resolve => resolvePromise = resolve)
-
 		let modal = $("#modal")
 		clearModal(modal)
 		modal.addClass("wide")
@@ -714,6 +748,7 @@ class Round{
 		modal.find(".modal-footer").append(btn)
 
 		let toGive = this.calculateEXPGained()
+		console.log(toGive)
 		let playing = false
 		const pretendToGiveEXP = (chooseable, pokemon, fromLevel) => {
 			let barContainer = chooseable.children(".exp-bar")
@@ -755,7 +790,6 @@ class Round{
 			pText.append(`<p>${expText}</p>`)
 		}
 
-		//TODO make this thing show the player's pokemon
 		let pokemon = this.trainers[0].pokemon
 		let body = modal.find(".modal-body")
 		let container = $(`<div class='d-flex flex-wrap justify-content-between container'></div>`)
@@ -782,14 +816,17 @@ class Round{
 		body.append(container)
 
 		//The actual "give exp" code
+		let updatedPokemon = []
 		let learnedMoves = []
 		for (let i = 0; i < pokemon.length; i++){
 			let p = pokemon[i]
-			let gained = toGive[p.uuid]
+			let gained = toGive[p.uuid] || 0
 			if (gained){
 				p.exp += gained
 				let newLevel = p.recalculateLevel()
-				if (newLevel !== p.level){
+				console.log(gained, newLevel)
+				if (newLevel > p.level){
+					updatedPokemon.push(p)
 					let changes = p.changeLevel(newLevel)
 					for (let moveIndex of changes.unlocked){
 						let learn = p.learnset[moveIndex]
@@ -817,14 +854,67 @@ class Round{
 			anTag.text(text)
 			announcementBox.append(anTag)
 		}
+		let promise = new Promise(resolve => {
+			modal.modal("show")
+			btn.click(() => {
+				modal.modal("hide")
+			})
+			modal.on("hidden.bs.modal", () => {
+				resolve()
+			})
+		})
 
-		modal.modal("show")
-		btn.click(() => {
-			modal.modal("hide")
-		})
-		modal.on("hidden.bs.modal", () => {
-			resolvePromise()
-		})
+		//Check if any pokemon should evolve
+		let canEvolve = updatedPokemon.filter(p => p.data.evolutions.length)
+		for (let p of canEvolve){
+			let evolutions = p.data.evolutions
+			let possibilities = evolutions.filter(evo => {
+				return checkIfPokemonMeetsRequirements(p, evo.unlock)
+			})
+			//TODO if there are multiple options, the player should get to choose
+			if (!possibilities.length) continue
+			let evolution = randomChoice(possibilities)
+			let evolveTo = pokemonData[evolution.name]
+			let announcementBox = $("<div class='d-flex text-center flex-column align-items-stretch'></div>")
+			promise = promise.then(() => new Promise(resolve => {
+				clearModal(modal)
+				modal.addClass("wide")
+				let message = `${p.name} is evolving!`
+				modal.find(".modal-title").html(`<h6 class='display-6'>${message}</h6>`)
+				let btn = $(`<button class='btn btn-primary'>Continue</button>`)
+				modal.find(".modal-footer").append(btn)
+
+				let animation = doEvolutionAnimation(body, p, evolution)
+				animation.promise.then(() => {
+					if (animation.skipped) return
+					let message = `${p.name} evolved into ${evolveTo.name}!`
+					modal.find(".modal-title").html(`<h6 class='display-6'>${message}</h6>`)
+
+					let changes = p.evolve(evolveTo)
+					for (let moveIndex of changes.unlocked){
+						let learn = p.learnset[moveIndex]
+						let move = pokemonMoveData[learn.name]
+						let moveName = getLocaleString("name", lang, ["moves", move.name])
+						let text = `${p.name} learned ${moveName}!`
+						createAnnouncement("general", text)
+						let anTag = $("<div></div>")
+						anTag.text(text)
+						announcementBox.append(anTag)
+					}
+				})
+
+				body.append(announcementBox)
+				modal.modal("show")
+				btn.click(() => {
+					modal.modal("hide")
+				})
+				modal.on("hidden.bs.modal", () => {
+					resolve()
+					animation.skip()
+				})
+			}))
+		}
+		
 		return promise
 	}
 
@@ -915,6 +1005,7 @@ class Round{
 	}
 
 	dealDamage(options){
+		let result = {}
 		let attackerTrainer = options.fromTrainer
 		if (!attackerTrainer){
 			attackerTrainer = this.trainers[this.activePlayerIndex]
@@ -974,21 +1065,30 @@ class Round{
 		}
 		damage *= typeMult
 		damage = Math.round(damage)
-		
-		defender.hp -= damage
-		let animOptions = {
-			color: "#db2428",
-			direction: randomAngle(225, 315),
-			duration: 2000,
-			distance: 30,
-			side: "right"
-		}
-		let healthBar = defenderTrainer.tags.healthBar
-		addFloatingText("-" + damage, healthBar, animOptions)
-		this.updateHealth(this.trainers.indexOf(defenderTrainer), true)
 
-		let result = {}
-		result.damageDealt = damage
+		//If the receiving Pokemon has Invulnerable, set damage dealt to 0.
+		let statusEffects = defender.statusEffects
+		let isInvulnerable = statusEffects.some(s => s.name === "invulnerable")
+		if (isInvulnerable && attacker !== defender){
+			damage = 0
+			result.damageDealt = 0
+		}
+		
+		if (damage){
+			defender.hp -= damage
+			result.damageDealt = damage
+			let animOptions = {
+				color: "#db2428",
+				direction: randomAngle(225, 315),
+				duration: 2000,
+				distance: 30,
+				side: "right"
+			}
+			let healthBar = defenderTrainer.tags.healthBar
+			addFloatingText("-" + damage, healthBar, animOptions)
+			this.updateHealth(this.trainers.indexOf(defenderTrainer), true)
+		}
+
 		return result
 	}
 
@@ -1120,9 +1220,12 @@ class Round{
 		let params = getEffectParams(effect, effectIndex, moveUseObj)
 
 		let targetTrainers = {
+			"choose-tiles": true,
 			"gain-energy": true
 		}
 		let targetDefaults = {
+			"choose-tiles": "user",
+			"damage": "opponent",
 			"heal": "user",
 			"get-stat": "user",
 			"apply-status-effect": "opponent",
@@ -1157,9 +1260,31 @@ class Round{
 				playSound(`${moveUseObj.move.name}-${name}`)
 				resolvePromise()
 			} break
+			case "swap-tiles": {
+				let selection = params.selection
+				if (selection.length < 2) {
+					resolvePromise()
+					break
+				}
+				let tile1 = selection[0]
+				let tile2 = selection[1]
+				let map = [
+					[tile1, [tile2.x, tile2.y]],
+					[tile2, [tile1.x, tile1.y]],
+				]
+				let options = {
+					callback: () => {
+						this.applyLocationChanges(map)
+						resolvePromise()
+					}
+				}
+				this.animateSwitchLocations(tile1, tile2, options)
+				console.log(selection)
+			} break
 			case "choose-tiles": {
 				let count = effect.count ?? 1
 				this.currentlySelecting = {
+					player: target,
 					type: "tiles",
 					count: count
 				}
@@ -1168,12 +1293,13 @@ class Round{
 				}
 				this.currentlySelecting.resolve = resolvePromise
 				this.currentlySelecting.promise = promise
-				//TODO probably only make announcement on your turn
-				this.createAnnouncement("general", `Select ${count} tiles`)
-				if (this.activePlayer === "enemy"){
+				
+				if (target === this.trainers[1]){
 					this.waitUntilNoAnnouncements(() => {
 						this.computerMakeSelection()
 					})
+				} else {
+					this.createAnnouncement("general", `Select ${count} tiles`)
 				}
 			} break
 			case "shuffle": {
@@ -1247,15 +1373,6 @@ class Round{
 			case "get-stat": {
 				let statName = effect.which ?? "attack"
 				moveUseObj.info[effectIndex] = target.getStat(statName)
-				resolvePromise()
-			} break
-			case "burn": {
-				let chance = effect.chance ?? 1
-				if (Math.random() <= chance){
-					let otherTrainer = this.trainers[this.getOtherPlayer(this.activePlayerIndex)]
-					let otherPokemon = otherTrainer.activePokemon
-					otherPokemon.addStatusEffect("burn", moveUseObj.trainer, moveUseObj.pokemon, moveUseObj.move)
-				}
 				resolvePromise()
 			} break
 			case "apply-status-effect": {
@@ -1503,8 +1620,9 @@ class Round{
 		//on the current thing
 		if (!this.currentlySelecting) return
 		let selectType = this.currentlySelecting.type
-		let playerTurn = this.activePlayer === "player"
-		if (selectType === "tiles" && playerTurn){
+		let playerTurn = this.currentlySelecting.player === this.trainers[0]
+		let valid = this.selectionIsValid()
+		if (selectType === "tiles" && playerTurn && valid){
 			this.confirmButton.show()
 		} else {
 			this.confirmButton.hide()
@@ -1512,6 +1630,11 @@ class Round{
 	}
 
 	canSelectTile(tile, trainerIndex){
+		// If currently selecting tiles, the player can override
+		// when they are allowed to make choices.
+		if (this.currentlySelecting.player === this.trainers[0]){
+			return true
+		}
 		return this.activePlayerIndex === trainerIndex
 		&& this.state === "waiting"
 		&& this.hasBegun
@@ -1596,7 +1719,8 @@ class Round{
 		playSound(`cascade${cascade}`)
 	}
 	
-	animateSwitchLocations(tile1, tile2){
+	animateSwitchLocations(tile1, tile2, options){
+		options = options ?? {}
 		let now = Date.now()
 		let duration = 300
 
@@ -1605,9 +1729,14 @@ class Round{
 		let animation = getEmptyAnimationBatch()
 		animation.batch.push(animation1)
 		animation.batch.push(animation2)
-		animation.callback = () => {
-			this.swap(tile1, tile2)
+		if (options.callback === undefined){
+			animation.callback = () => {
+				this.swap(tile1, tile2, options)
+			}
+		} else {
+			animation.callback = options.callback
 		}
+		
 		this.addAnimation(animation)
 		return animation
 	}
@@ -1708,6 +1837,7 @@ class Round{
 	}
 
 	handleMouseMove(){
+		if ($("#modal").hasClass("show")) return
 		let chosenTile = this.getChosenTile()
 		if (chosenTile){
 			this.moveToTopLayer(chosenTile)
@@ -1726,6 +1856,7 @@ class Round{
 	}
 
 	handleMouseDown(){
+		if ($("#modal").hasClass("show")) return
 		let chosenTile = this.getChosenTile()
 		if (!chosenTile) return
 		if (!this.currentlySelecting) return
@@ -1763,6 +1894,7 @@ class Round{
 	}
 
 	handleMouseUp(){
+		if ($("#modal").hasClass("show")) return
 		if (this.selectedTile){
 			if (this.tileSelectionType === "hold"){
 				this.deselectTile(this.selectedTile)
@@ -1904,7 +2036,7 @@ class Round{
 	}
 	updateStatusEffects(trainerIndex){
 		let statusTag = this.trainers[trainerIndex].tags.pokemonStatusSection
-		statusTag.find(".status-effect").popover("hide").popover("dispose")
+		statusTag.find(".status-effect").popover("hide")
 		statusTag.empty()
 		let pokemon = this.trainers[trainerIndex].activePokemon
 		for (let status of pokemon.statusEffects){
@@ -1965,8 +2097,10 @@ class Round{
 		tags.healthMax.text(0)
 		tags.pokemonSection = tags.sideTop.children(".avatar-pokemon-section")
 		tags.pokemonName = tags.pokemonSection.children(".avatar-pokemon-name")
+		tags.pokemonName.text("")
 		tags.pokemonImageSection = tags.pokemonSection.children(".avatar-pokemon-image")
 		tags.pokemonImage = tags.pokemonImageSection.children(".pokemon-image")
+		tags.pokemonImage.attr("src", "")
 		tags.pokeballImageSection = tags.pokemonSection.children(".avatar-pokeball-image")
 		tags.pokeballImage = tags.pokeballImageSection.find(".pokeball-image")
 		tags.trainerImageSection = tags.pokemonSection.children(".avatar-trainer-image-section")
@@ -2474,7 +2608,9 @@ class Board{
 			let top = Math.min(-1, column[0].y - 1)
 			let newTile = new Tile("random", tile.x, top)
 			this.add(newTile)
+			return true
 		}
+		return false
 	}
 
 	fill(){
@@ -2848,4 +2984,139 @@ function canPokemonBeHealed(pokemonList){
 	}
 	toPerform.pokemon = healables
 	return toPerform
+}
+
+function doEvolutionAnimation(elem, pokemon, evolution){
+	let evolveTo = pokemonData[evolution.name]
+	let body = $(`<div class='evolution-container'></div>`)
+	elem.append(body)
+	let image1src = pokemon.data.imageSources.large
+	let image2src = evolveTo.imageSources.large
+	let box1 = $("<div></div>")
+	let box2 = $("<div></div>")
+	body.append(box1)
+	body.append(box2)
+	let image1 = $(`<img>`).attr("src", image1src)
+	let image2 = $(`<img>`).attr("src", image2src)
+	image2.css("opacity", 0)
+	image2.css("filter", "brightness(100)")
+	box1.append(image1)
+	box2.append(image2)
+	let result = {}
+
+	let skipped = false
+	result.skipped = false
+	let skip = () => {
+		skipped = true
+		result.skipped = true
+	}
+
+	//Squash
+	delay(500).then(() => {
+		$({val: 0}).animate({val: 1}, {
+			duration: 1500,
+			step: function(){
+				if (skipped) return
+				let p = this.val
+				let x = 1 - (p * 0.2)
+				let y = 1 + (p * 0.2)
+				let transform = ""
+				transform += ` scaleX(${x})`
+				transform += ` scaleY(${y})`
+				image1.css("transform", transform)
+				image2.css("transform", transform)
+			}
+		})
+	})
+	//Outer glow
+	delay(1000).then(() => {
+		$({val: 0}).animate({val: 1}, {
+			duration: 3000,
+			step: function(){
+				if (skipped) return
+				let p = this.val
+				let glow = interpolate(0, 1, bezierEase(p))
+				let i = image1.width() * glow * 0.1
+				let filter = `drop-shadow(0px 0px ${i * 5}px white)`
+				filter += ` drop-shadow(0px 0px ${i * 3}px rgba(255, 255, 255, ${p}))`
+				body.css("filter", filter)
+			}
+		})
+	})
+	// Brightify
+	delay(700).then(() => {
+		$({val: 0}).animate({val: 1}, {
+			duration: 1800,
+			step: function(){
+				if (skipped) return
+				let p = this.val
+				let brightness = interpolate(1, 10, bezierEase(p))
+				brightness = brightness * brightness
+				image1.css("filter", `brightness(${brightness})`)
+			}
+		})
+	})
+	//In and out opacity to swap
+	let inNOut = (duration, times, last) => {
+		let promise = new Promise(res => {
+			$({val: 0}).animate({val: 1}, {
+				duration: duration,
+				easing: "linear",
+				step: function(){
+					if (skipped) return
+					let p = this.val
+					let extra = last ? (0.5 / times) : 0
+					let phase = (p * (1 + extra)) % (1 / times) * times
+					let v = phase > 0.5 ? 0.5 - (phase - 0.5) : phase
+					v *= 2
+					image2.css("opacity", v)
+					let v2 = 1 - v
+					image1.css("opacity", v2)
+				},
+				complete: function(){
+					res()
+				}
+			})
+		})
+		return promise
+	}
+	delay(4000)
+	.then(() => inNOut(4000, 3))
+	.then(() => inNOut(3000, 4))
+	.then(() => inNOut(3000, 9, true))
+	//Fade out outer glow & brightness
+	delay(13000).then(() => {
+		$({val: 0}).animate({val: 1}, {
+			duration: 1500,
+			step: function(){
+				let p = 1 - this.val
+				let x = 1 - (p * 0.2)
+				let y = 1 + (p * 0.2)
+				let transform = ""
+				transform += ` scaleX(${x})`
+				transform += ` scaleY(${y})`
+				image1.css("transform", transform)
+				image2.css("transform", transform)
+				let glow = interpolate(0, 1, bezierEase(p))
+				let i = image1.width() * glow * 0.1
+				let filter = `drop-shadow(0px 0px ${i * 5}px white)`
+				filter += ` drop-shadow(0px 0px ${i * 3}px rgba(255, 255, 255, ${p}))`
+				body.css("filter", filter)
+				let brightness = interpolate(1, 10, bezierEase(p))
+				brightness = brightness * brightness
+				image2.css("filter", `brightness(${brightness})`)
+			},
+			complete: function(){
+				if (skipped) return
+				image1.hide()
+				image2.css("opacity", 1)
+				image2.css("filter", "")
+				image2.css("transform", "")
+			}
+		})
+	})
+	let animationComplete = delay(15000)
+	result.promise = animationComplete
+	result.skip = skip
+	return result
 }

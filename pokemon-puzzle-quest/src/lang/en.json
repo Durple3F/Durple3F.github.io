@@ -1,5 +1,5 @@
 {
-	"Route 1-1-description": "Note: He always has a Litten.",
+	"Route 1-1-description": "Rival Battle",
 	"moves": {
 		"Absorb": {
 			"name": "Absorb",
@@ -26,6 +26,11 @@
 			"description": "Lowers the opponent's attack stat by 1 stage.",
 			"shortDescription": "Lowers enemy attack"
 		},
+		"Harden": {
+			"name": "Harden",
+			"description": "Gives the user the Invulnerable status for one turn. It can't take damage for as long as it has that status. Then ends the turn.",
+			"shortDescription": "Temporary invulnerability"
+		},
 		"Infestation": {
 			"name": "Infestation",
 			"description": "Deals damage. Converts a random tile into a Grass tile and gives it the Infested status. At the start of the opponent's turn, for each Infested tile, that tile drains 1 energy of a random color, and gives it to the user.",
@@ -51,6 +56,11 @@
 			"description": "Damage-dealing move with no special effects.",
 			"shortDescription": "Deals light damage"
 		},
+		"Play Nice": {
+			"name": "Play Nice",
+			"description": "Lowers the opponent's attack stat by 1 stage. Then, the opponent chooses two tiles. Those tiles are swapped. Then, the user chooses two tiles. Those tiles are swapped.",
+			"shortDescription": "Debuffs opponent and disrupts board"
+		},
 		"Poison Sting": {
 			"name": "Poison Sting",
 			"description": "Deals damage. Then, has a 30% chance to apply poisoned to the opponent.",
@@ -65,6 +75,11 @@
 			"name": "Quick Attack",
 			"description": "Deals damage. This move can be used more than once during a turn.",
 			"shortDescription": "Deals light damage."
+		},
+		"Scratch": {
+			"name": "Scratch",
+			"description": "Damage-dealing move with no special effects.",
+			"shortDescription": "Deals light damage"
 		},
 		"String Shot": {
 			"name": "String Shot",
@@ -96,6 +111,11 @@
 			"description": "Lowers the opponent's defense stat by 1 stage.",
 			"shortDescription": "Lowers enemy defense"
 		},
+		"Thunder Shock": {
+			"name": "Thunder Shock",
+			"description": "Deals damage. 2 random tiles are given the Static status effect. When the user removes a tile with Static, it explodes and removes orthogonally adjacent tiles as well.",
+			"shortDescription": "Gives tiles Static"
+		},
 		"Water Gun": {
 			"name": "Water Gun",
 			"description": "Deals damage. This move's power increases by 2 for every Water tile on the board.",
@@ -116,9 +136,26 @@
 			"name": "Confused",
 			"description": "Whenever this Pokemon uses a move, its turn has a 50% chance to end."
 		},
+		"invulnerable": {
+			"name": "Invulnerable",
+			"description": "This Pokemon can't be dealt damage."
+		},
 		"poisoned": {
 			"name": "Poisoned",
 			"description": "At the beginning of this Pokemon's turn, it will take 1/16 of its max HP in damage."
+		}
+	},
+	"settings": {
+		"sound-types": {
+			"music": {
+				"name": "Music"
+			},
+			"sound": {
+				"name": "Sound Effects"
+			},
+			"cry": {
+				"name": "Pokemon Cries"
+			}
 		}
 	}
 }

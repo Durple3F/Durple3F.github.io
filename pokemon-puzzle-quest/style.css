@@ -176,6 +176,19 @@ body {
 #game {
 	transition: background-image 0.3s;
 }
+#settings-btn {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	cursor: pointer;
+	background-color: var(--move-unusable);
+	padding: 0.35em 0.5em;
+	border-top-right-radius: 25%;
+	transition: background-color 0.25s;
+}
+#settings-btn:hover {
+	background-color: var(--move-usable);
+}
 
 .route-list {
 	width: 25%;
@@ -904,6 +917,23 @@ body {
 /* Hide scrollbar */
 #modal.summary .pokemon-info > .move-section::-webkit-scrollbar {
 	display: none;
+}
+
+.evolution-container {
+	position: relative;
+}
+.modal .evolution-container {
+	height: 10em;
+}
+.evolution-container > div {
+	height: 60%;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+.evolution-container > div > img {
+	max-height: 100%;
 }
 
 @keyframes bounce {

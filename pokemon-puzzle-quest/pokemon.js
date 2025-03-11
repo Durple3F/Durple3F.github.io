@@ -59,10 +59,12 @@ class Pokemon{
 			}
 		}
 
-		let unlocks = this.determineUnlockedMoves()
-		this.unlockMoves(unlocks)
-		if (this.activeMoves.length === 0){
-			this.chooseActiveMoves()
+		if (!options.skipGivingMoves){
+			let unlocks = this.determineUnlockedMoves()
+			this.unlockMoves(unlocks)
+			if (this.activeMoves.length === 0){
+				this.chooseActiveMoves()
+			}
 		}
 		
 		this.energy = getEmptyEnergy()
@@ -91,6 +93,12 @@ class Pokemon{
 				case "poisoned": {
 					status = {
 						name: "poisoned"
+					}
+				} break
+				case "invulnerable": {
+					status = {
+						name: "invulnerable",
+						turns: 1
 					}
 				} break
 				default:
@@ -207,7 +215,7 @@ class Pokemon{
 		return unlockMap
 	}
 	unlockMove(name){
-		let index = this.learnset.find(m => m.name === name)
+		let index = this.learnset.findIndex(m => m.name === name)
 		if (index !== -1){
 			this.movesUnlockedMap[index] = true
 		}
@@ -273,5 +281,42 @@ class Pokemon{
 	}
 	recalculateLevel(){
 		return this.getLevelFromEXP(this.exp)
+	}
+
+	evolve(evolveTo){
+		let copy = {}
+		let toCopy = [
+			"uuid", "owner", "level", "nature",
+			"ivs", "evs", "exp"
+		]
+		for (let key of toCopy){
+			copy[key] = this[key]
+		}
+		copy.skipGivingMoves = true
+		let changeName = this.name === this.pokemonName
+		let newName = changeName ? null : this.name
+		let oldActive = this.activeMoves
+		let oldMoves = this.moves
+		let oldMovesUnlocked = this.movesUnlockedMap
+		let newPokemon = new Pokemon(newName, evolveTo.id, copy)
+		for (let key in newPokemon){
+			this[key] = newPokemon[key]
+		}
+		oldMovesUnlocked.forEach((v, i) => {
+			if (!v) return
+			let move = oldMoves[i]
+			this.unlockMove(move.name)
+		})
+		oldActive.forEach(move => this.activeMoves.push(move))
+		let unlocks = this.determineUnlockedMoves()
+		let changes = this.unlockMoves(unlocks)
+		for (let moveIndex of changes.unlocked){
+			let learn = this.learnset[moveIndex]
+			let move = pokemonMoveData[learn.name]
+			if (this.activeMoves.length < 4){
+				this.activeMoves.push(move)
+			}
+		}
+		return changes
 	}
 }

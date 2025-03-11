@@ -184,6 +184,13 @@ const pokemonStatusData = {
 		stacks: false,
 		class: "debuff",
 		name: "poisoned"
+	},
+	"invulnerable": {
+		image: "src/img/icons/shield.png",
+		color: "rgb(122, 104, 223)",
+		stacks: false,
+		class: "buff",
+		name: "invulnerable"
 	}
 }
 
@@ -196,6 +203,9 @@ const tileStatusData = {
 	},
 	"Burn": {
 		url: "src/img/icons/burn-tile.png"
+	},
+	"Static": {
+		url: "src/img/icons/electric.png"
 	}
 }
 
@@ -244,6 +254,10 @@ function checkIfPokemonMeetsRequirements(pokemon, req){
 	if (req.type === "level"){
 		return pokemon.level >= req.amount
 	}
+	if (req.type === "pre-evolve"){
+		//This is the type for when a move may only be learned by a pre-evolved version of that pokemon.
+		return false
+	}
 	if (req.type === "never"){
 		return false
 	}
@@ -261,7 +275,10 @@ function getReasonPokemonDoesntMeetRequirements(pokemon, move){
 			return `Your Pokemon needs to be at least... wait, they're high enough level. Huh????`
 		}
 	}
-	if (req.type === "never"){
+	else if (req.type === "pre-evolve"){
+		return "A less evolved version of this pokemon could've learned this move.	"
+	}
+	else if (req.type === "never"){
 		return "Your Pokemon should NEVER be able to use this move and that is a GOOD thing because they are too STUPID to use it anyway."
 	}
 	console.warn("You never handled this", req)

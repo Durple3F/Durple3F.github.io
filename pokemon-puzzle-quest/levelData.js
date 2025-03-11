@@ -73,10 +73,28 @@ const levelData = [
 		id: "Route 1-1",
 		category: "Route 1",
 		name: "Rival Battle 1",
-		description: "Route 1-1-description",
+		// description: "Route 1-1-description",
 		icon: "1",
 		music: "SM Trainer Battle",
 		trainers: [
+			{
+				name: "Hau",
+				pokemon: [
+					{
+						pokemonName: "Popplio",
+						level: 5
+					}
+				]
+			},
+			{
+				name: "Hau",
+				pokemon: [
+					{
+						pokemonName: "Rowlet",
+						level: 5
+					}
+				]
+			},
 			{
 				name: "Hau",
 				pokemon: [
@@ -87,7 +105,20 @@ const levelData = [
 				]
 			}
 		],
-		effects: [{type: "fight", trainer: 0}]
+		effects: [
+			{type: "load-player-info", key: "chosen-starter"},
+			{type: "load-value", value: "Rowlet"},
+			{type: "jump-if-equal", jumpTo: "Litten"},
+			{type: "load-player-info", key: "chosen-starter"},
+			{type: "load-value", value: "Litten"},
+			{type: "jump-if-equal", jumpTo: "Popplio"},
+			{type: "fight", trainer: 1, label: "Rowlet"},
+			{type: "jump", jumpTo: Infinity},
+			{type: "fight", trainer: 2, label: "Litten"},
+			{type: "jump", jumpTo: Infinity},
+			{type: "fight", trainer: 0, label: "Popplio"},
+			{type: "jump", jumpTo: Infinity},
+		]
 	},
 	{
 		id: "Route 1-2",
@@ -112,9 +143,20 @@ const levelData = [
 					}
 				]
 			},
+			{
+				pokemon: [
+					{
+						pokemonName: "Pichu",
+						levelMin: 3, levelMax: 5
+					},
+				]
+			},
 		],
 		effects: [
-			{type: "fight", trainer: 0}
+			{type: "random-number", min: 1, max: 10},
+			{type: "fight", trainer: 1, label: "Pichu"},
+			{type: "jump", jumpTo: Infinity},
+			{type: "fight", trainer: 0, label: "Normal"}
 		]
 	},
 	{
@@ -143,6 +185,50 @@ const levelData = [
 		],
 		effects: [
 			{type: "fight", trainer: 0}
+		]
+	},
+	{
+		id: "Route 1-4",
+		category: "Route 1",
+		name: "Route 1-4 test",
+		icon: "4",
+		music: "SM Wild Pokemon Battle",
+		trainers: [
+			{
+				pokemon: [
+					{
+						pokemonName: "Caterpie",
+						levelMin: 1, levelMax: 1
+					}
+				]
+			},
+			{
+				pokemon: [
+					{
+						pokemonName: "Comfey",
+						levelMin: 1, levelMax: 1
+					}
+				]
+			},
+		],
+		effects: [
+			{type: "fight", trainer: 0},
+			{type: "load-player-info", key: "chosen-starter"},
+			{type: "load-value", value: "Popplio"},
+			{type: "jump-if-equal", jumpTo: 7},
+			{type: "fight", trainer: 0},
+			{type: "fight", trainer: 0},
+			{type: "fight", trainer: 0},
+			{type: "fight", trainer: 1},
+			{type: "fight", trainer: 0},
+			{type: "fight", trainer: 0},
+			{type: "fight", trainer: 0},
+			{type: "fight", trainer: 0},
+			{type: "fight", trainer: 0},
+			{type: "fight", trainer: 0},
+			{type: "fight", trainer: 0},
+			{type: "fight", trainer: 0},
+			{type: "fight", trainer: 0},
 		]
 	},
 ]

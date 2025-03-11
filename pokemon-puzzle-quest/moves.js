@@ -148,7 +148,8 @@ const pokemonMoveData = {
 		},
 		effects: [
 			{ type: "play-sound", name: "attack" },
-			{ type: "apply-status-effect", statusEffect: "invulnerable", target: "user" }
+			{ type: "apply-status-effect", statusEffect: "invulnerable", target: "user" },
+			{ type: "end-turn" }
 		],
 	},
 	"Infestation": {
@@ -276,6 +277,35 @@ const pokemonMoveData = {
 			{ type: "damage" }
 		],
 	},
+	"Play Nice": {
+		name: "Play Nice",
+		type: "Normal",
+		category: "Status",
+		strategy: "special",
+		pp: 20,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 2,
+		energy: {
+			purple: 2
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Play Nice.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "apply-debuff", debuff: {
+					type: "stat",
+					stat: "attack",
+					amount: -1
+				}
+			},
+			{ type: "choose-tiles", count: 2, target: "opponent" },
+			{ type: "swap-tiles", selection: -1 },
+			{ type: "choose-tiles", count: 2, target: "user" },
+			{ type: "swap-tiles", selection: -1 },
+		],
+	},
 	"Poison Sting": {
 		name: "Poison Sting",
 		type: "Poison",
@@ -335,6 +365,26 @@ const pokemonMoveData = {
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Quick Attack.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" }
+		],
+	},
+	"Scratch": {
+		name: "Scratch",
+		type: "Normal",
+		category: "Physical",
+		strategy: "basic-damage",
+		pp: 35,
+		power: 40,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			yellow: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Pound.mp3"
 		},
 		effects: [
 			{ type: "play-sound", name: "attack" },
@@ -472,6 +522,35 @@ const pokemonMoveData = {
 					stat: "defense",
 					amount: -1
 				}
+			}
+		],
+	},
+	"Thunder Shock": {
+		name: "Thunder Shock",
+		type: "Electric",
+		category: "Special",
+		strategy: "basic-damage",
+		pp: 30,
+		power: 40,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			yellow: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Thunder Shock.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "random-number", min: 1, max: 10 },
+			{ type: "load-number", value: 6 },
+			{ type: "jump-if-less-than", jumpTo: Infinity },
+			{ type: "load-number", value: 2 },
+			{ type: "select-random-tiles", count: -1 },
+			{
+				type: "apply-status-to-tiles", selection: "group", which: -1,
+				status: { name: "Static", type: "debuff", duration: null }
 			}
 		],
 	},
