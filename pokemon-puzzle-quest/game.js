@@ -1239,6 +1239,11 @@ class Round{
 		let trainer = this.trainers[trainerIndex]
 		let pokemon = trainer.pokemon[pokemonIndex]
 		let move = pokemon.moves[moveIndex]
+		let moveUsage = pokemon.moveUsage[moveIndex]
+		if (moveUsage.recharge){
+			this.createAnnouncement("general", "That move is recharging.")
+			return
+		}
 		let payability = this.canPayCost(move, trainerIndex)
 		let canPay = Object.keys(payability).every(k => payability[k] === true)
 		if (!canPay) {
@@ -2224,6 +2229,7 @@ class Round{
 		tags.pokeballImage = tags.pokeballImageSection.find(".pokeball-image")
 		tags.trainerImageSection = tags.pokemonSection.children(".avatar-trainer-image-section")
 		tags.trainerImage = tags.trainerImageSection.children(".trainer-image")
+		tags.trainerImage.attr("src", "")
 		tags.pokeballDisplay = tags.sideMiddle.children(".pokeball-display")
 		tags.pokeballContainers = tags.pokeballDisplay.children().children(".pokeball-container")
 		tags.pokemonStatusSection = tags.pokemonSection.children(".pokemon-status-effect-section")
@@ -3248,4 +3254,21 @@ function doEvolutionAnimation(elem, pokemon, evolution){
 	result.promise = animationComplete
 	result.skip = skip
 	return result
+}
+
+function healAllPokemon(pokemonList){
+	playSound("healing")
+	pokemonList.forEach(p => {
+		//Full health
+		p.hp = p.maxhp
+		//Remove all debuffs
+		let debuffs = p.statusEffects.filter(s => {
+			let name = s.name
+			let data = pokemonStatusData[name]
+			return data && data.class === "debuff"
+		})
+		debuffs.forEach(s => {
+			p.statusEffects.splice(p.statusEffects.indexOf(s), 1)
+		})
+	})
 }

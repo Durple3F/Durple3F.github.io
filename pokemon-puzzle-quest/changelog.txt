@@ -1,5 +1,13 @@
 3/12:
-	- 
+	- Leaving empty slots between pokemon in your party no longer crashes the game
+	- Music no longer randomly refuses to obey your sound settings i hope
+	- Fixed a crash on Route 1-2 related to me forgetting that Infinity is a big number
+	- Now if you lose a fight, the game automatically heals your pokemon
+	- If you exit the game before choosing your starter, it will now let you choose your starter when you get back.
+	- Fixed a glitch where you were allowed to use moves while they were recharging.
+	- Hau no longer stands there, watching you, observing your actions for all eternity.
+	- Added the remaining pokemon natures
+	- You can now view this very changelog in-game
 
 3/11 (8900 lines):
 	- Added Sweet Kiss

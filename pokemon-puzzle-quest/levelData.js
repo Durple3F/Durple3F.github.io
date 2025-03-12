@@ -167,7 +167,7 @@ const levelData = [
 		effects: [
 			{type: "random-number", min: 1, max: 10},
 			{type: "load-value", value: 2},
-			{type: "jump-if-less-than", jumpTo: Infinity},
+			{type: "jump-if-less-than", jumpTo: "Normal"},
 			{type: "fight", trainer: 1, label: "Pichu"},
 			{type: "jump", jumpTo: Infinity},
 			{type: "fight", trainer: 0, label: "Normal"}
@@ -208,7 +208,7 @@ const levelData = [
 		effects: [
 			{type: "random-number", min: 1, max: 10},
 			{type: "load-value", value: 0},
-			{type: "jump-if-less-than", jumpTo: Infinity},
+			{type: "jump-if-less-than", jumpTo: "Normal"},
 			{type: "fight", trainer: 1, label: "Grubbin"},
 			{type: "jump", jumpTo: Infinity},
 			{type: "fight", trainer: 0, label: "Normal"}

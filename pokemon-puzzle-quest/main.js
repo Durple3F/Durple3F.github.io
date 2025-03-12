@@ -114,7 +114,6 @@ function bezierEase(t){
 function interpolate(v1, v2, p){
 	return (1 - p)*v1 + p*v2
 }
-
 function lerp(a, b, t){
 	return a + (b - a)*t
 }
@@ -122,6 +121,7 @@ function lerp(a, b, t){
 function randomChoice(arr){
 	return arr[Math.floor(Math.random() * arr.length)]
 }
+//Note: Mutates the original array
 function shuffleArray(array) {
 	for (var i = array.length - 1; i > 0; i--) {
 			var j = Math.floor(Math.random() * (i + 1));
@@ -129,6 +129,15 @@ function shuffleArray(array) {
 			array[i] = array[j];
 			array[j] = temp;
 	}
+}
+//Note: Mutates the original array
+function removeEmptySlots(arr){
+	let emptyIndex = arr.findIndex(p => !p)
+	while (emptyIndex !== -1){
+		arr.splice(emptyIndex, 1)
+		emptyIndex = arr.findIndex(p => !p)
+	}
+	return arr
 }
 
 const ongoingTextAnimations = new Map()
@@ -313,6 +322,8 @@ function loadSound(name, type, url){
 			},
 			success: (response) => {
 				var audio = new Audio(URL.createObjectURL(response))
+				audio.muted = config.muted[type]
+				audio.volume = config.volumes[type]
 				audio.load()
 				sounds[name].audio = audio
 				loadedResources[2]++
@@ -754,6 +765,8 @@ function openSettings(){
 	let body = modal.find(".modal-body")
 
 	modal.find(".modal-title").html(`<h6 class='display-6 text-center'>Settings</h6>`)
+	let changelogBtn = $(`<button class='btn btn-secondary'>Changelog</button>`)
+	modal.find(".modal-footer").append(changelogBtn)
 	let btn = $(`<button class='btn btn-primary'>Continue</button>`)
 	modal.find(".modal-footer").append(btn)
 
@@ -831,6 +844,7 @@ function openSettings(){
 		section.append("%")
 	}
 
+	changelogBtn.click(openChangelog)
 	btn.click(() => {
 		modal.modal("hide")
 	})
@@ -842,6 +856,30 @@ function openSettings(){
 	promise = promise.then(() => {
 		if (playerSaveId) return savePlayerInfo()
 		return
+	})
+
+	return promise
+}
+function openChangelog(){
+	let resolvePromise
+	let promise = new Promise(resolve => resolvePromise = resolve)
+	let modal = $("#modal")
+	clearModal(modal)
+	modal.addClass("wide").addClass("show")
+	let body = modal.find(".modal-body")
+
+	modal.find(".modal-title").html(`<h6 class='display-6 text-center'>Changelog</h6>`)
+	let btn = $(`<button class='btn btn-primary'>Continue</button>`)
+	modal.find(".modal-footer").append(btn)
+
+	$.ajax({
+		url: "changelog.txt",
+		success: function(data){
+			body.html(data.replaceAll("\n", "<br>"))
+		},
+		error: function(){
+			body.html("Error getting changelog :/")
+		}
 	})
 
 	return promise
@@ -864,7 +902,7 @@ function continueGame(){
 	getPlayerPokemon(playerSaveId)
 	.then(result => {
 		result.forEach(obj => {
-			console.log(obj)
+			// console.log(obj)
 			let pokemon = new Pokemon(obj.name, obj.pokemonId, obj)
 			caughtPokemon.push(pokemon)
 
@@ -872,6 +910,9 @@ function continueGame(){
 				playerActivePokemon[obj.activeSlot] = pokemon
 			}
 		})
+
+		//If this leaves empty slots in the player's party, remove them.
+		removeEmptySlots(playerActivePokemon)
 	})
 	.then(() => getPlayerBoxes(playerSaveId))
 	.then(boxes => {
@@ -884,6 +925,13 @@ function continueGame(){
 			if (!level) return
 			level.status = obj.status
 		})
+	})
+	.then(() => {
+		if (playerActivePokemon.length === 0){
+			return startScene("choose-starter")
+		} else {
+			return Promise.resolve()
+		}
 	})
 	.then(() => changeScene("route", {name: "Route 1"}))
 }

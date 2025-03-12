@@ -167,20 +167,7 @@ function startScene(name, options){
 			pokemonCenterBtn.append(`<div class='route-button-text'>Restore All Pokemon</div>`)
 			pokemonCenterBtn.click(() => {
 				//TODO: Maybe make the pokemon center an entire screen?
-				playSound("healing")
-				playerActivePokemon.forEach(p => {
-					//Full health
-					p.hp = p.maxhp
-					//Remove all debuffs
-					let debuffs = p.statusEffects.filter(s => {
-						let name = s.name
-						let data = pokemonStatusData[name]
-						return data && data.class === "debuff"
-					})
-					debuffs.forEach(s => {
-						p.statusEffects.splice(p.statusEffects.indexOf(s), 1)
-					})
-				})
+				healAllPokemon(playerActivePokemon)
 				determinePokemonCenterActiveness()
 			})
 			//Should pokemonCenterBtn be active?
@@ -577,6 +564,8 @@ function startScene(name, options){
 			confirmButton.click(() => {
 				clearInterval(pcInterval)
 				clearInterval(holdInterval)
+				//Make sure the player doesn't have a gap in their party
+				removeEmptySlots(playerActivePokemon)
 				resolvePromise()
 				changeScene("route", {name: "Route 1"})
 			})
@@ -685,6 +674,7 @@ function beginLevel(levelID){
 		nextEffectIndex: 0
 	}
 
+	let levelResult
 	let promise = advanceCurrentLevel()
 	.then(val => {
 		let info = currentLevelProgress.info
@@ -694,8 +684,15 @@ function beginLevel(levelID){
 			return info[i] === "lose" && effect.type === "fight"
 		})
 		
-		if (lostFights.length || val === "lose"){
+		if (lostFights.length){
+			levelResult = "lose"
+		} else {
+			levelResult = "win"
+		}
+		
+		if (levelResult === "lose" || val === "lose"){
 			console.log("You lose :(")
+			healAllPokemon(playerActivePokemon)
 		} else {
 			level.status = "won"
 			saveLevelStatus(level, "won")

@@ -10,6 +10,3 @@ Story:
   - Loosely follows the S&M story.
 
 TODO
-  - it's possible to refresh the page before obtaining your first pokemon, need some sort of fix
-  - add the other natures in pokemonData
-  - if you enter a fight with no active pokemon, usually because they're all at 0 hp, the game freaks out

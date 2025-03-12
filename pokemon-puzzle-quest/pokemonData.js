@@ -214,6 +214,30 @@ const tileStatusData = {
 
 const natures = [
 	{name: "hardy", increase: "attack", decrease: "attack"},
+	{name: "lonely", increase: "attack", decrease: "defense"},
+	{name: "brave", increase: "attack", decrease: "speed"},
+	{name: "adamant", increase: "attack", decrease: "specialAttack"},
+	{name: "naughty", increase: "attack", decrease: "specialDefense"},
+	{name: "bold", increase: "defense", decrease: "attack"},
+	{name: "docile", increase: "defense", decrease: "defense"},
+	{name: "relaxed", increase: "defense", decrease: "speed"},
+	{name: "impish", increase: "defense", decrease: "specialAttack"},
+	{name: "lax", increase: "defense", decrease: "specialDefense"},
+	{name: "timid", increase: "speed", decrease: "attack"},
+	{name: "hasty", increase: "speed", decrease: "defense"},
+	{name: "serious", increase: "speed", decrease: "speed"},
+	{name: "jolly", increase: "speed", decrease: "specialAttack"},
+	{name: "naive", increase: "speed", decrease: "specialDefense"},
+	{name: "modest", increase: "specialAttack", decrease: "attack"},
+	{name: "mild", increase: "specialAttack", decrease: "defense"},
+	{name: "quiet", increase: "specialAttack", decrease: "speed"},
+	{name: "bashful", increase: "specialAttack", decrease: "specialAttack"},
+	{name: "rash", increase: "specialAttack", decrease: "specialDefense"},
+	{name: "calm", increase: "specialDefense", decrease: "attack"},
+	{name: "gentle", increase: "specialDefense", decrease: "defense"},
+	{name: "sassy", increase: "specialDefense", decrease: "speed"},
+	{name: "careful", increase: "specialDefense", decrease: "specialAttack"},
+	{name: "quirky", increase: "specialDefense", decrease: "specialDefense"},
 ]
 function getRandomNature(){
 	return randomChoice(natures)
