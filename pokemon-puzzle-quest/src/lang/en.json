@@ -4,17 +4,17 @@
 		"Absorb": {
 			"name": "Absorb",
 			"description": "Deals damage. Then, heals the user for 50% of the damage dealt.",
-			"shortDescription": "Steals a little HP."
+			"shortDescription": "Steals a little HP"
 		},
 		"Bug Bite": {
 			"name": "Bug Bite",
 			"description": "Deals damage. Then, drains 2 energy from the opponent's most full energy type and gives it to the user.",
-			"shortDescription": "Deals some damage and drains energy."
+			"shortDescription": "Deals some damage and drains energy"
 		},
 		"Ember": {
 			"name": "Ember",
 			"description": "Deals damage. There's a 10% chance for this move to inflict Burn on 3 random tiles. At the start of each turn, the opponent takes damage for each Burned tile on the board.",
-			"shortDescription": "Damages and might burn tiles."
+			"shortDescription": "Damages and might burn tiles"
 		},
 		"Focus Energy": {
 			"name": "Focus Energy",
@@ -39,7 +39,7 @@
 		"Leafage": {
 			"name": "Leafage",
 			"description": "Deals damage. 3 random tiles are transformed into Grass tiles.",
-			"shortDescription": "Damages and turns tiles into Grass tiles."
+			"shortDescription": "Damages and turns tiles into Grass tiles"
 		},
 		"Leer": {
 			"name": "Leer",
@@ -74,7 +74,7 @@
 		"Quick Attack": {
 			"name": "Quick Attack",
 			"description": "Deals damage. This move can be used more than once during a turn.",
-			"shortDescription": "Deals light damage."
+			"shortDescription": "Deals light damage"
 		},
 		"Scratch": {
 			"name": "Scratch",
@@ -89,17 +89,22 @@
 		"Struggle": {
 			"name": "Struggle",
 			"description": "An attack of desperation only useful when there are no available moves. It also hurts its user a little, before ending the current turn.",
-			"shortDescription": "Reshuffle board. Does recoil damage. Ends the turn."
+			"shortDescription": "Reshuffle board Does recoil damage. Ends the turn."
 		},
 		"Supersonic": {
 			"name": "Supersonic",
 			"description": "Applies Confused. After a Confused Pokemon uses a move, there's a 50% chance for their turn to end.",
-			"shortDescription": "Applies Confused."
+			"shortDescription": "Applies Confused"
+		},
+		"Sweet Kiss": {
+			"name": "Sweet Kiss",
+			"description": "Applies Confused. Then, shuffles the board. After a Confused Pokemon uses a move, there's a 50% chance for their turn to end.",
+			"shortDescription": "Confuses opponent and shuffles"
 		},
 		"Swift": {
 			"name": "Swift",
 			"description": "Deals damage. This move can be used more than once during a turn.",
-			"shortDescription": "Deals some damage."
+			"shortDescription": "Deals some damage"
 		},
 		"Tackle": {
 			"name": "Tackle",
@@ -115,6 +120,11 @@
 			"name": "Thunder Shock",
 			"description": "Deals damage. 2 random tiles are given the Static status effect. When the user removes a tile with Static, it explodes and removes orthogonally adjacent tiles as well.",
 			"shortDescription": "Gives tiles Static"
+		},
+		"Vise Grip": {
+			"name": "Vise Grip",
+			"description": "Deals damage. The user chooses a tile, and that tile becomes Locked for 3 turns. A tile with Locked can't be swapped normally.",
+			"shortDescription": "Damages and locks a tile"
 		},
 		"Water Gun": {
 			"name": "Water Gun",

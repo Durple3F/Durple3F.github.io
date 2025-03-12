@@ -206,6 +206,9 @@ const tileStatusData = {
 	},
 	"Static": {
 		url: "src/img/icons/electric.png"
+	},
+	"Locked": {
+		url: "src/img/icons/plain-padlock.png"
 	}
 }
 

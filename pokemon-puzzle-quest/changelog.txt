@@ -1,3 +1,11 @@
+3/12:
+	- 
+
+3/11 (8900 lines):
+	- Added Sweet Kiss
+	- The computer player is now much smarter about which tiles they swap.
+	- Added Grubbin and Vise Grip
+
 3/10 (8700 lines):
 	- Added a bunch of effects to levels involving conditional stuff
 	- Now you can have fights where the trainer might have different pokemon sometimes

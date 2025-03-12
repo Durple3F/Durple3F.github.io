@@ -135,7 +135,7 @@ const pokemonData = {
 			cry: "src/audio/cries/metapod.mp3"
 		},
 		types: ["Bug"],
-		tags: ["Starter"],
+		tags: [],
 		stats: {
 			hp: 50,
 			attack: 20,
@@ -333,7 +333,7 @@ const pokemonData = {
 			cry: "src/audio/cries/pichu.mp3"
 		},
 		types: ["Electric"],
-		tags: ["Starter"],
+		tags: [],
 		stats: {
 			hp: 20,
 			attack: 40,
@@ -371,6 +371,13 @@ const pokemonData = {
 				unlock: {
 					type: "level",
 					amount: 4
+				}
+			},
+			{
+				name: "Sweet Kiss",
+				unlock: {
+					type: "level",
+					amount: 8
 				}
 			},
 		]
@@ -634,6 +641,46 @@ const pokemonData = {
 				unlock: {
 					type: "level",
 					amount: 7
+				}
+			},
+		]
+	},
+	"Grubbin": {
+		name: "Grubbin",
+		number: "736",
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0736Grubbin.png",
+			"home": "src/img/tiny-pokemon/Grubbin.png"
+		},
+		sounds: {
+			cry: "src/audio/cries/grubbin.mp3"
+		},
+		tags: ["Starter"],
+		types: ["Bug"],
+		stats: {
+			hp: 47,
+			attack: 62,
+			defense: 45,
+			specialAttack: 55,
+			specialDefense: 45,
+			speed: 46
+		},
+		expYield: 60,
+		evYield: {
+			hp: 0,
+			attack: 1,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		learnset: [
+			{
+				name: "Vise Grip",
+				unlock: {
+					type: "level",
+					amount: 1
 				}
 			},
 		]

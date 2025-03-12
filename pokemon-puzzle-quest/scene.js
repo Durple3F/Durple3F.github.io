@@ -774,6 +774,20 @@ function advanceCurrentLevel(){
 			}
 			resolvePromise()
 		} break
+		case "jump-if-less-than": {
+			let test = currentLevelProgress.info[effectIndex - 2]
+			let against = currentLevelProgress.info[effectIndex - 1]
+			let index
+			if (typeof effect.jumpTo === "string"){
+				index = effects.findIndex(e => e.label === effect.jumpTo)
+			} else {
+				index = effect.jumpTo
+			}
+			if (test < against){
+				currentLevelProgress.nextEffectIndex = index
+			}
+			resolvePromise()
+		} break
 		case "jump": {
 			currentLevelProgress.nextEffectIndex = effect.jumpTo
 			resolvePromise()

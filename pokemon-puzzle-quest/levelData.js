@@ -146,6 +146,18 @@ const levelData = [
 			{
 				pokemon: [
 					{
+						pokemonName: "Pikipek",
+						levelMin: 2, levelMax: 3
+					},
+					{
+						pokemonName: "Caterpie",
+						levelMin: 2, levelMax: 3
+					},
+					{
+						pokemonName: "Ledyba",
+						levelMin: 2, levelMax: 3
+					},
+					{
 						pokemonName: "Pichu",
 						levelMin: 3, levelMax: 5
 					},
@@ -153,9 +165,11 @@ const levelData = [
 			},
 		],
 		effects: [
-			// {type: "random-number", min: 1, max: 10},
-			// {type: "fight", trainer: 1, label: "Pichu"},
-			// {type: "jump", jumpTo: Infinity},
+			{type: "random-number", min: 1, max: 10},
+			{type: "load-value", value: 2},
+			{type: "jump-if-less-than", jumpTo: Infinity},
+			{type: "fight", trainer: 1, label: "Pichu"},
+			{type: "jump", jumpTo: Infinity},
 			{type: "fight", trainer: 0, label: "Normal"}
 		]
 	},
@@ -182,9 +196,22 @@ const levelData = [
 					}
 				]
 			},
+			{
+				pokemon: [
+					{
+						pokemonName: "Grubbin",
+						levelMin: 4, levelMax: 6
+					}
+				]
+			}
 		],
 		effects: [
-			{type: "fight", trainer: 0}
+			{type: "random-number", min: 1, max: 10},
+			{type: "load-value", value: 0},
+			{type: "jump-if-less-than", jumpTo: Infinity},
+			{type: "fight", trainer: 1, label: "Grubbin"},
+			{type: "jump", jumpTo: Infinity},
+			{type: "fight", trainer: 0, label: "Normal"}
 		]
 	},
 	{

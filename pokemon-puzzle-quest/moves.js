@@ -114,10 +114,9 @@ const pokemonMoveData = {
 		pp: 40,
 		power: null,
 		accuracy: 100,
-		rechargeTurns: 0,
+		rechargeTurns: 1,
 		energy: {
-			orange: 3,
-			green: 1
+			orange: 2
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Growl.mp3"
@@ -191,7 +190,7 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			green: 3
+			green: 4
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Leafage.mp3"
@@ -458,6 +457,28 @@ const pokemonMoveData = {
 			{ type: "apply-status-effect", statusEffect: "confused", target: "opponent" }
 		],
 	},
+	"Sweet Kiss": {
+		name: "Sweet Kiss",
+		type: "Normal",
+		category: "Status",
+		strategy: "debuff-opponent",
+		pp: 10,
+		power: null,
+		accuracy: 75,
+		rechargeTurns: 1,
+		energy: {
+			purple: 2,
+			blue: 2
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Sweet Kiss part 1.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "apply-status-effect", statusEffect: "confused", target: "opponent" },
+			{ type: "shuffle" }
+		],
+	},
 	"Swift": {
 		name: "Swift",
 		type: "Normal",
@@ -550,7 +571,32 @@ const pokemonMoveData = {
 			{ type: "select-random-tiles", count: -1 },
 			{
 				type: "apply-status-to-tiles", selection: "group", which: -1,
-				status: { name: "Static", type: "debuff", duration: null }
+				status: { name: "Static", type: "buff", duration: null }
+			}
+		],
+	},
+	"Vise Grip": {
+		name: "Vise Grip",
+		type: "Normal",
+		category: "Physical",
+		strategy: "basic-damage",
+		pp: 30,
+		power: 55,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			green: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Vice Grip.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "choose-tiles", count: 1, target: "user" },
+			{
+				type: "apply-status-to-tiles", selection: "group", which: -1,
+				status: { name: "Locked", type: "debuff", duration: 1 }
 			}
 		],
 	},
@@ -564,7 +610,7 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			blue: 0//6
+			blue: 6
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Water Gun.mp3"

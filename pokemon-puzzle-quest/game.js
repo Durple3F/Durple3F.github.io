@@ -693,13 +693,34 @@ class Round{
 		for (let status of statusEffects){
 			if (status.turns){
 				status.turns--
-				if (status.turns === 0){
+				if (status.turns <= 0){
 					toRemove.push(status)
 				}
 			}
 		}
 		for (let status of toRemove){
 			statusEffects.splice(statusEffects.indexOf(status), 1)
+		}
+		//Reduce status effect durations but for tiles this time
+		contents = this.board.tilesOnScreen()
+		for (let tile of contents){
+			if (!this.board.isOnScreen(tile)) continue
+			toRemove = []
+			let statusEffects = tile.statusEffects
+			for (let status of statusEffects){
+				let trainer = status.sourceTrainer
+				let index = this.trainers.indexOf(trainer)
+				let isTurn = this.activePlayerIndex === index
+				if (status.duration && isTurn){
+					status.turns--
+					if (status.turns <= 0){
+						toRemove.push(status)
+					}
+				}
+			}
+			for (let status of toRemove){
+				statusEffects.splice(statusEffects.indexOf(status), 1)
+			}
 		}
 
 		let promise = this.checkForWinner()
@@ -748,7 +769,6 @@ class Round{
 		modal.find(".modal-footer").append(btn)
 
 		let toGive = this.calculateEXPGained()
-		console.log(toGive)
 		let playing = false
 		const pretendToGiveEXP = (chooseable, pokemon, fromLevel) => {
 			let barContainer = chooseable.children(".exp-bar")
@@ -824,7 +844,6 @@ class Round{
 			if (gained){
 				p.exp += gained
 				let newLevel = p.recalculateLevel()
-				console.log(gained, newLevel)
 				if (newLevel > p.level){
 					updatedPokemon.push(p)
 					let changes = p.changeLevel(newLevel)
@@ -986,18 +1005,104 @@ class Round{
 		}
 	}
 	computerMakeSwap(){
-		let allMoves = this.board.getAllPotentialMoves()
-		//TODO score moves somehow. Right now it just picks a random one.
-		if (allMoves.length){
-			let bestMove = randomChoice(allMoves)
-			this.animateSwitchLocations(bestMove[0], bestMove[1])
-		} else {
+		let allSwaps = this.board.getAllPotentialMoves()
+		let trainer = this.trainers[this.activePlayerIndex]
+		let pokemon = trainer.activePokemon
+
+		//Remove all swaps that intend to swap a tile with Locked
+		allSwaps = allSwaps.filter(swap => {
+			let tile1locked = swap[0].hasStatus("Locked")
+			let tile2locked = swap[1].hasStatus("Locked")
+			return !(tile1locked || tile2locked)
+		})
+
+		if (!allSwaps.length){
 			//There are no potential moves, just use Struggle instead
-			let trainer = this.trainers[this.activePlayerIndex]
-			let pokemon = trainer.activePokemon
 			let struggle = pokemon.moves.find(m => m.name === "Struggle")
 			this.beginToUseMove(trainer, pokemon, struggle)
+			return
 		}
+
+		//Array of objects containing info about how much the trainer
+		//would like to use each move
+		let moves = pokemon.activeMoves
+		let moveScores = moves.map((move, i) => {
+			let data = {}
+			data.move = move
+			data.payability = this.canPayForMove(trainer, pokemon, move)
+			//For now, the pokemon just prefers moves that are unlocked later.
+			data.score = pokemon.moves.indexOf(move)
+			return data
+		})
+
+		let swapScores = allSwaps.map(swap => {
+			let data = {}
+			data.swap = swap
+			let tiles = noDuplicates(swap[2].flat())
+			let energyValues = tiles.map(tile => tile.getEnergyValue())
+			let total = getEmptyEnergy()
+			for (let energyValue of energyValues){
+				for (let color in energyValue){
+					total[color] += energyValue[color]
+				}
+			}
+			data.total = total
+			let score = 1
+			//Big boost to scores for swaps that result in a 4+ match
+			let fourMatch = swap[2].some(match => match.length >= 4)
+			let fourMatchBonus = allSwaps.length * 0.5
+			score *= fourMatch ? fourMatchBonus : 1
+
+			//Does this match give you energy necessary for a move?
+			let paysFor = []
+			moveScores.forEach(moveScore => {
+				let move = moveScore.move
+				let canPay = moveScore.payability.result
+				let energyNeeded = canPay ? move.energy : moveScore.payability.needed
+				let energyProvided = total
+				let totalEnergyNeeded = Object.keys(energyNeeded)
+				.reduce((acc, key) => {
+					return acc + energyNeeded[key]
+				}, 0)
+				//If it's 0 just skip this one
+				if (totalEnergyNeeded === 0){
+					return
+				}
+
+				let totalEnergyProvided = Object.keys(energyProvided)
+				.reduce((acc, key) => {
+					let needed = energyNeeded[key] || 0
+					let provided = energyProvided[key] || 0
+					return acc + Math.min(needed, provided)
+				}, 0)
+				let bonus = canPay ? 1 : 5
+				let data = {}
+				data.move = move
+				data.canPay = canPay
+				data.percentage = totalEnergyProvided / totalEnergyNeeded
+				data.score = data.percentage * bonus + 0.2
+				paysFor.push(data)
+			})
+			data.paysFor = paysFor
+			let paysForScoreBonus = paysFor.reduce((acc, pay) => {
+				return acc + pay.score
+			}, 0)
+			score *= paysForScoreBonus
+
+			data.score = score
+			return data
+		})
+
+		// console.log(moveScores)
+		// console.log(swapScores)
+		// console.log(swapScores.map(swap => swap.swap),swapScores.map(swap => swap.score) )
+		let bestSwap = weightedRandom(
+			swapScores.map(swap => swap.swap),
+			swapScores.map(swap => swap.score)
+		).item
+		//TODO score swaps somehow. Right now it just picks a random one.
+		// let bestSwap = randomChoice(allSwaps)
+		this.animateSwitchLocations(bestSwap[0], bestSwap[1])
 	}
 	computerChoosePokemon(pokemon, reason){
 		//TODO have the logic here be based on which reason they could be choosing stuff
@@ -1092,26 +1197,6 @@ class Round{
 		return result
 	}
 
-	canPayCost(move, trainerIndex){
-		let payability = {}
-		let trainer = this.trainers[trainerIndex]
-		let pokemon = trainer.activePokemon
-
-		if (!move.specialCost){
-			let energy = move.energy
-			
-			for (let color of colors){
-				if (energy[color] === undefined) {
-					payability[color] = true
-					continue
-				}
-				payability[color] = pokemon.energy[color] >= energy[color]
-			}
-		}
-
-		return payability
-	}
-
 	canUseMovesRightNow(trainerIndex){
 		return trainerIndex === this.activePlayerIndex
 		&& !this.currentlyCarryingOutSwap
@@ -1162,6 +1247,40 @@ class Round{
 		}
 		this.payForMove(trainer, pokemon, move)
 		this.beginToUseMove(trainer, pokemon, move)
+	}
+	//Returns an object that contains true/false values for whether the trainer
+	//has enough of each color of energy
+	canPayCost(move, trainerIndex){
+		let payability = {}
+		let trainer = this.trainers[trainerIndex]
+		let pokemon = trainer.activePokemon
+
+		if (!move.specialCost){
+			let energy = move.energy
+			
+			for (let color of colors){
+				if (energy[color] === undefined) {
+					payability[color] = true
+					continue
+				}
+				payability[color] = pokemon.energy[color] >= energy[color]
+			}
+		}
+
+		return payability
+	}
+	//Returns an object that contains info about how much more of each color that
+	//the trainer must collect to use this move
+	canPayForMove(trainer, pokemon, move){
+		let able = true
+		let needed = getEmptyEnergy()
+		for (let color of colors){
+			if (move.energy[color] > pokemon.energy[color]){
+				able = false
+				needed[color] += move.energy[color] - pokemon.energy[color]
+			}
+		}
+		return {result: able, needed: needed}
 	}
 	payForMove(trainer, pokemon, move){
 		for (let color of colors){
@@ -1279,7 +1398,6 @@ class Round{
 					}
 				}
 				this.animateSwitchLocations(tile1, tile2, options)
-				console.log(selection)
 			} break
 			case "choose-tiles": {
 				let count = effect.count ?? 1
@@ -1773,9 +1891,10 @@ class Round{
 		}
 		let allMoves = this.board.getAllPotentialMoves()
 		for (let move of allMoves){
-			for (let tile of move){
-				tile.spriteHighlightTarget = 1
-			}
+			let tile1 = move[0]
+			let tile2 = move[1]
+			tile1.spriteHighlightTarget = 1
+			tile2.spriteHighlightTarget = 1
 		}
 	}
 
@@ -2815,7 +2934,7 @@ class Board{
 					})
 					if (alreadySeen) continue
 					let result = this.matchesIfSwapped(tile, thatTile)
-					let move = [thatTile, tile]
+					let move = [thatTile, tile, result]
 					alreadyConsidered.push(move)
 					if (!result.length) continue
 					allMoves.push(move)
@@ -2826,10 +2945,12 @@ class Board{
 	}
 
 	couldSwap(tile1, tile2){
-		return (
-			Math.abs(tile1.x - tile2.x) +
-			Math.abs(tile1.y - tile2.y) === 1
+		let goodDistance = distance(tile1.x, tile1.y, tile2.x, tile2.y) === 1
+		let isLocked = (
+			tile1.hasStatus("Locked") ||
+			tile2.hasStatus("Locked")
 		)
+		return goodDistance && !isLocked
 	}
 
 	getShuffleLocationMap(){
@@ -2925,7 +3046,13 @@ class Tile{
 		statusEffect.sourcePokemon = pokemon
 		statusEffect.sourceTrainer = owner
 		statusEffect.color = color
+		statusEffect.turns = status?.duration ?? null
 		this.statusEffects.push(statusEffect)
+	}
+	hasStatus(name){
+		return this.statusEffects.some(status => {
+			return status.name === name
+		})
 	}
 }
 
@@ -2936,6 +3063,8 @@ class TileStatus{
 		for (let key in status){
 			this[key] = status[key]
 		}
+		this.duration = this?.duration ?? null
+		this.turns = this.duration
 	}
 
 	tick(){
