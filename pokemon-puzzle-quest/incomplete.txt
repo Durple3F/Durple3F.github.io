@@ -1,0 +1,23 @@
+Incomplete move lists:
+Rattata-Alola (lv 7)
+Butterfree (lv 0)
+Ledyba (lv 8)
+Spinarak (lv 8)
+Rowlet (lv 3)
+Litten (lv 3)
+Popplio (lv 3)
+Pikipek (lv 3)
+Yungoos (lv 7)
+Grubbin (lv 10)
+
+Missing Evolutions:
+Rattata-Alola
+Ledyba
+Spinarak
+Pichu
+Rowlet
+Litten
+Popplio
+Pikipek
+Yungoos
+Grubbin

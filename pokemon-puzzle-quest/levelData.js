@@ -81,7 +81,7 @@ const levelData = [
 				name: "Hau",
 				pokemon: [
 					{
-						pokemonName: "Popplio",
+						id: "Popplio",
 						level: 5
 					}
 				]
@@ -90,7 +90,7 @@ const levelData = [
 				name: "Hau",
 				pokemon: [
 					{
-						pokemonName: "Rowlet",
+						id: "Rowlet",
 						level: 5
 					}
 				]
@@ -99,7 +99,7 @@ const levelData = [
 				name: "Hau",
 				pokemon: [
 					{
-						pokemonName: "Litten",
+						id: "Litten",
 						level: 5
 					}
 				]
@@ -130,15 +130,15 @@ const levelData = [
 			{
 				pokemon: [
 					{
-						pokemonName: "Pikipek",
+						id: "Pikipek",
 						levelMin: 2, levelMax: 3
 					},
 					{
-						pokemonName: "Caterpie",
+						id: "Caterpie",
 						levelMin: 2, levelMax: 3
 					},
 					{
-						pokemonName: "Ledyba",
+						id: "Ledyba",
 						levelMin: 2, levelMax: 3
 					}
 				]
@@ -146,19 +146,19 @@ const levelData = [
 			{
 				pokemon: [
 					{
-						pokemonName: "Pikipek",
+						id: "Pikipek",
 						levelMin: 2, levelMax: 3
 					},
 					{
-						pokemonName: "Caterpie",
+						id: "Caterpie",
 						levelMin: 2, levelMax: 3
 					},
 					{
-						pokemonName: "Ledyba",
+						id: "Ledyba",
 						levelMin: 2, levelMax: 3
 					},
 					{
-						pokemonName: "Pichu",
+						id: "Pichu",
 						levelMin: 3, levelMax: 5
 					},
 				]
@@ -166,7 +166,7 @@ const levelData = [
 		],
 		effects: [
 			{type: "random-number", min: 1, max: 10},
-			{type: "load-value", value: 2},
+			{type: "load-value", value: 10},
 			{type: "jump-if-less-than", jumpTo: "Normal"},
 			{type: "fight", trainer: 1, label: "Pichu"},
 			{type: "jump", jumpTo: Infinity},
@@ -183,15 +183,15 @@ const levelData = [
 			{
 				pokemon: [
 					{
-						pokemonName: "Spinarak",
+						id: "Spinarak",
 						levelMin: 3, levelMax: 4
 					},
 					{
-						pokemonName: "Yungoos",
+						id: "Yungoos",
 						levelMin: 3, levelMax: 4
 					},
 					{
-						pokemonName: "Rattata-Alola",
+						id: "Rattata-Alola",
 						levelMin: 3, levelMax: 4
 					}
 				]
@@ -199,7 +199,19 @@ const levelData = [
 			{
 				pokemon: [
 					{
-						pokemonName: "Grubbin",
+						id: "Spinarak",
+						levelMin: 3, levelMax: 4
+					},
+					{
+						id: "Yungoos",
+						levelMin: 3, levelMax: 4
+					},
+					{
+						id: "Rattata-Alola",
+						levelMin: 3, levelMax: 4
+					},
+					{
+						id: "Grubbin",
 						levelMin: 4, levelMax: 6
 					}
 				]
@@ -207,7 +219,7 @@ const levelData = [
 		],
 		effects: [
 			{type: "random-number", min: 1, max: 10},
-			{type: "load-value", value: 0},
+			{type: "load-value", value: 10},
 			{type: "jump-if-less-than", jumpTo: "Normal"},
 			{type: "fight", trainer: 1, label: "Grubbin"},
 			{type: "jump", jumpTo: Infinity},
@@ -217,14 +229,71 @@ const levelData = [
 	{
 		id: "Route 1-4",
 		category: "Route 1",
-		name: "Route 1-4 test",
+		name: "Rival Battle 2",
+		// description: "Route 1-1-description",
 		icon: "4",
+		music: "SM Trainer Battle",
+		trainers: [
+			{
+				name: "Hau",
+				pokemon: [
+					// {
+					// 	id: "Popplio",
+					// 	level: 7,
+					// 	activeMoves: ["Pound", "Water Gun", "Growl"]
+					// },
+					{
+						id: "Pichu",
+						level: 6,
+						activeMoves: ["Thunder Shock", "Tail Whip", "Charm"]
+					},
+				]
+			},
+			{
+				name: "Hau",
+				pokemon: [
+					{
+						id: "Rowlet",
+						level: 5
+					}
+				]
+			},
+			{
+				name: "Hau",
+				pokemon: [
+					{
+						id: "Litten",
+						level: 5
+					}
+				]
+			}
+		],
+		effects: [
+			{type: "load-player-info", key: "chosen-starter"},
+			{type: "load-value", value: "Rowlet"},
+			{type: "jump-if-equal", jumpTo: "Litten"},
+			{type: "load-player-info", key: "chosen-starter"},
+			{type: "load-value", value: "Litten"},
+			{type: "jump-if-equal", jumpTo: "Popplio"},
+			{type: "fight", trainer: 1, label: "Rowlet"},
+			{type: "jump", jumpTo: Infinity},
+			{type: "fight", trainer: 2, label: "Litten"},
+			{type: "jump", jumpTo: Infinity},
+			{type: "fight", trainer: 0, label: "Popplio"},
+			{type: "jump", jumpTo: Infinity},
+		]
+	},
+	{
+		id: "Route 1-5",
+		category: "Route 1",
+		name: "Route 1-5 test",
+		icon: "5",
 		music: "SM Wild Pokemon Battle",
 		trainers: [
 			{
 				pokemon: [
 					{
-						pokemonName: "Caterpie",
+						id: "Caterpie",
 						levelMin: 1, levelMax: 1
 					}
 				]
@@ -232,7 +301,7 @@ const levelData = [
 			{
 				pokemon: [
 					{
-						pokemonName: "Comfey",
+						id: "Comfey",
 						levelMin: 1, levelMax: 1
 					}
 				]

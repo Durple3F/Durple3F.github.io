@@ -50,6 +50,32 @@ const pokemonMoveData = {
 			{ type: "gain-energy", amounts: -1, target: "user" }
 		],
 	},
+	"Charm": {
+		name: "Charm",
+		type: "Fairy",
+		category: "Status",
+		strategy: "debuff-opponent",
+		pp: 20,
+		power: null,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			purple: 2
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Charm.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{
+				type: "apply-debuff", target: "opponent", debuff: {
+					type: "stat",
+					stat: "attack",
+					amount: -1
+				}
+			}
+		],
+	},
 	"Ember": {
 		name: "Ember",
 		type: "Fire",
@@ -83,7 +109,7 @@ const pokemonMoveData = {
 		name: "Focus Energy",
 		type: "Normal",
 		category: "Status",
-		strategy: "buff-self",
+		strategy: "buff-user",
 		pp: 30,
 		power: null,
 		accuracy: null,
@@ -124,7 +150,7 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{
-				type: "apply-debuff", debuff: {
+				type: "apply-debuff", target: "opponent", debuff: {
 					type: "stat",
 					stat: "attack",
 					amount: -1
@@ -169,10 +195,12 @@ const pokemonMoveData = {
 		},
 		effects: [
 			{ type: "play-sound", name: "attack" },
-			// { type: "damage" },
+			{ type: "damage" },
 			{ type: "load-number", value: 1 },
-			{ type: "select-random-tiles", count: -1,
-				conditions: { notTypes: ["green"] } },
+			{
+				type: "select-random-tiles", count: -1,
+				conditions: { notTypes: ["green"] }
+			},
 			{ type: "change-tile-type", selection: "group", which: -1, targetType: "green" },
 			{
 				type: "apply-status-to-tiles", selection: "group", which: -1,
@@ -221,12 +249,86 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{
-				type: "apply-debuff", debuff: {
+				type: "apply-debuff", target: "opponent", debuff: {
 					type: "stat",
 					stat: "defense",
 					amount: -1
 				}
 			}
+		],
+	},
+	"Mud-Slap": {
+		name: "Mud-Slap",
+		type: "Ground",
+		category: "Special",
+		strategy: "basic-damage",
+		pp: 10,
+		power: 20,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			orange: 2
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Mud-Slap.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "load-number", value: 2 },
+			{ type: "select-random-tiles", count: -1 },
+			{
+				type: "apply-status-to-tiles", selection: "group", which: -1,
+				status: { name: "Energy Down", type: "debuff", duration: null }
+			},
+		],
+	},
+	"Nasty Plot": {
+		name: "Nasty Plot",
+		type: "Dark",
+		category: "Status",
+		strategy: "buff-user",
+		pp: 20,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 2,
+		energy: {
+			orange: 3,
+			purple: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Nasty Plot.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{
+				type: "apply-debuff", target: "user", debuff: {
+					type: "stat",
+					stat: "specialAttack",
+					amount: 2
+				}
+			}
+		],
+	},
+	"Nuzzle": {
+		name: "Nuzzle",
+		type: "Electric",
+		category: "Physical",
+		strategy: "debuff-opponent",
+		pp: 20,
+		power: 20,
+		accuracy: 100,
+		rechargeTurns: 2,
+		energy: {
+			yellow: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Nuzzle.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "apply-status-effect", statusEffect: "paralyzed", target: "opponent" }
 		],
 	},
 	"Payback": {
@@ -293,7 +395,8 @@ const pokemonMoveData = {
 		},
 		effects: [
 			{ type: "play-sound", name: "attack" },
-			{ type: "apply-debuff", debuff: {
+			{
+				type: "apply-debuff", target: "opponent", debuff: {
 					type: "stat",
 					stat: "attack",
 					amount: -1
@@ -400,7 +503,6 @@ const pokemonMoveData = {
 		accuracy: 95,
 		rechargeTurns: 1,
 		energy: {
-			green: 3,
 			blue: 1
 		},
 		sounds: {
@@ -409,7 +511,7 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{
-				type: "apply-debuff", debuff: {
+				type: "apply-debuff", target: "opponent", debuff: {
 					type: "stat",
 					stat: "speed",
 					amount: -2
@@ -538,7 +640,7 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{
-				type: "apply-debuff", debuff: {
+				type: "apply-debuff", target: "opponent", debuff: {
 					type: "stat",
 					stat: "defense",
 					amount: -1
@@ -651,7 +753,7 @@ const pokemonMoveData = {
 	},
 };
 
-for (let name in pokemonData){
+for (let name in pokemonData) {
 	pokemonData[name].learnset.splice(0, 0, {
 		name: "Struggle",
 		unlock: {
@@ -659,3 +761,4 @@ for (let name in pokemonData){
 		}
 	})
 }
+fixLearnsets()

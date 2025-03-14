@@ -185,6 +185,13 @@ const pokemonStatusData = {
 		class: "debuff",
 		name: "poisoned"
 	},
+	"paralyzed": {
+		image: "src/img/icons/paralyzed.png",
+		color: "#ffcf00",
+		stacks: false,
+		class: "debuff",
+		name: "poisoned"
+	},
 	"invulnerable": {
 		image: "src/img/icons/shield.png",
 		color: "rgb(122, 104, 223)",
@@ -195,6 +202,9 @@ const pokemonStatusData = {
 }
 
 const tileStatusData = {
+	"Energy Down": {
+		url: "src/img/icons/down-arrow.png"
+	},
 	"Infested": {
 		url: "src/img/icons/ladybug.png"
 	},
@@ -285,7 +295,7 @@ function checkIfPokemonMeetsRequirements(pokemon, req){
 		//This is the type for when a move may only be learned by a pre-evolved version of that pokemon.
 		return false
 	}
-	if (req.type === "never"){
+	if (req.type === "never" || req.type === "hidden"){
 		return false
 	}
 	console.warn("You never handled this", req)
@@ -306,7 +316,10 @@ function getReasonPokemonDoesntMeetRequirements(pokemon, move){
 		return "A less evolved version of this pokemon could've learned this move.	"
 	}
 	else if (req.type === "never"){
-		return "Your Pokemon should NEVER be able to use this move and that is a GOOD thing because they are too STUPID to use it anyway."
+		return "Your Pokemon should NEVER be able to use this move. Why is this message even showing? You should tell Boo about this."
+	}
+	else if (req.type === "hidden"){
+		return "Your Pokemon should NEVER be able to use this move. You shouldn't even be able to see this one?? It's listed as hidden. Why can you see this?? Go yell at Boo. (Preferably with screenshots)"
 	}
 	console.warn("You never handled this", req)
 	return "I don't know why they can't use this move. *shrug*"

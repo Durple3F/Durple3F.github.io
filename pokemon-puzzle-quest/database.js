@@ -184,7 +184,9 @@ function savePokemon(pokemon){
 		obj.nature = pokemon.nature
 		obj.activeSlot = playerActivePokemon.indexOf(pokemon)
 		obj.activeMoves = pokemon.activeMoves.map(move => move.name)
-		obj.movesUnlockedMap = pokemon.movesUnlockedMap.map(v => v)
+		obj.movesUnlocked = pokemon.movesUnlockedMap.map((v, i) => {
+			return v ? pokemon.moves[i].name : null
+		}).filter(v => v)
 		obj.pcBox = pokemon.pcBox
 		obj.pcBoxX = pokemon.pcBoxX
 		obj.pcBoxY = pokemon.pcBoxY
@@ -338,7 +340,11 @@ function makeNewSaveFile(){
 		let uuid = window.crypto.randomUUID()
 		const transaction = db.transaction(["save-file"], "readwrite")
 		const saveFileStore = transaction.objectStore("save-file")
-		const request = saveFileStore.put({uuid: uuid, settings: config})
+		const request = saveFileStore.put({
+			uuid: uuid,
+			settings: config,
+			data: {}
+		})
 		request.onsuccess = event => {
 			makeNewBox(uuid, "Box 1")
 			.then(() => resolve(uuid))

@@ -1,4 +1,17 @@
-3/12:
+<a href="incomplete.txt">Currently incomplete pokemon list</a>
+
+3/14:
+	- Added Nuzzle, Nasty Plot and Charm
+	- Added Paralyze
+	- Fixed an annoying issue when starting a round involving your scroll position being saved between rounds.
+	- The data describing which moves a pokemon has unlocked is now stored in a more natural way
+	- Focus Energy works again
+	- Added that link at the top of the changelog
+
+3/13:
+	- Small fix to how saves are stored
+
+3/12 (9200 lines):
 	- Leaving empty slots between pokemon in your party no longer crashes the game
 	- Music no longer randomly refuses to obey your sound settings i hope
 	- Fixed a crash on Route 1-2 related to me forgetting that Infinity is a big number
@@ -8,6 +21,8 @@
 	- Hau no longer stands there, watching you, observing your actions for all eternity.
 	- Added the remaining pokemon natures
 	- You can now view this very changelog in-game
+	- Implimented some work towards moving pokemon names to the locale file.
+	- Added Mud-Slap, a move that makes tiles provide less energy.
 
 3/11 (8900 lines):
 	- Added Sweet Kiss

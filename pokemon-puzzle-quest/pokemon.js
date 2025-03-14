@@ -2,10 +2,18 @@ class Pokemon{
 	constructor(name, pokemonName, options){
 		this.uuid = options?.uuid ?? window.crypto.randomUUID()
 		this.owner = options?.owner ?? playerSaveId
-		this.pokemonId = pokemonName
+		this.pokemonId = pokemonName ?? options.id
 		this.data = pokemonData[pokemonName]
-		this.name = name ?? this.data.name
-		this.pokemonName = pokemonName ?? pokemonData.name
+
+		if (!this.data){
+			console.warn("WHICH POKEMON IS THIS??")
+			console.log(name, pokemonName, options)
+			console.trace()
+		}
+
+		let defaultName = getLocaleString("name", lang, ["pokemon", this.pokemonId])
+		this.name = name ?? defaultName ?? this.data.name
+		this.pokemonName = this.data.name
 		this.types = []
 		this.data.types.forEach(type => this.types.push(type))
 		this.level = options?.level ?? 1
@@ -33,12 +41,21 @@ class Pokemon{
 		this.maxhp = this.getStat("hp")
 		this.exp = options?.exp ?? this.getEXPNeededForLevel(this.level)
 
-		this.learnset = this.data.learnset.map(move => move)
-		this.moves = this.learnset.map(move => pokemonMoveData[move.name])
+		// this.learnset = this.data.learnset
+		this.moves = this.data.learnset.map(move => pokemonMoveData[move.name])
 		this.movesUnlockedMap = []
+		let movesUnlocked
+		if (options?.movesUnlocked){
+			movesUnlocked = options?.movesUnlocked
+		} else if (options?.movesUnlockedMap){
+			movesUnlocked = options.movesUnlockedMap.map((v, i) => {
+				return v ? this.moves[i].name : null
+			}).filter(v => v)
+		} else {
+			movesUnlocked = []
+		}
 		this.moves.forEach((move, i) => {
-			let movesUnlockedMap = options?.movesUnlockedMap ?? []
-			this.movesUnlockedMap[i] = movesUnlockedMap[i] || false
+			this.movesUnlockedMap[i] = movesUnlocked.includes(move.name)
 		})
 		this.moveUsage = this.moves.map(move => {
 			return {
@@ -95,6 +112,11 @@ class Pokemon{
 						name: "poisoned"
 					}
 				} break
+				case "paralyzed": {
+					status = {
+						name: "paralyzed"
+					}
+				} break
 				case "invulnerable": {
 					status = {
 						name: "invulnerable",
@@ -127,6 +149,10 @@ class Pokemon{
 				status.name === "poisoned" && this.types.includes("Steel")){
 			prevented = true
 		}
+		//Electric pokemon can't be paralyzed
+		if (status.name === "paralyzed" && this.types.includes("Electric")){
+			prevented = true
+		}
 
 		//There are some status effects that don't stack
 		let data = pokemonStatusData[status.name]
@@ -137,6 +163,20 @@ class Pokemon{
 
 		if (!prevented){
 			this.statusEffects.push(status)
+		}
+	}
+	hasStatus(name){
+		return this.statusEffects.some(status => {
+			return status.name === name
+		})
+	}
+	removeStatus(name){
+		while (this.statusEffects.some(status => {
+			return status.name === name
+		})){
+			this.statusEffects.splice(this.statusEffects.findIndex(status => {
+				return status.name === name
+			}), 1)
 		}
 	}
 
@@ -207,7 +247,7 @@ class Pokemon{
 		return changedIndexes
 	}
 	determineUnlockedMoves(){
-		let unlockMap = this.learnset.map((move, index) => {
+		let unlockMap = this.data.learnset.map((move, index) => {
 			let shouldBeUnlocked = checkIfPokemonMeetsRequirements(this, move.unlock)
 			let isUnlocked = this.movesUnlockedMap[index]
 			return shouldBeUnlocked || isUnlocked
@@ -215,7 +255,7 @@ class Pokemon{
 		return unlockMap
 	}
 	unlockMove(name){
-		let index = this.learnset.findIndex(m => m.name === name)
+		let index = this.data.learnset.findIndex(m => m.name === name)
 		if (index !== -1){
 			this.movesUnlockedMap[index] = true
 		}
@@ -311,7 +351,7 @@ class Pokemon{
 		let unlocks = this.determineUnlockedMoves()
 		let changes = this.unlockMoves(unlocks)
 		for (let moveIndex of changes.unlocked){
-			let learn = this.learnset[moveIndex]
+			let learn = this.data.learnset[moveIndex]
 			let move = pokemonMoveData[learn.name]
 			if (this.activeMoves.length < 4){
 				this.activeMoves.push(move)

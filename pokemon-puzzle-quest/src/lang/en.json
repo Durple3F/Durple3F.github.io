@@ -1,5 +1,49 @@
 {
 	"Route 1-1-description": "Rival Battle",
+	"pokemon": {
+		"Rattata-Alola": {
+			"name": "Rattata-Alola"
+		},
+		"Caterpie": {
+			"name": "Caterpie"
+		},
+		"Metapod": {
+			"name": "Metapod"
+		},
+		"Butterfree": {
+			"name": "Butterfree"
+		},
+		"Ledyba": {
+			"name": "Ledyba"
+		},
+		"Spinarak": {
+			"name": "Spinarak"
+		},
+		"Pichu": {
+			"name": "Pichu"
+		},
+		"Rowlet": {
+			"name": "Rowlet"
+		},
+		"Litten": {
+			"name": "Litten"
+		},
+		"Popplio": {
+			"name": "Popplio"
+		},
+		"Pikipek": {
+			"name": "Pikipek"
+		},
+		"Yungoos": {
+			"name": "Yungoos"
+		},
+		"Grubbin": {
+			"name": "Grubbin"
+		},
+		"Comfey": {
+			"name": "Comfey"
+		}
+	},
 	"moves": {
 		"Absorb": {
 			"name": "Absorb",
@@ -10,6 +54,11 @@
 			"name": "Bug Bite",
 			"description": "Deals damage. Then, drains 2 energy from the opponent's most full energy type and gives it to the user.",
 			"shortDescription": "Deals some damage and drains energy"
+		},
+		"Charm": {
+			"name": "Charm",
+			"description": "Lowers the opponent's attack stat by 1 stage.",
+			"shortDescription": "Lowers enemy attack"
 		},
 		"Ember": {
 			"name": "Ember",
@@ -45,6 +94,21 @@
 			"name": "Leer",
 			"description": "Lowers the opponent's defense stat by 1 stage.",
 			"shortDescription": "Lowers enemy defense"
+		},
+		"Mud-Slap": {
+			"name": "Mud-Slap",
+			"description": "Deals damage. 2 random tiles are given the Energy Down status. When an opponent removes those tiles, they're worth 1 less energy each.",
+			"shortDescription": "Weakens tiles"
+		},
+		"Nasty Plot": {
+			"name": "Nasty Plot",
+			"description": "Raises the user's special attack stat by 2 stages.",
+			"shortDescription": "Raises user's special attack"
+		},
+		"Nuzzle": {
+			"name": "Nuzzle",
+			"description": "Deals damage. Applies Paralyzed. When a Paralyzed Pokemon uses a move, the move does nothing, and they lose Paralyzed.",
+			"shortDescription": "Deals light damage and paralyzes"
 		},
 		"Payback": {
 			"name": "Payback",

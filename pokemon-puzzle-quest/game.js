@@ -365,6 +365,7 @@ class Round{
 	}
 
 	handleEffects(matches){
+		let energiesToAdd = []
 		let tiles = []
 		for (let match of matches){
 			match.forEach(t => {
@@ -372,6 +373,8 @@ class Round{
 					tiles.push(t)
 				}
 			})
+			//TODO log what kind of match this is so that we can give the player
+			//rewards for specific types of matches
 		}
 
 		let activeTrainer = this.trainers[this.activePlayerIndex]
@@ -382,10 +385,8 @@ class Round{
 		//of that color
 		let energy = getEmptyEnergy()
 		for (let tile of tiles){
-			let energyValue = tile.getEnergyValue()
-			for (let color in energyValue){
-				energy[color] += energyValue[color]
-			}
+			let energyValue = this.getTileEnergyValue(tile)
+			energy = addEnergies(energyValue, energy)
 		}
 		this.giveEnergy(energy, activeTrainer, activePokemon)
 
@@ -848,7 +849,7 @@ class Round{
 					updatedPokemon.push(p)
 					let changes = p.changeLevel(newLevel)
 					for (let moveIndex of changes.unlocked){
-						let learn = p.learnset[moveIndex]
+						let learn = p.data.learnset[moveIndex]
 						let move = pokemonMoveData[learn.name]
 						let obj = {
 							pokemon: p,
@@ -911,7 +912,7 @@ class Round{
 
 					let changes = p.evolve(evolveTo)
 					for (let moveIndex of changes.unlocked){
-						let learn = p.learnset[moveIndex]
+						let learn = p.data.learnset[moveIndex]
 						let move = pokemonMoveData[learn.name]
 						let moveName = getLocaleString("name", lang, ["moves", move.name])
 						let text = `${p.name} learned ${moveName}!`
@@ -1039,12 +1040,12 @@ class Round{
 			let data = {}
 			data.swap = swap
 			let tiles = noDuplicates(swap[2].flat())
-			let energyValues = tiles.map(tile => tile.getEnergyValue())
+			let energyValues = tiles.map(tile => {
+				return this.getTileEnergyValue(tile)
+			})
 			let total = getEmptyEnergy()
 			for (let energyValue of energyValues){
-				for (let color in energyValue){
-					total[color] += energyValue[color]
-				}
+				total = addEnergies(energyValue, total)
 			}
 			data.total = total
 			let score = 1
@@ -1135,6 +1136,11 @@ class Round{
 		
 		let category = options.category ?? move.category ?? "Physical"
 		let type = options.type ?? move.type ?? "Typeless"
+
+		let burned = attacker.hasStatus("burn")
+		if (burned && category === "Physical"){
+			power *= 0.5
+		}
 
 		let defenderTrainer = options.toTrainer
 		if (!defenderTrainer){
@@ -1308,12 +1314,18 @@ class Round{
 			effectIndex: 0
 		}
 		let promise = new Promise(resolve => moveUseObj.resolve = resolve)
-		.then(() => this.finishCurrentMove())
 		moveUseObj.promise = promise
 
-		this.moveQueue.push(moveUseObj)
-		this.updateEverything()
-		this.advanceCurrentMove()
+		let hasParalyzed = pokemon.hasStatus("paralyzed")
+		if (hasParalyzed){
+			pokemon.removeStatus("paralyzed")
+			moveUseObj.resolve()
+		} else {
+			promise = promise.then(() => this.finishCurrentMove())
+			this.moveQueue.push(moveUseObj)
+			this.updateEverything()
+			this.advanceCurrentMove()
+		}
 		return promise
 	}
 	advanceCurrentMove(){
@@ -1353,6 +1365,7 @@ class Round{
 			"heal": "user",
 			"get-stat": "user",
 			"apply-status-effect": "opponent",
+			"apply-debuff": "opponent",
 			"select-energy-colors": "none",
 			"gain-energy": "user"
 		}
@@ -1488,9 +1501,7 @@ class Round{
 			} break
 			case "apply-debuff": {
 				let debuff = effect.debuff
-				let otherTrainer = this.trainers[this.inactivePlayerIndex]
-				let otherPokemon = otherTrainer.activePokemon
-				otherPokemon.statusEffects.push(debuff)
+				target.statusEffects.push(debuff)
 				resolvePromise()
 			} break
 			case "get-stat": {
@@ -1840,6 +1851,36 @@ class Round{
 		this.currentCascade++
 		let cascade = Math.min(6, this.currentCascade)
 		playSound(`cascade${cascade}`)
+	}
+
+	getTileEnergyValue(tile){
+		let base = tile.getEnergyValue()
+		let result = addEnergies(base, getEmptyEnergy())
+
+		let energyModifiers = [
+			"Energy Down"
+		]
+		let statusEffects = tile.statusEffects.filter(s => {
+			return energyModifiers.includes(s.name)
+		})
+
+		let trainer = this.trainers[this.activePlayerIndex]
+		for (let status of statusEffects){
+			let name = status.name
+			let sourceTrainer = status.sourceTrainer
+			if (name === "Energy Down" && trainer !== sourceTrainer){
+				let nonZeroKeys = Object.keys(result)
+				.filter(key => result[key] > 0)
+				if (nonZeroKeys.length){
+					let mod = getEmptyEnergy()
+					let key = randomChoice(nonZeroKeys)
+					mod[key] = -1
+					result = addEnergies(result, mod)
+				}
+			}
+		}
+
+		return result
 	}
 	
 	animateSwitchLocations(tile1, tile2, options){
@@ -2207,6 +2248,7 @@ class Round{
 
 	fillTrainerTags(tags, classname){
 		tags.side = $(`#board .board-side${classname}`)
+		tags.side[0].scroll(0, 0)
 		tags.sideTop = tags.side.children(".board-side-top")
 		tags.sideMiddle = tags.side.children(".board-side-middle")
 		tags.sideBottom = tags.side.children(".board-side-bottom")
@@ -2431,7 +2473,7 @@ class Round{
 	sendOutPokemon(trainerIndex, pokemon){
 		let tags = this.trainerTags[trainerIndex]
 		let name = pokemon.name
-		let pokemonName = pokemon.pokemonName
+		let pokemonId = pokemon.pokemonId
 		let src = pokemon.data.imageSources.large
 		let facing = pokemon.data.imageFacing
 		let correctFacing = trainerIndex === 0 ? "right" : "left"
@@ -2450,13 +2492,14 @@ class Round{
 			this.giveEnergy(energy, trainer, pokemon)
 		}
 
-		let cry = pokemon.data.sounds.cry
-		if (cry){
-			loadSound(`${pokemonName}-cry`, "cry", cry)
-			.then(() => playSound(`${pokemonName}-cry`))
+		let cryUrl = pokemon.data.sounds.cry
+		if (cryUrl){
+			let cryName = `${pokemonId}-cry`
+			loadSound(cryName, "cry", cryUrl)
+			.then(() => playSound(cryName))
 
 			this.promise.then(() => {
-				unloadSound(`${pokemonName}-cry`)
+				unloadSound(cryName)
 			})
 		}
 
@@ -2484,7 +2527,8 @@ class Round{
 
 		let name = pokemon.name
 		if (name !== pokemon.data.name){
-			name += " the " + pokemon.data.name
+			let pokemonName = getLocaleString("name", lang, ["pokemon", pokemon.data.name])
+			name += " the " + pokemonName
 		}
 		html.append(`<div class='name'>${name} (Lv. ${pokemon.level})</div>`)
 
@@ -3083,10 +3127,18 @@ function beginRound(trainerData){
 	let promise = new Promise(resolve => resolvePromise = resolve)
 	let player = new Trainer("Player", playerActivePokemon)
 	let enemyPokemon = trainerData.pokemon.map(data => {
+		let options = {}
+		options.id = data.id
+		options.level = data.level
 		if (data.levelMin && data.levelMax){
-			data.level = randomFrom(data.levelMin, data.levelMax)
+			options.level = randomFrom(data.levelMin, data.levelMax)
 		}
-		return new Pokemon(undefined, data.pokemonName, data)
+		if (data.activeMoves){
+			options.activeMoves = data.activeMoves
+		}
+		let pokemon = new Pokemon(undefined, options.id, options)
+		console.log(pokemon)
+		return pokemon
 	})
 	let enemy = new Trainer("Enemy", enemyPokemon, trainerData)
 	gameRound = new Round(player, enemy, resolvePromise)

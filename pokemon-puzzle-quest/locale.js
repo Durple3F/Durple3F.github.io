@@ -17,7 +17,7 @@ function downloadLocale(name){
 				resolve()
 			},
 			error: function(){
-				download(name)
+				downloadLocale(name)
 				.then(resolve)
 			}
 		})

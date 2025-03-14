@@ -16,16 +16,6 @@ let currentHoveredElement
 const boardSize = 8
 let frameRate = 60
 
-const colors = ["red", "orange", "yellow", "green", "blue", "purple"]
-const cssColors = {
-	"energy-red": "#ff2f35",
-	"energy-orange": "#e57526",
-	"energy-yellow": "#e8aa00",
-	"energy-green": "#82dc42",
-	"energy-blue": "#00c0e7",
-	"energy-purple": "#dd60dd"
-}
-
 const UNITVECTORS = [
 	[1, 0],
 	[0, 1]
@@ -35,109 +25,6 @@ for (let v of UNITVECTORS){
 	let opposite = v.map(x => x * -1)
 	OPPOSITEVECTORS.set(v, opposite)
 	OPPOSITEVECTORS.set(opposite, v)
-}
-
-function delay(ms){
-	return new Promise(resolve => setTimeout(resolve, ms))
-}
-
-function randomAngle(deg1, deg2){
-	let result = (deg1 + Math.random() * (deg2 - deg1)) / 180 * Math.PI
-	return result
-}
-function randomFrom(min, max){
-	let result = min + Math.random() * (max - min + 1)
-	return Math.floor(result)
-}
-
-function weightedRandom(items, weights) {
-	if (items.length !== weights.length) {
-		throw new Error('Items and weights must be of the same size');
-	}
-
-	if (!items.length) {
-		throw new Error('Items must not be empty');
-	}
-
-	// Preparing the cumulative weights array.
-	// For example:
-	// - weights = [1, 4, 3]
-	// - cumulativeWeights = [1, 5, 8]
-	const cumulativeWeights = [];
-	for (let i = 0; i < weights.length; i += 1) {
-		cumulativeWeights[i] = weights[i] + (cumulativeWeights[i - 1] || 0);
-	}
-
-	// Getting the random number in a range of [0...sum(weights)]
-	// For example:
-	// - weights = [1, 4, 3]
-	// - maxCumulativeWeight = 8
-	// - range for the random number is [0...8]
-	const maxCumulativeWeight = cumulativeWeights[cumulativeWeights.length - 1];
-	const randomNumber = maxCumulativeWeight * Math.random();
-
-	// Picking the random item based on its weight.
-	// The items with higher weight will be picked more often.
-	for (let itemIndex = 0; itemIndex < items.length; itemIndex += 1) {
-		if (cumulativeWeights[itemIndex] >= randomNumber) {
-			return {
-				item: items[itemIndex],
-				index: itemIndex,
-			};
-		}
-	}
-}
-function distance(x1, y1, x2, y2){
-	let dx = x2-x1
-	let dy = y2-y1
-	return Math.sqrt(dx*dx + dy*dy)
-}
-function noDuplicates(arr){
-	return arr.filter((v, i, s) => s.indexOf(v) === i)
-}
-
-function bezierEase(t){
-	// return [
-	// 	Math.pow(1 - t, 3)*0 + 
-	// 	3*Math.pow(1 - t, 2)*t*0.42 + 
-	// 	3*(1 - t)*Math.pow(t,2)*0.58 + 
-	// 	Math.pow(t, 3)*1,
-
-	// 	Math.pow(1 - t, 3)*0 + 
-	// 	3*Math.pow(1 - t, 2)*t*0 + 
-	// 	3*(1 - t)*Math.pow(t,2)*1 + 
-	// 	Math.pow(t, 3)*1,
-	// ]
-	let r = Math.pow(1 - t, 3)*0 + 3*Math.pow(1 - t, 2)*t*0 + 3*(1 - t)*Math.pow(t,2)*1 + Math.pow(t, 3)*1
-	return r
-}
-function interpolate(v1, v2, p){
-	return (1 - p)*v1 + p*v2
-}
-function lerp(a, b, t){
-	return a + (b - a)*t
-}
-
-function randomChoice(arr){
-	return arr[Math.floor(Math.random() * arr.length)]
-}
-//Note: Mutates the original array
-function shuffleArray(array) {
-	for (var i = array.length - 1; i > 0; i--) {
-			var j = Math.floor(Math.random() * (i + 1));
-			var temp = array[i];
-			array[i] = array[j];
-			array[j] = temp;
-	}
-}
-//Note: Mutates the original array
-function removeEmptySlots(arr){
-	let emptyIndex = arr.findIndex(p => !p)
-	while (emptyIndex !== -1){
-		arr.splice(emptyIndex, 1)
-		emptyIndex = arr.findIndex(p => !p)
-	}
-	return arr
 }
 
 const ongoingTextAnimations = new Map()
@@ -262,12 +149,6 @@ function getCSSEnergyColor(type){
 			console.warn("You never handled", type)
 			return "pink"
 	}
-}
-
-function getEmptyEnergy(){
-	let t = {}
-	colors.forEach(c => t[c] = 0)
-	return t
 }
 
 const sprites = {

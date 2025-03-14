@@ -1,6 +1,7 @@
 const pokemonData = {
 	"Rattata-Alola": {
 		name: "Rattata",
+		id: "Rattata-Alola",
 		number: "19",
 		imageFacing: "left",
 		imageSources: {
@@ -11,7 +12,7 @@ const pokemonData = {
 			cry: "src/audio/cries/rattata.mp3"
 		},
 		types: ["Dark", "Normal"],
-		tags: [],
+		tags: ["Starter"],
 		stats: {
 			hp: 30,
 			attack: 56,
@@ -203,7 +204,7 @@ const pokemonData = {
 			speed: 0
 		},
 		learnset: [
-			
+
 		]
 	},
 	"Ledyba": {
@@ -255,7 +256,7 @@ const pokemonData = {
 				name: "Swift",
 				unlock: {
 					type: "level",
-					amount: 1
+					amount: 8
 				}
 			}
 		]
@@ -333,7 +334,7 @@ const pokemonData = {
 			cry: "src/audio/cries/pichu.mp3"
 		},
 		types: ["Electric"],
-		tags: [],
+		tags: ["Starter"],
 		stats: {
 			hp: 20,
 			attack: 40,
@@ -378,6 +379,27 @@ const pokemonData = {
 				unlock: {
 					type: "level",
 					amount: 8
+				}
+			},
+			{
+				name: "Nuzzle",
+				unlock: {
+					type: "level",
+					amount: 12
+				}
+			},
+			{
+				name: "Nasty Plot",
+				unlock: {
+					type: "level",
+					amount: 16
+				}
+			},
+			{
+				name: "Charm",
+				unlock: {
+					type: "level",
+					amount: 20
 				}
 			},
 		]
@@ -683,6 +705,27 @@ const pokemonData = {
 					amount: 1
 				}
 			},
+			{
+				name: "Mud-Slap",
+				unlock: {
+					type: "level",
+					amount: 1
+				}
+			},
+			{
+				name: "String Shot",
+				unlock: {
+					type: "level",
+					amount: 5
+				}
+			},
+			{
+				name: "Bug Bite",
+				unlock: {
+					type: "level",
+					amount: 10
+				}
+			}
 		]
 	},
 	"Comfey": {
@@ -728,7 +771,7 @@ const pokemonData = {
 };
 
 //Make sure all data is regular
-for (let name in pokemonData){
+for (let name in pokemonData) {
 	let pokemon = pokemonData[name]
 	if (!pokemon.name) {
 		pokemon.name = name
@@ -736,13 +779,13 @@ for (let name in pokemonData){
 	if (!pokemon.id) {
 		pokemon.id = name
 	}
-	if (!pokemon.imageSources){
+	if (!pokemon.imageSources) {
 		pokemon.imageSources = {}
 	}
-	if (!pokemon.imageSources.large){
+	if (!pokemon.imageSources.large) {
 		console.warn(pokemon, "has no images")
 	}
-	if (!pokemon.stats){
+	if (!pokemon.stats) {
 		pokemon.stats = {
 			hp: 50,
 			attack: 50,
@@ -752,20 +795,20 @@ for (let name in pokemonData){
 			speed: 50
 		}
 	}
-	if (!pokemon.learnset){
+	if (!pokemon.learnset) {
 		pokemon.learnset = []
 	}
-	if (!pokemon.types){
+	if (!pokemon.types) {
 		pokemon.types = []
 	}
-	if (!pokemon.tags){
+	if (!pokemon.tags) {
 		pokemon.tags = []
 	}
-	if (!pokemon.expYield){
-		console.warn("You really gotta give "+pokemon.name+" a yield man")
+	if (!pokemon.expYield) {
+		console.warn("You really gotta give " + pokemon.name + " a yield man")
 		pokemon.expYield = 50
 	}
-	if (!pokemon.evYield){
+	if (!pokemon.evYield) {
 		pokemon.evYield = {
 			hp: 0,
 			attack: 0,
@@ -775,63 +818,10 @@ for (let name in pokemonData){
 			speed: 0
 		}
 	}
-	if (!pokemon.evolutions){
+	if (!pokemon.evolutions) {
 		pokemon.evolutions = []
 	}
-}
-
-//Any pokemon with pre-evolved forms gain the learnset of those forms
-function fixLearnsets(){
-	let allPokemon = Object.values(pokemonData)
-	let evolvedForms = allPokemon.filter(pokemon => {
-		return allPokemon.some(p => {
-			return p.evolutions.some(evo => evo.name === pokemon.id)
-		})
-	})
-	let failsafe = 0
-	while (evolvedForms.length && failsafe < 100){
-		let changed = false
-		for (let pokemon of evolvedForms){
-			//If this pokemon has a yet-unresolved pre-evolved form, skip this for now.
-			let hasUnresolvedPreForm = evolvedForms.some(p => {
-				return p.evolutions.some(evo => evo.name === pokemon.id)
-			})
-			if (hasUnresolvedPreForm) continue
-			//Find all preForms of this pokemon
-			let preForms = allPokemon.filter(p => {
-				return p.evolutions.some(evo => evo.name === pokemon.id)
-			})
-			//This pokemon is capable of knowing any move that any of the preForms can learn
-			let learnset = pokemon.learnset
-			let moves = preForms.map(p => p.learnset).flat()
-			//Remove moves this pokemon can already learn
-			.filter(m => {
-				return !learnset.some(m2 => m2.name === m.name)
-			})
-			//Remove duplicates
-			.filter((v, i, s) => {
-				return s.find(m => m.name === v.name) === v
-			})
-			//Add a copy of each to this Pokemon's learnset, but make it impossible to unlock
-			moves.forEach(move => {
-				let copy = {}
-				Object.keys(move).forEach(key => copy[key] = move[key])
-				copy.unlock = { type: "pre-evolve" }
-				learnset.push(copy)
-				changed = true
-			})
-			if (changed) {
-				let index = evolvedForms.indexOf(pokemon)
-				evolvedForms.splice(index, 1)
-				break
-			}
-		}
-		if (!changed){
-			failsafe++
-		}
-	}
-	if (failsafe >= 100){
-		console.warn("Failed to fix some pokemon's learnsets")
+	if (!pokemon.energyBonus) {
+		pokemon.energyBonus = getEmptyEnergy()
 	}
 }
-fixLearnsets()

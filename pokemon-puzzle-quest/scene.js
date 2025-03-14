@@ -264,6 +264,15 @@ function startScene(name, options){
 			gameTag.append(listTag)
 			gameTag.append(routeTag)
 
+			let routeButtons = listTag.find(".route-button")
+			routeButtons.each(function(index, element){
+				let elem = $(element)
+				let width = elem.width()
+				let height = elem.height()
+				let fontSize = height / 3
+				$(element).css("font-size", `${fontSize}px`)
+			})
+
 			promise = promise.then(levelID => beginLevel(levelID))
 		} break
 		case "pc": {
@@ -946,8 +955,15 @@ function viewPokemonInfo(pokemon){
 	for (let i = 0; i < pokemon.moves.length; i++){
 		let move = pokemon.moves[i]
 		if (move.name === "Struggle") continue
-		let moveTag = getMoveHTML(move, true)
+
 		let available = pokemon.movesUnlockedMap[i]
+		let requirements = pokemon.data.learnset[i].unlock
+		//If move is not available and the move should be hidden, skip the rest of this
+		if (!available && requirements.type === "hidden"){
+			continue
+		}
+
+		let moveTag = getMoveHTML(move, true)
 		if (!available){
 			moveTag.addClass("unavailable")
 			moveTag.popover({
