@@ -1,5 +1,6 @@
 {
 	"Route 1-1-description": "Rival Battle",
+	"initiative-tutorial": "Initiative<br>Each turn, both Pokemon gain Initiative based on their speed stats. When a player matches 4 or more tiles in a row, they get a free turn.",
 	"pokemon": {
 		"Rattata-Alola": {
 			"name": "Rattata-Alola"
@@ -21,6 +22,9 @@
 		},
 		"Pichu": {
 			"name": "Pichu"
+		},
+		"Wingull": {
+			"name": "Wingull"
 		},
 		"Rowlet": {
 			"name": "Rowlet"
@@ -52,13 +56,18 @@
 		},
 		"Bug Bite": {
 			"name": "Bug Bite",
-			"description": "Deals damage. Then, drains 2 energy from the opponent's most full energy type and gives it to the user.",
+			"description": "Deals damage. Then, drains 2 energy from the opponent's three most full energy types and gives it to the user.",
 			"shortDescription": "Deals some damage and drains energy"
 		},
 		"Charm": {
 			"name": "Charm",
 			"description": "Lowers the opponent's attack stat by 1 stage.",
 			"shortDescription": "Lowers enemy attack"
+		},
+		"Disarming Voice": {
+			"name": "Disarming Voice",
+			"description": "Deals damage. Has a 50% chance to confuse the opponent.",
+			"shortDescription": "Deals light damage and may confuse"
 		},
 		"Ember": {
 			"name": "Ember",
@@ -95,6 +104,11 @@
 			"description": "Lowers the opponent's defense stat by 1 stage.",
 			"shortDescription": "Lowers enemy defense"
 		},
+		"Lick": {
+			"name": "Lick",
+			"description": "Deals damage. Lowers the chance of Grass tiles spawning by 50%, and makes Dark tiles more likely to spawn instead. Dark tiles are worth 1 purple energy AND 1 red energy each.",
+			"shortDescription": "Deals light damage and spawns Dark tiles"
+		},
 		"Mud-Slap": {
 			"name": "Mud-Slap",
 			"description": "Deals damage. 2 random tiles are given the Energy Down status. When an opponent removes those tiles, they're worth 1 less energy each.",
@@ -117,12 +131,12 @@
 		},
 		"Peck": {
 			"name": "Peck",
-			"description": "Damage-dealing move with no special effects.",
+			"description": "Damage-dealing move with no special effects. Ends the turn.",
 			"shortDescription": "Deals light damage"
 		},
 		"Play Nice": {
 			"name": "Play Nice",
-			"description": "Lowers the opponent's attack stat by 1 stage. Then, the opponent chooses two tiles. Those tiles are swapped. Then, the user chooses two tiles. Those tiles are swapped.",
+			"description": "Lowers the opponent's attack stat by 1 stage. Then, the user chooses two tiles. Those tiles are swapped.",
 			"shortDescription": "Debuffs opponent and disrupts board"
 		},
 		"Poison Sting": {
@@ -132,7 +146,7 @@
 		},
 		"Pound": {
 			"name": "Pound",
-			"description": "Damage-dealing move with no special effects.",
+			"description": "Damage-dealing move with no special effects. Ends the turn.",
 			"shortDescription": "Deals light damage"
 		},
 		"Quick Attack": {
@@ -142,7 +156,7 @@
 		},
 		"Scratch": {
 			"name": "Scratch",
-			"description": "Damage-dealing move with no special effects.",
+			"description": "Damage-dealing move with no special effects. Ends the turn.",
 			"shortDescription": "Deals light damage"
 		},
 		"String Shot": {
@@ -172,7 +186,7 @@
 		},
 		"Tackle": {
 			"name": "Tackle",
-			"description": "Damage-dealing move with no special effects.",
+			"description": "Damage-dealing move with no special effects. Ends the turn.",
 			"shortDescription": "Deals light damage"
 		},
 		"Tail Whip": {

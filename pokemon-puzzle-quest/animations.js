@@ -45,6 +45,22 @@ function getHealthColor(p){
 	}
 }
 
+let tileIconUrls = {
+	red: "src/img/tiles/red.png",
+	orange: "src/img/tiles/orange.png",
+	yellow: "src/img/tiles/yellow.png",
+	green: "src/img/tiles/green.png",
+	blue: "src/img/tiles/blue.png",
+	purple: "src/img/tiles/purple.png",
+	black: "src/img/tiles/black.png"
+}
+function getEnergyIcon(type){
+	if (type in tileIconUrls){
+		return tileIconUrls[type]
+	}
+	return `src/img/tiles/${type}.png`
+}
+
 function getTypeIcon(type){
 	switch (type.toLowerCase()){
 		case "normal":

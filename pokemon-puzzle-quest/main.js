@@ -47,7 +47,7 @@ function animateTextCounter(from, to, elem, duration){
 			elem.text(parseInt(this.val))
 		},
 		complete: function(){
-			elem.text(to)
+			elem.text(parseInt(to))
 			ongoingTextAnimations.delete(elem)
 		}
 	})
@@ -249,6 +249,7 @@ function playSound(name){
 		snd.currentTime = 0
 	}
 	snd.volume = config.volumes[soundData.type]
+	snd.muted = config.muted[soundData.type]
 	if (sounds[name].type === "music"){
 		//Fade the sound effect in
 		fadeSoundVolume(snd, 0, snd.volume)
@@ -399,8 +400,10 @@ function createAnnouncement(type, text, duration=1500){
 function resize(){
 	let screenW = document.body.clientWidth
 	let screenH = document.body.clientHeight
+	let initiativesHeight = $(".board-center > .initiatives").height()
+	let realH = screenH - initiativesHeight
 
-	let intendedSize = Math.min(screenH, screenW * 0.6)
+	let intendedSize = Math.min(realH, screenW * 0.6)
 	$(canvas).css({"width":intendedSize,"height":intendedSize})
 	canvas.width = intendedSize
 	canvas.height = intendedSize
@@ -409,6 +412,15 @@ function resize(){
 	let healthBars = $(".health-bar")
 	for (let healthBar of healthBars){
 		let bar = $(healthBar).children(".bar")
+		let width = bar.attr("data-width")
+		if (width !== undefined){
+			$(bar).css("width", width)
+		}
+	}
+
+	let initiativeBars = $(".initiative")
+	for (let initiativeBar of initiativeBars){
+		let bar = $(initiativeBar).children(".bar")
 		let width = bar.attr("data-width")
 		if (width !== undefined){
 			$(bar).css("width", width)
@@ -513,14 +525,14 @@ function loadResources(){
 	renderHelperSprites()
 
 	let sprites = [
-		{name: "pokeballs", url: "src/img/pokeballs.png"},
-		{name: "red", url: "src/img/tiles/red.png"},
-		{name: "orange", url: "src/img/tiles/orange.png"},
-		{name: "yellow", url: "src/img/tiles/yellow.png"},
-		{name: "green", url: "src/img/tiles/green.png"},
-		{name: "blue", url: "src/img/tiles/blue.png"},
-		{name: "purple", url: "src/img/tiles/purple.png"},
+		{name: "pokeballs", url: "src/img/pokeballs.png"}
 	]
+	sprites = sprites.concat(
+		Object.keys(tileIconUrls)
+		.map(key => {
+			return {name: key, url: tileIconUrls[key]}
+		})
+	)
 	sprites = sprites.concat(getAllStatusSprites())
 	loadedResources[1] = sprites.length
 
@@ -658,7 +670,6 @@ function openSettings(){
 		Object.values(sounds).forEach(sound => {
 			if (sound.type !== type) return
 			let snd = sound.audio
-			console.log(muted)
 			snd.muted = muted
 		})
 	}

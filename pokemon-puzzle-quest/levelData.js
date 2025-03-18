@@ -69,6 +69,7 @@ const levelCategoryData = [
 ]
 
 const levelData = [
+	// Rival Battle 1
 	{
 		id: "Route 1-1",
 		category: "Route 1",
@@ -226,22 +227,23 @@ const levelData = [
 			{type: "fight", trainer: 0, label: "Normal"}
 		]
 	},
+	// Rival Battle 2
 	{
 		id: "Route 1-4",
 		category: "Route 1",
 		name: "Rival Battle 2",
-		// description: "Route 1-1-description",
+		// description: "Route 1-4-description",
 		icon: "4",
 		music: "SM Trainer Battle",
 		trainers: [
 			{
 				name: "Hau",
 				pokemon: [
-					// {
-					// 	id: "Popplio",
-					// 	level: 7,
-					// 	activeMoves: ["Pound", "Water Gun", "Growl"]
-					// },
+					{
+						id: "Popplio",
+						level: 7,
+						activeMoves: ["Pound", "Water Gun", "Growl"]
+					},
 					{
 						id: "Pichu",
 						level: 6,
@@ -254,8 +256,14 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Rowlet",
-						level: 5
-					}
+						level: 7,
+						activeMoves: ["Tackle", "Growl", "Leafage"]
+					},
+					{
+						id: "Pichu",
+						level: 6,
+						activeMoves: ["Thunder Shock", "Tail Whip", "Charm"]
+					},
 				]
 			},
 			{
@@ -263,8 +271,14 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Litten",
-						level: 5
-					}
+						level: 7,
+						activeMoves: ["Scratch", "Growl", "Ember"]
+					},
+					{
+						id: "Pichu",
+						level: 6,
+						activeMoves: ["Thunder Shock", "Tail Whip", "Charm"]
+					},
 				]
 			}
 		],
@@ -286,45 +300,21 @@ const levelData = [
 	{
 		id: "Route 1-5",
 		category: "Route 1",
-		name: "Route 1-5 test",
+		name: "Route 1-5",
 		icon: "5",
 		music: "SM Wild Pokemon Battle",
 		trainers: [
 			{
 				pokemon: [
 					{
-						id: "Caterpie",
-						levelMin: 1, levelMax: 1
-					}
-				]
-			},
-			{
-				pokemon: [
-					{
-						id: "Comfey",
-						levelMin: 1, levelMax: 1
-					}
+						id: "Wingull",
+						levelMin: 5, levelMax: 7
+					},
 				]
 			},
 		],
 		effects: [
-			{type: "fight", trainer: 0},
-			{type: "load-player-info", key: "chosen-starter"},
-			{type: "load-value", value: "Popplio"},
-			{type: "jump-if-equal", jumpTo: 7},
-			{type: "fight", trainer: 0},
-			{type: "fight", trainer: 0},
-			{type: "fight", trainer: 0},
-			{type: "fight", trainer: 1},
-			{type: "fight", trainer: 0},
-			{type: "fight", trainer: 0},
-			{type: "fight", trainer: 0},
-			{type: "fight", trainer: 0},
-			{type: "fight", trainer: 0},
-			{type: "fight", trainer: 0},
-			{type: "fight", trainer: 0},
-			{type: "fight", trainer: 0},
-			{type: "fight", trainer: 0},
+			{type: "fight", trainer: 0}
 		]
 	},
 ]

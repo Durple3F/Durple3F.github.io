@@ -8,17 +8,29 @@ const cssColors = {
 	"energy-purple": "#dd60dd"
 }
 
-function delay(ms){
+const tileTypes = ["red", "orange", "yellow", "green", "blue", "purple", "black"]
+
+function delay(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms))
 }
 
-function randomAngle(deg1, deg2){
+function randomAngle(deg1, deg2) {
 	let result = (deg1 + Math.random() * (deg2 - deg1)) / 180 * Math.PI
 	return result
 }
-function randomFrom(min, max){
+function randomFrom(min, max) {
 	let result = min + Math.random() * (max - min + 1)
 	return Math.floor(result)
+}
+
+function formatNumber(f, digits=2) {
+	let decimal = f % 1
+	let off = Math.pow(10, -digits)
+	if (f % 1 && decimal > off){
+		return f.toFixed(digits)
+	} else {
+		return f.toString()
+	}
 }
 
 function weightedRandom(items, weights) {
@@ -58,16 +70,16 @@ function weightedRandom(items, weights) {
 		}
 	}
 }
-function distance(x1, y1, x2, y2){
-	let dx = x2-x1
-	let dy = y2-y1
-	return Math.sqrt(dx*dx + dy*dy)
+function distance(x1, y1, x2, y2) {
+	let dx = x2 - x1
+	let dy = y2 - y1
+	return Math.sqrt(dx * dx + dy * dy)
 }
-function noDuplicates(arr){
+function noDuplicates(arr) {
 	return arr.filter((v, i, s) => s.indexOf(v) === i)
 }
 
-function bezierEase(t){
+function bezierEase(t) {
 	// return [
 	// 	Math.pow(1 - t, 3)*0 + 
 	// 	3*Math.pow(1 - t, 2)*t*0.42 + 
@@ -79,49 +91,100 @@ function bezierEase(t){
 	// 	3*(1 - t)*Math.pow(t,2)*1 + 
 	// 	Math.pow(t, 3)*1,
 	// ]
-	let r = Math.pow(1 - t, 3)*0 + 3*Math.pow(1 - t, 2)*t*0 + 3*(1 - t)*Math.pow(t,2)*1 + Math.pow(t, 3)*1
+	let r = Math.pow(1 - t, 3) * 0 + 3 * Math.pow(1 - t, 2) * t * 0 + 3 * (1 - t) * Math.pow(t, 2) * 1 + Math.pow(t, 3) * 1
 	return r
 }
-function interpolate(v1, v2, p){
-	return (1 - p)*v1 + p*v2
+function interpolate(v1, v2, p) {
+	return (1 - p) * v1 + p * v2
 }
-function lerp(a, b, t){
-	return a + (b - a)*t
+function lerp(a, b, t) {
+	return a + (b - a) * t
 }
 
-function randomChoice(arr){
+function randomChoice(arr) {
 	return arr[Math.floor(Math.random() * arr.length)]
 }
 //Note: Mutates the original array
 function shuffleArray(array) {
 	for (var i = array.length - 1; i > 0; i--) {
-			var j = Math.floor(Math.random() * (i + 1));
-			var temp = array[i];
-			array[i] = array[j];
-			array[j] = temp;
+		var j = Math.floor(Math.random() * (i + 1));
+		var temp = array[i];
+		array[i] = array[j];
+		array[j] = temp;
 	}
 }
 //Note: Mutates the original array
-function removeEmptySlots(arr){
+function removeEmptySlots(arr) {
 	let emptyIndex = arr.findIndex(p => !p)
-	while (emptyIndex !== -1){
+	while (emptyIndex !== -1) {
 		arr.splice(emptyIndex, 1)
 		emptyIndex = arr.findIndex(p => !p)
 	}
 	return arr
 }
-function getEmptyEnergy(){
+function getEmptyEnergy() {
 	let t = {}
 	colors.forEach(c => t[c] = 0)
 	return t
 }
-function addEnergies(from, to){
+function addEnergies(from, to) {
 	let keys = Object.keys(from).concat(Object.keys(to))
 	keys = noDuplicates(keys)
 	let result = {}
-	for (let key of keys){
+	for (let key of keys) {
 		result[key] = (to[key] || 0) + (from[key] || 0)
 	}
+	return result
+}
+function multiplyEnergies(energy, factor) {
+	let keys = Object.keys(energy)
+	let result = {}
+	for (let key of keys) {
+		result[key] = energy[key] * factor
+	}
+	return result
+}
+
+function getTileEnergyValue(type){
+	if (type instanceof Tile){
+		type = type.type
+	}
+	let energy = getEmptyEnergy()
+	switch (type){
+		case "red": energy.red += 1
+		break
+		case "orange": energy.orange += 1
+		break
+		case "yellow": energy.yellow += 1
+		break
+		case "green": energy.green += 1
+		break
+		case "blue": energy.blue += 1
+		break
+		case "purple": energy.purple += 1
+		break
+		case "black":
+			energy.red += 1
+			energy.purple += 1
+		break
+		default:
+			console.warn("You never said what ",type,"should do")
+	}
+	return energy
+}
+
+function getEmptyTileTypeTable(){
+	let result = {}
+	tileTypes.forEach(t => result[t] = 0)
+	return result
+}
+function getMatchTypes(match){
+	let result = getEmptyTileTypeTable()
+	match.forEach(t => {
+		//Log what kind of match this is.
+		let type = t.type
+		result[type] += 1 / match.length
+	})
 	return result
 }
 
@@ -182,12 +245,12 @@ function fixLearnsets() {
 	//Then, make sure that all pokemon technically *can* use moves not in their learnset,
 	//but this shouldn't ever happen (barring things like Metronome)
 	let allMoves = Object.values(pokemonMoveData)
-	for (let pokemon of allPokemon){
+	for (let pokemon of allPokemon) {
 		let learnset = pokemon.learnset
-		for (let move of allMoves){
+		for (let move of allMoves) {
 			let name = move.name
 			let canLearn = learnset.find(l => l.name === name)
-			if (!canLearn){
+			if (!canLearn) {
 				let newMove = {
 					name: name,
 					unlock: {

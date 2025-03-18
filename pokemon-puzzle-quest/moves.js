@@ -9,7 +9,8 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 2,
 		energy: {
-			green: 1
+			green: 5,
+			red: 2
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Absorb part 1.mp3"
@@ -33,7 +34,8 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			green: 0
+			green: 8,
+			orange: 4
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Bug Bite.mp3"
@@ -41,7 +43,7 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
-			{ type: "load-number", value: 1 },
+			{ type: "load-number", value: 3 },
 			{ type: "select-energy-colors", search: "most-full", target: "opponent", count: -1 },
 			{ type: "load-number", value: -2 },
 			{ type: "gain-energy", count: -1, colors: -2, target: "opponent" },
@@ -60,7 +62,7 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			purple: 2
+			purple: 4
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Charm.mp3"
@@ -76,6 +78,31 @@ const pokemonMoveData = {
 			}
 		],
 	},
+	"Disarming Voice": {
+		name: "Disarming Voice",
+		type: "Fairy",
+		category: "Special",
+		strategy: "basic-damage",
+		pp: 15,
+		power: 40,
+		accuracy: null,
+		bypassAccuracyChecks: true,
+		rechargeTurns: 1,
+		energy: {
+			purple: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Disarming Voice.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "random-number", min: 1, max: 10 },
+			{ type: "load-number", value: 0 },
+			{ type: "jump-if-less-than", jumpTo: Infinity },
+			{ type: "apply-status-effect", statusEffect: "confused", target: "opponent" }
+		],
+	},
 	"Ember": {
 		name: "Ember",
 		type: "Fire",
@@ -86,7 +113,7 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			red: 5
+			red: 12
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Ember.mp3"
@@ -115,8 +142,8 @@ const pokemonMoveData = {
 		accuracy: null,
 		rechargeTurns: 2,
 		energy: {
-			blue: 3,
-			purple: 3
+			blue: 5,
+			purple: 5
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Focus Energy.mp3"
@@ -142,7 +169,7 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			orange: 2
+			orange: 5
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Growl.mp3"
@@ -166,7 +193,7 @@ const pokemonMoveData = {
 		pp: 30,
 		power: null,
 		accuracy: 0,
-		rechargeTurns: 3,
+		rechargeTurns: 5,
 		energy: {},
 		sounds: {
 			"attack": "src/audio/attacks/Harden.mp3"
@@ -187,8 +214,8 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 0,
 		energy: {
-			green: 2,
-			yellow: 1
+			green: 5,
+			yellow: 3
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Infestation.mp3"
@@ -218,7 +245,7 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			green: 4
+			green: 12
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Leafage.mp3"
@@ -241,7 +268,7 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			purple: 2
+			purple: 4
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Leer.mp3"
@@ -257,6 +284,32 @@ const pokemonMoveData = {
 			}
 		],
 	},
+	"Lick": {
+		name: "Lick",
+		type: "Ghost",
+		category: "Physical",
+		strategy: "basic-damage",
+		pp: 30,
+		power: 30,
+		accuracy: 100,
+		rechargeTurns: 2,
+		energy: {
+			purple: 5,
+			red: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Lick.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "load-number", value: 0.5 },
+			{ type: "change-tile-weight", tileType: "green", factor: -1 },
+			{ type: "load-number", value: -1 },
+			{ type: "multiply-numbers" },
+			{ type: "change-tile-weight", tileType: "black", add: -1 },
+		],
+	},
 	"Mud-Slap": {
 		name: "Mud-Slap",
 		type: "Ground",
@@ -267,7 +320,7 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			orange: 2
+			orange: 4
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Mud-Slap.mp3"
@@ -293,8 +346,8 @@ const pokemonMoveData = {
 		accuracy: null,
 		rechargeTurns: 2,
 		energy: {
-			orange: 3,
-			purple: 3
+			orange: 5,
+			purple: 5
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Nasty Plot.mp3"
@@ -320,7 +373,7 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 2,
 		energy: {
-			yellow: 6
+			yellow: 12
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Nuzzle.mp3"
@@ -341,8 +394,8 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			purple: 4,
-			orange: 2
+			purple: 8,
+			orange: 4
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Payback.mp3"
@@ -368,14 +421,15 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			yellow: 2
+			yellow: 5
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Peck.mp3"
 		},
 		effects: [
 			{ type: "play-sound", name: "attack" },
-			{ type: "damage" }
+			{ type: "damage" },
+			{ type: "end-turn" }
 		],
 	},
 	"Play Nice": {
@@ -388,7 +442,8 @@ const pokemonMoveData = {
 		accuracy: null,
 		rechargeTurns: 2,
 		energy: {
-			purple: 2
+			purple: 5,
+			yellow: 2
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Play Nice.mp3"
@@ -402,8 +457,6 @@ const pokemonMoveData = {
 					amount: -1
 				}
 			},
-			{ type: "choose-tiles", count: 2, target: "opponent" },
-			{ type: "swap-tiles", selection: -1 },
 			{ type: "choose-tiles", count: 2, target: "user" },
 			{ type: "swap-tiles", selection: -1 },
 		],
@@ -418,7 +471,7 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			purple: 3
+			purple: 7
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Poison Sting.mp3"
@@ -442,14 +495,15 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			red: 3
+			red: 6
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Pound.mp3"
 		},
 		effects: [
 			{ type: "play-sound", name: "attack" },
-			{ type: "damage" }
+			{ type: "damage" },
+			{ type: "end-turn" }
 		],
 	},
 	"Quick Attack": {
@@ -483,14 +537,15 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			yellow: 3
+			yellow: 6
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Pound.mp3"
 		},
 		effects: [
 			{ type: "play-sound", name: "attack" },
-			{ type: "damage" }
+			{ type: "damage" },
+			{ type: "end-turn" }
 		],
 	},
 	"String Shot": {
@@ -503,7 +558,7 @@ const pokemonMoveData = {
 		accuracy: 95,
 		rechargeTurns: 1,
 		energy: {
-			blue: 1
+			blue: 5
 		},
 		sounds: {
 			"attack": "src/audio/attacks/String Shot.mp3"
@@ -549,7 +604,7 @@ const pokemonMoveData = {
 		accuracy: 55,
 		rechargeTurns: 1,
 		energy: {
-			purple: 3
+			purple: 6
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Supersonic part 1.mp3"
@@ -569,8 +624,8 @@ const pokemonMoveData = {
 		accuracy: 75,
 		rechargeTurns: 1,
 		energy: {
-			purple: 2,
-			blue: 2
+			purple: 4,
+			blue: 4
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Sweet Kiss part 1.mp3"
@@ -592,7 +647,7 @@ const pokemonMoveData = {
 		bypassAccuracyChecks: true,
 		rechargeTurns: 0,
 		energy: {
-			yellow: 3
+			yellow: 8
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Swift.mp3"
@@ -612,14 +667,15 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			orange: 3
+			orange: 6
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Tackle.mp3"
 		},
 		effects: [
 			{ type: "play-sound", name: "attack" },
-			{ type: "damage" }
+			{ type: "damage" },
+			{ type: "end-turn" }
 		],
 	},
 	"Tail Whip": {
@@ -632,7 +688,7 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			purple: 2
+			purple: 4
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Tail Whip.mp3"
@@ -658,7 +714,7 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			yellow: 4
+			yellow: 10
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Thunder Shock.mp3"
@@ -687,7 +743,8 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			green: 5
+			green: 5,
+			yellow: 3
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Vice Grip.mp3"
@@ -712,7 +769,7 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			blue: 6
+			blue: 12
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Water Gun.mp3"
@@ -735,8 +792,8 @@ const pokemonMoveData = {
 		accuracy: 90,
 		rechargeTurns: 1,
 		energy: {
-			green: 1,
-			purple: 1
+			green: 5,
+			purple: 3
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Wrap.mp3"

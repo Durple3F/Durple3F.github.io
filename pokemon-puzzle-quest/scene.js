@@ -543,7 +543,7 @@ function startScene(name, options){
 					savePokemon(heldPokemon)
 					.then(() => loadBox(pcBoxData.indexOf(currentBox)))
 				} else {
-
+					loadBox(pcBoxData.indexOf(currentBox))
 				}
 				heldPokemonTag = null
 				heldPokemon = null
@@ -931,6 +931,8 @@ function viewPokemonInfo(pokemon){
 	modal.find(".modal-body").html(content)
 	let statsHTML = getStatsHTML(pokemon, false)
 	content.children(".pokemon-section").append(statsHTML)
+	let masteryHTML = getMasteryHTML(pokemon, false)
+	content.children(".pokemon-section").append(masteryHTML)
 
 	const toggleSelect = (move, moveTag) => {
 		let activeIndex = pokemon.activeMoves.indexOf(move)
@@ -999,6 +1001,7 @@ function viewPokemonInfo(pokemon){
 }
 
 function getStatsHTML(pokemon, abbreviate=true){
+	//Stats
 	let stats = $(`<div class='stats'></div>`)
 	for (let stat in pokemon.data.stats){
 		let statName = abbreviate ? getStatAbbr(stat) : getStatName(stat)
@@ -1019,6 +1022,34 @@ function getStatsHTML(pokemon, abbreviate=true){
 		statVal.append(effectiveVal.toFixed(0))
 		statTag.append(statVal)
 		stats.append(statTag)
+	}
+	return stats
+}
+function getMasteryHTML(pokemon, abbreviate=true){
+	let stats = $(`<div class='stats mastery'></div>`)
+	for (let type in pokemon.energyMastery){
+		let val = pokemon.energyMastery[type]
+		if (val || colors.includes(type)){
+			let icon = getEnergyIcon(type)
+			let tag = $("<div class='mastery-icon'></div>")
+			let left = $("<div class='mastery-left'></div>")
+			let img = $("<img>")
+			img.attr("src", icon)
+			left.append(img)
+			tag.append(left)
+
+			if (!abbreviate){
+				let name = `${type} Affinity`
+				let nameTag = $("<span class='mastery-name'></span>")
+				nameTag.text(name)
+				left.append(nameTag)
+			}
+
+			let number = $("<span></span>")
+			number.text(val)
+			tag.append(number)
+			stats.append(tag)
+		}
 	}
 	return stats
 }

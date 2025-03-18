@@ -63,6 +63,17 @@ class Pokemon{
 			}
 		})
 
+		this.energyMasteryUpgrades = {}
+		this.energyMastery = {}
+		for (let type in this.data.energyMastery){
+			this.energyMasteryUpgrades[type] = 0
+		}
+		if (options?.energyMasteryUpgrades){
+			for (let type in options.energyMasteryUpgrades){
+				this.energyMasteryUpgrades[type] = options.energyMasteryUpgrades[type]
+			}
+		}
+
 		this.statusEffects = []
 
 		//You can only have 4 moves active at once
@@ -86,7 +97,7 @@ class Pokemon{
 		
 		this.energy = getEmptyEnergy()
 		this.maxEnergy = getEmptyEnergy()
-		colors.forEach(c => this.maxEnergy[c] = 10)
+		this.resetEnergyMastery()
 
 		this.pcBox = options?.pcBox ?? null
 		this.pcBoxX = options?.pcBoxX ?? null
@@ -241,6 +252,11 @@ class Pokemon{
 			}
 			if (!this.movesUnlockedMap[i] && v){
 				changedIndexes.unlocked.push(i)
+
+				if (this.activeMoves.length < 4){
+					let move = this.moves[i]
+					this.activeMoves.push(move)
+				}
 			}
 			this.movesUnlockedMap[i] = v
 		})
@@ -292,6 +308,8 @@ class Pokemon{
 		let result = 0
 		let energy = this.energy
 		let maxEnergy = this.maxEnergy
+		//If the energy has a decimal component, no it doesn't.
+		amount = Math.floor(amount)
 		if (energy[color] + amount < 0){
 			result = energy[color] * -1
 			energy[color] = 0
@@ -303,6 +321,34 @@ class Pokemon{
 			energy[color] += amount
 		}
 		return result
+	}
+
+	getBonusEnergy(type){
+		//Returns an object that says how much bonus energy matches of this type should be worth.
+		let energy = getTileEnergyValue(type)
+		let masteryVal = this.energyMastery[type]
+		masteryVal = Math.pow(masteryVal * 0.2, 1/3)
+		let diff = masteryVal % 1
+		if (diff && Math.random() > diff){
+			masteryVal = Math.ceil(masteryVal)
+		} else {
+			masteryVal = Math.floor(masteryVal)
+		}
+		console.log(masteryVal)
+		energy = multiplyEnergies(energy, masteryVal)
+		return energy
+	}
+	resetEnergyMastery(){
+		for (let type of tileTypes){
+			this.energyMastery[type] = this.data.energyMastery[type]
+			this.energyMastery[type] += Math.floor(this.level * this.data.energyMastery[type] / 5)
+			this.energyMastery[type] += this.energyMasteryUpgrades[type]
+		}
+		colors.forEach(color => {
+			let max = Math.ceil(this.energyMastery[color] / 2)
+			this.maxEnergy[color] = 10 + max
+			this.energy[color] = Math.floor(this.energyMastery[color] / 4)
+		})
 	}
 
 	getEXPNeededForLevel(level){

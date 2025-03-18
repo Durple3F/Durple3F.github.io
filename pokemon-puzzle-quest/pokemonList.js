@@ -30,6 +30,10 @@ const pokemonData = {
 			specialDefense: 0,
 			speed: 1
 		},
+		energyMastery: {
+			orange: 2,
+			purple: 3
+		},
 		learnset: [
 			{
 				name: "Tackle",
@@ -90,6 +94,10 @@ const pokemonData = {
 			specialAttack: 0,
 			specialDefense: 0,
 			speed: 0
+		},
+		energyMastery: {
+			green: 3,
+			yellow: 1
 		},
 		evolutions: [
 			{
@@ -154,6 +162,11 @@ const pokemonData = {
 			specialDefense: 0,
 			speed: 0
 		},
+		energyMastery: {
+			green: 7,
+			yellow: 2,
+			purple: 3
+		},
 		evolutions: [
 			{
 				name: "Butterfree",
@@ -203,6 +216,9 @@ const pokemonData = {
 			specialDefense: 1,
 			speed: 0
 		},
+		energyMastery: {
+			
+		},
 		learnset: [
 
 		]
@@ -236,6 +252,10 @@ const pokemonData = {
 			specialAttack: 0,
 			specialDefense: 1,
 			speed: 0
+		},
+		energyMastery: {
+			green: 3,
+			purple: 5
 		},
 		learnset: [
 			{
@@ -290,6 +310,10 @@ const pokemonData = {
 			specialAttack: 0,
 			specialDefense: 0,
 			speed: 0
+		},
+		energyMastery: {
+			green: 5,
+			purple: 3
 		},
 		learnset: [
 			{
@@ -352,6 +376,10 @@ const pokemonData = {
 			specialDefense: 0,
 			speed: 1
 		},
+		energyMastery: {
+			yellow: 4,
+			orange: 2
+		},
 		learnset: [
 			{
 				name: "Thunder Shock",
@@ -404,6 +432,61 @@ const pokemonData = {
 			},
 		]
 	},
+	"Wingull": {
+		name: "Wingull",
+		number: "278",
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0278Wingull.png",
+			"home": "src/img/tiny-pokemon/Wingull.png"
+		},
+		sounds: {
+			cry: "src/audio/cries/wingull.mp3"
+		},
+		types: ["Water", "Flying"],
+		tags: ["Starter"],
+		stats: {
+			hp: 40,
+			attack: 30,
+			defense: 30,
+			specialAttack: 55,
+			specialDefense: 30,
+			speed: 85
+		},
+		expYield: 54,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 1
+		},
+		energyMastery: {
+			red: 1,
+			orange: 1,
+			yellow: 1,
+			green: 1,
+			blue: 3,
+			purple: 1,
+		},
+		learnset: [
+			{
+				name: "Growl",
+				unlock: {
+					type: "level",
+					amount: 1
+				}
+			},
+			{
+				name: "Water Gun",
+				unlock: {
+					type: "level",
+					amount: 1
+				}
+			},
+		]
+	},
 	"Rowlet": {
 		name: "Rowlet",
 		number: "722",
@@ -434,9 +517,13 @@ const pokemonData = {
 			specialDefense: 0,
 			speed: 0
 		},
+		energyMastery: {
+			green: 5,
+			purple: 3
+		},
 		learnset: [
 			{
-				name: "Pound",
+				name: "Tackle",
 				unlock: {
 					type: "level",
 					amount: 1
@@ -488,6 +575,10 @@ const pokemonData = {
 			specialDefense: 0,
 			speed: 1
 		},
+		energyMastery: {
+			red: 5,
+			purple: 3
+		},
 		learnset: [
 			{
 				name: "Scratch",
@@ -508,6 +599,13 @@ const pokemonData = {
 				unlock: {
 					type: "level",
 					amount: 3
+				}
+			},
+			{
+				name: "Lick",
+				unlock: {
+					type: "level",
+					amount: 1
 				}
 			}
 		]
@@ -542,6 +640,10 @@ const pokemonData = {
 			specialDefense: 0,
 			speed: 0
 		},
+		energyMastery: {
+			blue: 5,
+			purple: 3
+		},
 		learnset: [
 			{
 				name: "Pound",
@@ -562,6 +664,13 @@ const pokemonData = {
 				unlock: {
 					type: "level",
 					amount: 3
+				}
+			},
+			{
+				name: "Disarming Voice",
+				unlock: {
+					type: "level",
+					amount: 6
 				}
 			}
 		]
@@ -595,6 +704,10 @@ const pokemonData = {
 			specialAttack: 0,
 			specialDefense: 0,
 			speed: 0
+		},
+		energyMastery: {
+			yellow: 4,
+			orange: 2
 		},
 		learnset: [
 			{
@@ -642,6 +755,10 @@ const pokemonData = {
 			specialAttack: 0,
 			specialDefense: 0,
 			speed: 0
+		},
+		energyMastery: {
+			purple: 5,
+			green: 2
 		},
 		learnset: [
 			{
@@ -821,7 +938,10 @@ for (let name in pokemonData) {
 	if (!pokemon.evolutions) {
 		pokemon.evolutions = []
 	}
-	if (!pokemon.energyBonus) {
-		pokemon.energyBonus = getEmptyEnergy()
+	if (!pokemon.energyMastery) {
+		pokemon.energyMastery = {}
+	}
+	for (let type of tileTypes){
+		pokemon.energyMastery[type] = pokemon.energyMastery[type] ?? 0
 	}
 }

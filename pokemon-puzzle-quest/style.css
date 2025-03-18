@@ -49,6 +49,8 @@ body {
 }
 
 :root {
+	--player-color: #395aee;
+	--enemy-color: #e72e2e;
 	--move-usable: #6774dc;
 	--move-usable-focus: #7777ff;
 	--move-unusable: rgb(60, 60, 60);
@@ -407,12 +409,42 @@ body {
 	text-align: center;
 }
 
-#screen {
+.board-center {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.board-center > #screen {
 	width: 50%;
+}
+.board-center > .initiatives {
+	height: 4em;
+	width: 80%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	opacity: 0.5;
+	transition: opacity 0.5s;
+}
+.board-center > .initiatives:hover {
+	opacity: 1;
+}
+.board-center > .initiatives > .initiative {
+	width: 100%;
+	text-align: center;
+}
+.board-center > .initiatives > .initiative.player > .bar {
+	background-color: var(--player-color);
+}
+.board-center > .initiatives > .initiative.enemy > .bar {
+	background-color: var(--enemy-color);
 }
 
 .health-bar,
-.exp-bar {
+.exp-bar,
+.initiative {
 	position: relative;
 	display: flex;
 	justify-content: center;
@@ -425,7 +457,8 @@ body {
 	height: 1em;
 }
 .health-bar > div,
-.exp-bar > div {
+.exp-bar > div,
+.initiative > div {
 	position: absolute;
 	left: 0;
 	width: 100%;
@@ -433,7 +466,8 @@ body {
 	border-radius: 0.2em;
 }
 .health-bar > span,
-.exp-bar > span {
+.exp-bar > span,
+.initiative > span {
 	z-index: 2;
 }
 .health-bar > div {
@@ -772,6 +806,7 @@ body {
 	flex-direction: row;
 	justify-content: space-evenly;
 	align-items: center;
+	width: 100%;
 }
 .pokemon-stats > .stats > .stat {
 	display: flex;
@@ -786,6 +821,32 @@ body {
 }
 .pokemon-stats > .stats > .stat > .stat-val.up {
 	color: var(--health-high);
+}
+.pokemon-stats > .stats.mastery {
+	width: 100%;
+	justify-content: space-evenly;
+}
+.pokemon-stats > .stats.mastery > .mastery-icon {
+	height: 2em;
+	width: 2em;
+	position: relative;
+	margin: 0 0.2em;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.pokemon-stats > .stats.mastery > .mastery-icon img {
+	height: 100%;
+	position: absolute;
+	top: 50%; left: 50%;
+	transform: translate(-50%, -50%);
+}
+.pokemon-stats > .stats.mastery > .mastery-icon > span {
+	z-index: 1;
+	text-shadow:  0.2em 0     0.2em black,
+	             -0.2em 0     0.2em black,
+	             0      0.2em 0.2em black,
+	             0     -0.2em 0.2em black;
 }
 
 #pc {
@@ -905,6 +966,16 @@ body {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
+}
+#modal.summary .pokemon-info > .pokemon-section .stats.mastery .mastery-icon {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+#modal.summary .pokemon-info > .pokemon-section .stats.mastery .mastery-icon img {
+	height: 2em;
+	margin-right: 0.5em;
 }
 #modal.summary .pokemon-info > .move-section {
 	width: 45%;

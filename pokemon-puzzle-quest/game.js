@@ -31,6 +31,11 @@ class Round{
 		this.inactivePlayerIndex = 1
 		this.turn = 1
 		this.turnsWhichHaveStarted = {}
+		this.initiativeValues = []
+		this.trainers.forEach((t, i) => {
+			this.initiativeValues[i] = 0
+		})
+		this.maxInitiative = 100
 
 		this.result = null
 		this.hasBegun = false
@@ -136,6 +141,7 @@ class Round{
 			tags.sideMiddle.animate({opacity: "1"})
 			tags.sideBottom.animate({opacity: "1"})
 			tags.health.animate({opacity: "1"})
+			tags.initiative.animate({opacity: "1"})
 		}
 
 		let NPCData = this.trainers[1].data
@@ -160,8 +166,28 @@ class Round{
 			})
 		}
 
-		//TODO later we'll need to ensure that the faster player goes first
-		this.changeTurns(0)
+		//Give each pokemon their appropriate energy mastery values
+		for (let trainer of this.trainers){
+			for (let pokemon of trainer.pokemon){
+				pokemon.resetEnergyMastery()
+			}
+		}
+
+		//Determine who goes first
+		let firstPlayer = this.getNextPlayer()
+		this.changeTurns(firstPlayer)
+
+		const popoverHTML = () => {
+			let html = getLocaleString("initiative-tutorial", lang) || ""
+			return `<div class='text-center'>${html}</div>`
+		}
+		$(".initiatives").popover("dispose")
+		$(".initiatives").popover({
+			content: popoverHTML,
+			html: true,
+			trigger: "hover",
+			placement: "top"
+		})
 
 		this.resetCurrentlySelecting()
 		this.updateEverything()
@@ -268,71 +294,6 @@ class Round{
 		}))
 	}
 
-	calculateEXPGained(){
-		let enemyTrainer = this.trainers[1]
-		let defeatedPokemon = enemyTrainer.pokemon.filter(p => p.hp <= 0)
-		let yourPokemon = this.trainers[0].pokemon.filter(p => p.hp > 0)
-		let resultMap = {}
-		for (let yours of yourPokemon){
-			let totalEXP = 0
-			let youLevel = yours.level
-			for (let p of defeatedPokemon){
-				let base = p.data.expYield
-				let themLevel = p.level
-	
-				let exp = (base * themLevel * 0.2) *
-				Math.pow((2*themLevel + 10) / (themLevel + youLevel + 10), 2.5)
-				totalEXP += exp
-			}
-			resultMap[yours.uuid] = Math.round(totalEXP)
-		}
-		return resultMap
-	}
-	savePlayerPokemon(){
-		let saves = []
-		for (let i = 0; i < this.trainers[0].pokemon.length; i++){
-			let pokemon = this.trainers[0].pokemon[i]
-			if (!pokemon) continue
-			saves.push(savePokemon(pokemon))
-		}
-		return Promise.all(saves)
-	}
-
-	applyGravity(){
-		let now = Date.now()
-		//for each column, let's find all the tiles in that column.
-		let columns = []
-		for (let i = 0; i < this.board.width; i++){
-			columns[i] = this.board.getColumn(i)
-		}
-		let animations = getEmptyAnimationBatch()
-		let newLocationMap = []
-		animations.info.round = this
-		animations.info.newLocationMap = newLocationMap
-		animations.callback = () => {
-			let round = animations.info.round
-			round.applyLocationChanges(animations.info.newLocationMap)
-		}
-		for (let column of columns){
-			let bottom = this.board.height - 1
-			for (let i = column.length - 1; i >= 0; i--){
-				let tile = column[i]
-				let spaceBelow = bottom - tile.y
-				if (spaceBelow > 0){
-					let anim = animTemplates["displace"](tile, tile.x, tile.y + spaceBelow, now, 300)
-					animations.batch.push(anim)
-					newLocationMap.push([tile, [tile.x, tile.y + spaceBelow]])
-				}
-				bottom = tile.y + spaceBelow - 1
-			}
-		}
-		animations.info.newLocationMap = newLocationMap
-		this.addAnimation(animations)
-		animations.promise = animations.promise.then(() => this.timeStep())
-
-		return animations.promise
-	}
-
 	applyLocationChanges(map){
 		for (let change of map){
 			let tile = change[0]
@@ -341,7 +302,6 @@ class Round{
 			tile.y = loc[1]
 		}
 	}
-
 	swap(tile1, tile2, options){
 		options = options ?? {}
 		this.beginMove()
@@ -363,29 +323,63 @@ class Round{
 			.then(() => this.endMove(turn))
 		}
 	}
+	getTileEnergyValue(tile){
+		let base = tile.getEnergyValue()
+		let result = addEnergies(base, getEmptyEnergy())
 
-	handleEffects(matches){
-		let energiesToAdd = []
-		let tiles = []
-		for (let match of matches){
-			match.forEach(t => {
-				if (!tiles.includes(t)){
-					tiles.push(t)
+		let energyModifiers = [
+			"Energy Down"
+		]
+		let statusEffects = tile.statusEffects.filter(s => {
+			return energyModifiers.includes(s.name)
+		})
+
+		let trainer = this.trainers[this.activePlayerIndex]
+		for (let status of statusEffects){
+			let name = status.name
+			let sourceTrainer = status.sourceTrainer
+			if (name === "Energy Down" && trainer !== sourceTrainer){
+				let nonZeroKeys = Object.keys(result)
+				.filter(key => result[key] > 0)
+				if (nonZeroKeys.length){
+					let mod = getEmptyEnergy()
+					let key = randomChoice(nonZeroKeys)
+					mod[key] = -1
+					result = addEnergies(result, mod)
 				}
-			})
-			//TODO log what kind of match this is so that we can give the player
-			//rewards for specific types of matches
+			}
 		}
 
+		return result
+	}
+
+	handleEffects(matches){
 		let activeTrainer = this.trainers[this.activePlayerIndex]
 		let activePokemon = activeTrainer.activePokemon
 		let otherTrainer = this.trainers[this.inactivePlayerIndex]
 
+		let energiesToAdd = []
+		let energy = getEmptyEnergy()
+		let tiles = []
+		let matchTotals = getEmptyTileTypeTable()
+		for (let match of matches){
+			match.forEach(t => tiles.push(t))
+			let matchTypes = getMatchTypes(match)
+			matchTotals = addEnergies(matchTotals, matchTypes)
+		}
+		tiles = noDuplicates(tiles)
+		for (let type in matchTotals){
+			let count = matchTotals[type]
+			let energyValue = activePokemon.getBonusEnergy(type)
+			let totalEnergy = multiplyEnergies(energyValue, count)
+			energy = addEnergies(totalEnergy, energy)
+		}
+
 		//Let's give the active player energy of each color based on tiles matched
 		//of that color
-		let energy = getEmptyEnergy()
 		for (let tile of tiles){
 			let energyValue = this.getTileEnergyValue(tile)
+			// let bonus = activePokemon.getBonusEnergy(tile)
 			energy = addEnergies(energyValue, energy)
 		}
 		this.giveEnergy(energy, activeTrainer, activePokemon)
@@ -446,62 +440,6 @@ class Round{
 
 		//Next turn
 		this.turnEnd(turn)
-	}
-
-	prepareToChangeTurns(newPlayer){
-		//Put a big ol' announcement on screen that says whose turn it is
-		let text
-		if (newPlayer === 0){
-			text = "Your turn"
-		} else if (newPlayer === 1) {
-			//TODO use the enemy's name
-			text = "Enemy turn"
-		} else {
-			text = "Huh??? Received a weird changeTurn request: " + newPlayer
-		}
-
-		if (!this.currentlyReversingSwap){
-			this.createAnnouncement("general", text, 1500)
-		}
-
-		this.changeTurns(newPlayer)
-	}
-
-	changeTurns(newPlayer){
-		if (newPlayer === undefined){
-			newPlayer = [1, 0][this.activePlayerIndex]
-		}
-		if (newPlayer === 1){
-			this.activePlayerIndex = 1
-			this.activePlayer = "enemy"
-			this.inactivePlayerIndex = 0
-		} else {
-			this.activePlayerIndex = 0
-			this.activePlayer = "player"
-			this.inactivePlayerIndex = 1
-		}
-		let activeTags = this.trainerTags[this.activePlayerIndex]
-		let inactiveTags = this.trainerTags[this.inactivePlayerIndex]
-		activeTags.side.addClass("active")
-		inactiveTags.side.removeClass("active")
-	}
-
-	getOtherPlayer(trainerIndex){
-		return trainerIndex === 0 ? 1 : 0
-	}
-	getNextPlayer(){
-		//If the skip flag is set to true, the next turn goes to the other guy.
-		if (this.currentlyEndingTurn === true){
-			return this.getOtherPlayer(this.activePlayerIndex)
-		}
-
-		//If you matched 4 or more, you get an extra turn.
-		let getExtraTurn = this.matchesInCombo.some(m => m.length >= 4)
-		if (this.matchesInCombo.length > 0 && !getExtraTurn){
-			return this.inactivePlayerIndex
-		}
-		this.createAnnouncement("general", "Extra turn!")
-		return this.activePlayerIndex
 	}
 
 	timeStep(){
@@ -740,13 +678,19 @@ class Round{
 			console.trace()
 			return
 		}
+
+		//Reduce initiative
+		let initiatives = this.initiativeValues
+		initiatives[this.activePlayerIndex] -= this.maxInitiative
+		this.updateInitiative(this.activePlayerIndex, false)
+
 		let nextPlayer = this.getNextPlayer()
 		if (nextPlayer !== this.activePlayerIndex){
 			this.prepareToChangeTurns(nextPlayer)
 		}
 
 		this.currentlyReversingSwap = false
-		this.updateStats()
+		this.updateEverything()
 		this.turn++
 		let newTurn = this.turn
 		
@@ -759,6 +703,101 @@ class Round{
 				})
 			}
 		}
+	}
+
+	prepareToChangeTurns(newPlayer){
+		//Put a big ol' announcement on screen that says whose turn it is
+		let text
+		if (newPlayer === 0){
+			text = "Your turn"
+		} else if (newPlayer === 1) {
+			//TODO use the enemy's name
+			text = "Enemy turn"
+		} else {
+			text = "Huh??? Received a weird changeTurn request: " + newPlayer
+		}
+
+		if (!this.currentlyReversingSwap){
+			this.createAnnouncement("general", text, 1500)
+		}
+
+		this.changeTurns(newPlayer)
+	}
+	changeTurns(newPlayer){
+		if (newPlayer === undefined){
+			newPlayer = [1, 0][this.activePlayerIndex]
+		}
+		if (newPlayer === 1){
+			this.activePlayerIndex = 1
+			this.activePlayer = "enemy"
+			this.inactivePlayerIndex = 0
+		} else {
+			this.activePlayerIndex = 0
+			this.activePlayer = "player"
+			this.inactivePlayerIndex = 1
+		}
+		let activeTags = this.trainerTags[this.activePlayerIndex]
+		let inactiveTags = this.trainerTags[this.inactivePlayerIndex]
+		activeTags.side.addClass("active")
+		inactiveTags.side.removeClass("active")
+	}
+
+	getOtherPlayer(trainerIndex){
+		return trainerIndex === 0 ? 1 : 0
+	}
+	getNextPlayer(){
+		//If the skip flag is set to true, the next turn goes to the other guy.
+		// if (this.currentlyEndingTurn === true){
+		// 	return this.getOtherPlayer(this.activePlayerIndex)
+		// }
+
+		//Increase initiative values
+		let initiatives = this.initiativeValues
+		let getExtraTurn = this.matchesInCombo.some(m => m.length >= 4)
+		if (getExtraTurn){
+			let playerIndex = this.activePlayerIndex
+			initiatives[playerIndex] += this.maxInitiative
+		} else {
+			let max = this.maxInitiative
+			let speed1 = this.trainers[0].activePokemon.getEffectiveStat("speed")
+			let speed2 = this.trainers[1].activePokemon.getEffectiveStat("speed")
+			let p1 = (max - initiatives[0]) / speed1
+			let p2 = (max - initiatives[1]) / speed2
+			p1 = Math.max(p1, 0)
+			p2 = Math.max(p2, 0)
+			if (p1 < p2){
+				//If p1 should go next
+				initiatives[0] += speed1 * p1
+				initiatives[1] += speed2 * p1
+			} else {
+				initiatives[0] += speed1 * p2
+				initiatives[1] += speed2 * p2
+			}
+
+			//Just a nice thing, if there's a tie, err in favor of the player.
+			if (initiatives[0] > max - 1){
+				initiatives[0] = max
+			}
+			if (initiatives[0] === initiatives[1]){
+				initiatives[1] -= 1
+			}
+		}
+
+		//Whoever has the higher initiative goes next. One of them *should* be exactly 100.
+		//It *should* be impossible for one of them to be > 100.
+		if (initiatives[0] >= initiatives[1]){
+			return 0
+		} else {
+			return 1
+		}
+
+		//If you matched 4 or more, you get an extra turn.
+		// let getExtraTurn = this.matchesInCombo.some(m => m.length >= 4)
+		// if (this.matchesInCombo.length > 0 && !getExtraTurn){
+		// 	return this.inactivePlayerIndex
+		// }
+		// this.createAnnouncement("general", "Extra turn!")
+		// return this.activePlayerIndex
 	}
 
 	showEndScreen(message){
@@ -1564,6 +1603,23 @@ class Round{
 				moveUseObj.info[effectIndex] = result
 				resolvePromise()
 			} break
+			case "change-tile-weight": {
+				let type = effect.tileType
+				let factor = params.factor
+				let add = params.add
+
+				let old = this.board.tileWeights[type]
+				if (add !== undefined){
+					this.board.tileWeights[type] += add
+				}
+				if (factor !== undefined){
+					this.board.tileWeights[type] *= factor
+				}
+				let change = this.board.tileWeights[type] - old
+
+				moveUseObj.info[effectIndex] = change
+				resolvePromise()
+			} break
 			case "select-random-tiles": {
 				let count = params.count ?? 0
 				let conditions = effect?.conditions ?? {}
@@ -1627,10 +1683,7 @@ class Round{
 			case "multiply-energy": {
 				let amounts = params.amounts ?? {}
 				let scale = params.scale ?? 1
-				let result = {}
-				for (let color in amounts){
-					result[color] = amounts[color] * scale
-				}
+				let result = multiplyEnergies(amounts, scale)
 				moveUseObj.info[effectIndex] = result
 				resolvePromise()
 			} break
@@ -1853,56 +1906,39 @@ class Round{
 		playSound(`cascade${cascade}`)
 	}
 
-	getTileEnergyValue(tile){
-		let base = tile.getEnergyValue()
-		let result = addEnergies(base, getEmptyEnergy())
-
-		let energyModifiers = [
-			"Energy Down"
-		]
-		let statusEffects = tile.statusEffects.filter(s => {
-			return energyModifiers.includes(s.name)
-		})
-
-		let trainer = this.trainers[this.activePlayerIndex]
-		for (let status of statusEffects){
-			let name = status.name
-			let sourceTrainer = status.sourceTrainer
-			if (name === "Energy Down" && trainer !== sourceTrainer){
-				let nonZeroKeys = Object.keys(result)
-				.filter(key => result[key] > 0)
-				if (nonZeroKeys.length){
-					let mod = getEmptyEnergy()
-					let key = randomChoice(nonZeroKeys)
-					mod[key] = -1
-					result = addEnergies(result, mod)
-				}
-			}
-		}
-
-		return result
-	}
-	
-	animateSwitchLocations(tile1, tile2, options){
-		options = options ?? {}
+	applyGravity(){
 		let now = Date.now()
-		let duration = 300
-
-		let animation1 = animTemplates["displace"](tile1, tile2.x, tile2.y, now, duration)
-		let animation2 = animTemplates["displace"](tile2, tile1.x, tile1.y, now, duration)
-		let animation = getEmptyAnimationBatch()
-		animation.batch.push(animation1)
-		animation.batch.push(animation2)
-		if (options.callback === undefined){
-			animation.callback = () => {
-				this.swap(tile1, tile2, options)
-			}
-		} else {
-			animation.callback = options.callback
+		//for each column, let's find all the tiles in that column.
+		let columns = []
+		for (let i = 0; i < this.board.width; i++){
+			columns[i] = this.board.getColumn(i)
 		}
-		
-		this.addAnimation(animation)
-		return animation
+		let animations = getEmptyAnimationBatch()
+		let newLocationMap = []
+		animations.info.round = this
+		animations.info.newLocationMap = newLocationMap
+		animations.callback = () => {
+			let round = animations.info.round
+			round.applyLocationChanges(animations.info.newLocationMap)
+		}
+		for (let column of columns){
+			let bottom = this.board.height - 1
+			for (let i = column.length - 1; i >= 0; i--){
+				let tile = column[i]
+				let spaceBelow = bottom - tile.y
+				if (spaceBelow > 0){
+					let anim = animTemplates["displace"](tile, tile.x, tile.y + spaceBelow, now, 300)
+					animations.batch.push(anim)
+					newLocationMap.push([tile, [tile.x, tile.y + spaceBelow]])
+				}
+				bottom = tile.y + spaceBelow - 1
+			}
+		}
+		animations.info.newLocationMap = newLocationMap
+		this.addAnimation(animations)
+		animations.promise = animations.promise.then(() => this.timeStep())
+
+		return animations.promise
 	}
 	shuffleBoard(){
 		let now = Date.now()
@@ -1931,6 +1967,32 @@ class Round{
 		return promise
 	}
 
+	animateSwitchLocations(tile1, tile2, options){
+		options = options ?? {}
+		let now = Date.now()
+		let duration = 300
+
+		let animation1 = animTemplates["displace"](tile1, tile2.x, tile2.y, now, duration)
+		let animation2 = animTemplates["displace"](tile2, tile1.x, tile1.y, now, duration)
+		let animation = getEmptyAnimationBatch()
+		animation.batch.push(animation1)
+		animation.batch.push(animation2)
+		if (options.callback === undefined){
+			animation.callback = () => {
+				this.swap(tile1, tile2, options)
+			}
+		} else {
+			animation.callback = options.callback
+		}
+		
+		this.addAnimation(animation)
+		return animation
+	}
+	moveToTopLayer(tile){
+		let index = this.board.contents.indexOf(tile)
+		this.board.contents.splice(index, 1)
+		this.board.contents.push(tile)
+	}
 	applySpriteHighlights(){
 		for (let tile of this.board.tilesOnScreen()){
 			tile.spriteHighlightTarget = 0
@@ -2019,7 +2081,6 @@ class Round{
 			}
 		}
 	}
-
 	handleMouseDown(){
 		if ($("#modal").hasClass("show")) return
 		let chosenTile = this.getChosenTile()
@@ -2057,7 +2118,6 @@ class Round{
 			}
 		}
 	}
-
 	handleMouseUp(){
 		if ($("#modal").hasClass("show")) return
 		if (this.selectedTile){
@@ -2065,12 +2125,6 @@ class Round{
 				this.deselectTile(this.selectedTile)
 			}
 		}
-	}
-
-	moveToTopLayer(tile){
-		let index = this.board.contents.indexOf(tile)
-		this.board.contents.splice(index, 1)
-		this.board.contents.push(tile)
 	}
 
 	updateStats(){
@@ -2115,6 +2169,44 @@ class Round{
 					tags.healthBar.css("width", newWidth)
 					let curP = Math.ceil(newWidth) / availableWidth
 					tags.healthBar.css("background-color", getHealthColor(curP))
+				}
+			})
+		}
+	}
+	updateInitiative(trainerIndex, animate, duration=300){
+		let tags = this.trainerTags[trainerIndex]
+		let initiative = this.initiativeValues[trainerIndex]
+		let max = this.maxInitiative
+		let p = initiative / max
+		let percent = (p * 100) + "%"
+		let text = formatNumber(initiative)
+		tags.initiativeBar.attr("data-width", percent)
+		let oldTarget = tags.initiativeBar.attr("data-target")
+		let needToAnimate = Number(oldTarget) !== initiative
+		tags.initiativeBar.attr("data-target", initiative)
+		if (!animate){
+			tags.initiativeCurrent.text(text)
+			tags.initiativeMax.text(max)
+			tags.initiativeBar.css("width", percent)
+		} else if (needToAnimate) {
+			let oldInitiative = parseInt(tags.initiativeCurrent.text())
+			animateTextCounter(oldInitiative, initiative, tags.initiativeCurrent, duration)
+
+			let oldMax = parseInt(tags.initiativeMax.text())
+			animateTextCounter(oldMax, max, tags.initiativeMax, duration)
+
+			let availableWidth = tags.initiative.width()
+			let curWidth = tags.initiativeBar.width()
+			let newWidth = p * availableWidth
+			let barFrom = {width: curWidth}
+			let barTo = {width: newWidth}
+			$(barFrom).animate(barTo, {
+				duration: duration,
+				step: function(){
+					tags.initiativeBar.css("width", this.width)
+				},
+				complete: function(){
+					tags.initiativeBar.css("width", newWidth)
 				}
 			})
 		}
@@ -2235,9 +2327,11 @@ class Round{
 	}
 
 	updateEverything(){
+		let animate = this.hasBegun
 		for (let i = 0; i < this.trainers.length; i++){
-			this.updateHealth(i, true)
-			this.updateEnergy(i, true)
+			this.updateHealth(i, animate)
+			this.updateInitiative(i, animate)
+			this.updateEnergy(i, animate)
 			this.updatePokemonMoves(i)
 			this.updatePokeballs(i)
 			this.updateStatusEffects(i)
@@ -2252,6 +2346,7 @@ class Round{
 		tags.sideTop = tags.side.children(".board-side-top")
 		tags.sideMiddle = tags.side.children(".board-side-middle")
 		tags.sideBottom = tags.side.children(".board-side-bottom")
+		tags.center = $("#board .board-center")
 
 		tags.health = tags.sideTop.children(".health-bar")
 		tags.health.css({opacity: "0"})
@@ -2261,6 +2356,16 @@ class Round{
 		tags.healthCurrent.text(0)
 		tags.healthMax = tags.healthText.children(".max-health")
 		tags.healthMax.text(0)
+		
+		tags.initiative = tags.center.children(`.initiatives`).children(`.initiative${classname}`)
+		tags.initiative.css({opacity: "0"})
+		tags.initiativeBar = tags.initiative.children(".bar")
+		tags.initiativeText = tags.initiative.children("span")
+		tags.initiativeCurrent = tags.initiativeText.children(".current-initiative")
+		tags.initiativeCurrent.text(0)
+		tags.initiativeMax = tags.initiativeText.children(".max-initiative")
+		tags.initiativeMax.text(this.maxInitiative)
+
 		tags.pokemonSection = tags.sideTop.children(".avatar-pokemon-section")
 		tags.pokemonName = tags.pokemonSection.children(".avatar-pokemon-name")
 		tags.pokemonName.text("")
@@ -2492,6 +2597,9 @@ class Round{
 			this.giveEnergy(energy, trainer, pokemon)
 		}
 
+		//Remove all iniative from the new pokemon
+		this.initiativeValues[trainerIndex] = 0
+
 		let cryUrl = pokemon.data.sounds.cry
 		if (cryUrl){
 			let cryName = `${pokemonId}-cry`
@@ -2534,6 +2642,9 @@ class Round{
 
 		let stats = getStatsHTML(pokemon)
 		html.append(stats)
+
+		let mastery = getMasteryHTML(pokemon)
+		html.append(mastery)
 
 		return html.wrap('<p/>').parent().html()
 	}
@@ -2708,6 +2819,36 @@ class Round{
 		}
 	}
 
+	calculateEXPGained(){
+		let enemyTrainer = this.trainers[1]
+		let defeatedPokemon = enemyTrainer.pokemon.filter(p => p.hp <= 0)
+		let yourPokemon = this.trainers[0].pokemon.filter(p => p.hp > 0)
+		let resultMap = {}
+		for (let yours of yourPokemon){
+			let totalEXP = 0
+			let youLevel = yours.level
+			for (let p of defeatedPokemon){
+				let base = p.data.expYield
+				let themLevel = p.level
+	
+				let exp = (base * themLevel * 0.2) *
+				Math.pow((2*themLevel + 10) / (themLevel + youLevel + 10), 2.5)
+				totalEXP += exp
+			}
+			resultMap[yours.uuid] = Math.round(totalEXP)
+		}
+		return resultMap
+	}
+	savePlayerPokemon(){
+		let saves = []
+		for (let i = 0; i < this.trainers[0].pokemon.length; i++){
+			let pokemon = this.trainers[0].pokemon[i]
+			if (!pokemon) continue
+			saves.push(savePokemon(pokemon))
+		}
+		return Promise.all(saves)
+	}
+
 	removeAllStatusEffects(){
 		for (let trainer of this.trainers){
 			for (let pokemon of trainer.pokemon){
@@ -2743,6 +2884,15 @@ class Board{
 		this.width = width
 		this.height = height
 		this.contents = []
+		this.tileTypes = tileTypes
+		this.tileWeights = {}
+		for (let type of this.tileTypes){
+			if (colors.includes(type)){
+				this.tileWeights[type] = 1
+			} else {
+				this.tileWeights[type] = 0
+			}
+		}
 
 		this.spriteTileW = 0
 		this.spriteTileH = 0
@@ -2775,7 +2925,7 @@ class Board{
 			//Create a new tile at the top of the column to fill this one's space
 			let column = this.getColumn(tile.x)
 			let top = Math.min(-1, column[0].y - 1)
-			let newTile = new Tile("random", tile.x, top)
+			let newTile = this.getNextTile(tile.x, top)
 			this.add(newTile)
 			return true
 		}
@@ -2791,7 +2941,7 @@ class Board{
 				let x = Math.floor(Math.random() * this.width)
 				let y = Math.floor(Math.random() * this.height)
 				let alreadyThere = this.contents.some(t => t.x === x && t.y === y)
-				let tile = new Tile("random", x, y)
+				let tile = this.getNextTile(x, y)
 				let wouldCreateMatch = this.wouldCreateMatch(tile, x, y)
 				if (!alreadyThere && !wouldCreateMatch){
 					this.add(tile)
@@ -2799,6 +2949,16 @@ class Board{
 				}
 			}
 		}
+	}
+
+	getNextTile(x, y){
+		let tileType = this.getRandomTileType()
+		let tile = new Tile(tileType, x, y)
+		return tile
+	}
+	getRandomTileType(){
+		let weights = this.tileTypes.map(t => this.tileWeights[t])
+		return weightedRandom(this.tileTypes, weights).item
 	}
 
 	findTileAt(x, y){
@@ -3070,23 +3230,7 @@ class Tile{
 	}
 
 	getEnergyValue(){
-		let energy = getEmptyEnergy()
-		switch (this.type){
-			case "red": energy.red += 1
-			break
-			case "orange": energy.orange += 1
-			break
-			case "yellow": energy.yellow += 1
-			break
-			case "green": energy.green += 1
-			break
-			case "blue": energy.blue += 1
-			break
-			case "purple": energy.purple += 1
-			break
-			default:
-				console.warn("You never said what ",this.type,"should do")
-		}
+		let energy = getTileEnergyValue(this)
 		return energy
 	}
 
@@ -3137,7 +3281,6 @@ function beginRound(trainerData){
 			options.activeMoves = data.activeMoves
 		}
 		let pokemon = new Pokemon(undefined, options.id, options)
-		console.log(pokemon)
 		return pokemon
 	})
 	let enemy = new Trainer("Enemy", enemyPokemon, trainerData)
@@ -3310,6 +3453,7 @@ function doEvolutionAnimation(elem, pokemon, evolution){
 
 function healAllPokemon(pokemonList){
 	playSound("healing")
+	let promises = []
 	pokemonList.forEach(p => {
 		//Full health
 		p.hp = p.maxhp
@@ -3322,5 +3466,8 @@ function healAllPokemon(pokemonList){
 		debuffs.forEach(s => {
 			p.statusEffects.splice(p.statusEffects.indexOf(s), 1)
 		})
+
+		promises.push(savePokemon(p))
 	})
+	return Promise.all(promises)
 }
