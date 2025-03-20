@@ -1,5 +1,24 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
+3/20 (10.6k lines):
+	- Dialogue can now have fancy styled text inside it.
+	- Every trainer is now capable of having their own custom text box.
+	- It's now possible for dialogue to start in the middle of a level.
+
+3/19 (10.5k lines):
+	- Fixed a bug with initiative values sometimes being teeny tiny decimals
+	- The game now preloads trainer sprites
+	- The PC now shows pokemon more consistently at different resolutions.
+	- Finally fixed the thing where you were allowed to start a level with no active pokemon.
+	- Added some more trainers along the path.
+	- Working on getting some dialogue working, so that there can be some kind of tutorial hopefully.
+	- Fixed a particularly mean bug where if you started a level while the first pokemon in your party had EXACTLY 0 hp, it would crash.
+
+3/18 (10100 lines):
+	- Fixed a bug where you could choose a second starter by just refreshing the game
+	- Removed another bug where you could put your only pokemon into the PC and then have no pokemon
+	- Working on making different kinds of trainers possible
+
 3/17 (10000 lines)!!!!!!!:
 	- You can now actually see the stats on that system I was programming yesterday
 	- Those stats do a little more, now, too. I need to re-re-balance a lot of things.

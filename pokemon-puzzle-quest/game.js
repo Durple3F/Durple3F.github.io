@@ -111,10 +111,11 @@ class Round{
 	roundStartAnimation(){
 		let resolvePromise
 		let promise = new Promise(resolve => resolvePromise = resolve)
+		$("#board").addClass("no-pointer")
 
 		let enemyTrainer = this.trainers[1]
 		let enemyData = enemyTrainer.data
-		let NPCData = NPCTrainerData[enemyData.name] ?? {}
+		let NPCData = getNPCDataFromTrainer(enemyData)
 		let p = Promise.resolve()
 		if (NPCData.type === "trainer"){
 			let trainerImage = NPCData.imageSources.trainer
@@ -189,6 +190,8 @@ class Round{
 			placement: "top"
 		})
 
+		$("#board").removeClass("no-pointer")
+
 		this.resetCurrentlySelecting()
 		this.updateEverything()
 		this.timeStep()
@@ -249,7 +252,7 @@ class Round{
 			let enemyTrainer = this.trainers[1]
 			let enemyActivePokemon = enemyTrainer.activePokemon
 			if (enemyActivePokemon.hp <= 0){
-				let pokemonCanSwapTo = enemyTrainer.pokemon.filter(p => p.hp > 0)
+				let pokemonCanSwapTo = getUsablePokemon(enemyTrainer.pokemon)
 				if (pokemonCanSwapTo.length > 0){
 					//If the enemy has pokemon they can swap to, they pick one and swap to it.
 					let pokemon = this.computerChoosePokemon(pokemonCanSwapTo, "swap")
@@ -275,7 +278,7 @@ class Round{
 			let playerTrainer = this.trainers[0]
 			let playerActivePokemon = playerTrainer.activePokemon
 			if (playerActivePokemon.hp <= 0){
-				let pokemonCanSwapTo = playerTrainer.pokemon.filter(p => p.hp > 0)
+				let pokemonCanSwapTo = getUsablePokemon(playerTrainer.pokemon)
 				if (pokemonCanSwapTo.length > 0){
 					choosePokemon("Choose a Pokemon to swap to.", pokemonCanSwapTo)
 					.then(pokemon => this.animateSendOutPokemon(0, pokemon[0]))
@@ -773,6 +776,8 @@ class Round{
 				initiatives[0] += speed1 * p2
 				initiatives[1] += speed2 * p2
 			}
+			initiatives[0] = Math.round(initiatives[0])
+			initiatives[1] = Math.round(initiatives[1])
 
 			//Just a nice thing, if there's a tie, err in favor of the player.
 			if (initiatives[0] > max - 1){
@@ -1429,6 +1434,18 @@ class Round{
 				console.warn("You never handled", targetName)
 			}
 		}
+
+		let index
+		if (effect.jumpTo){
+			if (typeof effect.jumpTo === "string"){
+				index = effects.findIndex(e => e.label === effect.jumpTo)
+			} else {
+				index = effect.jumpTo
+			}
+			if (!index && index !== 0){
+				console.warn("Move produced a strange jump index", moveUseObj)
+			}
+		}
 		
 		switch (effectType){
 			case "play-sound": {
@@ -1713,12 +1730,12 @@ class Round{
 				let test = moveUseObj.info[effectIndex - 2]
 				let against = moveUseObj.info[effectIndex - 1]
 				if (test < against){
-					moveUseObj.nextEffectIndex = effect.jumpTo
+					moveUseObj.nextEffectIndex = index
 				}
 				resolvePromise()
 			} break
 			case "jump": {
-				moveUseObj.nextEffectIndex = effect.jumpTo
+				moveUseObj.nextEffectIndex = index
 				resolvePromise()
 			} break
 			default:
@@ -1908,6 +1925,7 @@ class Round{
 
 	applyGravity(){
 		let now = Date.now()
+		let duration = 300
 		//for each column, let's find all the tiles in that column.
 		let columns = []
 		for (let i = 0; i < this.board.width; i++){
@@ -1927,7 +1945,7 @@ class Round{
 				let tile = column[i]
 				let spaceBelow = bottom - tile.y
 				if (spaceBelow > 0){
-					let anim = animTemplates["displace"](tile, tile.x, tile.y + spaceBelow, now, 300)
+					let anim = animTemplates["displace"](tile, tile.x, tile.y + spaceBelow, now, duration)
 					animations.batch.push(anim)
 					newLocationMap.push([tile, [tile.x, tile.y + spaceBelow]])
 				}
@@ -2674,7 +2692,7 @@ class Round{
 			})
 			tags.moves.length = 0
 			let moveListTag = tags.moveList
-			moveListTag.html("")
+			moveListTag.empty()
 
 			let pokemon = trainer.activePokemon
 			let pokemonIndex = trainer.pokemon.indexOf(pokemon)
@@ -2822,7 +2840,7 @@ class Round{
 	calculateEXPGained(){
 		let enemyTrainer = this.trainers[1]
 		let defeatedPokemon = enemyTrainer.pokemon.filter(p => p.hp <= 0)
-		let yourPokemon = this.trainers[0].pokemon.filter(p => p.hp > 0)
+		let yourPokemon = getUsablePokemon(this.trainers[0].pokemon)
 		let resultMap = {}
 		for (let yours of yourPokemon){
 			let totalEXP = 0
@@ -2870,7 +2888,7 @@ class Trainer{
 		this.pokemon = []
 		this.data = options ?? {}
 		pokemon.forEach(p => this.pokemon.push(p))
-		let usablePokemon = pokemon.filter(p => p.hp >= 0)
+		let usablePokemon = getUsablePokemon(pokemon)
 		this.activePokemon = usablePokemon[0]
 		if (!this.activePokemon){
 			console.warn("WEE OO WEE OO")

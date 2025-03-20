@@ -1,10 +1,19 @@
+let currentSceneInfo = {}
 function startScene(name, options){
 	let resolvePromise
 	let promise = new Promise(resolve => resolvePromise = resolve)
 	let gameTag = $("#game")
-	gameTag.html("")
+	gameTag.empty()
+
+	currentSceneInfo.name = name
+	currentSceneInfo.options = options
 
 	switch (name){
+		case "fight": {
+			//This is all handled by the level effects.
+			//This one's just here in case I need it later.
+			gameTag.fadeOut()
+		} break
 		case "choose-starter": {
 			changeMusic("Route 201 (Day)")
 
@@ -184,13 +193,10 @@ function startScene(name, options){
 			
 			listTag.append(pokemonCenterBtn)
 
-			const getLevels = name => {
+			const displayLevels = levelList => {
 				routeTag.html("")
-				let routeLevels = levelData.filter(level => {
-					return level.category === name
-				})
 				let levelButtons = []
-				routeLevels.forEach(level => {
+				levelList.forEach(level => {
 					let btn = getLevelButtonHtml(level)
 					btn.popover({
 						placement: "top",
@@ -244,8 +250,14 @@ function startScene(name, options){
 				return content
 			}
 			const confirmChoice = level => {
-				$(".level-button").popover("hide")
-				resolvePromise(level.id)
+				let usablePokemon = getUsablePokemon(playerActivePokemon)
+				if (usablePokemon.length){
+					$(".level-button").popover("hide")
+					resolvePromise(level.id)
+				} else {
+					let message = getLocaleString("error-no-usable-pokemon", lang)
+					createAnnouncement("general", message)
+				}
 			}
 			const chooseLevel = event => {
 				let target = $(event.currentTarget)
@@ -259,19 +271,16 @@ function startScene(name, options){
 					
 				}
 			}
-			getLevels(routeName)
+			let routeLevels = getLevelsInCategory(routeName)
+			displayLevels(routeLevels)
+
+			let NPCDatas = getTrainerClassesFromLevelCategory(routeName)
+			NPCDatas.forEach(data => {
+				loadTrainerClassSprites(data)
+			})
 
 			gameTag.append(listTag)
 			gameTag.append(routeTag)
-
-			let routeButtons = listTag.find(".route-button")
-			routeButtons.each(function(index, element){
-				let elem = $(element)
-				let width = elem.width()
-				let height = elem.height()
-				let fontSize = height / 3
-				$(element).css("font-size", `${fontSize}px`)
-			})
 
 			promise = promise.then(levelID => beginLevel(levelID))
 		} break
@@ -339,12 +348,17 @@ function startScene(name, options){
 				let pokemon = new Pokemon(p.name, p.pokemonName, p)
 				let images = pokemon.data.imageSources
 				let source = images.home ?? images.large
+
+				let size = getRealBoxSize()
+				let left = pokemon.pcBoxX * size.width + size.offsetX
+				let top = pokemon.pcBoxY * size.height + size.offsetY
+
 				let img = $(`<img class='pokemon-image'>`)
 				img.attr("src", source)
 				img.attr("data-pokemon-id", pokemon.uuid)
 				img.css({
-					top: (pokemon.pcBoxY * 100) + "%",
-					left: (pokemon.pcBoxX * 100) + "%",
+					top: top + "px",
+					left: left + "px",
 					height: "10%"
 				})
 				pcBox.append(img)
@@ -428,6 +442,36 @@ function startScene(name, options){
 				}
 			}
 			prevBoxBtn.click(prevPCBox)
+
+			const getRealBoxSize = () => {
+				let boxBackgroundPixels = [156, 116]
+				let bgWidth = boxBackgroundPixels[0]
+				let bgHeight = boxBackgroundPixels[1]
+				let boxWidth = $(pcBox[0]).width()
+				let boxHeight = $(pcBox[0]).height()
+				let screenRatio = boxWidth / boxHeight
+				let boxRatio = bgWidth / bgHeight
+				let realBoxWidth, realBoxHeight, realBoxOffsetX, realBoxOffsetY
+				if (screenRatio < boxRatio){
+					realBoxHeight = boxWidth / bgWidth * bgHeight
+					realBoxOffsetY = (boxHeight - realBoxHeight) * 0.5
+					realBoxWidth = boxWidth
+					realBoxOffsetX = 0
+				} else {
+					realBoxWidth = boxHeight / bgHeight * bgWidth
+					realBoxOffsetX = (boxWidth - realBoxWidth) * 0.5
+					realBoxHeight = boxHeight
+					realBoxOffsetY = 0
+				}
+				let result = {
+					width: realBoxWidth,
+					height: realBoxHeight,
+					offsetX: realBoxOffsetX,
+					offsetY: realBoxOffsetY
+				}
+				console.log(boxRatio, screenRatio, result)
+				return result
+			}
 
 			let holdInterval
 			let heldPokemon = null
@@ -513,38 +557,61 @@ function startScene(name, options){
 				//Were we hovering over an active pokemon slot?
 				let hovered = document.elementsFromPoint(mouse.x, mouse.y)
 				let hoveredActiveBox = [...hovered].find(elem => $(elem).hasClass("active-pokemon-box"))
-				let hoveredBox = [...hovered].find(elem => elem === pcBox[0])
+				// let hoveredBox = [...hovered].find(elem => elem === pcBox[0])
 				if (hoveredActiveBox){
 					let index = $(hoveredActiveBox).attr("data-index")
 					if (index){
 						swapActivePokemon(heldPokemon, parseInt(index))
 					}
-				} else if (hoveredBox){
+				}
+				//Put the pokemon in the box instead
+				else {
 					let offset = pcBox.offset()
 					let left = mouse.x - offset.left
 					let top = mouse.y - offset.top
-					left = left / pcBox.width()
-					top = top / pcBox.height()
-					heldPokemon.pcBox = currentBox.uuid
-					heldPokemon.pcBoxX = left
-					heldPokemon.pcBoxY = top
-					
-					let boxIndex = currentBoxPokemon.indexOf(heldPokemon)
-					if (boxIndex !== -1){
-						currentBoxPokemon.splice(boxIndex, 1)
-					}
+					let realBoxSize = getRealBoxSize()
+					left -= realBoxSize.offsetX
+					top -= realBoxSize.offsetY
+					left = left / realBoxSize.width
+					top = top / realBoxSize.height
+					let tooLeft = left < 0.05
+					let tooTop = top < 0.05
+					let tooRight = left > 0.95
+					let tooBottom = top > 0.95
+					if (tooLeft) left = 0.05
+					if (tooTop) top = 0.05
+					if (tooRight) left = 0.95
+					if (tooBottom) top = 0.95
 
-					let index = playerActivePokemon.indexOf(heldPokemon)
-					if (index !== -1){
-						playerActivePokemon[index] = undefined
+					//Don't let the player remove their last pokemon
+					let onlyOnePokemon = playerActivePokemon.filter(p => p).length === 1
+					let active = playerActivePokemon.includes(heldPokemon)
+					let satisfiesActiveRule = !onlyOnePokemon || !active
+					console.log(left, top)
+
+					if (satisfiesActiveRule){
+						heldPokemon.pcBox = currentBox.uuid
+						heldPokemon.pcBoxX = left
+						heldPokemon.pcBoxY = top
+						
+						let boxIndex = currentBoxPokemon.indexOf(heldPokemon)
+						if (boxIndex !== -1){
+							currentBoxPokemon.splice(boxIndex, 1)
+						}
+
+						let index = playerActivePokemon.indexOf(heldPokemon)
+						if (index !== -1){
+							playerActivePokemon[index] = undefined
+						}
+					} else {
+						let message = getLocaleString("error-cant-remove-last-pokemon", lang)
+						createAnnouncement("general", message)
 					}
 
 					currentBoxPokemon.push(heldPokemon)
-					savePokemon(heldPokemon)
-					.then(() => loadBox(pcBoxData.indexOf(currentBox)))
-				} else {
-					loadBox(pcBoxData.indexOf(currentBox))
 				}
+				savePokemon(heldPokemon)
+				.then(() => loadBox(pcBoxData.indexOf(currentBox)))
 				heldPokemonTag = null
 				heldPokemon = null
 				updateBoxes()
@@ -555,6 +622,11 @@ function startScene(name, options){
 				playerActivePokemon[index] = p1
 				if (p1Index !== -1){
 					playerActivePokemon[p1Index] = undefined
+				}
+				if (p2){
+					p2.pcBox = p1.pcBox
+					p2.pcBoxX = p1.pcBoxX
+					p2.pcBoxY = p1.pcBoxY
 				}
 				p1.pcBox = null
 				p1.pcBoxX = null
@@ -595,14 +667,23 @@ function changeScene(name, options){
 	let promise = new Promise(resolve => resolvePromise = resolve)
 	let gameTag = $("#game")
 	$(".popover").fadeOut().queue(function(){$(this).remove()})
-	let toHide = gameTag.css("display") === "none" ? $("#board") : gameTag
 
-	toHide.fadeOut(() => {
-		gameTag.html("")
-		gameTag.removeClass("choosing-starter")
+	console.log(currentSceneInfo, name, options)
+	if (name !== currentSceneInfo.name){
+		let toHide = gameTag.css("display") === "none" ? $("#board") : gameTag
+		console.log(toHide)
+
+		toHide.fadeOut(() => {
+			gameTag.empty()
+			gameTag.removeClass("choosing-starter")
+			resolvePromise()
+			gameTag.fadeIn()
+		})
+	} else {
+		gameTag.empty()
 		resolvePromise()
-		gameTag.fadeIn()
-	})
+	}
+	
 	if (name){
 		promise = promise.then(() => startScene(name, options))
 	}
@@ -671,8 +752,6 @@ function beginLevel(levelID){
 	if (level.music){
 		changeMusic(level.music)
 	}
-	$("#game").fadeOut()
-	$("#board").fadeIn()
 
 	currentLevelProgress = {
 		id: levelID,
@@ -693,13 +772,17 @@ function beginLevel(levelID){
 			return info[i] === "lose" && effect.type === "fight"
 		})
 		
-		if (lostFights.length){
+		let forgiving = currentLevelProgress.level.forgiving
+		if (lostFights.length && !forgiving){
 			levelResult = "lose"
+		} else if (lostFights.length && forgiving) {
+			//Maybe one day, add an extra challenge to go back and finish the level without losing once
+			levelResult = "win"
 		} else {
 			levelResult = "win"
 		}
 		
-		if (levelResult === "lose" || val === "lose"){
+		if (levelResult === "lose"){
 			console.log("You lose :(")
 			healAllPokemon(playerActivePokemon)
 		} else {
@@ -727,8 +810,24 @@ function advanceCurrentLevel(){
 		return promise
 	}
 
+	let index
+	if (effect.jumpTo){
+		if (typeof effect.jumpTo === "string"){
+			index = effects.findIndex(e => e.label === effect.jumpTo)
+		} else {
+			index = effect.jumpTo
+		}
+	}
+
 	switch (effect.type){
 		case "fight": {
+			changeScene("fight")
+			let displayed = $("#board").css("display") !== "none"
+			if (!displayed){
+				$("#game").fadeOut()
+				$("#board").fadeIn()
+			}
+
 			let trainerIndex = effect.trainer ?? 0
 			let trainerData = level.trainers[trainerIndex]
 			beginRound(trainerData)
@@ -751,6 +850,15 @@ function advanceCurrentLevel(){
 				
 			}
 		} break
+		case "dialogue": {
+			let dialogueName = effect.source
+			let dialogue = getLocaleString(dialogueName, lang, ["dialogue"])
+			beginDialogue(dialogue)
+			.then(() => {
+				console.log("Ended dialogue!")
+				resolvePromise()
+			})
+		} break
 		case "random-number": {
 			let min = effect.min ?? 0
 			let max = effect.max ?? 10
@@ -765,6 +873,17 @@ function advanceCurrentLevel(){
 		case "load-value": {
 			currentLevelProgress.info[effectIndex] = effect.value
 			resolvePromise()
+		} break
+		case "jump-if-lost": {
+			let info = currentLevelProgress.info
+			//If you're marked as losing a "fight" effect, then you lose the whole level.
+			let effects = currentLevelProgress.effects
+			let lostFights = effects.filter((effect, i) => {
+				return info[i] === "lose" && effect.type === "fight"
+			})
+			if (lostFights.length){
+				currentLevelProgress.nextEffectIndex = index
+			}
 		} break
 		case "jump-if-equal": {
 			let test = currentLevelProgress.info[effectIndex - 2]
@@ -783,19 +902,14 @@ function advanceCurrentLevel(){
 		case "jump-if-less-than": {
 			let test = currentLevelProgress.info[effectIndex - 2]
 			let against = currentLevelProgress.info[effectIndex - 1]
-			let index
-			if (typeof effect.jumpTo === "string"){
-				index = effects.findIndex(e => e.label === effect.jumpTo)
-			} else {
-				index = effect.jumpTo
-			}
+			
 			if (test < against){
 				currentLevelProgress.nextEffectIndex = index
 			}
 			resolvePromise()
 		} break
 		case "jump": {
-			currentLevelProgress.nextEffectIndex = effect.jumpTo
+			currentLevelProgress.nextEffectIndex = index
 			resolvePromise()
 		} break
 		default:
@@ -1039,7 +1153,8 @@ function getMasteryHTML(pokemon, abbreviate=true){
 			tag.append(left)
 
 			if (!abbreviate){
-				let name = `${type} Affinity`
+				let typeName = getTypeFromTileType(type)
+				let name = `${typeName} Affinity`
 				let nameTag = $("<span class='mastery-name'></span>")
 				nameTag.text(name)
 				left.append(nameTag)

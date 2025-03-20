@@ -185,6 +185,7 @@ body {
 	cursor: pointer;
 	background-color: var(--move-unusable);
 	padding: 0.35em 0.5em;
+	font-size: 3vh;
 	border-top-right-radius: 25%;
 	transition: background-color 0.25s;
 }
@@ -208,6 +209,7 @@ body {
   justify-content: center;
   align-items: center;
   position: relative;
+	font-size: 1.3em;
 }
 
 .route-screen {
@@ -1007,6 +1009,148 @@ body {
 	max-height: 100%;
 }
 
+#dialogue,
+#dialogue > .speakers,
+#dialogue > .nameplate {
+	position: absolute;
+	top: 0; left: 0;
+	width: 100%; height: 100%;
+}
+#dialogue > .text-box {
+	position: absolute;
+	background: linear-gradient(-30deg, #00477d80 0%, #004ea8a0 100%);
+	/* background: radial-gradient(ellipse at center, #f3be43 50%, #3b3838 100%); */
+	left: 50%;
+	width: 80%; height: 40%;
+	max-width: 80em; max-height: 20em;
+	transform: translate(-50%, 0);
+	bottom: 10vh;
+	border-radius: 50%;
+	z-index: 10;
+}
+#dialogue > .text-box > .text-background {
+	position: absolute;
+	top: 50%;	left: 50%;
+	width: calc(100% - 1rem); height: calc(100% - 1rem);
+	transform: translate(-50%, -50%);
+	/* background-color: #ececec; */
+	background: radial-gradient(at bottom, #aeaeae, white);
+	border-radius: 50%;
+	display: flex;
+	/* justify-content: center; */
+	/* align-items: center; */
+	mask-image: radial-gradient(ellipse at center, black 67%, transparent 71%);
+	mask-size: cover;
+	mask-origin: center;
+}
+#dialogue > .text-box > .text {
+	position: absolute;
+	top: 50%;	left: 50%;
+	width: calc(100% - 1rem); height: calc(100% - 1rem);
+	transform: translate(-50%, -50%);
+	padding: min(4vh, 1.2em) min(5em, 15vw);
+	/* display: flex; */
+	/* justify-content: center; */
+	/* align-items: center; */
+	z-index: 12;
+	font-size: min(5vh, 2em, 5vw);
+	filter: drop-shadow(0.05em 0em 0.1em #ececec)
+	drop-shadow(-0.05em 0em 0.1em #ececec)
+	drop-shadow(0em 0.05em 0.1em #ececec)
+	drop-shadow(0em -0.05em 0.1em #ececec);
+}
+#dialogue > .text-box > .text {
+	color: black;
+}
+#dialogue > .text-box > .text > span {
+	background-image: linear-gradient(4deg, #222, #000);
+	background-clip: text;
+	color: transparent;
+}
+#dialogue > .text-box > .text .word {
+	display: inline-block;
+}
+#dialogue > .text-box > .text-continue {
+	position: absolute;
+	top: 70%;	left: 85%;
+	transform: translate(-50%, -50%);
+	font-size: min(7vh, 2.4em, 7vw);
+	background-image: radial-gradient(black, black);
+	background-clip: text;
+	color: transparent;
+}
+#dialogue > .text-box > .text-continue > .bi {
+	animation-name: vertical-bob;
+	animation-duration: 0.5s;
+	animation-iteration-count: infinite;
+	display: inline-block;
+}
+#dialogue > .text-box > .nameplate {
+	z-index: 11;
+	position: absolute;
+	top: -4%;
+	left: 28%;
+	transform: translate(-50%, -50%);
+}
+#dialogue > .text-box > .nameplate > .text-background {
+	position: absolute;
+	background-color: rgb(75, 117, 232);
+	font-size: min(4vh, 2em);
+	min-width: calc(10em + 0.3em);
+	min-height: calc(min(8vh, 4rem) + 0.3em);
+	transform: translate(-50%, -50%);
+	border-radius: 0.5em;
+}
+#dialogue > .text-box > .nameplate > .text-background-2 {
+	position: absolute;
+	font-size: min(4vh, 2em);
+	background-color: rgb(0, 68, 255);
+	background-image: repeating-linear-gradient(
+		-2deg,
+		transparent, transparent 0.24em, rgba(125, 143, 247, 0.266) 0.32em, transparent 0.4em
+	);
+	min-width: 10em;
+	min-height: min(8vh, 4rem);
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transform: translate(-50%, -50%);
+	border-radius: 0.5em;
+}
+#dialogue > .text-box > .nameplate > .text {
+	position: absolute;
+	font-size: min(4vh, 2em);
+	min-width: 10em;
+	min-height: min(8vh, 4rem);
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transform: translate(-50%, -50%);
+	border-radius: 0.5em;
+	background: linear-gradient(-200deg, white 40%, skyblue 60%);
+	background-clip: text;
+	color: transparent;
+	font-weight: bolder;
+}
+#dialogue > .speakers {
+	image-rendering: pixelated;
+}
+#dialogue > .speakers > .speaker {
+	position: absolute;
+	height: 50vh; max-height: 25em;
+	bottom: min(38vh, 22em); left: 56vw;
+}
+#dialogue > .speakers > .speaker > img {
+	height: 100%;
+	pointer-events: none;
+}
+
+.no-pointer {
+	pointer-events: none;
+}
+
 @keyframes bounce {
 	0% {
 		transform: translate(0, 0);
@@ -1018,6 +1162,20 @@ body {
 		transform: translate(0, -20%);
 	}
 	50.1% {
+		transform: translate(0, 0);
+	}
+}
+@keyframes vertical-bob {
+	0% {
+		transform: translate(0, 0);
+	}
+	5% {
+		transform: translate(0, -10%);
+	}
+	50% {
+		transform: translate(0, -10%);
+	}
+	55% {
 		transform: translate(0, 0);
 	}
 }

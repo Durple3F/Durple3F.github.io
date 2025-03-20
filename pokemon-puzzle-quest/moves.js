@@ -89,7 +89,8 @@ const pokemonMoveData = {
 		bypassAccuracyChecks: true,
 		rechargeTurns: 1,
 		energy: {
-			purple: 6
+			purple: 8,
+			blue: 4
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Disarming Voice.mp3"
@@ -98,9 +99,10 @@ const pokemonMoveData = {
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
 			{ type: "random-number", min: 1, max: 10 },
-			{ type: "load-number", value: 0 },
-			{ type: "jump-if-less-than", jumpTo: Infinity },
-			{ type: "apply-status-effect", statusEffect: "confused", target: "opponent" }
+			{ type: "load-number", value: 6 },
+			{ type: "jump-if-less-than", jumpTo: "end" },
+			{ type: "apply-status-effect", statusEffect: "confused", target: "opponent" },
+			{ type: "end-turn", label: "end" }
 		],
 	},
 	"Ember": {

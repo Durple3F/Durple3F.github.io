@@ -164,7 +164,12 @@ function handleSpriteLoad(){
 		}
 	}
 }
-function loadSprite(name, url, batch){
+function loadSprite(name, url){
+	if (name in sprites.images){
+		if (sprites.images[name].complete){
+			return Promise.resolve()
+		}
+	}
 	let img = new Image()
 	img.src = url
 	sprites.images[name] = img
@@ -366,9 +371,9 @@ function getRandomTileType(){
 
 function clearModal(modal){
 	modal.removeClass().addClass("modal").addClass("fade")
-	modal.find(".modal-header > .modal-title").html("")
-	modal.find(".modal-body").html("")
-	modal.find(".modal-footer").html("")
+	modal.find(".modal-header > .modal-title").empty()
+	modal.find(".modal-body").empty()
+	modal.find(".modal-footer").empty()
 	modal.off("hidden.bs.modal")
 }
 
@@ -773,6 +778,9 @@ function openChangelog(){
 			body.html("Error getting changelog :/")
 		}
 	})
+	modal.on("hidden.bs.modal", () => {
+		resolvePromise()
+	})
 
 	return promise
 }
@@ -819,7 +827,8 @@ function continueGame(){
 		})
 	})
 	.then(() => {
-		if (playerActivePokemon.length === 0){
+		let noPokemon = playerActivePokemon.length === 0
+		if (!playerSaveInfo["started-game"] && noPokemon){
 			return startScene("choose-starter")
 		} else {
 			return Promise.resolve()

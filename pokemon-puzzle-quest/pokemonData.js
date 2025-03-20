@@ -286,6 +286,20 @@ function getStatName(stat){
 	}
 }
 
+function getTypeFromTileType(type){
+	switch (type){
+		case "red": return "Fire"
+		case "orange": return "Fighting"
+		case "yellow": return "Electric"
+		case "green": return "Grass"
+		case "blue": return "Water"
+		case "purple": return "Psychic"
+		case "black": return "Dark"
+		default:
+			console.warn("What type is ", type)
+	}
+}
+
 function checkIfPokemonMeetsRequirements(pokemon, req){
 	if (!req) return true
 	if (req.type === "level"){
@@ -351,4 +365,8 @@ function getAllStatusSprites(){
 		}
 	}
 	return arr
+}
+
+function getUsablePokemon(pokemonList){
+	return pokemonList.filter(p => p.hp > 0)
 }

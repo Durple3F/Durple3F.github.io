@@ -1,6 +1,23 @@
 {
 	"Route 1-1-description": "Rival Battle",
 	"initiative-tutorial": "Initiative<br>Each turn, both Pokemon gain Initiative based on their speed stats. When a player matches 4 or more tiles in a row, they get a free turn.",
+	"error-cant-remove-last-pokemon": "You can't put your only Pokemon into the PC.",
+	"error-no-usable-pokemon": "All your Pokemon are currently fainted.",
+	"dialogue": {
+		"initial-hau-dialogue": [
+			{ "type": "get-speaker", "name": "Hau", "class": "Hau" },
+			{ "type": "text", "speaker": "Hau", "text": "Hey, hey! $@blue|Welcome!@$" },
+			{ "type": "transform-speaker", "speaker": "Hau", "transform": "rotate(10deg)", "duration": 300, "waitDuration": 150 },
+			{ "type": "text", "speaker": "Hau", "text": "Thanks for tryin' this little game. Not to go tooting horns, but this took A LOT of effort." },
+			{ "type": "transform-speaker", "speaker": "Hau", "transform": "rotate(0deg)", "duration": 500, "waitDuration": 150 },
+			{ "type": "load-player-info", "key": "chosen-starter" },
+			{ "type": "text", "speaker": "Hau", "text": "That's a nice %c-pname% you got there! Let's see how they are in a friendly match!", "values": [-1, -1] }
+		],
+		"route-1-2-dialogue": [
+			{ "type": "get-speaker", "name": "Jimmy", "class": "Youngster-Gen7" },
+			{ "type": "text", "speaker": "Jimmy", "text": "Hey, you! Check out my cool dog!" }
+		]
+	},
 	"pokemon": {
 		"Rattata-Alola": {
 			"name": "Rattata-Alola"
@@ -66,7 +83,7 @@
 		},
 		"Disarming Voice": {
 			"name": "Disarming Voice",
-			"description": "Deals damage. Has a 50% chance to confuse the opponent.",
+			"description": "Deals damage. Has a 50% chance to confuse the opponent. Ends the turn.",
 			"shortDescription": "Deals light damage and may confuse"
 		},
 		"Ember": {

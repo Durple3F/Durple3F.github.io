@@ -77,8 +77,6 @@ class Pokemon{
 		this.statusEffects = []
 
 		//You can only have 4 moves active at once
-		//TODO make the whole system for selecting which moves are active
-		//For now it's just all of them
 		this.activeMoves = []
 		if (options.activeMoves){
 			for (let name of options.activeMoves){
@@ -253,8 +251,10 @@ class Pokemon{
 			if (!this.movesUnlockedMap[i] && v){
 				changedIndexes.unlocked.push(i)
 
-				if (this.activeMoves.length < 4){
-					let move = this.moves[i]
+				let move = this.moves[i]
+				let movesCapped = this.activeMoves.length >= 4
+				let alreadyHasMove = this.activeMoves.includes(move)
+				if (!movesCapped && !alreadyHasMove){
 					this.activeMoves.push(move)
 				}
 			}
@@ -334,7 +334,6 @@ class Pokemon{
 		} else {
 			masteryVal = Math.floor(masteryVal)
 		}
-		console.log(masteryVal)
 		energy = multiplyEnergies(energy, masteryVal)
 		return energy
 	}

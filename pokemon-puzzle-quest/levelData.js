@@ -1,7 +1,7 @@
 const songData = {
-	"Route 201 (Day)": {source: "src/audio/songs/route201-2.mp3"},
-	"SM Trainer Battle": {source: "src/audio/songs/sm trainer battle.mp3"},
-	"SM Wild Pokemon Battle": {source: "src/audio/songs/sm wild pokemon battle.mp3"},
+	"Route 201 (Day)": { source: "src/audio/songs/route201-2.mp3" },
+	"SM Trainer Battle": { source: "src/audio/songs/sm trainer battle.mp3" },
+	"SM Wild Pokemon Battle": { source: "src/audio/songs/sm wild pokemon battle.mp3" },
 }
 
 const boxThemeData = {
@@ -12,22 +12,65 @@ const boxThemeData = {
 	}
 }
 
+const defaultDialogueStyle = {
+	textBoxBackground1: "linear-gradient(-30deg, #00477d80 0%, #004ea8a0 100%)",
+	textBoxBackground2: "radial-gradient(at bottom, #aeaeae, white)",
+	textBoxMask: "radial-gradient(ellipse at center, black 67%, transparent 71%)",
+	textBoxFilter: `drop-shadow(0.05em 0em 0.1em #ececec)
+				drop-shadow(-0.05em 0em 0.1em #ececec)
+				drop-shadow(0em 0.05em 0.1em #ececec)
+				drop-shadow(0em -0.05em 0.1em #ececec)`,
+	textBoxTextBackground: "linear-gradient(4deg, #222, #000)",
+	textBoxTextContinueBackground: "radial-gradient(black, black)",
+}
 const NPCTrainerData = {
 	"Hau": {
+		name: "Hau",
 		type: "trainer",
 		imageSources: {
 			trainer: "src/img/trainers/hau.png"
+		},
+		textStyle: {
+			textBoxBackground1: "radial-gradient(ellipse at center,rgb(243, 183, 42) 50%, #3b3838 100%)",
+			textBoxBackground2: "radial-gradient(at bottom,rgb(20, 19, 19),rgb(42, 37, 28))",
+			textBoxMask: "radial-gradient(ellipse at center, black 68%, transparent 72%)",
+			textBoxFilter: `drop-shadow(0.05em 0em 0.1em #ececec20)
+			drop-shadow(-0.05em 0em 0.1em #ececec20)
+			drop-shadow(0em 0.05em 0.1em #ececec20)
+			drop-shadow(0em -0.05em 0.1em #ececec20)`,
+			textBoxTextBackground: "linear-gradient(4deg, #bbb, #fff)",
+			textBoxTextContinueBackground: "linear-gradient(4deg, #bbb, #fff)",
 		}
+	},
+	"Youngster-Gen7": {
+		name: "Youngster",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/youngster-gen7.png"
+		}
+	},
+	"Lass-Gen7": {
+		name: "Lass",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/lass-gen7.png"
+		}
+	},
+}
+for (let trainerName in NPCTrainerData) {
+	let data = NPCTrainerData[trainerName]
+	if (!data.id) {
+		data.id = trainerName
 	}
 }
 
 const trainerAnimations = {
-	"default-throw-pokeball": function(tag){
+	"default-throw-pokeball": function (tag) {
 		let promise = new Promise(resolve => {
 			let resolved = false
 			let animation = p => {
 				let rotate = 0
-				if (p < 0.4){
+				if (p < 0.4) {
 					let partP = (p - 0) / (0.4 - 0)
 					rotate = interpolate(0, 30, bezierEase(partP))
 				} else if (p < 0.7) {
@@ -40,19 +83,19 @@ const trainerAnimations = {
 				tag.css({
 					transform: "rotate(" + rotate + "deg)"
 				})
-				if (p > 0.5 && !resolved){
+				if (p > 0.5 && !resolved) {
 					resolve()
 					resolved = true
 				}
 			}
 			delay(500).then(() => {
-				$({val: 0}).animate({val: 1}, {
+				$({ val: 0 }).animate({ val: 1 }, {
 					duration: 800,
 					easing: "linear",
-					step: function(){
+					step: function () {
 						animation(this.val)
 					},
-					complete: function(){
+					complete: function () {
 						animation(1)
 					}
 				})
@@ -74,7 +117,7 @@ const levelData = [
 		id: "Route 1-1",
 		category: "Route 1",
 		name: "Rival Battle 1",
-		// description: "Route 1-1-description",
+		forgiving: true,
 		icon: "1",
 		music: "SM Trainer Battle",
 		trainers: [
@@ -107,18 +150,19 @@ const levelData = [
 			}
 		],
 		effects: [
-			{type: "load-player-info", key: "chosen-starter"},
-			{type: "load-value", value: "Rowlet"},
-			{type: "jump-if-equal", jumpTo: "Litten"},
-			{type: "load-player-info", key: "chosen-starter"},
-			{type: "load-value", value: "Litten"},
-			{type: "jump-if-equal", jumpTo: "Popplio"},
-			{type: "fight", trainer: 1, label: "Rowlet"},
-			{type: "jump", jumpTo: Infinity},
-			{type: "fight", trainer: 2, label: "Litten"},
-			{type: "jump", jumpTo: Infinity},
-			{type: "fight", trainer: 0, label: "Popplio"},
-			{type: "jump", jumpTo: Infinity},
+			{ type: "dialogue", trainer: 0, source: "initial-hau-dialogue" },
+			{ type: "load-player-info", key: "chosen-starter" },
+			{ type: "load-value", value: "Rowlet" },
+			{ type: "jump-if-equal", jumpTo: "Litten" },
+			{ type: "load-player-info", key: "chosen-starter" },
+			{ type: "load-value", value: "Litten" },
+			{ type: "jump-if-equal", jumpTo: "Popplio" },
+			{ type: "fight", trainer: 1, label: "Rowlet" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "fight", trainer: 2, label: "Litten" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "fight", trainer: 0, label: "Popplio" },
+			{ type: "jump", jumpTo: Infinity },
 		]
 	},
 	{
@@ -137,10 +181,6 @@ const levelData = [
 					{
 						id: "Caterpie",
 						levelMin: 2, levelMax: 3
-					},
-					{
-						id: "Ledyba",
-						levelMin: 2, levelMax: 3
 					}
 				]
 			},
@@ -155,23 +195,33 @@ const levelData = [
 						levelMin: 2, levelMax: 3
 					},
 					{
-						id: "Ledyba",
-						levelMin: 2, levelMax: 3
-					},
-					{
 						id: "Pichu",
 						levelMin: 3, levelMax: 5
 					},
 				]
 			},
+			{
+				name: "Jimmy",
+				class: "Youngster-Gen7",
+				pokemon: [
+					{
+						id: "Rattata-Alola",
+						level: 3
+					}
+				]
+			},
 		],
 		effects: [
-			{type: "random-number", min: 1, max: 10},
-			{type: "load-value", value: 10},
-			{type: "jump-if-less-than", jumpTo: "Normal"},
-			{type: "fight", trainer: 1, label: "Pichu"},
-			{type: "jump", jumpTo: Infinity},
-			{type: "fight", trainer: 0, label: "Normal"}
+			{ type: "random-number", min: 1, max: 10 },
+			{ type: "load-value", value: 10 },
+			{ type: "jump-if-less-than", jumpTo: "Normal" },
+			{ type: "fight", trainer: 1, label: "Pichu" },
+			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "jump", jumpTo: "Jimmy" },
+			{ type: "fight", trainer: 0, label: "Normal" },
+			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "dialogue", trainer: 0, source: "route-1-2-dialogue", label: "Jimmy" },
+			{ type: "fight", trainer: 2}
 		]
 	},
 	{
@@ -188,12 +238,8 @@ const levelData = [
 						levelMin: 3, levelMax: 4
 					},
 					{
-						id: "Yungoos",
-						levelMin: 3, levelMax: 4
-					},
-					{
-						id: "Rattata-Alola",
-						levelMin: 3, levelMax: 4
+						id: "Ledyba",
+						levelMin: 2, levelMax: 3
 					}
 				]
 			},
@@ -204,27 +250,34 @@ const levelData = [
 						levelMin: 3, levelMax: 4
 					},
 					{
-						id: "Yungoos",
-						levelMin: 3, levelMax: 4
-					},
-					{
-						id: "Rattata-Alola",
-						levelMin: 3, levelMax: 4
-					},
-					{
 						id: "Grubbin",
 						levelMin: 4, levelMax: 6
+					},
+					{
+						id: "Ledyba",
+						levelMin: 2, levelMax: 3
 					}
 				]
-			}
+			},
+			{
+				name: "Audrey",
+				class: "Lass-Gen7",
+				pokemon: [
+					{
+						id: "Caterpie",
+						level: 3
+					}
+				]
+			},
 		],
 		effects: [
-			{type: "random-number", min: 1, max: 10},
-			{type: "load-value", value: 10},
-			{type: "jump-if-less-than", jumpTo: "Normal"},
-			{type: "fight", trainer: 1, label: "Grubbin"},
-			{type: "jump", jumpTo: Infinity},
-			{type: "fight", trainer: 0, label: "Normal"}
+			{ type: "random-number", min: 1, max: 10 },
+			{ type: "load-value", value: 10 },
+			{ type: "jump-if-less-than", jumpTo: "Normal" },
+			{ type: "fight", trainer: 1, label: "Grubbin" },
+			{ type: "jump", jumpTo: "Audrey" },
+			{ type: "fight", trainer: 0, label: "Normal" },
+			{ type: "fight", trainer: 2, label: "Audrey"}
 		]
 	},
 	// Rival Battle 2
@@ -283,18 +336,18 @@ const levelData = [
 			}
 		],
 		effects: [
-			{type: "load-player-info", key: "chosen-starter"},
-			{type: "load-value", value: "Rowlet"},
-			{type: "jump-if-equal", jumpTo: "Litten"},
-			{type: "load-player-info", key: "chosen-starter"},
-			{type: "load-value", value: "Litten"},
-			{type: "jump-if-equal", jumpTo: "Popplio"},
-			{type: "fight", trainer: 1, label: "Rowlet"},
-			{type: "jump", jumpTo: Infinity},
-			{type: "fight", trainer: 2, label: "Litten"},
-			{type: "jump", jumpTo: Infinity},
-			{type: "fight", trainer: 0, label: "Popplio"},
-			{type: "jump", jumpTo: Infinity},
+			{ type: "load-player-info", key: "chosen-starter" },
+			{ type: "load-value", value: "Rowlet" },
+			{ type: "jump-if-equal", jumpTo: "Litten" },
+			{ type: "load-player-info", key: "chosen-starter" },
+			{ type: "load-value", value: "Litten" },
+			{ type: "jump-if-equal", jumpTo: "Popplio" },
+			{ type: "fight", trainer: 1, label: "Rowlet" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "fight", trainer: 2, label: "Litten" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "fight", trainer: 0, label: "Popplio" },
+			{ type: "jump", jumpTo: Infinity },
 		]
 	},
 	{
@@ -310,22 +363,42 @@ const levelData = [
 						id: "Wingull",
 						levelMin: 5, levelMax: 7
 					},
+					{
+						id: "Yungoos",
+						levelMin: 5, levelMax: 7
+					},
+					{
+						id: "Rattata-Alola",
+						levelMin: 5, levelMax: 7
+					}
 				]
 			},
 		],
 		effects: [
-			{type: "fight", trainer: 0}
+			{ type: "fight", trainer: 0 }
+		]
+	},
+	{
+		id: "Route 1-6",
+		category: "Route 1",
+		name: "Route 1-6",
+		icon: "6",
+		music: "SM Trainer Battle",
+		trainers: [
+		],
+		effects: [
+			{ type: "fight", trainer: 0 }
 		]
 	},
 ]
 
-for (let level of levelData){
+for (let level of levelData) {
 	level.status = "not won"
 }
 
-function getLevelButtonHtml(level){
+function getLevelButtonHtml(level) {
 	let btn = $(`<button class='btn btn-primary level-button'></button>`)
-	if (level.status === "won"){
+	if (level.status === "won") {
 		btn.addClass("won")
 	}
 	let inner = $(`<div class='inner'></div>`)
@@ -333,6 +406,37 @@ function getLevelButtonHtml(level){
 	btn.append(inner)
 	btn.attr("data-level", level.id)
 	return btn
+}
+function getNPCDataFromTrainer(trainer){
+	let result = {}
+	if (trainer.class in NPCTrainerData){
+		result = NPCTrainerData[trainer.class]
+	} else if (trainer.name in NPCTrainerData){
+		result = NPCTrainerData[trainer.name]
+	}
+	return result
+}
+function getLevelsInCategory(category) {
+	return levelData.filter(level => level.category === category)
+}
+function getTrainerClassesFromLevelCategory(category){
+	let levels = getLevelsInCategory(category)
+	let trainers = levels.map(level => level.trainers ?? []).flat()
+	let NPCDatas = trainers.map(getNPCDataFromTrainer)
+	.filter(data => Object.keys(data).length)
+	NPCDatas = noDuplicates(NPCDatas)
+	return NPCDatas
+}
+function loadTrainerClassSprites(data){
+	let sprites = data.imageSources || {}
+	let names = []
+	for (let key in sprites){
+		let url = sprites[key]
+		let name = `trainer-${data.name}-${key}`
+		loadSprite(name, url)
+		names.push(name)
+	}
+	return names
 }
 
 const pokeballSpriteData = {
@@ -347,7 +451,7 @@ const pokeballSpriteData = {
 	}
 }
 
-function renderPokeballSmallCanvas(canvasTag, type, sprite){
+function renderPokeballSmallCanvas(canvasTag, type, sprite) {
 	let ctx = canvasTag.getContext("2d")
 	canvasTag.height = 30
 	canvasTag.width = 30
@@ -367,12 +471,12 @@ function renderPokeballSmallCanvas(canvasTag, type, sprite){
 		spriteOffsetX, spriteOffsetY, spriteWidth, spriteHeight,
 		placeOffsetX, placeOffsetY, spriteWidth, spriteHeight)
 }
-function renderPokeballSpinSmallCanvas(canvas, direction){
+function renderPokeballSpinSmallCanvas(canvas, direction) {
 	let directionMult = -1
-	if (direction === "left"){
+	if (direction === "left") {
 		directionMult = -1
 	}
-	if (direction === "right"){
+	if (direction === "right") {
 		directionMult = 1
 	}
 	return new Promise(resolve => {
@@ -384,17 +488,17 @@ function renderPokeballSpinSmallCanvas(canvas, direction){
 				top: `${top * 100}%`
 			})
 		}
-		$({val: 0}).animate({val: 1}, {
+		$({ val: 0 }).animate({ val: 1 }, {
 			duration: 1200,
 			easing: "linear",
-			step: function(){
-				if (this.val > 0.9 && !resolved){
+			step: function () {
+				if (this.val > 0.9 && !resolved) {
 					resolve()
 					resolved = true
 				}
 				animate(this.val)
 			},
-			complete: function(){
+			complete: function () {
 				animate(1)
 			}
 		})
