@@ -150,7 +150,7 @@ const levelData = [
 			}
 		],
 		effects: [
-			{ type: "dialogue", trainer: 0, source: "initial-hau-dialogue" },
+			{ type: "dialogue", trainer: 0, source: "rival-battle-1-dialogue" },
 			{ type: "load-player-info", key: "chosen-starter" },
 			{ type: "load-value", value: "Rowlet" },
 			{ type: "jump-if-equal", jumpTo: "Litten" },
@@ -158,11 +158,15 @@ const levelData = [
 			{ type: "load-value", value: "Litten" },
 			{ type: "jump-if-equal", jumpTo: "Popplio" },
 			{ type: "fight", trainer: 1, label: "Rowlet" },
-			{ type: "jump", jumpTo: Infinity },
+			{ type: "jump", jumpTo: "Win Check" },
 			{ type: "fight", trainer: 2, label: "Litten" },
-			{ type: "jump", jumpTo: Infinity },
+			{ type: "jump", jumpTo: "Win Check" },
 			{ type: "fight", trainer: 0, label: "Popplio" },
+			{ type: "jump", jumpTo: "Win Check" },
+			{ type: "jump-if-lost", jumpTo: "lost", label: "Win Check" },
+			{ type: "dialogue", trainer: 0, source: "rival-battle-1-dialogue-won" },
 			{ type: "jump", jumpTo: Infinity },
+			{ type: "dialogue", trainer: 0, source: "rival-battle-1-dialogue-lost", label: "lost" },
 		]
 	},
 	{
@@ -220,7 +224,9 @@ const levelData = [
 			{ type: "jump", jumpTo: "Jimmy" },
 			{ type: "fight", trainer: 0, label: "Normal" },
 			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "stop-music" },
 			{ type: "dialogue", trainer: 0, source: "route-1-2-dialogue", label: "Jimmy" },
+			{ type: "change-music", music: "SM Trainer Battle"},
 			{ type: "fight", trainer: 2}
 		]
 	},
@@ -275,9 +281,12 @@ const levelData = [
 			{ type: "load-value", value: 10 },
 			{ type: "jump-if-less-than", jumpTo: "Normal" },
 			{ type: "fight", trainer: 1, label: "Grubbin" },
+			{ type: "jump-if-lost", jumpTo: Infinity },
 			{ type: "jump", jumpTo: "Audrey" },
 			{ type: "fight", trainer: 0, label: "Normal" },
-			{ type: "fight", trainer: 2, label: "Audrey"}
+			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "dialogue", trainer: 0, source: "route-1-3-dialogue", label: "Audrey" },
+			{ type: "fight", trainer: 2}
 		]
 	},
 	// Rival Battle 2
@@ -336,6 +345,7 @@ const levelData = [
 			}
 		],
 		effects: [
+			{ type: "dialogue", trainer: 0, source: "rival-battle-2-dialogue" },
 			{ type: "load-player-info", key: "chosen-starter" },
 			{ type: "load-value", value: "Rowlet" },
 			{ type: "jump-if-equal", jumpTo: "Litten" },

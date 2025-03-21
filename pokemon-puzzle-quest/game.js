@@ -7,9 +7,10 @@ let playerSaveId = null
 let playerSaveInfo = {}
 
 class Round{
-	constructor(trainer1, trainer2, resolvePromise){
-		this.board = new Board(8, 8)
+	constructor(trainer1, trainer2, resolvePromise, oldBoard){
+		this.board = oldBoard ?? new Board(8, 8)
 		this.board.fill()
+		this.board.clearAllEffects()
 		this.trainers = [trainer1, trainer2]
 		this.trainer1 = trainer1
 		this.trainer2 = trainer2
@@ -247,54 +248,33 @@ class Round{
 		if (this.hasEnded){
 			return Promise.resolve()
 		}
-		return new Promise(resolve => {
-			//This next one handles whether the player should win
-			let enemyTrainer = this.trainers[1]
-			let enemyActivePokemon = enemyTrainer.activePokemon
-			if (enemyActivePokemon.hp <= 0){
-				let pokemonCanSwapTo = getUsablePokemon(enemyTrainer.pokemon)
-				if (pokemonCanSwapTo.length > 0){
-					//If the enemy has pokemon they can swap to, they pick one and swap to it.
-					let pokemon = this.computerChoosePokemon(pokemonCanSwapTo, "swap")
-					this.animateSendOutPokemon(1, pokemon)
-					.then(() => {
-						resolve(over)
-					})
-				} else {
-					//If the enemy has no pokemon they can swap to, you win.
-					return this.end("win")
-					.then(() => {
-						over = true
-						resolve(over)
-					})
-				}
+		let promise = Promise.resolve()
+		let enemyTrainer = this.trainers[1]
+		let enemyActivePokemon = enemyTrainer.activePokemon
+		let playerTrainer = this.trainers[0]
+		let playerActivePokemon = playerTrainer.activePokemon
+		if (enemyActivePokemon.hp <= 0){
+			let pokemonCanSwapTo = getUsablePokemon(enemyTrainer.pokemon)
+			if (pokemonCanSwapTo.length > 0){
+				//If the enemy has pokemon they can swap to, they pick one and swap to it.
+				let pokemon = this.computerChoosePokemon(pokemonCanSwapTo, "swap")
+				promise = promise.then(() => this.animateSendOutPokemon(1, pokemon))
 			} else {
-				resolve(over)
+				//If the enemy has no pokemon they can swap to, you win.
+				promise = promise.then(() => this.end("win"))
 			}
-		})
-		//This next one handles whether the player should lose
-		.then((alreadyWon) => new Promise(resolve => {
-			if (alreadyWon) resolve(over)
-			let playerTrainer = this.trainers[0]
-			let playerActivePokemon = playerTrainer.activePokemon
-			if (playerActivePokemon.hp <= 0){
-				let pokemonCanSwapTo = getUsablePokemon(playerTrainer.pokemon)
-				if (pokemonCanSwapTo.length > 0){
-					choosePokemon("Choose a Pokemon to swap to.", pokemonCanSwapTo)
-					.then(pokemon => this.animateSendOutPokemon(0, pokemon[0]))
-					.then(() => resolve(over))
-				} else {
-					//If you run out of viable pokemon, you lose.
-					return this.end("lose")
-					.then(() => {
-						over = true
-						resolve(over)
-					})
-				}
+		} else if (playerActivePokemon.hp <= 0){
+			let pokemonCanSwapTo = getUsablePokemon(playerTrainer.pokemon)
+			if (pokemonCanSwapTo.length > 0){
+				promise = promise.then(() => choosePokemon("Choose a Pokemon to swap to.", pokemonCanSwapTo))
+				.then(pokemon => this.animateSendOutPokemon(0, pokemon[0]))
 			} else {
-				resolve(over)
+				//If you run out of viable pokemon, you lose.
+				promise = promise.then(() => this.end("lose"))
 			}
-		}))
+		}
+
+		return promise
 	}
 
 	applyLocationChanges(map){
@@ -439,10 +419,13 @@ class Round{
 	}
 
 	endMove(turn){
+		let promise = Promise.resolve()
 		//This is where all of the end-of-move rewards can be done
 
 		//Next turn
-		this.turnEnd(turn)
+		promise = promise.then(() => this.checkForWinner())
+		promise = promise.then(() => this.turnEnd(turn))
+		return promise
 	}
 
 	timeStep(){
@@ -681,10 +664,14 @@ class Round{
 			console.trace()
 			return
 		}
+		if (this.hasEnded){
+			return
+		}
 
 		//Reduce initiative
 		let initiatives = this.initiativeValues
-		initiatives[this.activePlayerIndex] -= this.maxInitiative
+		let newInitiative = initiatives[this.activePlayerIndex] - this.maxInitiative
+		initiatives[this.activePlayerIndex] = Math.max(0, newInitiative)
 		this.updateInitiative(this.activePlayerIndex, false)
 
 		let nextPlayer = this.getNextPlayer()
@@ -702,7 +689,7 @@ class Round{
 				delay(300).then(() => this.turnStart(newTurn))
 			} else {
 				this.waitUntilNoAnnouncements(() => {
-					delay(300).then(() => this.turnStart(newTurn))
+					return delay(300).then(() => this.turnStart(newTurn))
 				})
 			}
 		}
@@ -786,6 +773,10 @@ class Round{
 			if (initiatives[0] === initiatives[1]){
 				initiatives[1] -= 1
 			}
+		}
+		if (initiatives.some(i => i < 0)){
+			console.warn("How is one of these less than 0?")
+			console.trace()
 		}
 
 		//Whoever has the higher initiative goes next. One of them *should* be exactly 100.
@@ -984,6 +975,7 @@ class Round{
 
 	computerMakeMoves(){
 		let promise = Promise.resolve()
+		promise = promise.then(() => delay(250))
 		let trainerIndex = this.activePlayerIndex
 		let availableMoves = this.getAvailableMoves(trainerIndex)
 		let payableMoves = availableMoves.filter(move => {
@@ -1354,6 +1346,7 @@ class Round{
 			trainer: trainer,
 			pokemon: pokemon,
 			move: move,
+			turnStartedOn: this.turn,
 			info: [],
 			effectIndex: 0
 		}
@@ -1379,8 +1372,6 @@ class Round{
 		moveUseObj.nextEffectIndex = effectIndex + 1
 		let effects = moveUseObj.move.effects
 
-		// console.log("Running effect", effectIndex)
-
 		if (effectIndex >= effects.length){
 			moveUseObj.resolve()
 			return
@@ -1390,18 +1381,13 @@ class Round{
 		let effectType = effect.type
 		let resolvePromise
 		let promise = new Promise(resolve => resolvePromise = resolve)
-		promise.then(() => {
-			moveUseObj.effectIndex = moveUseObj.nextEffectIndex
-			return this.advanceCurrentMove()
-		})
-		.then(() => delay(250))
-		.then(() => this.timeStep())
-		.then(() => this.updateEverything())
 		let params = getEffectParams(effect, effectIndex, moveUseObj)
 
 		let targetTrainers = {
 			"choose-tiles": true,
-			"gain-energy": true
+			"gain-energy": true,
+			"get-initiative": true,
+			"set-initiative": true,
 		}
 		let targetDefaults = {
 			"choose-tiles": "user",
@@ -1411,7 +1397,9 @@ class Round{
 			"apply-status-effect": "opponent",
 			"apply-debuff": "opponent",
 			"select-energy-colors": "none",
-			"gain-energy": "user"
+			"gain-energy": "user",
+			"get-initiative": "user",
+			"set-initiative": "user",
 		}
 		let target
 		if (effect.type in targetDefaults){
@@ -1451,7 +1439,7 @@ class Round{
 			case "play-sound": {
 				let name = effect.name
 				playSound(`${moveUseObj.move.name}-${name}`)
-				resolvePromise()
+				delay(100).then(() => resolvePromise())
 			} break
 			case "swap-tiles": {
 				let selection = params.selection
@@ -1503,7 +1491,7 @@ class Round{
 			case "end-turn": {
 				this.currentlyEndingTurn = true
 				this.endMove(this.turn)
-				resolvePromise()
+				.then(() => resolvePromise())
 			} break
 			case "damage": {
 				let options = {
@@ -1704,6 +1692,17 @@ class Round{
 				moveUseObj.info[effectIndex] = result
 				resolvePromise()
 			} break
+			case "get-initiative": {
+				let index = this.trainers.indexOf(target)
+				moveUseObj.info[effectIndex] = this.initiativeValues[index]
+				resolvePromise()
+			} break
+			case "set-initiative": {
+				let index = this.trainers.indexOf(target)
+				let initiative = params.initiative
+				this.initiativeValues[index] = Math.floor(initiative)
+				resolvePromise()
+			} break
 			case "load-number": {
 				let val = effect.value ?? 0
 				if (effect.index !== undefined){
@@ -1741,11 +1740,21 @@ class Round{
 			default:
 				console.warn("You never handled", effectType)
 		}
+
+		promise = promise.then(() => {
+			moveUseObj.effectIndex = moveUseObj.nextEffectIndex
+			return this.advanceCurrentMove()
+		})
+		.then(() => delay(250))
+		.then(() => this.timeStep())
+		.then(() => this.updateEverything())
+
 		return promise
 	}
 	finishCurrentMove(){
+		let moveUseObj
 		let promise = new Promise(resolve => {
-			this.moveQueue.splice(0, 1)
+			moveUseObj = this.moveQueue.splice(0, 1)
 
 			if (this.moveQueue.length){
 				this.advanceCurrentMove()
@@ -1758,8 +1767,15 @@ class Round{
 		})
 		//Post-end-of-move effects like Confused
 		.then(() => {
-			let trainer = this.trainers[this.activePlayerIndex]
-			let pokemon = trainer.activePokemon
+			if (!moveUseObj.length){
+				console.warn("Uh oh! I think a move got ended twice!")
+				console.trace()
+			} else {
+				moveUseObj = moveUseObj[0]
+			}
+
+			let trainer = moveUseObj.trainer
+			let pokemon = moveUseObj.pokemon
 			let promises = []
 			let endedTurn = false
 
@@ -1768,7 +1784,8 @@ class Round{
 				for (let status of statusEffects){
 					if (status.name === "confused"){
 						//50% chance that the turn ends.
-						if (Math.random() < 0.5 && !endedTurn){
+						let confuseChance = 0.5
+						if (Math.random() < confuseChance && !endedTurn){
 							endedTurn = true
 							let p = this.createAnnouncement("general", "Turn ended due to confusion!", 1500)
 							promises.push(p)
@@ -1779,8 +1796,8 @@ class Round{
 			}
 
 			let promise = Promise.all(promises)
-
-			if (endedTurn){
+			//Confusion won't end this turn if the turn has already passed.
+			if (endedTurn && this.turn === moveUseObj.turnStartedOn){
 				let turn = this.turn
 				this.currentlyEndingTurn = true
 				// this.turnEnd(this.turn)
@@ -2345,6 +2362,7 @@ class Round{
 	}
 
 	updateEverything(){
+		if (this.hasEnded) return
 		let animate = this.hasBegun
 		for (let i = 0; i < this.trainers.length; i++){
 			this.updateHealth(i, animate)
@@ -2398,6 +2416,7 @@ class Round{
 		tags.pokeballDisplay = tags.sideMiddle.children(".pokeball-display")
 		tags.pokeballContainers = tags.pokeballDisplay.children().children(".pokeball-container")
 		tags.pokemonStatusSection = tags.pokemonSection.children(".pokemon-status-effect-section")
+		tags.pokemonStatusSection.empty()
 
 		tags.energySection = tags.sideMiddle.children(".energy-resources")
 		tags.energyBars = {}
@@ -2653,7 +2672,7 @@ class Round{
 
 		let name = pokemon.name
 		if (name !== pokemon.data.name){
-			let pokemonName = getLocaleString("name", lang, ["pokemon", pokemon.data.name])
+			let pokemonName = getLocaleString("name", lang, ["pokemon", pokemon.data.id])
 			name += " the " + pokemonName
 		}
 		html.append(`<div class='name'>${name} (Lv. ${pokemon.level})</div>`)
@@ -2673,8 +2692,8 @@ class Round{
 		if (this.currentlySwappingPokemon) return
 		if (this.trainers[0].activePokemon === pokemon) return
 		this.currentlySwappingPokemon = true
-		this.animateSendOutPokemon(trainerIndex, pokemon)
 		let turn = this.turn
+		this.animateSendOutPokemon(trainerIndex, pokemon)
 		.then(() => {
 			this.currentlySwappingPokemon = false
 			this.currentlyEndingTurn = true
@@ -3205,6 +3224,12 @@ class Board{
 
 		return newLocationMap
 	}
+
+	clearAllEffects(){
+		this.contents.forEach(tile => {
+			tile.statusEffects.length = 0
+		})
+	}
 }
 
 class Tile{
@@ -3302,7 +3327,15 @@ function beginRound(trainerData){
 		return pokemon
 	})
 	let enemy = new Trainer("Enemy", enemyPokemon, trainerData)
-	gameRound = new Round(player, enemy, resolvePromise)
+
+	//If there was a previous fight in this level, carry over the board
+	//so that it remains there for this fight.
+	let oldBoard
+	if (gameRound){
+		oldBoard = gameRound.board
+	}
+
+	gameRound = new Round(player, enemy, resolvePromise, oldBoard)
 	gameBoard = gameRound.board
 
 	return promise

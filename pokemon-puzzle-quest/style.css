@@ -37,6 +37,10 @@
 	inherits: false;
 }
 
+* {
+	outline: none;
+}
+
 body {
 	background-color: #050506;
 	color: white;
@@ -171,6 +175,10 @@ body {
 }
 #board {
 	justify-content: space-between;
+	transition: opacity 0.5s;
+}
+#board.showing-dialogue {
+	opacity: 0.2;
 }
 #title-screen {
 	flex-direction: column;
@@ -1019,7 +1027,6 @@ body {
 #dialogue > .text-box {
 	position: absolute;
 	background: linear-gradient(-30deg, #00477d80 0%, #004ea8a0 100%);
-	/* background: radial-gradient(ellipse at center, #f3be43 50%, #3b3838 100%); */
 	left: 50%;
 	width: 80%; height: 40%;
 	max-width: 80em; max-height: 20em;
@@ -1141,6 +1148,7 @@ body {
 	position: absolute;
 	height: 50vh; max-height: 25em;
 	bottom: min(38vh, 22em); left: 56vw;
+	filter: drop-shadow(0 0 2em #000000ff) drop-shadow(0 0 2em #000000ff);
 }
 #dialogue > .speakers > .speaker > img {
 	height: 100%;

@@ -827,6 +827,10 @@ function continueGame(){
 		})
 	})
 	.then(() => {
+		let oldData = newPlayerSaveData()
+		Object.keys(playerSaveInfo).forEach(key => oldData[key] = playerSaveInfo[key])
+		Object.keys(oldData).forEach(key => playerSaveInfo[key] = oldData[key])
+		
 		let noPokemon = playerActivePokemon.length === 0
 		if (!playerSaveInfo["started-game"] && noPokemon){
 			return startScene("choose-starter")

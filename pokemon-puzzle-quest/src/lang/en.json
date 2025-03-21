@@ -1,26 +1,55 @@
 {
 	"Route 1-1-description": "Rival Battle",
-	"initiative-tutorial": "Initiative<br>Each turn, both Pokemon gain Initiative based on their speed stats. When a player matches 4 or more tiles in a row, they get a free turn.",
-	"error-cant-remove-last-pokemon": "You can't put your only Pokemon into the PC.",
-	"error-no-usable-pokemon": "All your Pokemon are currently fainted.",
+	"initiative-tutorial": "Initiative<br>Each turn, both Pokémon gain Initiative based on their speed stats. When a player matches 4 or more tiles in a row, they get a free turn.",
+	"error-cant-remove-last-pokemon": "You can't put your only Pokémon into the PC.",
+	"error-no-usable-pokemon": "All your Pokémon are currently fainted.",
 	"dialogue": {
-		"initial-hau-dialogue": [
-			{ "type": "get-speaker", "name": "Hau", "class": "Hau" },
-			{ "type": "text", "speaker": "Hau", "text": "Hey, hey! $@blue|Welcome!@$" },
-			{ "type": "transform-speaker", "speaker": "Hau", "transform": "rotate(10deg)", "duration": 300, "waitDuration": 150 },
-			{ "type": "text", "speaker": "Hau", "text": "Thanks for tryin' this little game. Not to go tooting horns, but this took A LOT of effort." },
-			{ "type": "transform-speaker", "speaker": "Hau", "transform": "rotate(0deg)", "duration": 500, "waitDuration": 150 },
-			{ "type": "load-player-info", "key": "chosen-starter" },
-			{ "type": "text", "speaker": "Hau", "text": "That's a nice %c-pname% you got there! Let's see how they are in a friendly match!", "values": [-1, -1] }
-		],
-		"route-1-2-dialogue": [
-			{ "type": "get-speaker", "name": "Jimmy", "class": "Youngster-Gen7" },
-			{ "type": "text", "speaker": "Jimmy", "text": "Hey, you! Check out my cool dog!" }
-		]
+		"rival-battle-1-dialogue": {
+			"effects": [
+				{ "type": "get-speaker", "name": "Hau", "class": "Hau" },
+				{ "type": "text", "speaker": "Hau", "text": "Hey, hey! $@blue|Welcome!@$" },
+				{ "type": "transform-speaker", "speaker": "Hau", "transform": "rotate(10deg)", "duration": 300, "waitDuration": 150 },
+				{ "type": "text", "speaker": "Hau", "text": "Thanks for tryin' this little game. Not to go tooting horns, but this took A LOT of effort." },
+				{ "type": "transform-speaker", "speaker": "Hau", "transform": "rotate(0deg)", "duration": 500, "waitDuration": 150 },
+				{ "type": "load-player-info", "key": "chosen-starter" },
+				{ "type": "text", "speaker": "Hau", "text": "That's a nice %c-pname% you got there! Let's see how they are in a friendly match!", "values": [-1] }
+			]
+		},
+		"rival-battle-1-dialogue-won": {
+			"effects": [
+				{ "type": "get-speaker", "name": "Hau", "class": "Hau" },
+				{ "type": "text", "speaker": "Hau", "text": "Aww, you got me! That was a tough fight! Hey, tell me when you want to have another go at it, alright?" }
+			]
+		},
+		"rival-battle-1-dialogue-lost": {
+			"effects": [
+				{ "type": "get-speaker", "name": "Hau", "class": "Hau" },
+				{ "type": "text", "speaker": "Hau", "text": "Hey, no worries! You can't win them all." },
+				{ "type": "text", "speaker": "Hau", "text": "I heard some Pokémon are better against others, anyway. I can't wait for next time!" }
+			]
+		},
+		"route-1-2-dialogue": {
+			"effects": [
+				{ "type": "get-speaker", "name": "Jimmy", "class": "Youngster-Gen7" },
+				{ "type": "text", "speaker": "Jimmy", "text": "Hey, you! Check out my cool dog!" }
+			]
+		},
+		"route-1-3-dialogue": {
+			"effects": [
+				{ "type": "get-speaker", "name": "Audrey", "class": "Lass-Gen7" },
+				{ "type": "text", "speaker": "Audrey", "text": "Hey, thanks for not telling my brother that his Pokémon isn't a dog. I know that took restraint." }
+			]
+		},
+		"rival-battle-2-dialogue": {
+			"effects": [
+				{ "type": "get-speaker", "name": "Hau", "class": "Hau" },
+				{ "type": "text", "speaker": "Hau", "text": "Oh, hey again! Have you caught any new Pokémon?" }
+			]
+		}
 	},
 	"pokemon": {
 		"Rattata-Alola": {
-			"name": "Rattata-Alola"
+			"name": "Rattata"
 		},
 		"Caterpie": {
 			"name": "Caterpie"
@@ -66,6 +95,11 @@
 		}
 	},
 	"moves": {
+		"Astonish": {
+			"name": "Astonish",
+			"description": "Deals damage. Then, removes half of the target's initiative.",
+			"shortDescription": "Deals light damage and slows opponent"
+		},
 		"Absorb": {
 			"name": "Absorb",
 			"description": "Deals damage. Then, heals the user for 50% of the damage dealt.",

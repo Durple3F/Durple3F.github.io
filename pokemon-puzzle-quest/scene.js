@@ -709,7 +709,10 @@ function catchPokemon(pokemon){
 	//TODO
 	askToRenamePokemon(pokemon)
 	.then(() => savePokemon(pokemon))
-	.then(() => resolvePromise())
+	.then(() => {
+		playerSaveInfo["total-pokemon-caught"]++
+		resolvePromise()
+	})
 
 	return promise
 }
@@ -753,6 +756,8 @@ function beginLevel(levelID){
 		changeMusic(level.music)
 	}
 
+	gameRound = undefined
+	gameBoard = undefined
 	currentLevelProgress = {
 		id: levelID,
 		level: level,
@@ -810,6 +815,8 @@ function advanceCurrentLevel(){
 		return promise
 	}
 
+	console.log(effect, effectIndex, params)
+
 	let index
 	if (effect.jumpTo){
 		if (typeof effect.jumpTo === "string"){
@@ -820,6 +827,20 @@ function advanceCurrentLevel(){
 	}
 
 	switch (effect.type){
+		case "stop-music": {
+			for (let soundName in sounds){
+				let type = sounds[soundName].type
+				if (type === "music"){
+					stopSound(soundName)
+				}
+			}
+			resolvePromise()
+		} break
+		case "change-music": {
+			let music = effect.music
+			changeMusic(music)
+			resolvePromise()
+		} break
 		case "fight": {
 			changeScene("fight")
 			let displayed = $("#board").css("display") !== "none"
@@ -884,6 +905,7 @@ function advanceCurrentLevel(){
 			if (lostFights.length){
 				currentLevelProgress.nextEffectIndex = index
 			}
+			resolvePromise()
 		} break
 		case "jump-if-equal": {
 			let test = currentLevelProgress.info[effectIndex - 2]
@@ -917,7 +939,7 @@ function advanceCurrentLevel(){
 	}
 
 	promise = promise.then(val => {
-		if (currentLevelProgress.endEarly) return Promise.resolve(val)
+		// if (currentLevelProgress.endEarly) return Promise.resolve(val)
 
 		if (effects[currentLevelProgress.nextEffectIndex]){
 			return advanceCurrentLevel()

@@ -542,7 +542,21 @@ const pokemonData = {
 					type: "level",
 					amount: 3
 				}
-			}
+			},
+			{
+				name: "Astonish",
+				unlock: {
+					type: "level",
+					amount: 6
+				}
+			},
+			{
+				name: "Peck",
+				unlock: {
+					type: "level",
+					amount: 9
+				}
+			},
 		]
 	},
 	"Litten": {
@@ -605,7 +619,7 @@ const pokemonData = {
 				name: "Lick",
 				unlock: {
 					type: "level",
-					amount: 1
+					amount: 6
 				}
 			}
 		]

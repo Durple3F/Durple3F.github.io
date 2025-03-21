@@ -1,9 +1,16 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-3/20 (10.6k lines):
+3/21:
+	- During fights, the dialogue should be easier to read now by lowering the board's opacity.
+
+3/20 (10.8k lines):
 	- Dialogue can now have fancy styled text inside it.
 	- Every trainer is now capable of having their own custom text box.
 	- It's now possible for dialogue to start in the middle of a level.
+	- Fixed yet another bug regarding Confusion.
+	- Added Astonish
+	- The checkForWinner function sucks less now
+	- Pokemon leaving the field no longer weirdly gives their controller an extra turn sometimes
 
 3/19 (10.5k lines):
 	- Fixed a bug with initiative values sometimes being teeny tiny decimals

@@ -343,7 +343,7 @@ function makeNewSaveFile(){
 		const request = saveFileStore.put({
 			uuid: uuid,
 			settings: config,
-			data: {}
+			data: newPlayerSaveData()
 		})
 		request.onsuccess = event => {
 			makeNewBox(uuid, "Box 1")
@@ -351,6 +351,11 @@ function makeNewSaveFile(){
 		}
 	})
 	return promise
+}
+function newPlayerSaveData(){
+	let data = {}
+	data["total-pokemon-caught"] = 0
+	return data
 }
 
 function makeNewBox(saveId, name){

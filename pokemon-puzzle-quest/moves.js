@@ -24,6 +24,31 @@ const pokemonMoveData = {
 			{ type: "heal", target: "user", amount: -2, min: -1 },
 		],
 	},
+	"Astonish": {
+		name: "Astonish",
+		type: "Ghost",
+		category: "Physical",
+		strategy: "basic-damage",
+		pp: 15,
+		power: 30,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			purple: 9,
+			yellow: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Astonish.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "get-initiative", target: "opponent" },
+			{ type: "load-number", value: 0.5 },
+			{ type: "multiply-numbers" },
+			{ type: "set-initiative", target: "opponent", initiative: -1 },
+		],
+	},
 	"Bug Bite": {
 		name: "Bug Bite",
 		type: "Bug",

@@ -22,6 +22,11 @@ function beginDialogue(dialogueData){
 		speakers: []
 	}
 
+	let boardIsVisible = $("#board").css("display") !== "none"
+	if (boardIsVisible){
+		$("#board").addClass("showing-dialogue")
+	}
+
 	let speakersTag = $("#dialogue").children(".speakers")
 	speakersTag.empty()
 	let textBox = $("#dialogue").children(".text-box")
@@ -30,6 +35,11 @@ function beginDialogue(dialogueData){
 	let promise = advanceCurrentDialogue()
 	.then(() => {
 		$("#dialogue").fadeOut()
+		if (boardIsVisible){
+			delay(400).then(() => {
+				$("#board").removeClass("showing-dialogue")
+			})
+		}
 		return delay(400)
 	})
 	dialogueData.promise = promise
@@ -39,7 +49,8 @@ function beginDialogue(dialogueData){
 function advanceCurrentDialogue(){
 	let resolvePromise
 	let promise = new Promise(resolve => resolvePromise = resolve)
-	let effects = dialogueProgress.dialogue
+	let dialogueData = dialogueProgress.dialogue
+	let effects = dialogueData.effects
 	dialogueProgress.effectIndex = dialogueProgress.nextEffectIndex
 	let effectIndex = dialogueProgress.effectIndex
 	let effect = effects[effectIndex]
@@ -193,14 +204,14 @@ function advanceCurrentDialogue(){
 						dur *= textSpeed
 						let span = $("<span>")
 						span.addClass("letter")
-						span.css("display", "none")
+						span.css("opacity", "0.001")
 						span.html(letter)
 						wordTag.append(span)
 
 						let promise = delay(currentDuration)
 						promises.push(promise)
 						promise.then(() => {
-							span.fadeIn(textSpeed * 2.5)
+							span.animate({"opacity": 1}, textSpeed * 2.5)
 						})
 						currentDuration += dur
 					})
@@ -218,7 +229,7 @@ function advanceCurrentDialogue(){
 			let skipResolve
 			let skipPromise = new Promise(resolve => skipResolve = resolve)
 			const skipDialogue = () => {
-				textTag.find(".letter").fadeIn(textSpeed * 2.5)
+				textTag.find(".letter").animate({"opacity": 1}, textSpeed * 2.5)
 				skipResolve()
 			}
 			const continueDialogue = () => {
