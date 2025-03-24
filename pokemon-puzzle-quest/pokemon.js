@@ -149,17 +149,18 @@ class Pokemon{
 		status.sourceTrainer = owner
 
 		let prevented = false
+		let types = this.getEffectiveTypes()
 		//Fire pokemon can't be burned
-		if (status.name === "burn" && this.types.includes("Fire")){
+		if (status.name === "burn" && types.includes("Fire")){
 			prevented = true
 		}
 		//Poison and Steel type pokemon can't be poisoned
-		if (status.name === "poisoned" && this.types.includes("Poison") ||
-				status.name === "poisoned" && this.types.includes("Steel")){
+		if (status.name === "poisoned" && types.includes("Poison") ||
+				status.name === "poisoned" && types.includes("Steel")){
 			prevented = true
 		}
 		//Electric pokemon can't be paralyzed
-		if (status.name === "paralyzed" && this.types.includes("Electric")){
+		if (status.name === "paralyzed" && types.includes("Electric")){
 			prevented = true
 		}
 
@@ -235,6 +236,10 @@ class Pokemon{
 		let denominator = 2 + Math.max(0, -stage)
 		let modifier = numerator / denominator
 		return val * modifier
+	}
+
+	getEffectiveTypes(){
+		return this.types
 	}
 
 	unlockMoves(unlockMap){

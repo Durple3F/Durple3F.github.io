@@ -5,11 +5,16 @@
 	"error-no-usable-pokemon": "All your Pokémon are currently fainted.",
 	"dialogue": {
 		"rival-battle-1-dialogue": {
+			"events": [
+				{ "type": "transform-speaker", "speaker": "Hau", "transform": "rotate(10deg)", "duration": 300, "waitDuration": 150 },
+				{ "type": "transform-speaker", "speaker": "Hau", "transform": "rotate(0deg)", "duration": 300, "waitDuration": 150 },
+				{ "type": "transform-speaker", "speaker": "Hau", "transform": "rotate(-10deg) scale(1.2, 1.2)", "duration": 600, "waitDuration": 300 },
+				{ "type": "transform-speaker", "speaker": "Hau", "transform": "rotate(0deg)", "duration": 300, "waitDuration": 150 }
+			],
 			"effects": [
 				{ "type": "get-speaker", "name": "Hau", "class": "Hau" },
-				{ "type": "text", "speaker": "Hau", "text": "Hey, hey! $@blue|Welcome!@$" },
-				{ "type": "transform-speaker", "speaker": "Hau", "transform": "rotate(10deg)", "duration": 300, "waitDuration": 150 },
-				{ "type": "text", "speaker": "Hau", "text": "Thanks for tryin' this little game. Not to go tooting horns, but this took A LOT of effort." },
+				{ "type": "text", "speaker": "Hau", "text": "Hey, hey! ^^$@blue|Welcome!@$^^" },
+				{ "type": "text", "speaker": "Hau", "text": "Thanks for tryin' this little game. Not to go tooting horns, but this to^^ok A LOT$@wait-5|@$ of ^^effort." },
 				{ "type": "transform-speaker", "speaker": "Hau", "transform": "rotate(0deg)", "duration": 500, "waitDuration": 150 },
 				{ "type": "load-player-info", "key": "chosen-starter" },
 				{ "type": "text", "speaker": "Hau", "text": "That's a nice %c-pname% you got there! Let's see how they are in a friendly match!", "values": [-1] }
@@ -59,6 +64,9 @@
 		},
 		"Butterfree": {
 			"name": "Butterfree"
+		},
+		"Slowpoke": {
+			"name": "Slowpoke"
 		},
 		"Ledyba": {
 			"name": "Ledyba"
@@ -114,6 +122,11 @@
 			"name": "Charm",
 			"description": "Lowers the opponent's attack stat by 1 stage.",
 			"shortDescription": "Lowers enemy attack"
+		},
+		"Curse": {
+			"name": "Curse",
+			"description": "If the user is Ghost type, applies Cursed to the opponent. Otherwise, lowers the user's Speed by one stage, and raises their Attack and Defense by one stage each.",
+			"shortDescription": " "
 		},
 		"Disarming Voice": {
 			"name": "Disarming Voice",
@@ -172,7 +185,7 @@
 		},
 		"Nuzzle": {
 			"name": "Nuzzle",
-			"description": "Deals damage. Applies Paralyzed. When a Paralyzed Pokemon uses a move, the move does nothing, and they lose Paralyzed.",
+			"description": "Deals damage. Applies Paralyzed. When a Paralyzed Pokémon uses a move, the move does nothing, and they lose Paralyzed.",
 			"shortDescription": "Deals light damage and paralyzes"
 		},
 		"Payback": {
@@ -210,6 +223,11 @@
 			"description": "Damage-dealing move with no special effects. Ends the turn.",
 			"shortDescription": "Deals light damage"
 		},
+		"Shadow Sneak": {
+			"name": "Shadow Sneak",
+			"description": "Deals damage. If you and your opponent have a different number of Pokémon remaining, this move's power increases by 40.",
+			"shortDescription": "Deals damage"
+		},
 		"String Shot": {
 			"name": "String Shot",
 			"description": "Lowers the opponent's speed stat by 2 stages.",
@@ -222,12 +240,12 @@
 		},
 		"Supersonic": {
 			"name": "Supersonic",
-			"description": "Applies Confused. After a Confused Pokemon uses a move, there's a 50% chance for their turn to end.",
+			"description": "Applies Confused. After a Confused Pokémon uses a move, there's a 50% chance for their turn to end.",
 			"shortDescription": "Applies Confused"
 		},
 		"Sweet Kiss": {
 			"name": "Sweet Kiss",
-			"description": "Applies Confused. Then, shuffles the board. After a Confused Pokemon uses a move, there's a 50% chance for their turn to end.",
+			"description": "Applies Confused. Then, shuffles the board. After a Confused Pokémon uses a move, there's a 50% chance for their turn to end.",
 			"shortDescription": "Confuses opponent and shuffles"
 		},
 		"Swift": {
@@ -269,22 +287,25 @@
 	"status-effects": {
 		"burn": {
 			"name": "Burn",
-			"description": "This Pokemon's physical moves are half as powerful, and at the start of its turn, it takes 1/16 of its max HP in damage. Currently not implemented. TODO."
+			"description": "This Pokémon's physical moves are half as powerful, and at the start of its turn, it takes 1/16 of its max HP in damage. Currently not implemented. TODO."
 		},
 		"confused": {
 			"name": "Confused",
-			"description": "Whenever this Pokemon uses a move, its turn has a 50% chance to end."
+			"description": "Whenever this Pokémon uses a move, its turn has a 50% chance to end."
 		},
 		"invulnerable": {
 			"name": "Invulnerable",
-			"description": "This Pokemon can't be dealt damage."
+			"description": "This Pokémon can't be dealt damage."
 		},
 		"poisoned": {
 			"name": "Poisoned",
-			"description": "At the beginning of this Pokemon's turn, it will take 1/16 of its max HP in damage."
+			"description": "At the beginning of this Pokémon's turn, it will take 1/16 of its max HP in damage."
 		}
 	},
 	"settings": {
+		"delete-save": "DELETE SAVE",
+		"delete-save-confirm": "Really delete save data, super for sure?",
+		"delete-save-failure": "Failed to delete save data.",
 		"sound-types": {
 			"music": {
 				"name": "Music"
@@ -293,7 +314,7 @@
 				"name": "Sound Effects"
 			},
 			"cry": {
-				"name": "Pokemon Cries"
+				"name": "Pokémon Cries"
 			}
 		}
 	}

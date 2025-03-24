@@ -3,7 +3,8 @@ const textCharacterDurationMap = {
 	",": 3,
 	"!": 7,
 	"?": 10,
-	"...": 30
+	"...": 30,
+	"^^": 0, //This one's for events
 }
 const textColors = {
 	"red":"rgb(251, 49, 69)",
@@ -19,6 +20,7 @@ function beginDialogue(dialogueData){
 		info: [],
 		effectIndex: -1,
 		nextEffectIndex: 0,
+		eventIndex: 0,
 		speakers: []
 	}
 
@@ -50,11 +52,13 @@ function advanceCurrentDialogue(){
 	let resolvePromise
 	let promise = new Promise(resolve => resolvePromise = resolve)
 	let dialogueData = dialogueProgress.dialogue
+	let events = dialogueData.events || []
 	let effects = dialogueData.effects
 	dialogueProgress.effectIndex = dialogueProgress.nextEffectIndex
 	let effectIndex = dialogueProgress.effectIndex
 	let effect = effects[effectIndex]
 	dialogueProgress.nextEffectIndex++
+	let eventIndex = dialogueProgress.eventIndex
 
 	if (effectIndex >= effects.length){
 		resolvePromise()
@@ -74,6 +78,7 @@ function advanceCurrentDialogue(){
 			}
 			let name = effect.name
 			speaker.name = name
+			speaker.id = effect.id || speaker.name
 			dialogueProgress.speakers.push(speaker)
 			let trainerClassName = effect.class
 			let trainerClass = NPCTrainerData[trainerClassName]
@@ -89,7 +94,7 @@ function advanceCurrentDialogue(){
 		} break
 		case "text": {
 			let name = effect.speaker
-			let speaker = dialogueProgress.speakers.find(s => s.name === name)
+			let speaker = dialogueProgress.speakers.find(s => s.id === name)
 			if (speaker){
 				nameplate.children(".text").text(speaker.name)
 			} else {
@@ -132,11 +137,21 @@ function advanceCurrentDialogue(){
 				}
 			}
 
-			let fancyRegex = /(?<!\\)\$@([^\|]+)\|([^\@]+)@\$/g
-			let fancyRegexNoCapture = /(?<!\\)\$@[^\|]+\|[^\@]+@\$/g
+			let fancyRegex = /(?<!\\)\$@([^\|]+)\|([^\@]*)@\$/g
+			let fancyRegexNoCapture = /(?<!\\)\$@[^\|]+\|[^\@]*@\$/g
 			let fancyTextMatches = [...text.matchAll(fancyRegex)]
 			let otherText = text.split(fancyRegexNoCapture)
 			let realWords = []
+
+			let skippedDialogue = false
+
+			let colors = {}
+			Object.keys(textColors).forEach(key => colors[key] = textColors[key])
+			if (speaker.class?.textColorOverrides){
+				let those = speaker.class.textColorOverrides
+				Object.keys(those).forEach(key => colors[key] = those[key])
+			}
+
 			for (let i = 0; i < otherText.length; i++){
 				let word = {
 					text: otherText[i],
@@ -151,10 +166,14 @@ function advanceCurrentDialogue(){
 						style: ""
 					}
 					let style = match[1]
-					if (style in textColors){
-						let color = textColors[style]
+					
+					if (style in colors){
+						let color = colors[style]
 						word.style += "color: "+color+";"
 						word.style += `background-image: linear-gradient(${color}, ${color});`
+					} else if (style.substring(0, 4) === "wait") {
+						let dur = Number(style.substring(5))
+						word.addedDuration = textSpeed * dur
 					} else {
 						console.warn("Unknown style info", style)
 					}
@@ -166,6 +185,10 @@ function advanceCurrentDialogue(){
 				let textPieceTag = $("<span>")
 				textPiece.tag = textPieceTag
 				textTag.append(textPieceTag)
+
+				if (textPiece.addedDuration){
+					currentDuration += textPiece.addedDuration
+				}
 
 				let words = [""]
 				let text = textPiece.text
@@ -206,7 +229,22 @@ function advanceCurrentDialogue(){
 						span.addClass("letter")
 						span.css("opacity", "0.001")
 						span.html(letter)
-						wordTag.append(span)
+
+						let isOperation = v === "^" && (letters[i+1] === "^" || letters[i-1] === "^")
+						//If this is a letter that triggers an event
+						if (isOperation && letters[i+1] === "^"){
+							let thisEvent = events[eventIndex]
+							eventIndex++
+							dialogueProgress.eventIndex = eventIndex
+							delay(currentDuration)
+							.then(() => {
+								if (!skippedDialogue){
+									carryOutDialogueEvent(thisEvent)
+								}
+							})
+						} else if (!isOperation) {
+							wordTag.append(span)
+						}
 
 						let promise = delay(currentDuration)
 						promises.push(promise)
@@ -229,7 +267,18 @@ function advanceCurrentDialogue(){
 			let skipResolve
 			let skipPromise = new Promise(resolve => skipResolve = resolve)
 			const skipDialogue = () => {
+				skippedDialogue = true
 				textTag.find(".letter").animate({"opacity": 1}, textSpeed * 2.5)
+
+				//Reset each speaker's position
+				dialogueProgress.speakers.forEach(speaker => {
+					carryOutDialogueEvent({
+						type: "transform-speaker",
+						speaker: speaker.id,
+						transform: ""
+					})
+				})
+
 				skipResolve()
 			}
 			const continueDialogue = () => {
@@ -251,15 +300,8 @@ function advanceCurrentDialogue(){
 			})
 		} break
 		case "transform-speaker": {
-			let name = effect.speaker
-			let speaker = dialogueProgress.speakers.find(s => s.name === name)
-			let tag = speaker.tag
-			let transform = effect.transform
-			let duration = effect.duration
-			let wait = effect.waitDuration ?? 100
-			tag.css("transition", `${duration}ms transform`)
-			delay(10).then(() => tag.css("transform", transform))
-			delay(10 + wait).then(() => resolvePromise())
+			carryOutDialogueEvent(effect)
+			.then(() => resolvePromise())
 		} break
 		case "load-player-info": {
 			dialogueProgress.info[effectIndex] = playerSaveInfo[effect.key]
@@ -305,4 +347,19 @@ function changeDialogueStyle(speaker){
 	textBox.children(".text").css("filter", style.textBoxFilter)
 	textBox.children(".text").children("span").css("background-image", style.textBoxTextBackground)
 	textBox.children(".text-continue").css("background-image", style.textBoxTextContinueBackground)
+}
+
+function carryOutDialogueEvent(effect){
+	let resolvePromise
+	let promise = new Promise(resolve => resolvePromise = resolve)
+	let name = effect.speaker
+	let speaker = dialogueProgress.speakers.find(s => s.id === name)
+	let tag = speaker.tag
+	let transform = effect.transform
+	let duration = effect.duration ?? 0
+	let wait = effect.waitDuration ?? 100
+	tag.css("transition", `${duration}ms transform`)
+	delay(10).then(() => tag.css("transform", transform))
+	delay(10 + wait).then(() => resolvePromise())
+	return promise
 }

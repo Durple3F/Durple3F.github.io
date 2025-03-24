@@ -12,7 +12,7 @@ const pokemonData = {
 			cry: "src/audio/cries/rattata.mp3"
 		},
 		types: ["Dark", "Normal"],
-		tags: ["Starter"],
+		tags: [],
 		stats: {
 			hp: 30,
 			attack: 56,
@@ -223,6 +223,72 @@ const pokemonData = {
 
 		]
 	},
+	"Slowpoke": {
+		name: "Slowpoke",
+		number: "79",
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0079Slowpoke.png",
+			"home": "src/img/tiny-pokemon/Slowpoke.png"
+		},
+		sounds: {
+			cry: "src/audio/cries/butterfree.mp3"
+		},
+		types: ["Water", "Psychic"],
+		tags: ["Starter"],
+		stats: {
+			hp: 90,
+			attack: 65,
+			defense: 65,
+			specialAttack: 40,
+			specialDefense: 40,
+			speed: 15
+		},
+		expYield: 63,
+		evYield: {
+			hp: 1,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 3,
+			blue: 3,
+			purple: 3
+		},
+		learnset: [
+			{
+				name: "Tackle",
+				unlock: {
+					type: "level",
+					amount: 1
+				}
+			},
+			{
+				name: "Curse",
+				unlock: {
+					type: "level",
+					amount: 1
+				}
+			},
+			{
+				name: "Growl",
+				unlock: {
+					type: "level",
+					amount: 3
+				}
+			},
+			{
+				name: "Water Gun",
+				unlock: {
+					type: "level",
+					amount: 6
+				}
+			},
+		]
+	},
 	"Ledyba": {
 		name: "Ledyba",
 		number: "165",
@@ -358,7 +424,7 @@ const pokemonData = {
 			cry: "src/audio/cries/pichu.mp3"
 		},
 		types: ["Electric"],
-		tags: ["Starter"],
+		tags: [],
 		stats: {
 			hp: 20,
 			attack: 40,
@@ -444,7 +510,7 @@ const pokemonData = {
 			cry: "src/audio/cries/wingull.mp3"
 		},
 		types: ["Water", "Flying"],
-		tags: ["Starter"],
+		tags: [],
 		stats: {
 			hp: 40,
 			attack: 30,
@@ -555,6 +621,13 @@ const pokemonData = {
 				unlock: {
 					type: "level",
 					amount: 9
+				}
+			},
+			{
+				name: "Shadow Sneak",
+				unlock: {
+					type: "level",
+					amount: 12
 				}
 			},
 		]
@@ -809,7 +882,7 @@ const pokemonData = {
 		sounds: {
 			cry: "src/audio/cries/grubbin.mp3"
 		},
-		tags: ["Starter"],
+		tags: [],
 		types: ["Bug"],
 		stats: {
 			hp: 47,

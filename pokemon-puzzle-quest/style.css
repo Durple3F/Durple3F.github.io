@@ -175,10 +175,10 @@ body {
 }
 #board {
 	justify-content: space-between;
-	transition: opacity 0.5s;
+	transition: filter 0.5s;
 }
 #board.showing-dialogue {
-	opacity: 0.2;
+	filter: opacity(0.2);
 }
 #title-screen {
 	flex-direction: column;
@@ -260,6 +260,11 @@ body {
 	border-radius: 0.3em;
 	margin-top: 1em;
 	margin-bottom: 1em;
+}
+#loading-bar.complete {
+	width: 30%;
+	height: calc(2em + 20px);
+	transition: width 1s, height 1s;
 }
 #loading-bar > .bar {
 	background-color: var(--health-high);
@@ -1113,7 +1118,7 @@ body {
 	font-size: min(4vh, 2em);
 	background-color: rgb(0, 68, 255);
 	background-image: repeating-linear-gradient(
-		-2deg,
+		-0.5deg,
 		transparent, transparent 0.24em, rgba(125, 143, 247, 0.266) 0.32em, transparent 0.4em
 	);
 	min-width: 10em;

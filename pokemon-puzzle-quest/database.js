@@ -1,5 +1,6 @@
 const dbName = "pokemon-puzzle-quest"
 let db
+let saveFileCount = -1
 
 const dbStores = [
 	{
@@ -133,7 +134,6 @@ function doesSaveDataExist(){
 		const request = saveFileStore.getAll()
 		request.onsuccess = event => {
 			let result = event.target.result
-			console.log(result)
 			if (result.length){
 				resolve(true)
 			} else {
@@ -147,13 +147,17 @@ function doesSaveDataExist(){
 	return promise
 }
 
+function getSaveDataObj(info){
+	return {
+		name: playerName,
+		uuid: playerSaveId,
+		settings: config,
+		data: info
+	}
+}
 function savePlayerInfo(){
 	return new Promise(resolve => {
-		let info = {
-			uuid: playerSaveId,
-			settings: config,
-			data: playerSaveInfo
-		}
+		let info = getSaveDataObj(playerSaveInfo)
 		findSaveFileInDatabase(playerSaveId)
 		.then(result => {
 			const transaction = db.transaction(["save-file"], "readwrite")
@@ -322,6 +326,7 @@ function getPlayerLevelData(saveId){
 }
 
 function findPreviousSaveData(){
+	saveFileCount = 0
 	let promise = new Promise(resolve => {
 		const transaction = db.transaction(["save-file"], "readonly")
 		const saveFileStore = transaction.objectStore("save-file")
@@ -329,27 +334,94 @@ function findPreviousSaveData(){
 		
 		request.onsuccess = event => {
 			let result = event.target.result
+			saveFileCount = result.length
 			resolve(result)
 		}
 	})
 	return promise
 }
 
-function makeNewSaveFile(){
+function deleteSaveFile(uuid){
 	let promise = new Promise(resolve => {
-		let uuid = window.crypto.randomUUID()
 		const transaction = db.transaction(["save-file"], "readwrite")
 		const saveFileStore = transaction.objectStore("save-file")
+		const index = saveFileStore.index("uuid")
+		const cursor = index.openCursor()
+		
+		cursor.onsuccess = event => {
+			const cur = event.target.result
+			if (cur){
+				if (cur.value.uuid === uuid){
+					saveFileStore.delete(cur.primaryKey)
+					resolve(true)
+				}
+				cur.continue()
+			} else {
+				resolve(false)
+			}
+		}
+	})
+	return promise
+}
+
+function makeNewSaveFile(){
+	let promise = Promise.resolve()
+	let chosenName
+	promise = promise.then(() => askToNameSave())
+	.then(name => {
+		chosenName = name
+		playerName = name || undefined
+	})
+	.then(() => new Promise(resolve => {
+		const uuid = window.crypto.randomUUID()
+		const transaction = db.transaction(["save-file"], "readwrite")
+		const saveFileStore = transaction.objectStore("save-file")
+		const data = newPlayerSaveData()
 		const request = saveFileStore.put({
+			name: chosenName,
 			uuid: uuid,
 			settings: config,
-			data: newPlayerSaveData()
+			data: getSaveDataObj(data)
 		})
 		request.onsuccess = event => {
 			makeNewBox(uuid, "Box 1")
 			.then(() => resolve(uuid))
 		}
+	}))
+	
+	return promise
+}
+function askToNameSave(){
+	let resolvePromise
+	let promise = new Promise(resolve => resolvePromise = resolve)
+	let modal = $("#modal")
+
+	clearModal(modal)
+
+	modal.find(".modal-header").addClass("justify-content-center")
+	modal.find(".modal-title").append("<h2>Enter your name:</h2>")
+	let body = modal.find(".modal-body")
+	let innerStuff = $(`<div class='container d-flex justify-content-center'></div>`)
+	innerStuff.append(`<input type='text' class='text-center'
+		required placeholder='Save File Name' style='font-size: 1.5em;'>`)
+	body.append(innerStuff)
+
+	modal.find(".modal-footer").addClass("justify-content-center")
+	.append("<button class='btn btn-primary confirm'>Submit</button>")
+
+	let result
+	modal.find(".btn.confirm").click(() => {
+		modal.modal("hide")
 	})
+
+	modal.on("hidden.bs.modal", () => {
+		result = body.find("input").val()
+		result = result.trim()
+		result = result || (saveFileCount + 1)
+		resolvePromise(result)
+	})
+
+	modal.modal("show")
 	return promise
 }
 function newPlayerSaveData(){

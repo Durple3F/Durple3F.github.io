@@ -1,6 +1,7 @@
 const canvas = $("#screen")[0]
 const ctx = canvas.getContext("2d")
 const lang = "en"
+let playerName
 
 const mouse = {
 	x: 0,
@@ -167,6 +168,7 @@ function handleSpriteLoad(){
 function loadSprite(name, url){
 	if (name in sprites.images){
 		if (sprites.images[name].complete){
+			loadedResources[0]++
 			return Promise.resolve()
 		}
 	}
@@ -286,6 +288,7 @@ function stopSound(name){
 				.then(() => {
 					snd.pause()
 					snd.volume = originalVolume
+					snd.currentTime = 0
 				})
 			} else {
 				sound.audio.pause()
@@ -371,9 +374,14 @@ function getRandomTileType(){
 
 function clearModal(modal){
 	modal.removeClass().addClass("modal").addClass("fade")
+	modal.find(".modal-header").empty().append("<div class='modal-title'>")
+	modal.find(".modal-header").removeClass().addClass("modal-header")
 	modal.find(".modal-header > .modal-title").empty()
+	modal.find(".modal-header > .modal-title").removeClass().addClass("modal-title")
 	modal.find(".modal-body").empty()
+	modal.find(".modal-body").removeClass().addClass("modal-body")
 	modal.find(".modal-footer").empty()
+	modal.find(".modal-footer").removeClass().addClass("modal-footer")
 	modal.off("hidden.bs.modal")
 }
 
@@ -525,8 +533,26 @@ function renderHelperSprites(){
 	//TODO would be nice to have more options for status circles
 }
 
+function resetEntirePage(){
+	loadedResources = [0, 0, 0, 0]
+	currentSceneInfo = {}
+
+	Object.values(sounds).forEach(sound => {
+		stopSound(sound.name)
+	})
+	playingSounds.forEach(sound => {
+		stopSound(sound.name)
+	})
+
+	$("#save-files").find(".save-file").remove()
+	$("#loading-bar").removeClass("complete")
+	$("#loading-bar").children(".count").show()
+	$("#loading-bar").children(".start").hide()
+}
+
 let loadedResources = [0, 0, 0, 0]
 function loadResources(){
+	resetEntirePage()
 	renderHelperSprites()
 
 	let sprites = [
@@ -581,67 +607,67 @@ function loadResources(){
 	.then(() => openDatabase())
 	.then(() => doesSaveDataExist())
 	//If we found data, show the save files. Otherwise, just move on.
-	.then(val => {
-		return new Promise(resolve => {
-			if (val){
-				findPreviousSaveData()
-				.then(saves => {
-					let saveFileTag = $("#save-files")
-					saveFileTag.animate({opacity: 1})
-					let list = saveFileTag.children(".list")
+	.then(val => new Promise(resolve => {
+		if (val){
+			findPreviousSaveData()
+			.then(saves => {
+				let saveFileTag = $("#save-files")
+				saveFileTag.animate({opacity: 1})
+				let list = saveFileTag.children(".list")
 
-					let chosen = null
-					const click = event => {
-						let target = $(event.currentTarget)
-						let index = parseInt(target.attr("data-save"))
-						list.children(".active").removeClass("active")
-						if (chosen === index){
-							chosen = null
-							playerSaveId = null
-							$("#loading-bar > .start").text("Start")
-						} else {
-							chosen = index
-							playerSaveId = saves[index].uuid
-							let settings = saves[index].settings
-							for (let key in settings){
-								config[key] = settings[key]
-							}
-							let newSaveData = saves[index]?.data ?? {}
-							Object.keys(playerSaveInfo).forEach(key => delete playerSaveInfo[key])
-							Object.keys(newSaveData).forEach(key => playerSaveInfo[key] = newSaveData[key])
-							$("#loading-bar > .start").text("Continue")
-							target.addClass("active")
+				let chosen = null
+				const click = event => {
+					let target = $(event.currentTarget)
+					let index = parseInt(target.attr("data-save"))
+					list.children(".active").removeClass("active")
+					if (chosen === index){
+						chosen = null
+						playerSaveId = null
+						$("#loading-bar > .start").text("Start")
+					} else {
+						chosen = index
+						playerSaveId = saves[index].uuid
+						let settings = saves[index].settings
+						for (let key in settings){
+							config[key] = settings[key]
 						}
+						let newSaveData = saves[index]?.data ?? {}
+						Object.keys(playerSaveInfo).forEach(key => delete playerSaveInfo[key])
+						Object.keys(newSaveData).forEach(key => playerSaveInfo[key] = newSaveData[key])
+						$("#loading-bar > .start").text("Continue")
+						target.addClass("active")
 					}
+				}
 
-					for (let i = 0; i < saves.length; i++){
-						let tag = $(`<div class='save-file btn btn-primary' data-save='${i}'>${i + 1}</div>`)
-						list.append(tag)
-						tag.click(click)
-					}
-					resolve()
-				})
-			} else {
+				for (let i = 0; i < saves.length; i++){
+					let tag = $(`<div class='save-file btn btn-primary' data-save='${i}'></div>`)
+					let save = saves[i]
+					let name = save.name ?? (i + 1)
+					tag.text(name)
+					list.append(tag)
+					tag.click(click)
+				}
 				resolve()
-			}
-		})
-	})
+			})
+		} else {
+			resolve()
+		}
+	}))
 	.then(() => {
 		update()
 		clearInterval(interval)
 
 		delay(1000).then(() => {
-			$("#loading-bar").animate({
-				width: "30%",
-				height: "+=20px"
-			}, 1000)
+			$("#loading-bar").addClass("complete")
 			$("#loading-bar > .bar").addClass("ready")
 			$("#loading-bar > .count").fadeOut()
 			$("#loading-bar > .start").fadeIn()
-			$("#loading-bar").click(() => {
+			$("#loading-bar").off("click")
+			.on("click", () => {
 				$("#title-screen *").off("click")
-				$("#title-screen").fadeOut().queue(() => {
-					$("#game").fadeIn()
+				$("#title-screen").stop(true)
+				.fadeOut().queue(() => {
+					// $("#game").empty().fadeIn()
 				})
 				if (playerSaveId){
 					continueGame()
@@ -742,6 +768,35 @@ function openSettings(){
 	}
 
 	changelogBtn.click(openChangelog)
+	
+	let deleteSaveSection = $("<div class='d-flex justify-space-between'></div>")
+	body.append(deleteSaveSection)
+	let deleteText = getLocaleString("delete-save", lang, ["settings"])
+	let deleteSaveButton = $(`<button class='btn btn-danger'>${deleteText}</button>`)
+	body.append(deleteSaveButton)
+	deleteSaveButton.click(() => {
+		let text = getLocaleString("delete-save-confirm", lang, ["settings"])
+		let sure = confirm(text)
+		if (sure){
+			deleteSaveFile(playerSaveId)
+			.then(success => {
+				if (!success){
+					let text = getLocaleString("delete-save-failure", lang, ["settings"])
+					alert(text)
+					location.reload()
+					return
+				}
+				alert("Successfully deleted save. However, it may be buggy, so I recommend refreshing your page.")
+				modal.modal("hide")
+				playerSaveId = null
+				playerSaveInfo = {}
+				$("body > div[data-initially-hidden='true']").fadeOut()
+				$("#title-screen").show().fadeIn()
+				loadResources()
+			})
+		}
+	})
+
 	btn.click(() => {
 		modal.modal("hide")
 	})

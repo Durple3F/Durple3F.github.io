@@ -4,7 +4,7 @@ const config = {
 	textSpeed: 40,
 
 	volumes: {
-		"music": 0.1,
+		"music": 0.02,
 		"sound": 0.4,
 		"cry": 0.4
 	},

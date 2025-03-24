@@ -35,7 +35,7 @@ const pokemonMoveData = {
 		rechargeTurns: 1,
 		energy: {
 			purple: 9,
-			yellow: 3
+			yellow: 5
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Astonish.mp3"
@@ -101,6 +101,31 @@ const pokemonMoveData = {
 					amount: -1
 				}
 			}
+		],
+	},
+	"Curse": {
+		name: "Curse",
+		type: "Ghost",
+		category: "Status",
+		strategy: "special",
+		pp: 10,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 1,
+		energy: {
+			// red: 1,
+			// orange: 1,
+			// yellow: 1,
+			// green: 1,
+			// blue: 1,
+			// purple: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Curse.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-types", target: "user" }
 		],
 	},
 	"Disarming Voice": {
@@ -573,6 +598,33 @@ const pokemonMoveData = {
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
 			{ type: "end-turn" }
+		],
+	},
+	"Shadow Sneak": {
+		name: "Shadow Sneak",
+		type: "Ghost",
+		category: "Physical",
+		strategy: "basic-damage",
+		pp: 30,
+		power: 40,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			purple: 15,
+			green: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Shadow Sneak.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "count-viable-pokemon", target: "user" },
+			{ type: "count-viable-pokemon", target: "opponent" },
+			{ type: "jump-if-equal", jumpTo: "tiny-damage" },
+			{ type: "load-number", value: 40 },
+			{ type: "damage", additivePower: -1 },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "damage", label: "tiny-damage" }
 		],
 	},
 	"String Shot": {

@@ -1203,11 +1203,11 @@ class Round{
 		if (damage === undefined){
 			damage = (attacker.level * 2 / 5 + 2) * power * atk / def / 50 + 2
 		}
-		if (attacker.data.types.includes(type)){
+		if (attacker.getEffectiveTypes().includes(type)){
 			damage *= 1.5
 		}
 		let typeMult = 1
-		for (let defType of defender.data.types){
+		for (let defType of defender.getEffectiveTypes()){
 			typeMult *= typeEffectiveness[type][defType]
 		}
 		damage *= typeMult
@@ -1388,6 +1388,7 @@ class Round{
 			"gain-energy": true,
 			"get-initiative": true,
 			"set-initiative": true,
+			"count-viable-pokemon": true,
 		}
 		let targetDefaults = {
 			"choose-tiles": "user",
@@ -1400,6 +1401,7 @@ class Round{
 			"gain-energy": "user",
 			"get-initiative": "user",
 			"set-initiative": "user",
+			"count-viable-pokemon": "user",
 		}
 		let target
 		if (effect.type in targetDefaults){
@@ -1504,6 +1506,7 @@ class Round{
 					options.additionalPower = options.additionalPower ?? 0
 					options.additionalPower += additivePower
 				}
+				console.log(options)
 				let result = this.dealDamage(options)
 				moveUseObj.info[effectIndex] = result.damageDealt
 				resolvePromise()
@@ -1551,6 +1554,10 @@ class Round{
 			case "get-stat": {
 				let statName = effect.which ?? "attack"
 				moveUseObj.info[effectIndex] = target.getStat(statName)
+				resolvePromise()
+			} break
+			case "get-types": {
+				moveUseObj.info[effectIndex] = target.getEffectiveTypes()
 				resolvePromise()
 			} break
 			case "apply-status-effect": {
@@ -1685,6 +1692,11 @@ class Round{
 				moveUseObj.info[effectIndex] = result
 				resolvePromise()
 			} break
+			case "count-viable-pokemon": {
+				let result = getUsablePokemon(target.pokemon).length
+				moveUseObj.info[effectIndex] = result
+				resolvePromise()
+			} break
 			case "multiply-energy": {
 				let amounts = params.amounts ?? {}
 				let scale = params.scale ?? 1
@@ -1729,6 +1741,14 @@ class Round{
 				let test = moveUseObj.info[effectIndex - 2]
 				let against = moveUseObj.info[effectIndex - 1]
 				if (test < against){
+					moveUseObj.nextEffectIndex = index
+				}
+				resolvePromise()
+			} break
+			case "jump-if-equal": {
+				let test = moveUseObj.info[effectIndex - 2]
+				let against = moveUseObj.info[effectIndex - 1]
+				if (test === against){
 					moveUseObj.nextEffectIndex = index
 				}
 				resolvePromise()

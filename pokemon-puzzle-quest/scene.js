@@ -3,6 +3,7 @@ function startScene(name, options){
 	let resolvePromise
 	let promise = new Promise(resolve => resolvePromise = resolve)
 	let gameTag = $("#game")
+	let gameIsHidden = $("#game").css("display") === "none"
 	gameTag.empty()
 
 	currentSceneInfo.name = name
@@ -12,13 +13,17 @@ function startScene(name, options){
 		case "fight": {
 			//This is all handled by the level effects.
 			//This one's just here in case I need it later.
-			gameTag.fadeOut()
+			if (!gameIsHidden){
+				gameTag.fadeOut()
+			}
 		} break
 		case "choose-starter": {
+			if (gameIsHidden){
+				gameTag.fadeIn()
+			}
 			changeMusic("Route 201 (Day)")
 
 			gameTag.addClass("choosing-starter")
-
 			gameTag.append(`<i class='bi bi-caret-left-fill left' style='opacity:0'></i>`)
 			gameTag.append(`<i class='bi bi-caret-right-fill right' style='opacity:0'></i>`)
 
@@ -126,7 +131,10 @@ function startScene(name, options){
 					return
 				}
 				currentIndex += indexMod
-				chooseTag.children(".ball").popover("hide")
+				chooseTag.children(".ball").popover("dispose")
+				$(".popover").fadeOut().queue(() => {
+					$(".popover").remove()
+				})
 				chooseTag.animate({
 					left: firstLeft
 				}, 400).queue(function(){
@@ -155,7 +163,10 @@ function startScene(name, options){
 			fillWithPokemon()
 		} break
 		case "route": {
-			console.log(name, options)
+			if (gameIsHidden){
+				gameTag.fadeIn()
+				gameTag.css("opacity", "0")
+			}
 			let routeName = options.name
 
 			if (routeName === "Route 1"){
@@ -668,19 +679,13 @@ function changeScene(name, options){
 	let gameTag = $("#game")
 	$(".popover").fadeOut().queue(function(){$(this).remove()})
 
-	console.log(currentSceneInfo, name, options)
 	if (name !== currentSceneInfo.name){
 		let toHide = gameTag.css("display") === "none" ? $("#board") : gameTag
-		console.log(toHide)
-
 		toHide.fadeOut(() => {
-			gameTag.empty()
 			gameTag.removeClass("choosing-starter")
 			resolvePromise()
-			gameTag.fadeIn()
 		})
 	} else {
-		gameTag.empty()
 		resolvePromise()
 	}
 	
@@ -756,6 +761,9 @@ function beginLevel(levelID){
 		changeMusic(level.music)
 	}
 
+	if (gameRound){
+		clearInterval(gameRound.tickInterval)
+	}
 	gameRound = undefined
 	gameBoard = undefined
 	currentLevelProgress = {
@@ -815,7 +823,7 @@ function advanceCurrentLevel(){
 		return promise
 	}
 
-	console.log(effect, effectIndex, params)
+	// console.log(effect, effectIndex, params)
 
 	let index
 	if (effect.jumpTo){

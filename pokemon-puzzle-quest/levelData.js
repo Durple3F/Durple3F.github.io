@@ -40,6 +40,9 @@ const NPCTrainerData = {
 			drop-shadow(0em -0.05em 0.1em #ececec20)`,
 			textBoxTextBackground: "linear-gradient(4deg, #bbb, #fff)",
 			textBoxTextContinueBackground: "linear-gradient(4deg, #bbb, #fff)",
+		},
+		textColorOverrides: {
+			"blue": "rgb(100, 129, 248)"
 		}
 	},
 	"Youngster-Gen7": {
@@ -169,6 +172,7 @@ const levelData = [
 			{ type: "dialogue", trainer: 0, source: "rival-battle-1-dialogue-lost", label: "lost" },
 		]
 	},
+	//Caterpie, Pikipek, Pichu? | Jimmy
 	{
 		id: "Route 1-2",
 		category: "Route 1",
@@ -224,12 +228,14 @@ const levelData = [
 			{ type: "jump", jumpTo: "Jimmy" },
 			{ type: "fight", trainer: 0, label: "Normal" },
 			{ type: "jump-if-lost", jumpTo: Infinity },
-			{ type: "stop-music" },
-			{ type: "dialogue", trainer: 0, source: "route-1-2-dialogue", label: "Jimmy" },
+			{ type: "jump", jumpTo: "Jimmy" },
+			{ type: "stop-music", label: "Jimmy" },
+			{ type: "dialogue", trainer: 0, source: "route-1-2-dialogue" },
 			{ type: "change-music", music: "SM Trainer Battle"},
 			{ type: "fight", trainer: 2}
 		]
 	},
+	//Spinarak, Ledyba, Grubbin? | Audrey
 	{
 		id: "Route 1-3",
 		category: "Route 1",
@@ -245,7 +251,7 @@ const levelData = [
 					},
 					{
 						id: "Ledyba",
-						levelMin: 2, levelMax: 3
+						levelMin: 3, levelMax: 4
 					}
 				]
 			},
@@ -256,13 +262,13 @@ const levelData = [
 						levelMin: 3, levelMax: 4
 					},
 					{
-						id: "Grubbin",
-						levelMin: 4, levelMax: 6
+						id: "Ledyba",
+						levelMin: 3, levelMax: 4
 					},
 					{
-						id: "Ledyba",
-						levelMin: 2, levelMax: 3
-					}
+						id: "Grubbin",
+						levelMin: 3, levelMax: 5
+					},
 				]
 			},
 			{
@@ -285,7 +291,10 @@ const levelData = [
 			{ type: "jump", jumpTo: "Audrey" },
 			{ type: "fight", trainer: 0, label: "Normal" },
 			{ type: "jump-if-lost", jumpTo: Infinity },
-			{ type: "dialogue", trainer: 0, source: "route-1-3-dialogue", label: "Audrey" },
+			{ type: "jump", jumpTo: "Audrey" },
+			{ type: "stop-music", label: "Audrey" },
+			{ type: "dialogue", trainer: 0, source: "route-1-3-dialogue" },
+			{ type: "change-music", music: "SM Trainer Battle"},
 			{ type: "fight", trainer: 2}
 		]
 	},
@@ -383,9 +392,35 @@ const levelData = [
 					}
 				]
 			},
+			{
+				pokemon: [
+					// {
+					// 	id: "Wingull",
+					// 	levelMin: 5, levelMax: 7
+					// },
+					// {
+					// 	id: "Yungoos",
+					// 	levelMin: 5, levelMax: 7
+					// },
+					// {
+					// 	id: "Rattata-Alola",
+					// 	levelMin: 5, levelMax: 7
+					// },
+					{
+						id: "Slowpoke",
+						levelMin: 5, levelMax: 7
+					}
+				]
+			},
 		],
 		effects: [
-			{ type: "fight", trainer: 0 }
+			{ type: "random-number", min: 1, max: 10 },
+			{ type: "load-value", value: 0 }, //10
+			{ type: "jump-if-less-than", jumpTo: "Normal" },
+			{ type: "fight", trainer: 1, label: "Slowpoke" },
+			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "fight", trainer: 0, label: "Normal" },
+			{ type: "jump-if-lost", jumpTo: Infinity },
 		]
 	},
 	{

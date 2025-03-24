@@ -1,7 +1,15 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-3/21:
+3/22:
+	- You can delete save files now
+
+3/21 (11k lines):
 	- During fights, the dialogue should be easier to read now by lowering the board's opacity.
+	- Character dialogue can now override the default colors for special text.
+	- Character dialogue can now trigger effects during the text appearing.
+	- Character dialogue can now have wait times programmed into the text directly.
+	- Added Shadow Sneak
+	- Big work on being able to delete save files
 
 3/20 (10.8k lines):
 	- Dialogue can now have fancy styled text inside it.
