@@ -9,6 +9,13 @@ function startScene(name, options){
 	currentSceneInfo.name = name
 	currentSceneInfo.options = options
 
+	const fadeInGame = () => {
+		if (gameIsHidden){
+			gameTag.fadeIn()
+			gameTag.css("opacity", "0")
+		}
+	}
+
 	switch (name){
 		case "fight": {
 			//This is all handled by the level effects.
@@ -163,10 +170,7 @@ function startScene(name, options){
 			fillWithPokemon()
 		} break
 		case "route": {
-			if (gameIsHidden){
-				gameTag.fadeIn()
-				gameTag.css("opacity", "0")
-			}
+			fadeInGame()
 			let routeName = options.name
 
 			if (routeName === "Route 1"){
@@ -296,6 +300,7 @@ function startScene(name, options){
 			promise = promise.then(levelID => beginLevel(levelID))
 		} break
 		case "pc": {
+			fadeInGame()
 			let pcBoxData
 			getPlayerBoxes(playerSaveId)
 			.then(val => {

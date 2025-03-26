@@ -1,5 +1,18 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
+3/26 (11.4k lines):
+	- Fixed a bug where the pc wouldn't appear anymore. Worrying.
+	- Somehow, I made it this far without having the computer player ever consider whether their moves were recharging.
+	- Some status effects can be exclusive to others. I'm making the executive decision that you are totally able to be Shocked <i>while</i> Asleep, but you can't be Drowsy and Asleep at the same time. That's just silly.
+	- Some status effects, when added, can replace others. This is mainly so that if you're Drowsy and become Asleep, it looks like the icon stays in the same spot.
+	- The function that multiplies energy can now round up/down
+	- Added Drowsy and Asleep statuses
+	- Added Yawn
+
+3/24 (11.2k lines):
+	- Added Slowpoke
+	- Added Curse
+
 3/22:
 	- You can delete save files now
 

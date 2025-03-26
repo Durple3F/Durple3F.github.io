@@ -87,7 +87,7 @@ class Pokemon{
 
 		if (!options.skipGivingMoves){
 			let unlocks = this.determineUnlockedMoves()
-			this.unlockMoves(unlocks)
+			this.unlockMoves(unlocks, true)
 			if (this.activeMoves.length === 0){
 				this.chooseActiveMoves()
 			}
@@ -105,11 +105,11 @@ class Pokemon{
 	addStatusEffect(status, owner, pokemon, source){
 		if (typeof status === "string"){
 			switch (status){
-				case "burn": {
-					status = {
-						name: "burn"
-					}
-				} break
+				// case "burn": {
+				// 	status = {
+				// 		name: "burn"
+				// 	}
+				// } break
 				case "confused": {
 					status = {
 						name: "confused",
@@ -132,6 +132,16 @@ class Pokemon{
 						turns: 1
 					}
 				} break
+				case "drowsy": {
+					status = {
+						name: "drowsy"
+					}
+				} break
+				case "asleep": {
+					status = {
+						name: "asleep"
+					}
+				} break
 				default:
 					console.warn("You never handled", status)
 					status = {
@@ -139,16 +149,35 @@ class Pokemon{
 					}
 				break
 			}
+			if (typeof status === "string"){
+				console.warn("Uh-oh, this status never got converted to an object: ", status)
+			}
 		} else {
 			console.warn("Non-string status effect added", status)
 		}
 
+		let result = {}
+		result.added = []
+		result.removed = []
+		result.replaced = []
 		status.type = "status"
 		status.sourceMove = source
 		status.sourcePokemon = pokemon
 		status.sourceTrainer = owner
 
 		let prevented = false
+		let statusEffects = this.statusEffects
+
+		//Is this status excluded due to a limitation of the status?
+		let statusType = pokemonStatusData[status.name]
+		if (statusType){
+			let exclusiveTo = statusType.exclusiveTo
+			let excluded = this.statusEffects.filter(s => exclusiveTo.includes(s.name))
+			if (excluded.length){
+				prevented = true
+			}
+		}
+
 		let types = this.getEffectiveTypes()
 		//Fire pokemon can't be burned
 		if (status.name === "burn" && types.includes("Fire")){
@@ -166,17 +195,53 @@ class Pokemon{
 
 		//There are some status effects that don't stack
 		let data = pokemonStatusData[status.name]
-		let existingCopies = this.statusEffects.filter(s => s.name === status.name)
+		let existingCopies = statusEffects.filter(s => s.name === status.name)
 		if (data && !data.stacks && existingCopies.length){
 			prevented = true
 		}
 
 		if (!prevented){
-			this.statusEffects.push(status)
+			result.added.push(status)
 		}
+
+		//Does gaining this status replace any other statuses the Pokemon may have?
+		if (statusType){
+			let canReplace = statusType.canReplace
+			let replaces = this.statusEffects.filter(s => canReplace.includes(s.name))
+			if (replaces.length){
+				replaces.forEach(s => result.replaced.push(s))
+			}
+		}
+
+		if (result.replaced.length){
+			let index = this.statusEffects.indexOf(result.replaced[0])
+			//Put the new statuses in place of the first old one
+			for (let status of result.added){
+				this.statusEffects.splice(index, 0, status)
+				index++
+			}
+			//Remove the old ones
+			for (let status of result.replaced){
+				if (this.statusEffects.includes(status)){
+					let index = this.statusEffects.indexOf(status)
+					this.statusEffects.splice(index, 1)
+				}
+			}
+		} else {
+			for (let status of result.added){
+				this.statusEffects.push(status)
+			}
+		}
+
+		return result
 	}
 	hasStatus(name){
 		return this.statusEffects.some(status => {
+			return status.name === name
+		})
+	}
+	getStatuses(name){
+		return this.statusEffects.filter(status => {
 			return status.name === name
 		})
 	}
@@ -242,7 +307,7 @@ class Pokemon{
 		return this.types
 	}
 
-	unlockMoves(unlockMap){
+	unlockMoves(unlockMap, skipActivating){
 		//Each move that becomes locked has its index noted in locked, and vice versa.
 		let changedIndexes = {
 			unlocked: [],
@@ -259,7 +324,7 @@ class Pokemon{
 				let move = this.moves[i]
 				let movesCapped = this.activeMoves.length >= 4
 				let alreadyHasMove = this.activeMoves.includes(move)
-				if (!movesCapped && !alreadyHasMove){
+				if (!movesCapped && !alreadyHasMove && !skipActivating){
 					this.activeMoves.push(move)
 				}
 			}

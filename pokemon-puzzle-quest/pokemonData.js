@@ -198,6 +198,31 @@ const pokemonStatusData = {
 		stacks: false,
 		class: "buff",
 		name: "invulnerable"
+	},
+	"drowsy": {
+		image: "src/img/icons/yawn.png",
+		color: "rgb(61, 79, 197)",
+		stacks: false,
+		class: "debuff",
+		exclusiveTo: ["asleep"],
+		name: "drowsy"
+	},
+	"asleep": {
+		image: "src/img/icons/sleep.png",
+		color: "rgb(34, 51, 158)",
+		stacks: false,
+		class: "debuff",
+		canReplace: ["drowsy"],
+		name: "asleep"
+	},
+}
+for (let statusName in pokemonStatusData){
+	let statusType = pokemonStatusData[statusName]
+	if (!statusType.exclusiveTo){
+		statusType.exclusiveTo = []
+	}
+	if (!statusType.canReplace){
+		statusType.canReplace = []
 	}
 }
 
@@ -219,6 +244,9 @@ const tileStatusData = {
 	},
 	"Locked": {
 		url: "src/img/icons/plain-padlock.png"
+	},
+	"Cursed": {
+		url: "src/img/icons/curse.png"
 	}
 }
 

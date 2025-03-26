@@ -125,7 +125,7 @@
 		},
 		"Curse": {
 			"name": "Curse",
-			"description": "If the user is Ghost type, applies Cursed to the opponent. Otherwise, lowers the user's Speed by one stage, and raises their Attack and Defense by one stage each.",
+			"description": "If the user is Ghost type, applies Cursed to one random tile. Otherwise, lowers the user's Speed by one stage, and raises their Attack and Defense by one stage each. At the start of the opponent's turn, if any tiles are Cursed, they take damage equal to 1/4 of their max HP.",
 			"shortDescription": " "
 		},
 		"Disarming Voice": {
@@ -282,6 +282,11 @@
 			"name": "Wrap",
 			"description": "Gives 2-5 tiles on the board the Wrap status. When an opponent removes those tiles, this move deals them damage.",
 			"shortDescription": "Trap random tiles"
+		},
+		"Yawn": {
+			"name": "Yawn",
+			"description": "Applies Drowsy. When a Drowsy Pokémon ends their turn, they may become Asleep, and lose Drowsy. An Asleep Pokémon gets half as much energy (rounded up) from matches.",
+			"shortDescription": "Applies Drowsy"
 		}
 	},
 	"status-effects": {
@@ -300,6 +305,14 @@
 		"poisoned": {
 			"name": "Poisoned",
 			"description": "At the beginning of this Pokémon's turn, it will take 1/16 of its max HP in damage."
+		},
+		"drowsy": {
+			"name": "Drowsy",
+			"description": "This Pokémon will fall Asleep at the end of its turn unless it can cascade two or more matches together."
+		},
+		"asleep": {
+			"name": "Asleep",
+			"description": "This Pokémon gets half as much energy from matches rounded up."
 		}
 	},
 	"settings": {

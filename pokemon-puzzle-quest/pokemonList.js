@@ -287,6 +287,13 @@ const pokemonData = {
 					amount: 6
 				}
 			},
+			{
+				name: "Yawn",
+				unlock: {
+					type: "level",
+					amount: 1
+				}
+			},
 		]
 	},
 	"Ledyba": {

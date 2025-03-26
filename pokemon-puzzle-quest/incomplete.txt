@@ -1,6 +1,7 @@
 Incomplete move lists:
 Rattata-Alola (lv 7)
 Butterfree (lv 0)
+Slowpoke (lv 9)
 Ledyba (lv 8)
 Spinarak (lv 8)
 Wingull (lv 1)
@@ -14,6 +15,7 @@ Comfey (lv 0)
 
 Missing Evolutions:
 Rattata-Alola
+Slowpoke
 Ledyba
 Spinarak
 Pichu

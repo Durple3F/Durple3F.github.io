@@ -18,9 +18,9 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
-			{ type: "load-number", value: 0.5 },
+			{ type: "load-value", value: 0.5 },
 			{ type: "multiply-numbers" },
-			{ type: "load-number", value: 1 },
+			{ type: "load-value", value: 1 },
 			{ type: "heal", target: "user", amount: -2, min: -1 },
 		],
 	},
@@ -44,7 +44,7 @@ const pokemonMoveData = {
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
 			{ type: "get-initiative", target: "opponent" },
-			{ type: "load-number", value: 0.5 },
+			{ type: "load-value", value: 0.5 },
 			{ type: "multiply-numbers" },
 			{ type: "set-initiative", target: "opponent", initiative: -1 },
 		],
@@ -68,11 +68,11 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
-			{ type: "load-number", value: 3 },
+			{ type: "load-value", value: 3 },
 			{ type: "select-energy-colors", search: "most-full", target: "opponent", count: -1 },
-			{ type: "load-number", value: -2 },
+			{ type: "load-value", value: -2 },
 			{ type: "gain-energy", count: -1, colors: -2, target: "opponent" },
-			{ type: "load-number", value: -1 },
+			{ type: "load-value", value: -1 },
 			{ type: "multiply-energy", amounts: -2, scale: -1 },
 			{ type: "gain-energy", amounts: -1, target: "user" }
 		],
@@ -111,21 +111,42 @@ const pokemonMoveData = {
 		pp: 10,
 		power: null,
 		accuracy: null,
-		rechargeTurns: 1,
+		rechargeTurns: 3,
 		energy: {
-			// red: 1,
-			// orange: 1,
-			// yellow: 1,
-			// green: 1,
-			// blue: 1,
-			// purple: 6
+			red: 1,
+			orange: 1,
+			yellow: 1,
+			green: 1,
+			blue: 1,
+			purple: 6
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Curse.mp3"
 		},
 		effects: [
 			{ type: "play-sound", name: "attack" },
-			{ type: "get-types", target: "user" }
+			{ type: "get-types", target: "user" },
+			{ type: "load-value", value: "Ghost" },
+			{ type: "jump-if-includes", jumpTo: "Ghost"},
+			{
+				type: "apply-debuff", target: "user",
+				debuff: { type: "stat", stat: "speed", amount: -1 }
+			},
+			{
+				type: "apply-debuff", target: "user",
+				debuff: { type: "stat", stat: "attack", amount: 1 }
+			},
+			{
+				type: "apply-debuff", target: "user",
+				debuff: { type: "stat", stat: "defense", amount: 1 }
+			},
+			{ type: "jump", jumpTo: Infinity},
+			{ type: "load-value", value: 1, label: "Ghost" },
+			{ type: "select-random-tiles", count: -1 },
+			{
+				type: "apply-status-to-tiles", selection: "group", which: -1,
+				status: { name: "Cursed", type: "debuff", duration: null }
+			}
 		],
 	},
 	"Disarming Voice": {
@@ -149,7 +170,7 @@ const pokemonMoveData = {
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
 			{ type: "random-number", min: 1, max: 10 },
-			{ type: "load-number", value: 6 },
+			{ type: "load-value", value: 6 },
 			{ type: "jump-if-less-than", jumpTo: "end" },
 			{ type: "apply-status-effect", statusEffect: "confused", target: "opponent" },
 			{ type: "end-turn", label: "end" }
@@ -174,9 +195,9 @@ const pokemonMoveData = {
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
 			{ type: "random-number", min: 1, max: 10 },
-			{ type: "load-number", value: 10 },
+			{ type: "load-value", value: 10 },
 			{ type: "jump-if-less-than", jumpTo: Infinity },
-			{ type: "load-number", value: 3 },
+			{ type: "load-value", value: 3 },
 			{ type: "select-random-tiles", count: -1 },
 			{
 				type: "apply-status-to-tiles", selection: "group", which: -1,
@@ -275,7 +296,7 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
-			{ type: "load-number", value: 1 },
+			{ type: "load-value", value: 1 },
 			{
 				type: "select-random-tiles", count: -1,
 				conditions: { notTypes: ["green"] }
@@ -305,7 +326,7 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
-			{ type: "load-number", value: 3 },
+			{ type: "load-value", value: 3 },
 			{ type: "select-random-tiles", count: -1 },
 			{ type: "change-tile-type", selection: "group", which: -1, targetType: "green" },
 		],
@@ -355,9 +376,9 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
-			{ type: "load-number", value: 0.5 },
+			{ type: "load-value", value: 0.5 },
 			{ type: "change-tile-weight", tileType: "green", factor: -1 },
-			{ type: "load-number", value: -1 },
+			{ type: "load-value", value: -1 },
 			{ type: "multiply-numbers" },
 			{ type: "change-tile-weight", tileType: "black", add: -1 },
 		],
@@ -380,7 +401,7 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
-			{ type: "load-number", value: 2 },
+			{ type: "load-value", value: 2 },
 			{ type: "select-random-tiles", count: -1 },
 			{
 				type: "apply-status-to-tiles", selection: "group", which: -1,
@@ -459,7 +480,7 @@ const pokemonMoveData = {
 			{ type: "jump-if-less-than", jumpTo: 6 },
 			{ type: "damage" },
 			{ type: "jump", jumpTo: Infinity },
-			{ type: "load-number", value: 50 },
+			{ type: "load-value", value: 50 },
 			{ type: "damage", additivePower: -1 }
 		],
 	},
@@ -532,7 +553,7 @@ const pokemonMoveData = {
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
 			{ type: "random-number", min: 1, max: 10 },
-			{ type: "load-number", value: 8 },
+			{ type: "load-value", value: 8 },
 			{ type: "jump-if-less-than", jumpTo: Infinity },
 			{ type: "apply-status-effect", statusEffect: "poisoned", target: "opponent" },
 		],
@@ -621,7 +642,7 @@ const pokemonMoveData = {
 			{ type: "count-viable-pokemon", target: "user" },
 			{ type: "count-viable-pokemon", target: "opponent" },
 			{ type: "jump-if-equal", jumpTo: "tiny-damage" },
-			{ type: "load-number", value: 40 },
+			{ type: "load-value", value: 40 },
 			{ type: "damage", additivePower: -1 },
 			{ type: "jump", jumpTo: Infinity },
 			{ type: "damage", label: "tiny-damage" }
@@ -802,9 +823,9 @@ const pokemonMoveData = {
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
 			{ type: "random-number", min: 1, max: 10 },
-			{ type: "load-number", value: 6 },
+			{ type: "load-value", value: 6 },
 			{ type: "jump-if-less-than", jumpTo: Infinity },
-			{ type: "load-number", value: 2 },
+			{ type: "load-value", value: 2 },
 			{ type: "select-random-tiles", count: -1 },
 			{
 				type: "apply-status-to-tiles", selection: "group", which: -1,
@@ -856,7 +877,7 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "count-tiles", options: { type: "blue" } },
-			{ type: "load-number", value: 2 },
+			{ type: "load-value", value: 2 },
 			{ type: "multiply-numbers" },
 			{ type: "damage", additivePower: -1 }
 		],
@@ -885,6 +906,27 @@ const pokemonMoveData = {
 				type: "apply-status-to-tiles", selection: "group", which: -1,
 				status: { name: "Wrap", type: "debuff", duration: null }
 			},
+		],
+	},
+	"Yawn": {
+		name: "Yawn",
+		type: "Normal",
+		category: "Status",
+		strategy: "debuff-opponent",
+		pp: 10,
+		power: null,
+		accuracy: 0,
+		rechargeTurns: 3,
+		energy: {
+			// blue: 6,
+			// purple: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Yawn.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "apply-status-effect", statusEffect: "drowsy", target: "opponent" }
 		],
 	},
 };

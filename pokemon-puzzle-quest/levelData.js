@@ -369,6 +369,7 @@ const levelData = [
 			{ type: "jump", jumpTo: Infinity },
 		]
 	},
+	//Wingull, Yungoos, Ratatta-Alola, Slowpoke?
 	{
 		id: "Route 1-5",
 		category: "Route 1",
@@ -380,15 +381,15 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Wingull",
-						levelMin: 5, levelMax: 7
+						levelMin: 4, levelMax: 6
 					},
 					{
 						id: "Yungoos",
-						levelMin: 5, levelMax: 7
+						levelMin: 4, levelMax: 6
 					},
 					{
 						id: "Rattata-Alola",
-						levelMin: 5, levelMax: 7
+						levelMin: 4, levelMax: 6
 					}
 				]
 			},
@@ -396,26 +397,26 @@ const levelData = [
 				pokemon: [
 					// {
 					// 	id: "Wingull",
-					// 	levelMin: 5, levelMax: 7
+					// 	levelMin: 4, levelMax: 6
 					// },
 					// {
 					// 	id: "Yungoos",
-					// 	levelMin: 5, levelMax: 7
+					// 	levelMin: 4, levelMax: 6
 					// },
 					// {
 					// 	id: "Rattata-Alola",
-					// 	levelMin: 5, levelMax: 7
+					// 	levelMin: 4, levelMax: 6
 					// },
 					{
 						id: "Slowpoke",
-						levelMin: 5, levelMax: 7
+						levelMin: 6, levelMax: 7
 					}
 				]
 			},
 		],
 		effects: [
 			{ type: "random-number", min: 1, max: 10 },
-			{ type: "load-value", value: 0 }, //10
+			{ type: "load-value", value: 0 }, //10 },
 			{ type: "jump-if-less-than", jumpTo: "Normal" },
 			{ type: "fight", trainer: 1, label: "Slowpoke" },
 			{ type: "jump-if-lost", jumpTo: Infinity },

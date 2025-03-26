@@ -42,7 +42,7 @@ Move effects:
   count-tiles:
     param: options (obj)
     Counts the tiles which match the description laid out by the options object.
-  load-number:
+  load-value:
     param: value (int)
     param: index (int, optional)
     Allows you to insert a number into a move's effects, assembly-style. It's done this way so that other effects are able to be coded more dynamically.

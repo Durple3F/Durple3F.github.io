@@ -351,6 +351,9 @@ class Round{
 			matchTotals = addEnergies(matchTotals, matchTypes)
 		}
 		tiles = noDuplicates(tiles)
+
+		//Each pokemon has stats governing how much bonus energy they should get
+		//From different match types.
 		for (let type in matchTotals){
 			let count = matchTotals[type]
 			let energyValue = activePokemon.getBonusEnergy(type)
@@ -360,11 +363,18 @@ class Round{
 
 		//Let's give the active player energy of each color based on tiles matched
 		//of that color
+		let energyFromMatches = getEmptyEnergy()
 		for (let tile of tiles){
 			let energyValue = this.getTileEnergyValue(tile)
-			// let bonus = activePokemon.getBonusEnergy(tile)
-			energy = addEnergies(energyValue, energy)
+			energyFromMatches = addEnergies(energyValue, energyFromMatches)
 		}
+
+		//If the active pokemon is Asleep, they get less energy.
+		if (activePokemon.hasStatus("asleep")){
+			energyFromMatches = multiplyEnergies(energyFromMatches, 0.5, "up")
+		}
+
+		energy = addEnergies(energyFromMatches, energy)
 		this.giveEnergy(energy, activeTrainer, activePokemon)
 
 		//Deal with status effects that do something when those tiles are matched
@@ -580,6 +590,9 @@ class Round{
 			}
 		}
 		let contents = this.board.tilesOnScreen()
+
+		let cursed
+
 		for (let tile of contents){
 			if (!this.board.isOnScreen(tile)) continue
 			let statusEffects = tile.statusEffects
@@ -594,7 +607,8 @@ class Round{
 						move: status.sourceMove,
 						to: activePokemon,
 						toTrainer: trainer,
-						damage: damage
+						damage: damage,
+						fixed: true
 					})
 				} else if (isEnemy && statusName === "Infested"){
 					//Infested tiles eat some of your energy and give them to the opponent
@@ -609,8 +623,22 @@ class Round{
 						energyToGive[type] = changes[type] * -1
 					}
 					this.giveEnergy(energyToGive, otherTrainer, otherPokemon)
+				} else if (isEnemy && statusName === "Cursed"){
+					cursed = status
 				}
 			}
+		}
+		if (cursed){
+			let damage = Math.floor(activePokemon.maxhp / 4)
+			this.dealDamage({
+				from: cursed.sourcePokemon,
+				fromTrainer: cursed.sourceTrainer,
+				move: cursed.sourceMove,
+				to: activePokemon,
+				toTrainer: trainer,
+				damage: damage,
+				fixed: true
+			})
 		}
 
 		//Reduce status effect durations
@@ -673,6 +701,22 @@ class Round{
 		let newInitiative = initiatives[this.activePlayerIndex] - this.maxInitiative
 		initiatives[this.activePlayerIndex] = Math.max(0, newInitiative)
 		this.updateInitiative(this.activePlayerIndex, false)
+
+		let activeTrainer = this.trainers[this.activePlayerIndex]
+		let activePokemon = activeTrainer.activePokemon
+
+		//A Drowsy pokemon becomes asleep.
+		if (activePokemon.hasStatus("drowsy")){
+			let drowsy = activePokemon.getStatuses("drowsy")[0]
+			if (this.currentCascade >= 2){
+				activePokemon.removeStatus("drowsy")
+			} else if (drowsy) {
+				let sourceTrainer = drowsy.sourceTrainer
+				let sourcePokemon = drowsy.sourcePokemon
+				let sourceMove = drowsy.sourceMove
+				activePokemon.addStatusEffect("asleep", sourceTrainer, sourcePokemon, sourceMove)
+			}
+		}
 
 		let nextPlayer = this.getNextPlayer()
 		if (nextPlayer !== this.activePlayerIndex){
@@ -1005,6 +1049,7 @@ class Round{
 		return promise
 	}
 	computerApplicableMoves(moveList){
+		let pokemon = this.trainers[1].activePokemon
 		//Returns a list of those same moves filtered to the ones
 		//that would do something right now
 		let good = []
@@ -1013,7 +1058,17 @@ class Round{
 		for (let move of moveList){
 			//TODO watch out for stuff like healing moves, or
 			//moves that only work if the board meets certain conditions
-			good.push(move)
+			let moveIndex = pokemon.moves.indexOf(move)
+			let moveUsage = pokemon.moveUsage[moveIndex]
+			let prevented = false
+
+			if (moveUsage.recharge){
+				prevented = true
+			}
+			
+			if (!prevented){
+				good.push(move)
+			}
 		}
 
 		return good
@@ -1211,6 +1266,12 @@ class Round{
 			typeMult *= typeEffectiveness[type][defType]
 		}
 		damage *= typeMult
+
+		//Damage can be set to a specific value
+		if (options.fixed && options.damage !== undefined){
+			damage = options.damage
+		}
+
 		damage = Math.round(damage)
 
 		//If the receiving Pokemon has Invulnerable, set damage dealt to 0.
@@ -1395,6 +1456,7 @@ class Round{
 			"damage": "opponent",
 			"heal": "user",
 			"get-stat": "user",
+			"get-types": "user",
 			"apply-status-effect": "opponent",
 			"apply-debuff": "opponent",
 			"select-energy-colors": "none",
@@ -1715,7 +1777,7 @@ class Round{
 				this.initiativeValues[index] = Math.floor(initiative)
 				resolvePromise()
 			} break
-			case "load-number": {
+			case "load-value": {
 				let val = effect.value ?? 0
 				if (effect.index !== undefined){
 					val = moveUseObj.info[effect.index]
@@ -1749,6 +1811,20 @@ class Round{
 				let test = moveUseObj.info[effectIndex - 2]
 				let against = moveUseObj.info[effectIndex - 1]
 				if (test === against){
+					moveUseObj.nextEffectIndex = index
+				}
+				resolvePromise()
+			} break
+			case "jump-if-includes": {
+				let test = moveUseObj.info[effectIndex - 2]
+				let against = moveUseObj.info[effectIndex - 1]
+				//If something goes horribly wrong and test is not a list
+				if (!test.includes){
+					console.warn("Uh oh! this is not an array!!!", test, against)
+					resolvePromise()
+					break
+				}
+				if (test.includes(against)){
 					moveUseObj.nextEffectIndex = index
 				}
 				resolvePromise()

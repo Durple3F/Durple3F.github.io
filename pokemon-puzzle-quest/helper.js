@@ -136,11 +136,18 @@ function addEnergies(from, to) {
 	}
 	return result
 }
-function multiplyEnergies(energy, factor) {
+function multiplyEnergies(energy, factor, round) {
 	let keys = Object.keys(energy)
 	let result = {}
 	for (let key of keys) {
 		result[key] = energy[key] * factor
+		if (round === "up"){
+			result[key] = Math.ceil(result[key])
+		} else if (round === "down"){
+			result[key] = Math.floor(result[key])
+		} else if (round){
+			result[key] = Math.round(result[key])
+		}
 	}
 	return result
 }

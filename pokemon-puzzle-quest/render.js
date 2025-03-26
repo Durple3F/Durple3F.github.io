@@ -90,15 +90,19 @@ function renderStatusEffects(tile, board, round, w, h, xOffset, yOffset){
 		let angle = (currentCount + 1) * diff
 		let statusCenterX = tileCenterX + tileWidth * Math.cos(angle) * 0.5
 		let statusCenterY = tileCenterY + tileHeight * Math.sin(angle) * 0.5
-		let statusWidth = tileWidth * 0.4
-		let statusHeight = tileHeight * 0.4
+		let statusWidth = tileWidth * 0.5
+		let statusHeight = tileHeight * 0.5
 		let statusX = statusCenterX - statusWidth * 0.5
 		let statusY = statusCenterY - statusHeight * 0.5
+		let circleWidth = statusWidth * 0.97
+		let circleHeight = statusHeight * 0.97
+		let circleX = statusCenterX - circleWidth * 0.5
+		let circleY = statusCenterY - circleHeight * 0.5
 		let circleType = `${status.color}-circle`
 
 		ctx.save()
 		ctx.filter = `opacity(${status.spriteOpacity})`
-		ctx.drawImage(sprites.images[circleType], statusX, statusY, statusWidth, statusHeight)
+		ctx.drawImage(sprites.images[circleType], circleX, circleY, circleWidth, circleHeight)
 		let sprite = sprites.images["status-" + status.name]
 		ctx.drawImage(sprite, statusX, statusY, statusWidth, statusHeight)
 		ctx.restore()
