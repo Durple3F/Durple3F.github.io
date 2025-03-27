@@ -12,7 +12,7 @@ const pokemonData = {
 			cry: "src/audio/cries/rattata.mp3"
 		},
 		types: ["Dark", "Normal"],
-		tags: [],
+		tags: ["Starter"],
 		stats: {
 			hp: 30,
 			attack: 56,
@@ -61,6 +61,13 @@ const pokemonData = {
 				unlock: {
 					type: "level",
 					amount: 7
+				}
+			},
+			{
+				name: "Bite",
+				unlock: {
+					type: "level",
+					amount: 10
 				}
 			},
 		]
@@ -235,7 +242,7 @@ const pokemonData = {
 			cry: "src/audio/cries/butterfree.mp3"
 		},
 		types: ["Water", "Psychic"],
-		tags: ["Starter"],
+		tags: [],
 		stats: {
 			hp: 90,
 			attack: 65,

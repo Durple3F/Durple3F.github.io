@@ -395,18 +395,18 @@ const levelData = [
 			},
 			{
 				pokemon: [
-					// {
-					// 	id: "Wingull",
-					// 	levelMin: 4, levelMax: 6
-					// },
-					// {
-					// 	id: "Yungoos",
-					// 	levelMin: 4, levelMax: 6
-					// },
-					// {
-					// 	id: "Rattata-Alola",
-					// 	levelMin: 4, levelMax: 6
-					// },
+					{
+						id: "Wingull",
+						levelMin: 4, levelMax: 6
+					},
+					{
+						id: "Yungoos",
+						levelMin: 4, levelMax: 6
+					},
+					{
+						id: "Rattata-Alola",
+						levelMin: 4, levelMax: 6
+					},
 					{
 						id: "Slowpoke",
 						levelMin: 6, levelMax: 7
@@ -416,7 +416,7 @@ const levelData = [
 		],
 		effects: [
 			{ type: "random-number", min: 1, max: 10 },
-			{ type: "load-value", value: 0 }, //10 },
+			{ type: "load-value", value: 10 },
 			{ type: "jump-if-less-than", jumpTo: "Normal" },
 			{ type: "fight", trainer: 1, label: "Slowpoke" },
 			{ type: "jump-if-lost", jumpTo: Infinity },

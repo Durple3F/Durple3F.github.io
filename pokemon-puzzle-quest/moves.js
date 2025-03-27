@@ -49,6 +49,34 @@ const pokemonMoveData = {
 			{ type: "set-initiative", target: "opponent", initiative: -1 },
 		],
 	},
+	"Bite": {
+		name: "Bite",
+		type: "Dark",
+		category: "Physical",
+		strategy: "basic-damage",
+		pp: 25,
+		power: 60,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			purple: 12,
+			green: 4,
+			yellow: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Bite.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "load-value", value: 1 },
+			{ type: "choose-tiles", count: -1, target: "user" },
+			{ type: "load-value", value: 2 },
+			{ type: "load-value", value: 2 },
+			{ type: "expand-tile-selection", selection: -3, width: -2, height: -1 },
+			{ type: "remove-tiles", selection: -1 }
+		],
+	},
 	"Bug Bite": {
 		name: "Bug Bite",
 		type: "Bug",
@@ -530,7 +558,8 @@ const pokemonMoveData = {
 					amount: -1
 				}
 			},
-			{ type: "choose-tiles", count: 2, target: "user" },
+			{ type: "load-value", value: 2 },
+			{ type: "choose-tiles", count: -1, target: "user" },
 			{ type: "swap-tiles", selection: -1 },
 		],
 	},
@@ -852,7 +881,8 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
-			{ type: "choose-tiles", count: 1, target: "user" },
+			{ type: "load-value", value: 1 },
+			{ type: "choose-tiles", count: -1, target: "user" },
 			{
 				type: "apply-status-to-tiles", selection: "group", which: -1,
 				status: { name: "Locked", type: "debuff", duration: 1 }
@@ -918,8 +948,8 @@ const pokemonMoveData = {
 		accuracy: 0,
 		rechargeTurns: 3,
 		energy: {
-			// blue: 6,
-			// purple: 4
+			blue: 6,
+			purple: 4
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Yawn.mp3"

@@ -3,6 +3,8 @@
 	"initiative-tutorial": "Initiative<br>Each turn, both Pokémon gain Initiative based on their speed stats. When a player matches 4 or more tiles in a row, they get a free turn.",
 	"error-cant-remove-last-pokemon": "You can't put your only Pokémon into the PC.",
 	"error-no-usable-pokemon": "All your Pokémon are currently fainted.",
+	"select-number-tiles-plural": "Select %c tiles",
+	"select-number-tiles-single": "Select a tile",
 	"dialogue": {
 		"rival-battle-1-dialogue": {
 			"events": [
@@ -112,6 +114,11 @@
 			"name": "Absorb",
 			"description": "Deals damage. Then, heals the user for 50% of the damage dealt.",
 			"shortDescription": "Steals a little HP"
+		},
+		"Bite": {
+			"name": "Bite",
+			"description": "Deals damage. Then, the user picks a tile. A 2x2 area of tiles centered on that tile are each removed.",
+			"shortDescription": "Deals some damage and removes tiles"
 		},
 		"Bug Bite": {
 			"name": "Bug Bite",

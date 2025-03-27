@@ -1526,7 +1526,7 @@ class Round{
 				this.animateSwitchLocations(tile1, tile2, options)
 			} break
 			case "choose-tiles": {
-				let count = effect.count ?? 1
+				let count = params.count ?? 1
 				this.currentlySelecting = {
 					player: target,
 					type: "tiles",
@@ -1543,7 +1543,11 @@ class Round{
 						this.computerMakeSelection()
 					})
 				} else {
-					this.createAnnouncement("general", `Select ${count} tiles`)
+					let plural = count !== 1
+					let localeId = plural ? "select-number-tiles-plural" : "select-number-tiles-single"
+					let text = getLocaleString(localeId, lang)
+					text = text.replaceAll("%c", count)
+					this.createAnnouncement("general", text)
 				}
 			} break
 			case "shuffle": {
@@ -1717,6 +1721,20 @@ class Round{
 				moveUseObj.info[effectIndex] = chosenTiles
 				resolvePromise()
 			} break
+			case "expand-tile-selection": {
+				let selection = params.selection ?? []
+				let targetWidth = params.width ?? 1
+				let targetHeight = params.height ?? 1
+				let avgX = selection.map(t => t.x).reduce((acc, v, _, s) => acc + v/s.length, 0)
+				let avgY = selection.map(t => t.y).reduce((acc, v, _, s) => acc + v/s.length, 0)
+				let chosenTiles = this.board.getTilesFromOrigin(
+					avgX, avgY, 
+					targetWidth, targetHeight, selection
+				)
+				
+				moveUseObj.info[effectIndex] = chosenTiles
+				resolvePromise()
+			} break
 			case "apply-status-to-tiles": {
 				let selection = effect.selection
 				let status = effect.status
@@ -1753,6 +1771,15 @@ class Round{
 				let result = this.board.countTiles(effect.options)
 				moveUseObj.info[effectIndex] = result
 				resolvePromise()
+			} break
+			case "remove-tiles": {
+				let selection = params.selection ?? []
+				selection.forEach(t => this.board.explodeTile(t))
+				if (selection.length){
+					this.increaseCascade()
+				}
+				this.applyGravity()
+				.then(() => resolvePromise())
 			} break
 			case "count-viable-pokemon": {
 				let result = getUsablePokemon(target.pokemon).length
@@ -3115,6 +3142,102 @@ class Board{
 
 	getColumn(x){
 		return this.contents.filter(t => t.x === x).sort((a, b) => a.y - b.y)
+	}
+
+	getBoundsOfSelection(tiles){
+		let minX, maxX, minY, maxY
+		for (let tile of tiles){
+			if (!(tile.x >= minX)){
+				minX = tile.x
+			}
+			if (!(tile.x <= maxX)){
+				maxX = tile.x
+			}
+			if (!(tile.y >= minY)){
+				minY = tile.y
+			}
+			if (!(tile.y <= maxY)){
+				maxY = tile.y
+			}
+		}
+		return [minX, maxX, minY, maxY]
+	}
+	getRectOfTilesIn(tiles){
+		let selection = []
+		let bounds = this.getBoundsOfSelection(tiles)
+		let minX = bounds[0]
+		let maxX = bounds[1]
+		let minY = bounds[2]
+		let maxY = bounds[3]
+		
+
+		let chooseable = this.tilesOnScreen()
+		let toAdd = chooseable.filter(tile => {
+			return tile.x >= minX && tile.x <= maxX && tile.y >= minY && tile.y <= maxY
+		})
+		toAdd.forEach(t => selection.push(t))
+		return selection
+	}
+	getTilesFromOrigin(x, y, width, height, tiles){
+		let contents = this.tilesOnScreen()
+		let selection = this.getRectOfTilesIn(tiles)
+
+		let changed = true
+		while (changed){
+			changed = false
+			let bounds = this.getBoundsOfSelection(selection)
+			let minX = bounds[0]
+			let maxX = bounds[1]
+			let minY = bounds[2]
+			let maxY = bounds[3]
+			let left = x - bounds[0]
+			let right = bounds[1] - x
+			let top = y - bounds[2]
+			let bottom = bounds[3] - y
+			let curWidth = left + right + 1
+			let curHeight = top + bottom + 1
+			
+			if (curWidth < width){
+				let addLeft = left < right ? true : right < left ? false : !!Math.round(Math.random())
+				let newX
+				if (addLeft){
+					newX = minX - 1
+					minX = newX
+				} else {
+					newX = maxX + 1
+					maxX = newX
+				}
+				let newTiles = contents.filter(t => {
+					return t.x === newX && !selection.includes(t) &&
+					t.y >= minY && t.y <= maxY
+				})
+				if (newTiles.length){
+					changed = true
+				}
+				newTiles.forEach(t => selection.push(t))
+			}
+			if (curHeight < height){
+				let addTop = top < bottom ? true : bottom < top ? false : !!Math.round(Math.random())
+				let newY
+				if (addTop){
+					newY = minY - 1
+					minY = newY
+				} else {
+					newY = maxY + 1
+					maxY = newY
+				}
+				let newTiles = contents.filter(t => {
+					return t.y === newY && !selection.includes(t) &&
+					t.x >= minX && t.x <= maxX
+				})
+				if (newTiles.length){
+					changed = true
+				}
+				newTiles.forEach(t => selection.push(t))
+			}
+		}
+		
+		return selection
 	}
 
 	matchesIfSwapped(tile1, tile2){

@@ -1,6 +1,11 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
+3/27 (11.6k lines):
+	- Added a neat function that lets me find tiles that surround a given selection of tiles.
+	- Added Bite, a move that needs to know what tiles surround a given selection of tiles.
+
 3/26 (11.4k lines):
+	- You can now see the version number in game. When I remember to update it.
 	- Fixed a bug where the pc wouldn't appear anymore. Worrying.
 	- Somehow, I made it this far without having the computer player ever consider whether their moves were recharging.
 	- Some status effects can be exclusive to others. I'm making the executive decision that you are totally able to be Shocked <i>while</i> Asleep, but you can't be Drowsy and Asleep at the same time. That's just silly.

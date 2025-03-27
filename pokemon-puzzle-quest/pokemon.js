@@ -139,7 +139,8 @@ class Pokemon{
 				} break
 				case "asleep": {
 					status = {
-						name: "asleep"
+						name: "asleep",
+						turns: Math.floor(Math.random() * 4) + 2
 					}
 				} break
 				default:

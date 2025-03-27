@@ -1,7 +1,9 @@
-const canvas = $("#screen")[0]
-const ctx = canvas.getContext("2d")
+const versionNumber = "v0.6.4"
 const lang = "en"
 let playerName
+
+const canvas = $("#screen")[0]
+const ctx = canvas.getContext("2d")
 
 const mouse = {
 	x: 0,
@@ -689,7 +691,8 @@ function openSettings(){
 	let body = modal.find(".modal-body")
 
 	modal.find(".modal-title").html(`<h6 class='display-6 text-center'>Settings</h6>`)
-	let changelogBtn = $(`<button class='btn btn-secondary'>Changelog</button>`)
+	let changelogBtn = $(`<button class='btn btn-secondary'></button>`)
+	changelogBtn.text(`Changelog (${versionNumber})`)
 	modal.find(".modal-footer").append(changelogBtn)
 	let btn = $(`<button class='btn btn-primary'>Continue</button>`)
 	modal.find(".modal-footer").append(btn)
