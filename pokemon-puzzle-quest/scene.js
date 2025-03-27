@@ -1089,8 +1089,10 @@ function viewPokemonInfo(pokemon){
 			if (pokemon.activeMoves.length >= 4){
 				createAnnouncement("general", "A Pokemon can't have more than 4 active moves.")
 			} else {
-				pokemon.activeMoves.push(move)
-				moveTag.addClass("active-move")
+				let added = pokemon.addActiveMove(move)
+				if (added){
+					moveTag.addClass("active-move")
+				}
 			}
 		} else {
 			if (pokemon.activeMoves.length === 1){

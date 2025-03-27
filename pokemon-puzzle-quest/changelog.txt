@@ -1,8 +1,13 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-3/27 (11.6k lines):
+3/27 (11.8k lines):
 	- Added a neat function that lets me find tiles that surround a given selection of tiles.
 	- Added Bite, a move that needs to know what tiles surround a given selection of tiles.
+	- Added the framework to make it possible for pokemon to have abilities. No promises I'll get very far with it. I'm telling myself that this is a very "nice to have" kind of feature.
+	- Fixed a bug where it would forget what you named your save.
+	- Re-did the dialogue box CSS. Now it has the same aspect ratio on all screens.
+	- Added some new effects for Dialogue
+	- Added more stuff to 1-5
 
 3/26 (11.4k lines):
 	- You can now see the version number in game. When I remember to update it.

@@ -519,7 +519,9 @@ class Round{
 		}
 		
 		let modalOpen = $("#modal").hasClass("show")
-		if (!document.hidden && !modalOpen){
+		let dialogueOpen = $("#dialogue-container").css("display") !== "none"
+		let covered = modalOpen || dialogueOpen
+		if (!document.hidden && !covered){
 			let board = this.board
 			let contents = board.tilesOnScreen()
 			for (let tile of contents){
@@ -2982,7 +2984,7 @@ class Round{
 	calculateEXPGained(){
 		let enemyTrainer = this.trainers[1]
 		let defeatedPokemon = enemyTrainer.pokemon.filter(p => p.hp <= 0)
-		let yourPokemon = getUsablePokemon(this.trainers[0].pokemon)
+		let yourPokemon = this.trainers[0].pokemon
 		let resultMap = {}
 		for (let yours of yourPokemon){
 			let totalEXP = 0

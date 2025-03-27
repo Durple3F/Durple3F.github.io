@@ -16,7 +16,7 @@
 			"effects": [
 				{ "type": "get-speaker", "name": "Hau", "class": "Hau" },
 				{ "type": "text", "speaker": "Hau", "text": "Hey, hey! ^^$@blue|Welcome!@$^^" },
-				{ "type": "text", "speaker": "Hau", "text": "Thanks for tryin' this little game. Not to go tooting horns, but this to^^ok A LOT$@wait-5|@$ of ^^effort." },
+				{ "type": "text", "speaker": "Hau", "text": "Thanks for tryin' this little game. Not to go tooting horns, but this to^^ok $@red|A LOT!@$$@wait-10|@$ of ^^effort." },
 				{ "type": "transform-speaker", "speaker": "Hau", "transform": "rotate(0deg)", "duration": 500, "waitDuration": 150 },
 				{ "type": "load-player-info", "key": "chosen-starter" },
 				{ "type": "text", "speaker": "Hau", "text": "That's a nice %c-pname% you got there! Let's see how they are in a friendly match!", "values": [-1] }
@@ -51,6 +51,46 @@
 			"effects": [
 				{ "type": "get-speaker", "name": "Hau", "class": "Hau" },
 				{ "type": "text", "speaker": "Hau", "text": "Oh, hey again! Have you caught any new Pokémon?" }
+			]
+		},
+		"route-1-5-dialogue-1": {
+			"effects": [
+				{ "type": "get-speaker", "name": "Kevin", "class": "Youngster-Gen7" },
+				{ "type": "text", "speaker": "Kevin", "text": "Hey, have you seen my big sister? She said she was coming with Gully... oh well! Let's have a battle while we wait!" }
+			]
+		},
+		"route-1-5-dialogue-2": {
+			"effects": [
+				{ "type": "get-speaker", "name": "Madison", "class": "Lass-Gen7" },
+				{ "type": "text", "speaker": "Madison", "text": "Y'know how Wingull are always stealing your snacks on the beach?" },
+				{ "type": "display-image", "src": "src/img/pokemon-sprites/wingull.png", "name": "Wingull", "position": {
+					"type": "relative",
+					"relative": "Madison"
+				}},
+				{ "type": "style-image", "image": "Wingull", "css": {
+					"z-index": -1,
+					"opacity": 0
+				}},
+				{ "type": "text", "speaker": "Madison", "text": "I've got a little secret for you!" },
+				{ "type": "text", "speaker": "Madison", "text": "It was the same Wingull every time." },
+				{ "type": "animate-speaker", "speaker": "Madison",
+				  "duration": 500, "waitDuration": 0, "css": {
+					"left": "+=8%"
+				}},
+				{ "type": "animate-image", "image": "Wingull", "duration": 500, "css": {
+					"left": "-=8%",
+					"opacity": 1
+				}},
+				{ "type": "text", "speaker": "Madison", "text": "Gully here has been single handedly making people buy a new order of fries for years." },
+				{ "type": "text", "speaker": "Madison", "text": "He's a $@start-italics|@$smart$@end-italics|@$ little kleptomaniac, isn't he?" },
+				{ "type": "text", "speaker": "Madison", "text": "But now you that know my secret... I can't let you go telling people about it!" }
+			]
+		},
+		"route-1-5-dialogue-2-win": {
+			"effects": [
+				{ "type": "get-speaker", "name": "Madison", "class": "Lass-Gen7" },
+				{ "type": "text", "speaker": "Madison", "text": "Arghhh! Fine, you beat me! But please, don't tell anyone about Gully's crimes!" },
+				{ "type": "text", "speaker": "Madison", "text": "He's a sweet little horrible thing! Just... keep this between us, okay?" }
 			]
 		}
 	},

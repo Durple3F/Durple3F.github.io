@@ -14,7 +14,7 @@ const textColors = {
 let dialogueProgress
 
 function beginDialogue(dialogueData){
-	$("#dialogue").fadeIn()
+	$("#dialogue-container").fadeIn()
 	dialogueProgress = {
 		dialogue: dialogueData,
 		info: [],
@@ -36,7 +36,7 @@ function beginDialogue(dialogueData){
 
 	let promise = advanceCurrentDialogue()
 	.then(() => {
-		$("#dialogue").fadeOut()
+		$("#dialogue-container").fadeOut()
 		if (boardIsVisible){
 			delay(400).then(() => {
 				$("#board").removeClass("showing-dialogue")
@@ -65,6 +65,7 @@ function advanceCurrentDialogue(){
 		return promise
 	}
 
+	let dialogueContainer = $("#dialogue-container")
 	let dialogueTag = $("#dialogue")
 	let speakersTag = dialogueTag.children(".speakers")
 	let textBox = dialogueTag.children(".text-box")
@@ -152,31 +153,44 @@ function advanceCurrentDialogue(){
 				Object.keys(those).forEach(key => colors[key] = those[key])
 			}
 
+			let currentAdditionalStyle = {}
 			for (let i = 0; i < otherText.length; i++){
 				let word = {
 					text: otherText[i],
-					style: ""
+					style: {}
 				}
+				Object.keys(currentAdditionalStyle)
+				.forEach(key => {
+					word.style[key] = currentAdditionalStyle[key]
+				})
 				realWords.push(word)
 
 				if (fancyTextMatches[i]){
 					let match = fancyTextMatches[i]
 					let word = {
 						text: match[2],
-						style: ""
+						style: {}
 					}
 					let style = match[1]
 					
 					if (style in colors){
 						let color = colors[style]
-						word.style += "color: "+color+";"
-						word.style += `background-image: linear-gradient(${color}, ${color});`
+						word.style["color"] = color
+						word.style["background-image"] = `linear-gradient(${color}, ${color})`
 					} else if (style.substring(0, 4) === "wait") {
 						let dur = Number(style.substring(5))
 						word.addedDuration = textSpeed * dur
+					} else if (style === "start-italics") {
+						currentAdditionalStyle["font-style"] = "italic"
+					} else if (style === "end-italics") {
+						currentAdditionalStyle["font-style"] = ""
 					} else {
 						console.warn("Unknown style info", style)
 					}
+					Object.keys(currentAdditionalStyle)
+					.forEach(key => {
+						word.style[key] = currentAdditionalStyle[key]
+					})
 					realWords.push(word)
 				}
 			}
@@ -227,7 +241,7 @@ function advanceCurrentDialogue(){
 						dur *= textSpeed
 						let span = $("<span>")
 						span.addClass("letter")
-						span.css("opacity", "0.001")
+						span.css("opacity", "0.0000001")
 						span.html(letter)
 
 						let isOperation = v === "^" && (letters[i+1] === "^" || letters[i-1] === "^")
@@ -260,8 +274,14 @@ function advanceCurrentDialogue(){
 
 			realWords.forEach(textPiece => {
 				let textPieceTag = textPiece.tag
-				let style = textPieceTag.attr("style")
-				textPieceTag.attr("style", style + textPiece.style)
+				let style = textPiece.style
+				textPieceTag.css(textPiece.style)
+				if (style["font-style"] === "italic"){
+					console.log(style)
+					textPieceTag.css({
+						"padding-right": "0.12em"
+					})
+				}
 			})
 
 			let skipResolve
@@ -302,6 +322,60 @@ function advanceCurrentDialogue(){
 		case "transform-speaker": {
 			carryOutDialogueEvent(effect)
 			.then(() => resolvePromise())
+		} break
+		case "display-image": {
+			let src = effect.src
+			let imageObj = {}
+			imageObj.src = src
+			let image = $("<img>")
+			imageObj.tag = image
+			image.attr("src", src)
+			let position = effect.position
+			if (position.type === "relative"){
+				let name = position.relative
+				let relativeTo = dialogueProgress.speakers.find(s => s.id === name)
+				let relativeTag = relativeTo.tag
+				let offset = relativeTag.position()
+				let width = relativeTag.width()
+				let height = relativeTag.height()
+				let totalWidth = dialogueContainer.width()
+				let totalHeight = dialogueContainer.height()
+				image.css({
+					"position": "absolute",
+					"top": offset.top + (totalHeight * (position?.top ?? 0)),
+					"left": offset.left + (totalWidth * (position?.left ?? 0)),
+					"width": width,
+					"height": height
+				})
+			}
+			image.attr("data-name", effect.name)
+			speakersTag.append(image)
+
+			resolvePromise()
+		} break
+		case "animate-speaker": {
+			let name = effect.speaker
+			let speaker = dialogueProgress.speakers.find(s => s.id === name)
+			let image = speaker.tag
+			let css = effect.css
+			let duration = effect.duration ?? 500
+			let waitDuration = effect.waitDuration ?? duration
+			image.animate(css, duration)
+			delay(waitDuration).then(() => resolvePromise())
+		} break
+		case "animate-image": {
+			let image = speakersTag.children(`[data-name=${effect.image}]`)
+			let css = effect.css
+			let duration = effect.duration ?? 500
+			let waitDuration = effect.waitDuration ?? duration
+			image.animate(css, duration)
+			delay(waitDuration).then(() => resolvePromise())
+		} break
+		case "style-image": {
+			let image = speakersTag.children(`[data-name=${effect.image}]`)
+			let css = effect.css
+			image.css(css)
+			resolvePromise()
 		} break
 		case "load-player-info": {
 			dialogueProgress.info[effectIndex] = playerSaveInfo[effect.key]

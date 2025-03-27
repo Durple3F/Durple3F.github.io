@@ -63,6 +63,26 @@ class Pokemon{
 			}
 		})
 
+		//Decide which abilities this pokemon has
+		if (options?.ability){
+			if (typeof options.ability === "string" && options.ability in abilityData){
+				this.ability = abilityData[options.ability]
+			} else {
+				this.ability = options.ability
+			}
+		} else {
+			//Choose a random ability this pokemon may have.
+			let which = options?.addHiddenAbility ? "hiddenAbilities" : "abilities"
+			let possibleAbilities = this.data[which]
+			let abilityName = randomChoice(possibleAbilities)
+			if (abilityName){
+				this.ability = abilityData[abilityName]
+			}
+		}
+		if (!this.ability){
+			this.ability = abilityData["No Ability"]
+		}
+
 		this.energyMasteryUpgrades = {}
 		this.energyMastery = {}
 		for (let type in this.data.energyMastery){
@@ -81,7 +101,7 @@ class Pokemon{
 		if (options.activeMoves){
 			for (let name of options.activeMoves){
 				let move = pokemonMoveData[name]
-				if (move) this.activeMoves.push(move)
+				if (move) this.addActiveMove(move)
 			}
 		}
 
@@ -256,6 +276,13 @@ class Pokemon{
 		}
 	}
 
+	addActiveMove(move){
+		if (this.activeMoves.length >= 4) return false
+		if (this.activeMoves.includes(move)) return false
+		this.activeMoves.push(move)
+		return true
+	}
+
 	changeLevel(level){
 		let oldMax = this.getStat("hp")
 		this.level = level
@@ -323,10 +350,8 @@ class Pokemon{
 				changedIndexes.unlocked.push(i)
 
 				let move = this.moves[i]
-				let movesCapped = this.activeMoves.length >= 4
-				let alreadyHasMove = this.activeMoves.includes(move)
-				if (!movesCapped && !alreadyHasMove && !skipActivating){
-					this.activeMoves.push(move)
+				if (!skipActivating){
+					this.addActiveMove(move)
 				}
 			}
 			this.movesUnlockedMap[i] = v
@@ -355,7 +380,7 @@ class Pokemon{
 		let toAdd = 4 - this.activeMoves.length
 		//Pick up to 4 of the most recently unlocked moves
 		chooseable = chooseable.reverse().slice(0, toAdd)
-		chooseable.forEach(m => this.activeMoves.push(m))
+		chooseable.forEach(m => this.addActiveMove(m))
 
 		//Just a nice thing: Sort the active moves by name.
 		this.activeMoves.sort((a, b) => {
@@ -463,14 +488,14 @@ class Pokemon{
 			let move = oldMoves[i]
 			this.unlockMove(move.name)
 		})
-		oldActive.forEach(move => this.activeMoves.push(move))
+		oldActive.forEach(move => this.addActiveMove(move))
 		let unlocks = this.determineUnlockedMoves()
 		let changes = this.unlockMoves(unlocks)
 		for (let moveIndex of changes.unlocked){
 			let learn = this.data.learnset[moveIndex]
 			let move = pokemonMoveData[learn.name]
 			if (this.activeMoves.length < 4){
-				this.activeMoves.push(move)
+				this.addActiveMove(move)
 			}
 		}
 		return changes

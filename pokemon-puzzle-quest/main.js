@@ -1,4 +1,4 @@
-const versionNumber = "v0.6.4"
+const versionNumber = "v0.6.5"
 const lang = "en"
 let playerName
 
@@ -433,6 +433,7 @@ function resize(){
 		}
 	}
 
+	//Resize initiative bars
 	let initiativeBars = $(".initiative")
 	for (let initiativeBar of initiativeBars){
 		let bar = $(initiativeBar).children(".bar")
@@ -441,6 +442,28 @@ function resize(){
 			$(bar).css("width", width)
 		}
 	}
+
+	//Resize the dialogue box to fit
+	let intendedDialogueRatio = 20 / 9
+	let currentRatio = screenW / screenH
+	let dialogueContainer = $("#dialogue-container")
+	let newW = screenW, newH = screenH
+	let xOffset = 0, yOffset = 0
+	if (currentRatio > intendedDialogueRatio){
+		//Screen is too wide
+		newW = screenH * intendedDialogueRatio
+		remainingW = screenW - newW
+		xOffset = remainingW * 0.5
+	} else {
+		//Screen is too short
+		newH = screenW / intendedDialogueRatio
+		remainingH = screenH - newH
+		yOffset = remainingH * 0.5
+	}
+	dialogueContainer.css("width", newW)
+	dialogueContainer.css("height", newH)
+	dialogueContainer.css("left", xOffset)
+	dialogueContainer.css("top", yOffset)
 }
 
 function doTick(){
@@ -629,6 +652,7 @@ function loadResources(){
 					} else {
 						chosen = index
 						playerSaveId = saves[index].uuid
+						playerName = saves[index].name || null
 						let settings = saves[index].settings
 						for (let key in settings){
 							config[key] = settings[key]

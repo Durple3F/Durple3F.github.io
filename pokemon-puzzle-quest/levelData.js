@@ -231,8 +231,8 @@ const levelData = [
 			{ type: "jump", jumpTo: "Jimmy" },
 			{ type: "stop-music", label: "Jimmy" },
 			{ type: "dialogue", trainer: 0, source: "route-1-2-dialogue" },
-			{ type: "change-music", music: "SM Trainer Battle"},
-			{ type: "fight", trainer: 2}
+			{ type: "change-music", music: "SM Trainer Battle" },
+			{ type: "fight", trainer: 2 }
 		]
 	},
 	//Spinarak, Ledyba, Grubbin? | Audrey
@@ -294,8 +294,8 @@ const levelData = [
 			{ type: "jump", jumpTo: "Audrey" },
 			{ type: "stop-music", label: "Audrey" },
 			{ type: "dialogue", trainer: 0, source: "route-1-3-dialogue" },
-			{ type: "change-music", music: "SM Trainer Battle"},
-			{ type: "fight", trainer: 2}
+			{ type: "change-music", music: "SM Trainer Battle" },
+			{ type: "fight", trainer: 2 }
 		]
 	},
 	// Rival Battle 2
@@ -369,7 +369,7 @@ const levelData = [
 			{ type: "jump", jumpTo: Infinity },
 		]
 	},
-	//Wingull, Yungoos, Ratatta-Alola, Slowpoke?
+	//Wingull, Yungoos, Ratatta-Alola, Slowpoke? | Kevin / Madison
 	{
 		id: "Route 1-5",
 		category: "Route 1",
@@ -413,6 +413,26 @@ const levelData = [
 					}
 				]
 			},
+			{
+				name: "Kevin",
+				class: "Youngster-Gen7",
+				pokemon: [
+					{
+						id: "Grubbin",
+						level: 6
+					}
+				]
+			},
+			{
+				name: "Madison",
+				class: "Lass-Gen7",
+				pokemon: [
+					{
+						id: "Wingull",
+						level: 6
+					}
+				]
+			},
 		],
 		effects: [
 			{ type: "random-number", min: 1, max: 10 },
@@ -420,8 +440,23 @@ const levelData = [
 			{ type: "jump-if-less-than", jumpTo: "Normal" },
 			{ type: "fight", trainer: 1, label: "Slowpoke" },
 			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "jump", jumpTo: "TrainerChoice" },
 			{ type: "fight", trainer: 0, label: "Normal" },
 			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "jump", jumpTo: "TrainerChoice" },
+
+			{ type: "random-number", min: 1, max: 10, label: "TrainerChoice" },
+			{ type: "load-value", value: 3 },
+			{ type: "jump-if-less-than", jumpTo: "Kevin" },
+			{ type: "jump", jumpTo: "Madison" },
+			{ type: "dialogue", trainer: 2, source: "route-1-5-dialogue-1", label: "Kevin" },
+			{ type: "fight", trainer: 2 },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "dialogue", trainer: 3, source: "route-1-5-dialogue-2", label: "Madison" },
+			{ type: "fight", trainer: 3 },
+			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "dialogue", trainer: 3, source: "route-1-5-dialogue-2-win" },
+			{ type: "jump", jumpTo: Infinity },
 		]
 	},
 	{
@@ -453,11 +488,11 @@ function getLevelButtonHtml(level) {
 	btn.attr("data-level", level.id)
 	return btn
 }
-function getNPCDataFromTrainer(trainer){
+function getNPCDataFromTrainer(trainer) {
 	let result = {}
-	if (trainer.class in NPCTrainerData){
+	if (trainer.class in NPCTrainerData) {
 		result = NPCTrainerData[trainer.class]
-	} else if (trainer.name in NPCTrainerData){
+	} else if (trainer.name in NPCTrainerData) {
 		result = NPCTrainerData[trainer.name]
 	}
 	return result
@@ -465,18 +500,18 @@ function getNPCDataFromTrainer(trainer){
 function getLevelsInCategory(category) {
 	return levelData.filter(level => level.category === category)
 }
-function getTrainerClassesFromLevelCategory(category){
+function getTrainerClassesFromLevelCategory(category) {
 	let levels = getLevelsInCategory(category)
 	let trainers = levels.map(level => level.trainers ?? []).flat()
 	let NPCDatas = trainers.map(getNPCDataFromTrainer)
-	.filter(data => Object.keys(data).length)
+		.filter(data => Object.keys(data).length)
 	NPCDatas = noDuplicates(NPCDatas)
 	return NPCDatas
 }
-function loadTrainerClassSprites(data){
+function loadTrainerClassSprites(data) {
 	let sprites = data.imageSources || {}
 	let names = []
-	for (let key in sprites){
+	for (let key in sprites) {
 		let url = sprites[key]
 		let name = `trainer-${data.name}-${key}`
 		loadSprite(name, url)

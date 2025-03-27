@@ -12,6 +12,7 @@
 	<script src="render.js"></script>
 	<script src="pokemonList.js"></script>
 	<script src="moves.js"></script>
+	<script src="abilities.js"></script>
 	<script src="pokemonData.js"></script>
 	<script src="levelData.js"></script>
 	<script src="animations.js"></script>
@@ -211,18 +212,20 @@
 			<div class="list"></div>
 		</div>
 	</div>
-	<div id="dialogue" data-initially-hidden="true" style="display: none;">
-		<div class="speakers"></div>
-		<div class="text-box">
-			<div class="nameplate">
+	<div id="dialogue-container" data-initially-hidden="true" style="display: none;">
+		<div id="dialogue">
+			<div class="speakers"></div>
+			<div class="text-box">
+				<div class="nameplate">
+					<div class="text-background"></div>
+					<div class="text-background-2"></div>
+					<div class="text"></div>
+				</div>
 				<div class="text-background"></div>
-				<div class="text-background-2"></div>
 				<div class="text"></div>
-			</div>
-			<div class="text-background"></div>
-			<div class="text"></div>
-			<div class="text-continue">
-				<i class="bi bi-caret-down-fill"></i>
+				<div class="text-continue">
+					<i class="bi bi-caret-down-fill"></i>
+				</div>
 			</div>
 		</div>
 	</div>

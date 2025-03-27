@@ -724,6 +724,8 @@ const pokemonData = {
 		},
 		types: ["Water"],
 		tags: ["Starter"],
+		abilities: ["Torrent"],
+		hiddenAbilities: ["Liquid Voice"],
 		stats: {
 			hp: 50,
 			attack: 54,
@@ -1044,5 +1046,11 @@ for (let name in pokemonData) {
 	}
 	for (let type of tileTypes){
 		pokemon.energyMastery[type] = pokemon.energyMastery[type] ?? 0
+	}
+	if (!pokemon.abilities) {
+		pokemon.abilities = []
+	}
+	if (!pokemon.hiddenAbilities) {
+		pokemon.hiddenAbilities = []
 	}
 }

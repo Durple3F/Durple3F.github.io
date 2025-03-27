@@ -191,6 +191,10 @@ function savePokemon(pokemon){
 		obj.movesUnlocked = pokemon.movesUnlockedMap.map((v, i) => {
 			return v ? pokemon.moves[i].name : null
 		}).filter(v => v)
+		obj.ability = pokemon.ability.id
+		if (obj.ability === "No Ability"){
+			delete obj.ability
+		}
 		obj.pcBox = pokemon.pcBox
 		obj.pcBoxX = pokemon.pcBoxX
 		obj.pcBoxY = pokemon.pcBoxY
