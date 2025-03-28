@@ -69,6 +69,8 @@ body {
 	--energy-blue: #00c0e7;
 	--energy-purple: #dd60dd;
 	--exp: #74def0;
+
+	--dialogue-font-size: min(5vh, 3vw)
 }
 
 .floating-text {
@@ -217,7 +219,7 @@ body {
   justify-content: center;
   align-items: center;
   position: relative;
-	font-size: 1.3em;
+	font-size: calc(var(--dialogue-font-size) * 0.7);
 }
 
 .route-screen {
@@ -1035,7 +1037,7 @@ body {
 	background: linear-gradient(-30deg, #00477d80 0%, #004ea8a0 100%);
 	left: 50%;
 	width: 80%; height: 40%;
-	max-width: 80em; max-height: 20em;
+	/* max-width: 80em; max-height: 20em; */
 	transform: translate(-50%, 0);
 	bottom: 0%;
 	border-radius: 50%;
@@ -1044,7 +1046,8 @@ body {
 #dialogue > .text-box > .text-background {
 	position: absolute;
 	top: 50%;	left: 50%;
-	width: calc(100% - 1rem); height: calc(100% - 1rem);
+	font-size: var(--dialogue-font-size);
+	width: calc(100% - 0.2em); height: calc(100% - 0.2em);
 	transform: translate(-50%, -50%);
 	/* background-color: #ececec; */
 	background: radial-gradient(at bottom, #aeaeae, white);
@@ -1062,11 +1065,15 @@ body {
 	width: calc(100% - 1rem); height: calc(100% - 1rem);
 	transform: translate(-50%, -50%);
 	padding: min(4vh, 1.2em) min(5em, 15vw);
+	padding-left: 15%;
+	padding-right: 15%;
+	padding-top: 2.5%;
+	padding-bottom: 2.5%;
 	/* display: flex; */
 	/* justify-content: center; */
 	/* align-items: center; */
 	z-index: 12;
-	font-size: min(5vh, 2em, 5vw);
+	font-size: var(--dialogue-font-size);
 	filter: drop-shadow(0.05em 0em 0.1em #ececec)
 	drop-shadow(-0.05em 0em 0.1em #ececec)
 	drop-shadow(0em 0.05em 0.1em #ececec)
@@ -1108,32 +1115,32 @@ body {
 #dialogue > .text-box > .nameplate > .text-background {
 	position: absolute;
 	background-color: rgb(75, 117, 232);
-	font-size: min(4vh, 2em);
-	min-width: calc(10em + 0.3em);
-	min-height: calc(min(8vh, 4rem) + 0.3em);
+	font-size: var(--dialogue-font-size);
+	min-width: calc(10em + 0.25em);
+	min-height: calc(var(--dialogue-font-size) + 0.25em);
 	transform: translate(-50%, -50%);
-	border-radius: 0.5em;
+	border-radius: 0.35em;
 }
 #dialogue > .text-box > .nameplate > .text-background-2 {
 	position: absolute;
-	font-size: min(4vh, 2em);
+	font-size: var(--dialogue-font-size);
 	background-color: rgb(0, 68, 255);
 	background-image: repeating-linear-gradient(
 		-0.5deg,
-		transparent, transparent 0.24em, rgba(125, 143, 247, 0.266) 0.32em, transparent 0.4em
+		transparent, transparent 0.1em, rgba(125, 143, 247, 0.266) 0.15em, transparent 0.25em
 	);
 	min-width: 10em;
-	min-height: min(8vh, 4rem);
+	min-height: var(--dialogue-font-size);
 	text-align: center;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	transform: translate(-50%, -50%);
-	border-radius: 0.5em;
+	border-radius: 0.35em;
 }
 #dialogue > .text-box > .nameplate > .text {
 	position: absolute;
-	font-size: min(4vh, 2em);
+	font-size: var(--dialogue-font-size);
 	min-width: 10em;
 	min-height: min(8vh, 4rem);
 	text-align: center;
@@ -1142,7 +1149,7 @@ body {
 	align-items: center;
 	transform: translate(-50%, -50%);
 	border-radius: 0.5em;
-	background: linear-gradient(-200deg, white 40%, skyblue 60%);
+	background: linear-gradient(-182deg, white 20%, skyblue 80%);
 	background-clip: text;
 	color: transparent;
 	font-weight: bolder;

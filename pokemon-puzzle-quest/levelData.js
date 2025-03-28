@@ -436,7 +436,7 @@ const levelData = [
 		],
 		effects: [
 			{ type: "random-number", min: 1, max: 10 },
-			{ type: "load-value", value: 10 },
+			{ type: "load-value", value: 9 },
 			{ type: "jump-if-less-than", jumpTo: "Normal" },
 			{ type: "fight", trainer: 1, label: "Slowpoke" },
 			{ type: "jump-if-lost", jumpTo: Infinity },
@@ -560,7 +560,7 @@ function renderPokeballSpinSmallCanvas(canvas, direction) {
 	if (direction === "right") {
 		directionMult = 1
 	}
-	return new Promise(resolve => {
+	let p = new Promise(resolve => {
 		let resolved = false
 		const animate = p => {
 			let top = 1.6 * (p - 0.4) * (p - 0.4) + 0.25
@@ -573,15 +573,20 @@ function renderPokeballSpinSmallCanvas(canvas, direction) {
 			duration: 1200,
 			easing: "linear",
 			step: function () {
+				animate(this.val)
 				if (this.val > 0.9 && !resolved) {
 					resolve()
 					resolved = true
 				}
-				animate(this.val)
 			},
 			complete: function () {
 				animate(1)
+				if (!resolved){
+					resolve()
+					resolved = true
+				}
 			}
 		})
 	})
+	return p
 }

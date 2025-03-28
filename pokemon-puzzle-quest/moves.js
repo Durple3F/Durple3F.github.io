@@ -201,7 +201,8 @@ const pokemonMoveData = {
 			{ type: "load-value", value: 6 },
 			{ type: "jump-if-less-than", jumpTo: "end" },
 			{ type: "apply-status-effect", statusEffect: "confused", target: "opponent" },
-			{ type: "end-turn", label: "end" }
+			{ type: "load-value", value: 6, label: "end" },
+			// { type: "end-turn", label: "end" }
 		],
 	},
 	"Ember": {

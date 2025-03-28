@@ -917,6 +917,10 @@ const pokemonData = {
 			specialDefense: 0,
 			speed: 0
 		},
+		energyMastery: {
+			yellow: 2,
+			green: 5
+		},
 		learnset: [
 			{
 				name: "Vise Grip",
@@ -978,6 +982,10 @@ const pokemonData = {
 			specialDefense: 2,
 			speed: 0
 		},
+		energyMastery: {
+			purple: 2,
+			green: 5
+		},
 		learnset: [
 			{
 				name: "Wrap",
@@ -994,6 +1002,7 @@ const pokemonData = {
 for (let name in pokemonData) {
 	let pokemon = pokemonData[name]
 	if (!pokemon.name) {
+		console.warn(pokemon, "is missing a name!")
 		pokemon.name = name
 	}
 	if (!pokemon.id) {
@@ -1006,6 +1015,7 @@ for (let name in pokemonData) {
 		console.warn(pokemon, "has no images")
 	}
 	if (!pokemon.stats) {
+		console.warn(pokemon, "is missing stats!")
 		pokemon.stats = {
 			hp: 50,
 			attack: 50,
@@ -1016,9 +1026,11 @@ for (let name in pokemonData) {
 		}
 	}
 	if (!pokemon.learnset) {
+		console.warn(pokemon, "is missing moves!")
 		pokemon.learnset = []
 	}
 	if (!pokemon.types) {
+		console.warn(pokemon, "is missing types!")
 		pokemon.types = []
 	}
 	if (!pokemon.tags) {
@@ -1029,6 +1041,7 @@ for (let name in pokemonData) {
 		pokemon.expYield = 50
 	}
 	if (!pokemon.evYield) {
+		console.warn(pokemon, "is missing evs!")
 		pokemon.evYield = {
 			hp: 0,
 			attack: 0,
@@ -1042,6 +1055,7 @@ for (let name in pokemonData) {
 		pokemon.evolutions = []
 	}
 	if (!pokemon.energyMastery) {
+		console.warn(pokemon, "is missing energy affinity!")
 		pokemon.energyMastery = {}
 	}
 	for (let type of tileTypes){

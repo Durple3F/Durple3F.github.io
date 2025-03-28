@@ -247,7 +247,6 @@ class Round{
 	}
 	checkForWinner(){
 		//Resolves with either true if the game is over or false if not
-		let over = false
 		if (this.hasEnded){
 			return Promise.resolve()
 		}
@@ -261,7 +260,9 @@ class Round{
 			if (pokemonCanSwapTo.length > 0){
 				//If the enemy has pokemon they can swap to, they pick one and swap to it.
 				let pokemon = this.computerChoosePokemon(pokemonCanSwapTo, "swap")
-				promise = promise.then(() => this.animateSendOutPokemon(1, pokemon))
+				promise = promise.then(() => {
+					return this.animateSendOutPokemon(1, pokemon)
+				})
 			} else {
 				//If the enemy has no pokemon they can swap to, you win.
 				promise = promise.then(() => this.end("win"))
@@ -270,7 +271,9 @@ class Round{
 			let pokemonCanSwapTo = getUsablePokemon(playerTrainer.pokemon)
 			if (pokemonCanSwapTo.length > 0){
 				promise = promise.then(() => choosePokemon("Choose a Pokemon to swap to.", pokemonCanSwapTo))
-				.then(pokemon => this.animateSendOutPokemon(0, pokemon[0]))
+				.then(pokemon => {
+					return this.animateSendOutPokemon(0, pokemon[0])
+				})
 			} else {
 				//If you run out of viable pokemon, you lose.
 				promise = promise.then(() => this.end("lose"))
@@ -284,8 +287,7 @@ class Round{
 		for (let change of map){
 			let tile = change[0]
 			let loc = change[1]
-			tile.x = loc[0]
-			tile.y = loc[1]
+			this.board.changeLocation(tile, loc[0], loc[1])
 		}
 	}
 	swap(tile1, tile2, options){
@@ -1255,6 +1257,10 @@ class Round{
 		} else if (category === "Special") {
 			atk = attacker.getEffectiveStat("specialAttack")
 			def = defender.getEffectiveStat("specialDefense")
+		} else if (category === "Status") {
+			//This should never run
+			atk = attacker.getEffectiveStat("attack")
+			def = defender.getEffectiveStat("defense")
 		} else {
 			console.warn("UNKNOWN CATEGORY", category)
 		}
@@ -2119,8 +2125,7 @@ class Round{
 			animation.batch.push(a)
 
 			animation.callback = () => {
-				tile.x = spot[0]
-				tile.y = spot[1]
+				this.board.changeLocation(tile, spot[0], spot[1])
 			}
 			this.addAnimation(animation)
 		})
@@ -2563,6 +2568,8 @@ class Round{
 	}
 
 	animateSendOutPokemon(trainerIndex, pokemon, animName){
+		this.currentlySwappingPokemon = true
+
 		let resolvePromise
 		let promise = new Promise(resolve => resolvePromise = resolve)
 
@@ -2630,8 +2637,8 @@ class Round{
 					}, 900)
 					
 					renderPokeballSmallCanvas(canvas, "pokeball", "closed")
-					renderPokeballSpinSmallCanvas(pokeballTag, spinDirection)
-					.then(resolve)
+					console.log(renderPokeballSpinSmallCanvas(pokeballTag, spinDirection)
+					.then(resolve))
 				})
 			})
 			//Then, the pokeball appears to open.
@@ -2737,7 +2744,10 @@ class Round{
 			}))
 		}
 
-		first.then(resolvePromise)
+		first.then(() => {
+			this.currentlySwappingPokemon = false
+			resolvePromise()
+		})
 		return promise
 	}
 	sendOutPokemon(trainerIndex, pokemon){
@@ -2814,19 +2824,18 @@ class Round{
 		return html.wrap('<p/>').parent().html()
 	}
 	beginToSwapPokemon(trainerIndex, pokemon){
-		if (this.activePlayerIndex !== trainerIndex) return
-		if (this.currentlyCarryingOutSwap) return
-		if (this.moveQueue.length) return
-		if (this.currentlySwappingPokemon) return
-		if (this.trainers[0].activePokemon === pokemon) return
-		this.currentlySwappingPokemon = true
+		if (this.activePlayerIndex !== trainerIndex) return Promise.resolve()
+		if (this.currentlyCarryingOutSwap) return Promise.resolve()
+		if (this.moveQueue.length) return Promise.resolve()
+		if (this.currentlySwappingPokemon) return Promise.resolve()
+		if (this.trainers[0].activePokemon === pokemon) return Promise.resolve()
 		let turn = this.turn
-		this.animateSendOutPokemon(trainerIndex, pokemon)
+		let promise = this.animateSendOutPokemon(trainerIndex, pokemon)
 		.then(() => {
-			this.currentlySwappingPokemon = false
 			this.currentlyEndingTurn = true
 			return this.turnEnd(turn)
 		})
+		return promise
 	}
 
 	resetPokemonMoves(){
@@ -3044,11 +3053,13 @@ class Trainer{
 	}
 }
 
+let tilesFound = 0
 class Board{
 	constructor(width, height){
 		this.width = width
 		this.height = height
 		this.contents = []
+		this.locationMap = new Map()
 		this.tileTypes = tileTypes
 		this.tileWeights = {}
 		for (let type of this.tileTypes){
@@ -3058,7 +3069,7 @@ class Board{
 				this.tileWeights[type] = 0
 			}
 		}
-		this.tileWeights.rainbow = 0.2
+		// this.tileWeights.rainbow = 0.2
 
 		this.spriteTileW = 0
 		this.spriteTileH = 0
@@ -3080,16 +3091,50 @@ class Board{
 		return sum === this.width * this.height
 	}
 
+	mapKey(tile){
+		let x = tile.x
+		let y = tile.y
+		return x+","+y
+	}
 	add(tile){
+		let mapKey = this.mapKey(tile)
+		this.locationMap.set(mapKey, tile)
 		this.contents.push(tile)
 	}
 	remove(tile){
+		let mapKey = this.mapKey(tile)
+		let fromMap = this.locationMap.get(mapKey)
+		
 		let index = this.contents.indexOf(tile)
 		if (index !== -1){
+			let tile = this.contents[index]
+			if (tile === fromMap){
+				this.locationMap.delete(mapKey)
+			} else {
+				console.warn("A tile was in the wrong spot for the location map.")
+			}
 			this.contents.splice(index, 1)
 			return true
 		}
 		return false
+	}
+	changeLocation(tile, x, y){
+		let mapKey = x+","+y
+		let map = this.locationMap
+		let movedTile
+		if (map.has(mapKey)){
+			movedTile = map.get(mapKey)
+		}
+
+		let oldMapKey = this.mapKey(tile)
+		let oldTile = map.get(oldMapKey)
+		if (oldTile === tile){
+			map.delete(oldMapKey)
+		}
+
+		tile.x = x
+		tile.y = y
+		map.set(mapKey, tile)
 	}
 
 	explodeTile(tile){
@@ -3194,7 +3239,13 @@ class Board{
 	}
 
 	findTileAt(x, y){
-		return this.contents.find(t => this.tileIsAt(t, x, y))
+		tilesFound++
+		let mapKey = x+","+y
+		let usingMap = this.locationMap.get(mapKey)
+		// let usingArr = this.contents.find(t => this.tileIsAt(t, x, y))
+		// return usingArr
+
+		return usingMap
 	}
 	tileIsAt(t, x, y){
 		if (t.x === x && t.y === y) return true
