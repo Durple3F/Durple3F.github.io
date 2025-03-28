@@ -1,5 +1,8 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
+3/28 (11.9k lines):
+	- Added rainbow tiles, tiles which can match with whatever. This took. SO much work. I'm going to scream.
+
 3/27 (11.8k lines):
 	- Added a neat function that lets me find tiles that surround a given selection of tiles.
 	- Added Bite, a move that needs to know what tiles surround a given selection of tiles.
