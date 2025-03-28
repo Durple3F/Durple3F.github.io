@@ -129,7 +129,6 @@ function advanceCurrentDialogue(){
 				let replaceCommand = replacementMatches[i]
 				let command = replaceCommand[0]
 				let commandType = command.substring(1, command.length - 1)
-				console.log(command)
 				
 				if (commandType === "c"){
 					text = text.replace(command, replacements[i])

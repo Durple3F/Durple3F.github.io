@@ -15,3 +15,4 @@ gradient linear-gradient(-30deg, #d5b01a80 0%, #f3be43a0 100%);
 mask radial-gradient(ellipse at center, black 67%, transparent 71%);
 
 TODO
+- if the board is too big, then the game round doesn't start.

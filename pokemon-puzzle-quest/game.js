@@ -69,8 +69,9 @@ class Round{
 		this.confirmButton.hide()
 
 		this.loadResources()
-		this.roundStartAnimation()
-		.then(() => this.begin())
+		let p = this.roundStartAnimation()
+		console.log(p)
+		p.then(() => this.begin())
 
 		this.startTicks()
 	}
@@ -195,10 +196,12 @@ class Round{
 
 		this.resetCurrentlySelecting()
 		this.updateEverything()
-		this.timeStep()
-		.then(() => {
+		let turn = this.turn
+		let p = this.timeStep()
+		console.log(p)
+		p.then(() => {
 			this.hasBegun = true
-			return this.turnStart(1)
+			return this.turnStart(turn)
 		})
 	}
 
@@ -3055,7 +3058,7 @@ class Board{
 				this.tileWeights[type] = 0
 			}
 		}
-		this.tileWeights.rainbow = 0.15
+		this.tileWeights.rainbow = 0.2
 
 		this.spriteTileW = 0
 		this.spriteTileH = 0
@@ -3104,10 +3107,18 @@ class Board{
 	}
 
 	fill(){
-		let missingCoordinates = this.getEmptyCoords()
 		let changesMade = 0
 		let loops = 0
-		while (missingCoordinates.length && loops < 10){
+		let attempts = 0
+		while (loops < 10){
+			let missingCoordinates = this.getEmptyCoords()
+
+			if (!missingCoordinates.length){
+				break
+			}
+
+			attempts++
+			// console.log(attempts, missingCoordinates)
 			let choice = randomChoice(missingCoordinates)
 			let index = missingCoordinates.indexOf(choice)
 			missingCoordinates.splice(index, 1)
@@ -3149,8 +3160,23 @@ class Board{
 				let rectangle = this.getRectOfTiles(minX, maxX, minY, maxY)
 				rectangle.forEach(t => this.remove(t))
 			}
+
+			//Are we out of possible places to put tiles?
 			if (!missingCoordinates.length){
-				missingCoordinates = this.getEmptyCoords()
+				//Well, maybe we messed up along the way.
+				//Are there any matches we accidentally made?
+				let remainingMatches = this.getAllMatches()
+				if (remainingMatches.length){
+					//Oof, we made some matches accidentally.
+					//Alright, well remove 'em, and try again.
+					//This list will probably contain like, 1-2 matches
+					//in standard situations.
+					remainingMatches.forEach(match => {
+						match.forEach(tile => {
+							this.remove(tile)
+						})
+					})
+				}
 				changesMade = 0
 				loops++
 			}
