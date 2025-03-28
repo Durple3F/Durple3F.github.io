@@ -8,7 +8,16 @@ const cssColors = {
 	"energy-purple": "#dd60dd"
 }
 
-const tileTypes = ["red", "orange", "yellow", "green", "blue", "purple", "black"]
+const tileTypes = [
+	"red",
+	"orange",
+	"yellow",
+	"green",
+	"blue",
+	"purple",
+	"black",
+	"rainbow"
+]
 
 function delay(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms))
@@ -113,6 +122,11 @@ function shuffleArray(array) {
 		array[j] = temp;
 	}
 }
+function toShuffled(array) {
+	let newArr = array.map(v => v)
+	shuffleArray(newArr)
+	return newArr
+}
 //Note: Mutates the original array
 function removeEmptySlots(arr) {
 	let emptyIndex = arr.findIndex(p => !p)
@@ -173,6 +187,9 @@ function getTileEnergyValue(type){
 		case "black":
 			energy.red += 1
 			energy.purple += 1
+		break
+		case "rainbow":
+		//Nothing happens
 		break
 		default:
 			console.warn("You never said what ",type,"should do")

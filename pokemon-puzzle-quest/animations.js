@@ -22,6 +22,8 @@ const tileTypeColors = {
 	"green": "#82dc42",
 	"blue": "#00c0e7",
 	"purple": "#dd60dd",
+	"black": "#495856",
+	"rainbow": "#ffffff",
 }
 
 function getEmptyAnimationBatch(){
@@ -52,7 +54,8 @@ let tileIconUrls = {
 	green: "src/img/tiles/green.png",
 	blue: "src/img/tiles/blue.png",
 	purple: "src/img/tiles/purple.png",
-	black: "src/img/tiles/black.png"
+	black: "src/img/tiles/black.png",
+	rainbow: "src/img/tiles/rainbow.png"
 }
 function getEnergyIcon(type){
 	if (type in tileIconUrls){

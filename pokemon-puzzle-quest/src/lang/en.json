@@ -50,7 +50,9 @@
 		"rival-battle-2-dialogue": {
 			"effects": [
 				{ "type": "get-speaker", "name": "Hau", "class": "Hau" },
-				{ "type": "text", "speaker": "Hau", "text": "Oh, hey again! Have you caught any new Pokémon?" }
+				{ "type": "text", "speaker": "Hau", "text": "Oh, hey again! Have you caught any new Pokémon?" },
+				{ "type": "load-player-info", "key": "total-pokemon-caught" },
+				{ "type": "text", "speaker": "Hau", "text": "You've caught %c% Pokémon!", "values": [-1] }
 			]
 		},
 		"route-1-5-dialogue-1": {
@@ -68,8 +70,10 @@
 					"relative": "Madison"
 				}},
 				{ "type": "style-image", "image": "Wingull", "css": {
-					"z-index": -1,
 					"opacity": 0
+				}},
+				{ "type": "style-speaker", "speaker": "Madison", "css": {
+					"z-index": 5
 				}},
 				{ "type": "text", "speaker": "Madison", "text": "I've got a little secret for you!" },
 				{ "type": "text", "speaker": "Madison", "text": "It was the same Wingull every time." },
@@ -283,7 +287,7 @@
 		"Struggle": {
 			"name": "Struggle",
 			"description": "An attack of desperation only useful when there are no available moves. It also hurts its user a little, before ending the current turn.",
-			"shortDescription": "Reshuffle board Does recoil damage. Ends the turn."
+			"shortDescription": "Reshuffle board"
 		},
 		"Supersonic": {
 			"name": "Supersonic",

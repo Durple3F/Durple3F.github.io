@@ -129,6 +129,7 @@ function advanceCurrentDialogue(){
 				let replaceCommand = replacementMatches[i]
 				let command = replaceCommand[0]
 				let commandType = command.substring(1, command.length - 1)
+				console.log(command)
 				
 				if (commandType === "c"){
 					text = text.replace(command, replacements[i])
@@ -370,6 +371,14 @@ function advanceCurrentDialogue(){
 			let waitDuration = effect.waitDuration ?? duration
 			image.animate(css, duration)
 			delay(waitDuration).then(() => resolvePromise())
+		} break
+		case "style-speaker": {
+			let name = effect.speaker
+			let speaker = dialogueProgress.speakers.find(s => s.id === name)
+			let image = speaker.tag
+			let css = effect.css
+			image.css(css)
+			resolvePromise()
 		} break
 		case "style-image": {
 			let image = speakersTag.children(`[data-name=${effect.image}]`)

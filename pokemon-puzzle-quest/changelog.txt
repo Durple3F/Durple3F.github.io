@@ -8,6 +8,8 @@
 	- Re-did the dialogue box CSS. Now it has the same aspect ratio on all screens.
 	- Added some new effects for Dialogue
 	- Added more stuff to 1-5
+	- Fixed a bug where the game would forget how many pokemon you caught.
+	- COMPLETELY rewrote the function that fills boards. It now has a much better chance of efficiently finding a board that won't have any matches made immediately for either player.
 
 3/26 (11.4k lines):
 	- You can now see the version number in game. When I remember to update it.

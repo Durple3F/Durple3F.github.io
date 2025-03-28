@@ -720,7 +720,8 @@ function catchPokemon(pokemon){
 	askToRenamePokemon(pokemon)
 	.then(() => savePokemon(pokemon))
 	.then(() => {
-		playerSaveInfo["total-pokemon-caught"]++
+		let total = playerSaveInfo["total-pokemon-caught"] || 0
+		playerSaveInfo["total-pokemon-caught"] = total + 1
 		resolvePromise()
 	})
 

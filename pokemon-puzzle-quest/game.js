@@ -357,7 +357,7 @@ class Round{
 		for (let type in matchTotals){
 			let count = matchTotals[type]
 			let energyValue = activePokemon.getBonusEnergy(type)
-			let totalEnergy = multiplyEnergies(energyValue, count)
+			let totalEnergy = multiplyEnergies(energyValue, count, "up")
 			energy = addEnergies(totalEnergy, energy)
 		}
 
@@ -3055,6 +3055,7 @@ class Board{
 				this.tileWeights[type] = 0
 			}
 		}
+		this.tileWeights.rainbow = 0.5
 
 		this.spriteTileW = 0
 		this.spriteTileH = 0
@@ -3079,11 +3080,19 @@ class Board{
 	add(tile){
 		this.contents.push(tile)
 	}
+	remove(tile){
+		let index = this.contents.indexOf(tile)
+		if (index !== -1){
+			this.contents.splice(index, 1)
+			return true
+		}
+		return false
+	}
 
 	explodeTile(tile){
 		let index = this.contents.indexOf(tile)
 		if (index !== -1) {
-			this.contents.splice(index, 1)
+			this.remove(tile)
 			//Create a new tile at the top of the column to fill this one's space
 			let column = this.getColumn(tile.x)
 			let top = Math.min(-1, column[0].y - 1)
@@ -3095,20 +3104,55 @@ class Board{
 	}
 
 	fill(){
-		while (!this.isFull()){
-			let createdTile = false
-			let maxAttempts = this.width * this.height * 10
-			let attempts = 0
-			while (!createdTile && attempts < maxAttempts){
-				let x = Math.floor(Math.random() * this.width)
-				let y = Math.floor(Math.random() * this.height)
-				let alreadyThere = this.contents.some(t => t.x === x && t.y === y)
-				let tile = this.getNextTile(x, y)
-				let wouldCreateMatch = this.wouldCreateMatch(tile, x, y)
-				if (!alreadyThere && !wouldCreateMatch){
-					this.add(tile)
-					createdTile = true
+		let missingCoordinates = this.getEmptyCoords()
+		let changesMade = 0
+		let loops = 0
+		while (missingCoordinates.length && loops < 10){
+			let choice = randomChoice(missingCoordinates)
+			let index = missingCoordinates.indexOf(choice)
+			missingCoordinates.splice(index, 1)
+			let x = choice[0]
+			let y = choice[1]
+			let possibleTileTypes = this.tileTypes.map(type => type)
+			let hypotheticalTiles = {}
+			let tileWeights = this.tileWeights
+			possibleTileTypes.forEach(type => {
+				if (tileWeights[type] > 0){
+					hypotheticalTiles[type] = new Tile(type, x, y)
 				}
+			})
+			let acceptable = {}
+			for (let type in hypotheticalTiles){
+				let tile = hypotheticalTiles[type]
+				let good = !this.wouldCreateMatch(tile)
+				if (good){
+					acceptable[type] = tile
+				}
+			}
+			let acceptableTypes = Object.keys(acceptable)
+			if (acceptableTypes.length){
+				let tiles = []
+				let weights = []
+				acceptableTypes.forEach(type => {
+					tiles.push(acceptable[type])
+					weights.push(tileWeights[type])
+				})
+				let tile = weightedRandom(tiles, weights).item
+				this.add(tile)
+				changesMade++
+			} else {
+				let size = loops + 2
+				let minX = x - (size * 0.5)
+				let maxX = x + (size * 0.5)
+				let minY = y - (size * 0.5)
+				let maxY = y + (size * 0.5)
+				let rectangle = this.getRectOfTiles(minX, maxX, minY, maxY)
+				rectangle.forEach(t => this.remove(t))
+			}
+			if (!missingCoordinates.length){
+				missingCoordinates = this.getEmptyCoords()
+				changesMade = 0
+				loops++
 			}
 		}
 	}
@@ -3142,6 +3186,19 @@ class Board{
 		return this.contents.filter(t => this.isOnScreen(t))
 	}
 
+	getEmptyCoords(){
+		let coords = []
+		for (let i = 0; i < this.width; i++){
+			for (let j = 0; j < this.height; j++){
+				let tile = this.findTileAt(i, j)
+				if (!tile){
+					coords.push([i, j])
+				}
+			}
+		}
+		return coords
+	}
+
 	getColumn(x){
 		return this.contents.filter(t => t.x === x).sort((a, b) => a.y - b.y)
 	}
@@ -3171,7 +3228,6 @@ class Board{
 		let maxX = bounds[1]
 		let minY = bounds[2]
 		let maxY = bounds[3]
-		
 
 		let chooseable = this.tilesOnScreen()
 		let toAdd = chooseable.filter(tile => {
@@ -3179,6 +3235,13 @@ class Board{
 		})
 		toAdd.forEach(t => selection.push(t))
 		return selection
+	}
+	getRectOfTiles(minX, maxX, minY, maxY){
+		let contents = this.tilesOnScreen()
+		return contents.filter(tile => {
+			return tile.x >= minX && tile.x <= maxX &&
+			tile.y >= minY && tile.y <= maxY
+		})
 	}
 	getTilesFromOrigin(x, y, width, height, tiles){
 		let contents = this.tilesOnScreen()
@@ -3242,6 +3305,60 @@ class Board{
 		return selection
 	}
 
+	// matchesIfSwapped(tile1, tile2){
+	// 	let locationMap = new Map()
+	// 	for (let tile of this.contents){
+	// 		let x = tile.x
+	// 		let y = tile.y
+	// 		if (tile === tile1){
+	// 			x = tile2.x
+	// 			y = tile2.y
+	// 		}
+	// 		if (tile === tile2){
+	// 			x = tile1.x
+	// 			y = tile1.y
+	// 		}
+	// 		locationMap.set([x,y].join(","), tile)
+	// 	}
+	// 	let matches = []
+
+	// 	//So, for every direction from tile1's new location, we check if it matches with anything.
+	// 	let tilesToCheck = [tile1, tile2]
+	// 	let oppositeTiles = [tile2, tile1]
+	// 	for (let i = 0; i < tilesToCheck.length; i++){
+	// 		let tileA = tilesToCheck[i]
+	// 		let tileB = oppositeTiles[i]
+	// 		for (let v of UNITVECTORS){
+	// 			let matching = true
+	// 			let opposite = OPPOSITEVECTORS.get(v)
+	// 			let dirs = [v, opposite]
+	// 			let match = []
+	// 			for (let dir of dirs){
+	// 				let diff = [0, 0]
+	// 				while (matching){
+	// 					diff.forEach((_, i) => diff[i] += dir[i])
+	// 					let newX = tileB.x + diff[0]
+	// 					let newY = tileB.y + diff[1]
+	// 					let coord = [newX, newY].join(",")
+	// 					let thatTile = locationMap.get(coord)
+	// 					if (!thatTile) break
+	// 					if (thatTile.matchesWith(tileA)){
+	// 						match.push(thatTile)
+	// 					} else {
+	// 						break
+	// 					}
+	// 				}
+	// 			}
+	// 			if (match.length > 1){
+	// 				match.push(tileA)
+	// 				matches.push(match)
+	// 			}
+	// 		}
+	// 	}
+
+	// 	return matches
+	// }
+
 	matchesIfSwapped(tile1, tile2){
 		let locationMap = new Map()
 		for (let tile of this.contents){
@@ -3257,83 +3374,68 @@ class Board{
 			}
 			locationMap.set([x,y].join(","), tile)
 		}
+		// console.log(locationMap)
 		let matches = []
-
-		//So, for every direction from tile1's new location, we check if it matches with anything.
-		let tilesToCheck = [tile1, tile2]
-		let oppositeTiles = [tile2, tile1]
-		for (let i = 0; i < tilesToCheck.length; i++){
-			let tileA = tilesToCheck[i]
-			let tileB = oppositeTiles[i]
-			for (let v of UNITVECTORS){
-				let matching = true
-				let opposite = OPPOSITEVECTORS.get(v)
-				let dirs = [v, opposite]
-				let match = []
-				for (let dir of dirs){
-					let diff = [0, 0]
-					while (matching){
-						diff.forEach((_, i) => diff[i] += dir[i])
-						let newX = tileB.x + diff[0]
-						let newY = tileB.y + diff[1]
-						let coord = [newX, newY].join(",")
-						let thatTile = locationMap.get(coord)
-						if (!thatTile) break
-						if (thatTile.matchesWith(tileA)){
-							match.push(thatTile)
-						} else {
-							break
-						}
-					}
-				}
-				if (match.length > 1){
-					match.push(tileA)
-					matches.push(match)
-				}
-			}
-		}
 
 		return matches
 	}
 
-	searchDirectionForMatches(tile, vector, x, y){
+	searchDirectionForMatches(tile, vector, hypotheticalTiles){
 		//This function pretends the tile is at the given
 		//x,y coords if it's told to.
-		if (x === undefined){
-			x = tile.x
-		}
-		if (y === undefined){
-			y = tile.y
-		}
+		let x = tile.x
+		let y = tile.y
+		hypotheticalTiles = hypotheticalTiles || []
+		let previouslyConsidered = [tile]
 		let allMatches = []
 		let currentDiff = [0, 0]
 		let matching = true
 		while (matching){
 			currentDiff.forEach((_, i) => currentDiff[i] += vector[i])
-			let thatTile = this.findTileAt(x + currentDiff[0], y + currentDiff[1])
+			let newX = x + currentDiff[0]
+			let newY = y + currentDiff[1]
+			let thatTile = hypotheticalTiles.find(tile => {
+				return tile.x === newX && tile.y === newY
+			})
+			if (!thatTile){
+				thatTile = this.findTileAt(newX, newY)
+			}
 			if (!thatTile){
 				break
 			}
-			if (tile.matchesWith(thatTile)){
+			let match = previouslyConsidered.every(compareTile => {
+				return compareTile.matchesWith(thatTile)
+			})
+			if (match){
 				allMatches.push(thatTile)
+				previouslyConsidered.push(thatTile)
 			} else {
 				break
 			}
 		}
+		// console.log(allMatches)
 		return allMatches
 	}
 
-	wouldCreateMatch(tile, x, y){
+	wouldCreateMatch(tile){
 		//A tile would create a match if there's 2 consecutive tiles vertically from it
 		//(or horizontally)
-		for (let v of UNITVECTORS){
+		
+		let x = tile.x
+		let y = tile.y
+		let unitVectors = toShuffled(UNITVECTORS)
+		for (let v of unitVectors){
 			//For every direction, check the number of matches in that direction,
 			//PLUS the number of matches in the opposite direction.
 			let opposite = OPPOSITEVECTORS.get(v)
-			let totalMatches = 0
-			totalMatches += this.searchDirectionForMatches(tile, v, x, y).length
-			totalMatches += this.searchDirectionForMatches(tile, opposite, x, y).length
-			if (totalMatches > 1){
+			let forwardMatchingTiles = this.searchDirectionForMatches(tile, v)
+			let matchSoFar = [tile].concat(forwardMatchingTiles)
+			let lastTile = matchSoFar[matchSoFar.length - 1]
+			let backwardsMatch = this.searchDirectionForMatches(
+				lastTile, opposite, [tile]
+			)
+			let completeMatch = [lastTile].concat(backwardsMatch)
+			if (completeMatch.length >= 3){
 				return true
 			}
 		}
@@ -3344,11 +3446,18 @@ class Board{
 		let allMatches = []
 		for (let v of UNITVECTORS){
 			let opposite = OPPOSITEVECTORS.get(v)
-			let matches = [tile]
-			.concat(this.searchDirectionForMatches(tile, v))
-			.concat(this.searchDirectionForMatches(tile, opposite))
+			// let matches = [tile]
+			// .concat(this.searchDirectionForMatches(tile, v))
+			// .concat(this.searchDirectionForMatches(tile, opposite))
+			let forwardMatchingTiles = this.searchDirectionForMatches(tile, v)
+			let matchSoFar = [tile].concat(forwardMatchingTiles)
+			let lastTile = matchSoFar[matchSoFar.length - 1]
+			let backwardsMatch = this.searchDirectionForMatches(
+				lastTile, opposite, [tile]
+			)
+			let matches = [lastTile].concat(backwardsMatch)
 
-			if (matches.length > 2){
+			if (matches.length >= 3){
 				matches.sort((a, b) => this.contents.indexOf(a) - this.contents.indexOf(b))
 				allMatches.push(matches)
 			}
@@ -3490,6 +3599,8 @@ class Tile{
 	matchesWith(tile){
 		if (!tile) return false
 		if (tile.y < 0) return false
+		if (tile.type === "rainbow") return true
+		if (this.type === "rainbow") return true
 		return tile.type === this.type
 	}
 
