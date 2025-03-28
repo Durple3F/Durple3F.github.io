@@ -22,8 +22,6 @@ let frameRate = 60
 const UNITVECTORS = [
 	[1, 0],
 	[0, 1],
-	[-1, 0],
-	[0, -1],
 ]
 const OPPOSITEVECTORS = new Map()
 for (let v of UNITVECTORS){

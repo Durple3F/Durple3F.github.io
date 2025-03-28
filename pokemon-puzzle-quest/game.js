@@ -3305,60 +3305,6 @@ class Board{
 		return selection
 	}
 
-	// matchesIfSwapped(tile1, tile2){
-	// 	let locationMap = new Map()
-	// 	for (let tile of this.contents){
-	// 		let x = tile.x
-	// 		let y = tile.y
-	// 		if (tile === tile1){
-	// 			x = tile2.x
-	// 			y = tile2.y
-	// 		}
-	// 		if (tile === tile2){
-	// 			x = tile1.x
-	// 			y = tile1.y
-	// 		}
-	// 		locationMap.set([x,y].join(","), tile)
-	// 	}
-	// 	let matches = []
-
-	// 	//So, for every direction from tile1's new location, we check if it matches with anything.
-	// 	let tilesToCheck = [tile1, tile2]
-	// 	let oppositeTiles = [tile2, tile1]
-	// 	for (let i = 0; i < tilesToCheck.length; i++){
-	// 		let tileA = tilesToCheck[i]
-	// 		let tileB = oppositeTiles[i]
-	// 		for (let v of UNITVECTORS){
-	// 			let matching = true
-	// 			let opposite = OPPOSITEVECTORS.get(v)
-	// 			let dirs = [v, opposite]
-	// 			let match = []
-	// 			for (let dir of dirs){
-	// 				let diff = [0, 0]
-	// 				while (matching){
-	// 					diff.forEach((_, i) => diff[i] += dir[i])
-	// 					let newX = tileB.x + diff[0]
-	// 					let newY = tileB.y + diff[1]
-	// 					let coord = [newX, newY].join(",")
-	// 					let thatTile = locationMap.get(coord)
-	// 					if (!thatTile) break
-	// 					if (thatTile.matchesWith(tileA)){
-	// 						match.push(thatTile)
-	// 					} else {
-	// 						break
-	// 					}
-	// 				}
-	// 			}
-	// 			if (match.length > 1){
-	// 				match.push(tileA)
-	// 				matches.push(match)
-	// 			}
-	// 		}
-	// 	}
-
-	// 	return matches
-	// }
-
 	matchesIfSwapped(tile1, tile2){
 		let locationMap = new Map()
 		for (let tile of this.contents){
@@ -3377,10 +3323,30 @@ class Board{
 		// console.log(locationMap)
 		let matches = []
 
+		let tilesToCheck = [tile1, tile2]
+		let oppositeTiles = [tile2, tile1]
+		for (let i = 0; i < tilesToCheck.length; i++){
+			let tileA = tilesToCheck[i]
+			let tileB = oppositeTiles[i]
+
+			let hypotheticalTile = new Tile(tileA.type, tileB.x, tileB.y)
+			Object.keys(tileA).forEach(key => hypotheticalTile[key] = tileA[key])
+			hypotheticalTile.x = tileB.x
+			hypotheticalTile.y = tileB.y
+			let theseMatches = this.getAllMatchesForTile(hypotheticalTile, [], [tileA])
+			if (theseMatches.length){
+				theseMatches.forEach(match => {
+					let index = match.indexOf(hypotheticalTile)
+					match.splice(index, 1, tileA)
+					matches.push(match)
+				})
+			}
+		}
+
 		return matches
 	}
 
-	searchDirectionForMatches(tile, vector, hypotheticalTiles){
+	searchDirectionForMatches(tile, vector, hypotheticalTiles, excludedTiles){
 		//This function pretends the tile is at the given
 		//x,y coords if it's told to.
 		let x = tile.x
@@ -3403,6 +3369,9 @@ class Board{
 			if (!thatTile){
 				break
 			}
+			if (excludedTiles.includes(thatTile)){
+				break
+			}
 			let match = previouslyConsidered.every(compareTile => {
 				return compareTile.matchesWith(thatTile)
 			})
@@ -3420,40 +3389,38 @@ class Board{
 	wouldCreateMatch(tile){
 		//A tile would create a match if there's 2 consecutive tiles vertically from it
 		//(or horizontally)
-		
-		let x = tile.x
-		let y = tile.y
-		let unitVectors = toShuffled(UNITVECTORS)
-		for (let v of unitVectors){
-			//For every direction, check the number of matches in that direction,
-			//PLUS the number of matches in the opposite direction.
-			let opposite = OPPOSITEVECTORS.get(v)
-			let forwardMatchingTiles = this.searchDirectionForMatches(tile, v)
-			let matchSoFar = [tile].concat(forwardMatchingTiles)
-			let lastTile = matchSoFar[matchSoFar.length - 1]
-			let backwardsMatch = this.searchDirectionForMatches(
-				lastTile, opposite, [tile]
-			)
-			let completeMatch = [lastTile].concat(backwardsMatch)
-			if (completeMatch.length >= 3){
-				return true
-			}
+		let matches = this.getAllMatchesForTile(tile)
+		if (matches.length){
+			return true
 		}
 		return false
 	}
 
-	getAllMatchesForTile(tile){
+	getAllMatchesForTile(tile, hypotheticalTiles, excludedTiles){
+		//Returns a list like this:
+		// [
+		// 	[tile1, tile2, tile3],
+		// 	[tile4, tile1, tile5]
+		// ]
+		// Where in this circumstance, this might be a T-shaped match.
+		// The function *pretends* that <tile> is inside of the board's contents,
+		// even if it isn't really.
+
+		// All of the lists within the result will have length >=3,
+		// because of that if statement near the end
+		hypotheticalTiles = hypotheticalTiles || []
+		excludedTiles = excludedTiles || []
 		let allMatches = []
 		for (let v of UNITVECTORS){
 			let opposite = OPPOSITEVECTORS.get(v)
-			// let matches = [tile]
-			// .concat(this.searchDirectionForMatches(tile, v))
-			// .concat(this.searchDirectionForMatches(tile, opposite))
-			let forwardMatchingTiles = this.searchDirectionForMatches(tile, v)
+			
+			let forwardMatchingTiles = this.searchDirectionForMatches(
+				tile, v, hypotheticalTiles, excludedTiles
+			)
 			let matchSoFar = [tile].concat(forwardMatchingTiles)
 			let lastTile = matchSoFar[matchSoFar.length - 1]
 			let backwardsMatch = this.searchDirectionForMatches(
-				lastTile, opposite, [tile]
+				lastTile, opposite, hypotheticalTiles.concat([tile]), excludedTiles
 			)
 			let matches = [lastTile].concat(backwardsMatch)
 
