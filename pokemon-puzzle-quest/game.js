@@ -3055,7 +3055,7 @@ class Board{
 				this.tileWeights[type] = 0
 			}
 		}
-		this.tileWeights.rainbow = 0.5
+		this.tileWeights.rainbow = 0.15
 
 		this.spriteTileW = 0
 		this.spriteTileH = 0
