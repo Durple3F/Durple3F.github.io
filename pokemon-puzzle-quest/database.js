@@ -1,4 +1,5 @@
 const dbName = "pokemon-puzzle-quest"
+const dbVersion = 3
 let db
 let saveFileCount = -1
 
@@ -40,6 +41,11 @@ const dbStores = [
 		options: { autoIncrement: true },
 		indexes: [
 			{
+				name: "uuid",
+				path: ["uuid"],
+				options: { unique: true }
+			},
+			{
 				name: "save-file",
 				path: ["saveFile"],
 				options: { unique: false }
@@ -50,6 +56,11 @@ const dbStores = [
 		name: "boxes",
 		options: { autoIncrement: true },
 		indexes: [
+			{
+				name: "uuid",
+				path: ["uuid"],
+				options: { unique: true }
+			},
 			{
 				name: "owner",
 				path: ["owner"],
@@ -79,7 +90,7 @@ function createObjectStore(store){
 
 function openDatabase(){
 	let promise = new Promise(resolve => {
-		const dbRequest = indexedDB.open(dbName, 1)
+		const dbRequest = indexedDB.open(dbName, dbVersion)
 
 		dbRequest.onupgradeneeded = (event) => {
 			db = event.target.result
@@ -155,14 +166,70 @@ function getSaveDataObj(info){
 		data: info
 	}
 }
-function savePlayerInfo(){
+function savePlayerInfo(data){
+	data = data ?? getSaveDataObj(playerSaveInfo)
+	let uuid = data.uuid
 	return new Promise(resolve => {
-		let info = getSaveDataObj(playerSaveInfo)
-		findSaveFileInDatabase(playerSaveId)
+		findSaveFilePrimaryKey(uuid)
 		.then(result => {
 			const transaction = db.transaction(["save-file"], "readwrite")
 			const saveStore = transaction.objectStore("save-file")
-			const request = saveStore.put(info, result)
+			
+			let request
+			if (result !== null){
+				request = saveStore.put(data, result)
+			} else {
+				request = saveStore.put(data)
+			}
+			request.onsuccess = event => {
+				resolve()
+			}
+		})
+	})
+}
+function getPokemonSaveObj(pokemon){
+	//This guy is gonna find the pokemon if it exists
+	//Pokemon by themselves contain a lot of information unnecessary to store.
+	//This object contains only the important stuff
+	let obj = {}
+	obj.uuid = pokemon.uuid
+	obj.owner = pokemon.owner
+	obj.name = pokemon.name
+	obj.pokemonName = pokemon.pokemonName
+	obj.pokemonId = pokemon.pokemonId
+	obj.hp = pokemon.hp
+	obj.level = pokemon.level
+	obj.exp = pokemon.exp
+	obj.ivs = pokemon.ivs
+	obj.evs = pokemon.evs
+	obj.nature = pokemon.nature
+	obj.activeSlot = playerActivePokemon.indexOf(pokemon)
+	obj.activeMoves = pokemon.activeMoves.map(move => move.name)
+	obj.movesUnlocked = pokemon.movesUnlockedMap.map((v, i) => {
+		return v ? pokemon.moves[i].name : null
+	}).filter(v => v)
+	obj.ability = pokemon.ability.id
+	if (obj.ability === "No Ability"){
+		delete obj.ability
+	}
+	obj.pcBox = pokemon.pcBox
+	obj.pcBoxX = pokemon.pcBoxX
+	obj.pcBoxY = pokemon.pcBoxY
+	return obj
+}
+function savePokemonObj(data){
+	return new Promise(resolve => {
+		findPokemonById(data.uuid)
+		.then(result => {
+			const transaction = db.transaction(["pokemon"], "readwrite")
+			const pokemonStore = transaction.objectStore("pokemon")
+			
+			let request
+			if (result !== null){
+				request = pokemonStore.put(data, result)
+			} else {
+				request = pokemonStore.put(data)
+			}
 			request.onsuccess = event => {
 				resolve()
 			}
@@ -170,72 +237,11 @@ function savePlayerInfo(){
 	})
 }
 function savePokemon(pokemon){
-	let promise = new Promise(resolve => {
-		//This guy is gonna find the pokemon if it exists
-		//Pokemon by themselves contain a lot of information unnecessary to store.
-		//This object contains only the important stuff
-		let obj = {}
-		obj.uuid = pokemon.uuid
-		obj.owner = pokemon.owner
-		obj.name = pokemon.name
-		obj.pokemonName = pokemon.pokemonName
-		obj.pokemonId = pokemon.pokemonId
-		obj.hp = pokemon.hp
-		obj.level = pokemon.level
-		obj.exp = pokemon.exp
-		obj.ivs = pokemon.ivs
-		obj.evs = pokemon.evs
-		obj.nature = pokemon.nature
-		obj.activeSlot = playerActivePokemon.indexOf(pokemon)
-		obj.activeMoves = pokemon.activeMoves.map(move => move.name)
-		obj.movesUnlocked = pokemon.movesUnlockedMap.map((v, i) => {
-			return v ? pokemon.moves[i].name : null
-		}).filter(v => v)
-		obj.ability = pokemon.ability.id
-		if (obj.ability === "No Ability"){
-			delete obj.ability
-		}
-		obj.pcBox = pokemon.pcBox
-		obj.pcBoxX = pokemon.pcBoxX
-		obj.pcBoxY = pokemon.pcBoxY
-
-		findPokemonInDatabase(pokemon)
-		.then(result => {
-			const transaction = db.transaction(["pokemon"], "readwrite")
-			const pokemonStore = transaction.objectStore("pokemon")
-			const request = pokemonStore.put(obj, result)
-			request.onsuccess = event => {
-				resolve()
-			}
-		})
-	})
-	return promise
+	let data = getPokemonSaveObj(pokemon)
+	return savePokemonObj(data)
 }
 
-function saveLevelStatus(level, status){
-	let promise = new Promise(resolve => {
-		//This guy is gonna find the pokemon if it exists
-		//Pokemon by themselves contain a lot of information unnecessary to store.
-		//This object contains only the important stuff
-		let obj = {}
-		obj.saveFile = playerSaveId
-		obj.id = level.id
-		obj.status = status
-
-		findLevelInDatabase(level)
-		.then(result => {
-			const transaction = db.transaction(["levels"], "readwrite")
-			const levelStore = transaction.objectStore("levels")
-			const request = levelStore.put(obj, result)
-			request.onsuccess = event => {
-				resolve()
-			}
-		})
-	})
-	return promise
-}
-
-function findSaveFileInDatabase(uuid){
+function findSaveFilePrimaryKey(uuid){
 	let promise = new Promise(resolve => {
 		const transaction = db.transaction(["save-file"], "readonly")
 		const saveFileStore = transaction.objectStore("save-file")
@@ -256,18 +262,18 @@ function findSaveFileInDatabase(uuid){
 	})
 	return promise
 }
-function findPokemonInDatabase(pokemon){
+function findSaveFileInDatabase(uuid){
 	let promise = new Promise(resolve => {
-		const transaction = db.transaction(["pokemon"], "readonly")
-		const pokemonStore = transaction.objectStore("pokemon")
-		const index = pokemonStore.index("uuid")
+		const transaction = db.transaction(["save-file"], "readonly")
+		const saveFileStore = transaction.objectStore("save-file")
+		const index = saveFileStore.index("uuid")
 		const cursor = index.openCursor()
 		
 		cursor.onsuccess = event => {
 			const cur = event.target.result
 			if (cur){
-				if (cur.value.uuid === pokemon.uuid){
-					resolve(cur.primaryKey)
+				if (cur.value.uuid === uuid){
+					resolve(cur.value)
 				}
 				cur.continue()
 			} else {
@@ -277,17 +283,20 @@ function findPokemonInDatabase(pokemon){
 	})
 	return promise
 }
-function findLevelInDatabase(level){
-	let promise = new Promise(resolve => {
-		const transaction = db.transaction(["levels"], "readonly")
-		const pokemonStore = transaction.objectStore("levels")
-		const index = pokemonStore.index("save-file")
+function findPokemonInDatabase(pokemon){
+	return findPokemonById(pokemon.uuid)
+}
+function findPokemonById(uuid){
+	return new Promise(resolve => {
+		const transaction = db.transaction(["pokemon"], "readonly")
+		const pokemonStore = transaction.objectStore("pokemon")
+		const index = pokemonStore.index("uuid")
 		const cursor = index.openCursor()
 		
 		cursor.onsuccess = event => {
 			const cur = event.target.result
 			if (cur){
-				if (cur.value.id === level.id){
+				if (cur.value.uuid === uuid){
 					resolve(cur.primaryKey)
 				}
 				cur.continue()
@@ -296,7 +305,6 @@ function findLevelInDatabase(level){
 			}
 		}
 	})
-	return promise
 }
 
 function getPlayerPokemon(saveId){
@@ -312,6 +320,24 @@ function getPlayerPokemon(saveId){
 		}
 	})
 	return promise
+}
+function loadPlayerPokemon(dataList){
+	return new Promise(resolve => {
+		dataList.forEach(obj => {
+			// console.log(obj)
+			let pokemon = new Pokemon(obj.name, obj.pokemonId, obj)
+			caughtPokemon.push(pokemon)
+
+			if (obj.activeSlot !== -1){
+				playerActivePokemon[obj.activeSlot] = pokemon
+			}
+		})
+
+		//If this leaves empty slots in the player's party, remove them.
+		removeEmptySlots(playerActivePokemon)
+
+		resolve()
+	})
 }
 
 function getPlayerLevelData(saveId){
@@ -377,15 +403,16 @@ function makeNewSaveFile(){
 		playerName = name || undefined
 	})
 	.then(() => new Promise(resolve => {
-		const uuid = window.crypto.randomUUID()
 		const transaction = db.transaction(["save-file"], "readwrite")
 		const saveFileStore = transaction.objectStore("save-file")
-		const data = newPlayerSaveData()
+
+		const uuid = window.crypto.randomUUID()
+		const saveData = newPlayerSaveData()
 		const request = saveFileStore.put({
 			name: chosenName,
 			uuid: uuid,
 			settings: config,
-			data: getSaveDataObj(data)
+			data: getSaveDataObj(saveData)
 		})
 		request.onsuccess = event => {
 			makeNewBox(uuid, "Box 1")
@@ -438,19 +465,58 @@ function makeNewBox(saveId, name){
 	let promise = new Promise(resolve => {
 		let uuid = window.crypto.randomUUID()
 		const transaction = db.transaction(["boxes"], "readwrite")
-		const saveFileStore = transaction.objectStore("boxes")
+		const boxStore = transaction.objectStore("boxes")
 		let box = {
 			name: name,
 			uuid: uuid,
 			owner: saveId,
 			theme: "forest_frlg"
 		}
-		const request = saveFileStore.put(box)
+		const request = boxStore.put(box)
 		request.onsuccess = event => {
 			resolve(uuid)
 		}
 	})
 	return promise
+}
+function findBoxById(uuid){
+	return new Promise(resolve => {
+		const transaction = db.transaction(["boxes"], "readonly")
+		const boxStore = transaction.objectStore("boxes")
+		const index = boxStore.index("uuid")
+		const cursor = index.openCursor()
+		
+		cursor.onsuccess = event => {
+			const cur = event.target.result
+			if (cur){
+				if (cur.value.uuid === uuid){
+					resolve(cur.primaryKey)
+				}
+				cur.continue()
+			} else {
+				resolve(null)
+			}
+		}
+	})
+}
+function saveBoxObj(data){
+	return new Promise(resolve => {
+		findBoxById(data.uuid)
+		.then(result => {
+			const transaction = db.transaction(["boxes"], "readwrite")
+			const boxStore = transaction.objectStore("boxes")
+			
+			let request
+			if (result !== null){
+				request = boxStore.put(data, result)
+			} else {
+				request = boxStore.put(data)
+			}
+			request.onsuccess = event => {
+				resolve()
+			}
+		})
+	})
 }
 function getPlayerBoxes(saveId){
 	let promise = new Promise(resolve => {
@@ -478,5 +544,120 @@ function getPokemonFromBox(boxId){
 			resolve(result)
 		}
 	})
+	return promise
+}
+
+function findLevelInDatabase(level, saveId){
+	let promise = new Promise(resolve => {
+		const transaction = db.transaction(["levels"], "readonly")
+		const levelStore = transaction.objectStore("levels")
+		const index = levelStore.index("save-file")
+		const cursor = index.openCursor()
+		
+		cursor.onsuccess = event => {
+			const cur = event.target.result
+			if (cur){
+				let data = cur.value
+				if (data.id === level.id && data.saveFile === saveId){
+					resolve(cur.primaryKey)
+				}
+				cur.continue()
+			} else {
+				resolve(null)
+			}
+		}
+	})
+	return promise
+}
+function saveLevelStatus(level, status){
+	let promise = new Promise(resolve => {
+		let obj = {}
+		obj.saveFile = playerSaveId
+		obj.id = level.id
+		obj.status = status
+
+		return saveLevelObj(obj)
+	})
+	return promise
+}
+function saveLevelObj(data){
+	let level = getLevelDataById(data.id)
+	let saveId = data.saveFile ?? playerSaveId
+	
+	let promise = new Promise(resolve => {
+		findLevelInDatabase(level, saveId)
+		.then(result => {
+			const transaction = db.transaction(["levels"], "readwrite")
+			const levelStore = transaction.objectStore("levels")
+
+			let request
+			if (result !== null){
+				request = levelStore.put(data, result)
+			} else {
+				request = levelStore.put(data)
+			}
+			request.onsuccess = event => {
+				resolve()
+			}
+		})
+	})
+	return promise
+}
+
+function getSaveTransferString(saveId){
+	let resolvePromise
+	let promise = new Promise(resolve => resolvePromise = resolve)
+	let result = {}
+	savePlayerInfo()
+	.then(() => findSaveFileInDatabase(saveId))
+	.then(val => {
+		result.saveFile = val
+	})
+	.then(() => getPlayerPokemon(saveId))
+	.then(val => {
+		result.pokemon = val
+	})
+	.then(() => getPlayerLevelData(saveId))
+	.then(val => {
+		result.levelData = val
+	})
+	.then(() => getPlayerBoxes(saveId))
+	.then(val => {
+		result.boxes = val
+	})
+	.then(() => {
+		let str = JSON.stringify(result)
+		let compressed = lzjs.compressToBase64(str)
+		resolvePromise(compressed)
+	})
+	return promise
+}
+function transferSaveFromString(str){
+	let uncompressed = lzjs.decompressFromBase64(str)
+	let result = JSON.parse(uncompressed)
+	let promise = Promise.resolve()
+
+	if (!result.saveFile){
+		alert("This data is missing a save file. How did that happen?")
+		return promise
+	}
+	promise = promise.then(() => savePlayerInfo(result.saveFile))
+
+	if (result.pokemon){
+		for (let pokemonData of result.pokemon){
+			promise = promise.then(() => savePokemonObj(pokemonData))
+		}
+	}
+	if (result.boxes){
+		for (let boxData of result.boxes){
+			promise = promise.then(() => saveBoxObj(boxData))
+		}
+	}
+	if (result.levelData){
+		for (let levelObj of result.levelData){
+			promise = promise.then(() => saveLevelObj(levelObj))
+		}
+	}
+
 	return promise
 }

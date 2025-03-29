@@ -277,7 +277,7 @@ function startScene(name, options){
 			const chooseLevel = event => {
 				let target = $(event.currentTarget)
 				let id = target.attr("data-level")
-				let level = levelData.find(l => l.id === id)
+				let level = getLevelDataById(id)
 				let oldActive = $(".level-button.clicked")
 				target.toggleClass("clicked")
 				oldActive.removeClass("clicked")
@@ -764,7 +764,7 @@ function askToRenamePokemon(pokemon){
 
 let currentLevelProgress
 function beginLevel(levelID){
-	let level = levelData.find(l => l.id === levelID)
+	let level = getLevelDataById(levelID)
 	if (level.music){
 		changeMusic(level.music)
 	}

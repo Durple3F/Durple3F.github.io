@@ -477,6 +477,10 @@ for (let level of levelData) {
 	level.status = "not won"
 }
 
+function getLevelDataById(id){
+	return levelData.find(l => l.id === id)
+}
+
 function getLevelButtonHtml(level) {
 	let btn = $(`<button class='btn btn-primary level-button'></button>`)
 	if (level.status === "won") {

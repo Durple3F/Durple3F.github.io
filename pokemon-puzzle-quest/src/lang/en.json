@@ -370,6 +370,11 @@
 		"delete-save": "DELETE SAVE",
 		"delete-save-confirm": "Really delete save data, super for sure?",
 		"delete-save-failure": "Failed to delete save data.",
+		"get-transfer-string": "Export Save",
+		"get-transfer-string-success": "Copied!",
+		"import-save-file": "Import Save",
+		"import-save-file-prompt": "Please enter save transfer string:",
+		"import-save-file-success": "Success!",
 		"sound-types": {
 			"music": {
 				"name": "Music"

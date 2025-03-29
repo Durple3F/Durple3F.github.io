@@ -1,12 +1,16 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-3/28 (12k lines):
+3/29 (12.2k lines):
+	- Added some buttons in the settings menu for save importing/exporting
+
+3/28 (12.1k lines):
 	- Added rainbow tiles, tiles which can match with whatever. This took. SO much work. I'm going to scream.
 	- Oops, Grubbin was missing stats!
 	- Changed several dialogue box styles.
 	- Huge improvements to how fast the computer can generate a board / find moves on the board. This change WILL bite me in the ass one day, but for now the game can handle up to 25x25 boards without much sweat!
 	- Fixed a bug where the game wouldn't start if no frames were displayed while the game was loading a board, which comes up a lot when testing it with 50x50 boards.
 	- Fixed a bug where the player could <a href="https://www.youtube.com/watch?v=UcZzlPGnKdU">use moves against the opponent's pokemon even while that pokemon was being swapped out.</a>
+	- You can now produce a string that will hopefully eventually be used to transfer your save.
 
 3/27 (11.8k lines):
 	- Added a neat function that lets me find tiles that surround a given selection of tiles.

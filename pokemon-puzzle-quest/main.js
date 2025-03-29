@@ -1,4 +1,4 @@
-const versionNumber = "v0.7.1"
+const versionNumber = "v0.8"
 const lang = "en"
 let playerName
 
@@ -569,6 +569,9 @@ function resetEntirePage(){
 		stopSound(sound.name)
 	})
 
+	$("body > div[data-initially-hidden='true']").fadeOut()
+	$("#title-screen").show().fadeIn()
+
 	$("#save-files").find(".save-file").remove()
 	$("#loading-bar").removeClass("complete")
 	$("#loading-bar").children(".count").show()
@@ -800,7 +803,7 @@ function openSettings(){
 	body.append(deleteSaveSection)
 	let deleteText = getLocaleString("delete-save", lang, ["settings"])
 	let deleteSaveButton = $(`<button class='btn btn-danger'>${deleteText}</button>`)
-	body.append(deleteSaveButton)
+	deleteSaveSection.append(deleteSaveButton)
 	deleteSaveButton.click(() => {
 		let text = getLocaleString("delete-save-confirm", lang, ["settings"])
 		let sure = confirm(text)
@@ -817,11 +820,44 @@ function openSettings(){
 				modal.modal("hide")
 				playerSaveId = null
 				playerSaveInfo = {}
-				$("body > div[data-initially-hidden='true']").fadeOut()
-				$("#title-screen").show().fadeIn()
 				loadResources()
 			})
 		}
+	})
+
+	let getTransferText = getLocaleString("get-transfer-string", lang, ["settings"])
+	let getTransferSuccessText = getLocaleString("get-transfer-string-success", lang, ["settings"])
+	let getTransferButton = $(`<button class='btn btn-secondary'>${getTransferText}</button>`)
+	deleteSaveSection.append(getTransferButton)
+	getTransferButton.click(() => {
+		getSaveTransferString(playerSaveId)
+		.then(transferString => {
+			let elem = document.createElement("input")
+			elem.value = transferString
+			elem.select()
+			elem.setSelectionRange(0, transferString.length)
+			navigator.clipboard.writeText(elem.value)
+			getTransferButton.text(getTransferSuccessText)
+			delay(1000).then(() => {
+				getTransferButton.text(getTransferText)
+			})
+		})
+	})
+
+	let importText = getLocaleString("import-save-file", lang, ["settings"])
+	let importPromptText = getLocaleString("import-save-file-prompt", lang, ["settings"])
+	let importSuccessText = getLocaleString("import-save-file-success", lang, ["settings"])
+	let importButton = $(`<button class='btn btn-secondary'>${importText}</button>`)
+	deleteSaveSection.append(importButton)
+	importButton.click(() => {
+		let transferString = prompt(importPromptText)
+		if (!transferString) return
+		transferSaveFromString(transferString)
+		.then(() => {
+			alert(importSuccessText)
+			modal.modal("hide")
+			loadResources()
+		})
 	})
 
 	btn.click(() => {
@@ -882,28 +918,18 @@ function beginNewGame(){
 
 function continueGame(){
 	getPlayerPokemon(playerSaveId)
-	.then(result => {
-		result.forEach(obj => {
-			// console.log(obj)
-			let pokemon = new Pokemon(obj.name, obj.pokemonId, obj)
-			caughtPokemon.push(pokemon)
-
-			if (obj.activeSlot !== -1){
-				playerActivePokemon[obj.activeSlot] = pokemon
-			}
-		})
-
-		//If this leaves empty slots in the player's party, remove them.
-		removeEmptySlots(playerActivePokemon)
-	})
+	.then(dataList => loadPlayerPokemon(dataList))
 	.then(() => getPlayerBoxes(playerSaveId))
 	.then(boxes => {
 		boxes.forEach(box => playerPCBoxes.push(box))
 	})
 	.then(() => getPlayerLevelData(playerSaveId))
 	.then(result => {
+		levelData.forEach(level => {
+			delete level.status
+		})
 		result.forEach(obj => {
-			let level = levelData.find(l => l.id === obj.id)
+			let level = getLevelDataById(obj.id)
 			if (!level) return
 			level.status = obj.status
 		})
