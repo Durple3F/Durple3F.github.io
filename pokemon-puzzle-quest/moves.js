@@ -49,6 +49,38 @@ const pokemonMoveData = {
 			{ type: "set-initiative", target: "opponent", initiative: -1 },
 		],
 	},
+	"Aqua Jet": {
+		name: "Aqua Jet",
+		type: "Water",
+		category: "Physical",
+		strategy: "basic-damage",
+		pp: 20,
+		power: 40,
+		accuracy: 100,
+		rechargeTurns: 2,
+		energy: {
+			// blue: 15,
+			// yellow: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Aqua Jet.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "get-viable-pokemon", target: "opponent" },
+			{ type: "get-active-pokemon", target: "opponent" },
+			{ type: "remove-element-from-list", list: -2, element: -1 },
+			{ type: "get-list-length", list: -1 },
+			{ type: "load-value", value: 1 },
+			{ type: "jump-if-less-than", jumpTo: Infinity },
+			{ type: "choose-pokemon", target: "user", message: "choose-pokemon", pokemon: -4, strategy: "damage" },
+			{ type: "load-value", value: 0 },
+			{ type: "get-element-from-list", list: -2, index: -1 },
+			{ type: "load-value", value: -20 },
+			{ type: "damage", toPokemon: -2, additivePower: -1 }
+		],
+	},
 	"Bite": {
 		name: "Bite",
 		type: "Dark",
@@ -202,7 +234,7 @@ const pokemonMoveData = {
 			{ type: "jump-if-less-than", jumpTo: "end" },
 			{ type: "apply-status-effect", statusEffect: "confused", target: "opponent" },
 			{ type: "load-value", value: 6, label: "end" },
-			// { type: "end-turn", label: "end" }
+			{ type: "end-turn", label: "end" }
 		],
 	},
 	"Ember": {
@@ -688,7 +720,7 @@ const pokemonMoveData = {
 		accuracy: 95,
 		rechargeTurns: 1,
 		energy: {
-			blue: 5
+			blue: 12
 		},
 		sounds: {
 			"attack": "src/audio/attacks/String Shot.mp3"

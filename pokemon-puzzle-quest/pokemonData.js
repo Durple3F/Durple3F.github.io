@@ -395,6 +395,9 @@ function getAllStatusSprites(){
 	return arr
 }
 
+function isPokemonUsable(pokemon){
+	return pokemon.hp > 0
+}
 function getUsablePokemon(pokemonList){
-	return pokemonList.filter(p => p.hp > 0)
+	return pokemonList.filter(isPokemonUsable)
 }

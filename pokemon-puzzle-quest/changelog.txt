@@ -1,7 +1,10 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-3/29 (12.2k lines):
+3/29 (12.3k lines):
 	- Added some buttons in the settings menu for save importing/exporting
+	- Reworked how pokeballs are shown onscreen
+	- You can now deal damage to non-active pokemon with some moves
+	- Added Aqua Jet, a move that deals damage to non-active pokemon
 
 3/28 (12.1k lines):
 	- Added rainbow tiles, tiles which can match with whatever. This took. SO much work. I'm going to scream.

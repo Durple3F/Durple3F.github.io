@@ -255,24 +255,24 @@ class Round{
 		let enemyActivePokemon = enemyTrainer.activePokemon
 		let playerTrainer = this.trainers[0]
 		let playerActivePokemon = playerTrainer.activePokemon
-		if (enemyActivePokemon.hp <= 0){
+		if (!isPokemonUsable(enemyActivePokemon)){
 			let pokemonCanSwapTo = getUsablePokemon(enemyTrainer.pokemon)
 			if (pokemonCanSwapTo.length > 0){
 				//If the enemy has pokemon they can swap to, they pick one and swap to it.
-				let pokemon = this.computerChoosePokemon(pokemonCanSwapTo, "swap")
-				promise = promise.then(() => {
-					return this.animateSendOutPokemon(1, pokemon)
+				promise = promise.then(() => this.computerChoosePokemon(pokemonCanSwapTo, "swap"))
+				.then(pokemonList => {
+					return this.animateSendOutPokemon(1, pokemonList[0])
 				})
 			} else {
 				//If the enemy has no pokemon they can swap to, you win.
 				promise = promise.then(() => this.end("win"))
 			}
-		} else if (playerActivePokemon.hp <= 0){
+		} else if (!isPokemonUsable(playerActivePokemon)){
 			let pokemonCanSwapTo = getUsablePokemon(playerTrainer.pokemon)
 			if (pokemonCanSwapTo.length > 0){
 				promise = promise.then(() => choosePokemon("Choose a Pokemon to swap to.", pokemonCanSwapTo))
-				.then(pokemon => {
-					return this.animateSendOutPokemon(0, pokemon[0])
+				.then(pokemonList => {
+					return this.animateSendOutPokemon(0, pokemonList[0])
 				})
 			} else {
 				//If you run out of viable pokemon, you lose.
@@ -1203,9 +1203,18 @@ class Round{
 		// let bestSwap = randomChoice(allSwaps)
 		this.animateSwitchLocations(bestSwap[0], bestSwap[1])
 	}
-	computerChoosePokemon(pokemon, reason){
+	computerChoosePokemon(pokemon, reason, minChooseable=1, maxChooseable=1){
 		//TODO have the logic here be based on which reason they could be choosing stuff
-		return pokemon[Math.floor(Math.random() * pokemon.length)]
+		//Current reasons are:
+		// - swap (The computer is changing their active pokemon)
+		// - damage (The computer is choosing a pokemon which they would like to have damage dealt to.)
+		let resolvePromise
+		let promise = new Promise(resolve => resolvePromise = resolve)
+
+		let chosen = pokemon[Math.floor(Math.random() * pokemon.length)]
+		resolvePromise([chosen])
+
+		return promise
 	}
 
 	dealDamage(options){
@@ -1296,16 +1305,32 @@ class Round{
 		if (damage){
 			defender.hp -= damage
 			result.damageDealt = damage
+		}
+
+		if (result.damageDealt !== 0){
 			let animOptions = {
 				color: "#db2428",
-				direction: randomAngle(225, 315),
 				duration: 2000,
-				distance: 30,
-				side: "right"
+				distance: 30
 			}
-			let healthBar = defenderTrainer.tags.healthBar
-			addFloatingText("-" + damage, healthBar, animOptions)
-			this.updateHealth(this.trainers.indexOf(defenderTrainer), true)
+			let text = damage > 0 ? ("-" + damage) : ("+" + damage)
+			let isActive = defender === defenderTrainer.activePokemon
+			if (isActive){
+				animOptions.direction = randomAngle(225, 315)
+				animOptions.side = "right"
+				let healthBar = defenderTrainer.tags.healthBar
+				addFloatingText(text, healthBar, animOptions)
+				this.updateHealth(this.trainers.indexOf(defenderTrainer), true)
+			} else {
+				animOptions.direction = randomAngle(80, 100)
+				animOptions.side = "top"
+				let pokeballContainers = defenderTrainer.tags.pokeballContainers
+				let trainerIndex = this.trainers.indexOf(defenderTrainer)
+				let pokemonIndex = defenderTrainer.pokemon.indexOf(defender)
+				let selector = `.pokeball[data-trainer=${trainerIndex}][data-pokemon=${pokemonIndex}]`
+				let pokeball = pokeballContainers.find(selector)
+				addFloatingText(text, pokeball, animOptions)
+			}
 		}
 
 		return result
@@ -1460,7 +1485,10 @@ class Round{
 			"gain-energy": true,
 			"get-initiative": true,
 			"set-initiative": true,
+			"get-active-pokemon": true,
 			"count-viable-pokemon": true,
+			"get-viable-pokemon": true,
+			"choose-pokemon": true,
 		}
 		let targetDefaults = {
 			"choose-tiles": "user",
@@ -1474,7 +1502,10 @@ class Round{
 			"gain-energy": "user",
 			"get-initiative": "user",
 			"set-initiative": "user",
+			"get-active-pokemon": "user",
 			"count-viable-pokemon": "user",
+			"get-viable-pokemon": "user",
+			"choose-pokemon": "user",
 		}
 		let target
 		if (effect.type in targetDefaults){
@@ -1578,6 +1609,14 @@ class Round{
 					fromTrainer: moveUseObj.trainer,
 					move: moveUseObj.move
 				}
+				
+				if (params.toPokemon){
+					let toPokemon = params.toPokemon
+					let toTrainer = this.getTrainerOfPokemon(toPokemon)
+					options.to = toPokemon
+					options.toTrainer = toTrainer
+				}
+
 				if (effect.additivePower !== undefined){
 					let additivePower = params.additivePower ?? 0
 					options.additionalPower = options.additionalPower ?? 0
@@ -1792,10 +1831,49 @@ class Round{
 				this.applyGravity()
 				.then(() => resolvePromise())
 			} break
+			case "get-active-pokemon": {
+				let result = target.activePokemon
+				moveUseObj.info[effectIndex] = result
+				resolvePromise()
+			} break
 			case "count-viable-pokemon": {
 				let result = getUsablePokemon(target.pokemon).length
 				moveUseObj.info[effectIndex] = result
 				resolvePromise()
+			} break
+			case "get-viable-pokemon": {
+				let result = getUsablePokemon(target.pokemon)
+				moveUseObj.info[effectIndex] = result
+				resolvePromise()
+			} break
+			case "choose-pokemon": {
+				let list = params.pokemon
+				let minChooseable = params.min ?? 1
+				let maxChooseable = params.max ?? 1
+				let message
+				let moveName = moveUseObj.move.name
+				let chooser = this.trainers.indexOf(target)
+				let strategy = effect.strategy
+				
+				if (effect.message){
+					let messageId = effect.message
+					message = getLocaleString(messageId, lang, ["moves", moveName])
+				}
+				if (!message) {
+					message = getLocaleString("choose-pokemon", lang)
+				}
+
+				let choosePromise
+				if (chooser === 0){
+					choosePromise = choosePokemon(message, list, minChooseable, maxChooseable)
+				} else {
+					choosePromise = this.computerChoosePokemon(list, strategy, minChooseable, maxChooseable)
+				}
+				
+				choosePromise.then(chosenPokemon => {
+					moveUseObj.info[effectIndex] = chosenPokemon
+					resolvePromise()
+				})
 			} break
 			case "multiply-energy": {
 				let amounts = params.amounts ?? {}
@@ -1813,6 +1891,40 @@ class Round{
 				let index = this.trainers.indexOf(target)
 				let initiative = params.initiative
 				this.initiativeValues[index] = Math.floor(initiative)
+				resolvePromise()
+			} break
+			case "get-element-from-list": {
+				let list = params.list
+				let index = params.index ?? 0
+				let element
+
+				if (!list){
+					console.error("I didn't get a list!", moveUseObj)
+				} else {
+					if (index in list){
+						element = list[index]
+					} else {
+						console.warn("Tried to find an item at an index that didn't exist!",
+							list, index)
+					}
+				}
+				
+				moveUseObj.info[effectIndex] = element
+				resolvePromise()
+			} break
+			case "remove-element-from-list": {
+				let list = params.list
+				let element = params.element
+				let index = list.indexOf(element)
+				if (index !== -1){
+					list = list.filter(v => v !== element)
+				}
+				moveUseObj.info[effectIndex] = list
+				resolvePromise()
+			} break
+			case "get-list-length": {
+				let list = params.list
+				moveUseObj.info[effectIndex] = list.length
 				resolvePromise()
 			} break
 			case "load-value": {
@@ -2408,55 +2520,89 @@ class Round{
 			}
 		})
 	}
+	resetPokeballs(){
+		const getPokeballPopoverContent = tag => {
+			let pokeball = $(tag)
+			let trainerIndex = pokeball.attr("data-trainer")
+			trainerIndex = parseInt(trainerIndex)
+			let pokemonIndex = pokeball.attr("data-pokemon")
+			pokemonIndex = parseInt(pokemonIndex)
+			let trainer = this.trainers[trainerIndex]
+			let pokemonList = trainer.pokemon
+			let pokemon = pokemonList[pokemonIndex]
+			let popoverContent = pokemon.name
+			if (trainerIndex === 0 && config.pokemonSwapOutInfo){
+				popoverContent += `<br><span class='tiny-tutorial'>Swapping ends your turn.<br>It will enter with half the active pokemon's energy.</span>`
+			}
+			popoverContent = `<p class='text-center mb-0'>` + popoverContent + `</p>`
+			return popoverContent
+		}
+		for (let trainerIndex = 0; trainerIndex < this.trainers.length; trainerIndex++){
+			let tags = this.trainerTags[trainerIndex]
+			let pokeballContainers = [...tags.pokeballContainers]
+			if (trainerIndex === 0){
+				pokeballContainers.reverse()
+			}
+			let trainer = this.trainers[trainerIndex]
+			let pokemonList = trainer.pokemon
+			for (let i = 0; i < 6; i++){
+				let container = $(pokeballContainers[i])
+				let pokeball = container.children(".pokeball")
+				pokeball.popover('dispose')
+				let pokemon = pokemonList[i]
+				pokeball.attr("data-trainer", trainerIndex)
+				pokeball.attr("data-pokemon", i)
+				
+				if (!pokemon) continue
+
+				pokeball.off("click")
+				if (trainerIndex === 0){
+					pokeball.click(() => {
+						this.beginToSwapPokemon(trainerIndex, p)
+					})
+				}
+
+				pokeball.popover({
+					content: getPokeballPopoverContent,
+					html: true,
+					placement: "bottom",
+					trigger: "hover"
+				})
+			}
+		}
+	}
 	updatePokeballs(trainerIndex){
 		let tags = this.trainerTags[trainerIndex]
 		let pokeballContainers = [...tags.pokeballContainers]
 		if (trainerIndex === 0) {
 			pokeballContainers.reverse()
 		}
-		let pokemon = this.trainers[trainerIndex].pokemon
+		let trainer = this.trainers[trainerIndex]
+		let pokemonList = trainer.pokemon
 		for (let i = 0; i < 6; i++){
 			let container = $(pokeballContainers[i])
-			let pokeball = $(`<img class="pokeball">`)
-			let p = pokemon[i]
-			if (p){
+			let pokeball = container.children(".pokeball")
+			let pokemon = pokemonList[i]
+			if (pokemon){
 				pokeball.attr("src", "src/img/Poké_Ball_icon.png")
 				pokeball.css({
 					opacity: 1
 				})
-				if (p.hp <= 0){
+				let usable = isPokemonUsable(pokemon)
+				if (!usable){
 					pokeball.css({
 						filter: "saturate(0)"
 					})
-				} else if (p === this.trainers[trainerIndex].activePokemon){
+				} else if (pokemon === this.trainers[trainerIndex].activePokemon){
 					pokeball.css({
 						filter: "drop-shadow(0px 0px 4px #ffffff70)",
 						'border-color': "white"
 					})
 				}
-				
-				let popoverContent = p.name
-				if (trainerIndex === 0 && config.pokemonSwapOutInfo){
-					popoverContent += `<br><span class='tiny-tutorial'>Swapping ends your turn.<br>It will enter with half the active pokemon's energy.</span>`
-				}
-				popoverContent = `<p class='text-center mb-0'>` + popoverContent + `</p>`
-
-				pokeball.click(() => {
-					this.beginToSwapPokemon(trainerIndex, p)
-				})
-
-				pokeball.popover({
-					content: popoverContent,
-					html: true,
-					placement: "bottom",
-					trigger: "hover"
-				})
 			} else {
 				// pokeball.attr("src", "src/img/Poké_Ball_icon_empty.svg")
 				pokeball.hide()
 			}
-
-			container.html(pokeball)
 		}
 	}
 	updateStatusEffects(trainerIndex){
@@ -2803,6 +2949,7 @@ class Round{
 		})
 		tags.pokemonName.text(name)
 		this.resetPokemonMoves()
+		this.resetPokeballs()
 		this.updateEverything()
 	}
 	getPokemonPopoverContent(pokemon){
@@ -2836,6 +2983,10 @@ class Round{
 			return this.turnEnd(turn)
 		})
 		return promise
+	}
+
+	getTrainerOfPokemon(pokemon){
+		return this.trainers.find(trainer => trainer.pokemon.includes(pokemon))
 	}
 
 	resetPokemonMoves(){
@@ -2995,7 +3146,8 @@ class Round{
 
 	calculateEXPGained(){
 		let enemyTrainer = this.trainers[1]
-		let defeatedPokemon = enemyTrainer.pokemon.filter(p => p.hp <= 0)
+		let defeatedPokemon = enemyTrainer.pokemon
+		.filter(p => !isPokemonUsable(p))
 		let yourPokemon = this.trainers[0].pokemon
 		let resultMap = {}
 		for (let yours of yourPokemon){

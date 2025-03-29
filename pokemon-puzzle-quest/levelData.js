@@ -466,6 +466,20 @@ const levelData = [
 		icon: "6",
 		music: "SM Trainer Battle",
 		trainers: [
+			{
+				name: "Madison",
+				class: "Lass-Gen7",
+				pokemon: [
+					{
+						id: "Popplio",
+						level: 6
+					},
+					{
+						id: "Pichu",
+						level: 6
+					},
+				]
+			},
 		],
 		effects: [
 			{ type: "fight", trainer: 0 }

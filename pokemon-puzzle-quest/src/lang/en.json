@@ -1,6 +1,8 @@
 {
 	"Route 1-1-description": "Rival Battle",
 	"initiative-tutorial": "Initiative<br>Each turn, both Pokémon gain Initiative based on their speed stats. When a player matches 4 or more tiles in a row, they get a free turn.",
+	"choose-pokemon": "Choose Pokémon",
+
 	"error-cant-remove-last-pokemon": "You can't put your only Pokémon into the PC.",
 	"error-no-usable-pokemon": "All your Pokémon are currently fainted.",
 	"select-number-tiles-plural": "Select %c tiles",
@@ -149,15 +151,21 @@
 		}
 	},
 	"moves": {
+		"Absorb": {
+			"name": "Absorb",
+			"description": "Deals damage. Then, heals the user for 50% of the damage dealt.",
+			"shortDescription": "Steals a little HP"
+		},
 		"Astonish": {
 			"name": "Astonish",
 			"description": "Deals damage. Then, removes half of the target's initiative.",
 			"shortDescription": "Deals light damage and slows opponent"
 		},
-		"Absorb": {
-			"name": "Absorb",
-			"description": "Deals damage. Then, heals the user for 50% of the damage dealt.",
-			"shortDescription": "Steals a little HP"
+		"Aqua Jet": {
+			"name": "Aqua Jet",
+			"description": "Deals damage. If the opponent has any benched Pokémon remaining, this move also attacks one of them of your choice, with 20 less power.",
+			"shortDescription": "Damages a benched Pokémon",
+			"choose-pokemon": "Choose a Pokémon for Aqua Jet to deal damage to."
 		},
 		"Bite": {
 			"name": "Bite",
