@@ -59,8 +59,8 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 2,
 		energy: {
-			// blue: 15,
-			// yellow: 5
+			blue: 15,
+			yellow: 5
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Aqua Jet.mp3"

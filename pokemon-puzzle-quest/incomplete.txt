@@ -7,7 +7,7 @@ Incomplete move lists:
   Wingull (lv 1)
   Rowlet (lv 12)
   Litten (lv 6)
-  Popplio (lv 6)
+  Popplio (lv 9)
   Pikipek (lv 3)
   Yungoos (lv 7)
   Grubbin (lv 10)

@@ -780,9 +780,9 @@ const pokemonData = {
 				name: "Aqua Jet",
 				unlock: {
 					type: "level",
-					amount: 1
+					amount: 9
 				}
-			},
+			}
 		]
 	},
 	"Pikipek": {

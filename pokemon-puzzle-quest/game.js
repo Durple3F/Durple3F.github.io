@@ -1303,17 +1303,29 @@ class Round{
 		}
 		
 		if (damage){
+			//On the off chance something ever does negative damage
+			let targetHp = defender.hp - damage
+			if (targetHp > defender.maxhp){
+				damage = defender.hp - defender.maxhp
+			}
 			defender.hp -= damage
 			result.damageDealt = damage
 		}
 
-		if (result.damageDealt !== 0){
+		if (result.damageDealt > 0 || result.damageDealt < 0){
 			let animOptions = {
-				color: "#db2428",
 				duration: 2000,
 				distance: 30
 			}
-			let text = damage > 0 ? ("-" + damage) : ("+" + damage)
+			let text
+			console.log(damage)
+			if (damage > 0){
+				animOptions.color = "#db2428"
+				text = "-" + damage
+			} else {
+				animOptions.color = "#179e08"
+				text = "+" + damage
+			}
 			let isActive = defender === defenderTrainer.activePokemon
 			if (isActive){
 				animOptions.direction = randomAngle(225, 315)
@@ -1622,7 +1634,6 @@ class Round{
 					options.additionalPower = options.additionalPower ?? 0
 					options.additionalPower += additivePower
 				}
-				console.log(options)
 				let result = this.dealDamage(options)
 				moveUseObj.info[effectIndex] = result.damageDealt
 				resolvePromise()
@@ -1633,20 +1644,27 @@ class Round{
 				if (amount < min){
 					amount = min
 				}
-				//Clamp it so it doesn't go above max hp
-				amount = Math.min(target.maxhp - target.hp, amount)
-				target.hp += amount
-				let animOptions = {
-					color: "#00ff00",
-					direction: randomAngle(225, 315),
-					duration: 2000,
-					distance: 30,
-					side: "right"
+				let options = {
+					from: moveUseObj.pokemon,
+					fromTrainer: moveUseObj.trainer,
+					to: moveUseObj.pokemon,
+					toTrainer: moveUseObj.trainer,
+					move: moveUseObj.move
 				}
-				let trainer = this.trainers.find(t => t.activePokemon === target)
-				let healthBar = trainer.tags.healthBar
-				addFloatingText("+" + amount, healthBar, animOptions)
-				this.updateHealth(this.trainers.indexOf(trainer), true)
+				
+				if (params.toPokemon){
+					let toPokemon = params.toPokemon
+					let toTrainer = this.getTrainerOfPokemon(toPokemon)
+					options.to = toPokemon
+					options.toTrainer = toTrainer
+				}
+
+				//Clamp it so it doesn't go above max hp
+				// amount = Math.min(target.maxhp - target.hp, amount)
+				options.damage = -amount
+				options.fixed = true
+				options.healing = true
+				this.dealDamage(options)
 				
 				resolvePromise()
 			} break
