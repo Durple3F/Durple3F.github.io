@@ -237,6 +237,39 @@ const pokemonMoveData = {
 			{ type: "end-turn", label: "end" }
 		],
 	},
+	"Echoed Voice": {
+		name: "Echoed Voice",
+		type: "Normal",
+		category: "Special",
+		strategy: "basic-damage",
+		pp: 15,
+		power: 40,
+		accuracy: 100,
+		rechargeTurns: 0,
+		energy: {
+			yellow: 12
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Echoed Voice.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "remove-status-effect", target: "user", statusName: "cost-reduction-from-echoed-voice" },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "cost-reduction-from-echoed-voice",
+				type: "cost-alteration",
+				stacks: false,
+				appliesTo: {
+					name: "Echoed Voice"
+				},
+				turns: 2,
+				energyCost: {
+					yellow: -6
+				}
+			} }
+		],
+	},
 	"Ember": {
 		name: "Ember",
 		type: "Fire",

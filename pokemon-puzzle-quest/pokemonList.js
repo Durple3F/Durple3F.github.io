@@ -841,6 +841,13 @@ const pokemonData = {
 					amount: 3
 				}
 			},
+			{
+				name: "Echoed Voice",
+				unlock: {
+					type: "level",
+					amount: 3
+				}
+			},
 		]
 	},
 	"Yungoos": {

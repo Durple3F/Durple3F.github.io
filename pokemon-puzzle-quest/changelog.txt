@@ -1,6 +1,11 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-3/29 (12.3k lines):
+3/30 (12.6k lines):
+	- Tons of failed work to make the pokemon moves look nicer.
+	- Moves may now affect their own costs. They can also affect the costs of other moves, or even the costs of the opponent's moves.
+	- Added Echoed Voice
+
+3/29 (12.5k lines):
 	- Added some buttons in the settings menu for save importing/exporting
 	- Reworked how pokeballs are shown onscreen
 	- You can now deal damage to non-active pokemon with some moves

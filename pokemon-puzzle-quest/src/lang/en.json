@@ -192,6 +192,11 @@
 			"description": "Deals damage. Has a 50% chance to confuse the opponent. Ends the turn.",
 			"shortDescription": "Deals light damage and may confuse"
 		},
+		"Echoed Voice": {
+			"name": "Echoed Voice",
+			"description": "Deals damage. This move's yellow energy cost is reduced by 6 during your next turn.",
+			"shortDescription": "Damages and becomes cheaper"
+		},
 		"Ember": {
 			"name": "Ember",
 			"description": "Deals damage. There's a 10% chance for this move to inflict Burn on 3 random tiles. At the start of each turn, the opponent takes damage for each Burned tile on the board.",

@@ -1,4 +1,4 @@
-const versionNumber = "v0.8.3"
+const versionNumber = "v0.8.4"
 let lang = "en"
 let playerName
 
@@ -44,6 +44,7 @@ function animateTextCounter(from, to, elem, duration){
 		$(oldAnimation).stop()
 	}
 
+	elem.attr("data-counter-target", to)
 	$(fromObj).animate(toObj, {
 		duration: duration,
 		step: function(){
@@ -52,6 +53,7 @@ function animateTextCounter(from, to, elem, duration){
 		complete: function(){
 			elem.text(parseInt(to))
 			ongoingTextAnimations.delete(elem)
+			elem.removeAttr("data-counter-target")
 		}
 	})
 	ongoingTextAnimations.set(elem, fromObj)

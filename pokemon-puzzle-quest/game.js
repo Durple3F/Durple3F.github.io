@@ -1296,7 +1296,7 @@ class Round{
 
 		//If the receiving Pokemon has Invulnerable, set damage dealt to 0.
 		let statusEffects = defender.statusEffects
-		let isInvulnerable = statusEffects.some(s => s.name === "invulnerable")
+		let isInvulnerable = defender.hasStatus("invulnerable")
 		if (isInvulnerable && attacker !== defender){
 			damage = 0
 			result.damageDealt = 0
@@ -1318,7 +1318,6 @@ class Round{
 				distance: 30
 			}
 			let text
-			console.log(damage)
 			if (damage > 0){
 				animOptions.color = "#db2428"
 				text = "-" + damage
@@ -1412,14 +1411,15 @@ class Round{
 		let pokemon = trainer.activePokemon
 
 		if (!move.specialCost){
-			let energy = move.energy
+			let cost = this.getEffectiveCost(trainer, pokemon, move)
+			let energyCost = cost.energyCost
 			
 			for (let color of colors){
-				if (energy[color] === undefined) {
+				if (energyCost[color] === undefined) {
 					payability[color] = true
 					continue
 				}
-				payability[color] = pokemon.energy[color] >= energy[color]
+				payability[color] = pokemon.energy[color] >= energyCost[color]
 			}
 		}
 
@@ -1443,6 +1443,51 @@ class Round{
 			if (move.energy[color] === undefined) continue
 			pokemon.energy[color] -= move.energy[color]
 		}
+	}
+	getEffectiveCost(trainer, pokemon, move, cost){
+		if (!cost){
+			cost = {}
+		}
+		if (!cost.energyCost){
+			let energyCost = getEmptyEnergy()
+			cost.energyCost = energyCost
+			for (let color in move.energy){
+				energyCost[color] = move.energy[color]
+			}
+		}
+		let energyCost = cost.energyCost
+		
+		let costEffects = pokemon.statusEffects.filter(s => {
+			return s.type === "cost-alteration"
+		})
+		const doesThisApply = (move, appliesTo) => {
+			let good = []
+			if (appliesTo.name){
+				good.push(move.name === appliesTo.name)
+			}
+			if (appliesTo.logic === "and"){
+				return good.every(v => v)
+			} else if (appliesTo.logic === "or"){
+				return good.some(v => v)
+			} else if (appliesTo.logic === "nor"){
+				return !good.some(v => v)
+			} else if (appliesTo.logic === "nand"){
+				return !good.every(v => v)
+			} else {
+				return good.every(v => v)
+			}
+		}
+		for (let statusEffect of costEffects){
+			let applies = doesThisApply(move, statusEffect.appliesTo)
+			if (applies){
+				let modification = statusEffect.energyCost
+				for (let color in modification){
+					energyCost[color] = (energyCost[color] ?? 0) + modification[color]
+				}
+			}
+		}
+
+		return cost
 	}
 	beginToUseMove(trainer, pokemon, move){
 		//Put the move on recharge
@@ -1510,6 +1555,7 @@ class Round{
 			"get-stat": "user",
 			"get-types": "user",
 			"apply-status-effect": "opponent",
+			"remove-status-effect": "opponent",
 			"apply-debuff": "opponent",
 			"select-energy-colors": "none",
 			"gain-energy": "user",
@@ -1699,6 +1745,11 @@ class Round{
 			case "apply-status-effect": {
 				let statusEffect = effect.statusEffect
 				target.addStatusEffect(statusEffect, moveUseObj.trainer, moveUseObj.pokemon, moveUseObj.move)
+				resolvePromise()
+			} break
+			case "remove-status-effect": {
+				let statusName = effect.statusName
+				target.removeStatus(statusName)
 				resolvePromise()
 			} break
 			case "select-energy-colors": {
@@ -3097,7 +3148,9 @@ class Round{
 			let thisPokemon = thisTrainer.pokemon[pokemonIndex]
 			let thisMove = thisPokemon.moves[moveIndex]
 			let thisMoveUsage = thisPokemon.moveUsage[moveIndex]
-			let payability = this.canPayCost(thisMove, trainerIndex)
+			let cost = this.getEffectiveCost(thisTrainer, thisPokemon, thisMove)
+			let energyCost = cost.energyCost ?? {}
+			let payability = this.canPayCost(thisMove, trainerIndex, cost)
 			let moveCostTag = moveTag.children(".move-cost")
 			let costParts = moveCostTag.children(".cost-part")
 			
@@ -3105,10 +3158,36 @@ class Round{
 			for (let i = 0; i < costParts.length; i++){
 				let costTag = $(costParts).eq(i)
 				let costType = costTag.attr("data-cost")
+				let numberTag = costTag.children(".cost")
+				let shownCost = Number(numberTag.html())
+				let realCost = energyCost[costType]
+
 				if (payability[costType]){
 					
 				} else {
 					usable = false
+				}
+
+				if (realCost){
+					costTag.children().show()
+				} else {
+					costTag.children().hide()
+				}
+
+				if (shownCost !== realCost){
+					let animatingTowards = numberTag.attr("data-counter-target")
+					animatingTowards = Number(animatingTowards)
+					if (animatingTowards !== realCost){
+						animateTextCounter(shownCost, realCost, numberTag)
+						let color
+						if (colors.includes(costType)){
+							color = tileTypeColors[costType]
+						} else {
+							color = "white"
+						}
+						costTag.css("filter", `drop-shadow(0em 0em 0.5em ${color})`)
+						delay(500).then(() => costTag.css("filter", ""))
+					}
 				}
 			}
 

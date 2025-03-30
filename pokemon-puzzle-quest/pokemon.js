@@ -172,16 +172,30 @@ class Pokemon{
 			}
 			if (typeof status === "string"){
 				console.warn("Uh-oh, this status never got converted to an object: ", status)
+				status = {
+					name: "???"
+				}
 			}
+			status.type = "status"
 		} else {
-			console.warn("Non-string status effect added", status)
+			let oldStatus = status
+			status = {
+				name: "???"
+			}
+			for (let key in oldStatus){
+				status[key] = oldStatus[key]
+			}
+		}
+
+		if (!status.name || !status.type){
+			console.warn("This status effect is weird:")
+			console.log(status)
 		}
 
 		let result = {}
 		result.added = []
 		result.removed = []
 		result.replaced = []
-		status.type = "status"
 		status.sourceMove = source
 		status.sourcePokemon = pokemon
 		status.sourceTrainer = owner
@@ -217,7 +231,12 @@ class Pokemon{
 		//There are some status effects that don't stack
 		let data = pokemonStatusData[status.name]
 		let existingCopies = statusEffects.filter(s => s.name === status.name)
-		if (data && !data.stacks && existingCopies.length){
+		let stacksAllowed = status.stacks ?? data.stacks
+		if (typeof stacksAllowed === "boolean"){
+			stacksAllowed = stacksAllowed ? Infinity : 1
+		}
+		let tooManyStacks = existingCopies.length + 1 > stacksAllowed
+		if (tooManyStacks){
 			prevented = true
 		}
 
