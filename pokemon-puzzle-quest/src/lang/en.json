@@ -277,6 +277,12 @@
 			"description": "Deals damage. This move can be used more than once during a turn.",
 			"shortDescription": "Deals light damage"
 		},
+		"Roar": {
+			"name": "Roar",
+			"description": "The opponent must swap to a different Pokémon if possible. Then ends the turn.",
+			"shortDescription": "Forces opponent to switch",
+			"choose-pokemon": "Choose a Pokémon to swap to."
+		},
 		"Scratch": {
 			"name": "Scratch",
 			"description": "Damage-dealing move with no special effects. Ends the turn.",

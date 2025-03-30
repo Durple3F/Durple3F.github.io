@@ -1501,6 +1501,7 @@ class Round{
 			"count-viable-pokemon": true,
 			"get-viable-pokemon": true,
 			"choose-pokemon": true,
+			"swap-pokemon": true,
 		}
 		let targetDefaults = {
 			"choose-tiles": "user",
@@ -1518,6 +1519,7 @@ class Round{
 			"count-viable-pokemon": "user",
 			"get-viable-pokemon": "user",
 			"choose-pokemon": "user",
+			"swap-pokemon": "user",
 		}
 		let target
 		if (effect.type in targetDefaults){
@@ -1892,6 +1894,15 @@ class Round{
 					moveUseObj.info[effectIndex] = chosenPokemon
 					resolvePromise()
 				})
+			} break
+			case "swap-pokemon": {
+				let pokemon = params.pokemon
+				let trainerIndex = this.trainers.indexOf(target)
+				
+				let animation = gameRound.animateSendOutPokemon(
+					trainerIndex, pokemon
+				)
+				animation.then(() => resolvePromise())
 			} break
 			case "multiply-energy": {
 				let amounts = params.amounts ?? {}

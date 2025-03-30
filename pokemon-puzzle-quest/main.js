@@ -1,5 +1,5 @@
-const versionNumber = "v0.8.2"
-const lang = "en"
+const versionNumber = "v0.8.3"
+let lang = "en"
 let playerName
 
 const canvas = $("#screen")[0]

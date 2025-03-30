@@ -662,6 +662,37 @@ const pokemonMoveData = {
 			{ type: "damage" }
 		],
 	},
+	"Roar": {
+		name: "Roar",
+		type: "Normal",
+		category: "Status",
+		strategy: "special",
+		pp: 20,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 5,
+		energy: {
+			red: 6,
+			orange: 5,
+			yellow: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Roar.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-viable-pokemon", target: "opponent" },
+			{ type: "get-active-pokemon", target: "opponent" },
+			{ type: "remove-element-from-list", list: -2, element: -1 },
+			{ type: "get-list-length", list: -1 },
+			{ type: "load-value", value: 1 },
+			{ type: "jump-if-less-than", jumpTo: Infinity },
+			{ type: "choose-pokemon", target: "opponent", message: "choose-pokemon", pokemon: -4, strategy: "swap" },
+			{ type: "load-value", value: 0 },
+			{ type: "get-element-from-list", list: -2, index: -1 },
+			{ type: "swap-pokemon", target: "opponent", pokemon: -1 },
+		],
+	},
 	"Scratch": {
 		name: "Scratch",
 		type: "Normal",

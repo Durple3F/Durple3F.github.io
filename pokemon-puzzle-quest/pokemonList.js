@@ -708,6 +708,13 @@ const pokemonData = {
 					type: "level",
 					amount: 6
 				}
+			},
+			{
+				name: "Roar",
+				unlock: {
+					type: "level",
+					amount: 9
+				}
 			}
 		]
 	},
