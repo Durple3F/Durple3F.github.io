@@ -167,7 +167,7 @@ function multiplyEnergies(energy, factor, round) {
 }
 
 function applyReplacements(text, replacements){
-	let replacementMatches = [...text.matchAll(/%[^%]+%/g)]
+	let replacementMatches = [...text.matchAll(/%[^% ]+%/g)]
 	for (let i in replacementMatches){
 		let replaceCommand = replacementMatches[i]
 		let command = replaceCommand[0]

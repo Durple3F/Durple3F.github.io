@@ -251,9 +251,14 @@ class Round{
 		let promise = Promise.resolve()
 		let enemyTrainer = this.trainers[1]
 		let enemyActivePokemon = enemyTrainer.activePokemon
+		let enemySwaps = !isPokemonUsable(enemyActivePokemon)
 		let playerTrainer = this.trainers[0]
 		let playerActivePokemon = playerTrainer.activePokemon
-		if (!isPokemonUsable(enemyActivePokemon)){
+		let playerSwaps = !isPokemonUsable(playerActivePokemon)
+		if (enemySwaps || playerSwaps){
+			this.updateEverything()
+		}
+		if (enemySwaps){
 			let pokemonCanSwapTo = getUsablePokemon(enemyTrainer.pokemon)
 			if (pokemonCanSwapTo.length > 0){
 				//If the enemy has pokemon they can swap to, they pick one and swap to it.
@@ -265,7 +270,7 @@ class Round{
 				//If the enemy has no pokemon they can swap to, you win.
 				promise = promise.then(() => this.end("win"))
 			}
-		} else if (!isPokemonUsable(playerActivePokemon)){
+		} else if (playerSwaps){
 			let pokemonCanSwapTo = getUsablePokemon(playerTrainer.pokemon)
 			if (pokemonCanSwapTo.length > 0){
 				promise = promise.then(() => choosePokemon("Choose a Pokemon to swap to.", pokemonCanSwapTo))
@@ -1504,6 +1509,7 @@ class Round{
 		}
 		let promise = new Promise(resolve => moveUseObj.resolve = resolve)
 		moveUseObj.promise = promise
+		console.log(moveUseObj)
 
 		let hasParalyzed = pokemon.hasStatus("paralyzed")
 		if (hasParalyzed){
@@ -1519,6 +1525,7 @@ class Round{
 	}
 	advanceCurrentMove(){
 		this.resetCurrentlySelecting()
+		// console.log(Date.now())
 		let moveUseObj = this.moveQueue[0]
 		let effectIndex = moveUseObj.effectIndex
 		moveUseObj.nextEffectIndex = effectIndex + 1
@@ -1587,6 +1594,12 @@ class Round{
 			}
 		}
 
+		let needsIndexes = {
+			"jump-if-less-than": true,
+			"jump-if-equal": true,
+			"jump-if-includes": true,
+			"jump": true,
+		}
 		let index
 		if (effect.jumpTo){
 			if (typeof effect.jumpTo === "string"){
@@ -1598,492 +1611,30 @@ class Round{
 				console.warn("Move produced a strange jump index", moveUseObj)
 			}
 		}
-		
-		switch (effectType){
-			case "play-sound": {
-				let name = effect.name
-				playSound(`${moveUseObj.move.name}-${name}`)
-				delay(100).then(() => resolvePromise())
-			} break
-			case "swap-tiles": {
-				let selection = params.selection
-				if (selection.length < 2) {
-					resolvePromise()
-					break
-				}
-				let tile1 = selection[0]
-				let tile2 = selection[1]
-				let map = [
-					[tile1, [tile2.x, tile2.y]],
-					[tile2, [tile1.x, tile1.y]],
-				]
-				let options = {
-					callback: () => {
-						this.applyLocationChanges(map)
-						resolvePromise()
-					}
-				}
-				this.animateSwitchLocations(tile1, tile2, options)
-			} break
-			case "choose-tiles": {
-				let count = params.count ?? 1
-				this.currentlySelecting = {
-					player: target,
-					type: "tiles",
-					count: count
-				}
-				this.currentlySelecting.callback = () => {
-					moveUseObj.info[effectIndex] = this.selectedTiles.map(t=>t)
-				}
-				this.currentlySelecting.resolve = resolvePromise
-				this.currentlySelecting.promise = promise
-				
-				if (target === this.trainers[1]){
-					this.waitUntilNoAnnouncements(() => {
-						this.computerMakeSelection()
-					})
-				} else {
-					let plural = count !== 1
-					let localeId = plural ? "select-number-tiles-plural" : "select-number-tiles-single"
-					let text = getLocaleString(localeId, lang)
-					text = text.replaceAll("%c", count)
-					this.createAnnouncement("general", text)
-				}
-			} break
-			case "shuffle": {
-				this.shuffleBoard()
-				.then(() => {
-					resolvePromise()
-				})
-			} break
-			case "end-turn": {
-				this.currentlyEndingTurn = true
-				this.endMove(this.turn)
-				.then(() => resolvePromise())
-			} break
-			case "damage": {
-				let options = {
-					from: moveUseObj.pokemon,
-					fromTrainer: moveUseObj.trainer,
-					move: moveUseObj.move
-				}
-				
-				if (params.toPokemon){
-					let toPokemon = params.toPokemon
-					let toTrainer = this.getTrainerOfPokemon(toPokemon)
-					options.to = toPokemon
-					options.toTrainer = toTrainer
-				}
+		if (needsIndexes[effectType] && index === undefined){
+			console.warn("Didn't get an index!", moveUseObj)
+		}
 
-				if (effect.additivePower !== undefined){
-					let additivePower = params.additivePower ?? 0
-					options.additionalPower = options.additionalPower ?? 0
-					options.additionalPower += additivePower
-				}
-				let result = this.dealDamage(options)
-				moveUseObj.info[effectIndex] = result.damageDealt
-				resolvePromise()
-			} break
-			case "heal": {
-				let amount = params.amount ?? 0
-				let min = params.min ?? 0
-				if (amount < min){
-					amount = min
-				}
-				let options = {
-					from: moveUseObj.pokemon,
-					fromTrainer: moveUseObj.trainer,
-					to: moveUseObj.pokemon,
-					toTrainer: moveUseObj.trainer,
-					move: moveUseObj.move
-				}
-				
-				if (params.toPokemon){
-					let toPokemon = params.toPokemon
-					let toTrainer = this.getTrainerOfPokemon(toPokemon)
-					options.to = toPokemon
-					options.toTrainer = toTrainer
-				}
+		let delayDuration = 250
+		if (effectType in pokemonMoveEffects){
+			let effectData = pokemonMoveEffects[effectType]
+			delayDuration = effectData.delay ?? delayDuration
+			let options = {}
+			options.promise = promise
+			options.moveUse = moveUseObj
+			options.effectIndex = effectIndex
+			options.target = target
+			options.index = index
 
-				//Clamp it so it doesn't go above max hp
-				// amount = Math.min(target.maxhp - target.hp, amount)
-				options.damage = -amount
-				options.fixed = true
-				options.healing = true
-				this.dealDamage(options)
-				
-				resolvePromise()
-			} break
-			case "recoil-percent": {
-				let damage = moveUseObj.pokemon.hp * effect.percent
-				this.dealDamage({
-					from: moveUseObj.pokemon,
-					fromTrainer: moveUseObj.trainer,
-					move: moveUseObj.move,
-					to: moveUseObj.pokemon,
-					toTrainer: moveUseObj.trainer,
-					damage: damage
-				})
-				resolvePromise()
-			} break
-			case "apply-debuff": {
-				let debuff = effect.debuff
-				target.statusEffects.push(debuff)
-				resolvePromise()
-			} break
-			case "get-stat": {
-				let statName = effect.which ?? "attack"
-				moveUseObj.info[effectIndex] = target.getStat(statName)
-				resolvePromise()
-			} break
-			case "get-types": {
-				moveUseObj.info[effectIndex] = target.getEffectiveTypes()
-				resolvePromise()
-			} break
-			case "apply-status-effect": {
-				let statusEffect = effect.statusEffect
-				target.addStatusEffect(statusEffect, moveUseObj.trainer, moveUseObj.pokemon, moveUseObj.move)
-				resolvePromise()
-			} break
-			case "remove-status-effect": {
-				let statusName = effect.statusName
-				target.removeStatus(statusName)
-				resolvePromise()
-			} break
-			case "select-energy-colors": {
-				let search = effect.search ?? "random"
-				let count = params.count ?? 1
-				let result = []
-
-				if (count >= colors.length){
-					colors.forEach(c => result.push(c))
-				} else if (search === "random") {
-					let options = colors.map(c => c)
-					for (let i = 0; i < count; i++){
-						let index = Math.floor(Math.random() * options.length)
-						result.push(options[index])
-						options.splice(index, 1)
-					}
-				} else if (search === "most-full"){
-					let energy = target.energy
-					let options = Object.keys(energy)
-					shuffleArray(options)
-					options.sort((a, b) => {
-						return energy[a] < energy[b] ? 1 : energy[a] > energy[b] ? -1 : 0
-					})
-					options.slice(0, count).forEach(c => result.push(c))
-				} else {
-					console.warn("You never handled", search)
+			effectData.execute(resolvePromise, effect, params, this, options)
+			promise.then(val => new Promise(res => {
+				if (val !== undefined){
+					moveUseObj.info[effectIndex] = val
 				}
-				
-				moveUseObj.info[effectIndex] = result
-				resolvePromise()
-			} break
-			case "gain-energy": {
-				let energyColors = params.colors ?? []
-				let count = params.count ?? 1
-				let amounts = params.amounts ?? null
-				let result = {}
-
-				if (amounts === null){
-					amounts = {}
-					for (let color of colors){
-						amounts[color] = 0
-						if (energyColors.includes(color)){
-							amounts[color] = count
-						}
-					}
-				}
-				
-				result = this.giveEnergy(amounts, target, target.activePokemon)
-				
-				moveUseObj.info[effectIndex] = result
-				resolvePromise()
-			} break
-			case "change-tile-weight": {
-				let type = effect.tileType
-				let factor = params.factor
-				let add = params.add
-
-				let old = this.board.tileWeights[type]
-				if (add !== undefined){
-					this.board.tileWeights[type] += add
-				}
-				if (factor !== undefined){
-					this.board.tileWeights[type] *= factor
-				}
-				let change = this.board.tileWeights[type] - old
-
-				moveUseObj.info[effectIndex] = change
-				resolvePromise()
-			} break
-			case "select-random-tiles": {
-				let count = params.count ?? 0
-				let conditions = effect?.conditions ?? {}
-				let chosenTiles = []
-				let chooseable = this.board.tilesOnScreen()
-				.filter(t => {
-					if (conditions.notTypes){
-						let notTypes = conditions.notTypes
-						if (notTypes.includes(t.type)){
-							return false
-						}
-					}
-					return true
-				})
-				for (let i = 0; i < count; i++){
-					let canChoose = chooseable
-					.filter(t => !chosenTiles.includes(t))
-					if (canChoose.length === 0) break
-					chosenTiles.push(randomChoice(canChoose))
-				}
-				moveUseObj.info[effectIndex] = chosenTiles
-				resolvePromise()
-			} break
-			case "select-tiles": {
-				let condition = effect.conditionExpression
-				let args = effect.conditionArguments
-				.map(index => {
-					return moveUseObj.info[effectIndex + index]
-				})
-				let expression = applyReplacements(condition, args)
-				let contents = this.board.tilesOnScreen()
-				let chosenTiles = []
-				for (let tile of contents){
-					let x = tile.x
-					let y = tile.y
-					let scope = {
-						x: x, y: y
-					}
-					let result = math.evaluate(expression, scope)
-					if (result) chosenTiles.push(tile)
-				}
-				moveUseObj.info[effectIndex] = chosenTiles
-				resolvePromise()
-			} break
-			case "expand-tile-selection": {
-				let selection = params.selection ?? []
-				let targetWidth = params.width ?? 1
-				let targetHeight = params.height ?? 1
-				let avgX = selection.map(t => t.x).reduce((acc, v, _, s) => acc + v/s.length, 0)
-				let avgY = selection.map(t => t.y).reduce((acc, v, _, s) => acc + v/s.length, 0)
-				let chosenTiles = this.board.getTilesFromOrigin(
-					avgX, avgY, 
-					targetWidth, targetHeight, selection
-				)
-				
-				moveUseObj.info[effectIndex] = chosenTiles
-				resolvePromise()
-			} break
-			case "apply-status-to-tiles": {
-				let selection = effect.selection
-				let status = effect.status
-				let chosenTiles = []
-				if (selection === "group"){
-					let which = params.which
-					which.forEach(t => chosenTiles.push(t))
-				} else {
-					console.warn("You never handled", selection)
-				}
-				chosenTiles.forEach(t => {
-					let color = moveUseObj.trainer === this.trainers[0] ? "friendly" : "enemy"
-					t.addStatusEffect(status, moveUseObj.trainer, moveUseObj.pokemon, moveUseObj.move, color)
-				})
-				resolvePromise()
-			} break
-			case "change-tile-type": {
-				let selection = effect.selection
-				let chosenTiles = []
-				if (selection === "group"){
-					let which = params.which
-					which.forEach(t => chosenTiles.push(t))
-				} else {
-					console.warn("You never handled", selection)
-				}
-				chosenTiles.forEach(t => {
-					//TODO I wish this had an animation
-					t.type = effect.targetType
-				})
-				moveUseObj.info[effectIndex] = chosenTiles
-				resolvePromise()
-			} break
-			case "count-tiles": {
-				let result = this.board.countTiles(effect.options)
-				moveUseObj.info[effectIndex] = result
-				resolvePromise()
-			} break
-			case "remove-tiles": {
-				let selection = params.selection ?? []
-				selection.forEach(t => this.board.explodeTile(t))
-				if (selection.length){
-					this.increaseCascade()
-				}
-				this.applyGravity()
-				.then(() => resolvePromise())
-			} break
-			case "get-active-pokemon": {
-				let result = target.activePokemon
-				moveUseObj.info[effectIndex] = result
-				resolvePromise()
-			} break
-			case "count-viable-pokemon": {
-				let result = getUsablePokemon(target.pokemon).length
-				moveUseObj.info[effectIndex] = result
-				resolvePromise()
-			} break
-			case "get-viable-pokemon": {
-				let result = getUsablePokemon(target.pokemon)
-				moveUseObj.info[effectIndex] = result
-				resolvePromise()
-			} break
-			case "choose-pokemon": {
-				let list = params.pokemon
-				let minChooseable = params.min ?? 1
-				let maxChooseable = params.max ?? 1
-				let message
-				let moveName = moveUseObj.move.name
-				let chooser = this.trainers.indexOf(target)
-				let strategy = effect.strategy
-				
-				if (effect.message){
-					let messageId = effect.message
-					message = getLocaleString(messageId, lang, ["moves", moveName])
-				}
-				if (!message) {
-					message = getLocaleString("choose-pokemon", lang)
-				}
-
-				let choosePromise
-				if (chooser === 0){
-					choosePromise = choosePokemon(message, list, minChooseable, maxChooseable)
-				} else {
-					choosePromise = this.computerChoosePokemon(list, strategy, minChooseable, maxChooseable)
-				}
-				
-				choosePromise.then(chosenPokemon => {
-					moveUseObj.info[effectIndex] = chosenPokemon
-					resolvePromise()
-				})
-			} break
-			case "swap-pokemon": {
-				let pokemon = params.pokemon
-				let trainerIndex = this.trainers.indexOf(target)
-				
-				let animation = gameRound.animateSendOutPokemon(
-					trainerIndex, pokemon
-				)
-				animation.then(() => resolvePromise())
-			} break
-			case "multiply-energy": {
-				let amounts = params.amounts ?? {}
-				let scale = params.scale ?? 1
-				let result = multiplyEnergies(amounts, scale)
-				moveUseObj.info[effectIndex] = result
-				resolvePromise()
-			} break
-			case "get-initiative": {
-				let index = this.trainers.indexOf(target)
-				moveUseObj.info[effectIndex] = this.initiativeValues[index]
-				resolvePromise()
-			} break
-			case "set-initiative": {
-				let index = this.trainers.indexOf(target)
-				let initiative = params.initiative
-				this.initiativeValues[index] = Math.floor(initiative)
-				resolvePromise()
-			} break
-			case "get-element-from-list": {
-				let list = params.list
-				let index = params.index ?? 0
-				let element
-
-				if (!list){
-					console.error("I didn't get a list!", moveUseObj)
-				} else {
-					if (index in list){
-						element = list[index]
-					} else {
-						console.warn("Tried to find an item at an index that didn't exist!",
-							list, index)
-					}
-				}
-				
-				moveUseObj.info[effectIndex] = element
-				resolvePromise()
-			} break
-			case "remove-element-from-list": {
-				let list = params.list
-				let element = params.element
-				let index = list.indexOf(element)
-				if (index !== -1){
-					list = list.filter(v => v !== element)
-				}
-				moveUseObj.info[effectIndex] = list
-				resolvePromise()
-			} break
-			case "get-list-length": {
-				let list = params.list
-				moveUseObj.info[effectIndex] = list.length
-				resolvePromise()
-			} break
-			case "load-value": {
-				let val = effect.value ?? 0
-				if (effect.index !== undefined){
-					val = moveUseObj.info[effect.index]
-				}
-				moveUseObj.info[effectIndex] = val
-				resolvePromise()
-			} break
-			case "multiply-numbers": {
-				let val1 = moveUseObj.info[effectIndex - 2]
-				let val2 = moveUseObj.info[effectIndex - 1]
-				let val = val1 * val2
-				moveUseObj.info[effectIndex] = val
-				resolvePromise()
-			} break
-			case "random-number": {
-				let min = effect.min ?? 0
-				let max = effect.max ?? 10
-				let val = Math.floor(Math.random() * (max - min + 1)) + min
-				moveUseObj.info[effectIndex] = val
-				resolvePromise()
-			} break
-			case "jump-if-less-than": {
-				let test = moveUseObj.info[effectIndex - 2]
-				let against = moveUseObj.info[effectIndex - 1]
-				if (test < against){
-					moveUseObj.nextEffectIndex = index
-				}
-				resolvePromise()
-			} break
-			case "jump-if-equal": {
-				let test = moveUseObj.info[effectIndex - 2]
-				let against = moveUseObj.info[effectIndex - 1]
-				if (test === against){
-					moveUseObj.nextEffectIndex = index
-				}
-				resolvePromise()
-			} break
-			case "jump-if-includes": {
-				let test = moveUseObj.info[effectIndex - 2]
-				let against = moveUseObj.info[effectIndex - 1]
-				//If something goes horribly wrong and test is not a list
-				if (!test.includes){
-					console.warn("Uh oh! this is not an array!!!", test, against)
-					resolvePromise()
-					break
-				}
-				if (test.includes(against)){
-					moveUseObj.nextEffectIndex = index
-				}
-				resolvePromise()
-			} break
-			case "jump": {
-				moveUseObj.nextEffectIndex = index
-				resolvePromise()
-			} break
-			default:
-				console.warn("You never handled", effectType)
+				res(val)
+			}))
+		} else {
+			console.warn("You never handled", effectType)
 		}
 
 		promise = promise.then(() => {

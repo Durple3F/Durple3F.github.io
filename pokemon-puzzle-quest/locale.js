@@ -24,7 +24,7 @@ function downloadLocale(name){
 	})
 }
 
-function getLocaleString(id, lang, path){
+function getLocaleString(id, lang, path, defaultResult=`% STRING MISSING %`){
 	var curLang = lang || "en"
 	var path = path ?? []
 	if (!locale[curLang]){
@@ -41,7 +41,7 @@ function getLocaleString(id, lang, path){
 	}
 	if (!localeObj[id]){
 		console.warn("String missing:", lang, id, path)
-		return `% STRING MISSING %`
+		return defaultResult
 	}
 	return localeObj[id]
 }

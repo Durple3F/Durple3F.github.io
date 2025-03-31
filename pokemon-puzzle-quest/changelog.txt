@@ -1,5 +1,11 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
+3/31 (13k lines):
+	- You can now use decimal values for the volume settings.
+	- Added Thunder Wave, which I feel like I should mention my autocomplete just wanted me to spell as "Thunder whatever"
+	- Added a fairly robust system for letting effects choose tiles.
+	- Re-did about 700 lines of code which defined how each effect of a move would be carried out. It is now more flexible I hope, and allowed me to move that code to a new file. This is GOING to bite me in the ass later.
+
 3/30 (12.7k lines):
 	- Tons of failed work to make the pokemon moves look nicer.
 	- Moves may now affect their own costs. They can also affect the costs of other moves, or even the costs of the opponent's moves.
@@ -8,9 +14,6 @@
 	- Whoops, Slowpoke had the same cry as Butterfree until now.
 	- Added Magnemite
 	- Ember now has a higher chance to do its additional effect.
-	- You can now use decimal values for the volume settings.
-	- Added Thunder Wave, which I feel like I should mention my autocomplete just wanted me to spell as "Thunder whatever"
-	- Added a fairly robust system for letting effects choose tiles.
 
 3/29 (12.5k lines):
 	- Added some buttons in the settings menu for save importing/exporting

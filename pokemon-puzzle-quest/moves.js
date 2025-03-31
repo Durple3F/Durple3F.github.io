@@ -976,8 +976,16 @@ const pokemonMoveData = {
 		},
 		effects: [
 			{ type: "play-sound", name: "attack" },
-			{ type: "load-value", value: 3 },
-			{ type: "select-tiles", conditionExpression: "x==%c%", conditionArguments: [-1] },
+			{ type: "get-board-width" },
+			{ type: "load-value", value: -1 },
+			{ type: "add-numbers" },
+			{ type: "load-value", value: 0 },
+			{ type: "random-number", min: -1, max: -2, useArgs: true },
+			{ 
+				type: "select-tiles",
+				conditionExpression: "x == %c%",
+				conditionArguments: [-1]
+			},
 			{
 				type: "apply-status-to-tiles", selection: "group", which: -1,
 				status: { name: "Static", type: "buff", duration: null }
