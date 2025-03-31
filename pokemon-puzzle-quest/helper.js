@@ -166,6 +166,23 @@ function multiplyEnergies(energy, factor, round) {
 	return result
 }
 
+function applyReplacements(text, replacements){
+	let replacementMatches = [...text.matchAll(/%[^%]+%/g)]
+	for (let i in replacementMatches){
+		let replaceCommand = replacementMatches[i]
+		let command = replaceCommand[0]
+		let commandType = command.substring(1, command.length - 1)
+		
+		if (commandType === "c"){
+			text = text.replace(command, replacements[i])
+		} else if (commandType === "c-pname"){
+			let replace = getLocaleString("name", lang, ["pokemon", replacements[i]])
+			text = text.replace(command, replace)
+		}
+	}
+	return text
+}
+
 function getTileEnergyValue(type){
 	if (type instanceof Tile){
 		type = type.type

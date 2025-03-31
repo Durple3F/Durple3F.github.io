@@ -1,4 +1,4 @@
-const versionNumber = "v0.8.4"
+const versionNumber = "v0.8.5"
 let lang = "en"
 let playerName
 
@@ -758,7 +758,7 @@ function openSettings(){
 	let changeRange = event => {
 		let elem = event.currentTarget
 		let type = elem.attributes["data-type"].value
-		let value = parseInt(elem.value) || 0
+		let value = Number(elem.value) || 0
 		value /= rangeSize
 		config.volumes[type] = value
 		changeVolume(type, value)
@@ -768,7 +768,7 @@ function openSettings(){
 	let changeNumInput = event => {
 		let elem = event.currentTarget
 		let type = elem.attributes["data-type"].value
-		let value = parseInt(elem.value) || 0
+		let value = Number(elem.value) || 0
 		value /= numSize
 		config.volumes[type] = value
 		changeVolume(type, value)

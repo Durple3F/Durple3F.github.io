@@ -70,7 +70,6 @@ class Round{
 
 		this.loadResources()
 		let p = this.roundStartAnimation()
-		console.log(p)
 		p.then(() => this.begin())
 
 		this.startTicks()
@@ -198,7 +197,6 @@ class Round{
 		this.updateEverything()
 		let turn = this.turn
 		let p = this.timeStep()
-		console.log(p)
 		p.then(() => {
 			this.hasBegun = true
 			return this.turnStart(turn)
@@ -1842,6 +1840,27 @@ class Round{
 				moveUseObj.info[effectIndex] = chosenTiles
 				resolvePromise()
 			} break
+			case "select-tiles": {
+				let condition = effect.conditionExpression
+				let args = effect.conditionArguments
+				.map(index => {
+					return moveUseObj.info[effectIndex + index]
+				})
+				let expression = applyReplacements(condition, args)
+				let contents = this.board.tilesOnScreen()
+				let chosenTiles = []
+				for (let tile of contents){
+					let x = tile.x
+					let y = tile.y
+					let scope = {
+						x: x, y: y
+					}
+					let result = math.evaluate(expression, scope)
+					if (result) chosenTiles.push(tile)
+				}
+				moveUseObj.info[effectIndex] = chosenTiles
+				resolvePromise()
+			} break
 			case "expand-tile-selection": {
 				let selection = params.selection ?? []
 				let targetWidth = params.width ?? 1
@@ -2182,10 +2201,18 @@ class Round{
 		if (this.currentlySelecting.player === this.trainers[0]){
 			return true
 		}
-		return this.activePlayerIndex === trainerIndex
+		let canSelect = this.activePlayerIndex === trainerIndex
 		&& this.state === "waiting"
 		&& this.hasBegun
 		&& !this.currentlySwappingPokemon
+
+		if (this.moveQueue.length){
+			if (this.currentlySelecting.type === "swap"){
+				canSelect = false
+			}
+		}
+
+		return canSelect
 		// && this.moveQueue.length === 0
 		// && this.showingAnnouncements.length === 0
 	}
@@ -2863,8 +2890,8 @@ class Round{
 					}, 900)
 					
 					renderPokeballSmallCanvas(canvas, "pokeball", "closed")
-					console.log(renderPokeballSpinSmallCanvas(pokeballTag, spinDirection)
-					.then(resolve))
+					renderPokeballSpinSmallCanvas(pokeballTag, spinDirection)
+					.then(resolve)
 				})
 			})
 			//Then, the pokeball appears to open.

@@ -124,19 +124,7 @@ function advanceCurrentDialogue(){
 					replacements.push(dialogueProgress.info[i])
 				}
 			}
-			let replacementMatches = [...text.matchAll(/%[^%]+%/g)]
-			for (let i in replacementMatches){
-				let replaceCommand = replacementMatches[i]
-				let command = replaceCommand[0]
-				let commandType = command.substring(1, command.length - 1)
-				
-				if (commandType === "c"){
-					text = text.replace(command, replacements[i])
-				} else if (commandType === "c-pname"){
-					let replace = getLocaleString("name", lang, ["pokemon", replacements[i]])
-					text = text.replace(command, replace)
-				}
-			}
+			text = applyReplacements(text, replacements)
 
 			let fancyRegex = /(?<!\\)\$@([^\|]+)\|([^\@]*)@\$/g
 			let fancyRegexNoCapture = /(?<!\\)\$@[^\|]+\|[^\@]*@\$/g

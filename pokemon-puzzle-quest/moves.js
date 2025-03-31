@@ -289,7 +289,7 @@ const pokemonMoveData = {
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
 			{ type: "random-number", min: 1, max: 10 },
-			{ type: "load-value", value: 10 },
+			{ type: "load-value", value: 6 },
 			{ type: "jump-if-less-than", jumpTo: Infinity },
 			{ type: "load-value", value: 3 },
 			{ type: "select-random-tiles", count: -1 },
@@ -953,6 +953,31 @@ const pokemonMoveData = {
 			{ type: "jump-if-less-than", jumpTo: Infinity },
 			{ type: "load-value", value: 2 },
 			{ type: "select-random-tiles", count: -1 },
+			{
+				type: "apply-status-to-tiles", selection: "group", which: -1,
+				status: { name: "Static", type: "buff", duration: null }
+			}
+		],
+	},
+	"Thunder Wave": {
+		name: "Thunder Wave",
+		type: "Electric",
+		category: "Status",
+		strategy: "basic-damage",
+		pp: 20,
+		power: null,
+		accuracy: 90,
+		rechargeTurns: 1,
+		energy: {
+			// yellow: 8
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Thunder Wave part 1.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "load-value", value: 3 },
+			{ type: "select-tiles", conditionExpression: "x==%c%", conditionArguments: [-1] },
 			{
 				type: "apply-status-to-tiles", selection: "group", which: -1,
 				status: { name: "Static", type: "buff", duration: null }

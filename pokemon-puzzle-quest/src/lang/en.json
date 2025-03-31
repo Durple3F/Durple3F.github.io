@@ -116,6 +116,9 @@
 		"Slowpoke": {
 			"name": "Slowpoke"
 		},
+		"Magnemite": {
+			"name": "Magnemite"
+		},
 		"Ledyba": {
 			"name": "Ledyba"
 		},
@@ -199,7 +202,7 @@
 		},
 		"Ember": {
 			"name": "Ember",
-			"description": "Deals damage. There's a 10% chance for this move to inflict Burn on 3 random tiles. At the start of each turn, the opponent takes damage for each Burned tile on the board.",
+			"description": "Deals damage. There's a 50% chance for this move to inflict Burn on 3 random tiles. At the start of each turn, the opponent takes damage for each Burned tile on the board.",
 			"shortDescription": "Damages and might burn tiles"
 		},
 		"Focus Energy": {
@@ -335,8 +338,13 @@
 		},
 		"Thunder Shock": {
 			"name": "Thunder Shock",
-			"description": "Deals damage. 2 random tiles are given the Static status effect. When the user removes a tile with Static, it explodes and removes orthogonally adjacent tiles as well.",
+			"description": "Deals damage. 2 random tiles are given the Static status effect. When the user removes a tile with Static, it explodes orthogonally adjacent tiles as well.",
 			"shortDescription": "Gives tiles Static"
+		},
+		"Thunder Wave": {
+			"name": "Thunder Wave",
+			"description": "A random column of tiles is given the Static status effect. When the user removes a tile with Static, it explodes orthogonally adjacent tiles as well.",
+			"shortDescription": "Gives a column Static"
 		},
 		"Vise Grip": {
 			"name": "Vise Grip",

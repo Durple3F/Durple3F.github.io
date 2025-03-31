@@ -239,7 +239,7 @@ const pokemonData = {
 			"home": "src/img/tiny-pokemon/Slowpoke.png"
 		},
 		sounds: {
-			cry: "src/audio/cries/butterfree.mp3"
+			cry: "src/audio/cries/slowpoke.mp3"
 		},
 		types: ["Water", "Psychic"],
 		tags: [],
@@ -296,6 +296,71 @@ const pokemonData = {
 			},
 			{
 				name: "Yawn",
+				unlock: {
+					type: "level",
+					amount: 1
+				}
+			},
+		]
+	},
+	"Magnemite": {
+		name: "Magnemite",
+		number: "81",
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0081Magnemite.png",
+			"home": "src/img/tiny-pokemon/Magnemite.png"
+		},
+		sounds: {
+			cry: "src/audio/cries/magnemite.mp3"
+		},
+		types: ["Electric", "Steel"],
+		tags: ["Starter"],
+		stats: {
+			hp: 25,
+			attack: 35,
+			defense: 70,
+			specialAttack: 95,
+			specialDefense: 55,
+			speed: 45
+		},
+		expYield: 65,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 1,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			yellow: 5,
+			orange: 2
+		},
+		learnset: [
+			{
+				name: "Thunder Shock",
+				unlock: {
+					type: "level",
+					amount: 1
+				}
+			},
+			{
+				name: "Tackle",
+				unlock: {
+					type: "level",
+					amount: 1
+				}
+			},
+			{
+				name: "Supersonic",
+				unlock: {
+					type: "level",
+					amount: 4
+				}
+			},
+			{
+				name: "Thunder Wave",
 				unlock: {
 					type: "level",
 					amount: 1
@@ -563,6 +628,20 @@ const pokemonData = {
 				unlock: {
 					type: "level",
 					amount: 1
+				}
+			},
+			{
+				name: "Quick Attack",
+				unlock: {
+					type: "level",
+					amount: 5
+				}
+			},
+			{
+				name: "Supersonic",
+				unlock: {
+					type: "level",
+					amount: 10
 				}
 			},
 		]

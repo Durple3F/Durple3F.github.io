@@ -2,13 +2,14 @@ Incomplete move lists:
   Rattata-Alola (lv 10)
   Butterfree (lv 0)
   Slowpoke (lv 9)
+  Magnemite (lv 4)
   Ledyba (lv 8)
   Spinarak (lv 8)
-  Wingull (lv 1)
+  Wingull (lv 10)
   Rowlet (lv 12)
   Litten (lv 9)
   Popplio (lv 9)
-  Pikipek (lv 3)
+  Pikipek (lv 7)
   Yungoos (lv 7)
   Grubbin (lv 10)
   Comfey (lv 0)
@@ -16,6 +17,7 @@ Incomplete move lists:
 Missing Evolutions:
   Rattata-Alola
   Slowpoke
+  Magnemite
   Ledyba
   Spinarak
   Pichu
@@ -33,6 +35,7 @@ Missing Abilities:
   Metapod
   Butterfree
   Slowpoke
+  Magnemite
   Ledyba
   Spinarak
   Pichu
@@ -44,3 +47,9 @@ Missing Abilities:
   Yungoos
   Grubbin
   Comfey
+
+Missing Shiny Variations:
+  - All but Popplio
+
+
+

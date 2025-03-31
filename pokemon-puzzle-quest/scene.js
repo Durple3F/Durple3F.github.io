@@ -1241,10 +1241,14 @@ function getMoveHTML(move, useLongDescription=false){
 			let cost = $("<div class='cost-part energy'></div>")
 			cost.addClass("energy-"+color)
 			cost.attr("data-cost", color)
+			let costValue = move.energy[color] ?? 0
 			
 			let icon = $("<span class='icon'></span>")
 			cost.append(icon)
-			cost.append(`<span class='cost'>${move.energy[color]}</span>`)
+			cost.append(`<span class='cost'>${costValue}</span>`)
+			if (!costValue){
+				cost.children().hide()
+			}
 			
 			moveCostTag.append(cost)
 		}
