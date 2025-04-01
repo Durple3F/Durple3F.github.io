@@ -488,8 +488,12 @@ class Round{
 				.then(() => resolve())
 			} else {
 				this.applySpriteHighlights()
+
+				if (this.matchesInCombo.length){
+					this.updateEverything()
+				}
+
 				resolve()
-				this.updateEverything()
 			}
 		})
 
@@ -686,7 +690,24 @@ class Round{
 			}
 		}
 
-		let promise = this.checkForWinner()
+		let promise = Promise.resolve()
+
+		//Find any start-of-turn effects that moves may have.
+		for (let trainer of this.trainers){
+			let activePokemon = trainer.activePokemon
+			let activeMoves = activePokemon.activeMoves
+			for (let move of activeMoves){
+				if (move.onTurnStart){
+					promise = promise.then(() => {
+						return this.triggerMoveEffects(
+							trainer, activePokemon, move, "onTurnStart"
+						)
+					})
+				}
+			}
+		}
+
+		promise = promise.then(() => this.checkForWinner())
 		if (this.activePlayer === "enemy"){
 			promise = promise.then(() => this.computerMakeMoves())
 		}
@@ -719,7 +740,7 @@ class Round{
 		if (activePokemon.hasStatus("drowsy")){
 			let drowsy = activePokemon.getStatuses("drowsy")[0]
 			if (this.currentCascade >= 2){
-				activePokemon.removeStatus("drowsy")
+				activePokemon.removeStatusesWithName("drowsy")
 			} else if (drowsy) {
 				let sourceTrainer = drowsy.sourceTrainer
 				let sourcePokemon = drowsy.sourcePokemon
@@ -1492,48 +1513,59 @@ class Round{
 
 		return cost
 	}
-	beginToUseMove(trainer, pokemon, move){
-		//Put the move on recharge
-		let moveIndex = pokemon.moves.indexOf(move)
-		pokemon.moveUsage[moveIndex].recharge = move.rechargeTurns
 
-		//Some moves require extra information
-		//Ex: choose a tile, energy bar, or number
+	newMoveUseObj(trainer, pokemon, move, trigger="effects"){
+		//This object gets passed around to every single effect of a move
+		//in sequence. It has information added to that info list, and
+		//that info is used by other effects as parameters.
+		let effects = move[trigger]
 		let moveUseObj = {
 			trainer: trainer,
 			pokemon: pokemon,
 			move: move,
+			effects: effects,
 			turnStartedOn: this.turn,
 			info: [],
 			effectIndex: 0
 		}
 		let promise = new Promise(resolve => moveUseObj.resolve = resolve)
 		moveUseObj.promise = promise
+		return moveUseObj
+	}
+	beginToUseMove(trainer, pokemon, move){
+		//Put the move on recharge
+		let moveIndex = pokemon.moves.indexOf(move)
+		pokemon.moveUsage[moveIndex].recharge = move.rechargeTurns
+
+		let moveUseObj = this.newMoveUseObj(trainer, pokemon, move)
+		let promise = moveUseObj.promise
 		console.log(moveUseObj)
 
 		let hasParalyzed = pokemon.hasStatus("paralyzed")
 		if (hasParalyzed){
-			pokemon.removeStatus("paralyzed")
+			pokemon.removeStatusesWithName("paralyzed")
 			moveUseObj.resolve()
 		} else {
 			promise = promise.then(() => this.finishCurrentMove())
 			this.moveQueue.push(moveUseObj)
 			this.updateEverything()
-			this.advanceCurrentMove()
+			if (this.moveQueue.length === 1){
+				this.advanceCurrentMove(moveUseObj)
+			}
 		}
 		return promise
 	}
-	advanceCurrentMove(){
+	advanceCurrentMove(moveUseObj){
 		this.resetCurrentlySelecting()
 		// console.log(Date.now())
-		let moveUseObj = this.moveQueue[0]
+		// let moveUseObj = this.moveQueue[0]
 		let effectIndex = moveUseObj.effectIndex
 		moveUseObj.nextEffectIndex = effectIndex + 1
-		let effects = moveUseObj.move.effects
+		let effects = moveUseObj.effects
 
 		if (effectIndex >= effects.length){
 			moveUseObj.resolve()
-			return
+			return moveUseObj.promise
 		}
 
 		let effect = effects[effectIndex]
@@ -1573,17 +1605,20 @@ class Round{
 			"swap-pokemon": "user",
 		}
 		let target
-		if (effect.type in targetDefaults){
-			let targetName = effect.target ?? targetDefaults[effect.type]
+		if (effectType in targetDefaults){
+			let targetName = effect.target ?? targetDefaults[effectType]
 			if (targetName === "opponent"){
-				let otherTrainer = this.trainers[this.inactivePlayerIndex]
+				let otherTrainers = this.trainers.filter(trainer => {
+					return trainer !== moveUseObj.trainer
+				})
+				let otherTrainer = otherTrainers[0]
 				if (targetTrainers[effect.type]){
 					target = otherTrainer
 				} else {
 					target = otherTrainer.activePokemon
 				}
 			} else if (targetName === "user"){
-				let trainer = this.trainers[this.activePlayerIndex]
+				let trainer = moveUseObj.trainer
 				if (targetTrainers[effect.type]){
 					target = trainer
 				} else {
@@ -1615,35 +1650,71 @@ class Round{
 			console.warn("Didn't get an index!", moveUseObj)
 		}
 
-		let delayDuration = 250
-		if (effectType in pokemonMoveEffects){
-			let effectData = pokemonMoveEffects[effectType]
-			delayDuration = effectData.delay ?? delayDuration
-			let options = {}
-			options.promise = promise
-			options.moveUse = moveUseObj
-			options.effectIndex = effectIndex
-			options.target = target
-			options.index = index
-
-			effectData.execute(resolvePromise, effect, params, this, options)
-			promise.then(val => new Promise(res => {
-				if (val !== undefined){
-					moveUseObj.info[effectIndex] = val
-				}
-				res(val)
-			}))
-		} else {
+		let shouldUpdate = true
+		let delayDuration = 50
+		if (!(effectType in pokemonMoveEffects)){
 			console.warn("You never handled", effectType)
+			console.trace()
+			alert("SOMETHING FUCKED UP BAD PLEASE SEND ME A SCREENSHOT OF THE CONSOLE")
+			return promise
 		}
+
+		let effectData = pokemonMoveEffects[effectType]
+		delayDuration = effectData.delay ?? delayDuration
+		shouldUpdate = effectData.update ?? shouldUpdate
+		let options = {}
+		options.promise = promise
+		options.moveUse = moveUseObj
+		options.effectIndex = effectIndex
+
+		if (effectData.hasTarget){
+			let targetName = effect.target ?? effectData.targetDefault
+			if (targetName === "opponent"){
+				let otherTrainers = this.trainers.filter(trainer => {
+					return trainer !== moveUseObj.trainer
+				})
+				let otherTrainer = otherTrainers[0]
+				if (effectData.targetType === "trainer"){
+					target = otherTrainer
+				} else {
+					target = otherTrainer.activePokemon
+				}
+			} else if (targetName === "user"){
+				let trainer = moveUseObj.trainer
+				if (effectData.targetType === "trainer"){
+					target = trainer
+				} else {
+					target = trainer.activePokemon
+				}
+			} else if (targetName) {
+				console.warn("You never handled", targetName)
+			}
+		}
+
+		options.target = target
+		options.index = index
+		effectData.execute(resolvePromise, effect, params, this, options)
+		promise.then(val => new Promise(res => {
+			if (val !== undefined){
+				moveUseObj.info[effectIndex] = val
+			}
+			res(val)
+		}))
 
 		promise = promise.then(() => {
 			moveUseObj.effectIndex = moveUseObj.nextEffectIndex
-			return this.advanceCurrentMove()
+			let p = Promise.resolve()
+			if (delayDuration){
+				p = p.then(() => delay(delayDuration))
+			}
+			return p.then(() => {
+				if (shouldUpdate){
+					this.updateEverything()
+				}
+			})
+			.then(() => this.timeStep())
+			.then(() => this.advanceCurrentMove(moveUseObj))
 		})
-		.then(() => delay(250))
-		.then(() => this.timeStep())
-		.then(() => this.updateEverything())
 
 		return promise
 	}
@@ -1653,7 +1724,8 @@ class Round{
 			moveUseObj = this.moveQueue.splice(0, 1)
 
 			if (this.moveQueue.length){
-				this.advanceCurrentMove()
+				let nextMoveUseObj = this.moveQueue[0]
+				this.advanceCurrentMove(nextMoveUseObj)
 				.then(resolve)
 			} else {
 				this.performMoveQueueCallbacks()
@@ -1720,6 +1792,14 @@ class Round{
 			callbackQueue[0]()
 			callbackQueue.splice(0, 1)
 		}
+	}
+
+	triggerMoveEffects(trainer, pokemon, move, trigger){
+		let moveUseObj = this.newMoveUseObj(trainer, pokemon, move, trigger)
+		let promise = moveUseObj.promise
+		this.advanceCurrentMove(moveUseObj)
+		console.log(moveUseObj)
+		return promise
 	}
 
 	confirm(){
@@ -2300,6 +2380,7 @@ class Round{
 
 	updateEverything(){
 		if (this.hasEnded) return
+		// let now = Date.now()
 		let animate = this.hasBegun
 		for (let i = 0; i < this.trainers.length; i++){
 			this.updateHealth(i, animate)
@@ -2311,6 +2392,7 @@ class Round{
 		}
 		
 		this.updateConfirmButton()
+		// console.trace("Update took", (Date.now() - now), "ms")
 	}
 
 	fillTrainerTags(tags, classname){
@@ -2566,6 +2648,16 @@ class Round{
 		let trainer = this.trainers[trainerIndex]
 		let oldActive = trainer.activePokemon
 		trainer.activePokemon = pokemon
+
+		//Remove any status effects from the old pokemon which are lost on swapping.
+		let lostOnSwap = oldActive.statusEffects.filter(statusEffect => {
+			return statusEffect.lostOnSwap
+		})
+		for (let statusEffect of lostOnSwap){
+			let index = oldActive.statusEffects.indexOf(statusEffect)
+			oldActive.statusEffects.splice(index, 1)
+		}
+
 		//Transfer half of the old pokemon's energy into the new pokemon.
 		if (oldActive !== pokemon){
 			let energy = getEmptyEnergy()

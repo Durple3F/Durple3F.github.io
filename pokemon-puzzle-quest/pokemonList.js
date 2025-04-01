@@ -2,7 +2,7 @@ const pokemonData = {
 	"Rattata-Alola": {
 		name: "Rattata",
 		id: "Rattata-Alola",
-		number: "19",
+		number: "19a",
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0019Rattata-Alola.png",
@@ -12,7 +12,7 @@ const pokemonData = {
 			cry: "src/audio/cries/rattata.mp3"
 		},
 		types: ["Dark", "Normal"],
-		tags: ["Starter"],
+		tags: [],
 		stats: {
 			hp: 30,
 			attack: 56,
@@ -230,6 +230,51 @@ const pokemonData = {
 
 		]
 	},
+	"Meowth-Alola": {
+		name: "Meowth",
+		id: "Meowth-Alola",
+		number: "52a",
+		imageFacing: "right",
+		imageSources: {
+			"large": "src/img/pokemon/0052Meowth-Alola.png",
+			"home": "src/img/tiny-pokemon/Meowth-Alola.png"
+		},
+		sounds: {
+			cry: "src/audio/cries/meowth.mp3"
+		},
+		types: ["Dark"],
+		tags: ["Starter"],
+		stats: {
+			hp: 40,
+			attack: 35,
+			defense: 35,
+			specialAttack: 50,
+			specialDefense: 40,
+			speed: 90
+		},
+		expYield: 58,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 1
+		},
+		energyMastery: {
+			orange: 2,
+			purple: 5
+		},
+		learnset: [
+			{
+				name: "Fake Out",
+				unlock: {
+					type: "level",
+					amount: 1
+				}
+			},
+		]
+	},
 	"Slowpoke": {
 		name: "Slowpoke",
 		number: "79",
@@ -363,7 +408,7 @@ const pokemonData = {
 				name: "Thunder Wave",
 				unlock: {
 					type: "level",
-					amount: 1
+					amount: 8
 				}
 			},
 		]

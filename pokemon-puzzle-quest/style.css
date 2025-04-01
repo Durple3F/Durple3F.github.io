@@ -417,6 +417,7 @@ body {
 	overflow-y: scroll;
 	-ms-overflow-style: none;
 	scrollbar-width: none;
+	padding-bottom: 3em;
 }
 /* Hide scrollbar */
 .board-side::-webkit-scrollbar {

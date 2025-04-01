@@ -1,10 +1,17 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-3/31 (13k lines):
+4/1 (13.1k lines):
+	- Added Alolan Meowth
+	- Added Fake Out, a move that does something at the start of your turn even when it's not being used.
+	- Many optimizations to how the computer updates the screen while a move is happening. I've made the effects very granular, but the computer previously naively updated every single thing, every single time anything happened. Like, even when it just picked a random number. This cost ~100ms on my computer every single time a move was used.
+	- Lots of other tiny time optimizations. I hope I haven't broken anything, but if I have, the code was teetering and about to fall over anyway.
+
+3/31 (13.1k lines):
 	- You can now use decimal values for the volume settings.
 	- Added Thunder Wave, which I feel like I should mention my autocomplete just wanted me to spell as "Thunder whatever"
 	- Added a fairly robust system for letting effects choose tiles.
 	- Re-did about 700 lines of code which defined how each effect of a move would be carried out. It is now more flexible I hope, and allowed me to move that code to a new file. This is GOING to bite me in the ass later.
+	- Y'know, actually, now that I did that, I can make effects that trigger off of things <i>OTHER THAN</i> you using the move. I spent some time working on that.
 
 3/30 (12.7k lines):
 	- Tons of failed work to make the pokemon moves look nicer.

@@ -1,11 +1,11 @@
 const pokemonMoveEffects = {
 	"play-sound": {
-		delay: 250,
+		update: false,
 		execute: (resolve, effect, params, game, options) => {
 			let name = effect.name
 			let moveUseObj = options.moveUse
 			playSound(`${moveUseObj.move.name}-${name}`)
-			delay(100).then(() => resolve())
+			resolve()
 		}
 	},
 	"swap-tiles": {
@@ -75,6 +75,7 @@ const pokemonMoveEffects = {
 		}
 	},
 	"damage": {
+		delay: 400,
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
 			let effectIndex = options.effectIndex
@@ -162,6 +163,7 @@ const pokemonMoveEffects = {
 		}
 	},
 	"get-stat": {
+		update: false,
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
 			let effectIndex = options.effectIndex
@@ -172,6 +174,7 @@ const pokemonMoveEffects = {
 		}
 	},
 	"get-types": {
+		update: false,
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
 			let effectIndex = options.effectIndex
@@ -196,11 +199,24 @@ const pokemonMoveEffects = {
 		execute: (resolve, effect, params, game, options) => {
 			let target = options.target
 			let statusName = effect.statusName
-			target.removeStatus(statusName)
+			target.removeStatusesWithName(statusName)
 			resolve()
 		}
 	},
+	"get-status-stacks": {
+		update: false,
+		hasTarget: true,
+		targetType: "pokemon",
+		targetDefault: "user",
+		execute: (resolve, effect, params, game, options) => {
+			let target = options.target
+			let statusName = effect.statusName
+			let result = target.getStatuses(statusName).length
+			resolve(result)
+		}
+	},
 	"select-energy-colors": {
+		update: false,
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
 			let effectIndex = options.effectIndex
@@ -261,6 +277,7 @@ const pokemonMoveEffects = {
 		}
 	},
 	"change-tile-weight": {
+		update: false,
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
 			let effectIndex = options.effectIndex
@@ -282,6 +299,7 @@ const pokemonMoveEffects = {
 		}
 	},
 	"select-random-tiles": {
+		update: false,
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
 			let effectIndex = options.effectIndex
@@ -309,6 +327,7 @@ const pokemonMoveEffects = {
 		}
 	},
 	"select-tiles": {
+		update: false,
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
 			let effectIndex = options.effectIndex
@@ -335,7 +354,25 @@ const pokemonMoveEffects = {
 			resolve()
 		}
 	},
+	"select-column": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let moveUseObj = options.moveUse
+			let effectIndex = options.effectIndex
+			let x = params.x
+			let contents = game.board.tilesOnScreen()
+			let chosenTiles = []
+			for (let tile of contents) {
+				if (tile.x === x) {
+					chosenTiles.push(tile)
+				}
+			}
+			moveUseObj.info[effectIndex] = chosenTiles
+			resolve()
+		}
+	},
 	"expand-tile-selection": {
+		update: false,
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
 			let effectIndex = options.effectIndex
@@ -396,6 +433,7 @@ const pokemonMoveEffects = {
 		}
 	},
 	"count-tiles": {
+		update: false,
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
 			let effectIndex = options.effectIndex
@@ -416,18 +454,21 @@ const pokemonMoveEffects = {
 		}
 	},
 	"get-board-height": {
+		update: false,
 		execute: (resolve, effect, params, game, options) => {
 			let result = game.board.height
 			resolve(result)
 		}
 	},
 	"get-board-width": {
+		update: false,
 		execute: (resolve, effect, params, game, options) => {
 			let result = game.board.width
 			resolve(result)
 		}
 	},
 	"get-active-pokemon": {
+		update: false,
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
 			let effectIndex = options.effectIndex
@@ -438,6 +479,7 @@ const pokemonMoveEffects = {
 		}
 	},
 	"count-viable-pokemon": {
+		update: false,
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
 			let effectIndex = options.effectIndex
@@ -448,6 +490,7 @@ const pokemonMoveEffects = {
 		}
 	},
 	"get-viable-pokemon": {
+		update: false,
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
 			let effectIndex = options.effectIndex
@@ -504,7 +547,19 @@ const pokemonMoveEffects = {
 			animation.then(() => resolve())
 		}
 	},
+	"is-trainers-turn": {
+		update: false,
+		hasTarget: true,
+		targetType: "trainer",
+		targetDefault: "user",
+		execute: (resolve, effect, params, game, options) => {
+			let target = options.target
+			let result = game.activePlayerIndex === game.trainers.indexOf(target)
+			resolve(result)
+		}
+	},
 	"multiply-energy": {
+		update: false,
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
 			let effectIndex = options.effectIndex
@@ -516,6 +571,7 @@ const pokemonMoveEffects = {
 		}
 	},
 	"get-initiative": {
+		update: false,
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
 			let effectIndex = options.effectIndex
@@ -533,6 +589,7 @@ const pokemonMoveEffects = {
 		}
 	},
 	"get-element-from-list": {
+		update: false,
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
 			let effectIndex = options.effectIndex
@@ -558,6 +615,7 @@ const pokemonMoveEffects = {
 		}
 	},
 	"remove-element-from-list": {
+		update: false,
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
 			let effectIndex = options.effectIndex
@@ -569,6 +627,7 @@ const pokemonMoveEffects = {
 		}
 	},
 	"get-list-length": {
+		update: false,
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
 			let effectIndex = options.effectIndex
@@ -578,6 +637,7 @@ const pokemonMoveEffects = {
 		}
 	},
 	"load-value": {
+		update: false,
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
 			let effectIndex = options.effectIndex
@@ -590,6 +650,7 @@ const pokemonMoveEffects = {
 		}
 	},
 	"multiply-numbers": {
+		update: false,
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
 			let effectIndex = options.effectIndex
@@ -601,6 +662,7 @@ const pokemonMoveEffects = {
 		}
 	},
 	"add-numbers": {
+		update: false,
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
 			let effectIndex = options.effectIndex
@@ -612,18 +674,18 @@ const pokemonMoveEffects = {
 		}
 	},
 	"random-number": {
+		update: false,
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
 			let effectIndex = options.effectIndex
 			let min = 0, max = 10
 			let useArgs = effect.useArgs ?? false
 			if (useArgs){
-				let min = params.min ?? min
-				let max = params.max ?? max
-				console.log(min, max)
+				min = params.min ?? min
+				max = params.max ?? max
 			} else {
-				let min = effect.min ?? min
-				let max = effect.max ?? max
+				min = effect.min ?? min
+				max = effect.max ?? max
 			}
 			let val = Math.floor(Math.random() * (max - min + 1)) + min
 			moveUseObj.info[effectIndex] = val
@@ -631,11 +693,12 @@ const pokemonMoveEffects = {
 		}
 	},
 	"jump-if-less-than": {
+		update: false,
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
 			let effectIndex = options.effectIndex
-			let test = moveUseObj.info[effectIndex - 2]
-			let against = moveUseObj.info[effectIndex - 1]
+			let test = params.test ?? moveUseObj.info[effectIndex - 2]
+			let against = params.against ?? moveUseObj.info[effectIndex - 1]
 			if (test < against) {
 				moveUseObj.nextEffectIndex = options.index
 			}
@@ -643,11 +706,12 @@ const pokemonMoveEffects = {
 		}
 	},
 	"jump-if-equal": {
+		update: false,
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
 			let effectIndex = options.effectIndex
-			let test = moveUseObj.info[effectIndex - 2]
-			let against = moveUseObj.info[effectIndex - 1]
+			let test = params.test ?? moveUseObj.info[effectIndex - 2]
+			let against = params.against ?? moveUseObj.info[effectIndex - 1]
 			if (test === against) {
 				moveUseObj.nextEffectIndex = options.index
 			}
@@ -655,11 +719,12 @@ const pokemonMoveEffects = {
 		}
 	},
 	"jump-if-includes": {
+		update: false,
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
 			let effectIndex = options.effectIndex
-			let test = moveUseObj.info[effectIndex - 2]
-			let against = moveUseObj.info[effectIndex - 1]
+			let test = params.test ?? moveUseObj.info[effectIndex - 2]
+			let against = params.against ?? moveUseObj.info[effectIndex - 1]
 			//If something goes horribly wrong and test is not a list
 			if (!test.includes) {
 				console.warn("Uh oh! jump-if-includes didn't get an array!!!", test, against)
@@ -673,6 +738,7 @@ const pokemonMoveEffects = {
 		}
 	},
 	"jump": {
+		update: false,
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
 			let effectIndex = options.effectIndex

@@ -285,7 +285,11 @@ class Pokemon{
 			return status.name === name
 		})
 	}
-	removeStatus(name){
+	removeStatus(statusEffect){
+		let index = this.statusEffects.indexOf(statusEffect)
+		this.statusEffects.splice(index, 1)
+	}
+	removeStatusesWithName(name){
 		while (this.statusEffects.some(status => {
 			return status.name === name
 		})){
@@ -332,10 +336,10 @@ class Pokemon{
 	}
 	getStatStage(stat){
 		let stage = 0
-		let statuses = this.statusEffects.filter(effect => {
+		let statusEffects = this.statusEffects.filter(effect => {
 			return effect.type === "stat" && effect.stat === stat
 		})
-		statuses.forEach(effect => {
+		statusEffects.forEach(effect => {
 			stage += effect.amount
 		})
 		return Math.max(-6, Math.min(6, stage))
@@ -402,11 +406,11 @@ class Pokemon{
 		chooseable.forEach(m => this.addActiveMove(m))
 
 		//Just a nice thing: Sort the active moves by name.
-		this.activeMoves.sort((a, b) => {
-			let na = a.name
-			let nb = b.name
-			return na < nb ? -1 : na > nb ? 1 : 0
-		})
+		// this.activeMoves.sort((a, b) => {
+		// 	let na = a.name
+		// 	let nb = b.name
+		// 	return na < nb ? -1 : na > nb ? 1 : 0
+		// })
 	}
 
 	gainEnergy(energy){

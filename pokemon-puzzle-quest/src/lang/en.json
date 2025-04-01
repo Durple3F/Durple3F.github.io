@@ -113,6 +113,9 @@
 		"Butterfree": {
 			"name": "Butterfree"
 		},
+		"Meowth-Alola": {
+			"name": "Meowth"
+		},
 		"Slowpoke": {
 			"name": "Slowpoke"
 		},
@@ -204,6 +207,11 @@
 			"name": "Ember",
 			"description": "Deals damage. There's a 50% chance for this move to inflict Burn on 3 random tiles. At the start of each turn, the opponent takes damage for each Burned tile on the board.",
 			"shortDescription": "Damages and might burn tiles"
+		},
+		"Fake Out": {
+			"name": "Fake Out",
+			"description": "As long as the user has been the active Pokémon for more than two turns, this move's cost increases.",
+			"shortDescription": "First-strike attack"
 		},
 		"Focus Energy": {
 			"name": "Focus Energy",

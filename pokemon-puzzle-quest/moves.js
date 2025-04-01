@@ -257,7 +257,7 @@ const pokemonMoveData = {
 			{ type: "damage" },
 			{ type: "remove-status-effect", target: "user", statusName: "cost-reduction-from-echoed-voice" },
 			{ type: "apply-status-effect", target: "user", statusEffect: {
-				name: "cost-reduction-from-echoed-voice",
+				name: "echoed-voice-cost-reduction",
 				type: "cost-alteration",
 				stacks: false,
 				appliesTo: {
@@ -298,6 +298,56 @@ const pokemonMoveData = {
 				status: { name: "Burn", type: "debuff", duration: null }
 			}
 		],
+	},
+	"Fake Out": {
+		name: "Fake Out",
+		type: "Normal",
+		category: "Physical",
+		strategy: "basic-damage",
+		pp: 10,
+		power: 40,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			purple: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Fake Out.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "end-turn" }
+		],
+		onTurnStart: [
+			{ type: "is-trainers-turn", target: "user" },
+			{ type: "load-value", value: false },
+			{ type: "jump-if-equal", jumpTo: Infinity},
+			{ type: "get-status-stacks", statusName: "fake-out-turns-out" },
+			{ type: "load-value", value: 3 },
+			{ type: "jump-if-equal", jumpTo: "alter-cost" },
+			{ type: "jump-if-less-than", test: -3, against: -2, jumpTo: "add-status" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "apply-status-effect", target: "user", label: "alter-cost", statusEffect: {
+				name: "fake-out-cost-reduction",
+				type: "cost-alteration",
+				stacks: false,
+				lostOnSwap: true,
+				appliesTo: {
+					name: "Fake Out"
+				},
+				energyCost: {
+					purple: 7
+				}
+			} },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "apply-status-effect", target: "user", label: "add-status", statusEffect: {
+				name: "fake-out-turns-out",
+				type: "hidden",
+				stacks: true,
+				lostOnSwap: true
+			} },
+		]
 	},
 	"Focus Energy": {
 		name: "Focus Energy",
@@ -981,11 +1031,12 @@ const pokemonMoveData = {
 			{ type: "add-numbers" },
 			{ type: "load-value", value: 0 },
 			{ type: "random-number", min: -1, max: -2, useArgs: true },
-			{ 
-				type: "select-tiles",
-				conditionExpression: "x == %c%",
-				conditionArguments: [-1]
-			},
+			{ type: "select-column", x: -1 },
+			// { 
+			// 	type: "select-tiles",
+			// 	conditionExpression: "x == %c%",
+			// 	conditionArguments: [-1]
+			// },
 			{
 				type: "apply-status-to-tiles", selection: "group", which: -1,
 				status: { name: "Static", type: "buff", duration: null }
