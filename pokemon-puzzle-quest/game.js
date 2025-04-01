@@ -666,7 +666,7 @@ class Round{
 			}
 		}
 		for (let status of toRemove){
-			statusEffects.splice(statusEffects.indexOf(status), 1)
+			activePokemon.removeStatus(status)
 		}
 		//Reduce status effect durations but for tiles this time
 		contents = this.board.tilesOnScreen()
@@ -686,7 +686,7 @@ class Round{
 				}
 			}
 			for (let status of toRemove){
-				statusEffects.splice(statusEffects.indexOf(status), 1)
+				tile.removeStatus(status)
 			}
 		}
 
@@ -2654,8 +2654,7 @@ class Round{
 			return statusEffect.lostOnSwap
 		})
 		for (let statusEffect of lostOnSwap){
-			let index = oldActive.statusEffects.indexOf(statusEffect)
-			oldActive.statusEffects.splice(index, 1)
+			oldActive.removeStatus(statusEffect)
 		}
 
 		//Transfer half of the old pokemon's energy into the new pokemon.
@@ -2960,8 +2959,8 @@ class Round{
 				let statChanges = statusEffects.filter(s => {
 					return s.type === "stat"
 				})
-				statChanges.forEach(s => {
-					statusEffects.splice(statusEffects.indexOf(s), 1)
+				statChanges.forEach(statusEffect => {
+					pokemon.removeStatus(statusEffect)
 				})
 			}
 		}
@@ -2999,7 +2998,7 @@ class Board{
 				this.tileWeights[type] = 0
 			}
 		}
-		// this.tileWeights.rainbow = 0.2
+		this.tileWeights.rainbow = 0.2
 
 		this.spriteTileW = 0
 		this.spriteTileH = 0
@@ -3597,6 +3596,12 @@ class Tile{
 			return status.name === name
 		})
 	}
+	removeStatus(statusEffect){
+		let index = this.statusEffects.indexOf(statusEffect)
+		if (index !== -1){
+			this.statusEffects.splice(index, 1)
+		}
+	}
 }
 
 class TileStatus{
@@ -3811,20 +3816,20 @@ function doEvolutionAnimation(elem, pokemon, evolution){
 function healAllPokemon(pokemonList){
 	playSound("healing")
 	let promises = []
-	pokemonList.forEach(p => {
+	pokemonList.forEach(pokemon => {
 		//Full health
-		p.hp = p.maxhp
+		pokemon.hp = pokemon.maxhp
 		//Remove all debuffs
-		let debuffs = p.statusEffects.filter(s => {
-			let name = s.name
+		let debuffs = pokemon.statusEffects.filter(statusEffects => {
+			let name = statusEffects.name
 			let data = pokemonStatusData[name]
 			return data && data.class === "debuff"
 		})
-		debuffs.forEach(s => {
-			p.statusEffects.splice(p.statusEffects.indexOf(s), 1)
+		debuffs.forEach(statusEffect => {
+			p.removeStatus(statusEffect)
 		})
 
-		promises.push(savePokemon(p))
+		promises.push(savePokemon(pokemon))
 	})
 	return Promise.all(promises)
 }

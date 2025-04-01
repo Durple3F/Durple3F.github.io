@@ -1,10 +1,13 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-4/1 (13.1k lines):
+4/1 (13.3k lines):
 	- Added Alolan Meowth
 	- Added Fake Out, a move that does something at the start of your turn even when it's not being used.
+	- Added Feint
 	- Many optimizations to how the computer updates the screen while a move is happening. I've made the effects very granular, but the computer previously naively updated every single thing, every single time anything happened. Like, even when it just picked a random number. This cost ~100ms on my computer every single time a move was used.
 	- Lots of other tiny time optimizations. I hope I haven't broken anything, but if I have, the code was teetering and about to fall over anyway.
+	- Many changes to how status effects are added/removed.
+	- Fixes to several pokemon images
 
 3/31 (13.1k lines):
 	- You can now use decimal values for the volume settings.

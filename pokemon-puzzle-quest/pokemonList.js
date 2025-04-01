@@ -273,6 +273,27 @@ const pokemonData = {
 					amount: 1
 				}
 			},
+			{
+				name: "Growl",
+				unlock: {
+					type: "level",
+					amount: 1
+				}
+			},
+			{
+				name: "Feint",
+				unlock: {
+					type: "level",
+					amount: 4
+				}
+			},
+			{
+				name: "Scratch",
+				unlock: {
+					type: "level",
+					amount: 8
+				}
+			},
 		]
 	},
 	"Slowpoke": {

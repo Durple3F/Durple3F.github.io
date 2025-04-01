@@ -1,6 +1,7 @@
 Incomplete move lists:
   Rattata-Alola (lv 10)
   Butterfree (lv 0)
+  Meowth-Alola (lv 8)
   Slowpoke (lv 9)
   Magnemite (lv 8)
   Ledyba (lv 8)
@@ -16,6 +17,7 @@ Incomplete move lists:
 
 Missing Evolutions:
   Rattata-Alola
+  Meowth-Alola
   Slowpoke
   Magnemite
   Ledyba
@@ -34,6 +36,7 @@ Missing Abilities:
   Caterpie
   Metapod
   Butterfree
+  Meowth-Alola
   Slowpoke
   Magnemite
   Ledyba

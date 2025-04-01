@@ -210,8 +210,13 @@
 		},
 		"Fake Out": {
 			"name": "Fake Out",
-			"description": "As long as the user has been the active Pokémon for more than two turns, this move's cost increases.",
+			"description": "As long as the user has been the active Pokémon for more than two turns, this move's purple energy cost increases by 7.",
 			"shortDescription": "First-strike attack"
+		},
+		"Feint": {
+			"name": "Feint",
+			"description": "Removes the Invulnerable status from the opponent. Then, deals damage.",
+			"shortDescription": "Deals damage through invulnerability"
 		},
 		"Focus Energy": {
 			"name": "Focus Energy",

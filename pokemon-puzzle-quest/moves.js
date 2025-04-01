@@ -324,7 +324,7 @@ const pokemonMoveData = {
 			{ type: "load-value", value: false },
 			{ type: "jump-if-equal", jumpTo: Infinity},
 			{ type: "get-status-stacks", statusName: "fake-out-turns-out" },
-			{ type: "load-value", value: 3 },
+			{ type: "load-value", value: 2 },
 			{ type: "jump-if-equal", jumpTo: "alter-cost" },
 			{ type: "jump-if-less-than", test: -3, against: -2, jumpTo: "add-status" },
 			{ type: "jump", jumpTo: Infinity },
@@ -347,6 +347,28 @@ const pokemonMoveData = {
 				stacks: true,
 				lostOnSwap: true
 			} },
+		]
+	},
+	"Feint": {
+		name: "Feint",
+		type: "Normal",
+		category: "Physical",
+		strategy: "basic-damage",
+		pp: 10,
+		power: 30,
+		accuracy: 100,
+		rechargeTurns: 2,
+		energy: {
+			yellow: 5,
+			orange: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Feint.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "remove-status", statusName: "invulnerable" },
+			{ type: "damage" }
 		]
 	},
 	"Focus Energy": {

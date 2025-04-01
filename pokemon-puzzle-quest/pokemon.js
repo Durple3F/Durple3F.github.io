@@ -256,16 +256,13 @@ class Pokemon{
 		if (result.replaced.length){
 			let index = this.statusEffects.indexOf(result.replaced[0])
 			//Put the new statuses in place of the first old one
-			for (let status of result.added){
-				this.statusEffects.splice(index, 0, status)
+			for (let statusEffect of result.added){
+				this.statusEffects.splice(index, 0, statusEffect)
 				index++
 			}
 			//Remove the old ones
-			for (let status of result.replaced){
-				if (this.statusEffects.includes(status)){
-					let index = this.statusEffects.indexOf(status)
-					this.statusEffects.splice(index, 1)
-				}
+			for (let statusEffect of result.replaced){
+				this.removeStatus(statusEffect)
 			}
 		} else {
 			for (let status of result.added){
@@ -287,15 +284,22 @@ class Pokemon{
 	}
 	removeStatus(statusEffect){
 		let index = this.statusEffects.indexOf(statusEffect)
-		this.statusEffects.splice(index, 1)
+		if (index !== -1){
+			this.statusEffects.splice(index, 1)
+		}
 	}
 	removeStatusesWithName(name){
-		while (this.statusEffects.some(status => {
+		let shouldRemove = this.statusEffects.some(status => {
 			return status.name === name
-		})){
-			this.statusEffects.splice(this.statusEffects.findIndex(status => {
+		})
+		while (shouldRemove){
+			let statusEffect = this.statusEffects.find(status => {
 				return status.name === name
-			}), 1)
+			})
+			this.removeStatus(statusEffect)
+			shouldRemove = this.statusEffects.some(status => {
+				return status.name === name
+			})
 		}
 	}
 
