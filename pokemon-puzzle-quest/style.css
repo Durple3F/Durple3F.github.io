@@ -8,6 +8,10 @@
 	font-family: DP_Pro;
 	src: url("src/font/pokemon-dp-pro.ttf")
 }
+@font-face {
+	font-family: Kode_Mono;
+	src: url("src/font/KodeMono-VariableFont_wght.ttf")
+}
 /* POKEMON SCARLET/VIOLET ALREADY HAS ICONS FOR ALL TYPES */
 /* Note for future
 @font-face {
@@ -70,7 +74,9 @@ body {
 	--energy-purple: #dd60dd;
 	--exp: #74def0;
 
-	--dialogue-font-size: min(5vh, 3vw)
+	--dialogue-font-size: min(5vh, 3vw);
+	--active-pokemon-box-size: max(4em, 10vh);
+	--ui-primary-bg: rgb(75, 117, 232);
 }
 
 .floating-text {
@@ -78,6 +84,11 @@ body {
 	transform: translate(-50%, -50%);
 	text-shadow: 0em 0em 0.2em black, 0em 0em 0.2em black;
 	z-index: 10;
+}
+.big-btn {
+	font-size: 3vh;
+	border-radius: 1vh;
+	padding: 1vh 3vh;
 }
 
 #fps {
@@ -887,7 +898,7 @@ body {
 	width: 100%;
 }
 #pc > #pc-header > #pc-box-name {
-	font-size: 3em;
+	font-size: max(3em, 5vh);
 	height: 100%;
 	width: 60%;
 	display: flex;
@@ -937,6 +948,9 @@ body {
 	text-align: center;
 }
 
+.active-pokemon-container {
+	padding-bottom: calc(var(--active-pokemon-box-size) * 0.3);
+}
 .active-pokemon-box {
 	display: flex;
 	flex-direction: column;
@@ -944,7 +958,7 @@ body {
 	align-items: center;
 	position: relative;
 	margin: 10px;
-	height: 4em;
+	height: var(--active-pokemon-box-size);
 	background-image: url("src/img/pc-profile-1.png");
 	background-size: contain;
 	background-position: center;
@@ -952,17 +966,17 @@ body {
 	image-rendering: pixelated;
 }
 .active-pokemon-box:nth-of-type(2n){
-	top: 1em;
+	top: calc(var(--active-pokemon-box-size) * 0.25);
 }
 .active-pokemon-box.selected {
 	background-image: url("src/img/pc-profile-2.png");
 }
 .active-pokemon-box > img {
 	image-rendering: auto;
-	height: 70%;
+	height: calc(var(--active-pokemon-box-size) * 0.7);
 	position: absolute;
-	top: calc(50% - 2em);
-	left: calc(50% - 5em);
+	top: calc(50% - var(--active-pokemon-box-size) * 0.5);
+	left: calc(50% - var(--active-pokemon-box-size) * 1.2);
 }
 .active-pokemon-box.selected > img {
 	animation: bounce 1.5s infinite;
@@ -975,17 +989,186 @@ body {
 	transform: translate(-50%, -25%);
 }
 
+#pokedex {
+	width: 100%; height: 100%;
+	position: relative;
+	display: flex;
+	justify-content: center;
+}
+#pokedex > #dexWindow {
+	width: 80%; height: 100%;
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	overflow-y: scroll;
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+}
+/* Hide scrollbar */
+#pokedex > #dexWindow::-webkit-scrollbar {
+	display: none;
+}
+#pokedex > #dexWindow > .pokemon-list {
+	width: 100%;
+	padding-top: 1em;
+	padding-bottom: 1em;
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: start;
+	row-gap: 1em;
+	column-gap: 1em;
+}
+#pokedex > #dexWindow > .pokemon-list > .pokemon-section {
+	width: 10em; height: 10em;
+	padding: 0.5em;
+	position: relative;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	align-items: center;
+	font-family: Kode_Mono;
+	font-weight: bold;
+	border-radius: 1em;
+
+	background-color: var(--ui-primary-bg);
+	background-image: repeating-linear-gradient(
+		18deg,
+		transparent 1em,
+		/* white 1.2em, */
+		rgba(99, 145, 219, 0.228) 1.2em,
+		transparent 1.4em,
+		transparent 2em
+	);
+	border: 0.25em solid rgba(15, 54, 118);
+	/* box-shadow: 0 0 0.7em rgba(255, 255, 255, 0.4); */
+
+	cursor: pointer;
+	transition: background-color 0.2s, transform 0.2s, border-width 0.2s;
+}
+#pokedex > #dexWindow > .pokemon-list > .pokemon-section:hover {
+	background-color: rgba(45, 48, 236);
+}
+#pokedex > #dexWindow > .pokemon-list > .pokemon-section .pokemon-image-section {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 20%;
+	flex-grow: 1;
+}
+#pokedex > #dexWindow > .pokemon-list > .pokemon-section .pokemon-image-section .pokemon-image {
+	max-width: 80%;
+	max-height: 80%;
+	z-index: 5;
+	transition: max-width 0.2s, max-height 0.2s;
+}
+#pokedex > #dexWindow > .pokemon-list > .pokemon-section.not-caught .pokemon-image-section .pokemon-image {
+	/* filter: brightness(1000000) sepia(1) brightness(1000000) saturate(0.5) brightness(0.2); */
+	opacity: 0;
+}
+#pokedex > #dexWindow > .pokemon-list > .pokemon-section:hover .pokemon-image-section .pokemon-image {
+	max-width: 90%; max-height: 90%;
+}
+#pokedex > #dexWindow > .pokemon-list > .pokemon-section .pokemon-image-section .pokemon-image-bg {
+	width: 80%; height: 80%;
+	position: absolute;
+	top: 50%; left: 50%;
+	transform: translate(-50%, -50%);
+	background: #111;
+	/* background: linear-gradient(
+			90deg,
+			rgba(255, 0, 0, 1) 0%,
+			rgba(255, 154, 0, 1) 5%,
+			rgba(208, 222, 33, 1) 10%,
+			rgba(79, 220, 74, 1) 15%,
+			rgba(63, 218, 216, 1) 20%,
+			rgba(47, 201, 226, 1) 25%,
+			rgba(28, 127, 238, 1) 30%,
+			rgba(95, 21, 242, 1) 35%,
+			rgba(186, 12, 248, 1) 40%,
+			rgba(251, 7, 217, 1) 45%,
+			rgba(255, 0, 0, 1) 50%,
+			rgba(255, 154, 0, 1) 55%,
+			rgba(208, 222, 33, 1) 60%,
+			rgba(79, 220, 74, 1) 65%,
+			rgba(63, 218, 216, 1) 70%,
+			rgba(47, 201, 226, 1) 75%,
+			rgba(28, 127, 238, 1) 80%,
+			rgba(95, 21, 242, 1) 85%,
+			rgba(186, 12, 248, 1) 90%,
+			rgba(251, 7, 217, 1) 95%,
+			rgba(255, 0, 0, 1) 100%
+	); */
+	/* background: url("src/Rick-Astley-Never-Gonna-Give-You-Up.webp"); */
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	mask-size: contain;
+	mask-position: center;
+	mask-repeat: no-repeat;
+	mask-origin: center;
+	transition: width 0.2s, height 0.2s;
+}
+#pokedex > #dexWindow > .pokemon-list > .pokemon-section:hover .pokemon-image-section .pokemon-image-bg {
+	width: 90%; height: 90%;
+}
+#pokedex > #dexWindow > .pokemon-list > .pokemon-section.caught .pokemon-image-section .pokemon-image-bg {
+	opacity: 0;
+}
+#pokedex > #dexWindow > .pokemon-list > .pokemon-section .pokemon-name-section {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	flex-grow: 0;
+	font-size: 90%;
+	/* filter: drop-shadow(0 0 0.2em white); */
+}
+#pokedex > #dexWindow > .pokemon-list > .pokemon-section .pokemon-number {
+	margin: 0;
+	line-height: 0.8;
+	letter-spacing: 0.2em;
+	opacity: 0.7;
+}
+#pokedex > #pokedex-admin {
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
 #modal.summary .pokemon-info > .pokemon-section {
 	width: 45%;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
+	align-items: center;
+	flex-grow: 1;
+}
+#modal.summary .pokemon-info > .pokemon-section .stats {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 	align-items: stretch;
 }
-#modal.summary .pokemon-info > .pokemon-section .stat {
+#modal.summary .pokemon-info > .pokemon-section .stat,
+#modal.summary .pokemon-info > .pokemon-section .mastery-icon {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
+	align-items: center;
+	margin: 0.2em 0;
+}
+#modal.summary .pokemon-info > .pokemon-section .stat .stat-name,
+#modal.summary .pokemon-info > .pokemon-section .mastery-icon .mastery-left {
+	margin-right: 3em;
 }
 #modal.summary .pokemon-info > .pokemon-section .stats.mastery .mastery-icon {
 	display: flex;
@@ -1117,7 +1300,7 @@ body {
 }
 #dialogue > .text-box > .nameplate > .text-background {
 	position: absolute;
-	background-color: rgb(75, 117, 232);
+	background-color: var(--ui-primary-bg);
 	font-size: var(--dialogue-font-size);
 	min-width: calc(10em + 0.25em);
 	min-height: calc(var(--dialogue-font-size) + 0.25em);
@@ -1173,6 +1356,12 @@ body {
 
 .no-pointer {
 	pointer-events: none;
+}
+
+@media screen and (min-width: 2160px) {
+	#pokedex {
+		font-size: 200%;
+	}
 }
 
 @keyframes bounce {

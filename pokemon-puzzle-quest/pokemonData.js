@@ -343,19 +343,23 @@ function checkIfPokemonMeetsRequirements(pokemon, req){
 	console.warn("You never handled this", req)
 	return false
 }
-function getReasonPokemonDoesntMeetRequirements(pokemon, move){
+function getReasonPokemonDoesntMeetRequirements(pokemon, move, options={}){
+	let pure = options.pure ?? false
 	let moveIndex = pokemon.moves.indexOf(move)
 	let req = pokemon.data.learnset.find(m => m.name === move.name).unlock
 	if (!req) return "This move doesn't require anything. Why can't you use it? Man, Boo sucks at programming."
 	if (req.type === "level"){
-		if (pokemon.level < req.amount){
-			return `Your Pokemon needs to be at least level ${req.amount} to use this move.`
+		if (pokemon.level < req.amount || options.pure){
+			let text = getLocaleString("pokemon-move-requirement-level", lang)
+			text = applyReplacements(text, [req.amount])
+			return text
 		} else {
-			return `Your Pokemon needs to be at least... wait, they're high enough level. Huh????`
+			let text = getLocaleString("pokemon-move-requirement-level-error", lang)
+			return text
 		}
 	}
 	else if (req.type === "pre-evolve"){
-		return "A less evolved version of this pokemon could've learned this move.	"
+		return "A less evolved version of this pokemon could've learned this move."
 	}
 	else if (req.type === "never"){
 		return "Your Pokemon should NEVER be able to use this move. Why is this message even showing? You should tell Boo about this."

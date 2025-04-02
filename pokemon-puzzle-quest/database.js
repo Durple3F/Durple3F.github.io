@@ -323,15 +323,41 @@ function getPlayerPokemon(saveId){
 }
 function loadPlayerPokemon(dataList){
 	return new Promise(resolve => {
+		let pokemonMinimumCaughtTotal = 0
+		let pokemonMinimumCaught = {}
+		for (let pokemonId in pokemonData){
+			pokemonMinimumCaught[pokemonId] = 0
+			pokemonMinimumCaughtTotal++
+		}
+
 		dataList.forEach(obj => {
 			// console.log(obj)
 			let pokemon = new Pokemon(obj.name, obj.pokemonId, obj)
-			caughtPokemon.push(pokemon)
+			//JUST IN CASE we try and load an otherwise illegal pokemon
+			if (obj.pokemonId in pokemonData){
+				pokemonMinimumCaught[obj.pokemonId]++
+				caughtPokemon.push(pokemon)
 
-			if (obj.activeSlot !== -1){
-				playerActivePokemon[obj.activeSlot] = pokemon
+				if (obj.activeSlot !== -1){
+					playerActivePokemon[obj.activeSlot] = pokemon
+				}
 			}
 		})
+
+		//Set the player's caught stats to the minimum they could be
+		//from the data we have.
+		let pokemonStats = playerSaveInfo["pokemon-caught-stats"]
+		for (let pokemonId in pokemonMinimumCaught){
+			let stats = pokemonStats[pokemonId]
+			let minimum = pokemonMinimumCaught[pokemonId]
+			if (stats.caught < minimum){
+				stats.caught = minimum
+			}
+		}
+		let totalCaught = playerSaveInfo["total-pokemon-caught"]
+		if (totalCaught < pokemonMinimumCaughtTotal){
+			playerSaveInfo["total-pokemon-caught"] = pokemonMinimumCaughtTotal
+		}
 
 		//If this leaves empty slots in the player's party, remove them.
 		removeEmptySlots(playerActivePokemon)
@@ -458,7 +484,37 @@ function askToNameSave(){
 function newPlayerSaveData(){
 	let data = {}
 	data["total-pokemon-caught"] = 0
+	data["pokemon-caught-stats"] = {}
 	return data
+}
+function normalizeSave(saveInfo){
+	let oldData = newPlayerSaveData()
+	Object.keys(saveInfo).forEach(key => oldData[key] = saveInfo[key])
+	Object.keys(oldData).forEach(key => saveInfo[key] = oldData[key])
+
+	//Fill pokemon stats
+	let pokemonStats = saveInfo["pokemon-caught-stats"]
+	for (let pokemonId in pokemonData){
+		let stats = {}
+		let oldValue = pokemonStats[pokemonId] ?? {}
+		pokemonStats[pokemonId] = stats
+		stats["caught"] = oldValue["caught"] ?? 0
+		stats["seen"] = oldValue["seen"] ?? 0
+	}
+
+	let starter = saveInfo["chosen-starter"]
+	if (starter && pokemonStats[starter].caught === 0){
+		pokemonStats[starter].caught++
+	}
+}
+function logPokemonAs(reason, pokemon){
+	let pokemonStats = playerSaveInfo["pokemon-caught-stats"]
+	let pokemonId = pokemon.data.id
+	if (pokemonId in pokemonStats){
+		let stats = pokemonStats[pokemonId]
+		stats[reason] = stats[reason] ?? 0
+		stats[reason]++
+	}
 }
 
 function makeNewBox(saveId, name){

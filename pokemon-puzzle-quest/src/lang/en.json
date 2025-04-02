@@ -3,10 +3,15 @@
 	"initiative-tutorial": "Initiative<br>Each turn, both Pokémon gain Initiative based on their speed stats. When a player matches 4 or more tiles in a row, they get a free turn.",
 	"choose-pokemon": "Choose Pokémon",
 
+	"pokemon-move-requirement-level": "Your Pokemon needs to be at least level %c% to use this move.",
+	"pokemon-move-requirement-level-error": "Your Pokemon needs to be at least... wait, they're high enough level. Huh????",
+
 	"error-cant-remove-last-pokemon": "You can't put your only Pokémon into the PC.",
 	"error-no-usable-pokemon": "All your Pokémon are currently fainted.",
 	"select-number-tiles-plural": "Select %c tiles",
 	"select-number-tiles-single": "Select a tile",
+	"confirm": "Confirm",
+	"pokedex": "Pokédex",
 	"dialogue": {
 		"rival-battle-1-dialogue": {
 			"events": [
@@ -210,7 +215,7 @@
 		},
 		"Fake Out": {
 			"name": "Fake Out",
-			"description": "As long as the user has been the active Pokémon for more than two turns, this move's purple energy cost increases by 7.",
+			"description": "Deals damage, then ends the turn. As long as the user has been the active Pokémon for more than two turns, this move's purple energy cost increases by 7.",
 			"shortDescription": "First-strike attack"
 		},
 		"Feint": {

@@ -1,5 +1,5 @@
 class Pokemon{
-	constructor(name, pokemonName, options){
+	constructor(name, pokemonName, options={}){
 		this.uuid = options?.uuid ?? window.crypto.randomUUID()
 		this.owner = options?.owner ?? playerSaveId
 		this.pokemonId = pokemonName ?? options.id
@@ -525,6 +525,7 @@ class Pokemon{
 				this.addActiveMove(move)
 			}
 		}
+		logPokemonAs("caught", newPokemon)
 		return changes
 	}
 }

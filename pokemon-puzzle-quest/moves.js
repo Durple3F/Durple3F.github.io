@@ -367,7 +367,7 @@ const pokemonMoveData = {
 		},
 		effects: [
 			{ type: "play-sound", name: "attack" },
-			{ type: "remove-status", statusName: "invulnerable" },
+			{ type: "remove-status-effect", statusName: "invulnerable" },
 			{ type: "damage" }
 		]
 	},

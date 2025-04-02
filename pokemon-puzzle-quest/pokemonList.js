@@ -1,77 +1,4 @@
 const pokemonData = {
-	"Rattata-Alola": {
-		name: "Rattata",
-		id: "Rattata-Alola",
-		number: "19a",
-		imageFacing: "left",
-		imageSources: {
-			"large": "src/img/pokemon/0019Rattata-Alola.png",
-			"home": "src/img/tiny-pokemon/Rattata-Alola.png"
-		},
-		sounds: {
-			cry: "src/audio/cries/rattata.mp3"
-		},
-		types: ["Dark", "Normal"],
-		tags: [],
-		stats: {
-			hp: 30,
-			attack: 56,
-			defense: 35,
-			specialAttack: 25,
-			specialDefense: 35,
-			speed: 72
-		},
-		expYield: 51,
-		evYield: {
-			hp: 0,
-			attack: 0,
-			defense: 0,
-			specialAttack: 0,
-			specialDefense: 0,
-			speed: 1
-		},
-		energyMastery: {
-			orange: 2,
-			purple: 3
-		},
-		learnset: [
-			{
-				name: "Tackle",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "Tail Whip",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "Quick Attack",
-				unlock: {
-					type: "level",
-					amount: 4
-				}
-			},
-			{
-				name: "Focus Energy",
-				unlock: {
-					type: "level",
-					amount: 7
-				}
-			},
-			{
-				name: "Bite",
-				unlock: {
-					type: "level",
-					amount: 10
-				}
-			},
-		]
-	},
 	"Caterpie": {
 		name: "Caterpie",
 		number: "10",
@@ -228,6 +155,79 @@ const pokemonData = {
 		},
 		learnset: [
 
+		]
+	},
+	"Rattata-Alola": {
+		name: "Rattata",
+		id: "Rattata-Alola",
+		number: "19a",
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0019Rattata-Alola.png",
+			"home": "src/img/tiny-pokemon/Rattata-Alola.png"
+		},
+		sounds: {
+			cry: "src/audio/cries/rattata.mp3"
+		},
+		types: ["Dark", "Normal"],
+		tags: [],
+		stats: {
+			hp: 30,
+			attack: 56,
+			defense: 35,
+			specialAttack: 25,
+			specialDefense: 35,
+			speed: 72
+		},
+		expYield: 51,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 1
+		},
+		energyMastery: {
+			orange: 2,
+			purple: 3
+		},
+		learnset: [
+			{
+				name: "Tackle",
+				unlock: {
+					type: "level",
+					amount: 1
+				}
+			},
+			{
+				name: "Tail Whip",
+				unlock: {
+					type: "level",
+					amount: 1
+				}
+			},
+			{
+				name: "Quick Attack",
+				unlock: {
+					type: "level",
+					amount: 4
+				}
+			},
+			{
+				name: "Focus Energy",
+				unlock: {
+					type: "level",
+					amount: 7
+				}
+			},
+			{
+				name: "Bite",
+				unlock: {
+					type: "level",
+					amount: 10
+				}
+			},
 		]
 	},
 	"Meowth-Alola": {
@@ -1233,4 +1233,15 @@ for (let name in pokemonData) {
 	if (!pokemon.hiddenAbilities) {
 		pokemon.hiddenAbilities = []
 	}
+
+	//Make sure all dex numbers are 4 digits long.
+	//Eg 0039, 0019a
+	let number = pokemon.number
+	let targetDigits = 4
+	let regex = /([\d\?]+)([^\d\?])*/g
+	let match = regex.exec(number)
+	let justDigits = match[1]
+	let modifier = match[2] ?? ""
+	justDigits = justDigits.padStart(targetDigits, "0")
+	pokemon.number = justDigits + modifier
 }

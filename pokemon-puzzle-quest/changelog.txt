@@ -1,6 +1,11 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-4/1 (13.3k lines):
+4/2 (13.6k lines):
+	- Clicking pokemon in your pokedex now shows you their full move list and default stats.
+	- When you load the game, if you have data from before the pokemon stats were added, it sets some defaults based on what it can tell.
+	- Added a lot of style to the pokemon in the pokedex.
+
+4/1 (13.6k lines):
 	- Added Alolan Meowth
 	- Added Fake Out, a move that does something at the start of your turn even when it's not being used.
 	- Added Feint
@@ -8,6 +13,8 @@
 	- Lots of other tiny time optimizations. I hope I haven't broken anything, but if I have, the code was teetering and about to fall over anyway.
 	- Many changes to how status effects are added/removed.
 	- Fixes to several pokemon images
+	- The game now keeps track of how many of each kind of pokemon you've caught/seen.
+	- Added a new scene for the pokedex, and plenty of work towards making it look nice
 
 3/31 (13.1k lines):
 	- You can now use decimal values for the volume settings.

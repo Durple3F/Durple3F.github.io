@@ -663,8 +663,11 @@ function loadResources(){
 							config[key] = settings[key]
 						}
 						let newSaveData = saves[index]?.data ?? {}
+						//Remove all existing data from playerSaveInfo
 						Object.keys(playerSaveInfo).forEach(key => delete playerSaveInfo[key])
+						//Carry over data from new save
 						Object.keys(newSaveData).forEach(key => playerSaveInfo[key] = newSaveData[key])
+
 						$("#loading-bar > .start").text("Continue")
 						target.addClass("active")
 					}
@@ -919,6 +922,8 @@ function beginNewGame(){
 }
 
 function continueGame(){
+	normalizeSave(playerSaveInfo)
+
 	getPlayerPokemon(playerSaveId)
 	.then(dataList => loadPlayerPokemon(dataList))
 	.then(() => getPlayerBoxes(playerSaveId))
@@ -936,11 +941,8 @@ function continueGame(){
 			level.status = obj.status
 		})
 	})
+	.then(() => normalizeSave(playerSaveInfo))
 	.then(() => {
-		let oldData = newPlayerSaveData()
-		Object.keys(playerSaveInfo).forEach(key => oldData[key] = playerSaveInfo[key])
-		Object.keys(oldData).forEach(key => playerSaveInfo[key] = oldData[key])
-		
 		let noPokemon = playerActivePokemon.length === 0
 		if (!playerSaveInfo["started-game"] && noPokemon){
 			return startScene("choose-starter")

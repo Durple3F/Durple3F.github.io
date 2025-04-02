@@ -233,7 +233,11 @@ class Round{
 				})
 			}
 			
-			this.promise
+			//Once the round is over, save the player's info.
+			this.promise.then(() => {
+				return savePlayerInfo()
+			})
+			//And THEN finalize the round finishing.
 			.then(() => {
 				this.removeAllStatusEffects()
 				this.savePlayerPokemon()
@@ -303,6 +307,7 @@ class Round{
 		//Maybe this swap ends in no changes. If so, swap 'em back.
 		this.applyLocationChanges(map)
 		let matches = this.board.getAllMatches()
+		console.log(this.currentlyReversingSwap)
 		if (matches.length === 0 && !this.currentlyReversingSwap){
 			this.currentlyReversingSwap = true
 			this.animateSwitchLocations(tile1, tile2)
@@ -1453,19 +1458,23 @@ class Round{
 	//the trainer must collect to use this move
 	canPayForMove(trainer, pokemon, move){
 		let able = true
+		let cost = this.getEffectiveCost(trainer, pokemon, move)
+		let energyCost = cost.energyCost
 		let needed = getEmptyEnergy()
 		for (let color of colors){
-			if (move.energy[color] > pokemon.energy[color]){
+			if (energyCost[color] > pokemon.energy[color]){
 				able = false
-				needed[color] += move.energy[color] - pokemon.energy[color]
+				needed[color] += energyCost[color] - pokemon.energy[color]
 			}
 		}
 		return {result: able, needed: needed}
 	}
 	payForMove(trainer, pokemon, move){
+		let cost = this.getEffectiveCost(trainer, pokemon, move)
+		let energyCost = cost.energyCost
 		for (let color of colors){
-			if (move.energy[color] === undefined) continue
-			pokemon.energy[color] -= move.energy[color]
+			if (energyCost[color] === undefined) continue
+			pokemon.energy[color] -= energyCost[color]
 		}
 	}
 	getEffectiveCost(trainer, pokemon, move, cost){
@@ -1473,6 +1482,7 @@ class Round{
 			cost = {}
 		}
 		if (!cost.energyCost){
+			//Start the cost equal to the move's energy cost
 			let energyCost = getEmptyEnergy()
 			cost.energyCost = energyCost
 			for (let color in move.energy){
@@ -2998,7 +3008,7 @@ class Board{
 				this.tileWeights[type] = 0
 			}
 		}
-		this.tileWeights.rainbow = 0.2
+		this.tileWeights.rainbow = 0.1
 
 		this.spriteTileW = 0
 		this.spriteTileH = 0
@@ -3635,6 +3645,7 @@ function beginRound(trainerData){
 			options.activeMoves = data.activeMoves
 		}
 		let pokemon = new Pokemon(undefined, options.id, options)
+		logPokemonAs("seen", pokemon)
 		return pokemon
 	})
 	let enemy = new Trainer("Enemy", enemyPokemon, trainerData)

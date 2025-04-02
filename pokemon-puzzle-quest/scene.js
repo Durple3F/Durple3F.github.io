@@ -654,17 +654,118 @@ function startScene(name, options){
 				}
 			}
 
-			updateBoxes()
-
-			let confirmButton = $(`<button class='btn btn-primary mt-3'>Confirm</button>`)
-			adminTag.append(confirmButton)
-			confirmButton.click(() => {
+			const leaveScene = () => {
 				clearInterval(pcInterval)
 				clearInterval(holdInterval)
 				//Make sure the player doesn't have a gap in their party
 				removeEmptySlots(playerActivePokemon)
 				resolvePromise()
+			}
+
+			updateBoxes()
+
+			let confirmText = getLocaleString("confirm", lang)
+			let confirmButton = $(`<button class='btn big-btn btn-primary m-3'>${confirmText}</button>`)
+			adminTag.append(confirmButton)
+			confirmButton.click(() => {
+				leaveScene()
 				changeScene("route", {name: "Route 1"})
+			})
+
+			let pokedexText = getLocaleString("pokedex", lang)
+			let pokedexButton = $(`<button class='btn big-btn btn-primary m-3'>${pokedexText}</button>`)
+			adminTag.append(pokedexButton)
+			pokedexButton.click(() => {
+				leaveScene()
+				changeScene("pokedex")
+			})
+		} break
+		case "pokedex": {
+			fadeInGame()
+			let pokedexTag = $(`<div id='pokedex'></div>`)
+			gameTag.append(pokedexTag)
+
+			let dexWindow = $(`<div id='dexWindow'></div>`)
+			pokedexTag.append(dexWindow)
+
+			let pokemonList = Object.values(pokemonData)
+			.sort((a, b) => {
+				let aId = a.number
+				let bId = b.number
+				if (aId < bId) return -1
+				if (aId > bId) return 1
+				return 0
+			})
+
+			let pokemonStats = playerSaveInfo["pokemon-caught-stats"]
+			let pokemonListTag = $("<div class='pokemon-list'>")
+			dexWindow.append(pokemonListTag)
+			for (let data of pokemonList){
+				let pokemonId = data.id
+				let pokemon = new Pokemon(undefined, pokemonId)
+				let stats = pokemonStats[pokemonId]
+				let section = $(`<div class='pokemon-section'></div>`)
+
+				section.click(() => {
+					viewPokemonInfo(pokemon, {pure: true})
+				})
+
+				let imageSection = $(`<div class='pokemon-image-section'>`)
+				section.append(imageSection)
+
+				let pokemonImg = $(`<img class='pokemon-image'>`)
+				let url = data.imageSources.large
+				pokemonImg.attr("src", url)
+				imageSection.append(pokemonImg)
+				let pokemonImgBg = $(`<div class='pokemon-image-bg'>`)
+				pokemonImgBg.css("mask-image", `url(${url})`)
+				imageSection.append(pokemonImgBg)
+
+				let textSection = $(`<div class='pokemon-name-section'></div>`)
+				let pokemonNumberTag = $(`<div class='pokemon-number'></div>`)
+				pokemonNumberTag.html(`#${data.number}`)
+				textSection.append(pokemonNumberTag)
+				let pokemonNameTag = $(`<div class='pokemon-name'></div>`)
+				textSection.append(pokemonNameTag)
+				let name = getLocaleString("name", lang, ["pokemon", pokemonId])
+				if (stats.seen === 0 && stats.caught === 0){
+					name = name.replaceAll(/./g, "?")
+				}
+				pokemonNameTag.html(name)
+
+				if (stats.caught === 0){
+					section.addClass("not-caught")
+				} else {
+					section.addClass("caught")
+				}
+				
+				section.append(textSection)
+				pokemonListTag.append(section)
+			}
+
+			let adminTag = $(`<div id='pokedex-admin'></div>`)
+			pokedexTag.append(adminTag)
+
+			let backButton = $("<button class='btn btn-primary big-btn back-btn'>Back</button>")
+			adminTag.append(backButton)
+
+			let allPokemonSections = pokemonListTag.children(".pokemon-section")
+			let bgUpAmt = 0
+			const pcTick = () => {
+				bgUpAmt += 1
+				let amt = bgUpAmt / 5
+				allPokemonSections.css("background-position", `top ${amt}px left`)
+			}
+			let dexInterval = setInterval(pcTick, 10)
+
+			const leaveScene = () => {
+				clearInterval(dexInterval)
+				resolvePromise()
+			}
+
+			backButton.click(() => {
+				leaveScene()
+				changeScene("pc")
 			})
 		} break
 		case "pokemon-center": {
@@ -724,6 +825,9 @@ function catchPokemon(pokemon){
 		// setPlayerSaveInfo("total-pokemon-caught", total + 1)
 		let total = playerSaveInfo["total-pokemon-caught"] || 0
 		playerSaveInfo["total-pokemon-caught"] = total + 1
+		return logPokemonAs("caught", pokemon)
+	})
+	.then(() => {
 		resolvePromise()
 	})
 
@@ -1056,7 +1160,7 @@ function choosePokemon(message, pokemon, minChooseable=1, maxChooseable=1){
 	})
 	return promise
 }
-function viewPokemonInfo(pokemon){
+function viewPokemonInfo(pokemon, options={}){
 	let resolvePromise
 	let promise = new Promise(resolve => resolvePromise = resolve)
 
@@ -1064,7 +1168,9 @@ function viewPokemonInfo(pokemon){
 	clearModal(modal)
 	modal.modal("show")
 	modal.addClass("wide").addClass("summary")
+	modal.find(".modal-header").addClass("justify-content-center")
 	modal.find(".modal-title").text(pokemon.name)
+	modal.find(".modal-title").addClass("display-6")
 	let btn = $(`<button class='btn btn-primary'>Done</button>`)
 	modal.find(".modal-footer").append(btn)
 
@@ -1081,10 +1187,19 @@ function viewPokemonInfo(pokemon){
 		</div>
 	`)
 	modal.find(".modal-body").html(content)
-	let statsHTML = getStatsHTML(pokemon, false)
-	content.children(".pokemon-section").append(statsHTML)
-	let masteryHTML = getMasteryHTML(pokemon, false)
-	content.children(".pokemon-section").append(masteryHTML)
+	let pokemonSection = content.children(".pokemon-section")
+	let statsSection = $(`<div class='stats-section'>`)
+	pokemonSection.append(statsSection)
+	let statsHTML = getStatsHTML(pokemon, {
+		abbreviate: false,
+		pure: options.pure
+	})
+	statsSection.append(statsHTML)
+	let masteryHTML = getMasteryHTML(pokemon, {
+		abbreviate: false,
+		pure: options.pure
+	})
+	statsSection.append(masteryHTML)
 
 	const toggleSelect = (move, moveTag) => {
 		let activeIndex = pokemon.activeMoves.indexOf(move)
@@ -1120,6 +1235,18 @@ function viewPokemonInfo(pokemon){
 		}
 
 		let moveTag = getMoveHTML(move, true)
+
+		//If this isn't even really a pokemon, don't bother marking things as available/not.
+		if (options.pure){
+			moveSection.append(moveTag)
+			moveTag.popover({
+				placement: "left",
+				trigger: "hover",
+				content: getReasonPokemonDoesntMeetRequirements(pokemon, move, options)
+			})
+			continue
+		}
+
 		if (!available){
 			moveTag.addClass("unavailable")
 			moveTag.popover({
@@ -1154,13 +1281,21 @@ function viewPokemonInfo(pokemon){
 	return promise
 }
 
-function getStatsHTML(pokemon, abbreviate=true){
+function getStatsHTML(pokemon, options={}){
+	let abbreviate = options.abbreviate ?? true
+	let pure = options.pure ?? false
 	//Stats
 	let stats = $(`<div class='stats'></div>`)
 	for (let stat in pokemon.data.stats){
 		let statName = abbreviate ? getStatAbbr(stat) : getStatName(stat)
-		let val = pokemon.getStat(stat)
-		let effectiveVal = pokemon.getEffectiveStat(stat)
+		let val, effectiveVal
+		if (pure){
+			val = pokemon.data.stats[stat]
+			effectiveVal = val
+		} else {
+			val = pokemon.getStat(stat)
+			effectiveVal = pokemon.getEffectiveStat(stat)
+		}
 		let statTag = $("<div class='stat'></div>")
 		statTag.append(`<span class='stat-name'>${statName}</span>`)
 		let statVal = $("<span class='stat-val'></span>")
@@ -1179,10 +1314,21 @@ function getStatsHTML(pokemon, abbreviate=true){
 	}
 	return stats
 }
-function getMasteryHTML(pokemon, abbreviate=true){
+function getMasteryHTML(pokemon, options={}){
+	let abbreviate = options.abbreviate ?? true
+	let pure = options.pure ?? false
 	let stats = $(`<div class='stats mastery'></div>`)
-	for (let type in pokemon.energyMastery){
-		let val = pokemon.energyMastery[type]
+	let energyMastery
+	if (pure){
+		energyMastery = pokemon.data.energyMastery
+	} else {
+		energyMastery = pokemon.energyMastery
+	}
+	let colorOrder = Object.keys(energyMastery).sort((a, b) => {
+		return colors.indexOf(a) - colors.indexOf(b)
+	})
+	for (let type of colorOrder){
+		let val = energyMastery[type]
 		if (val || colors.includes(type)){
 			let icon = getEnergyIcon(type)
 			let tag = $("<div class='mastery-icon'></div>")
