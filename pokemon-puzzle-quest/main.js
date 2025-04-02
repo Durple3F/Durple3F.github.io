@@ -1,4 +1,4 @@
-const versionNumber = "v0.9.2"
+const versionNumber = "v0.10.1"
 let lang = "en"
 let playerName
 
@@ -478,9 +478,7 @@ function tick(){
 	let now = Date.now()
 	doTick()
 	timeForTicks.push(Date.now() - now)
-	now = Date.now()
 	requestAnimationFrame(render)
-	timeForFrames.push(Date.now() - now)
 
 	let checkTime = 30
 	if (timeForTicks.length >= checkTime){
@@ -558,6 +556,21 @@ function renderHelperSprites(){
 	sprites.images["friendly-circle"] = img2
 
 	//TODO would be nice to have more options for status circles
+
+	//Maybe render blurs here?
+	// canvas.width = 200
+	// canvas.height = 200
+	// ctx.width = 200
+	// ctx.height = 200
+	// ctx.save()
+	// ctx.filter = "blur(" + blurAmount + "px)"
+	// ctx.fillStyle = "#db3737"
+	// ctx.beginPath()
+	// ctx.arc(ctx.width * 0.5, ctx.height * 0.5, ctx.width * 0.5, 0, 2 * Math.PI)
+	// ctx.fill()
+	// let img3 = new Image()
+	// img3.src = canvas.toDataURL()
+	// sprites.images["blur-test"] = img1
 }
 
 function resetEntirePage(){

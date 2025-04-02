@@ -4,6 +4,8 @@
 	- Clicking pokemon in your pokedex now shows you their full move list and default stats.
 	- When you load the game, if you have data from before the pokemon stats were added, it sets some defaults based on what it can tell.
 	- Added a lot of style to the pokemon in the pokedex.
+	- Added a nice gradient behind each player's side of the board to indicate whose turn it is.
+	- Whether the game displays highlights behind tiles is now controlled by a config setting.
 
 4/1 (13.6k lines):
 	- Added Alolan Meowth

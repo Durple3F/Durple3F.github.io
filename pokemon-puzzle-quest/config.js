@@ -1,6 +1,7 @@
 const config = {
 	confirmMoveSelection: true,
 	pokemonSwapOutInfo: true,
+	showBlurOnTiles: true,
 	textSpeed: 40,
 
 	volumes: {

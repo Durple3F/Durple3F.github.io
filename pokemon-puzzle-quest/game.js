@@ -2306,7 +2306,7 @@ class Round{
 				pokeball.off("click")
 				if (trainerIndex === 0){
 					pokeball.click(() => {
-						this.beginToSwapPokemon(trainerIndex, p)
+						this.beginToSwapPokemon(trainerIndex, pokemon)
 					})
 				}
 

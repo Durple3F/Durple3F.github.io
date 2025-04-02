@@ -1,7 +1,7 @@
 const PI = Math.PI
 const TWOPI = 2 * PI
 
-function renderTile(tile, board, round, w, h, xOffset, yOffset){
+function renderTile(tile, board, round, w, h, xOffset, yOffset, options){
 	let now = Date.now()
 	let tileW = w / board.width
 	let tileH = h / board.height
@@ -12,6 +12,8 @@ function renderTile(tile, board, round, w, h, xOffset, yOffset){
 
 	let tileGameX = tile.x
 	let tileGameY = tile.y
+
+	let trueBlur = options.trueBlur
 
 	//Now's the time to check for any tile displacements
 	//this tile might have.
@@ -62,16 +64,18 @@ function renderTile(tile, board, round, w, h, xOffset, yOffset){
 		let highlight = tile.spriteHighlight
 		let blurAmount = tileW * 0.05 * highlight
 		let diff = 5*Math.min(1, 1 - highlight)
-		ctx.save()
-		ctx.filter = "blur(" + blurAmount + "px)"
-		ctx.fillStyle = tileTypeColors[tile.type]
-		ctx.beginPath()
-		ctx.arc(tile.spriteCenterX, tile.spriteCenterY, tile.spriteWidth * 0.50 - diff, 0, TWOPI)
-		ctx.fill()
-		ctx.restore()
+		if (trueBlur){
+			ctx.save()
+			ctx.filter = "blur(" + blurAmount + "px)"
+			ctx.fillStyle = tileTypeColors[tile.type]
+			ctx.beginPath()
+			ctx.arc(tile.spriteCenterX, tile.spriteCenterY, tile.spriteWidth * 0.50 - diff, 0, TWOPI)
+			ctx.fill()
+			ctx.restore()
+		}
 	}
 
-	ctx.filter = "none"
+	// ctx.filter = "none"
 
 	let sprite = sprites.images[tile.type]
 	ctx.drawImage(sprite, x, y, spriteW, spriteH)
@@ -112,6 +116,7 @@ function renderStatusEffects(tile, board, round, w, h, xOffset, yOffset){
 }
 
 function render(){
+	let now = Date.now()
 	let w = canvas.width
 	let h = canvas.height
 	let board = gameRound.board
@@ -123,11 +128,16 @@ function render(){
 	let xOffset = w * (1 - scaleFactor) * 0.5
 	let yOffset = h * (1 - scaleFactor) * 0.5
 
+	let options = {}
+	options.trueBlur = config.showBlurOnTiles
+
 	ctx.clearRect(0, 0, w, h)
 	for (let tile of tiles){
-		renderTile(tile, board, gameRound, smallerW, smallerH, xOffset, yOffset)
+		renderTile(tile, board, gameRound, smallerW, smallerH, xOffset, yOffset, options)
 	}
 	for (let tile of tiles){
 		renderStatusEffects(tile, board, gameRound, smallerW, smallerH, xOffset, yOffset)
 	}
+	timeForFrames.push(Date.now() - now)
+	// console.log(Date.now() - now)
 }
