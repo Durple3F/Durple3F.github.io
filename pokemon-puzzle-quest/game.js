@@ -3008,7 +3008,7 @@ class Board{
 				this.tileWeights[type] = 0
 			}
 		}
-		this.tileWeights.rainbow = 0.1
+		this.tileWeights.rainbow = 0.5
 
 		this.spriteTileW = 0
 		this.spriteTileH = 0

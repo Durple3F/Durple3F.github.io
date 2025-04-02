@@ -26,6 +26,16 @@ const tileTypeColors = {
 	"rainbow": "#ffffff",
 }
 
+const RED = new Color("red")
+function getHighlightColor(color, now){
+	if (color === "rainbow"){
+		let rotate = now % 360
+		rotate /= 1000
+		return RED.set({"hsl.h": h => h + rotate}).toString()
+	}
+	return tileTypeColors[color]
+}
+
 function getEmptyAnimationBatch(){
 	let animations = {
 		batch: [],

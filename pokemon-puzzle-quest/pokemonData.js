@@ -349,7 +349,7 @@ function getReasonPokemonDoesntMeetRequirements(pokemon, move, options={}){
 	let req = pokemon.data.learnset.find(m => m.name === move.name).unlock
 	if (!req) return "This move doesn't require anything. Why can't you use it? Man, Boo sucks at programming."
 	if (req.type === "level"){
-		if (pokemon.level < req.amount || options.pure){
+		if (pokemon.level < req.amount || pure){
 			let text = getLocaleString("pokemon-move-requirement-level", lang)
 			text = applyReplacements(text, [req.amount])
 			return text

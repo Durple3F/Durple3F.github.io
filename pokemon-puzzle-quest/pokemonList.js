@@ -434,6 +434,73 @@ const pokemonData = {
 			},
 		]
 	},
+	"Grimer-Alola": {
+		name: "Grimer",
+		id: "Grimer-Alola",
+		number: "88a",
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0088Grimer-Alola.png",
+			"home": "src/img/tiny-pokemon/Grimer-Alola.png"
+		},
+		sounds: {
+			cry: "src/audio/cries/grimer.mp3"
+		},
+		types: ["Poison", "Dark"],
+		tags: ["Starter"],
+		stats: {
+			hp: 80,
+			attack: 80,
+			defense: 50,
+			specialAttack: 40,
+			specialDefense: 50,
+			speed: 25
+		},
+		expYield: 65,
+		evYield: {
+			hp: 1,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			red: 2,
+			green: 2,
+			purple: 3
+		},
+		learnset: [
+			{
+				name: "Pound",
+				unlock: {
+					type: "level",
+					amount: 1
+				}
+			},
+			{
+				name: "Poison Gas",
+				unlock: {
+					type: "level",
+					amount: 1
+				}
+			},
+			{
+				name: "Harden",
+				unlock: {
+					type: "level",
+					amount: 4
+				}
+			},
+			{
+				name: "Bite",
+				unlock: {
+					type: "level",
+					amount: 7
+				}
+			},
+		]
+	},
 	"Ledyba": {
 		name: "Ledyba",
 		number: "165",

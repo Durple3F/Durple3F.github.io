@@ -701,6 +701,29 @@ const pokemonMoveData = {
 			{ type: "swap-tiles", selection: -1 },
 		],
 	},
+	"Poison Gas": {
+		name: "Poison Gas",
+		type: "Poison",
+		category: "Status",
+		strategy: "basic-damage",
+		pp: 40,
+		power: null,
+		accuracy: 90,
+		rechargeTurns: 5,
+		energy: {
+			purple: 8
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Poison Gas part 1.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "random-number", min: 1, max: 10 },
+			{ type: "load-value", value: 10 },
+			{ type: "jump-if-less-than", jumpTo: Infinity },
+			{ type: "apply-status-effect", statusEffect: "poisoned", target: "opponent" },
+		],
+	},
 	"Poison Sting": {
 		name: "Poison Sting",
 		type: "Poison",
@@ -720,7 +743,7 @@ const pokemonMoveData = {
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
 			{ type: "random-number", min: 1, max: 10 },
-			{ type: "load-value", value: 8 },
+			{ type: "load-value", value: 4 },
 			{ type: "jump-if-less-than", jumpTo: Infinity },
 			{ type: "apply-status-effect", statusEffect: "poisoned", target: "opponent" },
 		],

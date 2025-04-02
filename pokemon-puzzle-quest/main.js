@@ -1,4 +1,4 @@
-const versionNumber = "v0.10.1"
+const versionNumber = "v0.10.2"
 let lang = "en"
 let playerName
 
@@ -925,6 +925,7 @@ function beginNewGame(){
 	makeNewSaveFile()
 	.then(uuid => {
 		playerSaveId = uuid
+		return normalizeSave(playerSaveInfo)
 	})
 	.then(() => getPlayerBoxes(playerSaveId))
 	.then(boxes => {

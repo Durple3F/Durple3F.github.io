@@ -66,8 +66,10 @@ function renderTile(tile, board, round, w, h, xOffset, yOffset, options){
 		let diff = 5*Math.min(1, 1 - highlight)
 		if (trueBlur){
 			ctx.save()
-			ctx.filter = "blur(" + blurAmount + "px)"
-			ctx.fillStyle = tileTypeColors[tile.type]
+			// ctx.filter = "blur(" + blurAmount + "px)"
+			// ctx.fillStyle = tileTypeColors[tile.type]
+			ctx.shadowColor = getHighlightColor(tile.type, now)
+			ctx.shadowBlur = blurAmount * 2
 			ctx.beginPath()
 			ctx.arc(tile.spriteCenterX, tile.spriteCenterY, tile.spriteWidth * 0.50 - diff, 0, TWOPI)
 			ctx.fill()

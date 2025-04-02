@@ -127,6 +127,9 @@
 		"Magnemite": {
 			"name": "Magnemite"
 		},
+		"Grimer-Alola": {
+			"name": "Grimer"
+		},
 		"Ledyba": {
 			"name": "Ledyba"
 		},
@@ -287,6 +290,11 @@
 			"name": "Play Nice",
 			"description": "Lowers the opponent's attack stat by 1 stage. Then, the user chooses two tiles. Those tiles are swapped.",
 			"shortDescription": "Debuffs opponent and disrupts board"
+		},
+		"Poison Gas": {
+			"name": "Poison Gas",
+			"description": "Has a 90% chance to apply poisoned to the opponent.",
+			"shortDescription": "Applies poisoned"
 		},
 		"Poison Sting": {
 			"name": "Poison Sting",

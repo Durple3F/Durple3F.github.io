@@ -4,6 +4,7 @@ Incomplete move lists:
   Meowth-Alola (lv 8)
   Slowpoke (lv 9)
   Magnemite (lv 8)
+  Grimer-Alola (lv 7)
   Ledyba (lv 8)
   Spinarak (lv 8)
   Wingull (lv 10)
@@ -20,6 +21,7 @@ Missing Evolutions:
   Meowth-Alola
   Slowpoke
   Magnemite
+  Grimer-Alola
   Ledyba
   Spinarak
   Pichu
@@ -39,6 +41,7 @@ Missing Abilities:
   Meowth-Alola
   Slowpoke
   Magnemite
+  Grimer-Alola
   Ledyba
   Spinarak
   Pichu

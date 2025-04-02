@@ -467,16 +467,18 @@ const levelData = [
 		music: "SM Trainer Battle",
 		trainers: [
 			{
-				name: "Madison",
-				class: "Lass-Gen7",
 				pokemon: [
 					{
-						id: "Popplio",
-						level: 6
+						id: "Magnemite",
+						levelMin: 6, levelMax: 8
 					},
 					{
-						id: "Pichu",
-						level: 6
+						id: "Meowth-Alola",
+						levelMin: 6, levelMax: 8
+					},
+					{
+						id: "Grimer-Alola",
+						levelMin: 6, levelMax: 8
 					},
 				]
 			},

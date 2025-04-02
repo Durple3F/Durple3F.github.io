@@ -497,20 +497,21 @@ function startScene(name, options){
 				let box = $(event.currentTarget)
 				let id = box.attr("data-index")
 				let index = parseInt(id)
-				let p = playerActivePokemon[index]
+				let pokemon = playerActivePokemon[index]
 				stopHolding()
-				if (!p) return
+				if (!pokemon) return
 				delay(100).then(() => {
 					if (!mouse.isDown){
 						let alreadySelected = box.hasClass("selected")
 						allBoxes.removeClass("selected")
 						if (!alreadySelected){
 							box.addClass("selected")
-							viewPokemonInfo(p)
+							viewPokemonInfo(pokemon)
+							.then(() => savePokemon(pokemon))
 							.then(() => box.removeClass("selected"))
 						}
 					} else {
-						if (p){
+						if (pokemon){
 							heldPokemon = playerActivePokemon[index]
 							beginHolding(heldPokemon)
 							box.children("img").hide()
@@ -522,15 +523,16 @@ function startScene(name, options){
 				event.preventDefault()
 				let box = $(event.currentTarget)
 				let id = box.attr("data-pokemon-id")
-				let p = currentBoxPokemon.find(p => p.uuid === id)
+				let pokemon = currentBoxPokemon.find(p => p.uuid === id)
 				stopHolding()
-				if (!p) return
+				if (!pokemon) return
 				// console.log(p)
 				delay(100).then(() => {
 					if (!mouse.isDown){
-						viewPokemonInfo(p)
+						viewPokemonInfo(pokemon)
+						.then(() => savePokemon(pokemon))
 					} else {
-						heldPokemon = p
+						heldPokemon = pokemon
 						beginHolding(heldPokemon)
 						box.hide()
 					}
@@ -1275,8 +1277,13 @@ function viewPokemonInfo(pokemon, options={}){
 	})
 	modal.on("hidden.bs.modal", () => {
 		moveSection.children(".move").popover("hide")
-		savePokemon(pokemon)
-		.then(() => resolvePromise())
+		// if (playerActivePokemon.owner === playerSaveId){
+		// 	savePokemon(pokemon)
+		// 	.then(() => resolvePromise())
+		// } else {
+		// 	resolvePromise()
+		// }
+		resolvePromise()
 	})
 	return promise
 }
