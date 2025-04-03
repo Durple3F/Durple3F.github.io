@@ -1064,7 +1064,7 @@ const pokemonMoveData = {
 		accuracy: 90,
 		rechargeTurns: 1,
 		energy: {
-			// yellow: 8
+			yellow: 8
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Thunder Wave part 1.mp3"

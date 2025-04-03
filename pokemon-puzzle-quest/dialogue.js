@@ -93,6 +93,18 @@ function advanceCurrentDialogue(){
 			speakersTag.append(speakerTag)
 			resolvePromise()
 		} break
+		case "update-style": {
+			let name = effect.speaker
+			let speaker = dialogueProgress.speakers.find(s => s.id === name)
+			if (speaker){
+				nameplate.children(".text").text(speaker.name)
+			} else {
+				console.warn("Who is", name, "???")
+			}
+
+			changeDialogueStyle(speaker)
+			resolvePromise()
+		} break
 		case "text": {
 			let name = effect.speaker
 			let speaker = dialogueProgress.speakers.find(s => s.id === name)
@@ -101,6 +113,9 @@ function advanceCurrentDialogue(){
 			} else {
 				console.warn("Who is", name, "???")
 			}
+			let autoAdvance = effect.auto ?? false
+
+			changeDialogueStyle(speaker)
 
 			let promises = []
 			let textSpeed = config.textSpeed ?? 10
@@ -258,8 +273,6 @@ function advanceCurrentDialogue(){
 				})
 			})
 
-			changeDialogueStyle(speaker)
-
 			realWords.forEach(textPiece => {
 				let textPieceTag = textPiece.tag
 				let style = textPiece.style
@@ -301,12 +314,18 @@ function advanceCurrentDialogue(){
 
 			Promise.any([skipPromise, Promise.all(promises)])
 			.then(() => {
-				dialogueTag.off("click")
-				dialogueTag.on("click", continueDialogue)
-				textBox.css("cursor", "pointer")
-				textBox.children(".text-continue").fadeIn(textSpeed * 2.5)
+				if (autoAdvance){
+					resolvePromise()
+				} else {
+					dialogueTag.off("click")
+					dialogueTag.on("click", continueDialogue)
+					textBox.css("cursor", "pointer")
+					textBox.children(".text-continue").fadeIn(textSpeed * 2.5)
+				}
 			})
 		} break
+		case "fade-out-text":
+		case "animate-speaker-nameplate":
 		case "transform-speaker": {
 			carryOutDialogueEvent(effect)
 			.then(() => resolvePromise())
@@ -377,6 +396,10 @@ function advanceCurrentDialogue(){
 			dialogueProgress.info[effectIndex] = playerSaveInfo[effect.key]
 			resolvePromise()
 		} break
+		case "wait": {
+			let wait = effect.waitDuration
+			delay(wait).then(() => resolvePromise())
+		} break
 		default:
 			console.warn("You never handled", effect.type)
 	}
@@ -417,19 +440,97 @@ function changeDialogueStyle(speaker){
 	textBox.children(".text").css("filter", style.textBoxFilter)
 	textBox.children(".text").children("span").css("background-image", style.textBoxTextBackground)
 	textBox.children(".text-continue").css("background-image", style.textBoxTextContinueBackground)
+	let namePlateTag = textBox.children(".nameplate")
+	namePlateTag.children(".text").css("background-image", style.namePlateTextBackground)
+	namePlateTag.children(".text").css("background-image", style.namePlateTextBackground)
+	namePlateTag.children(".text").css("background-image", style.namePlateTextBackground)
+	namePlateTag.children(".text-background").css("background-color", style.namePlateBackgroundColor)
+	namePlateTag.children(".text-background-2").css("background-image", style.namePlateBackground2)
+	namePlateTag.children(".text-background-2").css("background-color", style.namePlateBackground2Color)
 }
 
 function carryOutDialogueEvent(effect){
 	let resolvePromise
 	let promise = new Promise(resolve => resolvePromise = resolve)
 	let name = effect.speaker
-	let speaker = dialogueProgress.speakers.find(s => s.id === name)
-	let tag = speaker.tag
-	let transform = effect.transform
-	let duration = effect.duration ?? 0
-	let wait = effect.waitDuration ?? 100
-	tag.css("transition", `${duration}ms transform`)
-	delay(10).then(() => tag.css("transform", transform))
-	delay(10 + wait).then(() => resolvePromise())
+	let speaker, tag
+	if (name){
+		speaker = dialogueProgress.speakers.find(s => s.id === name)
+		tag = speaker.tag
+	}
+
+	let dialogueContainer = $("#dialogue-container")
+	let dialogueTag = $("#dialogue")
+	let speakersTag = dialogueTag.children(".speakers")
+	let textBox = dialogueTag.children(".text-box")
+	let nameplate = textBox.children(".nameplate")
+
+	switch (effect.type){
+		case "transform-speaker": {
+			let transform = effect.transform
+			let duration = effect.duration ?? 0
+			let wait = effect.waitDuration ?? 100
+			tag.css("transition", `${duration}ms transform`)
+			delay(10).then(() => tag.css("transform", transform))
+			delay(10 + wait).then(() => resolvePromise())
+		} break
+		case "animate-speaker-nameplate": {
+			let tag = $("#dialogue").find(".nameplate")
+			let css = effect.css
+			let duration = effect.duration ?? 0
+			let wait = effect.waitDuration ?? duration
+			if (duration){
+				$(tag).animate(css, duration)
+			} else {
+				$(tag).css(css)
+			}
+
+			if (wait){
+				delay(wait).then(() => resolvePromise())
+			} else {
+				resolvePromise()
+			}
+		} break
+		case "fade-out-text": {
+			let text = effect.text
+			let shownText = [...textBox.find(".letter")]
+			let textSpeed = config.textSpeed ?? 10
+			let promises = []
+			for (let i in shownText){
+				let nextFew = shownText.slice(i, text.length)
+				if (nextFew.length < text.length) break
+				let thatText = nextFew.map(tag => tag.textContent).join("")
+				//Remove those pesky non-breaking spaces
+				let matches = text.split("").every((v, charI) => {
+					if (v === " ") return true
+					if (v === thatText[charI]) return true
+					console.log(v, thatText[charI])
+					return false
+				})
+				if (!matches) continue
+
+				//We found the text, now we can fade those tags out.
+				let currentDuration = 0
+				for (let j = nextFew.length - 1; j >= 0; j--){
+					let letterTag = nextFew[j]
+					currentDuration += textSpeed
+					let p = delay(currentDuration).then(() => {
+						return new Promise(res => {
+							$(letterTag).fadeOut({
+								complete: () => res()
+							})
+						})
+					})
+					promises.push(p)
+				}
+				break
+			}
+			Promise.all(promises)
+			.then(() => resolvePromise())
+		} break
+		default:
+			console.warn("You never handled", effect.type)
+	}
+	
 	return promise
 }

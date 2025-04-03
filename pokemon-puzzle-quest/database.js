@@ -485,6 +485,7 @@ function newPlayerSaveData(){
 	let data = {}
 	data["total-pokemon-caught"] = 0
 	data["pokemon-caught-stats"] = {}
+	data["unlocked-pokedex"] = false
 	return data
 }
 function normalizeSave(saveInfo){
@@ -633,6 +634,7 @@ function saveLevelStatus(level, status){
 		obj.status = status
 
 		return saveLevelObj(obj)
+		.then(() => resolve())
 	})
 	return promise
 }
@@ -652,7 +654,9 @@ function saveLevelObj(data){
 			} else {
 				request = levelStore.put(data)
 			}
+			console.log(request)
 			request.onsuccess = event => {
+				console.log("Ding!")
 				resolve()
 			}
 		})

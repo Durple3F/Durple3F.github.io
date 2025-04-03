@@ -1102,6 +1102,9 @@ body {
 }
 #pokedex > #dexWindow > .pokemon-list > .pokemon-section.not-caught .pokemon-image-section .pokemon-image {
 	/* filter: brightness(1000000) sepia(1) brightness(1000000) saturate(0.5) brightness(0.2); */
+	opacity: 0.2;
+}
+#pokedex > #dexWindow > .pokemon-list > .pokemon-section.not-seen .pokemon-image-section .pokemon-image {
 	opacity: 0;
 }
 #pokedex > #dexWindow > .pokemon-list > .pokemon-section:hover .pokemon-image-section .pokemon-image {
@@ -1326,7 +1329,7 @@ body {
 #dialogue > .text-box > .nameplate {
 	z-index: 11;
 	position: absolute;
-	top: -4%;
+	top: 3%;
 	left: 28%;
 	transform: translate(-50%, -50%);
 }

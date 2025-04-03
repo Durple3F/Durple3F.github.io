@@ -30,7 +30,7 @@ const RED = new Color("red")
 function getHighlightColor(color, now){
 	if (color === "rainbow"){
 		let rotate = now % 360
-		rotate /= 1000
+		rotate /= 300
 		return RED.set({"hsl.h": h => h + rotate}).toString()
 	}
 	return tileTypeColors[color]

@@ -676,11 +676,14 @@ function startScene(name, options){
 
 			let pokedexText = getLocaleString("pokedex", lang)
 			let pokedexButton = $(`<button class='btn big-btn btn-primary m-3'>${pokedexText}</button>`)
-			adminTag.append(pokedexButton)
-			pokedexButton.click(() => {
-				leaveScene()
-				changeScene("pokedex")
-			})
+			if (playerSaveInfo["unlocked-pokedex"]){
+				adminTag.append(pokedexButton)
+				pokedexButton.click(() => {
+					leaveScene()
+					changeScene("pokedex")
+				})
+			}
+			
 		} break
 		case "pokedex": {
 			fadeInGame()
@@ -715,13 +718,14 @@ function startScene(name, options){
 				let imageSection = $(`<div class='pokemon-image-section'>`)
 				section.append(imageSection)
 
-				let pokemonImg = $(`<img class='pokemon-image'>`)
 				let url = data.imageSources.large
-				pokemonImg.attr("src", url)
-				imageSection.append(pokemonImg)
 				let pokemonImgBg = $(`<div class='pokemon-image-bg'>`)
 				pokemonImgBg.css("mask-image", `url(${url})`)
 				imageSection.append(pokemonImgBg)
+
+				let pokemonImg = $(`<img class='pokemon-image'>`)
+				pokemonImg.attr("src", url)
+				imageSection.append(pokemonImg)
 
 				let textSection = $(`<div class='pokemon-name-section'></div>`)
 				let pokemonNumberTag = $(`<div class='pokemon-number'></div>`)
@@ -735,6 +739,9 @@ function startScene(name, options){
 				}
 				pokemonNameTag.html(name)
 
+				if (stats.seen === 0 && stats.caught === 0){
+					section.addClass("not-seen")
+				}
 				if (stats.caught === 0){
 					section.addClass("not-caught")
 				} else {
@@ -892,6 +899,7 @@ function beginLevel(levelID){
 	let levelResult
 	let promise = advanceCurrentLevel()
 	.then(val => {
+		let promise = Promise.resolve()
 		let info = currentLevelProgress.info
 		//If you're marked as losing a "fight" effect, then you lose the whole level.
 		let effects = currentLevelProgress.effects
@@ -914,9 +922,15 @@ function beginLevel(levelID){
 			healAllPokemon(playerActivePokemon)
 		} else {
 			level.status = "won"
-			saveLevelStatus(level, "won")
+			promise = promise.then(() => saveLevelStatus(level, "won"))
 		}
-		return changeScene("route", {name: "Route 1"})
+		changeScene("route", {name: "Route 1"})
+		console.log(promise)
+		return promise
+	})
+	.then(() => {
+		console.log(playerSaveInfo)
+		return savePlayerInfo()
 	})
 	
 	return promise
@@ -1011,6 +1025,13 @@ function advanceCurrentLevel(){
 		} break
 		case "load-player-info": {
 			currentLevelProgress.info[effectIndex] = playerSaveInfo[effect.key]
+			resolvePromise()
+		} break
+		case "save-player-info": {
+			let key = effect.key
+			let value = params.value
+			playerSaveInfo[key] = value
+			console.log(key, value, playerSaveInfo)
 			resolvePromise()
 		} break
 		case "load-value": {

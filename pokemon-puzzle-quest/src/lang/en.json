@@ -103,6 +103,40 @@
 				{ "type": "text", "speaker": "Madison", "text": "Arghhh! Fine, you beat me! But please, don't tell anyone about Gully's crimes!" },
 				{ "type": "text", "speaker": "Madison", "text": "He's a sweet little horrible thing! Just... keep this between us, okay?" }
 			]
+		},
+		"route-1-6-dialogue": {
+			"events": [
+				{ "type": "transform-speaker", "speaker": "Lillie", "transform": "rotate(-10deg)", "duration": 500, "waitDuration": 0 },
+				{ "type": "transform-speaker", "speaker": "Lillie", "transform": "scaleX(-1) rotate(-10deg) scaleY(0.9)", "duration": 500, "waitDuration": 0 },
+				{ "type": "transform-speaker", "speaker": "Lillie", "transform": "rotate(-5deg) scaleY(0.8)", "duration": 500, "waitDuration": 0 },
+				{ "type": "transform-speaker", "speaker": "Lillie", "transform": "rotate(0deg)", "duration": 200, "waitDuration": 0 },
+				{ "type": "transform-speaker", "speaker": "Lillie", "transform": "translateY(-1em)", "duration": 200, "waitDuration": 0 },
+				{ "type": "transform-speaker", "speaker": "Lillie", "transform": "translateY(0)", "duration": 200, "waitDuration": 0 }
+			],
+			"effects": [
+				{ "type": "get-speaker", "name": "Lillie", "class": "Lillie" },
+				{ "type": "animate-speaker-nameplate", "speaker": "Lillie", "css": {
+					"opacity": 0
+				}, "duration": 0, "waitDuration": 0 },
+				{ "type": "update-style", "speaker": "Lillie" },
+				{ "type": "wait", "waitDuration": 1000 },
+				{ "type": "transform-speaker", "speaker": "Lillie", "transform": "rotate(-10deg)", "duration": 200, "waitDuration": 0 },
+				{ "type": "text", "speaker": "Lillie", "text": "Hello..." },
+				{ "type": "text", "speaker": "Lillie", "text": "^^Will you...", "auto": true },
+				{ "type": "fade-out-text", "text": "Will you..." },
+				{ "type": "text", "speaker": "Lillie", "text": "^^Could you please...", "auto": true },
+				{ "type": "fade-out-text", "text": "Could you please..." },
+				{ "type": "text", "speaker": "Lillie", "text": "^^Um... I'm really sorry to bother you, but...", "auto": true },
+				{ "type": "transform-speaker", "speaker": "Lillie", "transform": "rotate(0deg) scaleY(1.1)", "duration": 1000, "waitDuration": 0 },
+				{ "type": "fade-out-text", "text": "Um... I'm really sorry to bother you, but..." },
+				{ "type": "transform-speaker", "speaker": "Lillie", "transform": "rotate(6deg) scaleY(1)", "duration": 1000, "waitDuration": 1000 },
+				{ "type": "text", "speaker": "Lillie", "text": "^^My name is Lillie." },
+				{ "type": "animate-speaker-nameplate", "speaker": "Lillie", "css": {
+					"opacity": 1
+				}, "duration": 600, "waitDuration": 0 },
+				{ "type": "text", "speaker": "Lillie", "text": "I... I need help getting to the trainer's school. It's just a little further... but there are so many mean-looking Pokémon up ahead!" },
+				{ "type": "text", "speaker": "Lillie", "text": "I don't want to be late... ^^Oh, I can give you one of the professor's spare Pokédexes^^ for your trouble!" }
+			]
 		}
 	},
 	"pokemon": {
