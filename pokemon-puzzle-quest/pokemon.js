@@ -3,7 +3,7 @@ class Pokemon{
 		this.uuid = options?.uuid ?? window.crypto.randomUUID()
 		this.owner = options?.owner ?? playerSaveId
 		this.pokemonId = pokemonName ?? options.id
-		this.data = pokemonData[pokemonName]
+		this.data = pokemonData[this.pokemonId]
 
 		if (!this.data){
 			console.warn("WHICH POKEMON IS THIS??")
@@ -38,6 +38,7 @@ class Pokemon{
 
 		//Yikes this stuff is gonna be fun
 		this.hp = options?.hp ?? this.getStat("hp")
+		this.fainted = options?.fainted ?? false
 		this.maxhp = this.getStat("hp")
 		this.exp = options?.exp ?? this.getEXPNeededForLevel(this.level)
 

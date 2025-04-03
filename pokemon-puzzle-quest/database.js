@@ -198,6 +198,7 @@ function getPokemonSaveObj(pokemon){
 	obj.pokemonName = pokemon.pokemonName
 	obj.pokemonId = pokemon.pokemonId
 	obj.hp = pokemon.hp
+	obj.fainted = pokemon.fainted
 	obj.level = pokemon.level
 	obj.exp = pokemon.exp
 	obj.ivs = pokemon.ivs
@@ -632,6 +633,7 @@ function saveLevelStatus(level, status){
 		obj.saveFile = playerSaveId
 		obj.id = level.id
 		obj.status = status
+		obj.attempts = level.attempts
 
 		return saveLevelObj(obj)
 		.then(() => resolve())
@@ -656,7 +658,6 @@ function saveLevelObj(data){
 			}
 			console.log(request)
 			request.onsuccess = event => {
-				console.log("Ding!")
 				resolve()
 			}
 		})

@@ -203,6 +203,7 @@ body {
 }
 #settings-btn {
 	position: absolute;
+	z-index: 10;
 	bottom: 0;
 	left: 0;
 	cursor: pointer;
@@ -1180,12 +1181,11 @@ body {
 }
 
 #modal.summary .pokemon-info > .pokemon-section {
-	width: 45%;
+	width: 35%;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
 	align-items: center;
-	flex-grow: 1;
 }
 #modal.summary .pokemon-info > .pokemon-section .stats {
 	display: flex;
@@ -1222,6 +1222,7 @@ body {
 	overflow-y: scroll;
 	-ms-overflow-style: none;
 	scrollbar-width: none;
+	flex-grow: 1;
 }
 /* Hide scrollbar */
 #modal.summary .pokemon-info > .move-section::-webkit-scrollbar {

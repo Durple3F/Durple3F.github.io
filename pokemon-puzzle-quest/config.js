@@ -2,6 +2,7 @@ const config = {
 	confirmMoveSelection: true,
 	pokemonSwapOutInfo: true,
 	showBlurOnTiles: true,
+	showFPS: "dev",
 	textSpeed: 40,
 
 	volumes: {

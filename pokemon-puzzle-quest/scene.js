@@ -252,7 +252,7 @@ function startScene(name, options){
 				})
 			}
 			const getPopover = level => {
-				let content = $(`<div class='level-popover d-flex flex-column align-items-center justify-content-center'></div>`)
+				let content = $(`<div class='level-popover text-center d-flex flex-column align-items-center justify-content-center'></div>`)
 				content.append(`<div class='name'>${level.name}</div>`)
 				if (level.description){
 					let description = getLocaleString(level.description, lang)
@@ -353,7 +353,7 @@ function startScene(name, options){
 					pcBox.html("")
 					currentBoxPokemon.splice(0, currentBoxPokemon.length)
 					pokemonList.forEach(p => {
-						let pokemon = new Pokemon(p.name, p.pokemonName, p)
+						let pokemon = new Pokemon(p.name, p.pokemonId, p)
 						currentBoxPokemon.push(pokemon)
 						displayPokemon(pokemon)
 					})
@@ -361,7 +361,7 @@ function startScene(name, options){
 				})
 			}
 			const displayPokemon = p => {
-				let pokemon = new Pokemon(p.name, p.pokemonName, p)
+				let pokemon = new Pokemon(p.name, p.pokemonId, p)
 				let images = pokemon.data.imageSources
 				let source = images.home ?? images.large
 
@@ -887,6 +887,7 @@ function beginLevel(levelID){
 	}
 	gameRound = undefined
 	gameBoard = undefined
+
 	currentLevelProgress = {
 		id: levelID,
 		level: level,
@@ -896,6 +897,7 @@ function beginLevel(levelID){
 		nextEffectIndex: 0
 	}
 
+	level.attempts++
 	let levelResult
 	let promise = advanceCurrentLevel()
 	.then(val => {

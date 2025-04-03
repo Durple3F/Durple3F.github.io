@@ -1,5 +1,9 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
+4/3 (14.1k lines):
+	- Added some config on my end for how the fps displays.
+	- Levels now remember how many attempts you've made. That doesn't do anything yet, but they remember.
+
 4/2 (14.0k lines):
 	- Clicking pokemon in your pokedex now shows you their full move list and default stats.
 	- When you load the game, if you have data from before the pokemon stats were added, it sets some defaults based on what it can tell.

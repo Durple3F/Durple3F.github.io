@@ -1,5 +1,7 @@
 {
-	"Route 1-1-description": "Rival Battle",
+	"route-1-6-description": "After your battle with Hau, you continue towards Hau'oli City.",
+	"route-1-7-description": "You reach the trainers' school, and have to get through the teacher's challenge.<br>This level involves 5 consecutive trainer battles, so be ready.",
+	
 	"initiative-tutorial": "Initiative<br>Each turn, both Pokémon gain Initiative based on their speed stats. When a player matches 4 or more tiles in a row, they get a free turn.",
 	"choose-pokemon": "Choose Pokémon",
 
@@ -134,8 +136,8 @@
 				{ "type": "animate-speaker-nameplate", "speaker": "Lillie", "css": {
 					"opacity": 1
 				}, "duration": 600, "waitDuration": 0 },
-				{ "type": "text", "speaker": "Lillie", "text": "I... I need help getting to the trainer's school. It's just a little further... but there are so many mean-looking Pokémon up ahead!" },
-				{ "type": "text", "speaker": "Lillie", "text": "I don't want to be late... ^^Oh, I can give you one of the professor's spare Pokédexes^^ for your trouble!" }
+				{ "type": "text", "speaker": "Lillie", "text": "I... I need help getting to the trainers' school. It's just a little further... but there are so many mean-looking Pokémon up ahead!" },
+				{ "type": "text", "speaker": "Lillie", "text": "I don't want to be late... ^^Oh, I can give you one of the professor's spare $@red|Pokédex@$es^^ for your trouble!" }
 			]
 		}
 	},

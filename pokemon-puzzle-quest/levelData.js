@@ -2,6 +2,7 @@ const songData = {
 	"Route 201 (Day)": { source: "src/audio/songs/route201-2.mp3" },
 	"SM Trainer Battle": { source: "src/audio/songs/sm trainer battle.mp3" },
 	"SM Wild Pokemon Battle": { source: "src/audio/songs/sm wild pokemon battle.mp3" },
+	"SM Trainers' School": { source: "src/audio/songs/trainer school.mp3" }
 }
 
 const boxThemeData = {
@@ -493,8 +494,8 @@ const levelData = [
 		id: "Route 1-6",
 		category: "Route 1",
 		name: "Route 1-6",
+		description: "route-1-6-description",
 		icon: "6",
-		music: "SM Trainer Battle",
 		trainers: [
 			{
 				pokemon: [
@@ -519,16 +520,51 @@ const levelData = [
 		],
 		effects: [
 			{ type: "dialogue", trainer: 1, source: "route-1-6-dialogue" },
+			{ type: "change-music", music: "SM Wild Pokemon Battle" },
 			{ type: "fight", trainer: 0 },
 			{ type: "jump-if-lost", jumpTo: Infinity },
 			{ type: "load-value", value: true },
 			{ type: "save-player-info", key: "unlocked-pokedex", value: -1 }
 		]
 	},
+	{
+		id: "Route 1-7",
+		category: "Route 1",
+		name: "Route 1-7",
+		description: "route-1-7-description",
+		icon: "7",
+		music: "SM Trainers' School",
+		trainers: [
+			{
+				pokemon: [
+					{
+						id: "Magnemite",
+						levelMin: 6, levelMax: 8
+					},
+					{
+						id: "Meowth-Alola",
+						levelMin: 6, levelMax: 8
+					},
+					{
+						id: "Grimer-Alola",
+						levelMin: 6, levelMax: 8
+					},
+				]
+			},
+			{
+				name: "Lillie",
+				pokemon: []
+			}
+		],
+		effects: [
+			{ type: "fight", trainer: 0 },
+		]
+	}
 ]
 
 for (let level of levelData) {
 	level.status = "not won"
+	level.attempts = 0
 }
 
 function getLevelDataById(id){

@@ -400,7 +400,7 @@ function getAllStatusSprites(){
 }
 
 function isPokemonUsable(pokemon){
-	return pokemon.hp > 0
+	return pokemon.hp > 0 && !pokemon.fainted
 }
 function getUsablePokemon(pokemonList){
 	return pokemonList.filter(isPokemonUsable)

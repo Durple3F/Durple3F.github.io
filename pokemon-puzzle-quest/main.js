@@ -1,4 +1,4 @@
-const versionNumber = "v0.10.3.1"
+const versionNumber = "v0.10.4"
 let lang = "en"
 let playerName
 
@@ -480,22 +480,33 @@ function tick(){
 	timeForTicks.push(Date.now() - now)
 	requestAnimationFrame(render)
 
-	let checkTime = 30
+	let checkTime = 100
 	if (timeForTicks.length >= checkTime){
 		let sumT = 0
+		let maxT = 0
 		let sumF = 0
+		let maxF = 0
 		for (let i = 0; i < timeForTicks.length; i++){
-			sumT += timeForTicks[i]
+			let t = timeForTicks[i]
+			sumT += t
+			if (t > maxT) maxT = t
 		}
 		for (let i = 0; i < timeForFrames.length; i++){
-			sumF += timeForFrames[i]
+			let t = timeForFrames[i]
+			sumF += t
+			if (t > maxF) maxF = t
 		}
 		let avgT = sumT / timeForTicks.length
 		let avgF = sumF / timeForFrames.length
-		let fpsT = Math.min(60, 1000 / avgT)
-		let fpsF = Math.min(60, 1000 / avgF)
-		let text = fpsT.toFixed(0) + "ups / " + fpsF.toFixed(0) + "fps"
-		$("#fps").text(text)
+		let fpsT = 1000 / avgT //Math.min(60, 1000 / avgT)
+		let fpsF = 1000 / avgF //Math.min(60, 1000 / avgF)
+		let text = ""
+		if (config.showFPS === "dev"){
+			text = "Tick:"+avgT.toFixed(2)+"ms (max "+maxT+")<br>Frame:"+avgF.toFixed(2)+"ms (max "+maxF+")"
+		} else if (config.showFPS === "normal"){
+			text = fpsT.toFixed(0) + "ups / " + fpsF.toFixed(0) + "fps"
+		}
+		$("#fps").html(text)
 		timeForTicks.splice(0, timeForTicks.length - checkTime * 0.9)
 		timeForFrames.splice(0, timeForFrames.length - checkTime * 0.9)
 	}
@@ -953,6 +964,7 @@ function continueGame(){
 			let level = getLevelDataById(obj.id)
 			if (!level) return
 			level.status = obj.status
+			level.attempts = obj.attempts ?? 0
 		})
 	})
 	.then(() => normalizeSave(playerSaveInfo))

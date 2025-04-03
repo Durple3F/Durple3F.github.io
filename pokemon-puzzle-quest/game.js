@@ -259,6 +259,10 @@ class Round{
 		let playerTrainer = this.trainers[0]
 		let playerActivePokemon = playerTrainer.activePokemon
 		let playerSwaps = !isPokemonUsable(playerActivePokemon)
+
+		if (playerSwaps) playerActivePokemon.fainted = true
+		if (enemySwaps) enemyActivePokemon.fainted = true
+
 		if (enemySwaps || playerSwaps){
 			this.updateEverything()
 		}
@@ -3828,6 +3832,7 @@ function healAllPokemon(pokemonList){
 	playSound("healing")
 	let promises = []
 	pokemonList.forEach(pokemon => {
+		pokemon.fainted = false
 		//Full health
 		pokemon.hp = pokemon.maxhp
 		//Remove all debuffs
