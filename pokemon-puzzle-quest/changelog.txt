@@ -11,6 +11,7 @@
 	- Rainbow tiles now have a fun rainbow highlight.
 	- Getting past level 6 now unlocks the pokedex.
 	- Added some new dialogue effects, and some dialogue with Lillie. I think it's cute.
+	- Characters can now have custom nameplates.
 
 4/1 (13.6k lines):
 	- Added Alolan Meowth

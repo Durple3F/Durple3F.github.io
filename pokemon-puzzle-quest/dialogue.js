@@ -115,8 +115,6 @@ function advanceCurrentDialogue(){
 			}
 			let autoAdvance = effect.auto ?? false
 
-			changeDialogueStyle(speaker)
-
 			let promises = []
 			let textSpeed = config.textSpeed ?? 10
 			let currentDuration = 100
@@ -272,6 +270,8 @@ function advanceCurrentDialogue(){
 					})
 				})
 			})
+
+			changeDialogueStyle(speaker)
 
 			realWords.forEach(textPiece => {
 				let textPieceTag = textPiece.tag
@@ -441,8 +441,6 @@ function changeDialogueStyle(speaker){
 	textBox.children(".text").children("span").css("background-image", style.textBoxTextBackground)
 	textBox.children(".text-continue").css("background-image", style.textBoxTextContinueBackground)
 	let namePlateTag = textBox.children(".nameplate")
-	namePlateTag.children(".text").css("background-image", style.namePlateTextBackground)
-	namePlateTag.children(".text").css("background-image", style.namePlateTextBackground)
 	namePlateTag.children(".text").css("background-image", style.namePlateTextBackground)
 	namePlateTag.children(".text-background").css("background-color", style.namePlateBackgroundColor)
 	namePlateTag.children(".text-background-2").css("background-image", style.namePlateBackground2)
