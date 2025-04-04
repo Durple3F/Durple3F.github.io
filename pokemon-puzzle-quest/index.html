@@ -37,91 +37,93 @@
 </head>
 <body>
 	<div id="board" data-initially-hidden="true" style="display: none;">
-		<div class="board-side player">
-			<div class="board-side-bg"></div>
-			<div class="board-side-top">
-				<div class="health-bar">
-					<div class="bar"></div>
-					<span>
-						<span class="current-health"></span> / <span class="max-health"></span>
-					</span>
-				</div>
-				<div class="avatar-pokemon-section">
-					<div class="avatar-trainer-image-section">
-						<img class="trainer-image">
-					</div>
-					<div class="avatar-pokeball-image">
+		<div class="board-side-container player">
+			<div class="board-side">
+				<div class="board-side-bg"></div>
+				<div class="board-side-top">
+					<div class="health-bar">
+						<div class="bar"></div>
 						<span>
-							<canvas class="pokeball-image"></canvas>
+							<span class="current-health"></span> / <span class="max-health"></span>
 						</span>
 					</div>
-					<div class="avatar-pokemon-name"></div>
-					<div class="avatar-pokemon-image">
-						<img class="pokemon-image">
-					</div>
-					<div class="pokemon-status-effect-section"></div>
-					<div class="confirm-btn btn btn-primary" style="display: none">Confirm</div>
-					<div id="fps"></div>
-				</div>
-			</div>
-			<div class="board-side-middle">
-				<div class="pokeball-display">
-					<div class="pokeball-helper">
-						<div class="pokeball-container">
-							<img class="pokeball">
+					<div class="avatar-pokemon-section">
+						<div class="avatar-trainer-image-section">
+							<img class="trainer-image">
 						</div>
-						<div class="pokeball-container">
-							<img class="pokeball">
+						<div class="avatar-pokeball-image">
+							<span>
+								<canvas class="pokeball-image"></canvas>
+							</span>
 						</div>
-						<div class="pokeball-container">
-							<img class="pokeball">
+						<div class="avatar-pokemon-name"></div>
+						<div class="avatar-pokemon-image">
+							<img class="pokemon-image">
 						</div>
-						<div class="pokeball-container">
-							<img class="pokeball">
-						</div>
-						<div class="pokeball-container">
-							<img class="pokeball">
-						</div>
-						<div class="pokeball-container">
-							<img class="pokeball">
-						</div>
+						<div class="pokemon-status-effect-section"></div>
+						<div class="confirm-btn btn btn-primary" style="display: none">Confirm</div>
+						<div id="fps"></div>
 					</div>
 				</div>
-				<div class="energy-resources">
-					<div class="energy-red energy" data-energy="red">
-						<div class="background"></div>
-						<div class="bar"></div>
-						<div class="count">0</div>
+				<div class="board-side-middle">
+					<div class="pokeball-display">
+						<div class="pokeball-helper">
+							<div class="pokeball-container">
+								<img class="pokeball">
+							</div>
+							<div class="pokeball-container">
+								<img class="pokeball">
+							</div>
+							<div class="pokeball-container">
+								<img class="pokeball">
+							</div>
+							<div class="pokeball-container">
+								<img class="pokeball">
+							</div>
+							<div class="pokeball-container">
+								<img class="pokeball">
+							</div>
+							<div class="pokeball-container">
+								<img class="pokeball">
+							</div>
+						</div>
 					</div>
-					<div class="energy-orange energy" data-energy="orange">
-						<div class="background"></div>
-						<div class="bar"></div>
-						<div class="count">0</div>
-					</div>
-					<div class="energy-yellow energy" data-energy="yellow">
-						<div class="background"></div>
-						<div class="bar"></div>
-						<div class="count">0</div>
-					</div>
-					<div class="energy-green energy" data-energy="green">
-						<div class="background"></div>
-						<div class="bar"></div>
-						<div class="count">0</div>
-					</div>
-					<div class="energy-blue energy" data-energy="blue">
-						<div class="background"></div>
-						<div class="bar"></div>
-						<div class="count">0</div>
-					</div>
-					<div class="energy-purple energy" data-energy="purple">
-						<div class="background"></div>
-						<div class="bar"></div>
-						<div class="count">0</div>
+					<div class="energy-resources">
+						<div class="energy-red energy" data-energy="red">
+							<div class="background"></div>
+							<div class="bar"></div>
+							<div class="count">0</div>
+						</div>
+						<div class="energy-orange energy" data-energy="orange">
+							<div class="background"></div>
+							<div class="bar"></div>
+							<div class="count">0</div>
+						</div>
+						<div class="energy-yellow energy" data-energy="yellow">
+							<div class="background"></div>
+							<div class="bar"></div>
+							<div class="count">0</div>
+						</div>
+						<div class="energy-green energy" data-energy="green">
+							<div class="background"></div>
+							<div class="bar"></div>
+							<div class="count">0</div>
+						</div>
+						<div class="energy-blue energy" data-energy="blue">
+							<div class="background"></div>
+							<div class="bar"></div>
+							<div class="count">0</div>
+						</div>
+						<div class="energy-purple energy" data-energy="purple">
+							<div class="background"></div>
+							<div class="bar"></div>
+							<div class="count">0</div>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="board-side-bottom">
-				<div class="move-list">
+				<div class="board-side-bottom">
+					<div class="move-list">
+					</div>
 				</div>
 			</div>
 		</div>
@@ -142,89 +144,91 @@
 				</div>
 			</div>
 		</div>
-		<div class="board-side enemy">
-			<div class="board-side-bg"></div>
-			<div class="board-side-top">
-				<div class="health-bar">
-					<div class="bar"></div>
-					<span>
-						<span class="current-health"></span> / <span class="max-health"></span>
-					</span>
-				</div>
-				<div class="avatar-pokemon-section">
-					<div class="avatar-trainer-image-section">
-						<img class="trainer-image">
-					</div>
-					<div class="avatar-pokeball-image">
+		<div class="board-side-container enemy">
+			<div class="board-side">
+				<div class="board-side-bg"></div>
+				<div class="board-side-top">
+					<div class="health-bar">
+						<div class="bar"></div>
 						<span>
-							<canvas class="pokeball-image"></canvas>
+							<span class="current-health"></span> / <span class="max-health"></span>
 						</span>
 					</div>
-					<div class="avatar-pokemon-name"></div>
-					<div class="avatar-pokemon-image">
-						<img class="pokemon-image">
-					</div>
-					<div class="pokemon-status-effect-section"></div>
-				</div>
-			</div>
-			<div class="board-side-middle">
-				<div class="pokeball-display">
-					<div class="pokeball-helper">
-						<div class="pokeball-container">
-							<img class="pokeball">
+					<div class="avatar-pokemon-section">
+						<div class="avatar-trainer-image-section">
+							<img class="trainer-image">
 						</div>
-						<div class="pokeball-container">
-							<img class="pokeball">
+						<div class="avatar-pokeball-image">
+							<span>
+								<canvas class="pokeball-image"></canvas>
+							</span>
 						</div>
-						<div class="pokeball-container">
-							<img class="pokeball">
+						<div class="avatar-pokemon-name"></div>
+						<div class="avatar-pokemon-image">
+							<img class="pokemon-image">
 						</div>
-						<div class="pokeball-container">
-							<img class="pokeball">
-						</div>
-						<div class="pokeball-container">
-							<img class="pokeball">
-						</div>
-						<div class="pokeball-container">
-							<img class="pokeball">
-						</div>
+						<div class="pokemon-status-effect-section"></div>
 					</div>
 				</div>
-				<div class="energy-resources">
-					<div class="energy-red energy" data-energy="red">
-						<div class="background"></div>
-						<div class="bar"></div>
-						<div class="count">0</div>
+				<div class="board-side-middle">
+					<div class="pokeball-display">
+						<div class="pokeball-helper">
+							<div class="pokeball-container">
+								<img class="pokeball">
+							</div>
+							<div class="pokeball-container">
+								<img class="pokeball">
+							</div>
+							<div class="pokeball-container">
+								<img class="pokeball">
+							</div>
+							<div class="pokeball-container">
+								<img class="pokeball">
+							</div>
+							<div class="pokeball-container">
+								<img class="pokeball">
+							</div>
+							<div class="pokeball-container">
+								<img class="pokeball">
+							</div>
+						</div>
 					</div>
-					<div class="energy-orange energy" data-energy="orange">
-						<div class="background"></div>
-						<div class="bar"></div>
-						<div class="count">0</div>
-					</div>
-					<div class="energy-yellow energy" data-energy="yellow">
-						<div class="background"></div>
-						<div class="bar"></div>
-						<div class="count">0</div>
-					</div>
-					<div class="energy-green energy" data-energy="green">
-						<div class="background"></div>
-						<div class="bar"></div>
-						<div class="count">0</div>
-					</div>
-					<div class="energy-blue energy" data-energy="blue">
-						<div class="background"></div>
-						<div class="bar"></div>
-						<div class="count">0</div>
-					</div>
-					<div class="energy-purple energy" data-energy="purple">
-						<div class="background"></div>
-						<div class="bar"></div>
-						<div class="count">0</div>
+					<div class="energy-resources">
+						<div class="energy-red energy" data-energy="red">
+							<div class="background"></div>
+							<div class="bar"></div>
+							<div class="count">0</div>
+						</div>
+						<div class="energy-orange energy" data-energy="orange">
+							<div class="background"></div>
+							<div class="bar"></div>
+							<div class="count">0</div>
+						</div>
+						<div class="energy-yellow energy" data-energy="yellow">
+							<div class="background"></div>
+							<div class="bar"></div>
+							<div class="count">0</div>
+						</div>
+						<div class="energy-green energy" data-energy="green">
+							<div class="background"></div>
+							<div class="bar"></div>
+							<div class="count">0</div>
+						</div>
+						<div class="energy-blue energy" data-energy="blue">
+							<div class="background"></div>
+							<div class="bar"></div>
+							<div class="count">0</div>
+						</div>
+						<div class="energy-purple energy" data-energy="purple">
+							<div class="background"></div>
+							<div class="bar"></div>
+							<div class="count">0</div>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="board-side-bottom">
-				<div class="move-list">
+				<div class="board-side-bottom">
+					<div class="move-list">
+					</div>
 				</div>
 			</div>
 		</div>

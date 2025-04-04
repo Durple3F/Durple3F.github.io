@@ -2438,7 +2438,7 @@ class Round{
 	}
 
 	fillTrainerTags(tags, classname){
-		tags.side = $(`#board .board-side${classname}`)
+		tags.side = $(`#board ${classname} .board-side`)
 		tags.side[0].scroll(0, 0)
 		tags.sideTop = tags.side.children(".board-side-top")
 		tags.sideMiddle = tags.side.children(".board-side-middle")

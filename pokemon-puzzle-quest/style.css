@@ -435,21 +435,31 @@ body {
 	rgba(0,0,0,0.5) 75%, rgba(0,0,0,0) 100%);
 }
 
+.board-side-container {
+	width: 50%;
+	height: 100%;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+	display: flex;
+}
+.board-side-container.enemy {
+	justify-content: flex-end;
+}
+/* Hide scrollbar */
+.board-side-container::-webkit-scrollbar {
+	display: none;
+}
+
 .board-side {
-	width: 22%;
+	width: 44%;
 	height: 100%;
 	position: relative;
-	/* overflow-x: hidden; */
-	/* overflow-y: scroll;
-	-ms-overflow-style: none; */
 	scrollbar-width: none;
 	padding-bottom: 3em;
 	background-image: linear-gradient(transparent, transparent);
 	transition: background-image 0.3s;
-}
-/* Hide scrollbar */
-.board-side::-webkit-scrollbar {
-	display: none;
 }
 .board-side .board-side-bg {
 	position: absolute;
@@ -459,6 +469,7 @@ body {
 	z-index: -1;
 	transition: opacity 0.5s;
 }
+
 .board-side.player .board-side-bg {
 	background-image: linear-gradient(
 		var(--player-color) 20%,

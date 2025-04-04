@@ -8,6 +8,7 @@
 	- Oops, copycat didn't have a cost until now.
 	- Added a skip button to dialogue
 	- Finally figured out how to make move sides have stuff sticking out of the sides, if I ever want that. Only downside is that now you have to scroll both sides of the play area.
+	- Then I figured out how to get rid of that last little issue ^^^
 
 4/3 (14.4k lines):
 	- Added some config on my end for how the fps displays.
