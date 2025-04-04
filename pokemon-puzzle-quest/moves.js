@@ -173,7 +173,8 @@ const pokemonMoveData = {
 		accuracy: null,
 		rechargeTurns: 1,
 		energy: {
-			// purple: 4
+			orange: 6,
+			purple: 6
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Charm.mp3"

@@ -167,6 +167,15 @@
 				{ "type": "fade-out-text", "text": "*ahem*" },
 				{ "type": "text", "speaker": "Hiromi", "text": "They say the early bird gets the worm...... but I hope it also wins this battle!" }
 			]
+		},
+		"route-1-7-dialogue-2": {
+			"events": [],
+			"effects": [
+				{ "type": "get-speaker", "name": "Hiromi", "class": "Young-Athlete-F" },
+				{ "type": "text", "speaker": "Hiromi", "text": "Aww, dang. But be honest, was my line at least a $@start-italics|@$little$@end-italics|@$ cool?" },
+				{ "type": "get-speaker", "name": "Mia", "class": "Preschooler-F-Gen7" },
+				{ "type": "text", "speaker": "Mia", "text": "Yay, my turn my turn! Uh... me and my Pokémon are gonna $@start-italics|@$rock$@end-italics|@$ your world!" }
+			]
 		}
 	},
 	"pokemon": {

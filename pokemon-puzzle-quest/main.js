@@ -1,4 +1,4 @@
-const versionNumber = "v0.10.6"
+const versionNumber = "v0.10.7"
 let lang = "en"
 let playerName
 
@@ -420,7 +420,7 @@ function resize(){
 	let initiativesHeight = $(".board-center > .initiatives").height()
 	let realH = screenH - initiativesHeight
 
-	let intendedSize = Math.min(realH, screenW * 0.6)
+	let intendedSize = Math.min(realH, screenW * 0.6) * 0.95
 	$(canvas).css({"width":intendedSize,"height":intendedSize})
 	canvas.width = intendedSize
 	canvas.height = intendedSize

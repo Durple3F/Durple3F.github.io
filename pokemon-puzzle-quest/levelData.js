@@ -409,14 +409,14 @@ const levelData = [
 				name: "Hiromi",
 				class: "Young-Athlete-F",
 				pokemon: [
-					{ id: "Pikipek", level: 8 }
+					{ id: "Pikipek", name: "Chirpo", level: 8 }
 				]
 			},
 			{
 				name: "Mia",
 				class: "Preschooler-F-Gen7",
 				pokemon: [
-					{ id: "Bonsly", level: 7 }
+					{ id: "Bonsly", name: "Mister Wobbles", level: 7 }
 				]
 			},
 			{
@@ -446,6 +446,7 @@ const levelData = [
 			{ type: "dialogue", source: "route-1-7-dialogue-1" },
 			{ type: "fight", trainer: 0 },
 			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "dialogue", source: "route-1-7-dialogue-2" },
 			{ type: "fight", trainer: 1 },
 			{ type: "jump-if-lost", jumpTo: Infinity },
 			{ type: "fight", trainer: 2 },

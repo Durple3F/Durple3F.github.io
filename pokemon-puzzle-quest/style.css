@@ -472,6 +472,10 @@ body {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	position: fixed;
+	top: 0;
+	left: 50%;
+	transform: translate(-50%);
 }
 .board-center > #screen {
 	width: 50%;
@@ -1401,6 +1405,11 @@ body {
 #dialogue > .speakers > .speaker > img {
 	height: 100%;
 	pointer-events: none;
+}
+#dialogue > #dialogueSkipBtn {
+	position: fixed;
+	top: 0.2em; right: 0.2em;
+	z-index: 100;
 }
 
 .no-pointer {

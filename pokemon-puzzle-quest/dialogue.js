@@ -35,7 +35,22 @@ function beginDialogue(dialogueData){
 	let textBox = $("#dialogue").children(".text-box")
 	let nameplate = $("#dialogue").children(".nameplate")
 
+	let promises = []
 	let promise = advanceCurrentDialogue()
+	promises.push(promise)
+	dialogueData.promise = promise
+
+	let skipPromise = new Promise(res => {
+		$("#dialogueSkipBtn").off("click")
+		$("#dialogueSkipBtn").on("click", () => {
+			res()
+		})
+	})
+	promises.push(skipPromise)
+
+	let totalPromise = Promise.any(promises)
+
+	totalPromise
 	.then(() => {
 		$("#dialogue-container").fadeOut()
 		if (boardIsVisible){
@@ -45,9 +60,8 @@ function beginDialogue(dialogueData){
 		}
 		return delay(400)
 	})
-	dialogueData.promise = promise
 
-	return promise
+	return totalPromise
 }
 function advanceCurrentDialogue(){
 	let resolvePromise

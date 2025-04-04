@@ -2472,6 +2472,7 @@ class Round{
 		tags.pokeballImageSection = tags.pokemonSection.children(".avatar-pokeball-image")
 		tags.pokeballImage = tags.pokeballImageSection.find(".pokeball-image")
 		tags.trainerImageSection = tags.pokemonSection.children(".avatar-trainer-image-section")
+		tags.trainerImageSection.attr("style", "")
 		tags.trainerImage = tags.trainerImageSection.children(".trainer-image")
 		tags.trainerImage.attr("src", "")
 		tags.pokeballDisplay = tags.sideMiddle.children(".pokeball-display")

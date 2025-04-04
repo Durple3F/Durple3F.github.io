@@ -4,6 +4,8 @@
 	- Slowly starting to rework where the dialogue effects are stored.
 	- Added some more to the 1-7 cutscenes.
 	- Added some new dialogue effects.
+	- Fixed a bug where trainers wouldn't throw their pokeball properly on a second fight.
+	- Oops, copycat didn't have a cost until now.
 
 4/3 (14.4k lines):
 	- Added some config on my end for how the fps displays.
