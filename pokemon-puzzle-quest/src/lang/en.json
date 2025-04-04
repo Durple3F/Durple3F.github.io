@@ -139,6 +139,34 @@
 				{ "type": "text", "speaker": "Lillie", "text": "I... I need help getting to the trainers' school. It's just a little further... but there are so many mean-looking Pokémon up ahead!" },
 				{ "type": "text", "speaker": "Lillie", "text": "I don't want to be late... ^^Oh, I can give you one of the professor's spare $@red|Pokédex@$es^^ for your trouble!" }
 			]
+		},
+		"route-1-7-dialogue-1": {
+			"events": [
+				{ "type": "animate-speaker", "speaker": "Lillie", "css": {
+					"left": "-=10%"
+				}, "duration": 500, "waitDuration": 0 },
+				{ "type": "transform-speaker", "speaker": "Lillie", "transform": "scaleX(-1)", "duration": 1000, "waitDuration": 0 },
+				{ "type": "transform-speaker", "speaker": "Lillie", "transform": "scaleX(1)", "duration": 1500, "waitDuration": 0 },
+				{ "type": "go-out-from-onscreen", "speaker": "Lillie", "direction": "right", "duration": 15000, "waitDuration": 0 }
+			],
+			"effects": [
+				{ "type": "get-speaker", "name": "Lillie", "class": "Lillie" },
+				{ "type": "text", "speaker": "Lillie", "text": "Phew..." },
+				{ "type": "text", "speaker": "Lillie", "text": "Thank you so much for helping me out there." },
+				{ "type": "text", "speaker": "Lillie", "text": "I'll... get out of your hair. The professor probably needs me, anyway. Thank you again!" },
+				{ "type": "animate-speaker", "speaker": "Lillie", "css": {
+					"left": "+=20%"
+				}, "duration": 600, "waitDuration": 400 },
+				{ "type": "text", "speaker": "Lillie", "text": "Oh! ^^Before I go! This school is having a special lesson today." },
+				{ "type": "text", "speaker": "Lillie", "text": "Ms. Emily wants their students to get some practice battling Pokémon with other trainers! You should help her out!" },
+				{ "type": "get-speaker", "name": "Hiromi", "class": "Young-Athlete-F" },
+				{ "type": "come-in-from-offscreen", "speaker": "Hiromi", "direction": "up", "duration": 400, "waitDuration": 200 },
+				{ "type": "text", "speaker": "Hiromi", "text": "Did I hear that right?! Are you guys part of today's lesson?!" },
+				{ "type": "text", "speaker": "Hiromi", "text": "I^^ can't wait! I've even been^^ working on a cool thing tor me and my Pokémon to say!^^" },
+				{ "type": "text", "speaker": "Hiromi", "text": "$@start-italics|@$*ahem*$@end-italics|@$$@wait-10|@$", "auto": true },
+				{ "type": "fade-out-text", "text": "*ahem*" },
+				{ "type": "text", "speaker": "Hiromi", "text": "They say the early bird gets the worm...... but I hope it also wins this battle!" }
+			]
 		}
 	},
 	"pokemon": {

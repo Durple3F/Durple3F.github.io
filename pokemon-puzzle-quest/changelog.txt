@@ -1,5 +1,10 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
+4/4 (14.5k lines):
+	- Slowly starting to rework where the dialogue effects are stored.
+	- Added some more to the 1-7 cutscenes.
+	- Added some new dialogue effects.
+
 4/3 (14.4k lines):
 	- Added some config on my end for how the fps displays.
 	- Levels now remember how many attempts you've made. That doesn't do anything yet, but they remember.
@@ -8,6 +13,7 @@
 	- Improved evolution animation slightly.
 	- When you hover over Copycat, it highlights the move it will copy. That was hard.
 	- Added 4 new trainer classes.
+	- Making cutscenes is SO MUCH WORK
 
 4/2 (14.0k lines):
 	- Clicking pokemon in your pokedex now shows you their full move list and default stats.

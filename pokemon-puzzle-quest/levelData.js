@@ -13,159 +13,6 @@ const boxThemeData = {
 	}
 }
 
-const defaultDialogueStyle = {
-	textBoxBackground1: "linear-gradient(-30deg, #00477d80 0%, #004ea8a0 100%)",
-	textBoxBackground2: "radial-gradient(at bottom, #aeaeae, white)",
-	textBoxMask: "radial-gradient(ellipse at center, black 67%, transparent 71%)",
-	textBoxFilter: `drop-shadow(0.05em 0em 0.1em #ececec)
-				drop-shadow(-0.05em 0em 0.1em #ececec)
-				drop-shadow(0em 0.05em 0.1em #ececec)
-				drop-shadow(0em -0.05em 0.1em #ececec)`,
-	textBoxTextBackground: "linear-gradient(4deg, #222, #000)",
-	textBoxTextContinueBackground: "radial-gradient(black, black)",
-	namePlateTextBackground: "linear-gradient(-182deg, white 20%, skyblue 80%)",
-	namePlateBackground: "var(--ui-primary-bg)",
-	namePlateBackground2: "repeating-linear-gradient( -0.5deg, transparent, transparent 0.1em, rgba(125, 143, 247, 0.266) 0.15em, transparent 0.25em )",
-	namePlateBackground2Color: "rgb(0, 68, 255)"
-}
-const NPCTrainerData = {
-	"Hau": {
-		name: "Hau",
-		type: "trainer",
-		imageSources: {
-			trainer: "src/img/trainers/hau.png"
-		},
-		textStyle: {
-			textBoxBackground1: "radial-gradient(ellipse at center,rgb(243, 183, 42) 50%, #3b3838 100%)",
-			textBoxBackground2: "radial-gradient(at bottom,rgb(20, 19, 19),rgb(42, 37, 28))",
-			textBoxMask: "radial-gradient(ellipse at center, black 68%, transparent 72%)",
-			textBoxFilter: `drop-shadow(0.05em 0em 0.1em #ececec20)
-			drop-shadow(-0.05em 0em 0.1em #ececec20)
-			drop-shadow(0em 0.05em 0.1em #ececec20)
-			drop-shadow(0em -0.05em 0.1em #ececec20)`,
-			textBoxTextBackground: "linear-gradient(4deg, #bbb, #fff)",
-			textBoxTextContinueBackground: "linear-gradient(4deg, #bbb, #fff)",
-		},
-		textColorOverrides: {
-			"blue": "rgb(100, 129, 248)"
-		}
-	},
-	"Lillie": {
-		name: "Lillie",
-		type: "trainer",
-		imageSources: {
-			trainer: "src/img/trainers/lillie.png"
-		},
-		textStyle: {
-			textBoxBackground1: "radial-gradient(ellipse at center,rgb(218, 132, 255) 50%,rgb(235, 190, 252) 100%)",
-			textBoxBackground2: "radial-gradient(at bottom,rgb(192, 255, 255),rgb(243, 253, 255))",
-			textBoxMask: "radial-gradient(ellipse at center, black 68%, transparent 72%)",
-			textBoxFilter: `drop-shadow(0.05em 0em 0.1em #ececec20)
-			drop-shadow(-0.05em 0em 0.1em #ececec20)
-			drop-shadow(0em 0.05em 0.1em #ececec20)
-			drop-shadow(0em -0.05em 0.1em #ececec20)`,
-			textBoxTextBackground: "linear-gradient(0deg, #333, #050505, #333)",
-			textBoxTextContinueBackground: "linear-gradient(0deg, #333, #050505, #333)",
-			namePlateTextBackground: "linear-gradient(0deg, #333, #050505, #333)",
-			namePlateBackgroundColor: "rgb(228, 129, 255)",
-			namePlateBackground2: "repeating-linear-gradient( -0.5deg, transparent, transparent 0.1em, transparent 0.15em, transparent 0.25em )",
-			namePlateBackground2Color: "rgb(216, 248, 254)",
-		},
-		textColorOverrides: {
-			"blue": "rgb(100, 129, 248)"
-		}
-	},
-	"Youngster-Gen7": {
-		name: "Youngster",
-		type: "trainer",
-		imageSources: {
-			trainer: "src/img/trainers/youngster-gen7.png"
-		}
-	},
-	"Lass-Gen7": {
-		name: "Lass",
-		type: "trainer",
-		imageSources: {
-			trainer: "src/img/trainers/lass-gen7.png"
-		}
-	},
-	"Young-Athlete-F": {
-		name: "Youth Athlete",
-		type: "trainer",
-		imageSources: {
-			trainer: "src/img/trainers/youngathletef.png"
-		}
-	},
-	"Preschooler-F-Gen7": {
-		name: "Preschooler",
-		type: "trainer",
-		imageSources: {
-			trainer: "src/img/trainers/preschoolerf-gen7.png"
-		}
-	},
-	"Rising-Star": {
-		name: "Rising Star",
-		type: "trainer",
-		imageSources: {
-			trainer: "src/img/trainers/risingstar.png"
-		}
-	},
-	"Teacher-Gen7": {
-		name: "Teacher",
-		type: "trainer",
-		imageSources: {
-			trainer: "src/img/trainers/teacher-gen7.png"
-		}
-	},
-}
-for (let trainerName in NPCTrainerData) {
-	let data = NPCTrainerData[trainerName]
-	if (!data.id) {
-		data.id = trainerName
-	}
-}
-
-const trainerAnimations = {
-	"default-throw-pokeball": function (tag) {
-		let promise = new Promise(resolve => {
-			let resolved = false
-			let animation = p => {
-				let rotate = 0
-				if (p < 0.4) {
-					let partP = (p - 0) / (0.4 - 0)
-					rotate = interpolate(0, 30, bezierEase(partP))
-				} else if (p < 0.7) {
-					let partP = (p - 0.4) / (0.7 - 0.4)
-					rotate = interpolate(30, -10, bezierEase(partP))
-				} else {
-					let partP = (p - 0.7) / (1 - 0.7)
-					rotate = interpolate(-10, 0, bezierEase(partP))
-				}
-				tag.css({
-					transform: "rotate(" + rotate + "deg)"
-				})
-				if (p > 0.5 && !resolved) {
-					resolve()
-					resolved = true
-				}
-			}
-			delay(500).then(() => {
-				$({ val: 0 }).animate({ val: 1 }, {
-					duration: 800,
-					easing: "linear",
-					step: function () {
-						animation(this.val)
-					},
-					complete: function () {
-						animation(1)
-					}
-				})
-			})
-		})
-		return promise
-	}
-}
-
 const levelCategoryData = [
 	{
 		name: "Route 1"
@@ -211,7 +58,7 @@ const levelData = [
 			}
 		],
 		effects: [
-			{ type: "dialogue", trainer: 0, source: "rival-battle-1-dialogue" },
+			{ type: "dialogue", source: "rival-battle-1-dialogue" },
 			{ type: "load-player-info", key: "chosen-starter" },
 			{ type: "load-value", value: "Rowlet" },
 			{ type: "jump-if-equal", jumpTo: "Litten" },
@@ -225,9 +72,9 @@ const levelData = [
 			{ type: "fight", trainer: 0, label: "Popplio" },
 			{ type: "jump", jumpTo: "Win Check" },
 			{ type: "jump-if-lost", jumpTo: "lost", label: "Win Check" },
-			{ type: "dialogue", trainer: 0, source: "rival-battle-1-dialogue-won" },
+			{ type: "dialogue", source: "rival-battle-1-dialogue-won" },
 			{ type: "jump", jumpTo: Infinity },
-			{ type: "dialogue", trainer: 0, source: "rival-battle-1-dialogue-lost", label: "lost" },
+			{ type: "dialogue", source: "rival-battle-1-dialogue-lost", label: "lost" },
 		]
 	},
 	//Caterpie, Pikipek, Pichu? | Jimmy
@@ -288,7 +135,7 @@ const levelData = [
 			{ type: "jump-if-lost", jumpTo: Infinity },
 			{ type: "jump", jumpTo: "Jimmy" },
 			{ type: "stop-music", label: "Jimmy" },
-			{ type: "dialogue", trainer: 0, source: "route-1-2-dialogue" },
+			{ type: "dialogue", source: "route-1-2-dialogue" },
 			{ type: "change-music", music: "SM Trainer Battle" },
 			{ type: "fight", trainer: 2 }
 		]
@@ -351,7 +198,7 @@ const levelData = [
 			{ type: "jump-if-lost", jumpTo: Infinity },
 			{ type: "jump", jumpTo: "Audrey" },
 			{ type: "stop-music", label: "Audrey" },
-			{ type: "dialogue", trainer: 0, source: "route-1-3-dialogue" },
+			{ type: "dialogue", source: "route-1-3-dialogue" },
 			{ type: "change-music", music: "SM Trainer Battle" },
 			{ type: "fight", trainer: 2 }
 		]
@@ -412,7 +259,7 @@ const levelData = [
 			}
 		],
 		effects: [
-			{ type: "dialogue", trainer: 0, source: "rival-battle-2-dialogue" },
+			{ type: "dialogue", source: "rival-battle-2-dialogue" },
 			{ type: "load-player-info", key: "chosen-starter" },
 			{ type: "load-value", value: "Rowlet" },
 			{ type: "jump-if-equal", jumpTo: "Litten" },
@@ -510,13 +357,13 @@ const levelData = [
 			{ type: "load-value", value: 3 },
 			{ type: "jump-if-less-than", jumpTo: "Kevin" },
 			{ type: "jump", jumpTo: "Madison" },
-			{ type: "dialogue", trainer: 2, source: "route-1-5-dialogue-1", label: "Kevin" },
+			{ type: "dialogue", source: "route-1-5-dialogue-1", label: "Kevin" },
 			{ type: "fight", trainer: 2 },
 			{ type: "jump", jumpTo: Infinity },
-			{ type: "dialogue", trainer: 3, source: "route-1-5-dialogue-2", label: "Madison" },
+			{ type: "dialogue", source: "route-1-5-dialogue-2", label: "Madison" },
 			{ type: "fight", trainer: 3 },
 			{ type: "jump-if-lost", jumpTo: Infinity },
-			{ type: "dialogue", trainer: 3, source: "route-1-5-dialogue-2-win" },
+			{ type: "dialogue", source: "route-1-5-dialogue-2-win" },
 			{ type: "jump", jumpTo: Infinity },
 		]
 	},
@@ -530,18 +377,9 @@ const levelData = [
 		trainers: [
 			{
 				pokemon: [
-					{
-						id: "Magnemite",
-						levelMin: 6, levelMax: 8
-					},
-					{
-						id: "Meowth-Alola",
-						levelMin: 6, levelMax: 8
-					},
-					{
-						id: "Grimer-Alola",
-						levelMin: 6, levelMax: 8
-					},
+					{ id: "Magnemite", levelMin: 6, levelMax: 8 },
+					{ id: "Meowth-Alola", levelMin: 6, levelMax: 8 },
+					{ id: "Grimer-Alola", levelMin: 6, levelMax: 8 },
 				]
 			},
 			{
@@ -550,7 +388,7 @@ const levelData = [
 			}
 		],
 		effects: [
-			{ type: "dialogue", trainer: 1, source: "route-1-6-dialogue" },
+			{ type: "dialogue", source: "route-1-6-dialogue" },
 			{ type: "change-music", music: "SM Wild Pokemon Battle" },
 			{ type: "fight", trainer: 0 },
 			{ type: "jump-if-lost", jumpTo: Infinity },
@@ -568,18 +406,53 @@ const levelData = [
 		music: "SM Trainers' School",
 		trainers: [
 			{
-				name: "Kevin",
+				name: "Hiromi",
+				class: "Young-Athlete-F",
+				pokemon: [
+					{ id: "Pikipek", level: 8 }
+				]
+			},
+			{
+				name: "Mia",
+				class: "Preschooler-F-Gen7",
+				pokemon: [
+					{ id: "Bonsly", level: 7 }
+				]
+			},
+			{
+				name: "Joey",
 				class: "Youngster-Gen7",
 				pokemon: [
-					{
-						id: "Grubbin",
-						level: 6
-					}
+					{ id: "Metapod", level: 7 }
+				]
+			},
+			{
+				name: "Joseph",
+				class: "Rising-Star",
+				pokemon: [
+					{ id: "Grimer-Alola", level: 8 }
+				]
+			},
+			{
+				name: "Emily",
+				class: "Teacher-Gen7",
+				pokemon: [
+					{ id: "Magnemite", level: 8 },
+					{ id: "Meowth-Alola", level: 9 }
 				]
 			},
 		],
 		effects: [
+			{ type: "dialogue", source: "route-1-7-dialogue-1" },
 			{ type: "fight", trainer: 0 },
+			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "fight", trainer: 1 },
+			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "fight", trainer: 2 },
+			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "fight", trainer: 3 },
+			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "fight", trainer: 4 },
 		]
 	}
 ]

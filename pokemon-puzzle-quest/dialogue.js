@@ -3,6 +3,7 @@ const textCharacterDurationMap = {
 	",": 3,
 	"!": 7,
 	"?": 10,
+	"?!": 10,
 	"...": 30,
 	"^^": 0, //This one's for events
 }
@@ -154,6 +155,9 @@ function advanceCurrentDialogue(){
 				Object.keys(those).forEach(key => colors[key] = those[key])
 			}
 
+			let skipResolve
+			let skipPromise = new Promise(resolve => skipResolve = resolve)
+
 			let currentAdditionalStyle = {}
 			for (let i = 0; i < otherText.length; i++){
 				let word = {
@@ -251,9 +255,17 @@ function advanceCurrentDialogue(){
 							let thisEvent = events[eventIndex]
 							eventIndex++
 							dialogueProgress.eventIndex = eventIndex
+							let carriedOut = false
 							delay(currentDuration)
 							.then(() => {
-								if (!skippedDialogue){
+								if (!skippedDialogue && !carriedOut){
+									carriedOut = true
+									carryOutDialogueEvent(thisEvent)
+								}
+							})
+							skipPromise.then(() => {
+								if (!carriedOut){
+									carriedOut = true
 									carryOutDialogueEvent(thisEvent)
 								}
 							})
@@ -285,8 +297,6 @@ function advanceCurrentDialogue(){
 				}
 			})
 
-			let skipResolve
-			let skipPromise = new Promise(resolve => skipResolve = resolve)
 			const skipDialogue = () => {
 				skippedDialogue = true
 				textTag.find(".letter").animate({"opacity": 1}, textSpeed * 2.5)
@@ -324,12 +334,6 @@ function advanceCurrentDialogue(){
 				}
 			})
 		} break
-		case "fade-out-text":
-		case "animate-speaker-nameplate":
-		case "transform-speaker": {
-			carryOutDialogueEvent(effect)
-			.then(() => resolvePromise())
-		} break
 		case "display-image": {
 			let src = effect.src
 			let imageObj = {}
@@ -359,16 +363,6 @@ function advanceCurrentDialogue(){
 			speakersTag.append(image)
 
 			resolvePromise()
-		} break
-		case "animate-speaker": {
-			let name = effect.speaker
-			let speaker = dialogueProgress.speakers.find(s => s.id === name)
-			let image = speaker.tag
-			let css = effect.css
-			let duration = effect.duration ?? 500
-			let waitDuration = effect.waitDuration ?? duration
-			image.animate(css, duration)
-			delay(waitDuration).then(() => resolvePromise())
 		} break
 		case "animate-image": {
 			let image = speakersTag.children(`[data-name=${effect.image}]`)
@@ -401,7 +395,8 @@ function advanceCurrentDialogue(){
 			delay(wait).then(() => resolvePromise())
 		} break
 		default:
-			console.warn("You never handled", effect.type)
+			carryOutDialogueEvent(effect)
+			.then(() => resolvePromise())
 	}
 
 	promise = promise.then(() => {
@@ -457,11 +452,28 @@ function carryOutDialogueEvent(effect){
 		tag = speaker.tag
 	}
 
+	let options = {}
 	let dialogueContainer = $("#dialogue-container")
 	let dialogueTag = $("#dialogue")
 	let speakersTag = dialogueTag.children(".speakers")
 	let textBox = dialogueTag.children(".text-box")
 	let nameplate = textBox.children(".nameplate")
+	options.dialogueContainer = dialogueContainer
+	options.dialogueTag = dialogueTag
+	options.speakersTag = speakersTag
+	options.textBox = textBox
+	options.nameplate = nameplate
+
+	if (effect.speaker){
+		options.name = effect.speaker
+		options.speaker = dialogueProgress.speakers.find(s => s.id === options.name)
+	}
+
+	let effectData = dialogueEffects[effect.type]
+	if (effectData){
+		effectData.execute(resolvePromise, effect, dialogueProgress, options)
+		return promise
+	}
 
 	switch (effect.type){
 		case "transform-speaker": {
@@ -488,6 +500,15 @@ function carryOutDialogueEvent(effect){
 			} else {
 				resolvePromise()
 			}
+		} break
+		case "animate-speaker": {
+			let speaker = options.speaker
+			let image = speaker.tag
+			let css = effect.css
+			let duration = effect.duration ?? 500
+			let waitDuration = effect.waitDuration ?? duration
+			image.animate(css, duration)
+			delay(waitDuration).then(() => resolvePromise())
 		} break
 		case "fade-out-text": {
 			let text = effect.text

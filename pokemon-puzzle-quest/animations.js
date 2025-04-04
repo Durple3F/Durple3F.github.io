@@ -26,7 +26,7 @@ const tileTypeColors = {
 	"rainbow": "#ffffff",
 }
 
-const RED = new Color("red")
+const RED = new Color("#ff2f35")
 function getHighlightColor(color, now){
 	if (color === "rainbow"){
 		let rotate = now % 360

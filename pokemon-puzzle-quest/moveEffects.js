@@ -795,6 +795,18 @@ const pokemonMoveEffects = {
 			resolve()
 		}
 	},
+	"jump-if-truthy": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let moveUseObj = options.moveUse
+			let effectIndex = options.effectIndex
+			let test = params.test ?? moveUseObj.info[effectIndex - 1]
+			if (test) {
+				moveUseObj.nextEffectIndex = options.index
+			}
+			resolve()
+		}
+	},
 	"jump": {
 		update: false,
 		execute: (resolve, effect, params, game, options) => {

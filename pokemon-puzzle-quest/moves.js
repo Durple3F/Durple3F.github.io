@@ -179,8 +179,11 @@ const pokemonMoveData = {
 			"attack": "src/audio/attacks/Charm.mp3"
 		},
 		effects: [
-			{ type: "play-sound", name: "attack", wait: true },
-			{ type: "wait", duration: 200 },
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-last-move", target: "opponent" },
+			{ type: "jump-if-truthy", jumpTo: "use-move" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "wait", duration: 1000, label: "use-move" },
 			{ type: "get-last-move", target: "opponent" },
 			{ type: "use-move", move: -1 }
 		],
