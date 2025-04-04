@@ -180,7 +180,7 @@ body {
 	margin-bottom: 0;
 }
 
-#board, #title-screen, #game {
+#title-screen, #game {
 	width: 100%;
 	height: 100%;
 	display: flex;
@@ -189,8 +189,20 @@ body {
 	position: relative;
 }
 #board {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: flex-start;
+	position: relative;
 	justify-content: space-between;
 	transition: filter 0.5s;
+	overflow-y: scroll;
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+}
+/* Hide scrollbar */
+#board::-webkit-scrollbar {
+	display: none;
 }
 #board.showing-dialogue {
 	filter: opacity(0.2);
@@ -427,9 +439,9 @@ body {
 	width: 22%;
 	height: 100%;
 	position: relative;
-	overflow-x: hidden;
-	overflow-y: scroll;
-	-ms-overflow-style: none;
+	/* overflow-x: hidden; */
+	/* overflow-y: scroll;
+	-ms-overflow-style: none; */
 	scrollbar-width: none;
 	padding-bottom: 3em;
 	background-image: linear-gradient(transparent, transparent);
@@ -476,6 +488,7 @@ body {
 	top: 0;
 	left: 50%;
 	transform: translate(-50%);
+	z-index: 5;
 }
 .board-center > #screen {
 	width: 50%;
@@ -770,6 +783,7 @@ body {
 .move.highlight {
 	box-shadow: 0 0 1em var(--player-color);
 	background-color: var(--player-color);
+	box-shadow: 0 0 1em var(--player-color);
 	color: black;
 }
 
@@ -1416,6 +1430,17 @@ body {
 	pointer-events: none;
 }
 
+@media (min-width: 1500px) {
+	body {
+		font-size: 125%;
+	}
+	.popover {
+		font-size: 1em;
+		max-width: 25em;
+		padding: 0.5em;
+		border-radius: 0.7em;
+	}
+}
 @media (min-width: 2000px) {
 	body {
 		font-size: 150%;
