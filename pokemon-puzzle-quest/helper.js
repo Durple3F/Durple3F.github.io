@@ -183,6 +183,12 @@ function applyReplacements(text, replacements){
 	return text
 }
 
+function isMouseSomewhereIn($selection){
+	let onElem = $selection[0] === currentHoveredElement
+	let inElem = $selection.has(currentHoveredElement).length > 0
+	return onElem || inElem
+}
+
 function getTileEnergyValue(type){
 	if (type instanceof Tile){
 		type = type.type

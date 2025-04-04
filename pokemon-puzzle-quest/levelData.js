@@ -89,6 +89,34 @@ const NPCTrainerData = {
 			trainer: "src/img/trainers/lass-gen7.png"
 		}
 	},
+	"Young-Athlete-F": {
+		name: "Youth Athlete",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/youngathletef.png"
+		}
+	},
+	"Preschooler-F-Gen7": {
+		name: "Preschooler",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/preschoolerf-gen7.png"
+		}
+	},
+	"Rising-Star": {
+		name: "Rising Star",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/risingstar.png"
+		}
+	},
+	"Teacher-Gen7": {
+		name: "Teacher",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/teacher-gen7.png"
+		}
+	},
 }
 for (let trainerName in NPCTrainerData) {
 	let data = NPCTrainerData[trainerName]
@@ -459,12 +487,15 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Wingull",
+						name: "Gully",
 						level: 6
 					}
 				]
 			},
 		],
 		effects: [
+			{ type: "fight", trainer: 3 },
+
 			{ type: "random-number", min: 1, max: 10 },
 			{ type: "load-value", value: 9 },
 			{ type: "jump-if-less-than", jumpTo: "Normal" },
@@ -527,6 +558,7 @@ const levelData = [
 			{ type: "save-player-info", key: "unlocked-pokedex", value: -1 }
 		]
 	},
+	//Trainer school teacher's challenge
 	{
 		id: "Route 1-7",
 		category: "Route 1",
@@ -536,25 +568,15 @@ const levelData = [
 		music: "SM Trainers' School",
 		trainers: [
 			{
+				name: "Kevin",
+				class: "Youngster-Gen7",
 				pokemon: [
 					{
-						id: "Magnemite",
-						levelMin: 6, levelMax: 8
-					},
-					{
-						id: "Meowth-Alola",
-						levelMin: 6, levelMax: 8
-					},
-					{
-						id: "Grimer-Alola",
-						levelMin: 6, levelMax: 8
-					},
+						id: "Grubbin",
+						level: 6
+					}
 				]
 			},
-			{
-				name: "Lillie",
-				pokemon: []
-			}
 		],
 		effects: [
 			{ type: "fight", trainer: 0 },

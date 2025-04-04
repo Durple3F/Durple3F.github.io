@@ -116,7 +116,10 @@ class Pokemon{
 		
 		this.energy = getEmptyEnergy()
 		this.maxEnergy = getEmptyEnergy()
-		this.resetEnergyMastery()
+
+		this.turnsActive = 0
+
+		this.resetEverything()
 
 		this.pcBox = options?.pcBox ?? null
 		this.pcBoxX = options?.pcBoxX ?? null
@@ -472,6 +475,11 @@ class Pokemon{
 			this.maxEnergy[color] = 10 + max
 			this.energy[color] = Math.floor(this.energyMastery[color] / 4)
 		})
+	}
+	resetEverything(){
+		this.turnsActive = 0
+
+		this.resetEnergyMastery()
 	}
 
 	getEXPNeededForLevel(level){

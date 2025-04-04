@@ -4,8 +4,20 @@ const pokemonMoveEffects = {
 		execute: (resolve, effect, params, game, options) => {
 			let name = effect.name
 			let moveUseObj = options.moveUse
-			playSound(`${moveUseObj.move.name}-${name}`)
-			resolve()
+			let wait = effect.wait ?? false
+			let p = playSound(`${moveUseObj.move.name}-${name}`)
+			if (wait){
+				p.then(() => resolve())
+			} else {
+				resolve()
+			}
+		}
+	},
+	"wait": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let duration = effect.duration ?? 0
+			delay(duration).then(() => resolve())
 		}
 	},
 	"swap-tiles": {
@@ -556,6 +568,52 @@ const pokemonMoveEffects = {
 			let target = options.target
 			let result = game.activePlayerIndex === game.trainers.indexOf(target)
 			resolve(result)
+		}
+	},
+	"get-last-move": {
+		update: false,
+		hasTarget: true,
+		targetType: "trainer",
+		targetDefault: "none",
+		execute: (resolve, effect, params, game, options) => {
+			let target = options.target
+			let moveUseList = game.moveUseHistory
+			if (target){
+				moveUseList = moveUseList.filter(moveUseObj => {
+					return moveUseObj.trainer === target
+				})
+			}
+			let moveUseObj = moveUseList[moveUseList.length - 1]
+			if (!moveUseObj){
+				resolve(undefined)
+				return
+			}
+			let result = moveUseObj.move
+			resolve(result)
+		}
+	},
+	"use-move": {
+		update: false,
+		hasTarget: true,
+		targetType: "trainer",
+		targetDefault: "none",
+		execute: (resolve, effect, params, game, options) => {
+			let move = params.move
+			let moveUseObj = options.moveUse
+			let moveIndex = game.moveQueue.indexOf(moveUseObj)
+			let trainer = moveUseObj.trainer
+			let pokemon = moveUseObj.pokemon
+			let newMoveUseObj = game.newMoveUseObj(
+				trainer, pokemon, move, "effects"
+			)
+			if (moveIndex !== -1){
+				game.moveQueue.splice(moveIndex + 1, 0, newMoveUseObj)
+			} else {
+				game.moveQueue.push(newMoveUseObj)
+			}
+			let newIndex = game.moveQueue.indexOf(newMoveUseObj)
+
+			resolve(newIndex)
 		}
 	},
 	"multiply-energy": {

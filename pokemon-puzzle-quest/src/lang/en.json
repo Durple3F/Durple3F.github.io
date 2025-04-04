@@ -178,6 +178,9 @@
 		"Wingull": {
 			"name": "Wingull"
 		},
+		"Bonsly": {
+			"name": "Bonsly"
+		},
 		"Rowlet": {
 			"name": "Rowlet"
 		},
@@ -232,6 +235,11 @@
 			"description": "Lowers the opponent's attack stat by 1 stage.",
 			"shortDescription": "Lowers enemy attack"
 		},
+		"Copycat": {
+			"name": "Copycat",
+			"description": "Uses the effects of the move the opponent most recently used. If they haven't used a move, then this move does nothing.",
+			"shortDescription": "Copies enemy's last move"
+		},
 		"Curse": {
 			"name": "Curse",
 			"description": "If the user is Ghost type, applies Cursed to one random tile. Otherwise, lowers the user's Speed by one stage, and raises their Attack and Defense by one stage each. At the start of the opponent's turn, if any tiles are Cursed, they take damage equal to 1/4 of their max HP.",
@@ -256,6 +264,11 @@
 			"name": "Fake Out",
 			"description": "Deals damage, then ends the turn. As long as the user has been the active Pokémon for more than two turns, this move's purple energy cost increases by 7.",
 			"shortDescription": "First-strike attack"
+		},
+		"Fake Tears": {
+			"name": "Fake Tears",
+			"description": "Lowers the opponent's special defense stat by 2 stages.",
+			"shortDescription": "Lowers enemy special defense"
 		},
 		"Feint": {
 			"name": "Feint",

@@ -52,6 +52,8 @@ class Round{
 		this.currentCascade = 0
 		this.matchesInCombo = []
 
+		this.moveUseHistory = []
+
 		this.promise = new Promise(resolve => {
 			this.resolve = resolve
 		})
@@ -168,10 +170,10 @@ class Round{
 			})
 		}
 
-		//Give each pokemon their appropriate energy mastery values
+		//Set each pokemon back so they forget anything that shouldn't be there.
 		for (let trainer of this.trainers){
 			for (let pokemon of trainer.pokemon){
-				pokemon.resetEnergyMastery()
+				pokemon.resetEverything()
 			}
 		}
 
@@ -214,6 +216,11 @@ class Round{
 						pokemon.energy[color] = 0
 					}
 				}
+			}
+
+			//Remove activeness from both trainer's tags.
+			for (let trainer of this.trainers){
+				trainer.tags.side.removeClass("active")
 			}
 
 			for (let pokemon of this.trainers[0].pokemon){
@@ -311,7 +318,6 @@ class Round{
 		//Maybe this swap ends in no changes. If so, swap 'em back.
 		this.applyLocationChanges(map)
 		let matches = this.board.getAllMatches()
-		console.log(this.currentlyReversingSwap)
 		if (matches.length === 0 && !this.currentlyReversingSwap){
 			this.currentlyReversingSwap = true
 			this.animateSwitchLocations(tile1, tile2)
@@ -587,6 +593,9 @@ class Round{
 		let trainer = this.trainers[this.activePlayerIndex]
 		let otherTrainer = this.trainers[this.inactivePlayerIndex]
 
+		//This pokemon has been active for one more turn
+		trainer.activePokemon.turnsActive++
+
 		//Reduce move cooldowns
 		for (let pokemon of trainer.pokemon){
 			if (!pokemon) continue
@@ -614,8 +623,8 @@ class Round{
 		}
 		let contents = this.board.tilesOnScreen()
 
+		//Handle start-of-turn status effects
 		let cursed
-
 		for (let tile of contents){
 			if (!this.board.isOnScreen(tile)) continue
 			let statusEffects = tile.statusEffects
@@ -1533,12 +1542,21 @@ class Round{
 		//in sequence. It has information added to that info list, and
 		//that info is used by other effects as parameters.
 		let effects = move[trigger]
+		if (!effects){
+			console.warn("Tried to run effects that don't exist...")
+			console.log(trainer, pokemon, move, trigger)
+			console.trace()
+			effects = []
+		}
+		effects = effects.map(effect => effect)
 		let moveUseObj = {
 			trainer: trainer,
 			pokemon: pokemon,
 			move: move,
 			effects: effects,
 			turnStartedOn: this.turn,
+			originalTrigger: trigger,
+			completed: false,
 			info: [],
 			effectIndex: 0
 		}
@@ -1551,7 +1569,7 @@ class Round{
 		let moveIndex = pokemon.moves.indexOf(move)
 		pokemon.moveUsage[moveIndex].recharge = move.rechargeTurns
 
-		let moveUseObj = this.newMoveUseObj(trainer, pokemon, move)
+		let moveUseObj = this.newMoveUseObj(trainer, pokemon, move, "effects")
 		let promise = moveUseObj.promise
 		console.log(moveUseObj)
 
@@ -1562,7 +1580,13 @@ class Round{
 		} else {
 			promise = promise.then(() => this.finishCurrentMove())
 			this.moveQueue.push(moveUseObj)
+			this.moveUseHistory.push(moveUseObj)
 			this.updateEverything()
+
+			//It's important to have this check, because otherwise,
+			//if you use a move while another one is being carried out,
+			//it creates a race condition where they're both being used
+			//at the same time.
 			if (this.moveQueue.length === 1){
 				this.advanceCurrentMove(moveUseObj)
 			}
@@ -1700,6 +1724,8 @@ class Round{
 				} else {
 					target = trainer.activePokemon
 				}
+			} else if (targetName === "none"){
+				target = undefined
 			} else if (targetName) {
 				console.warn("You never handled", targetName)
 			}
@@ -1735,6 +1761,8 @@ class Round{
 	finishCurrentMove(){
 		let moveUseObj
 		let promise = new Promise(resolve => {
+			//Note: Bad name for this thing.
+			//This variable is a LIST of HOPEFULLY one moveUseObject.
 			moveUseObj = this.moveQueue.splice(0, 1)
 
 			if (this.moveQueue.length){
@@ -1755,6 +1783,7 @@ class Round{
 			} else {
 				moveUseObj = moveUseObj[0]
 			}
+			moveUseObj.completed = true
 
 			let trainer = moveUseObj.trainer
 			let pokemon = moveUseObj.pokemon
@@ -2341,15 +2370,14 @@ class Round{
 					opacity: 1
 				})
 				let usable = isPokemonUsable(pokemon)
+				pokeball.removeClass("unusable")
+				pokeball.removeClass("active-pokeball")
 				if (!usable){
-					pokeball.css({
-						filter: "saturate(0)"
-					})
+					pokeball.addClass("unusable")
 				} else if (pokemon === this.trainers[trainerIndex].activePokemon){
-					pokeball.css({
-						filter: "drop-shadow(0px 0px 4px #ffffff70)",
-						'border-color': "white"
-					})
+					pokeball.addClass("active-pokeball")
+				} else {
+
 				}
 			} else {
 				// pokeball.attr("src", "src/img/Poké_Ball_icon_empty.svg")
@@ -2753,6 +2781,58 @@ class Round{
 	}
 
 	resetPokemonMoves(){
+		const onMouseEnter = event => {
+			let tag = $(event.currentTarget)
+			let trainerIndex = Number(tag.attr("data-trainer"))
+			let pokemonIndex = Number(tag.attr("data-pokemon"))
+			let moveIndex = Number(tag.attr("data-move"))
+			let trainer = this.trainers[trainerIndex]
+			let pokemon = trainer.pokemon[pokemonIndex]
+			let move = pokemon.moves[moveIndex]
+			let highlight = move.highlightOnHover
+			if (highlight.type === "last-enemy-move"){
+				let moveUseList = this.moveUseHistory
+				moveUseList = moveUseList.filter(moveUseObj => {
+					return moveUseObj.trainer !== trainer
+				})
+				if (moveUseList.length === 0) return
+				let lastMoveUse = moveUseList[moveUseList.length - 1]
+				let thatTrainer = lastMoveUse.trainer
+				let thatPokemon = lastMoveUse.pokemon
+				let thatMove = lastMoveUse.move
+				let thatTrainerIndex = this.trainers.indexOf(thatTrainer)
+				let thatPokemonIndex = thatTrainer.pokemon.indexOf(thatPokemon)
+				let thatMoveIndex = thatPokemon.moves.indexOf(thatMove)
+				//This is a jquery selection of both trainer's movelist tags.
+				let toSearch = this.trainers.map(trainer => trainer.tags.moveList)
+				.reduce((acc, v) => acc.add(v), $())
+				let selector = ".move"
+				selector += `[data-trainer=${thatTrainerIndex}]`
+				selector += `[data-pokemon=${thatPokemonIndex}]`
+				selector += `[data-move=${thatMoveIndex}]`
+				let moveTag = toSearch.find(selector)
+				let alreadyHighlit = toSearch.find(".move.highlight")
+				alreadyHighlit.removeClass("highlight")
+				moveTag.addClass("highlight")
+				console.log(moveTag)
+			}
+		}
+		const onMouseLeave = event => {
+			let tag = $(event.currentTarget)
+			let trainerIndex = Number(tag.attr("data-trainer"))
+			let pokemonIndex = Number(tag.attr("data-pokemon"))
+			let moveIndex = Number(tag.attr("data-move"))
+			let trainer = this.trainers[trainerIndex]
+			let pokemon = trainer.pokemon[pokemonIndex]
+			let move = pokemon.moves[moveIndex]
+			let highlight = move.highlightOnHover
+			if (highlight.type === "last-enemy-move"){
+				let toSearch = this.trainers.map(trainer => trainer.tags.moveList)
+				.reduce((acc, v) => acc.add(v), $())
+				let moveTags = toSearch.find(".move.highlight")
+				moveTags.removeClass("highlight")
+			}
+		}
 		for (let i = 0; i < this.trainers.length; i++){
 			let trainer = this.trainers[i]
 			let tags = this.trainerTags[i]
@@ -2781,6 +2861,12 @@ class Round{
 				tag.attr("data-pokemon", pokemonIndex)
 				let moveIndex = pokemon.moves.indexOf(move)
 				tag.attr("data-move", moveIndex)
+
+				//The move Copycat (and maybe others) does something when you hover over it.
+				if (move.highlightOnHover){
+					tag.on("mouseenter", onMouseEnter)
+					tag.on("mouseleave", onMouseLeave)
+				}
 
 				let popoverHTML = () => {
 					let html = $(`<div class='move-popover'></div>`)
@@ -2822,6 +2908,7 @@ class Round{
 		let tags = this.trainerTags[trainerIndex]
 		let moveList = tags.moves
 		this.updateMovePayability(trainerIndex)
+
 		for (let moveTag of moveList){
 			let userIndex = moveTag.attr("data-trainer")
 			let pokemonIndex = moveTag.attr("data-pokemon")
@@ -2882,6 +2969,15 @@ class Round{
 				rechargeTag.fadeIn()
 			} else {
 				rechargeTag.fadeOut()
+			}
+
+			//If the player's mouse is in the tag, pretend they just hovered it.
+			if (thisMove.highlightOnHover){
+				let onTag = isMouseSomewhereIn(moveTag)
+				if (onTag){
+					console.log(onTag)
+					moveTag.trigger("mouseenter")
+				}
 			}
 
 			if (usable && this.canUseMovesRightNow(trainerIndex)){
@@ -3012,7 +3108,7 @@ class Board{
 				this.tileWeights[type] = 0
 			}
 		}
-		this.tileWeights.rainbow = 0.5
+		this.tileWeights.rainbow = 0.3
 
 		this.spriteTileW = 0
 		this.spriteTileH = 0
@@ -3648,7 +3744,10 @@ function beginRound(trainerData){
 		if (data.activeMoves){
 			options.activeMoves = data.activeMoves
 		}
-		let pokemon = new Pokemon(undefined, options.id, options)
+		if (data.name){
+			options.name = data.name
+		}
+		let pokemon = new Pokemon(options.name, options.id, options)
 		logPokemonAs("seen", pokemon)
 		return pokemon
 	})
@@ -3758,8 +3857,9 @@ function doEvolutionAnimation(elem, pokemon, evolution){
 				if (skipped) return
 				let p = this.val
 				let brightness = interpolate(1, 10, bezierEase(p))
+				let invert = interpolate(0, 0.02, bezierEase(p))
 				brightness = brightness * brightness
-				image1.css("filter", `brightness(${brightness})`)
+				image1.css("filter", `invert(0.01) brightness(${brightness})`)
 			}
 		})
 	})
@@ -3811,7 +3911,8 @@ function doEvolutionAnimation(elem, pokemon, evolution){
 				body.css("filter", filter)
 				let brightness = interpolate(1, 10, bezierEase(p))
 				brightness = brightness * brightness
-				image2.css("filter", `brightness(${brightness})`)
+				let invert = interpolate(0, 0.02, bezierEase(p))
+				image2.css("filter", `invert(0.01) brightness(${brightness})`)
 			},
 			complete: function(){
 				if (skipped) return

@@ -1,8 +1,13 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-4/3 (14.1k lines):
+4/3 (14.4k lines):
 	- Added some config on my end for how the fps displays.
 	- Levels now remember how many attempts you've made. That doesn't do anything yet, but they remember.
+	- Added Bonsly, Fake Tears.
+	- Added Copycat, a very unique move. Lucky for me, I already prepared for it! <i>HAHAHA!!!</i> I STILL DON'T HAVE TO REWRITE ANYTHING, <i>EVERYTHING</i> has worked so far!!!
+	- Improved evolution animation slightly.
+	- When you hover over Copycat, it highlights the move it will copy. That was hard.
+	- Added 4 new trainer classes.
 
 4/2 (14.0k lines):
 	- Clicking pokemon in your pokedex now shows you their full move list and default stats.

@@ -779,6 +779,57 @@ const pokemonData = {
 			},
 		]
 	},
+	"Bonsly": {
+		name: "Bonsly",
+		number: "278",
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0438Bonsly.png",
+			"home": "src/img/tiny-pokemon/Bonsly.png"
+		},
+		sounds: {
+			cry: "src/audio/cries/bonsly.mp3"
+		},
+		types: ["Rock"],
+		tags: ["Starter"],
+		stats: {
+			hp: 50,
+			attack: 80,
+			defense: 95,
+			specialAttack: 10,
+			specialDefense: 45,
+			speed: 10
+		},
+		expYield: 58,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 1,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 5,
+			green: 2,
+		},
+		learnset: [
+			{
+				name: "Fake Tears",
+				unlock: {
+					type: "level",
+					amount: 1
+				}
+			},
+			{
+				name: "Copycat",
+				unlock: {
+					type: "level",
+					amount: 1
+				}
+			},
+		]
+	},
 	"Rowlet": {
 		name: "Rowlet",
 		number: "722",

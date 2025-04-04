@@ -231,13 +231,11 @@ function startScene(name, options){
 						let popoverId = btn.attr("aria-describedby")
 						setTimeout(function(){
 							let p = $("#" + popoverId)
-							let onPopover = p[0] === currentHoveredElement
-							let inPopover = p.has(currentHoveredElement).length > 0
-							let onBtn = btn[0] === currentHoveredElement
-							let inBtn = btn.has(currentHoveredElement).length > 0
+							let onPopover = isMouseSomewhereIn(p)
+							let onBtn = isMouseSomewhereIn(btn)
 							// console.log(currentHoveredElement, onPopover, inPopover, onBtn, inBtn)
 							//If the mouse is NOWHERE RELATED TO THE LEVEL
-							if (!onPopover && !inPopover && !onBtn && !inBtn){
+							if (!onPopover && !onBtn){
 								btn.popover("hide")
 							} else {
 								p.off("mouseleave")
@@ -847,16 +845,16 @@ function askToRenamePokemon(pokemon){
 	let resolvePromise
 	let promise = new Promise(resolve => resolvePromise = resolve)
 	let modal = $("#modal")
-	let pokemonName = pokemon.name
+	let name = pokemon.name
 	let image = pokemon.data.imageSources.large
 
 	clearModal(modal)
 
-	modal.find(".modal-title").text(`What would you like to name your ${pokemonName}?`)
+	modal.find(".modal-title").text(`What would you like to name your ${name}?`)
 	let innerStuff = $(`<div class='container d-flex'></div>`)
 	innerStuff.append(`<div class='col col-3'><img class='pokemon-image' src='${image}'></div>`)
 	innerStuff.append(`<div class='col col-9 d-flex flex-column justify-content-center align-items-center'>
-		<input type='text' required value='${pokemonName}'>
+		<input type='text' required value='${name}'>
 		<button class='btn btn-primary confirm'>Submit</button>
 	</div>`)
 	let body = modal.find(".modal-body")

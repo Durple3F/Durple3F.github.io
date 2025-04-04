@@ -631,6 +631,14 @@ body {
 	max-width: 100%;
 	border: 0.1em solid transparent;
 	border-radius: 50%;
+	transition: filter 0.3s, border-color 0.3s;
+}
+.pokeball-display > .pokeball-helper > .pokeball-container > .pokeball.unusable {
+	filter: saturate(0);
+}
+.pokeball-display > .pokeball-helper > .pokeball-container > .pokeball.active-pokeball {
+	filter: drop-shadow(0px 0px 4px #ffffff70);
+	border-color: white;
 }
 .player .pokeball-display > .pokeball-helper > .pokeball-container > .pokeball  {
 	cursor: pointer;
@@ -754,6 +762,11 @@ body {
 }
 .move.active-move:hover {
 	background-color: var(--move-usable-focus);
+}
+.move.highlight {
+	box-shadow: 0 0 1em var(--player-color);
+	background-color: var(--player-color);
+	color: black;
 }
 
 .move > .move-top{

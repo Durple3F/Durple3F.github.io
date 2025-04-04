@@ -163,6 +163,31 @@ const pokemonMoveData = {
 			}
 		],
 	},
+	"Copycat": {
+		name: "Copycat",
+		type: "Normal",
+		category: "Status",
+		strategy: "special",
+		pp: 20,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 1,
+		energy: {
+			// purple: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Charm.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack", wait: true },
+			{ type: "wait", duration: 200 },
+			{ type: "get-last-move", target: "opponent" },
+			{ type: "use-move", move: -1 }
+		],
+		highlightOnHover: {
+			type: "last-enemy-move"
+		}
+	},
 	"Curse": {
 		name: "Curse",
 		type: "Ghost",
@@ -233,7 +258,6 @@ const pokemonMoveData = {
 			{ type: "load-value", value: 6 },
 			{ type: "jump-if-less-than", jumpTo: "end" },
 			{ type: "apply-status-effect", statusEffect: "confused", target: "opponent" },
-			{ type: "load-value", value: 6, label: "end" },
 			{ type: "end-turn", label: "end" }
 		],
 	},
@@ -348,6 +372,32 @@ const pokemonMoveData = {
 				lostOnSwap: true
 			} },
 		]
+	},
+	"Fake Tears": {
+		name: "Fake Tears",
+		type: "Normal",
+		category: "Status",
+		strategy: "debuff-opponent",
+		pp: 20,
+		power: null,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			purple: 10
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Fake Tears.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{
+				type: "apply-debuff", target: "opponent", debuff: {
+					type: "stat",
+					stat: "specialDefense",
+					amount: -2
+				}
+			}
+		],
 	},
 	"Feint": {
 		name: "Feint",
