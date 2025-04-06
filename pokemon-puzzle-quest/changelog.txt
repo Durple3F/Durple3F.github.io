@@ -1,6 +1,10 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-4/4 (14.5k lines):
+4/5 (15.0k lines):
+	- Added new dialogue effects
+	- I'm finally pretty happy with level 1-7. Mostly just adding dialogue.
+
+4/4 (14.7k lines):
 	- Slowly starting to rework where the dialogue effects are stored.
 	- Added some more to the 1-7 cutscenes.
 	- Added some new dialogue effects.
@@ -9,6 +13,7 @@
 	- Added a skip button to dialogue
 	- Finally figured out how to make move sides have stuff sticking out of the sides, if I ever want that. Only downside is that now you have to scroll both sides of the play area.
 	- Then I figured out how to get rid of that last little issue ^^^
+	- I've customized the moves so they show up with their type's color. I'm not big on it right now, but I like it a bit.
 
 4/3 (14.4k lines):
 	- Added some config on my end for how the fps displays.

@@ -75,6 +75,29 @@ body {
 	--energy-purple: #dd60dd;
 	--exp: #74def0;
 
+	--move-shadow-size: 1em;
+	--move-text-lighter: white;
+	--move-text-light: rgb(180, 180, 180);
+	--move-text-dark: black;
+	--type-water: #2381ef;
+	--type-steel: #60a1b7;
+	--type-rock: #aea981;
+	--type-psychic: #ee4079;
+	--type-poison: #9240cc;
+	--type-normal: #9fa19e;
+	--type-ice: #3ed9ff;
+	--type-ground: #915118;
+	--type-grass: #3ea125;
+	--type-ghost: #703f70;
+	--type-flying: #81b8ee;
+	--type-fire: #e62222;
+	--type-fighting: #ff7f00;
+	--type-fairy: #ee70ee;
+	--type-electric: #fabf00;
+	--type-dragon: #5160e1;
+	--type-dark: #50403d;
+	--type-bug: #91a110;
+
 	--dialogue-font-size: min(5vh, 3vw);
 	--active-pokemon-box-size: max(4em, 10vh);
 	--ui-primary-bg: rgb(75, 117, 232);
@@ -496,9 +519,9 @@ body {
 	justify-content: center;
 	align-items: center;
 	position: fixed;
-	top: 0;
+	top: 50%;
 	left: 50%;
-	transform: translate(-50%);
+	transform: translate(-50%, -50%);
 	z-index: 5;
 }
 .board-center > #screen {
@@ -760,11 +783,12 @@ body {
 
 .move {
 	border-radius: 0.25em;
+	--background-color: var(var(--player-color));
 	background-color: var(--move-unusable);
-	color: rgb(180, 180, 180);
+	color: var(--move-text-light);
 	margin-top: 0.25em; margin-bottom: 0.25em;
 	padding-top: 0.25em;
-	transition: color 0.3s, background-color 0.3s;
+	transition: color 0.3s, background-color 0.3s, box-shadow 0.2s, transform 0.3s;
 }
 .move.usable {
 	background-color: var(--move-usable);
@@ -774,11 +798,140 @@ body {
 .move.usable:hover {
 	background-color: var(--move-usable-focus);
 }
+.move.usable[data-move-type="Bug"] {
+	background-color: var(--type-bug);
+	color: var(--move-text-lighter);
+}
+.move.usable[data-move-type="Bug"]:active {
+	box-shadow: 0 0 var(--move-shadow-size) var(--type-bug);
+}
+.move.usable[data-move-type="Dark"] {
+	background-color: var(--type-dark);
+	color: var(--move-text-lighter);
+}
+.move.usable[data-move-type="Dark"]:active {
+	box-shadow: 0 0 var(--move-shadow-size) var(--type-dark);
+}
+.move.usable[data-move-type="Dragon"] {
+	background-color: var(--type-dragon);
+	color: var(--move-text-lighter);
+}
+.move.usable[data-move-type="Dragon"]:active {
+	box-shadow: 0 0 var(--move-shadow-size) var(--type-dragon);
+}
+.move.usable[data-move-type="Electric"] {
+	background-color: var(--type-electric);
+	color: var(--move-text-lighter);
+}
+.move.usable[data-move-type="Electric"]:active {
+	box-shadow: 0 0 var(--move-shadow-size) var(--type-electric);
+}
+.move.usable[data-move-type="Fairy"] {
+	background-color: var(--type-fairy);
+	color: var(--move-text-lighter);
+}
+.move.usable[data-move-type="Fairy"]:active {
+	box-shadow: 0 0 var(--move-shadow-size) var(--type-fairy);
+}
+.move.usable[data-move-type="Fighting"] {
+	background-color: var(--type-fighting);
+	color: var(--move-text-lighter);
+}
+.move.usable[data-move-type="Fighting"]:active {
+	box-shadow: 0 0 var(--move-shadow-size) var(--type-fighting);
+}
+.move.usable[data-move-type="Fire"] {
+	background-color: var(--type-fire);
+	color: var(--move-text-lighter);
+}
+.move.usable[data-move-type="Fire"]:active {
+	box-shadow: 0 0 var(--move-shadow-size) var(--type-fire);
+}
+.move.usable[data-move-type="Flying"] {
+	background-color: var(--type-flying);
+	color: var(--move-text-lighter);
+}
+.move.usable[data-move-type="Flying"]:active {
+	box-shadow: 0 0 var(--move-shadow-size) var(--type-flying);
+}
+.move.usable[data-move-type="Ghost"] {
+	background-color: var(--type-ghost);
+	color: var(--move-text-lighter);
+}
+.move.usable[data-move-type="Ghost"]:active {
+	box-shadow: 0 0 var(--move-shadow-size) var(--type-ghost);
+}
+.move.usable[data-move-type="Grass"] {
+	background-color: var(--type-grass);
+	color: var(--move-text-lighter);
+}
+.move.usable[data-move-type="Grass"]:active {
+	box-shadow: 0 0 var(--move-shadow-size) var(--type-grass);
+}
+.move.usable[data-move-type="Ground"] {
+	background-color: var(--type-ground);
+	color: var(--move-text-lighter);
+}
+.move.usable[data-move-type="Ground"]:active {
+	box-shadow: 0 0 var(--move-shadow-size) var(--type-ground);
+}
+.move.usable[data-move-type="Ice"] {
+	background-color: var(--type-ice);
+	color: var(--move-text-lighter);
+}
+.move.usable[data-move-type="Ice"]:active {
+	box-shadow: 0 0 var(--move-shadow-size) var(--type-ice);
+}
+.move.usable[data-move-type="Normal"] {
+	background-color: var(--type-normal);
+	color: var(--move-text-lighter);
+}
+.move.usable[data-move-type="Normal"]:active {
+	box-shadow: 0 0 var(--move-shadow-size) var(--type-normal);
+}
+.move.usable[data-move-type="Poison"] {
+	background-color: var(--type-poison);
+	color: var(--move-text-lighter);
+}
+.move.usable[data-move-type="Poison"]:active {
+	box-shadow: 0 0 var(--move-shadow-size) var(--type-poison);
+}
+.move.usable[data-move-type="Psychic"] {
+	background-color: var(--type-psychic);
+	color: var(--move-text-lighter);
+}
+.move.usable[data-move-type="Psychic"]:active {
+	box-shadow: 0 0 var(--move-shadow-size) var(--type-psychic);
+}
+.move.usable[data-move-type="Rock"] {
+	background-color: var(--type-rock);
+	color: var(--move-text-lighter);
+}
+.move.usable[data-move-type="Rock"]:active {
+	box-shadow: 0 0 var(--move-shadow-size) var(--type-rock);
+}
+.move.usable[data-move-type="Steel"] {
+	background-color: var(--type-steel);
+	color: var(--move-text-lighter);
+}
+.move.usable[data-move-type="Steel"]:active {
+	box-shadow: 0 0 var(--move-shadow-size) var(--type-steel);
+}
+.move.usable[data-move-type="Water"] {
+	background-color: var(--type-water);
+	color: var(--move-text-lighter);
+}
+.move.usable[data-move-type="Water"]:active {
+	box-shadow: 0 0 var(--move-shadow-size) var(--type-water);
+}
 .move.usable[data-struggle="true"] {
 	background-color: var(--health-med)
 }
 .move.usable[data-struggle="true"]:hover {
 	background-color: #dcb518;
+}
+.move.usable:active {
+	transform: scale(1.1);
 }
 .move.unavailable {
   opacity: 0.5;
@@ -796,6 +949,12 @@ body {
 	background-color: var(--player-color);
 	box-shadow: 0 0 1em var(--player-color);
 	color: black;
+}
+.player .move {
+	transform-origin: left;
+}
+.enemy .move {
+	transform-origin: right;
 }
 
 .move > .move-top{
@@ -1342,8 +1501,6 @@ body {
 	drop-shadow(-0.05em 0em 0.1em #ececec)
 	drop-shadow(0em 0.05em 0.1em #ececec)
 	drop-shadow(0em -0.05em 0.1em #ececec);
-}
-#dialogue > .text-box > .text {
 	color: black;
 }
 #dialogue > .text-box > .text > span {
@@ -1358,7 +1515,7 @@ body {
 	position: absolute;
 	top: 70%;	left: 85%;
 	transform: translate(-50%, -50%);
-	font-size: min(7vh, 2.4em, 7vw);
+	font-size: var(--dialogue-font-size);
 	background-image: radial-gradient(black, black);
 	background-clip: text;
 	color: transparent;

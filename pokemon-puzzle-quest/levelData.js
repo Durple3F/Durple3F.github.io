@@ -423,7 +423,7 @@ const levelData = [
 				name: "Joey",
 				class: "Youngster-Gen7",
 				pokemon: [
-					{ id: "Metapod", level: 7 }
+					{ id: "Metapod", name: "Podzilla", level: 7 }
 				]
 			},
 			{
@@ -437,8 +437,8 @@ const levelData = [
 				name: "Emily",
 				class: "Teacher-Gen7",
 				pokemon: [
-					{ id: "Magnemite", level: 8 },
-					{ id: "Meowth-Alola", level: 9 }
+					{ id: "Magnemite", name: "Tesla", level: 8 },
+					{ id: "Meowth-Alola", name: "Cleo", level: 9 }
 				]
 			},
 		],
@@ -449,11 +449,16 @@ const levelData = [
 			{ type: "dialogue", source: "route-1-7-dialogue-2" },
 			{ type: "fight", trainer: 1 },
 			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "dialogue", source: "route-1-7-dialogue-3" },
 			{ type: "fight", trainer: 2 },
 			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "dialogue", source: "route-1-7-dialogue-4" },
 			{ type: "fight", trainer: 3 },
 			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "dialogue", source: "route-1-7-dialogue-5" },
 			{ type: "fight", trainer: 4 },
+			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "dialogue", source: "route-1-7-dialogue-6" },
 		]
 	}
 ]

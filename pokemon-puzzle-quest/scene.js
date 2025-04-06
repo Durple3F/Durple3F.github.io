@@ -252,14 +252,16 @@ function startScene(name, options){
 			const getPopover = level => {
 				let content = $(`<div class='level-popover text-center d-flex flex-column align-items-center justify-content-center'></div>`)
 				content.append(`<div class='name'>${level.name}</div>`)
+				let btn = $(`<button class='btn btn-primary'>Play Level </button>`)
+				btn.append("<i class='bi bi-play-circle-fill'></i>")
+				content.append(btn)
+				btn.click(() => confirmChoice(level))
+
 				if (level.description){
 					let description = getLocaleString(level.description, lang)
 					content.append(`<div class='desc'>${description}</div>`)
 				}
-				let btn = $(`<button class='btn btn-primary'>Play Level </button>`)
-				btn.append("<i class='bi bi-play-circle-fill'></i>")
-				btn.click(() => confirmChoice(level))
-				content.append(btn)
+
 				return content
 			}
 			const confirmChoice = level => {

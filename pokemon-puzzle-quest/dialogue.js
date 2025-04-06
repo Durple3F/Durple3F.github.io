@@ -4,7 +4,8 @@ const textCharacterDurationMap = {
 	"!": 7,
 	"?": 10,
 	"?!": 10,
-	"...": 30,
+	"...": 20,
+	"—": 20,
 	"^^": 0, //This one's for events
 }
 const textColors = {
@@ -22,7 +23,8 @@ function beginDialogue(dialogueData){
 		effectIndex: -1,
 		nextEffectIndex: 0,
 		eventIndex: 0,
-		speakers: []
+		speakers: [],
+		intervals: {}
 	}
 
 	let boardIsVisible = $("#board").css("display") !== "none"
@@ -58,6 +60,9 @@ function beginDialogue(dialogueData){
 				$("#board").removeClass("showing-dialogue")
 			})
 		}
+		for (let interval in dialogueProgress.intervals){
+			clearInterval(dialogueProgress.intervals[interval])
+		}
 		return delay(400)
 	})
 
@@ -88,23 +93,50 @@ function advanceCurrentDialogue(){
 
 	switch (effect.type){
 		case "get-speaker": {
-			let speaker = {
-				position: "right",
-				facing: "left"
-			}
+			let speaker = {}
+			dialogueProgress.speakers.push(speaker)
+			let speakerTag = $("<div class='speaker'></div>")
+			speaker.tag = speakerTag
 			let name = effect.name
 			speaker.name = name
 			speaker.id = effect.id || speaker.name
-			dialogueProgress.speakers.push(speaker)
 			let trainerClassName = effect.class
 			let trainerClass = NPCTrainerData[trainerClassName]
 			speaker.class = trainerClass
+			let position = effect.position ?? "right"
+			speaker.position = position
+			let facing = effect.facing ?? "left"
+			speaker.facing = facing
+
+			let positions = {
+				"right": {
+					bottom: "30%",
+					left: "50%"
+				},
+				"left": {
+					bottom: "30%",
+					left: "10%"
+				}
+			}
+			speakerTag.css(positions[position])
+
 			let url = trainerClass.imageSources["trainer"]
-			let speakerTag = $("<div class='speaker'></div>")
-			speaker.tag = speakerTag
 			let img = $("<img>")
 			img.attr("src", url)
 			speakerTag.append(img)
+			speaker.imgTag = img
+
+			let facings = {
+				"right": "scaleX(-1)",
+				"left": ""
+			}
+			img.css("transform", facings[facing])
+
+			if (effect.fadeIn){
+				speakerTag.hide()
+				speakerTag.fadeIn()
+			}
+
 			speakersTag.append(speakerTag)
 			resolvePromise()
 		} break
@@ -203,6 +235,10 @@ function advanceCurrentDialogue(){
 						currentAdditionalStyle["font-style"] = "italic"
 					} else if (style === "end-italics") {
 						currentAdditionalStyle["font-style"] = ""
+					} else if (style === "start-bold") {
+						currentAdditionalStyle["font-weight"] = "bold"
+					} else if (style === "end-bold") {
+						currentAdditionalStyle["font-weight"] = ""
 					} else {
 						console.warn("Unknown style info", style)
 					}
@@ -304,7 +340,6 @@ function advanceCurrentDialogue(){
 				let style = textPiece.style
 				textPieceTag.css(textPiece.style)
 				if (style["font-style"] === "italic"){
-					console.log(style)
 					textPieceTag.css({
 						"padding-right": "0.12em"
 					})
@@ -404,10 +439,6 @@ function advanceCurrentDialogue(){
 			dialogueProgress.info[effectIndex] = playerSaveInfo[effect.key]
 			resolvePromise()
 		} break
-		case "wait": {
-			let wait = effect.waitDuration
-			delay(wait).then(() => resolvePromise())
-		} break
 		default:
 			carryOutDialogueEvent(effect)
 			.then(() => resolvePromise())
@@ -450,6 +481,7 @@ function changeDialogueStyle(speaker){
 	textBox.children(".text").children("span").css("background-image", style.textBoxTextBackground)
 	textBox.children(".text-continue").css("background-image", style.textBoxTextContinueBackground)
 	let namePlateTag = textBox.children(".nameplate")
+	namePlateTag.css("opacity", style.namePlateOpacity)
 	namePlateTag.children(".text").css("background-image", style.namePlateTextBackground)
 	namePlateTag.children(".text-background").css("background-color", style.namePlateBackgroundColor)
 	namePlateTag.children(".text-background-2").css("background-image", style.namePlateBackground2)
@@ -465,6 +497,7 @@ function carryOutDialogueEvent(effect){
 		speaker = dialogueProgress.speakers.find(s => s.id === name)
 		tag = speaker.tag
 	}
+	let callbacks = dialogueProgress.dialogue.callbacks || {}
 
 	let options = {}
 	let dialogueContainer = $("#dialogue-container")
@@ -485,84 +518,103 @@ function carryOutDialogueEvent(effect){
 
 	let effectData = dialogueEffects[effect.type]
 	if (effectData){
+		let target
+		if (effectData.hasTarget){
+			let targetType = effect.targetType ?? effectData.targetType ?? "speaker"
+			if (targetType === "speaker"){
+				target = options.speaker.tag
+			} else if (targetType === "image"){
+				target = speakersTag.children(`[data-name=${effect.image}]`)
+			} else {
+				console.warn("???", targetType)
+			}
+		}
+		options.target = target
 		effectData.execute(resolvePromise, effect, dialogueProgress, options)
-		return promise
-	}
-
-	switch (effect.type){
-		case "transform-speaker": {
-			let transform = effect.transform
-			let duration = effect.duration ?? 0
-			let wait = effect.waitDuration ?? 100
-			tag.css("transition", `${duration}ms transform`)
-			delay(10).then(() => tag.css("transform", transform))
-			delay(10 + wait).then(() => resolvePromise())
-		} break
-		case "animate-speaker-nameplate": {
-			let tag = $("#dialogue").find(".nameplate")
-			let css = effect.css
-			let duration = effect.duration ?? 0
-			let wait = effect.waitDuration ?? duration
-			if (duration){
-				$(tag).animate(css, duration)
-			} else {
-				$(tag).css(css)
-			}
-
-			if (wait){
-				delay(wait).then(() => resolvePromise())
-			} else {
-				resolvePromise()
-			}
-		} break
-		case "animate-speaker": {
-			let speaker = options.speaker
-			let image = speaker.tag
-			let css = effect.css
-			let duration = effect.duration ?? 500
-			let waitDuration = effect.waitDuration ?? duration
-			image.animate(css, duration)
-			delay(waitDuration).then(() => resolvePromise())
-		} break
-		case "fade-out-text": {
-			let text = effect.text
-			let shownText = [...textBox.find(".letter")]
-			let textSpeed = config.textSpeed ?? 10
-			let promises = []
-			for (let i in shownText){
-				let nextFew = shownText.slice(i, text.length)
-				if (nextFew.length < text.length) break
-				let thatText = nextFew.map(tag => tag.textContent).join("")
-				//Remove those pesky non-breaking spaces
-				let matches = text.split("").every((v, charI) => {
-					if (v === " ") return true
-					if (v === thatText[charI]) return true
-					console.log(v, thatText[charI])
-					return false
-				})
-				if (!matches) continue
-
-				//We found the text, now we can fade those tags out.
-				let currentDuration = 0
-				for (let j = nextFew.length - 1; j >= 0; j--){
-					let letterTag = nextFew[j]
-					currentDuration += textSpeed
-					let p = delay(currentDuration).then(() => {
-						return new Promise(res => {
-							$(letterTag).fadeOut({
-								complete: () => res()
+	} else {
+		switch (effect.type){
+			case "transform-speaker": {
+				let transform = effect.transform
+				let duration = effect.duration ?? 0
+				let wait = effect.waitDuration ?? 100
+				tag.css("transition", `${duration}ms transform`)
+				delay(10).then(() => tag.css("transform", transform))
+				delay(10 + wait).then(() => resolvePromise())
+			} break
+			case "animate-speaker-nameplate": {
+				let tag = $("#dialogue").find(".nameplate")
+				let css = effect.css
+				let duration = effect.duration ?? 0
+				let wait = effect.waitDuration ?? duration
+				if (duration){
+					$(tag).animate(css, duration)
+				} else {
+					$(tag).css(css)
+				}
+	
+				if (wait){
+					delay(wait).then(() => resolvePromise())
+				} else {
+					resolvePromise()
+				}
+			} break
+			case "animate-speaker": {
+				let speaker = options.speaker
+				let image = speaker.tag
+				let css = effect.css
+				let duration = effect.duration ?? 500
+				let waitDuration = effect.waitDuration ?? duration
+				image.animate(css, duration)
+				delay(waitDuration).then(() => resolvePromise())
+			} break
+			case "fade-out-text": {
+				let text = effect.text
+				let shownText = [...textBox.find(".letter")]
+				let textSpeed = config.textSpeed ?? 10
+				let promises = []
+				for (let i in shownText){
+					let nextFew = shownText.slice(i, text.length)
+					if (nextFew.length < text.length) break
+					let thatText = nextFew.map(tag => tag.textContent).join("")
+					//Remove those pesky non-breaking spaces
+					let matches = text.split("").every((v, charI) => {
+						if (v === " ") return true
+						if (v === thatText[charI]) return true
+						console.log(v, thatText[charI])
+						return false
+					})
+					if (!matches) continue
+	
+					//We found the text, now we can fade those tags out.
+					let currentDuration = 0
+					for (let j = nextFew.length - 1; j >= 0; j--){
+						let letterTag = nextFew[j]
+						currentDuration += textSpeed
+						let p = delay(currentDuration).then(() => {
+							return new Promise(res => {
+								$(letterTag).fadeOut({
+									complete: () => res()
+								})
 							})
 						})
-					})
-					promises.push(p)
+						promises.push(p)
+					}
+					break
 				}
-				break
-			}
-			Promise.all(promises)
-			.then(() => resolvePromise())
-		} break
-		default:
-			console.warn("You never handled", effect.type)
+				Promise.all(promises)
+				.then(() => resolvePromise())
+			} break
+			default:
+				console.warn("You never handled", effect.type)
+		}
+	}
+
+	if (effect.then){
+		let callback = callbacks[effect.then]
+		//Notably, this behavior is not halting
+		promise.then(() => {
+			carryOutDialogueEvent(callback)
+		})
 	}
 	
 	return promise

@@ -6,7 +6,7 @@
 	"choose-pokemon": "Choose Pokémon",
 
 	"pokemon-move-requirement-level": "Your Pokemon needs to be at least level %c% to use this move.",
-	"pokemon-move-requirement-level-error": "Your Pokemon needs to be at least... wait, they're high enough level. Huh????",
+	"pokemon-move-requirement-level-error": "Your Pokémon needs to be at least... wait, they're high enough level. Huh????",
 
 	"error-cant-remove-last-pokemon": "You can't put your only Pokémon into the PC.",
 	"error-no-usable-pokemon": "All your Pokémon are currently fainted.",
@@ -153,7 +153,7 @@
 				{ "type": "get-speaker", "name": "Lillie", "class": "Lillie" },
 				{ "type": "text", "speaker": "Lillie", "text": "Phew..." },
 				{ "type": "text", "speaker": "Lillie", "text": "Thank you so much for helping me out there." },
-				{ "type": "text", "speaker": "Lillie", "text": "I'll... get out of your hair. The professor probably needs me, anyway. Thank you again!" },
+				{ "type": "text", "speaker": "Lillie", "text": "I'll get out of your hair. The professor probably needs me, anyway. Thank you again!" },
 				{ "type": "animate-speaker", "speaker": "Lillie", "css": {
 					"left": "+=20%"
 				}, "duration": 600, "waitDuration": 400 },
@@ -173,8 +173,137 @@
 			"effects": [
 				{ "type": "get-speaker", "name": "Hiromi", "class": "Young-Athlete-F" },
 				{ "type": "text", "speaker": "Hiromi", "text": "Aww, dang. But be honest, was my line at least a $@start-italics|@$little$@end-italics|@$ cool?" },
-				{ "type": "get-speaker", "name": "Mia", "class": "Preschooler-F-Gen7" },
+				{ "type": "get-speaker", "name": "Mia", "class": "Preschooler-F-Gen7", "position": "left", "facing": "right", "fadeIn": true },
 				{ "type": "text", "speaker": "Mia", "text": "Yay, my turn my turn! Uh... me and my Pokémon are gonna $@start-italics|@$rock$@end-italics|@$ your world!" }
+			]
+		},
+		"route-1-7-dialogue-3": {
+			"events": [
+				{ "type": "looping-animation", "name": "Wobble", "targetType": "image", "image": "Bonsly", "states": [
+					{
+						"instant": true,
+						"duration": 1000,
+						"css": {
+							"transition": "transform 1000ms",
+							"transform": "scale(0.5) rotate(30deg)"
+						}
+					},
+					{
+						"instant": true,
+						"duration": 1000,
+						"css": {
+							"transition": "transform 1000ms",
+							"transform": "scale(0.5) rotate(-48deg)"
+						}
+					}
+				]}
+			],
+			"effects": [
+				{ "type": "get-speaker", "name": "Mia", "class": "Preschooler-F-Gen7" },
+				{ "type": "display-image", "src": "src/img/pokemon-sprites/bonsly.png", "name": "Bonsly", "position": {
+					"type": "relative",
+					"relative": "Mia"
+				}},
+				{ "type": "style-speaker", "speaker": "Mia", "css": {
+					"z-index": 5
+				}},
+				{ "type": "style-image", "image": "Bonsly", "css": {
+					"left": "-=8%",
+					"top": "+=20%",
+					"transition": "transform 0ms",
+					"transform": "scale(0.5) rotate(-30deg)"
+				}},
+				{ "type": "text", "speaker": "Mia", "text": "$@start-italics|@$A^^wwwwww...$@end-italics|@$ Mister Wobbles wobbled too hard..." },
+				{ "type": "get-speaker", "name": "Joey", "class": "Youngster-Gen7", "position": "left", "facing": "right", "fadeIn": true },
+				{ "type": "text", "speaker": "Joey", "text": "Alright, lemme show you two how it's $@start-italics|@$really$@end-italics|@$ done!" },
+				{ "type": "text", "speaker": "Joey", "text": "This Pokémon I caught yesterday is practically invincible!" }
+			]
+		},
+		"route-1-7-dialogue-4": {
+			"callbacks": {
+				"wait-before-remove-Joey": { "type": "wait", "waitDuration": 1000, "then": "remove-Joey" },
+				"remove-Joey": {"type": "remove-speaker", "speaker": "Joey"}
+			},
+			"effects": [
+				{ "type": "get-speaker", "name": "Joey", "class": "Youngster-Gen7" },
+				{ "type": "text", "speaker": "Joey", "text": "How did you defeat my unbeatable strategy?! I guess I should teach Podzilla more moves..." },
+				{ "type": "get-speaker", "name": "Joseph", "class": "Rising-Star", "position": "left", "facing": "right" },
+				{ "type": "come-in-from-offscreen", "speaker": "Joseph", "direction": "right", "duration": 800, "waitDuration": 400 },
+				{ "type": "text", "speaker": "Joseph", "text": "Hmph. What was your plan there, Joey? Just let your Metapod get squashed?" },
+				{ "type": "animate-speaker", "speaker": "Joseph", "css": {
+					"left": "50%"
+				}, "duration": 600, "waitDuration": 230 },
+				{ "type": "transform-speaker", "speaker": "Joseph", "transform": "scaleX(-1)", "duration": 500, "waitDuration": 100 },
+				{ "type": "animate-speaker", "speaker": "Joey", "css": {
+					"left": "100vw"
+				}, "duration": 600, "waitDuration": 30, "then": "wait-before-remove-Joey" },
+				{ "type": "transform-speaker", "speaker": "Joey", "transform": "rotate(30deg)", "duration": 600, "waitDuration": 100 },
+				{ "type": "text", "speaker": "Joseph", "text": "Let me take a swing at them. Sit back and watch a future Pokémon champion at work!" }
+			]
+		},
+		"route-1-7-dialogue-5": {
+			"callbacks": {},
+			"effects": [
+				{ "type": "get-speaker", "name": "Joseph", "class": "Rising-Star" },
+				{ "type": "text", "speaker": "Joseph", "text": "$@start-bold|@$What?!$@end-bold|@$ How the heck did— How did I lose?! That— that can't be right!" },
+				{ "type": "text", "speaker": "Joseph", "text": "Grrr... Maybe I need to train more. I'm gonna be the champion one day!" },
+				{ "type": "get-speaker", "name": "Emily", "class": "Teacher-Gen7", "position": "left", "facing": "right" },
+				{ "type": "come-in-from-offscreen", "speaker": "Emily", "direction": "right", "duration": 1500, "waitDuration": 800 },
+				{ "type": "text", "speaker": "Emily", "text": "Oh, there you are, Joseph. And Hiromi, Joey, Mia... wait, is everyone already finished? What happened?" },
+				{ "type": "text", "speaker": "Emily", "text": "Oh! You're not the trainer I was expecting... but, judging by all these fainted Pokémon, I think I can guess what happened." },
+				{ "type": "text", "speaker": "Emily", "text": "Well, no harm done. The lesson was about battling, and thanks to you, they got $@start-italics|@$plenty$@end-italics|@$ of experience." },
+				{ "type": "text", "speaker": "Emily", "text": "Since everyone's already battled... I guess there's no harm in one last match, right? Think of it as... $@start-italics|@$extra credit$@end-italics|@$." }
+			]
+		},
+		"route-1-7-dialogue-6": {
+			"callbacks": {},
+			"effects": [
+				{ "type": "get-speaker", "name": "Emily", "class": "Teacher-Gen7" },
+				{ "type": "text", "speaker": "Emily", "text": "$@start-italics|@$Whew$@end-italics|@$... You really know how to keep a class on their toes." },
+				{ "type": "text", "speaker": "Emily", "text": "Well, that's everyone in the school. You've got some skills." },
+				{ "type": "get-speaker", "name": "Hiromi", "class": "Young-Athlete-F", "position": "left", "facing": "right", "fadeIn": true },
+				{ "type": "style-speaker", "speaker": "Hiromi", "css": {
+					"filter": "unset",
+					"left": "+=5%"
+				}},
+				{ "type": "get-speaker", "name": "Joey", "class": "Youngster-Gen7", "position": "left", "facing": "right", "fadeIn": true },
+				{ "type": "style-speaker", "speaker": "Joey", "css": {
+					"filter": "unset",
+					"left": "-=5%"
+				}},
+				{ "type": "get-speaker", "name": "Mia", "class": "Preschooler-F-Gen7", "position": "left", "facing": "right", "fadeIn": true },
+				{ "type": "style-speaker", "speaker": "Mia", "css": {
+					"filter": "unset"
+				}},
+				{ "type": "text", "speaker": "Hiromi", "text": "I'm gonna make up more cool battle lines!" },
+				{ "type": "text", "speaker": "Mia", "text": "Me and Mister Wobbles are gonna be just as good as you when we grow up!" },
+				{ "type": "text", "speaker": "Joey", "text": "I just looked up what Metapod evolves into, I think I'm gonna have to rename him soon..." },
+				{ "type": "get-speaker", "name": "Lillie", "class": "Lillie" },
+				{ "type": "style-speaker", "speaker": "Lillie", "css": {
+					"left": "+=10%"
+				}},
+				{ "type": "come-in-from-offscreen", "speaker": "Lillie", "direction": "left", "duration": 1500, "waitDuration": 0 },
+				{ "type": "text", "speaker": "Lillie", "text": "Hey, uh... sorry to interrupt, but the professor and I are finished." },
+				{ "type": "text", "speaker": "Lillie", "text": "Apparently he's got something planned for later today... but anyway, he asked about you. Sorry, you just came up in conversation..." },
+				{ "type": "text", "speaker": "Lillie", "text": "Anyway, he wants me to take you to Hau'oli City. I think he thinks you're doing the island challenge thing? I don't know..." },
+				{ "type": "text", "speaker": "Lillie", "text": "But I can take you there, if you'd like." },
+				{ "type": "remove-speaker", "speaker": "Emily" },
+				{ "type": "remove-speaker", "speaker": "Hiromi" },
+				{ "type": "remove-speaker", "speaker": "Mia" },
+				{ "type": "remove-speaker", "speaker": "Joey" },
+				{ "type": "remove-speaker", "speaker": "Lillie" },
+
+				{ "type": "get-speaker", "name": "Narrator", "class": "Narrator" },
+				{ "type": "text", "speaker": "Narrator", "text": "Some time later..." },
+				{ "type": "get-speaker", "name": "The Masked Royal", "class": "Masked-Royal" },{ "type": "come-in-from-offscreen", "speaker": "The Masked Royal", "direction": "up", "duration": 400, "waitDuration": 200 },
+				{ "type": "text", "speaker": "The Masked Royal", "text": "Alright! Who's ready to throw down?!" },
+				{ "type": "transform-speaker", "speaker": "The Masked Royal", "transform": "scaleX(-1)", "duration": 300 },
+				{ "type": "wait", "waitDuration": 1000 },
+				{ "type": "transform-speaker", "speaker": "The Masked Royal", "transform": "scaleX(1)", "duration": 300 },
+				{ "type": "wait", "waitDuration": 1500 },
+				{ "type": "transform-speaker", "speaker": "The Masked Royal", "transform": "scaleX(-1)", "duration": 600 },
+				{ "type": "wait", "waitDuration": 1000 },
+				{ "type": "text", "speaker": "The Masked Royal", "text": "Where'd everybody go?" }
 			]
 		}
 	},

@@ -2438,8 +2438,8 @@ class Round{
 	}
 
 	fillTrainerTags(tags, classname){
-		tags.side = $(`#board ${classname} .board-side`)
-		tags.side[0].scroll(0, 0)
+		tags.side = $(`#board .board-side-container${classname} .board-side`)
+		tags.side.parent()[0].scroll(0, 0)
 		tags.sideTop = tags.side.children(".board-side-top")
 		tags.sideMiddle = tags.side.children(".board-side-middle")
 		tags.sideBottom = tags.side.children(".board-side-bottom")
@@ -2862,6 +2862,8 @@ class Round{
 				tag.attr("data-pokemon", pokemonIndex)
 				let moveIndex = pokemon.moves.indexOf(move)
 				tag.attr("data-move", moveIndex)
+				let type = move
+				tag.attr("data-move-type", type)
 
 				//The move Copycat (and maybe others) does something when you hover over it.
 				if (move.highlightOnHover){
@@ -2924,6 +2926,9 @@ class Round{
 			let payability = this.canPayCost(thisMove, trainerIndex, cost)
 			let moveCostTag = moveTag.children(".move-cost")
 			let costParts = moveCostTag.children(".cost-part")
+
+			let type = thisMove.type
+			moveTag.attr("data-move-type", type)
 			
 			let usable = true
 			for (let i = 0; i < costParts.length; i++){
