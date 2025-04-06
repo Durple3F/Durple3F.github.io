@@ -4,6 +4,7 @@
 	- Added Abra
 	- Added Teleport
 	- While dialogue is being shown, you can't make matches.
+	- There's now a little tooltip that shows you what tiles you're being asked to choose.
 
 4/5 (15.0k lines):
 	- Added new dialogue effects

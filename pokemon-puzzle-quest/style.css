@@ -527,6 +527,44 @@ body {
 .board-center > #screen {
 	width: 50%;
 }
+.board-center > #screen-tooltip {
+	position: absolute;
+	right: -2em;
+	width: 20vw;
+	max-height: 50vh;
+	min-height: 30vh;
+	background-color: var(--move-tooltip);
+	border-radius: 1em;
+	transform: translate(100%, 0);
+	font-size: 120%;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	/* pointer-events: none; */
+	/* transition: opacity 0.5s; */
+}
+/* .board-center > #screen-tooltip.show {
+	opacity: 1;
+}
+.board-center > #screen-tooltip.hide {
+	opacity: 0;
+} */
+.board-center .confirm-btn {
+	/* position: absolute;
+	top: 50%; left: 50%;
+	transform: translate(-50%, -50%); */
+	margin-left: 1em;
+	margin-right: 1em;
+	margin-bottom: 1em;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 1);
+	pointer-events: auto;
+}
+.board-center .confirm-btn[disabled] {
+	cursor: auto;
+}
 .board-center > .initiatives {
 	height: 4em;
 	width: 80%;
@@ -1048,17 +1086,10 @@ body {
 	position: absolute;
 	min-width: 100%; height: 100%;
 	top: 50%; left: 50%;
-	z-index: 10;
+	z-index: 4;
 	text-align: center;
 	transform: translate(-50%, -50%);
 	color: white;
-}
-
-.confirm-btn {
-	position: absolute;
-	top: 50%; left: 50%;
-	transform: translate(-50%, -50%);
-	box-shadow: 0px 0px 10px rgba(0, 0, 0, 1);
 }
 
 .pokemon-stats {

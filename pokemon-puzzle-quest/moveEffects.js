@@ -60,7 +60,7 @@ const pokemonMoveEffects = {
 			game.currentlySelecting.resolve = resolve
 			game.currentlySelecting.promise = promise
 
-			if (target === game.trainers[1]) {
+			if (target !== game.trainers[0]) {
 				game.waitUntilNoAnnouncements(() => {
 					game.computerMakeSelection()
 				})
@@ -70,6 +70,7 @@ const pokemonMoveEffects = {
 				let text = getLocaleString(localeId, lang)
 				text = text.replaceAll("%c", count)
 				game.createAnnouncement("general", text)
+				game.selectionBegin()
 			}
 		}
 	},

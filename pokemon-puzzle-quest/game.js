@@ -64,11 +64,11 @@ class Round{
 		this.fillTrainerTags(playerTags, ".player")
 		this.fillTrainerTags(enemyTags, ".enemy")
 
-		this.confirmButton = $(".board-side.player .confirm-btn")
+		this.selectionWindow = $(".board-center #screen-tooltip")
+		this.confirmButton = $(".board-center .confirm-btn")
 		this.confirmButton.click(() => {
 			this.confirm()
 		})
-		this.confirmButton.hide()
 
 		this.loadResources()
 		let p = this.roundStartAnimation()
@@ -1851,22 +1851,27 @@ class Round{
 			let valid = this.selectionIsValid()
 			if (valid){
 				this.submitSelection()
+				this.selectionEnd()
 			}
 		}
 		this.updateConfirmButton()
 	}
 	updateConfirmButton(){
-		//TODO really need some way of encoding whether the player gets input
-		//on the current thing
 		if (!this.currentlySelecting) return
 		let selectType = this.currentlySelecting.type
 		let playerTurn = this.currentlySelecting.player === this.trainers[0]
 		let valid = this.selectionIsValid()
 		if (selectType === "tiles" && playerTurn && valid){
-			this.confirmButton.show()
+			this.confirmButton.removeAttr("disabled")
 		} else {
-			this.confirmButton.hide()
+			this.confirmButton.attr("disabled", true)
 		}
+	}
+	selectionBegin(){
+		this.selectionWindow.fadeIn()
+	}
+	selectionEnd(){
+		this.selectionWindow.fadeOut()
 	}
 
 	canSelectTile(tile, trainerIndex){
