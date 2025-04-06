@@ -2125,7 +2125,7 @@ class Round{
 	}
 
 	handleMouseMove(){
-		if ($("#modal").hasClass("show")) return
+		if (this.shouldIgnoreInput()) return
 		let chosenTile = this.getChosenTile()
 		if (chosenTile){
 			this.moveToTopLayer(chosenTile)
@@ -2143,7 +2143,7 @@ class Round{
 		}
 	}
 	handleMouseDown(){
-		if ($("#modal").hasClass("show")) return
+		if (this.shouldIgnoreInput()) return
 		let chosenTile = this.getChosenTile()
 		if (!chosenTile) return
 		if (!this.currentlySelecting) return
@@ -2180,12 +2180,17 @@ class Round{
 		}
 	}
 	handleMouseUp(){
-		if ($("#modal").hasClass("show")) return
+		if (this.shouldIgnoreInput()) return
 		if (this.selectedTile){
 			if (this.tileSelectionType === "hold"){
 				this.deselectTile(this.selectedTile)
 			}
 		}
+	}
+	shouldIgnoreInput(){
+		if ($("#modal").hasClass("show")) return true
+		if ($("#board").hasClass("showing-dialogue")) return true
+		return false
 	}
 
 	updateStats(){

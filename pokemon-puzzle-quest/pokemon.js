@@ -478,6 +478,7 @@ class Pokemon{
 	}
 	resetEverything(){
 		this.turnsActive = 0
+		this.moveUsage.forEach(usage => usage.recharge = 0)
 
 		this.resetEnergyMastery()
 	}

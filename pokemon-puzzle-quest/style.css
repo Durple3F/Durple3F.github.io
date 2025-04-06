@@ -793,7 +793,6 @@ body {
 .move.usable {
 	background-color: var(--move-usable);
 	color: black;
-	cursor: pointer;
 }
 .move.usable:hover {
 	background-color: var(--move-usable-focus);
@@ -884,7 +883,7 @@ body {
 }
 .move.usable[data-move-type="Normal"] {
 	background-color: var(--type-normal);
-	color: var(--move-text-lighter);
+	color: var(--move-text-dark);
 }
 .move.usable[data-move-type="Normal"]:active {
 	box-shadow: 0 0 var(--move-shadow-size) var(--type-normal);
@@ -952,6 +951,9 @@ body {
 }
 .player .move {
 	transform-origin: left;
+}
+.player .move.usable {
+	cursor: pointer;
 }
 .enemy .move {
 	transform-origin: right;

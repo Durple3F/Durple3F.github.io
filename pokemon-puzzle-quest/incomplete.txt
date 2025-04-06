@@ -8,6 +8,7 @@ Incomplete move lists:
   Ledyba (lv 8)
   Spinarak (lv 8)
   Wingull (lv 10)
+  Bonsly ()
   Rowlet (lv 12)
   Litten (lv 9)
   Popplio (lv 9)
@@ -19,6 +20,7 @@ Incomplete move lists:
 Missing Evolutions:
   Rattata-Alola
   Meowth-Alola
+  Abra
   Slowpoke
   Magnemite
   Grimer-Alola
@@ -26,6 +28,7 @@ Missing Evolutions:
   Spinarak
   Pichu
   Wingull
+  Bonsly
   Rowlet
   Litten
   Popplio
@@ -39,6 +42,7 @@ Missing Abilities:
   Metapod
   Butterfree
   Meowth-Alola
+  Abra
   Slowpoke
   Magnemite
   Grimer-Alola
@@ -46,6 +50,7 @@ Missing Abilities:
   Spinarak
   Pichu
   Wingull
+  Bonsly
   Rowlet
   Litten
   Popplio

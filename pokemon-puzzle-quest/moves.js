@@ -1063,7 +1063,7 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			purple: 4
+			purple: 6
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Tail Whip.mp3"
@@ -1077,6 +1077,35 @@ const pokemonMoveData = {
 					amount: -1
 				}
 			}
+		],
+	},
+	"Teleport": {
+		name: "Teleport",
+		type: "Psychic",
+		category: "Status",
+		strategy: "special",
+		pp: 20,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 5,
+		energy: {
+			purple: 10
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Teleport.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-viable-pokemon", target: "user" },
+			{ type: "get-active-pokemon", target: "user" },
+			{ type: "remove-element-from-list", list: -2, element: -1 },
+			{ type: "get-list-length", list: -1 },
+			{ type: "load-value", value: 1 },
+			{ type: "jump-if-less-than", jumpTo: Infinity },
+			{ type: "choose-pokemon", target: "user", message: "choose-pokemon", pokemon: -4, strategy: "swap" },
+			{ type: "load-value", value: 0 },
+			{ type: "get-element-from-list", list: -2, index: -1 },
+			{ type: "swap-pokemon", target: "user", pokemon: -1 }
 		],
 	},
 	"Thunder Shock": {

@@ -323,6 +323,9 @@
 		"Meowth-Alola": {
 			"name": "Meowth"
 		},
+		"Abra": {
+			"name": "Abra"
+		},
 		"Slowpoke": {
 			"name": "Slowpoke"
 		},
@@ -576,6 +579,12 @@
 			"name": "Tail Whip",
 			"description": "Lowers the opponent's defense stat by 1 stage.",
 			"shortDescription": "Lowers enemy defense"
+		},
+		"Teleport": {
+			"name": "Teleport",
+			"description": "The user swaps to a different Pokémon if possible.",
+			"shortDescription": "Switch Pokémon",
+			"choose-pokemon": "Choose a Pokémon to teleport in."
 		},
 		"Thunder Shock": {
 			"name": "Thunder Shock",

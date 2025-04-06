@@ -243,7 +243,7 @@ const pokemonData = {
 			cry: "src/audio/cries/meowth.mp3"
 		},
 		types: ["Dark"],
-		tags: ["Starter"],
+		tags: [],
 		stats: {
 			hp: 40,
 			attack: 35,
@@ -294,6 +294,49 @@ const pokemonData = {
 					amount: 8
 				}
 			},
+		]
+	},
+	"Abra": {
+		name: "Abra",
+		number: "63",
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0063Abra.png",
+			"home": "src/img/tiny-pokemon/Abra.png"
+		},
+		sounds: {
+			cry: "src/audio/cries/abra.mp3"
+		},
+		types: ["Psychic"],
+		tags: ["Starter"],
+		stats: {
+			hp: 25,
+			attack: 20,
+			defense: 15,
+			specialAttack: 105,
+			specialDefense: 55,
+			speed: 90
+		},
+		expYield: 62,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 1,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			purple: 7
+		},
+		learnset: [
+			{
+				name: "Teleport",
+				unlock: {
+					type: "level",
+					amount: 1
+				}
+			}
 		]
 	},
 	"Slowpoke": {
@@ -381,7 +424,7 @@ const pokemonData = {
 			cry: "src/audio/cries/magnemite.mp3"
 		},
 		types: ["Electric", "Steel"],
-		tags: ["Starter"],
+		tags: [],
 		stats: {
 			hp: 25,
 			attack: 35,
@@ -447,7 +490,7 @@ const pokemonData = {
 			cry: "src/audio/cries/grimer.mp3"
 		},
 		types: ["Poison", "Dark"],
-		tags: ["Starter"],
+		tags: [],
 		stats: {
 			hp: 80,
 			attack: 80,
@@ -791,7 +834,7 @@ const pokemonData = {
 			cry: "src/audio/cries/bonsly.mp3"
 		},
 		types: ["Rock"],
-		tags: ["Starter"],
+		tags: [],
 		stats: {
 			hp: 50,
 			attack: 80,

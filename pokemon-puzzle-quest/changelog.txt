@@ -1,5 +1,10 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
+4/6 (15.1k lines):
+	- Added Abra
+	- Added Teleport
+	- While dialogue is being shown, you can't make matches.
+
 4/5 (15.0k lines):
 	- Added new dialogue effects
 	- I'm finally pretty happy with level 1-7. Mostly just adding dialogue.
