@@ -1290,6 +1290,8 @@ class Round{
 		if (options.additionalPower !== undefined){
 			power += options.additionalPower
 		}
+		power = this.getEffectivePower(attackerTrainer, attacker, move, power)
+		console.log(power)
 		
 		let category = options.category ?? move.category ?? "Physical"
 		let type = options.type ?? move.type ?? "Typeless"
@@ -1512,28 +1514,9 @@ class Round{
 		}
 		let energyCost = cost.energyCost
 		
-		let costEffects = pokemon.statusEffects.filter(s => {
-			return s.type === "cost-alteration"
-		})
-		const doesThisApply = (move, appliesTo) => {
-			let good = []
-			if (appliesTo.name){
-				good.push(move.name === appliesTo.name)
-			}
-			if (appliesTo.logic === "and"){
-				return good.every(v => v)
-			} else if (appliesTo.logic === "or"){
-				return good.some(v => v)
-			} else if (appliesTo.logic === "nor"){
-				return !good.some(v => v)
-			} else if (appliesTo.logic === "nand"){
-				return !good.every(v => v)
-			} else {
-				return good.every(v => v)
-			}
-		}
+		let costEffects = pokemon.getStatusesOfType("cost-alteration")
 		for (let statusEffect of costEffects){
-			let applies = doesThisApply(move, statusEffect.appliesTo)
+			let applies = doesThisApplyToMove(move, statusEffect.appliesTo)
 			if (applies){
 				let modification = statusEffect.energyCost
 				for (let color in modification){
@@ -1543,6 +1526,24 @@ class Round{
 		}
 
 		return cost
+	}
+
+	getEffectivePower(trainer, pokemon, move, power){
+		power = (power ?? move.power) || 0
+		let powerEffects = pokemon.getStatusesOfType("power-alteration")
+		for (let statusEffect of powerEffects){
+			let applies = doesThisApplyToMove(move, statusEffect.appliesTo)
+			if (applies){
+				let modification = statusEffect.modification
+				let operation = modification.operation ?? "add"
+				let change = modification.change
+				switch (operation){
+					case "add": power += change; break
+					case "multiply": power *= change; break
+				}
+			}
+		}
+		return power
 	}
 
 	newMoveUseObj(trainer, pokemon, move, trigger="effects"){
@@ -2861,6 +2862,7 @@ class Round{
 			})
 			tags.moves.length = 0
 			let moveListTag = tags.moveList
+			moveListTag.children().popover("dispose")
 			moveListTag.empty()
 
 			let pokemon = trainer.activePokemon
@@ -2896,8 +2898,19 @@ class Round{
 						<img src="src/img/recharge.png">
 						<div class="count">${move.rechargeTurns}</div>
 					</div>`)
-					if (move.power === 0 || move.power){
-						statLine.append(`<span class="move-power">Power: ${move.power}</span>`)
+					let power = this.getEffectivePower(trainer, pokemon, move)
+					if (power || move.power){
+						let powerTag = $(`<span class="move-power">Power: </span>`)
+						statLine.append(powerTag)
+						let powerVal = $(`<span class="val">${power}</span>`)
+						powerTag.append(powerVal)
+						if (power > move.power){
+							powerVal.addClass("up")
+							.prepend("<i class='bi bi-arrow-up'></i>")
+						} else if (power < move.power){
+							powerVal.addClass("down")
+							.prepend("<i class='bi bi-arrow-down'></i>")
+						}
 					}
 					html.append(statLine)
 					let description = getLocaleString("description", lang, ["moves", move.name])
@@ -2922,7 +2935,6 @@ class Round{
 			this.updateMovePayability(i)
 			this.updateShowStruggle(i)
 		}
-		delay(250).then(() => $(".popover").remove())
 	}
 	updatePokemonMoves(trainerIndex){
 		let trainer = this.trainers[trainerIndex]

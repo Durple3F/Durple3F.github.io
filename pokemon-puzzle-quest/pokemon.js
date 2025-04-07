@@ -286,6 +286,11 @@ class Pokemon{
 			return status.name === name
 		})
 	}
+	getStatusesOfType(type){
+		return this.statusEffects.filter(s => {
+			return s.type === type
+		})
+	}
 	removeStatus(statusEffect){
 		let index = this.statusEffects.indexOf(statusEffect)
 		if (index !== -1){

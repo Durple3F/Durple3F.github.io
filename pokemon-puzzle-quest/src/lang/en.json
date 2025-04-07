@@ -353,6 +353,9 @@
 		"Bonsly": {
 			"name": "Bonsly"
 		},
+		"Happiny": {
+			"name": "Happiny"
+		},
 		"Rowlet": {
 			"name": "Rowlet"
 		},
@@ -416,6 +419,11 @@
 			"name": "Curse",
 			"description": "If the user is Ghost type, applies Cursed to one random tile. Otherwise, lowers the user's Speed by one stage, and raises their Attack and Defense by one stage each. At the start of the opponent's turn, if any tiles are Cursed, they take damage equal to 1/4 of their max HP.",
 			"shortDescription": " "
+		},
+		"Defense Curl": {
+			"name": "Defense Curl",
+			"description": "Raises the user's defense stat by 1 stage.",
+			"shortDescription": "Raises defense and buffs other moves"
 		},
 		"Disarming Voice": {
 			"name": "Disarming Voice",

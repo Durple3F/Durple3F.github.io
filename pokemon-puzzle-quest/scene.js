@@ -55,7 +55,7 @@ function startScene(name, options){
 
 			let currentIndex = 0
 			const confirmChoice = pokemon => {
-				chooseTag.children(".ball").popover("hide")
+				chooseTag.find(".ball").popover("dispose")
 				delay(250).then(() => $(".popover").remove())
 				let caught = new Pokemon(pokemon.name, pokemon.id, {level: 5})
 				catchPokemon(caught)
@@ -1330,13 +1330,13 @@ function getStatsHTML(pokemon, options={}){
 		statTag.append(`<span class='stat-name'>${statName}</span>`)
 		let statVal = $("<span class='stat-val'></span>")
 
-		if (val > effectiveVal){
-			statVal.addClass("down")
-			.append("<i class='bi bi-arrow-down'></i>")
-		} else if (val < effectiveVal){
+		if (effectiveVal > val){
 			statVal.addClass("up")
 			.append("<i class='bi bi-arrow-up'></i>")
-		}
+		} else if (effectiveVal < val){
+			statVal.addClass("down")
+			.append("<i class='bi bi-arrow-down'></i>")
+		} 
 
 		statVal.append(effectiveVal.toFixed(0))
 		statTag.append(statVal)

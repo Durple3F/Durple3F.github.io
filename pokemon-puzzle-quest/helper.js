@@ -235,6 +235,27 @@ function getMatchTypes(match){
 	return result
 }
 
+function doesThisApplyToMove(move, appliesTo) {
+	let good = []
+	if (appliesTo.name){
+		good.push(move.name === appliesTo.name)
+	}
+	if (appliesTo.names){
+		good.push(appliesTo.names.includes(move.name))
+	}
+	if (appliesTo.logic === "and"){
+		return good.every(v => v)
+	} else if (appliesTo.logic === "or"){
+		return good.some(v => v)
+	} else if (appliesTo.logic === "nor"){
+		return !good.some(v => v)
+	} else if (appliesTo.logic === "nand"){
+		return !good.every(v => v)
+	} else {
+		return good.every(v => v)
+	}
+}
+
 function fixLearnsets() {
 	//Any pokemon with pre-evolved forms gain the learnset of those forms
 	let allPokemon = Object.values(pokemonData)

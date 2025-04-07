@@ -238,6 +238,46 @@ const pokemonMoveData = {
 			}
 		],
 	},
+	"Defense Curl": {
+		name: "Defense Curl",
+		type: "Normal",
+		category: "Status",
+		strategy: "buff-user",
+		pp: 40,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 1,
+		energy: {
+			orange: 10
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Defense Curl.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{
+				type: "apply-debuff", target: "user", debuff: {
+					type: "stat",
+					stat: "defense",
+					amount: 1
+				}
+			},
+			{ type: "apply-status-effect", target: "user", label: "alter-cost", statusEffect: {
+				name: "defense-curl-curled-up",
+				type: "power-alteration",
+				stacks: false,
+				lostOnSwap: true,
+				lostOnBatonPass: true,
+				appliesTo: {
+					names: ["Tackle", "Rollout"]
+				},
+				modification: {
+					change: 2,
+					operation: "multiply"
+				}
+			} },
+		],
+	},
 	"Disarming Voice": {
 		name: "Disarming Voice",
 		type: "Fairy",

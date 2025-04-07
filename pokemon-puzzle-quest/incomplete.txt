@@ -10,6 +10,7 @@ Incomplete move lists:
   Spinarak (lv 8)
   Wingull (lv 10)
   Bonsly ()
+  Happiny (lv 4)
   Rowlet (lv 12)
   Litten (lv 9)
   Popplio (lv 9)
@@ -29,6 +30,7 @@ Missing Evolutions:
   Spinarak
   Wingull
   Bonsly
+  Happiny
   Rowlet
   Litten
   Popplio
@@ -52,6 +54,7 @@ Missing Abilities:
   Pichu
   Wingull
   Bonsly
+  Happiny
   Rowlet
   Litten
   Popplio

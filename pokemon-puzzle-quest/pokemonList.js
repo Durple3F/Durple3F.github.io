@@ -268,80 +268,47 @@ const pokemonData = {
 		learnset: [
 			{
 				name: "Play Nice",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
+				unlock: { type: "level", amount: 1 }
 			},
 			{
 				name: "Sweet Kiss",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
+				unlock: { type: "level", amount: 1 }
 			},
 			{
 				name: "Nuzzle",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
+				unlock: { type: "level", amount: 1 }
 			},
 			{
 				name: "Nasty Plot",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
+				unlock: { type: "level", amount: 1 }
 			},
 			{
 				name: "Charm",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
+				unlock: { type: "level", amount: 1 }
 			},
 			{
 				name: "Thunder Shock",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
+				unlock: { type: "level", amount: 1 }
 			},
 			{
 				name: "Tail Whip",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
+				unlock: { type: "level", amount: 1 }
 			},
 			{
 				name: "Growl",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
+				unlock: { type: "level", amount: 1 }
 			},
 			{
 				name: "Quick Attack",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
+				unlock: { type: "level", amount: 1 }
 			},
 			{
 				name: "Thunder Wave",
-				unlock: {
-					type: "level",
-					amount: 4
-				}
+				unlock: { type: "level", amount: 4 }
 			},
 			{
 				name: "Double Team",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
+				unlock: { type: "level", amount: 1 }
 			},
 		]
 	},
@@ -994,6 +961,56 @@ const pokemonData = {
 					type: "level",
 					amount: 1
 				}
+			},
+		]
+	},
+	"Happiny": {
+		name: "Happiny",
+		number: "440",
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0440Happiny.png",
+			"home": "src/img/tiny-pokemon/Happiny.png"
+		},
+		sounds: {
+			cry: "src/audio/cries/happiny.mp3"
+		},
+		types: ["Normal"],
+		tags: ["Starter"],
+		stats: {
+			hp: 100,
+			attack: 5,
+			defense: 5,
+			specialAttack: 15,
+			specialDefense: 65,
+			speed: 30
+		},
+		expYield: 110,
+		evYield: {
+			hp: 1,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			green: 2,
+			blue: 2,
+			purple: 2
+		},
+		learnset: [
+			{
+				name: "Pound",
+				unlock: { type: "level", amount: 1 }
+			},
+			{
+				name: "Copycat",
+				unlock: { type: "level", amount: 1 }
+			},
+			{
+				name: "Defense Curl",
+				unlock: { type: "level", amount: 4 }
 			},
 		]
 	},

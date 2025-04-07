@@ -1114,10 +1114,12 @@ body {
 	margin-left: 0.2em;
 	margin-right: 0.2em;
 }
-.pokemon-stats > .stats > .stat > .stat-val.down {
+.pokemon-stats > .stats > .stat > .stat-val.down,
+.move-popover .val.down {
 	color: var(--health-low);
 }
-.pokemon-stats > .stats > .stat > .stat-val.up {
+.pokemon-stats > .stats > .stat > .stat-val.up,
+.move-popover .val.up {
 	color: var(--health-high);
 }
 .pokemon-stats > .stats.mastery {
