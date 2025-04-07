@@ -100,9 +100,9 @@ const pokemonData = {
 			speed: 0
 		},
 		energyMastery: {
-			green: 7,
-			yellow: 2,
-			purple: 3
+			green: 5,
+			yellow: 3,
+			blue: 5
 		},
 		evolutions: [
 			{
@@ -1272,7 +1272,7 @@ const pokemonData = {
 			cry: "src/audio/cries/pikipek.mp3"
 		},
 		tags: [],
-		types: ["Flying"],
+		types: ["Normal", "Flying"],
 		stats: {
 			hp: 35,
 			attack: 75,

@@ -902,8 +902,8 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 0,
 		energy: {
-			yellow: 2,
-			orange: 1
+			yellow: 4,
+			orange: 4
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Quick Attack.mp3"

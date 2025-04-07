@@ -536,10 +536,12 @@ class Pokemon{
 		let oldActive = this.activeMoves
 		let oldMoves = this.moves
 		let oldMovesUnlocked = this.movesUnlockedMap
+		let oldIsShiny = this.isShiny
 		let newPokemon = new Pokemon(newName, evolveTo.id, copy)
 		for (let key in newPokemon){
 			this[key] = newPokemon[key]
 		}
+		this.isShiny = oldIsShiny
 		oldMovesUnlocked.forEach((v, i) => {
 			if (!v) return
 			let move = oldMoves[i]
