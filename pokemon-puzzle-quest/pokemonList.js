@@ -32,7 +32,8 @@ const pokemonData = {
 		},
 		energyMastery: {
 			green: 3,
-			yellow: 1
+			yellow: 1,
+			blue: 3
 		},
 		evolutions: [
 			{
@@ -1091,7 +1092,7 @@ const pokemonData = {
 				name: "Astonish",
 				unlock: {
 					type: "level",
-					amount: 6
+					amount: 1
 				}
 			},
 			{
@@ -1388,7 +1389,7 @@ const pokemonData = {
 		sounds: {
 			cry: "src/audio/cries/grubbin.mp3"
 		},
-		tags: [],
+		tags: ["Starter"],
 		types: ["Bug"],
 		stats: {
 			hp: 47,

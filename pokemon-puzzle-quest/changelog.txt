@@ -1,5 +1,8 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
+4/7 (15.5k lines):
+	- The selection window now has the right text.
+
 4/6 (15.5k lines):
 	- Added Abra, Pikachu, Happiny
 	- Added Teleport, Double Team, Defense Curl

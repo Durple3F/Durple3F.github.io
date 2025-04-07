@@ -1259,7 +1259,10 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
-			{ type: "load-value", value: 1 },
+			{ type: "is-active-pokemon-viable", target: "opponent" },
+			{ type: "jump-if-truthy", jumpTo: "grip" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "load-value", value: 1, label: "grip" },
 			{ type: "choose-tiles", count: -1, target: "user" },
 			{
 				type: "apply-status-to-tiles", selection: "group", which: -1,

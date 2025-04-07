@@ -13,11 +13,16 @@ const boxThemeData = {
 	}
 }
 
-const levelCategoryData = [
-	{
-		name: "Route 1"
+const levelCategoryData = {
+	"Route 1": {
+		name: "Route 1",
+		startsUnlocked: true
+	},
+	"Route 2": {
+		name: "Route 2",
+		startsUnlocked: false
 	}
-]
+}
 
 const levelData = [
 	// Rival Battle 1
@@ -126,7 +131,7 @@ const levelData = [
 		],
 		effects: [
 			{ type: "random-number", min: 1, max: 10 },
-			{ type: "load-value", value: 0 },
+			{ type: "load-value", value: 10 },
 			{ type: "jump-if-less-than", jumpTo: "Normal" },
 			{ type: "fight", trainer: 1, label: "Pichu" },
 			{ type: "jump-if-lost", jumpTo: Infinity },

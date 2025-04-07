@@ -69,6 +69,7 @@ const pokemonMoveEffects = {
 				let localeId = plural ? "select-number-tiles-plural" : "select-number-tiles-single"
 				let text = getLocaleString(localeId, lang)
 				text = text.replaceAll("%c", count)
+				gameRound.selectionWindow.find(".message").text(text)
 				game.createAnnouncement("general", text)
 				game.selectionBegin()
 			}
@@ -534,6 +535,18 @@ const pokemonMoveEffects = {
 			resolve()
 		}
 	},
+	"is-active-pokemon-viable": {
+		update: false,
+		hasTarget: true,
+		targetType: "trainer",
+		targetDefault: "user",
+		execute: (resolve, effect, params, game, options) => {
+			let target = options.target
+			let result = isPokemonUsable(target.activePokemon)
+			console.log(target, result)
+			resolve(result)
+		}
+	},
 	"choose-pokemon": {
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
@@ -655,14 +668,15 @@ const pokemonMoveEffects = {
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
 			let effectIndex = options.effectIndex
-			let index = game.trainers.indexOf(target)
+			let index = game.trainers.indexOf(options.target)
 			moveUseObj.info[effectIndex] = game.initiativeValues[index]
 			resolve()
 		}
 	},
 	"set-initiative": {
+		update: true,
 		execute: (resolve, effect, params, game, options) => {
-			let index = game.trainers.indexOf(target)
+			let index = game.trainers.indexOf(options.target)
 			let initiative = params.initiative
 			game.initiativeValues[index] = Math.floor(initiative)
 			resolve()
@@ -841,6 +855,7 @@ const pokemonMoveEffects = {
 			let moveUseObj = options.moveUse
 			let effectIndex = options.effectIndex
 			let test = params.test ?? moveUseObj.info[effectIndex - 1]
+			console.log(test)
 			if (test) {
 				moveUseObj.nextEffectIndex = options.index
 			}
