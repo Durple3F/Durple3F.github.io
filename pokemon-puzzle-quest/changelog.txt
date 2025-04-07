@@ -1,6 +1,6 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-4/6 (15.3k lines):
+4/6 (15.5k lines):
 	- Added Abra, Pikachu, Happiny
 	- Added Teleport, Double Team, Defense Curl
 	- While dialogue is being shown, you can't make matches.
@@ -9,6 +9,8 @@
 	- Added a few new move effects
 	- Moves may now affect the power of other moves.
 	- Added some css for when that ^^ happens.
+	- <b>Added Shiny Pokemon.</b>
+	- Non-wild pokemon don't have a chance to be shiny.
 
 4/5 (15.0k lines):
 	- Added new dialogue effects

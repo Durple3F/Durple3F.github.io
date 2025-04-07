@@ -149,7 +149,8 @@ class Round{
 		}
 
 		let NPCData = this.trainers[1].data
-		if (!NPCData.name){
+		let isWild = !NPCData.name
+		if (isWild){
 			//If this is a wild group of pokemon, then when you win you get to
 			//catch one of them.
 			this.promise = this.promise.then(() => {
@@ -329,6 +330,7 @@ class Round{
 			let turn = this.turn
 			this.timeStep()
 			.then(() => {
+				this.currentlyCarryingOutSwap = false
 				if (!options.noEndTurn){
 					this.endMove(turn)
 				} else {
@@ -954,7 +956,7 @@ class Round{
 			let p = pokemon[i]
 			let box = $(`<div class='col col-6'></div>`)
 			let chooseable = $(`<div class='chooseable m-1'></div>`)
-			let image = p.data.imageSources.large
+			let image = p.getImage()
 			chooseable.html(`
 				<div class='row mb-3'>
 					<div class='pokemon-text col d-flex flex-column justify-content-center'></div>
@@ -2702,7 +2704,7 @@ class Round{
 		let tags = this.trainerTags[trainerIndex]
 		let name = pokemon.name
 		let pokemonId = pokemon.pokemonId
-		let src = pokemon.data.imageSources.large
+		let src = pokemon.getImage()
 		let facing = pokemon.data.imageFacing
 		let correctFacing = trainerIndex === 0 ? "right" : "left"
 		tags.pokemonImage.attr("src", src)
@@ -3774,6 +3776,16 @@ function beginRound(trainerData){
 		let options = {}
 		options.id = data.id
 		options.level = data.level
+		let isWild = !trainerData.name
+		
+		if ("isShiny" in data){
+			options.isShiny = data.isShiny
+		}
+		//Only wild pokemon are allowed to have a chance to be shiny.
+		else if (!isWild){
+			options.isShiny = false
+		}
+
 		if (data.levelMin && data.levelMax){
 			options.level = randomFrom(data.levelMin, data.levelMax)
 		}
@@ -3832,8 +3844,8 @@ function doEvolutionAnimation(elem, pokemon, evolution){
 	let evolveTo = pokemonData[evolution.name]
 	let body = $(`<div class='evolution-container'></div>`)
 	elem.append(body)
-	let image1src = pokemon.data.imageSources.large
-	let image2src = evolveTo.imageSources.large
+	let image1src = pokemon.getImage()
+	let image2src = getPokemonImage(evolveTo, "large", pokemon.isShiny)
 	let box1 = $("<div></div>")
 	let box2 = $("<div></div>")
 	body.append(box1)

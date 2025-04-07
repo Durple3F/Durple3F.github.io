@@ -256,6 +256,18 @@ function doesThisApplyToMove(move, appliesTo) {
 	}
 }
 
+function getPokemonImage(pData, key, shiny){
+	if (key === "large"){
+		if (shiny){
+			return pData.imageSources.largeShiny ?? this.data.imageSources.large
+		} else {
+			return pData.imageSources.large
+		}
+	} else {
+		console.warn("YOU NEVER HANDLED", key)
+	}
+}
+
 function fixLearnsets() {
 	//Any pokemon with pre-evolved forms gain the learnset of those forms
 	let allPokemon = Object.values(pokemonData)

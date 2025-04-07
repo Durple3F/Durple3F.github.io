@@ -5,6 +5,7 @@ const pokemonData = {
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0010Caterpie.png",
+			"largeShiny": "src/img/shiny-pokemon/010-Caterpie.png",
 			"home": "src/img/tiny-pokemon/Caterpie.png"
 		},
 		sounds: {
@@ -72,6 +73,7 @@ const pokemonData = {
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0011Metapod.png",
+			"largeShiny": "src/img/shiny-pokemon/011-Metapod.png",
 			"home": "src/img/tiny-pokemon/Metapod.png"
 		},
 		sounds: {
@@ -126,6 +128,7 @@ const pokemonData = {
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0012Butterfree.png",
+			"largeShiny": "src/img/shiny-pokemon/012-Butterfree.png",
 			"home": "src/img/tiny-pokemon/Butterfree.png"
 		},
 		sounds: {
@@ -164,6 +167,7 @@ const pokemonData = {
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0019Rattata-Alola.png",
+			"largeShiny": "src/img/shiny-pokemon/019-Rattata-Alola.png",
 			"home": "src/img/tiny-pokemon/Rattata-Alola.png"
 		},
 		sounds: {
@@ -236,6 +240,7 @@ const pokemonData = {
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0025Pikachu.png",
+			"largeShiny": "src/img/shiny-pokemon/025-Pikachu.png",
 			"home": "src/img/tiny-pokemon/Pikachu.png"
 		},
 		sounds: {
@@ -319,6 +324,7 @@ const pokemonData = {
 		imageFacing: "right",
 		imageSources: {
 			"large": "src/img/pokemon/0052Meowth-Alola.png",
+			"largeShiny": "src/img/shiny-pokemon/052-Meowth-Alola.png",
 			"home": "src/img/tiny-pokemon/Meowth-Alola.png"
 		},
 		sounds: {
@@ -384,6 +390,7 @@ const pokemonData = {
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0063Abra.png",
+			"largeShiny": "src/img/shiny-pokemon/063-Abra.png",
 			"home": "src/img/tiny-pokemon/Abra.png"
 		},
 		sounds: {
@@ -427,6 +434,7 @@ const pokemonData = {
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0079Slowpoke.png",
+			"largeShiny": "src/img/shiny-pokemon/079-Slowpoke.png",
 			"home": "src/img/tiny-pokemon/Slowpoke.png"
 		},
 		sounds: {
@@ -500,6 +508,7 @@ const pokemonData = {
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0081Magnemite.png",
+			"largeShiny": "src/img/shiny-pokemon/081-Magnemite.png",
 			"home": "src/img/tiny-pokemon/Magnemite.png"
 		},
 		sounds: {
@@ -566,6 +575,7 @@ const pokemonData = {
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0088Grimer-Alola.png",
+			"largeShiny": "src/img/shiny-pokemon/088-Grimer-Alola.png",
 			"home": "src/img/tiny-pokemon/Grimer-Alola.png"
 		},
 		sounds: {
@@ -632,6 +642,7 @@ const pokemonData = {
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0165Ledyba.png",
+			"largeShiny": "src/img/shiny-pokemon/165-Ledyba.png",
 			"home": "src/img/tiny-pokemon/Ledyba.png"
 		},
 		sounds: {
@@ -690,6 +701,7 @@ const pokemonData = {
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0167Spinarak.png",
+			"largeShiny": "src/img/shiny-pokemon/167-Spinarak.png",
 			"home": "src/img/tiny-pokemon/Spinarak.png"
 		},
 		sounds: {
@@ -755,6 +767,7 @@ const pokemonData = {
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0172Pichu.png",
+			"largeShiny": "src/img/shiny-pokemon/172-Pichu.png",
 			"home": "src/img/tiny-pokemon/Pichu.png"
 		},
 		sounds: {
@@ -850,6 +863,7 @@ const pokemonData = {
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0278Wingull.png",
+			"largeShiny": "src/img/shiny-pokemon/278-Wingull.png",
 			"home": "src/img/tiny-pokemon/Wingull.png"
 		},
 		sounds: {
@@ -919,6 +933,7 @@ const pokemonData = {
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0438Bonsly.png",
+			"largeShiny": "src/img/shiny-pokemon/438-Bonsly.png",
 			"home": "src/img/tiny-pokemon/Bonsly.png"
 		},
 		sounds: {
@@ -970,6 +985,7 @@ const pokemonData = {
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0440Happiny.png",
+			"largeShiny": "src/img/shiny-pokemon/440-Happiny.png",
 			"home": "src/img/tiny-pokemon/Happiny.png"
 		},
 		sounds: {
@@ -1020,6 +1036,7 @@ const pokemonData = {
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0722Rowlet.png",
+			"largeShiny": "src/img/shiny-pokemon/722-Rowlet.png",
 			"home": "src/img/tiny-pokemon/Rowlet.png"
 		},
 		sounds: {
@@ -1099,6 +1116,7 @@ const pokemonData = {
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0725Litten.png",
+			"largeShiny": "src/img/shiny-pokemon/725-Litten.png",
 			"home": "src/img/tiny-pokemon/Litten.png"
 		},
 		sounds: {
@@ -1171,6 +1189,7 @@ const pokemonData = {
 		imageFacing: "right",
 		imageSources: {
 			"large": "src/img/pokemon/0728Popplio.png",
+			"largeShiny": "src/img/shiny-pokemon/728-Popplio.png",
 			"home": "src/img/tiny-pokemon/Popplio.png"
 		},
 		sounds: {
@@ -1245,6 +1264,7 @@ const pokemonData = {
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0731Pikipek.png",
+			"largeShiny": "src/img/shiny-pokemon/731-Pikipek.png",
 			"home": "src/img/tiny-pokemon/Pikipek.png"
 		},
 		sounds: {
@@ -1303,6 +1323,7 @@ const pokemonData = {
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0734Yungoos.png",
+			"largeShiny": "src/img/shiny-pokemon/734-Yungoos.png",
 			"home": "src/img/tiny-pokemon/Yungoos.png"
 		},
 		sounds: {
@@ -1361,6 +1382,7 @@ const pokemonData = {
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0736Grubbin.png",
+			"largeShiny": "src/img/shiny-pokemon/736-Grubbin.png",
 			"home": "src/img/tiny-pokemon/Grubbin.png"
 		},
 		sounds: {
@@ -1426,6 +1448,7 @@ const pokemonData = {
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0764Comfey.png",
+			"largeShiny": "src/img/shiny-pokemon/764-Comfey.png",
 			"home": "src/img/tiny-pokemon/Comfey.png"
 		},
 		sounds: {

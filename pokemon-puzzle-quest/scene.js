@@ -83,7 +83,7 @@ function startScene(name, options){
 				}
 			}
 			const getPopover = pokemon => {
-				let image = pokemon.imageSources.large
+				let image = getPokemonImage(pokemon, "large")
 				let html = `<div class='text-center'>${pokemon.name}
 				<div>
 				<img class='pokemon-image' src='${image}'>
@@ -104,7 +104,7 @@ function startScene(name, options){
 
 					//Now add a tiny, nearly-invisible image of that pokemon
 					//(just to get the image preloaded)
-					let image = pokemon.imageSources.large
+					let image = getPokemonImage(pokemon, "large")
 					chooseTag.append(`<img class='invisible-image' src='${image}'>`)
 				}
 
@@ -363,7 +363,7 @@ function startScene(name, options){
 			const displayPokemon = p => {
 				let pokemon = new Pokemon(p.name, p.pokemonId, p)
 				let images = pokemon.data.imageSources
-				let source = images.home ?? images.large
+				let source = images.home ?? pokemon.getImage()
 
 				let size = getRealBoxSize()
 				let left = pokemon.pcBoxX * size.width + size.offsetX
@@ -399,7 +399,7 @@ function startScene(name, options){
 					if (p){
 						container.attr("data-pokemon-id", p.uuid)
 						let images = p.data.imageSources
-						let image = images.home ?? images.large
+						let image = images.home ?? pokemon.getImage()
 						let img = $(`<img src='${image}' class='pokemon-image'>`)
 						img.css("opacity", 1)
 						container.append(img)
@@ -485,7 +485,7 @@ function startScene(name, options){
 					offsetX: realBoxOffsetX,
 					offsetY: realBoxOffsetY
 				}
-				console.log(boxRatio, screenRatio, result)
+				// console.log(boxRatio, screenRatio, result)
 				return result
 			}
 
@@ -544,7 +544,7 @@ function startScene(name, options){
 				tag.css("opacity", 0)
 				heldPokemonTag = tag
 				let images = pokemon.data.imageSources
-				let image = images.home ?? images.large
+				let image = images.home ?? pokemon.getImage()
 				tag.attr("src", image)
 				$("body").append(tag)
 				.css("cursor", "pointer")
@@ -707,7 +707,10 @@ function startScene(name, options){
 			dexWindow.append(pokemonListTag)
 			for (let data of pokemonList){
 				let pokemonId = data.id
-				let pokemon = new Pokemon(undefined, pokemonId)
+				let pokemonOptions = {
+					isShiny: false
+				}
+				let pokemon = new Pokemon(undefined, pokemonId, pokemonOptions)
 				let stats = pokemonStats[pokemonId]
 				let section = $(`<div class='pokemon-section'></div>`)
 
@@ -718,7 +721,7 @@ function startScene(name, options){
 				let imageSection = $(`<div class='pokemon-image-section'>`)
 				section.append(imageSection)
 
-				let url = data.imageSources.large
+				let url = pokemon.getImage()
 				let pokemonImgBg = $(`<div class='pokemon-image-bg'>`)
 				pokemonImgBg.css("mask-image", `url(${url})`)
 				imageSection.append(pokemonImgBg)
@@ -848,7 +851,7 @@ function askToRenamePokemon(pokemon){
 	let promise = new Promise(resolve => resolvePromise = resolve)
 	let modal = $("#modal")
 	let name = pokemon.name
-	let image = pokemon.data.imageSources.large
+	let image = pokemon.getImage()
 
 	clearModal(modal)
 
@@ -1142,7 +1145,7 @@ function choosePokemon(message, pokemon, minChooseable=1, maxChooseable=1){
 		let p = pokemon[i]
 		let box = $(`<div class='col col-6'></div>`)
 		let chooseable = $(`<div class='chooseable m-1' data-choose='${i}'></div>`)
-		let image = p.data.imageSources.large
+		let image = p.getImage()
 		chooseable.html(`
 			<div class='row mb-3'>
 				<div class='col d-flex flex-column justify-content-center'>
@@ -1199,7 +1202,7 @@ function viewPokemonInfo(pokemon, options={}){
 	let btn = $(`<button class='btn btn-primary'>Done</button>`)
 	modal.find(".modal-footer").append(btn)
 
-	let image = pokemon.data.imageSources.large
+	let image = pokemon.getImage()
 	let content = $(`
 		<div class='pokemon-info d-flex justify-content-between align-center'>
 			<div class='pokemon-section'>

@@ -488,7 +488,7 @@ const pokemonMoveEffects = {
 		}
 	},
 	"perform-swap": {
-		update: false,
+		update: true,
 		execute: (resolve, effect, params, game, options) => {
 			let swap = params.swap
 			let tile1 = swap[0]
@@ -499,7 +499,6 @@ const pokemonMoveEffects = {
 			}
 			let animation = game.animateSwitchLocations(tile1, tile2, swapOptions)
 			animation.promise.then(() => resolve())
-			// resolve(result)
 		}
 	},
 	"get-active-pokemon": {

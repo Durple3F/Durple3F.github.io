@@ -19,6 +19,15 @@ class Pokemon{
 		this.level = options?.level ?? 1
 
 		this.nature = options?.nature ?? getRandomNature()
+		this.isShiny = false
+		if ("isShiny" in options){
+			this.isShiny = options.isShiny
+		} else if (!options.shinyLocked) {
+			//Shiny odds calculation
+			let rand = Math.random()
+			this.isShiny = rand < 0.1
+			console.log(this.isShiny)
+		}
 
 		this.ivs = {}
 		this.evs = {}
@@ -548,5 +557,9 @@ class Pokemon{
 		}
 		logPokemonAs("caught", newPokemon)
 		return changes
+	}
+
+	getImage(){
+		return getPokemonImage(this.data, "large", this.isShiny)
 	}
 }

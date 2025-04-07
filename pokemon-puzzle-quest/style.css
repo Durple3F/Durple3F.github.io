@@ -858,7 +858,7 @@ body {
 }
 .move.usable[data-move-type="Electric"] {
 	background-color: var(--type-electric);
-	color: var(--move-text-lighter);
+	color: var(--move-text-dark);
 }
 .move.usable[data-move-type="Electric"]:active {
 	box-shadow: 0 0 var(--move-shadow-size) var(--type-electric);
