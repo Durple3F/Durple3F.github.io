@@ -397,7 +397,7 @@ const pokemonData = {
 			cry: "src/audio/cries/abra.mp3"
 		},
 		types: ["Psychic"],
-		tags: ["Starter"],
+		tags: [],
 		stats: {
 			hp: 25,
 			attack: 20,
@@ -992,7 +992,7 @@ const pokemonData = {
 			cry: "src/audio/cries/happiny.mp3"
 		},
 		types: ["Normal"],
-		tags: ["Starter"],
+		tags: [],
 		stats: {
 			hp: 100,
 			attack: 5,
