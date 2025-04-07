@@ -480,7 +480,7 @@ body {
 	height: 100%;
 	position: relative;
 	scrollbar-width: none;
-	padding-bottom: 3em;
+	margin-bottom: 10vh;
 	background-image: linear-gradient(transparent, transparent);
 	transition: background-image 0.3s;
 }
@@ -493,13 +493,13 @@ body {
 	transition: opacity 0.5s;
 }
 
-.board-side.player .board-side-bg {
+.player .board-side-bg {
 	background-image: linear-gradient(
 		var(--player-color) 20%,
 		transparent 40%
 	);
 }
-.board-side.enemy .board-side-bg {
+.enemy .board-side-bg {
 	background-image: linear-gradient(
 		var(--enemy-color) 20%,
 		transparent 40%

@@ -265,6 +265,35 @@ const pokemonMoveData = {
 			{ type: "end-turn", label: "end" }
 		],
 	},
+	"Double Team": {
+		name: "Double Team",
+		type: "Normal",
+		category: "Status",
+		strategy: "special",
+		pp: 15,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 1,
+		energy: {
+			red: 1,
+			orange: 1,
+			yellow: 1,
+			green: 1,
+			blue: 1,
+			purple: 1
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Double Team.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-all-swaps" },
+			{ type: "random-choice-from-list", list: -1 },
+			{ type: "jump-if-truthy", jumpTo: "move" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "perform-swap", swap: -3, label: "move" }
+		],
+	},
 	"Echoed Voice": {
 		name: "Echoed Voice",
 		type: "Normal",

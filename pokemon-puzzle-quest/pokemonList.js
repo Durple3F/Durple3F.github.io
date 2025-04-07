@@ -230,6 +230,121 @@ const pokemonData = {
 			},
 		]
 	},
+	"Pikachu": {
+		name: "Pikachu",
+		number: "25",
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0025Pikachu.png",
+			"home": "src/img/tiny-pokemon/Pikachu.png"
+		},
+		sounds: {
+			cry: "src/audio/cries/pikachu.mp3"
+		},
+		types: ["Electric"],
+		tags: [],
+		stats: {
+			hp: 35,
+			attack: 55,
+			defense: 40,
+			specialAttack: 50,
+			specialDefense: 50,
+			speed: 90
+		},
+		expYield: 112,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 2
+		},
+		energyMastery: {
+			yellow: 5,
+			orange: 3,
+			purple: 2
+		},
+		learnset: [
+			{
+				name: "Play Nice",
+				unlock: {
+					type: "level",
+					amount: 1
+				}
+			},
+			{
+				name: "Sweet Kiss",
+				unlock: {
+					type: "level",
+					amount: 1
+				}
+			},
+			{
+				name: "Nuzzle",
+				unlock: {
+					type: "level",
+					amount: 1
+				}
+			},
+			{
+				name: "Nasty Plot",
+				unlock: {
+					type: "level",
+					amount: 1
+				}
+			},
+			{
+				name: "Charm",
+				unlock: {
+					type: "level",
+					amount: 1
+				}
+			},
+			{
+				name: "Thunder Shock",
+				unlock: {
+					type: "level",
+					amount: 1
+				}
+			},
+			{
+				name: "Tail Whip",
+				unlock: {
+					type: "level",
+					amount: 1
+				}
+			},
+			{
+				name: "Growl",
+				unlock: {
+					type: "level",
+					amount: 1
+				}
+			},
+			{
+				name: "Quick Attack",
+				unlock: {
+					type: "level",
+					amount: 1
+				}
+			},
+			{
+				name: "Thunder Wave",
+				unlock: {
+					type: "level",
+					amount: 4
+				}
+			},
+			{
+				name: "Double Team",
+				unlock: {
+					type: "level",
+					amount: 1
+				}
+			},
+		]
+	},
 	"Meowth-Alola": {
 		name: "Meowth",
 		id: "Meowth-Alola",
@@ -701,6 +816,15 @@ const pokemonData = {
 			yellow: 4,
 			orange: 2
 		},
+		evolutions: [
+			{
+				name: "Pikachu",
+				unlock: {
+					type: "level",
+					amount: 15
+				}
+			}
+		],
 		learnset: [
 			{
 				name: "Thunder Shock",

@@ -1,6 +1,7 @@
 Incomplete move lists:
   Rattata-Alola (lv 10)
   Butterfree (lv 0)
+  Pikachu (lv 8)
   Meowth-Alola (lv 8)
   Slowpoke (lv 9)
   Magnemite (lv 8)
@@ -26,7 +27,6 @@ Missing Evolutions:
   Grimer-Alola
   Ledyba
   Spinarak
-  Pichu
   Wingull
   Bonsly
   Rowlet
@@ -41,6 +41,7 @@ Missing Abilities:
   Caterpie
   Metapod
   Butterfree
+  Pikachu
   Meowth-Alola
   Abra
   Slowpoke

@@ -275,6 +275,11 @@ function fixLearnsets() {
 				learnset.push(copy)
 				changed = true
 			})
+			//If, by some chance, there were no moves to add to the current pokemon,
+			//then let's just count this guy as being finished.
+			if (!moves.length){
+				changed = true
+			}
 			if (changed) {
 				let index = evolvedForms.indexOf(pokemon)
 				evolvedForms.splice(index, 1)

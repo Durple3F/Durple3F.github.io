@@ -308,9 +308,6 @@
 		}
 	},
 	"pokemon": {
-		"Rattata-Alola": {
-			"name": "Rattata"
-		},
 		"Caterpie": {
 			"name": "Caterpie"
 		},
@@ -319,6 +316,12 @@
 		},
 		"Butterfree": {
 			"name": "Butterfree"
+		},
+		"Rattata-Alola": {
+			"name": "Rattata"
+		},
+		"Pikachu": {
+			"name": "Pikachu"
 		},
 		"Meowth-Alola": {
 			"name": "Meowth"
@@ -418,6 +421,11 @@
 			"name": "Disarming Voice",
 			"description": "Deals damage. Has a 50% chance to confuse the opponent. Ends the turn.",
 			"shortDescription": "Deals light damage and may confuse"
+		},
+		"Double Team": {
+			"name": "Double Team",
+			"description": "Makes a random match somewhere on the board without ending the user's turn.",
+			"shortDescription": "Makes a random match"
 		},
 		"Echoed Voice": {
 			"name": "Echoed Voice",

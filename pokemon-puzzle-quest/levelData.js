@@ -126,7 +126,7 @@ const levelData = [
 		],
 		effects: [
 			{ type: "random-number", min: 1, max: 10 },
-			{ type: "load-value", value: 10 },
+			{ type: "load-value", value: 0 },
 			{ type: "jump-if-less-than", jumpTo: "Normal" },
 			{ type: "fight", trainer: 1, label: "Pichu" },
 			{ type: "jump-if-lost", jumpTo: Infinity },
@@ -341,8 +341,6 @@ const levelData = [
 			},
 		],
 		effects: [
-			{ type: "fight", trainer: 3 },
-
 			{ type: "random-number", min: 1, max: 10 },
 			{ type: "load-value", value: 9 },
 			{ type: "jump-if-less-than", jumpTo: "Normal" },
@@ -460,7 +458,24 @@ const levelData = [
 			{ type: "jump-if-lost", jumpTo: Infinity },
 			{ type: "dialogue", source: "route-1-7-dialogue-6" },
 		]
-	}
+	},
+	{
+		id: "Route 1-8",
+		category: "Route 1",
+		name: "Route 1-8",
+		music: "SM Wild Pokemon Battle",
+		icon: "8",
+		trainers: [
+			{
+				pokemon: [
+					{ id: "Pikachu", levelMin: 6, levelMax: 8 },
+				]
+			}
+		],
+		effects: [
+			{ type: "fight", trainer: 0 },
+		]
+	},
 ]
 
 for (let level of levelData) {

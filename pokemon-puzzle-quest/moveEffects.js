@@ -480,6 +480,28 @@ const pokemonMoveEffects = {
 			resolve(result)
 		}
 	},
+	"get-all-swaps": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let result = game.board.getAllPotentialMoves()
+			resolve(result)
+		}
+	},
+	"perform-swap": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let swap = params.swap
+			let tile1 = swap[0]
+			let tile2 = swap[1]
+			let swapOptions = {
+				// automated: true,
+				noEndTurn: true,
+			}
+			let animation = game.animateSwitchLocations(tile1, tile2, swapOptions)
+			animation.promise.then(() => resolve())
+			// resolve(result)
+		}
+	},
 	"get-active-pokemon": {
 		update: false,
 		execute: (resolve, effect, params, game, options) => {
@@ -671,6 +693,24 @@ const pokemonMoveEffects = {
 
 			moveUseObj.info[effectIndex] = element
 			resolve()
+		}
+	},
+	"random-choice-from-list": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let moveUseObj = options.moveUse
+			let effectIndex = options.effectIndex
+			let list = params.list
+			let index = params.index ?? 0
+			let element
+
+			if (!list) {
+				console.error("I didn't get a list!", moveUseObj)
+			} else {
+				element = randomChoice(list)
+			}
+
+			resolve(element)
 		}
 	},
 	"remove-element-from-list": {

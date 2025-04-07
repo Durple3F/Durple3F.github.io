@@ -1,10 +1,12 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-4/6 (15.1k lines):
-	- Added Abra
-	- Added Teleport
+4/6 (15.3k lines):
+	- Added Abra, Pikachu
+	- Added Teleport, Double Team
 	- While dialogue is being shown, you can't make matches.
 	- There's now a little tooltip that shows you what tiles you're being asked to choose.
+	- Now, wild pokemon don't always have the same moves if they have >4 possible moves to pull from.
+	- Added a few new move effects
 
 4/5 (15.0k lines):
 	- Added new dialogue effects

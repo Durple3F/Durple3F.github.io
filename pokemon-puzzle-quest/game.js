@@ -321,12 +321,20 @@ class Round{
 		if (matches.length === 0 && !this.currentlyReversingSwap){
 			this.currentlyReversingSwap = true
 			this.animateSwitchLocations(tile1, tile2)
-		} else if (this.currentlyReversingSwap){
+		}
+		else if (this.currentlyReversingSwap){
 			this.currentlyReversingSwap = false
-		} else {
+		}
+		else {
 			let turn = this.turn
 			this.timeStep()
-			.then(() => this.endMove(turn))
+			.then(() => {
+				if (!options.noEndTurn){
+					this.endMove(turn)
+				} else {
+					console.log("Skipped the turn ending!")
+				}
+			})
 		}
 	}
 	getTileEnergyValue(tile){

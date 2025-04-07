@@ -409,16 +409,22 @@ class Pokemon{
 			return this.movesUnlockedMap[i]
 		})
 		let toAdd = 4 - this.activeMoves.length
+		let adding = []
 		//Pick up to 4 of the most recently unlocked moves
-		chooseable = chooseable.reverse().slice(0, toAdd)
-		chooseable.forEach(m => this.addActiveMove(m))
+		// chooseable = chooseable.reverse().slice(0, toAdd)
 
-		//Just a nice thing: Sort the active moves by name.
-		// this.activeMoves.sort((a, b) => {
-		// 	let na = a.name
-		// 	let nb = b.name
-		// 	return na < nb ? -1 : na > nb ? 1 : 0
-		// })
+		//v2: Decide which moves to add by starting with the first 4 we possibly could,
+		//then replacing a random one one by one, simulating the player making choices
+		//as the pokemon leveled up.
+		for (let move of chooseable){
+			if (adding.length < toAdd){
+				adding.push(move)
+			} else {
+				let index = Math.floor(Math.random() * adding.length)
+				adding.splice(index, 1, move)
+			}
+		}
+		adding.forEach(m => this.addActiveMove(m))
 	}
 
 	gainEnergy(energy){
