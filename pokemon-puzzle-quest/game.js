@@ -366,6 +366,7 @@ class Round{
 		}
 	}
 	swap(tile1, tile2, options){
+		let promise = Promise.resolve()
 		options = options ?? {}
 		this.beginMove()
 		let map = [
@@ -377,23 +378,26 @@ class Round{
 		let matches = this.board.getAllMatches()
 		if (matches.length === 0 && !this.currentlyReversingSwap){
 			this.currentlyReversingSwap = true
-			this.animateSwitchLocations(tile1, tile2)
+			promise = promise.then(() => {
+				return this.animateSwitchLocations(tile1, tile2).promise
+			})
 		}
 		else if (this.currentlyReversingSwap){
 			this.currentlyReversingSwap = false
 		}
 		else {
 			let turn = this.turn
-			this.timeStep()
+			promise = promise.then(() => this.timeStep())
 			.then(() => {
 				this.currentlyCarryingOutSwap = false
 				if (!options.noEndTurn){
-					this.endMove(turn)
+					return this.endMove(turn)
 				} else {
-					console.log("Skipped the turn ending!")
+					//Skipped the turn ending
 				}
 			})
 		}
+		return promise
 	}
 	getTileEnergyValue(tile){
 		let base = tile.getEnergyValue()
@@ -567,7 +571,8 @@ class Round{
 				matches.forEach(m => this.matchesInCombo.push(m))
 				this.applyGravity()
 				.then(() => resolve())
-			} else {
+			}
+			else {
 				this.applySpriteHighlights()
 
 				if (this.matchesInCombo.length){
@@ -1157,10 +1162,14 @@ class Round{
 			if (this.hasEnded) return Promise.resolve()
 			return delay(250).then(() => {
 				if (this.turn === turn){
-					this.computerMakeSwap()
+					return this.timeStep()
+					.then(() => {
+						return this.computerMakeSwap()
+					})
 				}
 			})
 		})
+
 		return promise
 	}
 	computerApplicableMoves(moveList){
@@ -1309,7 +1318,8 @@ class Round{
 		).item
 		//TODO score swaps somehow. Right now it just picks a random one.
 		// let bestSwap = randomChoice(allSwaps)
-		this.animateSwitchLocations(bestSwap[0], bestSwap[1])
+		let animation = this.animateSwitchLocations(bestSwap[0], bestSwap[1])
+		return animation.promise
 	}
 	computerChoosePokemon(pokemon, reason, minChooseable=1, maxChooseable=1){
 		//TODO have the logic here be based on which reason they could be choosing stuff
@@ -2055,10 +2065,6 @@ class Round{
 		let newLocationMap = []
 		animations.info.round = this
 		animations.info.newLocationMap = newLocationMap
-		animations.callback = () => {
-			let round = animations.info.round
-			round.applyLocationChanges(animations.info.newLocationMap)
-		}
 		for (let column of columns){
 			let bottom = this.board.height - 1
 			for (let i = column.length - 1; i >= 0; i--){
@@ -2074,7 +2080,11 @@ class Round{
 		}
 		animations.info.newLocationMap = newLocationMap
 		this.addAnimation(animations)
-		animations.promise = animations.promise.then(() => this.timeStep())
+		animations.promise = animations.promise.then(() => {
+			let round = animations.info.round
+			round.applyLocationChanges(animations.info.newLocationMap)
+			return this.timeStep()
+		})
 
 		return animations.promise
 	}
@@ -2115,11 +2125,13 @@ class Round{
 		animation.batch.push(animation1)
 		animation.batch.push(animation2)
 		if (options.callback === undefined){
-			animation.callback = () => {
-				this.swap(tile1, tile2, options)
-			}
+			animation.promise = animation.promise.then(() => {
+				return this.swap(tile1, tile2, options)
+			})
 		} else {
-			animation.callback = options.callback
+			animation.promise = animation.promise.then(() => {
+				return options.callback()
+			})
 		}
 		
 		this.addAnimation(animation)
@@ -3832,7 +3844,9 @@ function beginRound(trainerData){
 	let resolvePromise
 	let promise = new Promise(resolve => resolvePromise = resolve)
 	let player = new Trainer("Player", playerActivePokemon)
-	let enemyPokemon = trainerData.pokemon.map(data => {
+
+	let pokemonData = trainerData.pokemon.map(v => v)
+	let enemyPokemon = pokemonData.map(data => {
 		let options = {}
 		options.id = data.id
 		options.level = data.level

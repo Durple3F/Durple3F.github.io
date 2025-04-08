@@ -434,8 +434,8 @@
 		},
 		"Double Team": {
 			"name": "Double Team",
-			"description": "Makes a random match somewhere on the board without ending the user's turn.",
-			"shortDescription": "Makes a random match"
+			"description": "Raises the user's speed stat by 1 stage. Then, makes a random match somewhere on the board without ending the user's turn.",
+			"shortDescription": "Raises speed & makes a match"
 		},
 		"Echoed Voice": {
 			"name": "Echoed Voice",

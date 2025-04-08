@@ -315,18 +315,21 @@ const pokemonMoveData = {
 		accuracy: null,
 		rechargeTurns: 1,
 		energy: {
-			red: 1,
-			orange: 1,
-			yellow: 1,
-			green: 1,
-			blue: 1,
-			purple: 1
+			blue: 6,
+			yellow: 4
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Double Team.mp3"
 		},
 		effects: [
 			{ type: "play-sound", name: "attack" },
+			{
+				type: "apply-debuff", target: "user", debuff: {
+					type: "stat",
+					stat: "speed",
+					amount: 1
+				}
+			},
 			{ type: "get-all-swaps" },
 			{ type: "random-choice-from-list", list: -1 },
 			{ type: "jump-if-truthy", jumpTo: "move" },
@@ -1035,7 +1038,7 @@ const pokemonMoveData = {
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
 			{ type: "recoil-percent", percent: 0.25 },
-			{ type: "shuffle" },
+			{ type: "shuffle-board" },
 			{ type: "end-turn" }
 		],
 	},

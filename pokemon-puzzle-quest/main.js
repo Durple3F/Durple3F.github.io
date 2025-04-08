@@ -1,6 +1,8 @@
-const versionNumber = "v0.11.2"
+const versionNumber = "v0.11.3"
 let lang = "en"
 let playerName
+
+let timeSteps = 0
 
 const canvas = $("#screen")[0]
 const ctx = canvas.getContext("2d")

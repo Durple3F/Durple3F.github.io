@@ -8,6 +8,8 @@
 	- Lowered the shiny odds to 1/50.
 	- Added buttons for what will hopefully be other level groups.
 	- Added a flee button.
+	- Double Team used to be SO BROKEN and I think it still is sometimes but GOD i hope I fixed it
+	- Struggle was also broken.
 
 4/7 (15.5k lines):
 	- The selection window now has the right text.

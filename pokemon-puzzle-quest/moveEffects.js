@@ -499,7 +499,9 @@ const pokemonMoveEffects = {
 				noEndTurn: true,
 			}
 			let animation = game.animateSwitchLocations(tile1, tile2, swapOptions)
-			animation.promise.then(() => resolve())
+			animation.promise
+			.then(() => game.timeStep())
+			.then(() => resolve())
 		}
 	},
 	"get-active-pokemon": {

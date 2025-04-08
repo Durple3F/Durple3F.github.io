@@ -110,6 +110,7 @@ const levelData = [
 		name: "Route 1-2",
 		icon: "2",
 		music: "SM Wild Pokemon Battle",
+		obtainablePokemon: ["Caterpie", "Pikipek", "Pichu"],
 		trainers: [
 			{
 				pokemon: [
@@ -173,6 +174,7 @@ const levelData = [
 		name: "Route 1-3",
 		icon: "3",
 		music: "SM Wild Pokemon Battle",
+		obtainablePokemon: ["Spinarak", "Ledyba", "Grubbin"],
 		trainers: [
 			{
 				pokemon: [
@@ -321,6 +323,7 @@ const levelData = [
 		name: "Route 1-5",
 		icon: "5",
 		music: "SM Wild Pokemon Battle",
+		obtainablePokemon: ["Wingull", "Yungoos", "Rattata-Alola", "Slowpoke"],
 		trainers: [
 			{
 				pokemon: [
@@ -413,6 +416,7 @@ const levelData = [
 		name: "Route 1-6",
 		description: "route-1-6-description",
 		icon: "6",
+		obtainablePokemon: ["Magnemite", "Meowth-Alola", "Grimer-Alola"],
 		trainers: [
 			{
 				pokemon: [
@@ -501,12 +505,14 @@ const levelData = [
 			{ type: "dialogue", source: "route-1-7-dialogue-6" },
 		]
 	},
+
+	//2-1
 	{
-		id: "Route 1-8",
+		id: "Route 2-1",
 		category: "Route 2",
-		name: "Route 1-8",
+		name: "Route 2-1",
 		music: "SM Wild Pokemon Battle",
-		icon: "8",
+		icon: "1",
 		trainers: [
 			{
 				pokemon: [
@@ -528,6 +534,7 @@ for (let categoryId in levelCategoryData){
 for (let level of levelData) {
 	level.status = "not won"
 	level.attempts = 0
+	level.obtainablePokemon = level.obtainablePokemon ?? []
 }
 
 function getLevelDataById(id){

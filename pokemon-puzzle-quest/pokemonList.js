@@ -272,46 +272,46 @@ const pokemonData = {
 			purple: 2
 		},
 		learnset: [
-			{
-				name: "Play Nice",
-				unlock: { type: "level", amount: 1 }
-			},
-			{
-				name: "Sweet Kiss",
-				unlock: { type: "level", amount: 1 }
-			},
-			{
-				name: "Nuzzle",
-				unlock: { type: "level", amount: 1 }
-			},
-			{
-				name: "Nasty Plot",
-				unlock: { type: "level", amount: 1 }
-			},
-			{
-				name: "Charm",
-				unlock: { type: "level", amount: 1 }
-			},
-			{
-				name: "Thunder Shock",
-				unlock: { type: "level", amount: 1 }
-			},
-			{
-				name: "Tail Whip",
-				unlock: { type: "level", amount: 1 }
-			},
-			{
-				name: "Growl",
-				unlock: { type: "level", amount: 1 }
-			},
-			{
-				name: "Quick Attack",
-				unlock: { type: "level", amount: 1 }
-			},
-			{
-				name: "Thunder Wave",
-				unlock: { type: "level", amount: 4 }
-			},
+			// {
+			// 	name: "Play Nice",
+			// 	unlock: { type: "level", amount: 1 }
+			// },
+			// {
+			// 	name: "Sweet Kiss",
+			// 	unlock: { type: "level", amount: 1 }
+			// },
+			// {
+			// 	name: "Nuzzle",
+			// 	unlock: { type: "level", amount: 1 }
+			// },
+			// {
+			// 	name: "Nasty Plot",
+			// 	unlock: { type: "level", amount: 1 }
+			// },
+			// {
+			// 	name: "Charm",
+			// 	unlock: { type: "level", amount: 1 }
+			// },
+			// {
+			// 	name: "Thunder Shock",
+			// 	unlock: { type: "level", amount: 1 }
+			// },
+			// {
+			// 	name: "Tail Whip",
+			// 	unlock: { type: "level", amount: 1 }
+			// },
+			// {
+			// 	name: "Growl",
+			// 	unlock: { type: "level", amount: 1 }
+			// },
+			// {
+			// 	name: "Quick Attack",
+			// 	unlock: { type: "level", amount: 1 }
+			// },
+			// {
+			// 	name: "Thunder Wave",
+			// 	unlock: { type: "level", amount: 4 }
+			// },
 			{
 				name: "Double Team",
 				unlock: { type: "level", amount: 1 }
