@@ -25,8 +25,7 @@ class Pokemon{
 		} else if (!options.shinyLocked) {
 			//Shiny odds calculation
 			let rand = Math.random()
-			this.isShiny = rand < 0.1
-			console.log(this.isShiny)
+			this.isShiny = rand < 0.02
 		}
 
 		this.ivs = {}

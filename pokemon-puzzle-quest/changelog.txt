@@ -5,6 +5,9 @@
 	- Added a setting to turn EXP share off, which apparently is something that real pokemon, made by real developers, just forgot how to do since 2018.
 	- Added a setting to control whether Hau chooses the better or worse starter against you.
 	- You now get all your pokemon healed if (a fight ends and all your pokemon are fainted) which is a different condition from (a fight ends and you count as having lost it)
+	- Lowered the shiny odds to 1/50.
+	- Added buttons for what will hopefully be other level groups.
+	- Added a flee button.
 
 4/7 (15.5k lines):
 	- The selection window now has the right text.

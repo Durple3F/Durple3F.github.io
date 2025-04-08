@@ -180,14 +180,14 @@ function startScene(name, options){
 			let listTag = $(`<div class='route-list'></div>`)
 			let routeTag = $(`<div class='route-screen'></div>`)
 
-			let pcBtn = $(`<button class='route-button btn btn-primary' id='pc-button'></button>`)
+			let pcBtn = $(`<button class='btn btn-primary' id='pc-button'></button>`)
 			pcBtn.append(`<div class='route-button-text'>My PC</div>`)
 			pcBtn.click(() => {
 				changeScene("pc")
 			})
 			listTag.append(pcBtn)
 
-			let pokemonCenterBtn = $(`<button class='route-button btn btn-primary' id='pokemon-center-button'></button>`)
+			let pokemonCenterBtn = $(`<button class='btn btn-primary' id='pokemon-center-button'></button>`)
 			pokemonCenterBtn.append(`<div class='route-button-text'>Restore All Pokemon</div>`)
 			pokemonCenterBtn.click(() => {
 				//TODO: Maybe make the pokemon center an entire screen?
@@ -205,8 +205,43 @@ function startScene(name, options){
 				}
 			}
 			determinePokemonCenterActiveness()
-			
 			listTag.append(pokemonCenterBtn)
+
+			let shownCategory
+			const changeCategory = routeName => {
+				const change = () => {
+					if (shownCategory === routeName) return
+					let routeLevels = getLevelsInCategory(routeName)
+					displayLevels(routeLevels)
+					shownCategory = routeName
+				}
+				listTag.children(".highlight").removeClass("highlight")
+				let categoryBtn = listTag.children(`[data-category="${routeName}"]`)
+				categoryBtn.addClass("highlight")
+				if (!!shownCategory){
+					routeTag.fadeOut(300, () => {
+						change()
+						routeTag.fadeIn(300)
+					})
+				} else {
+					change()
+				}
+			}
+
+			determineUnlockedLevels()
+			for (let categoryId in levelCategoryData){
+				let category = levelCategoryData[categoryId]
+				if (!category.unlocked) continue
+
+				let categoryBtn = $(`<button class='route-btn btn btn-primary'></button>`)
+				categoryBtn.attr("data-category", categoryId)
+				let name = getLocaleString("name", lang, ["route-categories", category.id])
+				categoryBtn.text(name)
+				listTag.append(categoryBtn)
+				categoryBtn.click(event => {
+					changeCategory(category.id)
+				})
+			}
 
 			const displayLevels = levelList => {
 				routeTag.html("")
@@ -286,8 +321,7 @@ function startScene(name, options){
 					
 				}
 			}
-			let routeLevels = getLevelsInCategory(routeName)
-			displayLevels(routeLevels)
+			changeCategory(routeName)
 
 			let NPCDatas = getTrainerClassesFromLevelCategory(routeName)
 			NPCDatas.forEach(data => {

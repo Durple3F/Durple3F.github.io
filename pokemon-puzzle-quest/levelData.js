@@ -15,12 +15,17 @@ const boxThemeData = {
 
 const levelCategoryData = {
 	"Route 1": {
-		name: "Route 1",
+		id: "Route 1",
 		startsUnlocked: true
 	},
 	"Route 2": {
-		name: "Route 2",
-		startsUnlocked: false
+		id: "Route 2",
+		startsUnlocked: false,
+		prerequisites: {
+			levelsBeaten: [
+				"Route 1-7"
+			]
+		}
 	}
 }
 
@@ -498,7 +503,7 @@ const levelData = [
 	},
 	{
 		id: "Route 1-8",
-		category: "Route 1",
+		category: "Route 2",
 		name: "Route 1-8",
 		music: "SM Wild Pokemon Battle",
 		icon: "8",
@@ -515,6 +520,11 @@ const levelData = [
 	},
 ]
 
+for (let categoryId in levelCategoryData){
+	let category = levelCategoryData[categoryId]
+	category.id = categoryId
+	category.unlocked = category.startsUnlocked ?? false
+}
 for (let level of levelData) {
 	level.status = "not won"
 	level.attempts = 0
@@ -565,6 +575,32 @@ function loadTrainerClassSprites(data) {
 		names.push(name)
 	}
 	return names
+}
+
+function determineUnlockedLevels(){
+	for (let categoryId in levelCategoryData){
+		let category = levelCategoryData[categoryId]
+		let unlocked = category.unlocked
+		if (category.prerequisites){
+			let prereq = category.prerequisites
+			let allBeaten = true
+			if (prereq.levelsBeaten){
+				for (let levelId of prereq.levelsBeaten){
+					let level = getLevelDataById(levelId)
+					console.log(level)
+					if (level.status !== "won"){
+						allBeaten = false
+						break
+					}
+				}
+			}
+			let shouldUnlock = allBeaten
+			if (shouldUnlock){
+				unlocked = true
+			}
+		}
+		category.unlocked = unlocked
+	}
 }
 
 const pokeballSpriteData = {

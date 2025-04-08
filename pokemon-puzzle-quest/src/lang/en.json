@@ -661,6 +661,14 @@
 			"description": "This Pokémon gets half as much energy from matches rounded up."
 		}
 	},
+	"route-categories": {
+		"Route 1": {
+			"name": "Route 1"
+		},
+		"Route 2": {
+			"name": "Route 2"
+		}
+	},
 	"settings": {
 		"toggle-skip-seen-dialogue": "Skip seen dialogue?",
 		"toggle-exp-share": "Exp gained in fights is shared between all active Pokémon?",

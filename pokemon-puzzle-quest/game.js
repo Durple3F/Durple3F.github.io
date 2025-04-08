@@ -6,9 +6,13 @@ let gameRound, gameBoard
 let playerSaveId = null
 let playerSaveInfo = {}
 
+let boardSize = 8
+let boardWidth = boardSize
+let boardHeight = boardSize
+
 class Round{
 	constructor(trainer1, trainer2, resolvePromise, oldBoard){
-		this.board = oldBoard ?? new Board(8, 8)
+		this.board = oldBoard ?? new Board(boardWidth, boardHeight)
 		this.board.fill()
 		this.board.clearAllEffects()
 		this.trainers = [trainer1, trainer2]
@@ -69,6 +73,8 @@ class Round{
 		this.confirmButton.click(() => {
 			this.confirm()
 		})
+		
+		$("#flee-btn").off("click").on("click", () => this.fleeBattle())
 
 		this.loadResources()
 		let p = this.roundStartAnimation()
@@ -320,6 +326,36 @@ class Round{
 		}
 
 		return promise
+	}
+	fleeBattle(){
+		let modal = $("#modal")
+		clearModal(modal)
+		modal.find(".modal-title").text("Are you sure you'd like to flee?")
+	
+		let body = modal.find(".modal-body")
+		let container = $(`<div class='container d-flex justify-content-around'>`)
+		body.append(container)
+		let noBtn = $(`<button class='btn btn-lg w-25 btn-primary'>No</button>`)
+		container.append(noBtn)
+		let yesBtn = $(`<button class='btn btn-lg w-25 btn-secondary'>Yes</button>`)
+		container.append(yesBtn)
+
+		let result = false
+	
+		modal.modal("show")
+		yesBtn.click(() => {
+			result = true
+			modal.modal("hide")
+		})
+		noBtn.click(() => {
+			result = false
+			modal.modal("hide")
+		})
+		modal.on("hidden.bs.modal", () => {
+			if (result){
+				this.end("lose")
+			}
+		})
 	}
 
 	applyLocationChanges(map){

@@ -1,4 +1,4 @@
-const versionNumber = "v0.11.1"
+const versionNumber = "v0.11.2"
 let lang = "en"
 let playerName
 
@@ -16,7 +16,6 @@ const mouse = {
 }
 let currentHoveredElement
 
-const boardSize = 8
 let frameRate = 60
 
 const UNITVECTORS = [
