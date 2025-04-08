@@ -3,6 +3,8 @@ const config = {
 	pokemonSwapOutInfo: true,
 	showBlurOnTiles: true,
 	showFPS: "dev",
+	skipSeenDialogue: false,
+	expShare: true,
 	textSpeed: 40,
 
 	volumes: {

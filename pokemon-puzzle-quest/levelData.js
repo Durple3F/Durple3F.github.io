@@ -64,18 +64,34 @@ const levelData = [
 		],
 		effects: [
 			{ type: "dialogue", source: "rival-battle-1-dialogue" },
+			{ type: "load-setting", key: "hardMode" },
+			{ type: "load-value", value: true },
+			{ type: "jump-if-equal", jumpTo: "hardMode" },
+			{ type: "jump", jumpTo: "easyMode" },
+
+			{ type: "load-player-info", key: "chosen-starter", label: "easyMode" },
+			{ type: "load-value", value: "Rowlet" },
+			{ type: "jump-if-equal", jumpTo: "Popplio" },
 			{ type: "load-player-info", key: "chosen-starter" },
+			{ type: "load-value", value: "Litten" },
+			{ type: "jump-if-equal", jumpTo: "Rowlet" },
+			{ type: "jump", jumpTo: "Litten" },
+
+			{ type: "load-player-info", key: "chosen-starter", label: "hardMode" },
 			{ type: "load-value", value: "Rowlet" },
 			{ type: "jump-if-equal", jumpTo: "Litten" },
 			{ type: "load-player-info", key: "chosen-starter" },
 			{ type: "load-value", value: "Litten" },
 			{ type: "jump-if-equal", jumpTo: "Popplio" },
+			{ type: "jump", jumpTo: "Rowlet" },
+
 			{ type: "fight", trainer: 1, label: "Rowlet" },
 			{ type: "jump", jumpTo: "Win Check" },
 			{ type: "fight", trainer: 2, label: "Litten" },
 			{ type: "jump", jumpTo: "Win Check" },
 			{ type: "fight", trainer: 0, label: "Popplio" },
 			{ type: "jump", jumpTo: "Win Check" },
+
 			{ type: "jump-if-lost", jumpTo: "lost", label: "Win Check" },
 			{ type: "dialogue", source: "rival-battle-1-dialogue-won" },
 			{ type: "jump", jumpTo: Infinity },
@@ -213,7 +229,6 @@ const levelData = [
 		id: "Route 1-4",
 		category: "Route 1",
 		name: "Rival Battle 2",
-		// description: "Route 1-4-description",
 		icon: "4",
 		music: "SM Trainer Battle",
 		trainers: [
@@ -265,12 +280,27 @@ const levelData = [
 		],
 		effects: [
 			{ type: "dialogue", source: "rival-battle-2-dialogue" },
+			{ type: "load-setting", key: "hardMode" },
+			{ type: "load-value", value: true },
+			{ type: "jump-if-equal", jumpTo: "hardMode" },
+			{ type: "jump", jumpTo: "easyMode" },
+
+			{ type: "load-player-info", key: "chosen-starter", label: "easyMode" },
+			{ type: "load-value", value: "Rowlet" },
+			{ type: "jump-if-equal", jumpTo: "Popplio" },
 			{ type: "load-player-info", key: "chosen-starter" },
+			{ type: "load-value", value: "Litten" },
+			{ type: "jump-if-equal", jumpTo: "Rowlet" },
+			{ type: "jump", jumpTo: "Litten" },
+
+			{ type: "load-player-info", key: "chosen-starter", label: "hardMode" },
 			{ type: "load-value", value: "Rowlet" },
 			{ type: "jump-if-equal", jumpTo: "Litten" },
 			{ type: "load-player-info", key: "chosen-starter" },
 			{ type: "load-value", value: "Litten" },
 			{ type: "jump-if-equal", jumpTo: "Popplio" },
+			{ type: "jump", jumpTo: "Rowlet" },
+
 			{ type: "fight", trainer: 1, label: "Rowlet" },
 			{ type: "jump", jumpTo: Infinity },
 			{ type: "fight", trainer: 2, label: "Litten" },
@@ -356,6 +386,7 @@ const levelData = [
 			{ type: "jump-if-lost", jumpTo: Infinity },
 			{ type: "jump", jumpTo: "TrainerChoice" },
 
+			{ type: "change-music", music: "SM Trainer Battle" },
 			{ type: "random-number", min: 1, max: 10, label: "TrainerChoice" },
 			{ type: "load-value", value: 3 },
 			{ type: "jump-if-less-than", jumpTo: "Kevin" },
@@ -447,6 +478,7 @@ const levelData = [
 		],
 		effects: [
 			{ type: "dialogue", source: "route-1-7-dialogue-1" },
+			{ type: "change-music", music: "SM Trainer Battle" },
 			{ type: "fight", trainer: 0 },
 			{ type: "jump-if-lost", jumpTo: Infinity },
 			{ type: "dialogue", source: "route-1-7-dialogue-2" },

@@ -531,7 +531,7 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			orange: 5
+			purple: 5
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Growl.mp3"
@@ -1002,7 +1002,8 @@ const pokemonMoveData = {
 		accuracy: 95,
 		rechargeTurns: 1,
 		energy: {
-			blue: 12
+			green: 4,
+			blue: 8
 		},
 		sounds: {
 			"attack": "src/audio/attacks/String Shot.mp3"

@@ -180,14 +180,14 @@ function startScene(name, options){
 			let listTag = $(`<div class='route-list'></div>`)
 			let routeTag = $(`<div class='route-screen'></div>`)
 
-			let pcBtn = $(`<button class='route-button btn btn-primary mx-3 my-1' id='pc-button'></button>`)
+			let pcBtn = $(`<button class='route-button btn btn-primary' id='pc-button'></button>`)
 			pcBtn.append(`<div class='route-button-text'>My PC</div>`)
 			pcBtn.click(() => {
 				changeScene("pc")
 			})
 			listTag.append(pcBtn)
 
-			let pokemonCenterBtn = $(`<button class='route-button btn btn-primary mx-3 my-1' id='pokemon-center-button'></button>`)
+			let pokemonCenterBtn = $(`<button class='route-button btn btn-primary' id='pokemon-center-button'></button>`)
 			pokemonCenterBtn.append(`<div class='route-button-text'>Restore All Pokemon</div>`)
 			pokemonCenterBtn.click(() => {
 				//TODO: Maybe make the pokemon center an entire screen?
@@ -850,12 +850,14 @@ function askToRenamePokemon(pokemon){
 	let resolvePromise
 	let promise = new Promise(resolve => resolvePromise = resolve)
 	let modal = $("#modal")
-	let name = pokemon.name
+	let name = getLocaleString("name", lang, ["pokemon", pokemon.data.id])
 	let image = pokemon.getImage()
 
 	clearModal(modal)
 
-	modal.find(".modal-title").text(`What would you like to name your ${name}?`)
+	let question = getLocaleString("ask-to-rename-pokemon", lang)
+	question = applyReplacements(question, [name])
+	modal.find(".modal-title").text(question)
 	let innerStuff = $(`<div class='container d-flex'></div>`)
 	innerStuff.append(`<div class='col col-3'><img class='pokemon-image' src='${image}'></div>`)
 	innerStuff.append(`<div class='col col-9 d-flex flex-column justify-content-center align-items-center'>
@@ -916,15 +918,19 @@ function beginLevel(levelID){
 		if (lostFights.length && !forgiving){
 			levelResult = "lose"
 		} else if (lostFights.length && forgiving) {
-			//Maybe one day, add an extra challenge to go back and finish the level without losing once
+			//TODO Maybe one day, add an extra challenge to go back and finish the level without losing once
 			levelResult = "win"
 		} else {
 			levelResult = "win"
 		}
+
+		let shouldHeal = playerActivePokemon.every(pokemon => pokemon.fainted)
+		if (shouldHeal){
+			healAllPokemon(playerActivePokemon)
+		}
 		
 		if (levelResult === "lose"){
 			console.log("You lose :(")
-			healAllPokemon(playerActivePokemon)
 		} else {
 			level.status = "won"
 			promise = promise.then(() => saveLevelStatus(level, "won"))
@@ -1014,12 +1020,20 @@ function advanceCurrentLevel(){
 		} break
 		case "dialogue": {
 			let dialogueName = effect.source
-			let dialogue = getLocaleString(dialogueName, lang, ["dialogue"])
-			beginDialogue(dialogue)
-			.then(() => {
-				console.log("Ended dialogue!")
+			let seenDialogue = playerSaveInfo["seen-dialogue"]
+			let shouldSkip = config.skipSeenDialogue && seenDialogue.includes(dialogueName)
+			if (shouldSkip){
 				resolvePromise()
-			})
+			} else {
+				let dialogue = getLocaleString(dialogueName, lang, ["dialogue"], {})
+				beginDialogue(dialogue)
+				.then(() => {
+					if (!seenDialogue.includes(dialogueName)){
+						seenDialogue.push(dialogueName)
+					}
+					resolvePromise()
+				})
+			}
 		} break
 		case "random-number": {
 			let min = effect.min ?? 0
@@ -1030,6 +1044,10 @@ function advanceCurrentLevel(){
 		} break
 		case "load-player-info": {
 			currentLevelProgress.info[effectIndex] = playerSaveInfo[effect.key]
+			resolvePromise()
+		} break
+		case "load-setting": {
+			currentLevelProgress.info[effectIndex] = config[effect.key]
 			resolvePromise()
 		} break
 		case "save-player-info": {

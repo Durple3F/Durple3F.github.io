@@ -492,11 +492,12 @@ class Pokemon{
 		}
 		colors.forEach(color => {
 			let max = Math.ceil(this.energyMastery[color] / 2)
-			this.maxEnergy[color] = 10 + max
+			this.maxEnergy[color] = 10 + max + Math.floor(this.level / 3)
 			this.energy[color] = Math.floor(this.energyMastery[color] / 4)
 		})
 	}
 	resetEverything(){
+		this.maxhp = this.getStat("hp")
 		this.turnsActive = 0
 		this.moveUsage.forEach(usage => usage.recharge = 0)
 

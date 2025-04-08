@@ -1,6 +1,6 @@
 {
 	"route-1-6-description": "After your battle with Hau, you continue towards Hau'oli City.",
-	"route-1-7-description": "You reach the trainers' school, and have to get through the teacher's challenge.<br>This level involves 5 consecutive trainer battles, so be ready.",
+	"route-1-7-description": "You reach the trainers' school with Lillie, and get mistaken for somebody else.<br>This level involves 5 consecutive trainer battles, so be ready.",
 	
 	"initiative-tutorial": "Initiative<br>Each turn, both Pokémon gain Initiative based on their speed stats. When a player matches 4 or more tiles in a row, they get a free turn.",
 	"choose-pokemon": "Choose Pokémon",
@@ -8,9 +8,10 @@
 	"pokemon-move-requirement-level": "Your Pokemon needs to be at least level %c% to use this move.",
 	"pokemon-move-requirement-level-error": "Your Pokémon needs to be at least... wait, they're high enough level. Huh????",
 
+	"ask-to-rename-pokemon": "What would you like to name your %c%?",
 	"error-cant-remove-last-pokemon": "You can't put your only Pokémon into the PC.",
 	"error-no-usable-pokemon": "All your Pokémon are currently fainted.",
-	"select-number-tiles-plural": "Select %c tiles",
+	"select-number-tiles-plural": "Select %c% tiles",
 	"select-number-tiles-single": "Select a tile",
 	"confirm": "Confirm",
 	"pokedex": "Pokédex",
@@ -278,6 +279,7 @@
 				{ "type": "text", "speaker": "Hiromi", "text": "I'm gonna make up more cool battle lines!" },
 				{ "type": "text", "speaker": "Mia", "text": "Me and Mister Wobbles are gonna be just as good as you when we grow up!" },
 				{ "type": "text", "speaker": "Joey", "text": "I just looked up what Metapod evolves into, I think I'm gonna have to rename him soon..." },
+				{ "type": "text", "speaker": "Emily", "text": "Yes, even though you weren't the special guest I was expecting, you certainly helped quite a bit. I hope he's alright..." },
 				{ "type": "get-speaker", "name": "Lillie", "class": "Lillie" },
 				{ "type": "style-speaker", "speaker": "Lillie", "css": {
 					"left": "+=10%"
@@ -295,7 +297,7 @@
 
 				{ "type": "get-speaker", "name": "Narrator", "class": "Narrator" },
 				{ "type": "text", "speaker": "Narrator", "text": "Some time later..." },
-				{ "type": "get-speaker", "name": "The Masked Royal", "class": "Masked-Royal" },{ "type": "come-in-from-offscreen", "speaker": "The Masked Royal", "direction": "up", "duration": 400, "waitDuration": 200 },
+				{ "type": "get-speaker", "name": "The Masked Royal", "class": "Masked-Royal" },{ "type": "come-in-from-offscreen", "speaker": "The Masked Royal", "direction": "right", "duration": 1000, "waitDuration": 200 },
 				{ "type": "text", "speaker": "The Masked Royal", "text": "Alright! Who's ready to throw down?!" },
 				{ "type": "transform-speaker", "speaker": "The Masked Royal", "transform": "scaleX(-1)", "duration": 300 },
 				{ "type": "wait", "waitDuration": 1000 },
@@ -660,6 +662,10 @@
 		}
 	},
 	"settings": {
+		"toggle-skip-seen-dialogue": "Skip seen dialogue?",
+		"toggle-exp-share": "Exp gained in fights is shared between all active Pokémon?",
+		"toggle-hard-mode": "Hard mode (Rival chooses the more effective Pokémon)",
+
 		"delete-save": "DELETE SAVE",
 		"delete-save-confirm": "Really delete save data, super for sure?",
 		"delete-save-failure": "Failed to delete save data.",

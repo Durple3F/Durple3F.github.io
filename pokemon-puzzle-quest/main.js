@@ -1,4 +1,4 @@
-const versionNumber = "v0.11"
+const versionNumber = "v0.11.1"
 let lang = "en"
 let playerName
 
@@ -202,11 +202,13 @@ function loadSprites(list){
 const sounds = {}
 const playingSounds = []
 function loadSound(name, type, url){
+	if (sounds[name]){
+		return sounds[name].promise
+	}
 	sounds[name] = {
 		type: type
 	}
-	return new Promise((resolve, reject) => {
-		let request = new XMLHttpRequest()
+	let promise = new Promise((resolve, reject) => {
 		$.ajax({
 			url: url,
 			xhrFields: {
@@ -219,24 +221,29 @@ function loadSound(name, type, url){
 				audio.load()
 				sounds[name].audio = audio
 				loadedResources[2]++
-				resolve()
+				audio.oncanplaythrough = () => resolve(audio)
 			}
 		})
-		request.open("GET", url, true)
-		request.responseType = "blob"
-		request.onload = function(){
-			if (this.status === 200){
-				var audio = new Audio(URL.createObjectURL(this.response))
-				audio.load()
+		// No idea what I was thinking when I wrote this code
+		// let request = new XMLHttpRequest()
+		// request.open("GET", url, true)
+		// request.responseType = "blob"
+		// request.onload = function(){
+		// 	if (this.status === 200){
+		// 		var audio = new Audio(URL.createObjectURL(this.response))
+		// 		audio.load()
 
-				audio.muted = config.muted[type]
-				audio.volume = config.volumes[type]
+		// 		audio.muted = config.muted[type]
+		// 		audio.volume = config.volumes[type]
 
-				sounds[name].audio = audio
-				resolve(audio)
-			}
-		}
+		// 		sounds[name].audio = audio
+		// 		console.log("Just ran the weird code")
+		// 		resolve(audio)
+		// 	}
+		// }
 	})
+	sounds[name].promise = promise
+	return promise
 }
 function loadSounds(list){
 	let batch = []
@@ -621,7 +628,7 @@ function loadResources(){
 	sprites = sprites.concat(getAllStatusSprites())
 	loadedResources[1] = sprites.length
 
-	let sounds = [
+	let soundsToLoad = [
 		{name: "cascade1", type: "sound", url: "src/audio/Cascade1.wav"},
 		{name: "cascade2", type: "sound", url: "src/audio/Cascade2.wav"},
 		{name: "cascade3", type: "sound", url: "src/audio/Cascade3.wav"},
@@ -631,13 +638,24 @@ function loadResources(){
 		{name: "level-up", type: "sound", url: "src/audio/Level Up!.wav"},
 		{name: "healing", type: "sound", url: "src/audio/healing.mp3"},
 	]
-	loadedResources[3] = sounds.length
+	loadedResources[3] = soundsToLoad.length
 
 	let localeFinished = 0
 
-	let update = () => {
+	const countCompleteSounds = () => {
+		let done = 0
+		for (let sound of soundsToLoad){
+			let soundName = sound.name
+			if (sounds[soundName] && sounds[soundName]?.audio?.readyState === 4){
+				done++
+			}
+		}
+		return done
+	}
+
+	const update = () => {
 		let total = loadedResources[1] + loadedResources[3] + 1
-		let complete = loadedResources[0] + loadedResources[2] + localeFinished
+		let complete = loadedResources[0] + countCompleteSounds() + localeFinished
 		let completeTag = $("#loading-bar > .count > .count")
 		let shown = parseInt(completeTag.text() || 0)
 		animateTextCounter(shown, complete, completeTag)
@@ -650,7 +668,7 @@ function loadResources(){
 
 	let promise = Promise.all([
 		loadSprites(sprites),
-		loadSounds(sounds),
+		loadSounds(soundsToLoad),
 		downloadLocale(lang).then(() => new Promise(resolve => {
 			localeFinished++
 			resolve()
@@ -747,11 +765,8 @@ function openSettings(){
 	let body = modal.find(".modal-body")
 
 	modal.find(".modal-title").html(`<h6 class='display-6 text-center'>Settings</h6>`)
-	let changelogBtn = $(`<button class='btn btn-secondary'></button>`)
-	changelogBtn.text(`Changelog (${versionNumber})`)
-	modal.find(".modal-footer").append(changelogBtn)
-	let btn = $(`<button class='btn btn-primary'>Continue</button>`)
-	modal.find(".modal-footer").append(btn)
+
+	//SOUND SETTINGS
 
 	let rangeSize = 1000
 	let numSize = 100
@@ -826,9 +841,43 @@ function openSettings(){
 		section.append("%")
 	}
 
-	changelogBtn.click(openChangelog)
-	
-	let deleteSaveSection = $("<div class='d-flex justify-space-between'></div>")
+	//TOGGLES
+	let toggleInfo = [
+		{
+			text: "toggle-skip-seen-dialogue",
+			key: "skipSeenDialogue"
+		},
+		{
+			text: "toggle-exp-share",
+			key: "expShare"
+		},
+		{
+			text: "toggle-hard-mode",
+			key: "hardMode"
+		}
+	]
+	for (let toggle of toggleInfo){
+		let textName = toggle.text
+		let text = getLocaleString(textName, lang, ["settings"])
+		let key = toggle.key
+		let section = $(`<div class='mb-3 d-flex align-items-center'></div>`)
+		body.append(section)
+		let checkbox = $("<input class='form-check-input' type='checkbox'>")
+		let id = `setting-toggle-${key}`
+		checkbox.attr("id", id)
+		section.append(checkbox)
+		section.append(`<label for='${id}'>${text}</label>`)
+		if (config[key]){
+			checkbox.attr("checked", true)
+		}
+		checkbox.change(() => {
+			let checked = checkbox[0].checked
+			config[key] = checked
+		})
+	}
+
+	//SAVE FILE SETTINGS
+	let deleteSaveSection = $("<div class='d-flex justify-content-between w-50 mx-auto'></div>")
 	body.append(deleteSaveSection)
 	let deleteText = getLocaleString("delete-save", lang, ["settings"])
 	let deleteSaveButton = $(`<button class='btn btn-danger'>${deleteText}</button>`)
@@ -872,6 +921,10 @@ function openSettings(){
 			})
 		})
 	})
+	if (!playerSaveId){
+		deleteSaveButton.attr("disabled", true)
+		getTransferButton.attr("disabled", true)
+	}
 
 	let importText = getLocaleString("import-save-file", lang, ["settings"])
 	let importPromptText = getLocaleString("import-save-file-prompt", lang, ["settings"])
@@ -888,6 +941,16 @@ function openSettings(){
 			loadResources()
 		})
 	})
+
+	//BOTTOM BUTTONS
+
+	let changelogBtn = $(`<button class='btn btn-secondary'></button>`)
+	changelogBtn.text(`Changelog (${versionNumber})`)
+	changelogBtn.click(openChangelog)
+
+	modal.find(".modal-footer").append(changelogBtn)
+	let btn = $(`<button class='btn btn-primary'>Continue</button>`)
+	modal.find(".modal-footer").append(btn)
 
 	btn.click(() => {
 		modal.modal("hide")

@@ -98,7 +98,9 @@ body {
 	--type-dark: #50403d;
 	--type-bug: #91a110;
 
+	--won-color: gold;
 	--dialogue-font-size: min(5vh, 3vw);
+	--large-button-font-size: calc(var(--dialogue-font-size) * 0.7);
 	--active-pokemon-box-size: max(4em, 10vh);
 	--ui-primary-bg: rgb(75, 117, 232);
 }
@@ -256,19 +258,26 @@ body {
 	width: 25%;
 	height: 100%;
 	border-right: 1px solid #333;
-	padding: 5vh 0;
+	padding: 3vh;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 }
 .route-button {
   height: 12vh;
-	width: 80%;
+	width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-	font-size: calc(var(--dialogue-font-size) * 0.7);
+	font-size: var(--large-button-font-size);
+	margin: 0.1em 0;
+}
+.route-button:first-child {
+	margin-top: 0;
+}
+.route-button:last-child {
+	margin-bottom: 0;
 }
 
 .route-screen {
@@ -277,15 +286,17 @@ body {
 }
 
 .level-button {
-	height: 3em; width: 3em;
+	height: 3em;
+	width: 3em;
 	padding: 0;
 	border-radius: 50%;
 	margin: 0.5em;
+	font-size: var(--large-button-font-size)
 }
 .level-button.won {
-	background-color: gold;
-	border-color: gold;
-	box-shadow: 0px 0px 4px gold;
+	background-color: var(--won-color);
+	border-color: var(--won-color);
+	box-shadow: 0px 0px 4px var(--won-color);
 }
 .level-button.won:active {
 	background-color: rgb(214, 184, 17);
@@ -299,6 +310,11 @@ body {
 	position: absolute;
 	top: 50%; left: 50%;
 	transform: translate(-50%, -50%);
+}
+.level-button.won > .inner {
+	color: white;
+	filter: drop-shadow(0 0 0.05em black)
+	drop-shadow(0 0 0.1em black);
 }
 
 #logo {
@@ -865,7 +881,7 @@ body {
 }
 .move.usable[data-move-type="Fairy"] {
 	background-color: var(--type-fairy);
-	color: var(--move-text-lighter);
+	color: var(--move-text-dark);
 }
 .move.usable[data-move-type="Fairy"]:active {
 	box-shadow: 0 0 var(--move-shadow-size) var(--type-fairy);
@@ -886,7 +902,7 @@ body {
 }
 .move.usable[data-move-type="Flying"] {
 	background-color: var(--type-flying);
-	color: var(--move-text-lighter);
+	color: var(--move-text-dark);
 }
 .move.usable[data-move-type="Flying"]:active {
 	box-shadow: 0 0 var(--move-shadow-size) var(--type-flying);
@@ -1473,10 +1489,17 @@ body {
 }
 .evolution-container > div {
 	height: 60%;
+	width: 40%;
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	mask-position: center;
+	mask-size: contain;
+	mask-repeat: no-repeat;
 }
 .evolution-container > div > img {
 	max-height: 100%;

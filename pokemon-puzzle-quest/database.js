@@ -488,6 +488,7 @@ function newPlayerSaveData(){
 	data["total-pokemon-caught"] = 0
 	data["pokemon-caught-stats"] = {}
 	data["unlocked-pokedex"] = false
+	data["seen-dialogue"] = []
 	return data
 }
 function normalizeSave(saveInfo){

@@ -82,11 +82,27 @@ class Round{
 		let moveList = []
 		moveList.push(pokemonMoveData["Struggle"])
 		let soundsToUnload = []
+		let imagesToUnload = []
 		for (let i = 0; i < this.trainers.length; i++){
 			let trainer = this.trainers[i]
 			for (let j = 0; j < trainer.pokemon.length; j++){
 				let pokemon = trainer.pokemon[j]
 				if (!pokemon) continue
+				let pokemonId = pokemon.data.id
+
+				let imgUrl = pokemon.getImage()
+				let imgName = `${pokemon.uuid}-img`
+				loadSprite(imgName, imgUrl)
+				imagesToUnload.push(imgName)
+
+				//Preload cry
+				let cryUrl = pokemon.data.sounds.cry
+				if (cryUrl){
+					let cryName = `${pokemonId}-cry`
+					loadSound(cryName, "cry", cryUrl)
+					soundsToUnload.push(cryName)
+				}
+
 				for (let k = 0; k < pokemon.activeMoves.length; k++){
 					let move = pokemon.activeMoves[k]
 					if (!moveList.includes(move)){
@@ -105,9 +121,13 @@ class Round{
 			}
 		}
 
+		//Unload all of that
 		this.promise.then(() => {
 			for (let soundName of soundsToUnload){
 				unloadSound(soundName)
+			}
+			for (let imageName of imagesToUnload){
+				console.log("unload", imageName)
 			}
 		})
 	}
@@ -1027,7 +1047,7 @@ class Round{
 		for (let p of canEvolve){
 			let evolutions = p.data.evolutions
 			let possibilities = evolutions.filter(evo => {
-				return checkIfPokemonMeetsRequirements(p, evo.unlock)
+				return checkIfPokemonMeetsRequirements(p, evo.unlock) || true
 			})
 			//TODO if there are multiple options, the player should get to choose
 			if (!possibilities.length) continue
@@ -1744,7 +1764,11 @@ class Round{
 
 		options.target = target
 		options.index = index
-		effectData.execute(resolvePromise, effect, params, this, options)
+		try {
+			effectData.execute(resolvePromise, effect, params, this, options)
+		} catch {
+			alert("Something broke during this move's execution. Please send me a screenshot of the console. (F12)")
+		}
 		promise.then(val => new Promise(res => {
 			if (val !== undefined){
 				moveUseObj.info[effectIndex] = val
@@ -2737,12 +2761,8 @@ class Round{
 		let cryUrl = pokemon.data.sounds.cry
 		if (cryUrl){
 			let cryName = `${pokemonId}-cry`
-			loadSound(cryName, "cry", cryUrl)
+			loadSound(cryName, "sound", cryUrl)
 			.then(() => playSound(cryName))
-
-			this.promise.then(() => {
-				unloadSound(cryName)
-			})
 		}
 
 		if (facing !== correctFacing){
@@ -3074,6 +3094,9 @@ class Round{
 		let defeatedPokemon = enemyTrainer.pokemon
 		.filter(p => !isPokemonUsable(p))
 		let yourPokemon = this.trainers[0].pokemon
+		if (!config.expShare){
+			yourPokemon = yourPokemon.filter(pokemon => pokemon.turnsActive > 0)
+		}
 		let resultMap = {}
 		for (let yours of yourPokemon){
 			let totalEXP = 0
@@ -3088,6 +3111,7 @@ class Round{
 			}
 			resultMap[yours.uuid] = Math.round(totalEXP)
 		}
+		console.log(resultMap)
 		return resultMap
 	}
 	savePlayerPokemon(){
@@ -3826,11 +3850,7 @@ function canPokemonBeHealed(pokemonList){
 			healed = true
 			toPerform.hp += pokemon.maxhp - pokemon.hp
 		}
-		let debuffs = pokemon.statusEffects.filter(s => {
-			let name = s.name
-			let data = pokemonStatusData[name]
-			return data && data.class === "debuff"
-		})
+		let debuffs = pokemon.statusEffects.filter(s => s)
 		debuffs.forEach(s => debuffs.push(s))
 		if (healed){
 			healables.push(pokemon)
@@ -3848,10 +3868,24 @@ function doEvolutionAnimation(elem, pokemon, evolution){
 	let image2src = getPokemonImage(evolveTo, "large", pokemon.isShiny)
 	let box1 = $("<div></div>")
 	let box2 = $("<div></div>")
+	let box1Mask = $("<div></div>")
+	let box2Mask = $("<div></div>")
 	body.append(box1)
 	body.append(box2)
+	body.append(box1Mask)
+	body.append(box2Mask)
 	let image1 = $(`<img>`).attr("src", image1src)
 	let image2 = $(`<img>`).attr("src", image2src)
+	box1Mask.css({
+		"mask-image": `url(${image1src})`,
+		"opacity": 0,
+		"background-color": "white"
+	})
+	box2Mask.css({
+		"mask-image": `url(${image2src})`,
+		"opacity": 0,
+		"background-color": "white"
+	})
 	image2.css("opacity", 0)
 	image2.css("filter", "brightness(100)")
 	box1.append(image1)
@@ -3877,8 +3911,7 @@ function doEvolutionAnimation(elem, pokemon, evolution){
 				let transform = ""
 				transform += ` scaleX(${x})`
 				transform += ` scaleY(${y})`
-				image1.css("transform", transform)
-				image2.css("transform", transform)
+				body.css("transform", transform)
 			}
 		})
 	})
@@ -3905,9 +3938,10 @@ function doEvolutionAnimation(elem, pokemon, evolution){
 				if (skipped) return
 				let p = this.val
 				let brightness = interpolate(1, 10, bezierEase(p))
-				let invert = interpolate(0, 0.02, bezierEase(p))
 				brightness = brightness * brightness
 				image1.css("filter", `invert(0.01) brightness(${brightness})`)
+				let maskOpacity = interpolate(0, 1, bezierEase(p))
+				box1Mask.css("opacity", maskOpacity)
 			}
 		})
 	})
@@ -3925,8 +3959,10 @@ function doEvolutionAnimation(elem, pokemon, evolution){
 					let v = phase > 0.5 ? 0.5 - (phase - 0.5) : phase
 					v *= 2
 					image2.css("opacity", v)
+					box2Mask.css("opacity", v)
 					let v2 = 1 - v
 					image1.css("opacity", v2)
+					box1Mask.css("opacity", v2)
 				},
 				complete: function(){
 					res()
@@ -3939,6 +3975,27 @@ function doEvolutionAnimation(elem, pokemon, evolution){
 	.then(() => inNOut(4000, 3))
 	.then(() => inNOut(3000, 4))
 	.then(() => inNOut(3000, 9, true))
+	.then(() => {
+		$({val: 0}).animate({val: 1}, {
+			duration: 1500,
+			step: function(){
+				let p = 1 - this.val
+				let glow = interpolate(0, 1, bezierEase(p))
+				let i = image1.width() * glow * 0.1
+				let filter = `drop-shadow(0px 0px ${i * 5}px white)`
+				filter += ` drop-shadow(0px 0px ${i * 3}px rgba(255, 255, 255, ${p}))`
+				body.css("filter", filter)
+				let brightness = interpolate(1, 10, bezierEase(p))
+				brightness = brightness * brightness
+				image2.css("filter", `brightness(${brightness})`)
+				box2Mask.css("opacity", glow)
+			},
+			complete: function(){
+				if (skipped) return
+				box2Mask.css("opacity", 0)
+			}
+		})
+	})
 	//Fade out outer glow & brightness
 	delay(13000).then(() => {
 		$({val: 0}).animate({val: 1}, {
@@ -3950,24 +4007,13 @@ function doEvolutionAnimation(elem, pokemon, evolution){
 				let transform = ""
 				transform += ` scaleX(${x})`
 				transform += ` scaleY(${y})`
-				image1.css("transform", transform)
-				image2.css("transform", transform)
-				let glow = interpolate(0, 1, bezierEase(p))
-				let i = image1.width() * glow * 0.1
-				let filter = `drop-shadow(0px 0px ${i * 5}px white)`
-				filter += ` drop-shadow(0px 0px ${i * 3}px rgba(255, 255, 255, ${p}))`
-				body.css("filter", filter)
-				let brightness = interpolate(1, 10, bezierEase(p))
-				brightness = brightness * brightness
-				let invert = interpolate(0, 0.02, bezierEase(p))
-				image2.css("filter", `invert(0.01) brightness(${brightness})`)
+				body.css("transform", transform)
 			},
 			complete: function(){
 				if (skipped) return
 				image1.hide()
+				box2Mask.hide()
 				image2.css("opacity", 1)
-				image2.css("filter", "")
-				image2.css("transform", "")
 			}
 		})
 	})
@@ -3984,13 +4030,8 @@ function healAllPokemon(pokemonList){
 		pokemon.fainted = false
 		//Full health
 		pokemon.hp = pokemon.maxhp
-		//Remove all debuffs
-		let debuffs = pokemon.statusEffects.filter(statusEffects => {
-			let name = statusEffects.name
-			let data = pokemonStatusData[name]
-			return data && data.class === "debuff"
-		})
-		debuffs.forEach(statusEffect => {
+		//Remove all status effects
+		pokemon.statusEffects.forEach(statusEffect => {
 			p.removeStatus(statusEffect)
 		})
 

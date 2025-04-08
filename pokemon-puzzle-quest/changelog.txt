@@ -1,7 +1,19 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
+4/8 (15.7k lines):
+	- Added a setting to allow you to skip dialogue you've already seen.
+	- Added a setting to turn EXP share off, which apparently is something that real pokemon, made by real developers, just forgot how to do since 2018.
+	- Added a setting to control whether Hau chooses the better or worse starter against you.
+	- You now get all your pokemon healed if (a fight ends and all your pokemon are fainted) which is a different condition from (a fight ends and you count as having lost it)
+
 4/7 (15.5k lines):
 	- The selection window now has the right text.
+	- A bunch of tweaks to moves & pokemon.
+	- I *believe* that the glitch where pokemon health bars would be wonky when you're selecting pokemon should be fixed.
+	- Healing pokemon now removes all status effects, not just debuffs.
+	- Tweaked level 7 dialogue
+	- Pokemon now have a higher max energy in all colors based on their level.
+	- Improved the evolution animation.
 
 4/6 (15.5k lines):
 	- Added Abra, Pikachu, Happiny
