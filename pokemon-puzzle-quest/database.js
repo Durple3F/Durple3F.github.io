@@ -329,7 +329,6 @@ function loadPlayerPokemon(dataList){
 		let pokemonMinimumCaught = {}
 		for (let pokemonId in pokemonData){
 			pokemonMinimumCaught[pokemonId] = 0
-			pokemonMinimumCaughtTotal++
 		}
 
 		dataList.forEach(obj => {
@@ -338,6 +337,7 @@ function loadPlayerPokemon(dataList){
 			//JUST IN CASE we try and load an otherwise illegal pokemon
 			if (obj.pokemonId in pokemonData){
 				pokemonMinimumCaught[obj.pokemonId]++
+				pokemonMinimumCaughtTotal++
 				caughtPokemon.push(pokemon)
 
 				if (obj.activeSlot !== -1){
@@ -358,6 +358,7 @@ function loadPlayerPokemon(dataList){
 		}
 		let totalCaught = playerSaveInfo["total-pokemon-caught"]
 		if (totalCaught < pokemonMinimumCaughtTotal){
+			console.log("Changed it")
 			playerSaveInfo["total-pokemon-caught"] = pokemonMinimumCaughtTotal
 		}
 

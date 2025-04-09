@@ -318,6 +318,57 @@ const pokemonData = {
 			},
 		]
 	},
+	"Zubat": {
+		name: "Zubat",
+		number: "41",
+		imageFacing: "right",
+		imageSources: {
+			"large": "src/img/pokemon/0041Zubat.png",
+			"largeShiny": "src/img/shiny-pokemon/041-Zubat.png",
+			"home": "src/img/tiny-pokemon/Zubat.png"
+		},
+		sounds: {
+			cry: "src/audio/cries/zubat.mp3"
+		},
+		types: ["Poison", "Flying"],
+		tags: [],
+		stats: {
+			hp: 40,
+			attack: 45,
+			defense: 35,
+			specialAttack: 30,
+			specialDefense: 40,
+			speed: 55
+		},
+		expYield: 49,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 1
+		},
+		energyMastery: {
+			green: 3,
+			yellow: 2,
+			purple: 2
+		},
+		learnset: [
+			{
+				name: "Absorb",
+				unlock: { type: "level", amount: 1 }
+			},
+			{
+				name: "Supersonic",
+				unlock: { type: "level", amount: 1 }
+			},
+			{
+				name: "Astonish",
+				unlock: { type: "level", amount: 1 }
+			},
+		]
+	},
 	"Meowth-Alola": {
 		name: "Meowth",
 		id: "Meowth-Alola",
@@ -854,6 +905,55 @@ const pokemonData = {
 				unlock: {
 					type: "level",
 					amount: 20
+				}
+			},
+		]
+	},
+	"Smeargle": {
+		name: "Smeargle",
+		number: "235",
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0235Smeargle.png",
+			"largeShiny": "src/img/shiny-pokemon/235-Smeargle.png",
+			"home": "src/img/tiny-pokemon/Smeargle.png"
+		},
+		sounds: {
+			cry: "src/audio/cries/smeargle.mp3"
+		},
+		types: ["Normal"],
+		tags: ["Starter"],
+		stats: {
+			hp: 55,
+			attack: 20,
+			defense: 35,
+			specialAttack: 20,
+			specialDefense: 45,
+			speed: 75
+		},
+		expYield: 88,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 1
+		},
+		energyMastery: {
+			red: 2,
+			orange: 2,
+			yellow: 2,
+			green: 2,
+			blue: 2,
+			purple: 2
+		},
+		learnset: [
+			{
+				name: "Sketch",
+				unlock: {
+					type: "level",
+					amount: 1
 				}
 			},
 		]

@@ -1,7 +1,8 @@
 Incomplete move lists:
-  Rattata-Alola (lv 10)
   Butterfree (lv 0)
+  Rattata-Alola (lv 10)
   Pikachu (lv 8)
+  Zubat (lv 5)
   Meowth-Alola (lv 8)
   Slowpoke (lv 9)
   Magnemite (lv 8)
@@ -21,6 +22,8 @@ Incomplete move lists:
 
 Missing Evolutions:
   Rattata-Alola
+  Pikachu
+  Zubat
   Meowth-Alola
   Abra
   Slowpoke
@@ -39,29 +42,8 @@ Missing Evolutions:
   Grubbin
 
 Missing Abilities:
-  Rattata-Alola
-  Caterpie
-  Metapod
-  Butterfree
-  Pikachu
-  Meowth-Alola
-  Abra
-  Slowpoke
-  Magnemite
-  Grimer-Alola
-  Ledyba
-  Spinarak
-  Pichu
-  Wingull
-  Bonsly
-  Happiny
-  Rowlet
-  Litten
-  Popplio
-  Pikipek
-  Yungoos
-  Grubbin
-  Comfey
+  - All
+  - Popplio has an ability but it does nothing
 
 Missing Shiny Variations:
   - None! :)

@@ -895,6 +895,48 @@ const pokemonMoveData = {
 			{ type: "end-turn" }
 		],
 	},
+	"Pursuit": {
+		name: "Pursuit",
+		type: "Dark",
+		category: "Physical",
+		strategy: "basic-damage",
+		pp: 20,
+		power: 40,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			orange: 8
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Pursuit.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+		],
+		onTurnStart: [
+			{ type: "get-turns-active", target: "opponent" },
+			{ type: "load-value", value: 1 },
+			{ type: "jump-if-less-than", jumpTo: "add-status" },
+			{ type: "remove-status-effect", target: "user", statusName: "pursuit-double-power" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "apply-status-effect", target: "user", label: "add-status", statusEffect: {
+				name: "pursuit-double-power",
+				type: "power-alteration",
+				stacks: false,
+				turns: 1,
+				lostOnSwap: true,
+				lostOnBatonPass: true,
+				appliesTo: {
+					names: ["Pursuit"]
+				},
+				modification: {
+					change: 2,
+					operation: "multiply"
+				}
+			} },
+		]
+	},
 	"Quick Attack": {
 		name: "Quick Attack",
 		type: "Normal",
@@ -994,6 +1036,35 @@ const pokemonMoveData = {
 			{ type: "jump", jumpTo: Infinity },
 			{ type: "damage", label: "tiny-damage" }
 		],
+	},
+	"Sketch": {
+		name: "Sketch",
+		type: "Normal",
+		category: "Status",
+		strategy: "special",
+		pp: 1,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 1,
+		energy: {
+			
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Sketch part 1.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-last-move", target: "opponent" },
+			{ type: "jump-if-truthy", jumpTo: "use-move" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "get-move", moveName: "Sketch", label: "use-move" },
+			{ type: "unlearn-move", move: -1 },
+			{ type: "get-last-move", target: "opponent" },
+			{ type: "learn-move", move: -1 },
+		],
+		highlightOnHover: {
+			type: "last-enemy-move"
+		}
 	},
 	"String Shot": {
 		name: "String Shot",
@@ -1162,7 +1233,7 @@ const pokemonMoveData = {
 		accuracy: null,
 		rechargeTurns: 5,
 		energy: {
-			purple: 10
+			purple: 5
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Teleport.mp3"

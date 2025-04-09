@@ -40,7 +40,9 @@ function getLocaleString(id, lang, path, defaultResult=`% STRING MISSING %`){
 		}
 	}
 	if (!localeObj[id]){
-		console.warn("String missing:", lang, id, path)
+		if (defaultResult === `% STRING MISSING %`){
+			console.warn("String missing:", lang, id, path)
+		}
 		return defaultResult
 	}
 	return localeObj[id]

@@ -126,6 +126,7 @@ class Pokemon{
 		this.maxEnergy = getEmptyEnergy()
 
 		this.turnsActive = 0
+		this.turnsParticipated = 0
 
 		this.resetEverything()
 
@@ -416,6 +417,17 @@ class Pokemon{
 			this.movesUnlockedMap[index] = true
 		}
 	}
+	lockMove(name){
+		let index = this.data.learnset.findIndex(m => m.name === name)
+		if (index !== -1){
+			this.movesUnlockedMap[index] = true
+		}
+		let move = pokemonMoveData[name]
+		if (this.activeMoves.includes(move)){
+			let activeIndex = this.activeMoves.indexOf(move)
+			this.activeMoves.splice(activeIndex, 1)
+		}
+	}
 	chooseActiveMoves(){
 		//Should only be used for wild pokemon and other instances where no original list is given
 		let chooseable = this.moves.filter((m, i) => {
@@ -498,6 +510,7 @@ class Pokemon{
 	resetEverything(){
 		this.maxhp = this.getStat("hp")
 		this.turnsActive = 0
+		this.turnsParticipated = 0
 		this.moveUsage.forEach(usage => usage.recharge = 0)
 
 		this.resetEnergyMastery()

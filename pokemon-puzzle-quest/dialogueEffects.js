@@ -89,5 +89,11 @@ const dialogueEffects = {
 			animateNext()
 			resolve()
 		}
+	},
+	"clear-text": {
+		execute: (resolve, effect, progress, options) => {
+			options.textBox.children(".text").empty()
+			resolve()
+		}
 	}
 }

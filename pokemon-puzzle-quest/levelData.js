@@ -110,9 +110,9 @@ const levelData = [
 		name: "Route 1-2",
 		icon: "2",
 		music: "SM Wild Pokemon Battle",
-		obtainablePokemon: ["Caterpie", "Pikipek", "Pichu"],
 		trainers: [
 			{
+				isWild: true,
 				pokemon: [
 					{
 						id: "Pikipek",
@@ -125,6 +125,7 @@ const levelData = [
 				]
 			},
 			{
+				isWild: true,
 				pokemon: [
 					{
 						id: "Pikipek",
@@ -174,9 +175,9 @@ const levelData = [
 		name: "Route 1-3",
 		icon: "3",
 		music: "SM Wild Pokemon Battle",
-		obtainablePokemon: ["Spinarak", "Ledyba", "Grubbin"],
 		trainers: [
 			{
+				isWild: true,
 				pokemon: [
 					{
 						id: "Spinarak",
@@ -189,6 +190,7 @@ const levelData = [
 				]
 			},
 			{
+				isWild: true,
 				pokemon: [
 					{
 						id: "Spinarak",
@@ -323,9 +325,9 @@ const levelData = [
 		name: "Route 1-5",
 		icon: "5",
 		music: "SM Wild Pokemon Battle",
-		obtainablePokemon: ["Wingull", "Yungoos", "Rattata-Alola", "Slowpoke"],
 		trainers: [
 			{
+				isWild: true,
 				pokemon: [
 					{
 						id: "Wingull",
@@ -342,6 +344,7 @@ const levelData = [
 				]
 			},
 			{
+				isWild: true,
 				pokemon: [
 					{
 						id: "Wingull",
@@ -416,9 +419,9 @@ const levelData = [
 		name: "Route 1-6",
 		description: "route-1-6-description",
 		icon: "6",
-		obtainablePokemon: ["Magnemite", "Meowth-Alola", "Grimer-Alola"],
 		trainers: [
 			{
+				isWild: true,
 				pokemon: [
 					{ id: "Magnemite", levelMin: 6, levelMax: 8 },
 					{ id: "Meowth-Alola", levelMin: 6, levelMax: 8 },
@@ -506,7 +509,7 @@ const levelData = [
 		]
 	},
 
-	//2-1
+	//2-1: Abra, Pikachu, Happiny, + others
 	{
 		id: "Route 2-1",
 		category: "Route 2",
@@ -515,13 +518,90 @@ const levelData = [
 		icon: "1",
 		trainers: [
 			{
-				pokemon: [
-					{ id: "Pikachu", levelMin: 6, levelMax: 8 },
+				isWild: true,
+				targetPokemon: 5,
+				possiblePokemon: [
+					{ id: "Abra", levelMin: 6, levelMax: 8, weight: 4 },
+					{ id: "Pichu", levelMin: 6, levelMax: 8, weight: 4 },
+					{ id: "Pikachu", levelMin: 6, levelMax: 8, weight: 2 },
+					{ id: "Happiny", levelMin: 6, levelMax: 8, weight: 2 },
+					{ id: "Rattata-Alola", levelMin: 6, levelMax: 8, weight: 1 },
+					{ id: "Meowth-Alola", levelMin: 6, levelMax: 8, weight: 1 },
+					{ id: "Magnemite", levelMin: 6, levelMax: 8, weight: 1 },
+					{ id: "Wingull", levelMin: 6, levelMax: 8, weight: 0.5 },
+					{ id: "Yungoos", levelMin: 6, levelMax: 8, weight: 0.5 },
+					{ id: "Grimer-Alola", levelMin: 6, levelMax: 8, weight: 0.5 },
 				]
 			}
 		],
 		effects: [
 			{ type: "fight", trainer: 0 },
+		]
+	},
+	//2-2: Battle with Team Skull Grunts + Ilima
+	{
+		id: "Route 2-2",
+		category: "Route 2",
+		name: "Route 2-2",
+		music: "SM Wild Pokemon Battle",
+		icon: "2",
+		trainers: [
+			{
+				name: "Team Skull Grunt A",
+				class: "Team-Skull-Grunt",
+				pokemon: [
+					{ id: "Zubat", level: 8 },
+					{ id: "Meowth-Alola", level: 8 }
+				]
+			},
+			{
+				name: "Team Skull Grunt B",
+				class: "Team-Skull-Grunt",
+				pokemon: [
+					{ id: "Grimer-Alola", level: 8 },
+					{ id: "Rattata-Alola", level: 8 },
+				]
+			},
+			{
+				name: "Ilima",
+				pokemon: [
+					{ id: "Yungoos", level: 9, activeMoves: ["Tackle", "Pursuit", "Leer"] },
+					{ id: "Smeargle", level: 10, activeMoves: ["Ember", "Tackle"] },
+				]
+			},
+			{
+				name: "Ilima",
+				pokemon: [
+					{ id: "Yungoos", level: 9, activeMoves: ["Tackle", "Pursuit", "Leer"] },
+					{ id: "Smeargle", level: 10, activeMoves: ["Water Gun", "Tackle"] },
+				]
+			},
+			{
+				name: "Ilima",
+				pokemon: [
+					{ id: "Yungoos", level: 9, activeMoves: ["Tackle", "Pursuit", "Leer"] },
+					{ id: "Smeargle", level: 10, activeMoves: ["Leafage", "Tackle"] },
+				]
+			},
+		],
+		effects: [
+			{ type: "load-player-info", key: "chosen-starter" },
+			{ type: "load-value", value: "Rowlet" },
+			{ type: "jump-if-equal", jumpTo: "Fire" },
+			{ type: "load-player-info", key: "chosen-starter" },
+			{ type: "load-value", value: "Litten" },
+			{ type: "jump-if-equal", jumpTo: "Water" },
+			{ type: "jump", jumpTo: "Grass" },
+
+			{ type: "fight", trainer: 2, label: "Fire" },
+			{ type: "jump", jumpTo: "Win Check" },
+			{ type: "fight", trainer: 3, label: "Water" },
+			{ type: "jump", jumpTo: "Win Check" },
+			{ type: "fight", trainer: 4, label: "Grass" },
+			{ type: "jump", jumpTo: "Win Check" },
+
+			{ type: "fight", trainer: 0 },
+			{ type: "fight", trainer: 1 },
 		]
 	},
 ]
@@ -535,6 +615,25 @@ for (let level of levelData) {
 	level.status = "not won"
 	level.attempts = 0
 	level.obtainablePokemon = level.obtainablePokemon ?? []
+	if (level.trainers){
+		for (let trainerData of level.trainers){
+			trainerData.isWild = trainerData.isWild ?? false
+			trainerData.pokemon = trainerData.pokemon ?? []
+
+			if (trainerData.isWild){
+				let pokemonList = trainerData.pokemon
+				if (trainerData.possiblePokemon){
+					pokemonList = pokemonList.concat(trainerData.possiblePokemon)
+				}
+				for (let pokemonData of pokemonList){
+					let id = pokemonData.id
+					if (!level.obtainablePokemon.includes(id)){
+						level.obtainablePokemon.push(id)
+					}
+				}
+			}
+		}
+	}
 }
 
 function getLevelDataById(id){
@@ -594,7 +693,6 @@ function determineUnlockedLevels(){
 			if (prereq.levelsBeaten){
 				for (let levelId of prereq.levelsBeaten){
 					let level = getLevelDataById(levelId)
-					console.log(level)
 					if (level.status !== "won"){
 						allBeaten = false
 						break

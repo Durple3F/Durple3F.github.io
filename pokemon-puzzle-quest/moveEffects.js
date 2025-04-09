@@ -607,6 +607,14 @@ const pokemonMoveEffects = {
 			resolve(result)
 		}
 	},
+	"get-move": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let moveName = effect.moveName
+			let result = pokemonMoveData[moveName]
+			resolve(result)
+		}
+	},
 	"get-last-move": {
 		update: false,
 		hasTarget: true,
@@ -629,11 +637,12 @@ const pokemonMoveEffects = {
 			resolve(result)
 		}
 	},
+	//TODO this target does nothing
 	"use-move": {
 		update: false,
 		hasTarget: true,
-		targetType: "trainer",
-		targetDefault: "none",
+		targetType: "pokemon",
+		targetDefault: "user",
 		execute: (resolve, effect, params, game, options) => {
 			let move = params.move
 			let moveUseObj = options.moveUse
@@ -651,6 +660,33 @@ const pokemonMoveEffects = {
 			let newIndex = game.moveQueue.indexOf(newMoveUseObj)
 
 			resolve(newIndex)
+		}
+	},
+	"learn-move": {
+		update: false,
+		resetMoves: true,
+		hasTarget: true,
+		targetType: "pokemon",
+		targetDefault: "user",
+		execute: (resolve, effect, params, game, options) => {
+			let target = options.target
+			let move = params.move
+			//Result is whether the move was added to its active moves.
+			let result = target.addActiveMove(move)
+			resolve(result)
+		}
+	},
+	"unlearn-move": {
+		update: false,
+		resetMoves: true,
+		hasTarget: true,
+		targetType: "pokemon",
+		targetDefault: "user",
+		execute: (resolve, effect, params, game, options) => {
+			let target = options.target
+			let move = params.move
+			target.lockMove(move.name)
+			resolve()
 		}
 	},
 	"multiply-energy": {
@@ -682,6 +718,16 @@ const pokemonMoveEffects = {
 			let initiative = params.initiative
 			game.initiativeValues[index] = Math.floor(initiative)
 			resolve()
+		}
+	},
+	"get-turns-active": {
+		update: false,
+		hasTarget: true,
+		targetType: "pokemon",
+		targetDefault: "user",
+		execute: (resolve, effect, params, game, options) => {
+			let result = options.target.turnsActive
+			resolve(result)
 		}
 	},
 	"get-element-from-list": {

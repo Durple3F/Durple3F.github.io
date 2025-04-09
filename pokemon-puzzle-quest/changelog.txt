@@ -1,7 +1,15 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-4/9 (15.7k lines):
+4/9 (16.2k lines):
 	- Added a way to see what locations a pokemon is available in.
+	- Changed the main font to allow for italic text.
+	- Wild pokemon can now appear in any order.
+	- Hau no longer completely miscounts your pokemon on purpose. What an idiot.
+	- Tweaked level 6 dialogue
+	- Added Zubat, Smeargle
+	- Added Pursuit, Sketch
+	- Little note about Sketch: I'm so glad I did Copycat first. I would've coded Sketch in a super stupid way otherwise.
+	- Another little note about Sketch: It <i>did</i> force me to rewrite a lot of code for handling what move tags exist.
 
 4/8 (15.7k lines):
 	- Added a setting to allow you to skip dialogue you've already seen.

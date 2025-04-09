@@ -119,8 +119,9 @@
 			"effects": [
 				{ "type": "get-speaker", "name": "Lillie", "class": "Lillie" },
 				{ "type": "animate-speaker-nameplate", "speaker": "Lillie", "css": {
-					"opacity": 0
+					"filter": "opacity(0)"
 				}, "duration": 0, "waitDuration": 0 },
+				{ "type": "clear-text", "speaker": "Lillie" },
 				{ "type": "update-style", "speaker": "Lillie" },
 				{ "type": "wait", "waitDuration": 1000 },
 				{ "type": "transform-speaker", "speaker": "Lillie", "transform": "rotate(-10deg)", "duration": 200, "waitDuration": 0 },
@@ -135,7 +136,7 @@
 				{ "type": "transform-speaker", "speaker": "Lillie", "transform": "rotate(6deg) scaleY(1)", "duration": 1000, "waitDuration": 1000 },
 				{ "type": "text", "speaker": "Lillie", "text": "^^My name is Lillie." },
 				{ "type": "animate-speaker-nameplate", "speaker": "Lillie", "css": {
-					"opacity": 1
+					"filter": "opacity(1)"
 				}, "duration": 600, "waitDuration": 0 },
 				{ "type": "text", "speaker": "Lillie", "text": "I... I need help getting to the trainers' school. It's just a little further... but there are so many mean-looking Pokémon up ahead!" },
 				{ "type": "text", "speaker": "Lillie", "text": "I don't want to be late... ^^Oh, I can give you one of the professor's spare $@red|Pokédex@$es^^ for your trouble!" }
@@ -152,7 +153,7 @@
 			],
 			"effects": [
 				{ "type": "get-speaker", "name": "Lillie", "class": "Lillie" },
-				{ "type": "text", "speaker": "Lillie", "text": "Phew..." },
+				{ "type": "text", "speaker": "Lillie", "text": "$@start-italics|@$Phew...$@end-italics|@$" },
 				{ "type": "text", "speaker": "Lillie", "text": "Thank you so much for helping me out there." },
 				{ "type": "text", "speaker": "Lillie", "text": "I'll get out of your hair. The professor probably needs me, anyway. Thank you again!" },
 				{ "type": "animate-speaker", "speaker": "Lillie", "css": {
@@ -325,6 +326,9 @@
 		"Pikachu": {
 			"name": "Pikachu"
 		},
+		"Zubat": {
+			"name": "Zubat"
+		},
 		"Meowth-Alola": {
 			"name": "Meowth"
 		},
@@ -348,6 +352,9 @@
 		},
 		"Pichu": {
 			"name": "Pichu"
+		},
+		"Smeargle": {
+			"name": "Smeargle"
 		},
 		"Wingull": {
 			"name": "Wingull"
@@ -414,7 +421,7 @@
 		},
 		"Copycat": {
 			"name": "Copycat",
-			"description": "Uses the effects of the move the opponent most recently used. If they haven't used a move, then this move does nothing.",
+			"description": "Uses the effects of the move the opponent most recently used. If they haven't used a move, this move does nothing.",
 			"shortDescription": "Copies enemy's last move"
 		},
 		"Curse": {
@@ -542,6 +549,11 @@
 			"description": "Damage-dealing move with no special effects. Ends the turn.",
 			"shortDescription": "Deals light damage"
 		},
+		"Pursuit": {
+			"name": "Pursuit",
+			"description": "Deals damage. If the opponent has been active for no more than 1 turn, this move's power doubles.",
+			"shortDescription": "More damage to fresh Pokémon"
+		},
 		"Quick Attack": {
 			"name": "Quick Attack",
 			"description": "Deals damage. This move can be used more than once during a turn.",
@@ -562,6 +574,11 @@
 			"name": "Shadow Sneak",
 			"description": "Deals damage. If you and your opponent have a different number of Pokémon remaining, this move's power increases by 40.",
 			"shortDescription": "Deals damage"
+		},
+		"Sketch": {
+			"name": "Sketch",
+			"description": "This Pokémon learns how to use the move the opponent most recently used. If they haven't used a move, this move does nothing.",
+			"shortDescription": "Learns the enemy's last move."
 		},
 		"String Shot": {
 			"name": "String Shot",
@@ -684,7 +701,12 @@
 			"name": "Route 1-7"
 		},
 		"Route 2-1": {
-			"name": "Route 2-1"
+			"name": "Route 2-1",
+			"description": "You reach Hau'oli city, and explore for a while with Lillie and Hau."
+		},
+		"Route 2-2": {
+			"name": "Route 2-2",
+			"description": "You find Ilima relaxing at the Marina."
 		}
 	},
 	"route-categories": {

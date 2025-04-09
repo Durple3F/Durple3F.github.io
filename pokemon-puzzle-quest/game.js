@@ -175,7 +175,7 @@ class Round{
 		}
 
 		let NPCData = this.trainers[1].data
-		let isWild = !NPCData.name
+		let isWild = NPCData.isWild
 		if (isWild){
 			//If this is a wild group of pokemon, then when you win you get to
 			//catch one of them.
@@ -666,6 +666,7 @@ class Round{
 
 		//This pokemon has been active for one more turn
 		trainer.activePokemon.turnsActive++
+		trainer.activePokemon.turnsParticipated++
 
 		//Reduce move cooldowns
 		for (let pokemon of trainer.pokemon){
@@ -747,7 +748,7 @@ class Round{
 		//Reduce status effect durations
 		let toRemove = []
 		for (let status of statusEffects){
-			if (status.turns){
+			if (typeof status.turns === "number"){
 				status.turns--
 				if (status.turns <= 0){
 					toRemove.push(status)
@@ -1648,7 +1649,7 @@ class Round{
 
 		let moveUseObj = this.newMoveUseObj(trainer, pokemon, move, "effects")
 		let promise = moveUseObj.promise
-		console.log(moveUseObj)
+		// console.log(moveUseObj)
 
 		let hasParalyzed = pokemon.hasStatus("paralyzed")
 		if (hasParalyzed){
@@ -1766,6 +1767,7 @@ class Round{
 		}
 
 		let shouldUpdate = true
+		let shouldResetMoves = false
 		let delayDuration = 50
 		if (!(effectType in pokemonMoveEffects)){
 			console.warn("You never handled", effectType)
@@ -1777,6 +1779,7 @@ class Round{
 		let effectData = pokemonMoveEffects[effectType]
 		delayDuration = effectData.delay ?? delayDuration
 		shouldUpdate = effectData.update ?? shouldUpdate
+		shouldResetMoves = effectData.resetMoves ?? shouldResetMoves
 		let options = {}
 		options.promise = promise
 		options.moveUse = moveUseObj
@@ -1812,7 +1815,8 @@ class Round{
 		options.index = index
 		try {
 			effectData.execute(resolvePromise, effect, params, this, options)
-		} catch {
+		} catch (error) {
+			console.error(error)
 			alert("Something broke during this move's execution. Please send me a screenshot of the console. (F12)")
 		}
 		promise.then(val => new Promise(res => {
@@ -1829,6 +1833,9 @@ class Round{
 				p = p.then(() => delay(delayDuration))
 			}
 			return p.then(() => {
+				if (shouldResetMoves){
+					this.resetPokemonMoves(true)
+				}
 				if (shouldUpdate){
 					this.updateEverything()
 				}
@@ -1922,7 +1929,6 @@ class Round{
 		let moveUseObj = this.newMoveUseObj(trainer, pokemon, move, trigger)
 		let promise = moveUseObj.promise
 		this.advanceCurrentMove(moveUseObj)
-		console.log(moveUseObj)
 		return promise
 	}
 
@@ -2644,7 +2650,7 @@ class Round{
 
 		//If this is a wild pokemon, the pokemon just slides in from the side.
 		//Otherwise, it enters from a pokeball.	
-		if (trainerIndex === 0 || trainer.data.name){
+		if (trainerIndex === 0 || !trainer.data.isWild){
 			//First, the trainer throws the pokeball, then moves to the side.
 			first = first.then(() => {
 				pokemonTag.css({
@@ -2773,6 +2779,7 @@ class Round{
 		return promise
 	}
 	sendOutPokemon(trainerIndex, pokemon){
+		this.clearPokemonMoves(trainerIndex)
 		let tags = this.trainerTags[trainerIndex]
 		let name = pokemon.name
 		let pokemonId = pokemon.pokemonId
@@ -2794,7 +2801,9 @@ class Round{
 		}
 
 		//Transfer half of the old pokemon's energy into the new pokemon.
+		//Remove any turnsActive from the old pokemon.
 		if (oldActive !== pokemon){
+			oldActive.turnsActive = 0
 			let energy = getEmptyEnergy()
 			for (let color of colors){
 				energy[color] = Math.floor(oldActive.energy[color] * 0.5)
@@ -2829,7 +2838,7 @@ class Round{
 			placement: trainerIndex === 0 ? "right" : "left"
 		})
 		tags.pokemonName.text(name)
-		this.resetPokemonMoves()
+		this.resetPokemonMoves(false)
 		this.resetPokeballs()
 		this.updateEverything()
 	}
@@ -2870,7 +2879,7 @@ class Round{
 		return this.trainers.find(trainer => trainer.pokemon.includes(pokemon))
 	}
 
-	resetPokemonMoves(){
+	resetPokemonMoves(animate){
 		const onMouseEnter = event => {
 			let tag = $(event.currentTarget)
 			let trainerIndex = Number(tag.attr("data-trainer"))
@@ -2904,7 +2913,6 @@ class Round{
 				let alreadyHighlit = toSearch.find(".move.highlight")
 				alreadyHighlit.removeClass("highlight")
 				moveTag.addClass("highlight")
-				console.log(moveTag)
 			}
 		}
 		const onMouseLeave = event => {
@@ -2926,21 +2934,37 @@ class Round{
 		for (let i = 0; i < this.trainers.length; i++){
 			let trainer = this.trainers[i]
 			let tags = this.trainerTags[i]
+			
+			let oldShowingMoveIndexes = []
 			tags.moves.forEach(tag => {
-				$(tag).popover("hide")
-				$(tag).remove()
+				let moveIndex = Number(tag.attr("data-move"))
+				oldShowingMoveIndexes.push(moveIndex)
+				tag.popover("dispose")
 			})
-			tags.moves.length = 0
 			let moveListTag = tags.moveList
-			moveListTag.children().popover("dispose")
-			moveListTag.empty()
 
 			let pokemon = trainer.activePokemon
 			let pokemonIndex = trainer.pokemon.indexOf(pokemon)
-			let moves = this.getAvailableMoves(i)
+			let availableMoves = this.getAvailableMoves(i)
 
-			for (let j = 0; j < moves.length; j++){
-				let move = moves[j]
+			let presentTags = tags.moves
+			let movesToConsider = []
+			for (let move of availableMoves){
+				let selector = ".move"
+				selector += `[data-trainer=${i}]`
+				selector += `[data-pokemon=${trainer.pokemon.indexOf(pokemon)}]`
+				selector += `[data-move=${pokemon.moves.indexOf(move)}]`
+				let tag = moveListTag.find(selector)
+				if (!tag.length){
+					movesToConsider.push(move)
+				}
+			}
+			console.log(movesToConsider)
+
+			let tagsToAdd = []
+			let tagsToRemove = []
+			//Create the necessary tags
+			for (let move of movesToConsider){
 				let tag = getMoveHTML(move)
 				
 				if (move.name === "Struggle"){
@@ -2995,15 +3019,42 @@ class Round{
 					placement: i === 0 ? "right" : "left"
 				})
 
+				tagsToAdd.push(tag)
+			}
+			//Figure out which tags that exist can be removed
+			for (let tag of presentTags){
+				tag = $(tag)
+				let trainerIndex = Number(tag.attr("data-trainer"))
+				let pokemonIndex = Number(tag.attr("data-pokemon"))
+				let moveIndex = Number(tag.attr("data-move"))
+				let trainer = this.trainers[trainerIndex]
+				let pokemon = trainer.pokemon[pokemonIndex]
+				let move = pokemon.moves[moveIndex]
+				if (!availableMoves.includes(move)){
+					tagsToRemove.push(tag)
+				}
+			}
+			//Remove the tags which should be removed
+			let removePromises = []
+			for (let tag of tagsToRemove){
+				let p = this.removeMoveTag(tag, animate)
+				removePromises.push(p)
+			}
+			//Actually add the new tags
+			for (let tag of tagsToAdd){
 				tags.moves.push(tag)
 				tag.appendTo(moveListTag)
 				if (i === 0){
-					tag.click(event => this.attemptToUseMove(event))
+					tag.off("click").on("click", event => this.attemptToUseMove(event))
+				}
+				if (this.hasBegun && animate){
+					tag.hide()
+					Promise.all(removePromises)
+					.then(() => tag.fadeIn())
 				}
 			}
 
-			this.updateMovePayability(i)
-			this.updateShowStruggle(i)
+			this.updatePokemonMoves(i)
 		}
 	}
 	updatePokemonMoves(trainerIndex){
@@ -3136,6 +3187,44 @@ class Round{
 			}
 		}
 	}
+	clearPokemonMoves(trainerIndex){
+		let tags = this.trainerTags[trainerIndex]
+		let moveList = tags.moves
+
+		for (let moveTag of moveList){
+			this.removeMoveTag(moveTag, false)
+		}
+		moveList.length = 0
+	}
+	removeMoveTag(tag, animate){
+		if (this.hasBegun && animate){
+			tag.off("click").trigger("mouseleave")
+			let fontSize = tag.css("font-size")
+			fontSize = fontSize.substring(0, fontSize.length - 2)
+			fontSize = Number(fontSize)
+			return new Promise(resolve => {
+				$({val:0}).animate({val:1}, {
+					duration: 500,
+					step: function(){
+						let p = (1 - this.val)
+						let css = {
+							"font-size": (p*fontSize)+"px",
+							"opacity": p
+						}
+						tag.css(css)
+					},
+					complete: function(){
+						tag.css("font-size", "0px")
+						tag.remove()
+						resolve()
+					}
+				})
+			})
+		} else {
+			tag.remove()
+			return Promise.resolve()
+		}
+	}
 
 	calculateEXPGained(){
 		let enemyTrainer = this.trainers[1]
@@ -3143,7 +3232,7 @@ class Round{
 		.filter(p => !isPokemonUsable(p))
 		let yourPokemon = this.trainers[0].pokemon
 		if (!config.expShare){
-			yourPokemon = yourPokemon.filter(pokemon => pokemon.turnsActive > 0)
+			yourPokemon = yourPokemon.filter(pokemon => pokemon.turnsParticipated > 0)
 		}
 		let resultMap = {}
 		for (let yours of yourPokemon){
@@ -3844,13 +3933,24 @@ function beginRound(trainerData){
 	let resolvePromise
 	let promise = new Promise(resolve => resolvePromise = resolve)
 	let player = new Trainer("Player", playerActivePokemon)
-
+	
 	let pokemonData = trainerData.pokemon.map(v => v)
+	//If this trainer has a group of pokemon it *might* pull from,
+	//randomly choose new pokemon to add from that list.
+	while (trainerData.targetPokemon > pokemonData.length){
+		let possiblePokemon = trainerData.possiblePokemon
+		let weights = possiblePokemon.map(pokemonData => {
+			return pokemonData.weight ?? 1
+		})
+		let rand = weightedRandom(possiblePokemon, weights)
+		let toAdd = rand.item
+		pokemonData.push(toAdd)
+	}
 	let enemyPokemon = pokemonData.map(data => {
 		let options = {}
 		options.id = data.id
 		options.level = data.level
-		let isWild = !trainerData.name
+		let isWild = trainerData.isWild
 		
 		if ("isShiny" in data){
 			options.isShiny = data.isShiny
@@ -3873,6 +3973,12 @@ function beginRound(trainerData){
 		logPokemonAs("seen", pokemon)
 		return pokemon
 	})
+
+	//If it's wild, shuffle the pokemon.
+	if (trainerData.isWild){
+		shuffleArray(enemyPokemon)
+	}
+
 	let enemy = new Trainer("Enemy", enemyPokemon, trainerData)
 
 	//If there was a previous fight in this level, carry over the board

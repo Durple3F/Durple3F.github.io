@@ -90,6 +90,14 @@ const NPCTrainerData = {
 			namePlateBackground2Color: "#003e76",
 		}
 	},
+	"Ilima": {
+		name: "Ilima",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/ilima.png"
+		},
+		textStyle: {}
+	},
 	"Youngster-Gen7": {
 		name: "Youngster",
 		type: "trainer",
@@ -130,6 +138,13 @@ const NPCTrainerData = {
 		type: "trainer",
 		imageSources: {
 			trainer: "src/img/trainers/teacher-gen7.png"
+		}
+	},
+	"Team-Skull-Grunt": {
+		name: "Team Skull Grunt",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/skullgrunt.png"
 		}
 	},
 }

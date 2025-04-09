@@ -14,6 +14,17 @@ text background #3b3838
 gradient linear-gradient(-30deg, #d5b01a80 0%, #f3be43a0 100%);
 mask radial-gradient(ellipse at center, black 67%, transparent 71%);
 
+Why hello! You don't look like you're from here, how are you enjoying Hau'oli city?
+Am I correct in assuming you're visiting to partake in the island challenge?
+You *suppose* so? That's not often the response I'm accustomed--
+*skull grunts appear*
+Yo, yo, yo! Look who we found out and about! Tryna act tough? Well, knock it out!
+Y'all talk big with your island trial, but here's Team Skull to cramp your style!
+It's island *challenge*, actually. Anyway, <name>, if we may continue--
+Hey! Hold up! We're challengin' you here!
+Oh, *fine*... if you must. <name>, may I have you deal with these two for me?
+Why thank you, in the meantime I will be doing anything else. Be back soon!
+
 TODO
 - Preload images when getting into fights (check(?))
 - Hau should ask at the beginning whether to pick the better or worse starter
