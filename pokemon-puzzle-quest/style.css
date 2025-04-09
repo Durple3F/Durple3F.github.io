@@ -58,6 +58,8 @@ body {
 }
 
 :root {
+	--modal-border-color: #444;
+
 	--player-color: #395aee;
 	--enemy-color: #e72e2e;
 	--move-usable: #6774dc;
@@ -130,10 +132,10 @@ body {
 	background-color: #222;
 }
 .modal > .modal-dialog > .modal-content > .modal-header {
-	border-bottom: 1px solid #444;
+	border-bottom: 1px solid var(--modal-border-color);
 }
 .modal > .modal-dialog > .modal-content > .modal-footer {
-	border-top: 1px solid #444;
+	border-top: 1px solid var(--modal-border-color);
 }
 .modal .pokemon-image {
 	height: 7em;
@@ -1442,6 +1444,11 @@ body {
 	align-items: center;
 }
 
+#modal.summary .pokemon-info {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
 #modal.summary .pokemon-info > .pokemon-section {
 	width: 35%;
 	display: flex;
@@ -1489,6 +1496,26 @@ body {
 /* Hide scrollbar */
 #modal.summary .pokemon-info > .move-section::-webkit-scrollbar {
 	display: none;
+}
+
+#modal.summary .nav-tabs {
+	border-bottom: none;
+}
+#modal.summary .nav-tabs .nav-item .nav-link {
+	border-radius: 0;
+	border-bottom-left-radius: var(--bs-border-radius);
+	border-bottom-right-radius: var(--bs-border-radius);
+	border-top: none;
+	/* background-color: var(--modal-border-color); */
+}
+#modal.summary .nav-tabs .nav-item .nav-link:hover {
+	--bs-nav-tabs-link-hover-border-color: var(--modal-border-color);
+	background-color: var(--modal-border-color);
+	color: white;
+}
+#modal.summary .nav-tabs .nav-item .nav-link.active {
+	background-color: white;
+	color: black;
 }
 
 .evolution-container {

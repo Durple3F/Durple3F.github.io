@@ -525,7 +525,7 @@ class Pokemon{
 		let copy = {}
 		let toCopy = [
 			"uuid", "owner", "level", "nature",
-			"ivs", "evs", "exp"
+			"ivs", "evs", "exp", "isShiny"
 		]
 		for (let key of toCopy){
 			copy[key] = this[key]

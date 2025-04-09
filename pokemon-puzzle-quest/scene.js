@@ -749,7 +749,7 @@ function startScene(name, options){
 				let section = $(`<div class='pokemon-section'></div>`)
 
 				section.click(() => {
-					viewPokemonInfo(pokemon, {pure: true})
+					viewPokemonInfo(pokemon, {pure: true, dex: true})
 				})
 
 				let imageSection = $(`<div class='pokemon-image-section'>`)
@@ -1254,9 +1254,38 @@ function viewPokemonInfo(pokemon, options={}){
 	let btn = $(`<button class='btn btn-primary'>Done</button>`)
 	modal.find(".modal-footer").append(btn)
 
+	let body = modal.find(".modal-body")
+	if (options.dex){
+		body.css("padding-top", 0)
+		let tabs = $("<ul class='nav nav-tabs mb-1 justify-content-center'>")
+		body.append(tabs)
+
+		const changeTab = event => {
+			tabs.find(".active").removeClass("active")
+			let tab = $(event.currentTarget)
+			tab.find(".nav-link").addClass("active")
+			let className = "." + tab.attr("data-target-class")
+			body.children(".info").fadeOut(() => {
+				body.children(className).fadeIn()
+			})
+		}
+
+		let infoTab = $(`<li class='nav-item' data-target-class='pokemon-info'>
+			<a class="nav-link active" href="#">Info</a>
+		</li>`)
+		tabs.append(infoTab)
+
+		let findingTab = $(`<li class='nav-item' data-target-class='location-info'>
+			<a class="nav-link" href="#">Locations</a>
+		</li>`)
+		tabs.append(findingTab)
+		tabs.children().click(changeTab)
+	}
+
+	//POKEMON
 	let image = pokemon.getImage()
 	let content = $(`
-		<div class='pokemon-info d-flex justify-content-between align-center'>
+		<div class='info pokemon-info'>
 			<div class='pokemon-section'>
 				<div class='image text-center'>
 					<img src='${image}' class='pokemon-image'>
@@ -1266,7 +1295,7 @@ function viewPokemonInfo(pokemon, options={}){
 			</div>
 		</div>
 	`)
-	modal.find(".modal-body").html(content)
+	body.append(content)
 	let pokemonSection = content.children(".pokemon-section")
 	let statsSection = $(`<div class='stats-section'>`)
 	pokemonSection.append(statsSection)
@@ -1349,6 +1378,20 @@ function viewPokemonInfo(pokemon, options={}){
 		moveSection.append(moveTag)
 	}
 	content.append(moveSection)
+
+	//LOCATIONS
+	if (options.dex){
+		let info = $(`<div class='info location-info'>`)
+		body.append(info)
+		info.hide()
+
+		for (let level of levelData){
+			if (level.obtainablePokemon.includes(pokemon.data.id)){
+				let name = getLocaleString("name", lang, ["levels", level.id])
+				info.append(name)
+			}
+		}
+	}
 
 	btn.click(() => {
 		modal.modal("hide")

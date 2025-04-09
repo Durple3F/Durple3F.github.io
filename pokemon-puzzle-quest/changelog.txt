@@ -1,5 +1,8 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
+4/9 (15.7k lines):
+	- Added a way to see what locations a pokemon is available in.
+
 4/8 (15.7k lines):
 	- Added a setting to allow you to skip dialogue you've already seen.
 	- Added a setting to turn EXP share off, which apparently is something that real pokemon, made by real developers, just forgot how to do since 2018.
