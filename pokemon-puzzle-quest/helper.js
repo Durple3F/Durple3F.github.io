@@ -31,6 +31,10 @@ function randomFrom(min, max) {
 	let result = min + Math.random() * (max - min + 1)
 	return Math.floor(result)
 }
+function roundTo(num, precision) {
+  const factor = Math.pow(10, precision)
+  return Math.round(num * factor) / factor
+}
 
 function formatNumber(f, digits=2) {
 	let decimal = f % 1

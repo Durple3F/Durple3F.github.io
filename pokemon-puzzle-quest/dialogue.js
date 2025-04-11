@@ -9,13 +9,26 @@ const textCharacterDurationMap = {
 	"^^": 0, //This one's for events
 }
 const textColors = {
-	"red":"rgb(251, 49, 69)",
-	"blue":"rgb(49, 89, 251)",
+	"red": "rgb(251, 49, 69)",
+	"blue": "rgb(49, 89, 251)",
+}
+
+const dialogueStyleData = {
+	positions: {
+		"right": {
+			bottom: "30%",
+			left: "50%"
+		},
+		"left": {
+			bottom: "30%",
+			left: "10%"
+		}
+	}
 }
 
 let dialogueProgress
 
-function beginDialogue(dialogueData){
+function beginDialogue(dialogueData) {
 	$("#dialogue-container").fadeIn()
 	dialogueProgress = {
 		dialogue: dialogueData,
@@ -28,7 +41,7 @@ function beginDialogue(dialogueData){
 	}
 
 	let boardIsVisible = $("#board").css("display") !== "none"
-	if (boardIsVisible){
+	if (boardIsVisible) {
 		$("#board").addClass("showing-dialogue")
 	}
 
@@ -53,22 +66,22 @@ function beginDialogue(dialogueData){
 	let totalPromise = Promise.any(promises)
 
 	totalPromise
-	.then(() => {
-		$("#dialogue-container").fadeOut()
-		if (boardIsVisible){
-			delay(400).then(() => {
-				$("#board").removeClass("showing-dialogue")
-			})
-		}
-		for (let interval in dialogueProgress.intervals){
-			clearInterval(dialogueProgress.intervals[interval])
-		}
-		return delay(400)
-	})
+		.then(() => {
+			$("#dialogue-container").fadeOut()
+			if (boardIsVisible) {
+				delay(400).then(() => {
+					$("#board").removeClass("showing-dialogue")
+				})
+			}
+			for (let interval in dialogueProgress.intervals) {
+				clearInterval(dialogueProgress.intervals[interval])
+			}
+			return delay(400)
+		})
 
 	return totalPromise
 }
-function advanceCurrentDialogue(){
+function advanceCurrentDialogue() {
 	let resolvePromise
 	let promise = new Promise(resolve => resolvePromise = resolve)
 	let dialogueData = dialogueProgress.dialogue
@@ -80,7 +93,7 @@ function advanceCurrentDialogue(){
 	dialogueProgress.nextEffectIndex++
 	let eventIndex = dialogueProgress.eventIndex
 
-	if (effectIndex >= effects.length){
+	if (effectIndex >= effects.length) {
 		resolvePromise()
 		return promise
 	}
@@ -91,7 +104,7 @@ function advanceCurrentDialogue(){
 	let textBox = dialogueTag.children(".text-box")
 	let nameplate = textBox.children(".nameplate")
 
-	switch (effect.type){
+	switch (effect.type) {
 		case "get-speaker": {
 			let speaker = {}
 			dialogueProgress.speakers.push(speaker)
@@ -108,16 +121,7 @@ function advanceCurrentDialogue(){
 			let facing = effect.facing ?? "left"
 			speaker.facing = facing
 
-			let positions = {
-				"right": {
-					bottom: "30%",
-					left: "50%"
-				},
-				"left": {
-					bottom: "30%",
-					left: "10%"
-				}
-			}
+			let positions = dialogueStyleData.positions
 			speakerTag.css(positions[position])
 
 			let url = trainerClass.imageSources["trainer"]
@@ -132,7 +136,7 @@ function advanceCurrentDialogue(){
 			}
 			img.css("transform", facings[facing])
 
-			if (effect.fadeIn){
+			if (effect.fadeIn) {
 				speakerTag.hide()
 				speakerTag.fadeIn()
 			}
@@ -143,7 +147,7 @@ function advanceCurrentDialogue(){
 		case "update-style": {
 			let name = effect.speaker
 			let speaker = dialogueProgress.speakers.find(s => s.id === name)
-			if (speaker){
+			if (speaker) {
 				nameplate.children(".text").text(speaker.name)
 			} else {
 				console.warn("Who is", name, "???")
@@ -151,237 +155,6 @@ function advanceCurrentDialogue(){
 
 			changeDialogueStyle(speaker)
 			resolvePromise()
-		} break
-		case "text": {
-			let name = effect.speaker
-			let speaker = dialogueProgress.speakers.find(s => s.id === name)
-			if (speaker){
-				nameplate.children(".text").text(speaker.name)
-			} else {
-				console.warn("Who is", name, "???")
-			}
-			let autoAdvance = effect.auto ?? false
-
-			let promises = []
-			let textSpeed = config.textSpeed ?? 10
-			let currentDuration = 100
-			let characters = Object.keys(textCharacterDurationMap)
-			.sort((a, b) => a.length - b.length)
-
-			let textTag = textBox.children(".text")
-			textTag.empty()
-			let text = effect.text
-
-			let replacements = []
-			if (effect.values){
-				for (let index of effect.values){
-					let i
-					if (index < 0){
-						i = effectIndex + index
-					} else {
-						i = index
-					}
-					replacements.push(dialogueProgress.info[i])
-				}
-			}
-			text = applyReplacements(text, replacements)
-
-			let fancyRegex = /(?<!\\)\$@([^\|]+)\|([^\@]*)@\$/g
-			let fancyRegexNoCapture = /(?<!\\)\$@[^\|]+\|[^\@]*@\$/g
-			let fancyTextMatches = [...text.matchAll(fancyRegex)]
-			let otherText = text.split(fancyRegexNoCapture)
-			let realWords = []
-
-			let skippedDialogue = false
-
-			let colors = {}
-			Object.keys(textColors).forEach(key => colors[key] = textColors[key])
-			if (speaker.class?.textColorOverrides){
-				let those = speaker.class.textColorOverrides
-				Object.keys(those).forEach(key => colors[key] = those[key])
-			}
-
-			let skipResolve
-			let skipPromise = new Promise(resolve => skipResolve = resolve)
-
-			let currentAdditionalStyle = {}
-			for (let i = 0; i < otherText.length; i++){
-				let word = {
-					text: otherText[i],
-					style: {}
-				}
-				Object.keys(currentAdditionalStyle)
-				.forEach(key => {
-					word.style[key] = currentAdditionalStyle[key]
-				})
-				realWords.push(word)
-
-				if (fancyTextMatches[i]){
-					let match = fancyTextMatches[i]
-					let word = {
-						text: match[2],
-						style: {}
-					}
-					let style = match[1]
-					
-					if (style in colors){
-						let color = colors[style]
-						word.style["color"] = color
-						word.style["background-image"] = `linear-gradient(${color}, ${color})`
-					} else if (style.substring(0, 4) === "wait") {
-						let dur = Number(style.substring(5))
-						word.addedDuration = textSpeed * dur
-					} else if (style === "start-italics") {
-						currentAdditionalStyle["font-style"] = "italic"
-					} else if (style === "end-italics") {
-						currentAdditionalStyle["font-style"] = ""
-					} else if (style === "start-bold") {
-						currentAdditionalStyle["font-weight"] = "bold"
-					} else if (style === "end-bold") {
-						currentAdditionalStyle["font-weight"] = ""
-					} else {
-						console.warn("Unknown style info", style)
-					}
-					Object.keys(currentAdditionalStyle)
-					.forEach(key => {
-						word.style[key] = currentAdditionalStyle[key]
-					})
-					realWords.push(word)
-				}
-			}
-
-			realWords.forEach(textPiece => {
-				let textPieceTag = $("<span>")
-				textPiece.tag = textPieceTag
-				textTag.append(textPieceTag)
-
-				if (textPiece.addedDuration){
-					currentDuration += textPiece.addedDuration
-				}
-
-				let words = [""]
-				let text = textPiece.text
-				for (let letter of text){
-					if (letter === " "){
-						words.push(letter)
-						words.push("")
-					} else {
-						let lastIndex = words.length - 1
-						words[lastIndex] += letter
-					}
-				}
-				words.forEach(word => {
-					let wordTag = $("<span>")
-					wordTag.addClass("word")
-					textPieceTag.append(wordTag)
-					let durationMap = {}
-
-					let letters = word.split("")
-					letters = letters.map(letter => letter.replace(" ", "&nbsp;"))
-					letters.forEach((v, i) => {
-						let letter = v
-						let dur = 1
-						for (let character of characters){
-							let len = character.length
-							let substring = letters.slice(i, i + len).join("")
-							if (substring === character){
-								for (let j = i; j < i + len; j++){
-									durationMap[j] = textCharacterDurationMap[character] / len
-								}
-							}
-						}
-						if (i in durationMap){
-							dur = durationMap[i]
-						}
-						dur *= textSpeed
-						let span = $("<span>")
-						span.addClass("letter")
-						span.css("opacity", "0.0000001")
-						span.html(letter)
-
-						let isOperation = v === "^" && (letters[i+1] === "^" || letters[i-1] === "^")
-						//If this is a letter that triggers an event
-						if (isOperation && letters[i+1] === "^"){
-							let thisEvent = events[eventIndex]
-							eventIndex++
-							dialogueProgress.eventIndex = eventIndex
-							let carriedOut = false
-							delay(currentDuration)
-							.then(() => {
-								if (!skippedDialogue && !carriedOut){
-									carriedOut = true
-									carryOutDialogueEvent(thisEvent)
-								}
-							})
-							skipPromise.then(() => {
-								if (!carriedOut){
-									carriedOut = true
-									carryOutDialogueEvent(thisEvent)
-								}
-							})
-						} else if (!isOperation) {
-							wordTag.append(span)
-						}
-
-						let promise = delay(currentDuration)
-						promises.push(promise)
-						promise.then(() => {
-							span.animate({"opacity": 1}, textSpeed * 2.5)
-						})
-						currentDuration += dur
-					})
-				})
-			})
-
-			changeDialogueStyle(speaker)
-
-			realWords.forEach(textPiece => {
-				let textPieceTag = textPiece.tag
-				let style = textPiece.style
-				textPieceTag.css(textPiece.style)
-				if (style["font-style"] === "italic"){
-					textPieceTag.css({
-						"padding-right": "0.12em"
-					})
-				}
-			})
-
-			const skipDialogue = () => {
-				skippedDialogue = true
-				textTag.find(".letter").animate({"opacity": 1}, textSpeed * 2.5)
-
-				//Reset each speaker's position
-				dialogueProgress.speakers.forEach(speaker => {
-					carryOutDialogueEvent({
-						type: "transform-speaker",
-						speaker: speaker.id,
-						transform: ""
-					})
-				})
-
-				skipResolve()
-			}
-			const continueDialogue = () => {
-				dialogueTag.off("click")
-				resolvePromise()
-				textBox.css("cursor", "")
-			}
-
-			dialogueTag.on("click", skipDialogue)
-			textBox.css("cursor", "")
-			textBox.children(".text-continue").hide()
-
-			Promise.any([skipPromise, Promise.all(promises)])
-			.then(() => {
-				if (autoAdvance){
-					resolvePromise()
-				} else {
-					dialogueTag.off("click")
-					dialogueTag.on("click", continueDialogue)
-					textBox.css("cursor", "pointer")
-					textBox.children(".text-continue").fadeIn(textSpeed * 2.5)
-				}
-			})
 		} break
 		case "display-image": {
 			let src = effect.src
@@ -391,7 +164,7 @@ function advanceCurrentDialogue(){
 			imageObj.tag = image
 			image.attr("src", src)
 			let position = effect.position
-			if (position.type === "relative"){
+			if (position.type === "relative") {
 				let name = position.relative
 				let relativeTo = dialogueProgress.speakers.find(s => s.id === name)
 				let relativeTag = relativeTo.tag
@@ -440,14 +213,18 @@ function advanceCurrentDialogue(){
 			resolvePromise()
 		} break
 		default:
-			carryOutDialogueEvent(effect)
-			.then(() => resolvePromise())
+			try {
+				carryOutDialogueEvent(effect, dialogueProgress)
+				.then(() => resolvePromise())
+			} catch (error){
+				console.error(error)
+			}
 	}
 
 	promise = promise.then(() => {
-		if (effects[dialogueProgress.nextEffectIndex]){
+		if (effects[dialogueProgress.nextEffectIndex]) {
 			return advanceCurrentDialogue()
-			.then(() => Promise.resolve())
+				.then(() => Promise.resolve())
 		}
 
 		return Promise.resolve()
@@ -456,20 +233,20 @@ function advanceCurrentDialogue(){
 	return promise
 }
 
-function changeDialogueStyle(speaker){
+function changeDialogueStyle(speaker) {
 	let dialogueTag = $("#dialogue")
 	let speakersTag = dialogueTag.children(".speakers")
 	let textBox = dialogueTag.children(".text-box")
 	let nameplate = textBox.children(".nameplate")
 
 	let style = {}
-	for (let key in defaultDialogueStyle){
+	for (let key in defaultDialogueStyle) {
 		style[key] = defaultDialogueStyle[key]
 	}
 
 	let trainerClass = speaker.class
-	if (trainerClass?.textStyle){
-		for (let key in trainerClass.textStyle){
+	if (trainerClass?.textStyle) {
+		for (let key in trainerClass.textStyle) {
 			style[key] = trainerClass.textStyle[key]
 		}
 	}
@@ -479,6 +256,7 @@ function changeDialogueStyle(speaker){
 	textBox.children(".text-background").css("mask", style.textBoxMask)
 	textBox.children(".text").css("filter", style.textBoxFilter)
 	textBox.children(".text").children("span").css("background-image", style.textBoxTextBackground)
+	textBox.children(".text").css("font-family", style.textBoxFont)
 	textBox.children(".text-continue").css("background-image", style.textBoxTextContinueBackground)
 	let namePlateTag = textBox.children(".nameplate")
 	namePlateTag.css("opacity", style.namePlateOpacity)
@@ -488,16 +266,21 @@ function changeDialogueStyle(speaker){
 	namePlateTag.children(".text-background-2").css("background-color", style.namePlateBackground2Color)
 }
 
-function carryOutDialogueEvent(effect){
+function carryOutDialogueEvent(effect, dialogueProgress) {
 	let resolvePromise
 	let promise = new Promise(resolve => resolvePromise = resolve)
 	let name = effect.speaker
 	let speaker, tag
-	if (name){
+	if (name) {
 		speaker = dialogueProgress.speakers.find(s => s.id === name)
 		tag = speaker.tag
 	}
+	let dialogueData = dialogueProgress.dialogue
+	let events = dialogueData.events || []
+	let eventIndex = dialogueProgress.eventIndex
 	let callbacks = dialogueProgress.dialogue.callbacks || {}
+	let effects = dialogueData.effects
+	let effectIndex = dialogueProgress.effectIndex
 
 	let options = {}
 	let dialogueContainer = $("#dialogue-container")
@@ -511,19 +294,19 @@ function carryOutDialogueEvent(effect){
 	options.textBox = textBox
 	options.nameplate = nameplate
 
-	if (effect.speaker){
+	if (effect.speaker) {
 		options.name = effect.speaker
 		options.speaker = dialogueProgress.speakers.find(s => s.id === options.name)
 	}
 
 	let effectData = dialogueEffects[effect.type]
-	if (effectData){
+	if (effectData) {
 		let target
-		if (effectData.hasTarget){
+		if (effectData.hasTarget) {
 			let targetType = effect.targetType ?? effectData.targetType ?? "speaker"
-			if (targetType === "speaker"){
+			if (targetType === "speaker") {
 				target = options.speaker.tag
-			} else if (targetType === "image"){
+			} else if (targetType === "image") {
 				target = speakersTag.children(`[data-name=${effect.image}]`)
 			} else {
 				console.warn("???", targetType)
@@ -532,7 +315,250 @@ function carryOutDialogueEvent(effect){
 		options.target = target
 		effectData.execute(resolvePromise, effect, dialogueProgress, options)
 	} else {
-		switch (effect.type){
+		switch (effect.type) {
+			case "text": {
+				let name = effect.speaker
+				let speaker = dialogueProgress.speakers.find(s => s.id === name)
+				if (speaker) {
+					nameplate.children(".text").text(speaker.name)
+				} else {
+					console.warn("Who is", name, "???")
+				}
+				let autoAdvance = effect.auto ?? false
+
+				let promises = []
+				let textSpeed = config.textSpeed ?? 10
+				let currentDuration = 100
+				let characters = Object.keys(textCharacterDurationMap)
+					.sort((a, b) => a.length - b.length)
+
+				let textTag = textBox.children(".text")
+				textTag.empty()
+				if (effect.fontSize) {
+					textTag.css("line-height", effect.fontSize)
+				} else {
+					textTag.css("line-height", "")
+				}
+
+				let text = effect.text
+
+				let replacements = []
+				if (effect.values) {
+					for (let index of effect.values) {
+						let i
+						if (index < 0) {
+							i = effectIndex + index
+						} else {
+							i = index
+						}
+						replacements.push(dialogueProgress.info[i])
+					}
+				}
+				text = applyReplacements(text, replacements)
+
+				let fancyRegex = /(?<!\\)\$@([^\|]+)\|([^\@]*)@\$/g
+				let fancyRegexNoCapture = /(?<!\\)\$@[^\|]+\|[^\@]*@\$/g
+				let fancyTextMatches = [...text.matchAll(fancyRegex)]
+				let otherText = text.split(fancyRegexNoCapture)
+				let realWords = []
+
+				let skippedDialogue = false
+
+				let colors = {}
+				Object.keys(textColors).forEach(key => colors[key] = textColors[key])
+				if (speaker.class?.textColorOverrides) {
+					let those = speaker.class.textColorOverrides
+					Object.keys(those).forEach(key => colors[key] = those[key])
+				}
+
+				let skipResolve
+				let skipPromise = new Promise(resolve => skipResolve = resolve)
+
+				let currentAdditionalStyle = {}
+				if (effect.fontSize) {
+					currentAdditionalStyle["font-size"] = (effect.fontSize * 100) + "%"
+				}
+
+				for (let i = 0; i < otherText.length; i++) {
+					let word = {
+						text: otherText[i],
+						style: {}
+					}
+					Object.keys(currentAdditionalStyle)
+						.forEach(key => {
+							word.style[key] = currentAdditionalStyle[key]
+						})
+					realWords.push(word)
+
+					if (fancyTextMatches[i]) {
+						let match = fancyTextMatches[i]
+						let word = {
+							text: match[2],
+							style: {}
+						}
+						let style = match[1]
+
+						if (style in colors) {
+							let color = colors[style]
+							word.style["color"] = color
+							word.style["background-image"] = `linear-gradient(${color}, ${color})`
+						} else if (style.substring(0, 4) === "wait") {
+							let dur = Number(style.substring(5))
+							word.addedDuration = textSpeed * dur
+						} else if (style === "start-italics") {
+							currentAdditionalStyle["font-style"] = "italic"
+						} else if (style === "end-italics") {
+							currentAdditionalStyle["font-style"] = ""
+						} else if (style === "start-bold") {
+							currentAdditionalStyle["font-weight"] = "bold"
+						} else if (style === "end-bold") {
+							currentAdditionalStyle["font-weight"] = ""
+						} else {
+							console.warn("Unknown style info", style)
+						}
+						Object.keys(currentAdditionalStyle)
+							.forEach(key => {
+								word.style[key] = currentAdditionalStyle[key]
+							})
+						realWords.push(word)
+					}
+				}
+
+				realWords.forEach(textPiece => {
+					let textPieceTag = $("<span>")
+					textPiece.tag = textPieceTag
+					textTag.append(textPieceTag)
+
+					if (textPiece.addedDuration) {
+						currentDuration += textPiece.addedDuration
+					}
+
+					let words = [""]
+					let text = textPiece.text
+					for (let letter of text) {
+						if (letter === " ") {
+							let lastIndex = words.length - 1
+							words[lastIndex] += letter
+							words.push("")
+						} else {
+							let lastIndex = words.length - 1
+							words[lastIndex] += letter
+						}
+					}
+					words.forEach(word => {
+						let wordTag = $("<span>")
+						wordTag.addClass("word")
+						textPieceTag.append(wordTag)
+						let durationMap = {}
+
+						let letters = word.split("")
+						letters = letters.map(letter => letter.replace(" ", "&nbsp;"))
+						letters.forEach((v, i) => {
+							let letter = v
+							let dur = 1
+							for (let character of characters) {
+								let len = character.length
+								let substring = letters.slice(i, i + len).join("")
+								if (substring === character) {
+									for (let j = i; j < i + len; j++) {
+										durationMap[j] = textCharacterDurationMap[character] / len
+									}
+								}
+							}
+							if (i in durationMap) {
+								dur = durationMap[i]
+							}
+							dur *= textSpeed
+							let span = $("<span>")
+							span.addClass("letter")
+							span.css("opacity", "0.0000001")
+							span.html(letter)
+
+							let isOperation = v === "^" && (letters[i + 1] === "^" || letters[i - 1] === "^")
+							//If this is a letter that triggers an event
+							if (isOperation && letters[i + 1] === "^") {
+								let thisEvent = events[eventIndex]
+								eventIndex++
+								dialogueProgress.eventIndex = eventIndex
+								let carriedOut = false
+								delay(currentDuration)
+									.then(() => {
+										if (!skippedDialogue && !carriedOut) {
+											carriedOut = true
+											carryOutDialogueEvent(thisEvent, dialogueProgress)
+										}
+									})
+								skipPromise.then(() => {
+									if (!carriedOut) {
+										carriedOut = true
+										carryOutDialogueEvent(thisEvent, dialogueProgress)
+									}
+								})
+							} else if (!isOperation) {
+								wordTag.append(span)
+							}
+
+							let promise = delay(currentDuration)
+							promises.push(promise)
+							promise.then(() => {
+								span.animate({ "opacity": 1 }, textSpeed * 2.5)
+							})
+							currentDuration += dur
+						})
+					})
+				})
+
+				changeDialogueStyle(speaker)
+
+				realWords.forEach(textPiece => {
+					let textPieceTag = textPiece.tag
+					let style = textPiece.style
+					textPieceTag.css(textPiece.style)
+					if (style["font-style"] === "italic") {
+						textPieceTag.css({
+							"padding-right": "0.02em"
+						})
+					}
+				})
+
+				const skipDialogue = () => {
+					skippedDialogue = true
+					textTag.find(".letter").animate({ "opacity": 1 }, textSpeed * 2.5)
+
+					//Reset each speaker's position
+					// dialogueProgress.speakers.forEach(speaker => {
+					// 	carryOutDialogueEvent({
+					// 		type: "transform-speaker",
+					// 		speaker: speaker.id,
+					// 		transform: ""
+					// 	})
+					// })
+
+					skipResolve()
+				}
+				const continueDialogue = () => {
+					dialogueTag.off("click")
+					textBox.css("cursor", "")
+					textBox.children(".text-continue").fadeOut(textSpeed * 2.5)
+					resolvePromise()
+				}
+
+				dialogueTag.on("click", skipDialogue)
+				textBox.css("cursor", "")
+				textBox.children(".text-continue").hide()
+
+				Promise.any([skipPromise, Promise.all(promises)])
+					.then(() => {
+						if (autoAdvance) {
+							resolvePromise()
+						} else {
+							dialogueTag.off("click")
+							dialogueTag.on("click", continueDialogue)
+							textBox.css("cursor", "pointer")
+							textBox.children(".text-continue").fadeIn(textSpeed * 2.5)
+						}
+					})
+			} break
 			case "transform-speaker": {
 				let transform = effect.transform
 				let duration = effect.duration ?? 0
@@ -546,13 +572,13 @@ function carryOutDialogueEvent(effect){
 				let css = effect.css
 				let duration = effect.duration ?? 0
 				let wait = effect.waitDuration ?? duration
-				if (duration){
+				if (duration) {
 					$(tag).animate(css, duration)
 				} else {
 					$(tag).css(css)
 				}
-	
-				if (wait){
+
+				if (wait) {
 					delay(wait).then(() => resolvePromise())
 				} else {
 					resolvePromise()
@@ -572,7 +598,7 @@ function carryOutDialogueEvent(effect){
 				let shownText = [...textBox.find(".letter")]
 				let textSpeed = config.textSpeed ?? 10
 				let promises = []
-				for (let i in shownText){
+				for (let i in shownText) {
 					let nextFew = shownText.slice(i, text.length)
 					if (nextFew.length < text.length) break
 					let thatText = nextFew.map(tag => tag.textContent).join("")
@@ -584,10 +610,10 @@ function carryOutDialogueEvent(effect){
 						return false
 					})
 					if (!matches) continue
-	
+
 					//We found the text, now we can fade those tags out.
 					let currentDuration = 0
-					for (let j = nextFew.length - 1; j >= 0; j--){
+					for (let j = nextFew.length - 1; j >= 0; j--) {
 						let letterTag = nextFew[j]
 						currentDuration += textSpeed
 						let p = delay(currentDuration).then(() => {
@@ -602,20 +628,21 @@ function carryOutDialogueEvent(effect){
 					break
 				}
 				Promise.all(promises)
-				.then(() => resolvePromise())
+					.then(() => resolvePromise())
 			} break
 			default:
 				console.warn("You never handled", effect.type)
 		}
 	}
 
-	if (effect.then){
+	if (effect.then) {
 		let callback = callbacks[effect.then]
 		//Notably, this behavior is not halting
 		promise.then(() => {
-			carryOutDialogueEvent(callback)
+			console.log(callback)
+			carryOutDialogueEvent(callback, dialogueProgress)
 		})
 	}
-	
+
 	return promise
 }

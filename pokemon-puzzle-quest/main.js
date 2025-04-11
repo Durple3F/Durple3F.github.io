@@ -1,11 +1,14 @@
-const versionNumber = "v0.11.5"
+const versionNumber = "v0.12"
 let lang = "en"
 let playerName
 
 let timeSteps = 0
+let frameRate = 60
 
 const canvas = $("#screen")[0]
 const ctx = canvas.getContext("2d")
+const bgCanvas = $("#background")[0]
+const background = new Background(bgCanvas)
 
 const mouse = {
 	x: 0,
@@ -17,8 +20,6 @@ const mouse = {
 	upY: 0
 }
 let currentHoveredElement
-
-let frameRate = 60
 
 const UNITVECTORS = [
 	[1, 0],
@@ -253,7 +254,7 @@ function loadSounds(list){
 	}
 	return Promise.all(batch)
 }
-function playSound(name){
+function playSound(name, fadeMusic=true){
 	let resolvePromise
 	let promise = new Promise(resolve => resolvePromise = resolve)
 	let soundData = sounds[name]
@@ -269,7 +270,7 @@ function playSound(name){
 	}
 	snd.volume = config.volumes[soundData.type]
 	snd.muted = config.muted[soundData.type]
-	if (sounds[name].type === "music"){
+	if (sounds[name].type === "music" && fadeMusic){
 		//Fade the sound effect in
 		fadeSoundVolume(snd, 0, snd.volume)
 	}
@@ -282,7 +283,7 @@ function playSound(name){
 	}, duration * 1000)
 	return promise
 }
-function stopSound(name){
+function stopSound(name, fadeMusic=true){
 	let toCheck = playingSounds.map(p => p)
 	while (toCheck.length){
 		let sound = toCheck[0]
@@ -294,7 +295,7 @@ function stopSound(name){
 		if (sound.name === name){
 			let index = playingSounds.indexOf(sound)
 			playingSounds.splice(index, 1)
-			if (sound.type === "music"){
+			if (sound.type === "music" && fadeMusic){
 				let originalVolume = snd.volume
 				fadeSoundVolume(snd, originalVolume, 0)
 				.then(() => {
@@ -333,24 +334,40 @@ function fadeSoundVolume(snd, from, to, duration){
 //Songs are loaded & stored the same way as sounds,
 //but in a less memory-intensive way.
 const songs = {}
-function loadMusic(name, url){
-	if (!url && songData[name]) {
-		url = songData[name].source
+function loadMusic(name, url, loops=false){
+	let data = songData[name] ?? {}
+	if (!url && data) {
+		url = data.source
 	}
 	sounds[name] = {type: "music"}
-	return new Promise((resolve, reject) => {
+	sounds[name].children = []
+	let promises = []
+	let promise = new Promise((resolve, reject) => {
 		let snd = new Audio()
 		snd.src = url
 		snd.volume = config.volumes["music"]
-		snd.loop = true
 		sounds[name].audio = snd
 		snd.muted = config.muted["music"]
 		snd.audio = config.volumes["music"]
+		if (data.loops || loops){
+			snd.loop = true
+		}
+		if (data.loopTransition){
+			let loopName = name+"-loop"
+			let loopPromise = loadMusic(loopName, data.loopSource, true)
+			promises.push(loopPromise)
+			snd.onended = () => {
+				playSound(loopName, false)
+			}
+			sounds[name].children.push(loopName)
+		}
 
 		snd.oncanplaythrough = () => {
 			resolve(snd)
 		}
 	})
+	promises.push(promise)
+	return Promise.all(promises)
 }
 function changeMusic(name){
 	let toStop = playingSounds.filter(sound => sound.type === "music")
@@ -474,17 +491,16 @@ function resize(){
 	dialogueContainer.css("height", newH)
 	dialogueContainer.css("left", xOffset)
 	dialogueContainer.css("top", yOffset)
-}
 
-function doTick(){
-	gameRound.tick()
+	background.resize()
+	background.render()
 }
 
 let timeForTicks = []
 let timeForFrames = []
 function tick(){
 	let now = Date.now()
-	doTick()
+	gameRound.tick()
 	timeForTicks.push(Date.now() - now)
 	requestAnimationFrame(render)
 
@@ -1044,12 +1060,10 @@ function continueGame(){
 }
 
 function handleVisibilityChange(){
-	if (gameRound){
-		if (document.hidden){
-			gameRound.stopTicks()
-		} else {
-			gameRound.startTicks()
-		}
+	if (document.hidden){
+		if (gameRound) gameRound.stopTicks()
+	} else {
+		if (gameRound) gameRound.startTicks()
 	}
 }
 

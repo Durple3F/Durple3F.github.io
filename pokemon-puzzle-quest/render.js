@@ -121,8 +121,6 @@ function render(){
 	let now = Date.now()
 	let w = canvas.width
 	let h = canvas.height
-	let board = gameRound.board
-	let tiles = board.contents
 	//to avoid things being cut off, make the rendered area a little smaller.
 	let scaleFactor = 0.96
 	let smallerW = w * scaleFactor
@@ -133,13 +131,22 @@ function render(){
 	let options = {}
 	options.trueBlur = config.showBlurOnTiles
 
-	ctx.clearRect(0, 0, w, h)
-	for (let tile of tiles){
-		renderTile(tile, board, gameRound, smallerW, smallerH, xOffset, yOffset, options)
+	if (gameBoard){
+		let board = gameRound.board
+		let tiles = board.contents
+
+		ctx.clearRect(0, 0, w, h)
+		for (let tile of tiles){
+			renderTile(tile, board, gameRound, smallerW, smallerH, xOffset, yOffset, options)
+		}
+		for (let tile of tiles){
+			renderStatusEffects(tile, board, gameRound, smallerW, smallerH, xOffset, yOffset)
+		}
 	}
-	for (let tile of tiles){
-		renderStatusEffects(tile, board, gameRound, smallerW, smallerH, xOffset, yOffset)
-	}
+	
 	timeForFrames.push(Date.now() - now)
 	// console.log(Date.now() - now)
+}
+function renderBackground(){
+	background.render()
 }

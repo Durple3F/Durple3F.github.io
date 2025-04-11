@@ -2652,6 +2652,7 @@ class Round{
 		//Otherwise, it enters from a pokeball.	
 		if (trainerIndex === 0 || !trainer.data.isWild){
 			//First, the trainer throws the pokeball, then moves to the side.
+			let pokeballType = pokemon.pokeballType
 			first = first.then(() => {
 				pokemonTag.css({
 					opacity: "0",
@@ -2664,7 +2665,7 @@ class Round{
 						left: "40%"
 					}, 900)
 					
-					renderPokeballSmallCanvas(canvas, "pokeball", "closed")
+					renderPokeballSmallCanvas(canvas, pokeballType, "closed")
 					renderPokeballSpinSmallCanvas(pokeballTag, spinDirection)
 					.then(resolve)
 				})
@@ -2674,7 +2675,7 @@ class Round{
 			.then(() => {
 				return new Promise(resolve => {
 					let pokeballContainer = pokeballTag.parent()
-					renderPokeballSmallCanvas(canvas, "pokeball", "squish")
+					renderPokeballSmallCanvas(canvas, pokeballType, "squish")
 	
 					let filter = "brightness(4)"
 					for (let i = 6; i > 0; i--){
@@ -2698,9 +2699,9 @@ class Round{
 			//Last, the pokemon grows out of the pokeball.
 			//This is when the pokemon is considered to have been fully sent out.
 			.then(() => {
-				delay(50).then(() => renderPokeballSmallCanvas(canvas, "pokeball", "open"))
+				delay(50).then(() => renderPokeballSmallCanvas(canvas, pokeballType, "open"))
 				.then(() => delay(300))
-				.then(() => renderPokeballSmallCanvas(canvas, "pokeball", "none"))
+				.then(() => renderPokeballSmallCanvas(canvas, pokeballType, "none"))
 				this.sendOutPokemon(trainerIndex, pokemon)
 	
 				let h = pokemonSection.height()
@@ -2939,7 +2940,6 @@ class Round{
 			tags.moves.forEach(tag => {
 				let moveIndex = Number(tag.attr("data-move"))
 				oldShowingMoveIndexes.push(moveIndex)
-				tag.popover("dispose")
 			})
 			let moveListTag = tags.moveList
 
@@ -2959,7 +2959,6 @@ class Round{
 					movesToConsider.push(move)
 				}
 			}
-			console.log(movesToConsider)
 
 			let tagsToAdd = []
 			let tagsToRemove = []
@@ -3037,6 +3036,7 @@ class Round{
 			//Remove the tags which should be removed
 			let removePromises = []
 			for (let tag of tagsToRemove){
+				$(tag).popover("dispose")
 				let p = this.removeMoveTag(tag, animate)
 				removePromises.push(p)
 			}
@@ -3158,9 +3158,9 @@ class Round{
 	updateMovePayability(trainerIndex){
 		let tags = this.trainerTags[trainerIndex]
 		let moveList = tags.moveList
-		let moveTags = moveList.children(".move")
+		let moveTags = tags.moves
 		for (let i = 0; i < moveTags.length; i++){
-			let moveTag = moveTags.eq(i)
+			let moveTag = moveTags[i]
 			let costSection = moveTag.children(".move-cost")
 
 			let userIndex = parseInt(moveTag.attr("data-trainer"))
@@ -3968,6 +3968,9 @@ function beginRound(trainerData){
 		}
 		if (data.name){
 			options.name = data.name
+		}
+		if (data.pokeball){
+			options.pokeballType = data.pokeball
 		}
 		let pokemon = new Pokemon(options.name, options.id, options)
 		logPokemonAs("seen", pokemon)

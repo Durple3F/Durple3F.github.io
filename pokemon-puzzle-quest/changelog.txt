@@ -1,6 +1,12 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-4/9 (16.2k lines):
+4/10 (16.9k lines):
+	- Many improvements to level 2-2.
+	- Working on a system to add backgrounds to the game.
+	- Like, SO MUCH work. I made it so that the backgrounds can be preloaded, and intelligently speed up/slow down how fast they're working in the background to generate the frames used in the animations. I HOPE that the effect is seamless.
+	- Added different types of pokeballs for the little animation where the pokeball is thrown in fights.
+
+4/9 (16.5k lines):
 	- Added a way to see what locations a pokemon is available in.
 	- Changed the main font to allow for italic text.
 	- Wild pokemon can now appear in any order.
@@ -10,6 +16,7 @@
 	- Added Pursuit, Sketch
 	- Little note about Sketch: I'm so glad I did Copycat first. I would've coded Sketch in a super stupid way otherwise.
 	- Another little note about Sketch: It <i>did</i> force me to rewrite a lot of code for handling what move tags exist.
+	- Added support for music which has an intro and then loops a part of the song that is after the intro
 
 4/8 (15.7k lines):
 	- Added a setting to allow you to skip dialogue you've already seen.

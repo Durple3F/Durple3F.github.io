@@ -18,6 +18,8 @@ class Pokemon{
 		this.data.types.forEach(type => this.types.push(type))
 		this.level = options?.level ?? 1
 
+		this.pokeballType = options?.pokeballType ?? "pokeball"
+
 		this.nature = options?.nature ?? getRandomNature()
 		this.isShiny = false
 		if ("isShiny" in options){

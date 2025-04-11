@@ -298,7 +298,8 @@
 
 				{ "type": "get-speaker", "name": "Narrator", "class": "Narrator" },
 				{ "type": "text", "speaker": "Narrator", "text": "Some time later..." },
-				{ "type": "get-speaker", "name": "The Masked Royal", "class": "Masked-Royal" },{ "type": "come-in-from-offscreen", "speaker": "The Masked Royal", "direction": "right", "duration": 1000, "waitDuration": 200 },
+				{ "type": "get-speaker", "name": "The Masked Royal", "class": "Masked-Royal" },
+				{ "type": "come-in-from-offscreen", "speaker": "The Masked Royal", "direction": "right", "duration": 1000, "waitDuration": 200 },
 				{ "type": "text", "speaker": "The Masked Royal", "text": "Alright! Who's ready to throw down?!" },
 				{ "type": "transform-speaker", "speaker": "The Masked Royal", "transform": "scaleX(-1)", "duration": 300 },
 				{ "type": "wait", "waitDuration": 1000 },
@@ -307,6 +308,146 @@
 				{ "type": "transform-speaker", "speaker": "The Masked Royal", "transform": "scaleX(-1)", "duration": 600 },
 				{ "type": "wait", "waitDuration": 1000 },
 				{ "type": "text", "speaker": "The Masked Royal", "text": "Where'd everybody go?" }
+			]
+		},
+		"route-2-2-dialogue-1": {
+			"callbacks": {
+				"remove-Ilima": { "type": "go-out-from-onscreen", "speaker": "Ilima", "direction": "left", "duration": 3000, "waitDuration": 0}
+			},
+			"events": [
+				{ "type": "transform-speaker", "speaker": "Ilima", "transform": "scaleX(-1)", "duration": 300, "waitDuration": 0, "then": "remove-Ilima" }
+			],
+			"effects": [
+				{ "type": "load-background-animation", "name": "ilima-radial", "priority": 5 },
+				{ "type": "get-speaker", "name": "Ilima", "class": "Ilima" },
+				{ "type": "style-speaker", "speaker": "Ilima", "css": {
+					"filter": "unset"
+				}},
+				{ "type": "get-speaker", "name": "Hau", "class": "Hau", "position": "left", "facing": "right" },
+				{ "type": "style-speaker", "speaker": "Hau", "css": {
+					"filter": "unset"
+				}},
+				{ "type": "get-speaker", "name": "Lillie", "class": "Lillie", "position": "left", "facing": "right" },
+				{ "type": "style-speaker", "speaker": "Lillie", "css": {
+					"filter": "unset",
+					"left": "-=12%",
+					"top": "+=3%"
+				}},
+				{ "type": "text", "speaker": "Ilima", "text": "Why hello! You don't look like you're from here, if you don't mind my saying so. How are you enjoying Hau'oli city?" },
+				{ "type": "text", "speaker": "Ilima", "text": "Am I correct in assuming you're visiting to partake in the island challenge?" },
+				{ "type": "text", "speaker": "Ilima", "text": "You $@start-italics|@$suppose$@end-italics|@$ so? That's not often the response I'm accustomed to hear—", "auto": true },
+				{ "type": "get-speaker", "name": "Team Skull Grunt A", "class": "Team-Skull-Grunt" },
+				{ "type": "style-speaker", "speaker": "Team Skull Grunt A", "css": {
+					"filter": "unset"
+				}},
+				{ "type": "change-music", "music": "Team Skull Appears!" },
+				{ "type": "come-in-from-offscreen", "speaker": "Team Skull Grunt A", "easing": "linear", "direction": "left", "duration": 6000, "waitDuration": 600, "walkAnimation": "skull" },
+				{ "type": "get-speaker", "name": "Team Skull Grunt B", "class": "Team-Skull-Grunt" },
+				{ "type": "style-speaker", "speaker": "Team Skull Grunt B", "css": {
+					"filter": "unset",
+					"left": "+=12%",
+					"top": "+=3%"
+				}},
+				{ "type": "come-in-from-offscreen", "speaker": "Team Skull Grunt B", "easing": "linear", "direction": "left", "duration": 6000, "waitDuration": 0, "additionalLeft": 0.12, "walkAnimation": "skull" },
+				{ "type": "wait", "duration": 1000 },
+				{ "type": "animate-speaker", "speaker": "Ilima", "css": {
+					"left": "-=24%"
+				}, "duration": 3000, "waitDuration": 0},
+				{ "type": "text", "speaker": "Team Skull Grunt A", "text": "Yo, yo, yo! Look who we found out and about! Tryna act tough? Well, knock it out!" },
+				{ "type": "text", "speaker": "Team Skull Grunt B", "text": "Y'all talk big with your island trial, but here's Team Skull to cramp your style!" },
+				{ "type": "text", "speaker": "Ilima", "text": "It's island $@start-italics|@$challenge$@end-italics|@$, actually. Anyway, <name>, if we may continue—", "auto": true },
+				{ "type": "text", "speaker": "Team Skull Grunt A", "text": "Hey! Hold up! We're challengin' ya here!" },
+				{ "type": "text", "speaker": "Team Skull Grunt B", "text": "Yeah, c'mon! You're supposed to be all intimidated with the boot-quakin' and stuff!" },
+				{ "type": "text", "speaker": "Ilima", "text": "Oh, $@start-italics|@$fine$@end-italics|@$... if you must. <name>, may I have you deal with these two for me?" },
+				{ "type": "text", "speaker": "Ilima", "text": "In the meantime, I will be doing anything else.^^ Be back soon!" }
+			]
+		},
+		"route-2-2-dialogue-2": {
+			"callbacks": {
+				"adjust-Lillie": { "type": "animate-speaker", "speaker": "Lillie", "css": {
+					"left": "+=10%"
+				}, "duration": 1000, "waitDuration": 0},
+				"fade-out-background": { "type": "animate-background", "css": {
+					"opacity": 0
+				}, "duration": 1000, "waitDuration": 1100, "then": "reset-background-animation" },
+				"reset-background-animation": { "type": "play-background-animation", "name": "none", "then": "fade-in-background" },
+				"fade-in-background": { "type": "style-background", "css": {
+					"opacity": 1
+				} }
+			},
+			"events": [],
+			"effects": [
+				{ "type": "style-background", "css": {
+					"opacity": 0
+				} },
+				{ "type": "get-speaker", "name": "Hau", "class": "Hau", "position": "left", "facing": "right" },
+				{ "type": "style-speaker", "speaker": "Hau", "css": {
+					"filter": "unset"
+				}},
+				{ "type": "get-speaker", "name": "Lillie", "class": "Lillie", "position": "left", "facing": "right" },
+				{ "type": "style-speaker", "speaker": "Lillie", "css": {
+					"filter": "unset",
+					"left": "-=12%",
+					"top": "+=3%"
+				}},
+				{ "type": "get-speaker", "name": "Ilima", "class": "Ilima" },
+				{ "type": "style-speaker", "speaker": "Ilima", "css": {
+					"filter": "unset",
+					"opacity": 0
+				}},
+				{ "type": "get-speaker", "name": "Team Skull Grunt A", "class": "Team-Skull-Grunt" },
+				{ "type": "style-speaker", "speaker": "Team Skull Grunt A", "css": {
+					"filter": "unset"
+				}},
+				{ "type": "get-speaker", "name": "Team Skull Grunt B", "class": "Team-Skull-Grunt" },
+				{ "type": "style-speaker", "speaker": "Team Skull Grunt B", "css": {
+					"filter": "unset",
+					"left": "+=12%",
+					"top": "+=3%"
+				}},
+				{ "type": "transform-speaker", "speaker": "Team Skull Grunt A", "transform": "scaleX(-1)", "duration": 300, "waitDuration": 0 },
+				{ "type": "text", "speaker": "Team Skull Grunt A", "text": "Man... this always happens, B. Why's this $@start-italics|@$always$@end-italics|@$ gotta happen?" },
+				{ "type": "text", "speaker": "Team Skull Grunt B", "text": "I know, I know... but like, maybe we shouldn't be jumpin' people who are right next to the best trainer in the city?" },
+				{ "type": "text", "speaker": "Team Skull Grunt A", "text": "$@start-bold|@$Fiiiine$@end-bold|@$... you told me so, is that what you wanna hear?" },
+				{ "type": "text", "speaker": "Team Skull Grunt B", "text": "Let's just leave before that pompous prince gets back and starts like, givin' us battle tips or somethin'." },
+				{ "type": "transform-speaker", "speaker": "Team Skull Grunt A", "transform": "scaleX(1)", "duration": 300, "waitDuration": 0 },
+				{ "type": "go-out-from-onscreen", "speaker": "Team Skull Grunt A", "direction": "right", "duration": 5000, "waitDuration": 100},
+				{ "type": "go-out-from-onscreen", "speaker": "Team Skull Grunt B", "direction": "right", "duration": 5000, "waitDuration": 0, "additionalLeft": 0.12},
+				{ "type": "text", "speaker": "Team Skull Grunt A", "text": "Yeah, you guys got lucky this time! Next time we'll bring THREE guys, then whatcha gonna do?!" },
+				{ "type": "text", "speaker": "Team Skull Grunt B", "text": "Three guys! The magic number! You guys don't stand a chance!" },
+				{ "type": "transform-speaker", "speaker": "Hau", "transform": "scaleX(-1)", "duration": 300, "waitDuration": 0 },
+				{ "type": "text", "speaker": "Hau", "text": "Is Ilima coming back?" },
+				{ "type": "transform-speaker", "speaker": "Lillie", "transform": "scaleX(-1)", "duration": 300, "waitDuration": 0 },
+				{ "type": "text", "speaker": "Lillie", "text": "I think he's over there shopping." },
+				{ "type": "transform-speaker", "speaker": "Lillie", "transform": "scaleX(-1) rotate(5deg)", "duration": 1000, "waitDuration": 1000 },
+				{ "type": "transform-speaker", "speaker": "Lillie", "transform": "scaleX(-1)", "duration": 600, "waitDuration": 1000 },
+				{ "type": "text", "speaker": "Lillie", "text": "I'll go get him..." },
+				{ "type": "go-out-from-onscreen", "speaker": "Lillie", "direction": "left", "duration": 2000, "waitDuration": 2000},
+				{ "type": "reset-position", "speaker": "Lillie", "position": "right" },
+				{ "type": "style-speaker", "speaker": "Lillie", "css": {
+					"left": "+=6%"
+				}},
+				{ "type": "come-in-from-offscreen", "speaker": "Lillie", "direction": "right", "duration": 5000, "waitDuration": 0, "then": "adjust-Lillie" },
+				{ "type": "style-speaker", "speaker": "Ilima", "css": {
+					"opacity": "1"
+				}},
+				{ "type": "reset-position", "speaker": "Ilima", "position": "right" },
+				{ "type": "come-in-from-offscreen", "speaker": "Ilima", "direction": "right", "additionalLeft": -0.06, "duration": 5000, "waitDuration": 2000},
+				{ "type": "transform-speaker", "speaker": "Hau", "transform": "scaleX(1)", "duration": 300, "waitDuration": 0 },
+				{ "type": "text", "speaker": "Ilima", "text": "(Yes, I'm coming, I'm coming... you have a strong grip...)", "auto": true, "fontSize": 0.7 },
+				{ "type": "text", "speaker": "Ilima", "text": "Hello again. In recognition of your efforts, I am obliged to battle with you so as to test your worth in the island challenge, and what have you." },
+				{ "type": "animate-speaker", "speaker": "Ilima", "css": {
+					"left": "50%",
+					"top": "10%"
+				}, "duration": 3000, "waitDuration": 0},
+				{ "type": "play-background-animation", "name": "ilima-radial" },
+				{ "type": "animate-background", "css": {
+					"opacity": 0.7
+				}, "duration": 5000, "waitDuration": 0 },
+				{ "type": "transform-speaker", "speaker": "Ilima", "transform": "translate(-50%, 0%) scale(1.6)", "duration": 3000, "waitDuration": 0 },
+				{ "type": "go-out-from-onscreen", "speaker": "Lillie", "direction": "right", "duration": 2000, "waitDuration": 0, "additionalLeft": -0.12 },
+				{ "type": "go-out-from-onscreen", "speaker": "Hau", "direction": "left", "duration": 3000, "waitDuration": 0 },
+				{ "type": "text", "speaker": "Ilima", "text": "Prepare to face the magnificent Pokémon of captain Ilima!", "then": "fade-out-background" }
 			]
 		}
 	},

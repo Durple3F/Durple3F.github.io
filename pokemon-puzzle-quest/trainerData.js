@@ -8,6 +8,7 @@ const defaultDialogueStyle = {
 				drop-shadow(0em -0.05em 0.1em #ececec)`,
 	textBoxTextBackground: "linear-gradient(4deg, #222, #000)",
 	textBoxTextContinueBackground: "radial-gradient(black, black)",
+	textBoxFont: "unset",
 	namePlateOpacity: 1,
 	namePlateTextBackground: "linear-gradient(-182deg, white 20%, skyblue 80%)",
 	namePlateBackgroundColor: "var(--ui-primary-bg)",
@@ -35,10 +36,7 @@ const NPCTrainerData = {
 			textBoxBackground1: "radial-gradient(ellipse at center,rgb(243, 183, 42) 50%, #3b3838 100%)",
 			textBoxBackground2: "radial-gradient(at bottom,rgb(20, 19, 19),rgb(42, 37, 28))",
 			textBoxMask: "radial-gradient(ellipse at center, black 68%, transparent 72%)",
-			textBoxFilter: `drop-shadow(0.05em 0em 0.1em #ececec20)
-			drop-shadow(-0.05em 0em 0.1em #ececec20)
-			drop-shadow(0em 0.05em 0.1em #ececec20)
-			drop-shadow(0em -0.05em 0.1em #ececec20)`,
+			textBoxFilter: `drop-shadow(0em 0em 0.1em #ececec10)`,
 			textBoxTextBackground: "linear-gradient(4deg, #bbb, #fff)",
 			textBoxTextContinueBackground: "linear-gradient(4deg, #bbb, #fff)",
 		},
@@ -145,6 +143,9 @@ const NPCTrainerData = {
 		type: "trainer",
 		imageSources: {
 			trainer: "src/img/trainers/skullgrunt.png"
+		},
+		textStyle: {
+			textBoxFont: "\"Caveat Brush\"",
 		}
 	},
 }

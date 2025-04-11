@@ -29,3 +29,5 @@ TODO
 - Preload images when getting into fights (check(?))
 - Hau should ask at the beginning whether to pick the better or worse starter
 - Fix weird delay on pokemon heal sound
+- Hau and Team Skull should get special battle themes
+- Hovering enemy moves does nothing

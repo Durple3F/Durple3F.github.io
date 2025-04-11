@@ -1,8 +1,26 @@
 const songData = {
-	"Route 201 (Day)": { source: "src/audio/songs/route201-2.mp3" },
-	"SM Trainer Battle": { source: "src/audio/songs/sm trainer battle.mp3" },
-	"SM Wild Pokemon Battle": { source: "src/audio/songs/sm wild pokemon battle.mp3" },
-	"SM Trainers' School": { source: "src/audio/songs/trainer school.mp3" }
+	"Route 201 (Day)": {
+		source: "src/audio/songs/route201-2.mp3",
+		loops: true,
+	},
+	"SM Trainer Battle": {
+		source: "src/audio/songs/sm wild pokemon battle intro.mp3",
+		loopTransition: true,
+		loopSource: "src/audio/songs/sm wild pokemon battle loop.mp3"
+	},
+	"SM Wild Pokemon Battle": {
+		source: "src/audio/songs/sm wild pokemon battle.mp3",
+		loops: true,
+	},
+	"SM Trainers' School": {
+		source: "src/audio/songs/trainer school.mp3",
+		loops: true,
+	},
+	"Team Skull Appears!": {
+		source: "src/audio/songs/2-02. Team Skull Appears! intro.mp3",
+		loopTransition: true,
+		loopSource: "src/audio/songs/2-02. Team Skull Appears! intro.mp3"
+	},
 }
 
 const boxThemeData = {
@@ -37,7 +55,6 @@ const levelData = [
 		name: "Rival Battle 1",
 		forgiving: true,
 		icon: "1",
-		music: "SM Trainer Battle",
 		trainers: [
 			{
 				name: "Hau",
@@ -69,6 +86,7 @@ const levelData = [
 		],
 		effects: [
 			{ type: "dialogue", source: "rival-battle-1-dialogue" },
+			{ type: "change-music", music: "SM Trainer Battle" },
 			{ type: "load-setting", key: "hardMode" },
 			{ type: "load-value", value: true },
 			{ type: "jump-if-equal", jumpTo: "hardMode" },
@@ -239,7 +257,6 @@ const levelData = [
 		category: "Route 1",
 		name: "Rival Battle 2",
 		icon: "4",
-		music: "SM Trainer Battle",
 		trainers: [
 			{
 				name: "Hau",
@@ -289,6 +306,7 @@ const levelData = [
 		],
 		effects: [
 			{ type: "dialogue", source: "rival-battle-2-dialogue" },
+			{ type: "change-music", music: "SM Trainer Battle" },
 			{ type: "load-setting", key: "hardMode" },
 			{ type: "load-value", value: true },
 			{ type: "jump-if-equal", jumpTo: "hardMode" },
@@ -543,7 +561,6 @@ const levelData = [
 		id: "Route 2-2",
 		category: "Route 2",
 		name: "Route 2-2",
-		music: "SM Wild Pokemon Battle",
 		icon: "2",
 		trainers: [
 			{
@@ -565,26 +582,33 @@ const levelData = [
 			{
 				name: "Ilima",
 				pokemon: [
-					{ id: "Yungoos", level: 9, activeMoves: ["Tackle", "Pursuit", "Leer"] },
-					{ id: "Smeargle", level: 10, activeMoves: ["Ember", "Tackle"] },
+					{ id: "Yungoos", level: 9, pokeball: "ultraball", activeMoves: ["Tackle", "Pursuit", "Leer"] },
+					{ id: "Smeargle", level: 10, pokeball: "ultraball", activeMoves: ["Ember", "Tackle"] },
 				]
 			},
 			{
 				name: "Ilima",
 				pokemon: [
-					{ id: "Yungoos", level: 9, activeMoves: ["Tackle", "Pursuit", "Leer"] },
-					{ id: "Smeargle", level: 10, activeMoves: ["Water Gun", "Tackle"] },
+					{ id: "Yungoos", level: 9, pokeball: "ultraball", activeMoves: ["Tackle", "Pursuit", "Leer"] },
+					{ id: "Smeargle", level: 10, pokeball: "ultraball", activeMoves: ["Water Gun", "Tackle"] },
 				]
 			},
 			{
 				name: "Ilima",
 				pokemon: [
-					{ id: "Yungoos", level: 9, activeMoves: ["Tackle", "Pursuit", "Leer"] },
-					{ id: "Smeargle", level: 10, activeMoves: ["Leafage", "Tackle"] },
+					{ id: "Yungoos", level: 9, pokeball: "ultraball", activeMoves: ["Tackle", "Pursuit", "Leer"] },
+					{ id: "Smeargle", level: 10, pokeball: "ultraball", activeMoves: ["Leafage", "Tackle"] },
 				]
 			},
 		],
 		effects: [
+			// { type: "dialogue", source: "route-2-2-dialogue-1" },
+
+			// { type: "change-music", music: "SM Trainer Battle" },
+			// { type: "fight", trainer: 0 },
+			// { type: "fight", trainer: 1 },
+
+			{ type: "dialogue", source: "route-2-2-dialogue-2" },
 			{ type: "load-player-info", key: "chosen-starter" },
 			{ type: "load-value", value: "Rowlet" },
 			{ type: "jump-if-equal", jumpTo: "Fire" },
@@ -600,8 +624,10 @@ const levelData = [
 			{ type: "fight", trainer: 4, label: "Grass" },
 			{ type: "jump", jumpTo: "Win Check" },
 
-			{ type: "fight", trainer: 0 },
-			{ type: "fight", trainer: 1 },
+			{ type: "jump-if-lost", jumpTo: "lost", label: "Win Check" },
+			{ type: "dialogue", source: "rival-battle-1-dialogue-won" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "dialogue", source: "rival-battle-1-dialogue-lost", label: "lost" },
 		]
 	},
 ]
@@ -710,7 +736,8 @@ function determineUnlockedLevels(){
 
 const pokeballSpriteData = {
 	types: {
-		"pokeball": [0, 3]
+		"pokeball": [0, 3],
+		"ultraball": [0, 55]
 	},
 	sprites: {
 		"none": [1, 1, 0, 0],

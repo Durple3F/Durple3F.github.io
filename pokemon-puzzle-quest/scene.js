@@ -244,7 +244,8 @@ function startScene(name, options){
 			}
 
 			const displayLevels = levelList => {
-				routeTag.html("")
+				routeTag.children().popover("dispose")
+				routeTag.empty()
 				let levelButtons = []
 				levelList.forEach(level => {
 					let btn = getLevelButtonHtml(level)
@@ -1057,6 +1058,7 @@ function advanceCurrentLevel(){
 			}
 		} break
 		case "dialogue": {
+			$("#game").fadeOut()
 			let dialogueName = effect.source
 			let seenDialogue = playerSaveInfo["seen-dialogue"]
 			let shouldSkip = config.skipSeenDialogue && seenDialogue.includes(dialogueName)
