@@ -497,6 +497,9 @@
 		"Grimer-Alola": {
 			"name": "Grimer"
 		},
+		"Drowzee": {
+			"name": "Drowzee"
+		},
 		"Ledyba": {
 			"name": "Ledyba"
 		},
@@ -536,6 +539,9 @@
 		"Grubbin": {
 			"name": "Grubbin"
 		},
+		"Charjabug": {
+			"name": "Charjabug"
+		},
 		"Comfey": {
 			"name": "Comfey"
 		}
@@ -566,6 +572,11 @@
 			"name": "Bug Bite",
 			"description": "Deals damage. Then, drains 2 energy from the opponent's three most full energy types and gives it to the user.",
 			"shortDescription": "Deals some damage and drains energy"
+		},
+		"Charge": {
+			"name": "Charge",
+			"description": "Raises the user's special defense stat by 1 stage. The power of the next Electric-type move the user uses is doubled.",
+			"shortDescription": "Doubles next Electric move's power"
 		},
 		"Charm": {
 			"name": "Charm",
@@ -604,7 +615,7 @@
 		},
 		"Ember": {
 			"name": "Ember",
-			"description": "Deals damage. There's a 50% chance for this move to inflict Burn on 3 random tiles. At the start of each turn, the opponent takes damage for each Burned tile on the board.",
+			"description": "Deals damage. There's a 50% chance for this move to inflict Burn on 3 random tiles for 5 turns. At the start of each turn, the opponent takes damage for each Burned tile on the board.",
 			"shortDescription": "Damages and might burn tiles"
 		},
 		"Fake Out": {
@@ -636,6 +647,11 @@
 			"name": "Harden",
 			"description": "Gives the user the Invulnerable status for one turn. It can't take damage for as long as it has that status. Then ends the turn.",
 			"shortDescription": "Temporary invulnerability"
+		},
+		"Hypnosis": {
+			"name": "Hypnosis",
+			"description": "Has an 80% to apply Sleep to the opponent. Otherwise, it will apply Drowsy. When a Drowsy Pokémon ends their turn, they may become Asleep, and lose Drowsy. An Asleep Pokémon gets half as much energy (rounded up) from matches.",
+			"shortDescription": "Puts opponent to sleep"
 		},
 		"Infestation": {
 			"name": "Infestation",
@@ -786,7 +802,7 @@
 		},
 		"Vise Grip": {
 			"name": "Vise Grip",
-			"description": "Deals damage. The user chooses a tile, and that tile becomes Locked for 3 turns. A tile with Locked can't be swapped normally.",
+			"description": "Deals damage. Then, if the target is still active, the user chooses a tile. That tile becomes Locked for 3 turns. A tile with Locked can't be swapped normally.",
 			"shortDescription": "Damages and locks a tile"
 		},
 		"Water Gun": {
@@ -828,7 +844,7 @@
 		},
 		"asleep": {
 			"name": "Asleep",
-			"description": "This Pokémon gets half as much energy from matches rounded up."
+			"description": "This Pokémon gets half as much energy from matches, rounded up."
 		}
 	},
 	"levels": {
@@ -860,6 +876,10 @@
 		"Route 2-2": {
 			"name": "Route 2-2",
 			"description": "You find Ilima relaxing at the Marina."
+		},
+		"Route 2-3": {
+			"name": "Route 2-3",
+			"description": "You begin to explore the rest of Melemele Island."
 		}
 	},
 	"route-categories": {

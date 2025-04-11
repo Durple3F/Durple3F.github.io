@@ -462,12 +462,12 @@ class Round{
 			energyFromMatches = addEnergies(energyValue, energyFromMatches)
 		}
 
+		energy = addEnergies(energyFromMatches, energy)
 		//If the active pokemon is Asleep, they get less energy.
 		if (activePokemon.hasStatus("asleep")){
-			energyFromMatches = multiplyEnergies(energyFromMatches, 0.5, "up")
+			energy = multiplyEnergies(energy, 0.5, "up")
 		}
 
-		energy = addEnergies(energyFromMatches, energy)
 		this.giveEnergy(energy, activeTrainer, activePokemon)
 
 		//Deal with status effects that do something when those tiles are matched
@@ -1107,7 +1107,8 @@ class Round{
 				let animation = doEvolutionAnimation(body, p, evolution)
 				animation.promise.then(() => {
 					if (animation.skipped) return
-					let message = `${p.name} evolved into ${evolveTo.name}!`
+					let newPokemonName = getLocaleString("name", lang, ["pokemon", evolveTo.id])
+					let message = `${p.name} evolved into ${newPokemonName}!`
 					modal.find(".modal-title").html(`<h6 class='display-6'>${message}</h6>`)
 
 					let changes = p.evolve(evolveTo)
@@ -1362,7 +1363,7 @@ class Round{
 		power = this.getEffectivePower(attackerTrainer, attacker, move, power)
 		
 		let category = options.category ?? move.category ?? "Physical"
-		let type = options.type ?? move.type ?? "Typeless"
+		let type = options.type ?? this.getEffectiveMoveType(attackerTrainer, attacker, move) ?? "Typeless"
 
 		let burned = attacker.hasStatus("burn")
 		if (burned && category === "Physical"){
@@ -1412,6 +1413,9 @@ class Round{
 			damage = options.damage
 		}
 
+		//Finalize how much damage is intended to be dealt.
+		//I'm going to reduce how much damage things deal across the board, just a smidge.
+		damage *= 0.8
 		damage = Math.round(damage)
 
 		//If the receiving Pokemon has Invulnerable, set damage dealt to 0.
@@ -1568,6 +1572,7 @@ class Round{
 			pokemon.energy[color] -= energyCost[color]
 		}
 	}
+
 	getEffectiveCost(trainer, pokemon, move, cost){
 		if (!cost){
 			cost = {}
@@ -1584,7 +1589,8 @@ class Round{
 		
 		let costEffects = pokemon.getStatusesOfType("cost-alteration")
 		for (let statusEffect of costEffects){
-			let applies = doesThisApplyToMove(move, statusEffect.appliesTo)
+			let effectiveType = this.getEffectiveMoveType(trainer, pokemon, move)
+			let applies = this.doesThisApplyToMove(move, statusEffect.appliesTo, effectiveType)
 			if (applies){
 				let modification = statusEffect.energyCost
 				for (let color in modification){
@@ -1595,12 +1601,12 @@ class Round{
 
 		return cost
 	}
-
 	getEffectivePower(trainer, pokemon, move, power){
 		power = (power ?? move.power) || 0
 		let powerEffects = pokemon.getStatusesOfType("power-alteration")
 		for (let statusEffect of powerEffects){
-			let applies = doesThisApplyToMove(move, statusEffect.appliesTo)
+			let effectiveType = this.getEffectiveMoveType(trainer, pokemon, move)
+			let applies = this.doesThisApplyToMove(move, statusEffect.appliesTo, effectiveType)
 			if (applies){
 				let modification = statusEffect.modification
 				let operation = modification.operation ?? "add"
@@ -1612,6 +1618,33 @@ class Round{
 			}
 		}
 		return power
+	}
+	getEffectiveMoveType(trainer, pokemon, move){
+		return move.type
+	}
+
+	doesThisApplyToMove(move, appliesTo, type) {
+		let good = []
+		if (appliesTo.name){
+			good.push(move.name === appliesTo.name)
+		}
+		if (appliesTo.names){
+			good.push(appliesTo.names.includes(move.name))
+		}
+		if (appliesTo.types){
+			good.push(appliesTo.types.includes(type))
+		}
+		if (appliesTo.logic === "and"){
+			return good.every(v => v)
+		} else if (appliesTo.logic === "or"){
+			return good.some(v => v)
+		} else if (appliesTo.logic === "nor"){
+			return !good.some(v => v)
+		} else if (appliesTo.logic === "nand"){
+			return !good.every(v => v)
+		} else {
+			return good.every(v => v)
+		}
 	}
 
 	newMoveUseObj(trainer, pokemon, move, trigger="effects"){
@@ -1649,6 +1682,24 @@ class Round{
 		let moveUseObj = this.newMoveUseObj(trainer, pokemon, move, "effects")
 		let promise = moveUseObj.promise
 		// console.log(moveUseObj)
+
+		let statusEffects = pokemon.statusEffects
+		for (let statusEffect of statusEffects){
+			//If having used that move just spent an application of a status effect,
+			//count that and remove the status if necessary.
+			if (statusEffect.numberOfApplications > 0){
+				let type = this.getEffectiveMoveType(trainer, pokemon, move)
+				let applies = this.doesThisApplyToMove(move, statusEffect.appliesTo, type)
+				if (applies){
+					promise = promise.then(() => {
+						statusEffect.numberOfApplications--
+						if (statusEffect.numberOfApplications <= 0){
+							pokemon.removeStatus(statusEffect)
+						}
+					})
+				}
+			}
+		}
 
 		let hasParalyzed = pokemon.hasStatus("paralyzed")
 		if (hasParalyzed){
@@ -1874,13 +1925,14 @@ class Round{
 
 			let trainer = moveUseObj.trainer
 			let pokemon = moveUseObj.pokemon
+			let move = moveUseObj.move
 			let promises = []
 			let endedTurn = false
 
 			if (pokemon && pokemon.statusEffects.length){
 				let statusEffects = pokemon.statusEffects
-				for (let status of statusEffects){
-					if (status.name === "confused"){
+				for (let statusEffect of statusEffects){
+					if (statusEffect.name === "confused"){
 						//50% chance that the turn ends.
 						let confuseChance = 0.5
 						if (Math.random() < confuseChance && !endedTurn){
@@ -2975,7 +3027,7 @@ class Round{
 				tag.attr("data-pokemon", pokemonIndex)
 				let moveIndex = pokemon.moves.indexOf(move)
 				tag.attr("data-move", moveIndex)
-				let type = move
+				let type = this.getEffectiveMoveType(trainer, pokemon, move)
 				tag.attr("data-move-type", type)
 
 				//The move Copycat (and maybe others) does something when you hover over it.
@@ -3078,7 +3130,7 @@ class Round{
 			let moveCostTag = moveTag.children(".move-cost")
 			let costParts = moveCostTag.children(".cost-part")
 
-			let type = thisMove.type
+			let type = this.getEffectiveMoveType(thisTrainer, thisPokemon, thisMove)
 			moveTag.attr("data-move-type", type)
 			
 			let usable = true

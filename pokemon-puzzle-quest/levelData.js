@@ -628,6 +628,28 @@ const levelData = [
 			{ type: "dialogue", source: "route-2-2-dialogue-won" },
 		]
 	},
+	{
+		id: "Route 2-3",
+		category: "Route 2",
+		name: "Route 2-3",
+		music: "SM Wild Pokemon Battle",
+		icon: "3",
+		trainers: [
+			{
+				isWild: true,
+				targetPokemon: 5,
+				possiblePokemon: [
+					// { id: "Smeargle", levelMin: 7, levelMax: 10, weight: 4 },
+					{ id: "Drowzee", levelMin: 7, levelMax: 10, weight: 4 },
+					// { id: "Meowth-Alola", levelMin: 7, levelMax: 10, weight: 2 },
+					// { id: "Abra", levelMin: 7, levelMax: 10, weight: 2 },
+				]
+			}
+		],
+		effects: [
+			{ type: "fight", trainer: 0 },
+		]
+	},
 ]
 
 for (let categoryId in levelCategoryData){

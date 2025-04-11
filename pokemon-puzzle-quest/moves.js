@@ -137,6 +137,47 @@ const pokemonMoveData = {
 			{ type: "gain-energy", amounts: -1, target: "user" }
 		],
 	},
+	"Charge": {
+		name: "Charge",
+		type: "Electric",
+		category: "Status",
+		strategy: "buff-user",
+		pp: 20,
+		power: null,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			// yellow: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Charge.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{
+				type: "apply-debuff", target: "user", debuff: {
+					type: "stat",
+					stat: "specialDefense",
+					amount: 1
+				}
+			},
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "charge-charged-up",
+				type: "power-alteration",
+				stacks: false,
+				lostOnSwap: true,
+				lostOnBatonPass: true,
+				numberOfApplications: 1,
+				appliesTo: {
+					types: ["Electric"]
+				},
+				modification: {
+					change: 2,
+					operation: "multiply"
+				}
+			} },
+		],
+	},
 	"Charm": {
 		name: "Charm",
 		type: "Fairy",
@@ -262,7 +303,7 @@ const pokemonMoveData = {
 					amount: 1
 				}
 			},
-			{ type: "apply-status-effect", target: "user", label: "alter-cost", statusEffect: {
+			{ type: "apply-status-effect", target: "user", statusEffect: {
 				name: "defense-curl-curled-up",
 				type: "power-alteration",
 				stacks: false,
@@ -395,7 +436,7 @@ const pokemonMoveData = {
 			{ type: "select-random-tiles", count: -1 },
 			{
 				type: "apply-status-to-tiles", selection: "group", which: -1,
-				status: { name: "Burn", type: "debuff", duration: null }
+				status: { name: "Burn", type: "debuff", duration: 5 }
 			}
 		],
 	},
@@ -567,6 +608,31 @@ const pokemonMoveData = {
 			{ type: "play-sound", name: "attack" },
 			{ type: "apply-status-effect", statusEffect: "invulnerable", target: "user" },
 			{ type: "end-turn" }
+		],
+	},
+	"Hypnosis": {
+		name: "Hypnosis",
+		type: "Normal",
+		category: "Status",
+		strategy: "debuff-opponent",
+		pp: 20,
+		power: null,
+		accuracy: 60,
+		rechargeTurns: 4,
+		energy: {
+			purple: 8
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Hypnosis part 1.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "random-number", min: 1, max: 10 },
+			{ type: "load-value", value: 6 },
+			{ type: "jump-if-less-than", jumpTo: "sleep" },
+			{ type: "apply-status-effect", statusEffect: "drowsy", target: "opponent" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "apply-status-effect", statusEffect: "asleep", target: "opponent", label: "sleep" },
 		],
 	},
 	"Infestation": {
@@ -1404,8 +1470,8 @@ const pokemonMoveData = {
 		accuracy: 0,
 		rechargeTurns: 3,
 		energy: {
-			blue: 6,
-			purple: 4
+			blue: 5,
+			purple: 3
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Yawn.mp3"

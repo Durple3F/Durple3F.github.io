@@ -100,9 +100,9 @@ const pokemonData = {
 			speed: 0
 		},
 		energyMastery: {
-			green: 5,
-			yellow: 3,
-			blue: 5
+			green: 4,
+			yellow: 1,
+			blue: 4
 		},
 		evolutions: [
 			{
@@ -114,7 +114,7 @@ const pokemonData = {
 			}
 		],
 		learnset: [
-			{
+			{  //NOTE: Should be learned upon evolution.
 				name: "Harden",
 				unlock: {
 					type: "level",
@@ -688,6 +688,57 @@ const pokemonData = {
 			},
 		]
 	},
+	"Drowzee": {
+		name: "Drowzee",
+		number: "96",
+		imageFacing: "right",
+		imageSources: {
+			"large": "src/img/pokemon/0096Drowzee.png",
+			"largeShiny": "src/img/shiny-pokemon/096-Drowzee.png",
+			"home": "src/img/tiny-pokemon/Drowzee.png"
+		},
+		sounds: {
+			cry: "src/audio/cries/grimer.mp3"
+		},
+		types: ["Psychic"],
+		tags: [],
+		stats: {
+			hp: 60,
+			attack: 48,
+			defense: 45,
+			specialAttack: 43,
+			specialDefense: 90,
+			speed: 42
+		},
+		expYield: 66,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 1,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			purple: 6
+		},
+		learnset: [
+			{
+				name: "Pound",
+				unlock: {
+					type: "level",
+					amount: 1
+				}
+			},
+			{
+				name: "Hypnosis",
+				unlock: {
+					type: "level",
+					amount: 1
+				}
+			},
+		]
+	},
 	"Ledyba": {
 		name: "Ledyba",
 		number: "165",
@@ -1064,20 +1115,8 @@ const pokemonData = {
 			green: 2,
 		},
 		learnset: [
-			{
-				name: "Fake Tears",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "Copycat",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
+			{ name: "Fake Tears", unlock: { type: "level", amount: 1 } },
+			{ name: "Copycat", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Happiny": {
@@ -1512,35 +1551,65 @@ const pokemonData = {
 			yellow: 2,
 			green: 5
 		},
-		learnset: [
+		evolutions: [
 			{
-				name: "Vise Grip",
+				name: "Charjabug",
 				unlock: {
 					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "Mud-Slap",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "String Shot",
-				unlock: {
-					type: "level",
-					amount: 5
-				}
-			},
-			{
-				name: "Bug Bite",
-				unlock: {
-					type: "level",
-					amount: 10
+					amount: 20
 				}
 			}
+		],
+		learnset: [
+			{ name: "Vise Grip", unlock: { type: "level", amount: 1 } },
+			{ name: "Mud-Slap", unlock: { type: "level", amount: 1 } },
+			{ name: "String Shot", unlock: { type: "level", amount: 5 } },
+			{ name: "Bug Bite", unlock: { type: "level", amount: 10 } },
+			{ name: "Bite", unlock: { type: "level", amount: 15 } },
+		]
+	},
+	"Charjabug": {
+		name: "Charjabug",
+		number: "737",
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0737Charjabug.png",
+			"largeShiny": "src/img/shiny-pokemon/737-Charjabug.png",
+			"home": "src/img/tiny-pokemon/Charjabug.png"
+		},
+		sounds: {
+			cry: "src/audio/cries/charjabug.mp3"
+		},
+		tags: [],
+		types: ["Bug", "Electric"],
+		stats: {
+			hp: 57,
+			attack: 82,
+			defense: 95,
+			specialAttack: 55,
+			specialDefense: 75,
+			speed: 36
+		},
+		expYield: 140,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 2,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			yellow: 4,
+			green: 5
+		},
+		learnset: [
+			{ name: "Vise Grip", unlock: { type: "level", amount: 1 } },
+			{ name: "Mud-Slap", unlock: { type: "level", amount: 1 } },
+			{ name: "String Shot", unlock: { type: "level", amount: 1 } },
+			{ name: "Bug Bite", unlock: { type: "level", amount: 1 } },
+			{ name: "Charge", unlock: { type: "level", amount: 1 } }, //NOTE: Should be learned upon evolution.
+			{ name: "Bite", unlock: { type: "level", amount: 15 } },
 		]
 	},
 	"Comfey": {
@@ -1579,13 +1648,7 @@ const pokemonData = {
 			green: 5
 		},
 		learnset: [
-			{
-				name: "Wrap",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
+			{ name: "Wrap", unlock: { type: "level", amount: 1 } },
 		]
 	},
 };

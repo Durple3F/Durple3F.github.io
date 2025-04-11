@@ -7,17 +7,19 @@ Incomplete move lists:
   Slowpoke (lv 9)
   Magnemite (lv 8)
   Grimer-Alola (lv 7)
+  Drowzee (lv 1)
   Ledyba (lv 8)
   Spinarak (lv 8)
   Wingull (lv 10)
-  Bonsly ()
+  Bonsly (lv 1)
   Happiny (lv 4)
   Rowlet (lv 12)
   Litten (lv 9)
   Popplio (lv 9)
   Pikipek (lv 7)
   Yungoos (lv 7)
-  Grubbin (lv 10)
+  Grubbin (lv 15)
+  Charjabug (lv 15)
   Comfey (lv 0)
 
 Missing Evolutions:
@@ -29,6 +31,7 @@ Missing Evolutions:
   Slowpoke
   Magnemite
   Grimer-Alola
+  Drowzee
   Ledyba
   Spinarak
   Wingull
@@ -39,7 +42,7 @@ Missing Evolutions:
   Popplio
   Pikipek
   Yungoos
-  Grubbin
+  Charjabug
 
 Missing Abilities:
   - All
