@@ -355,10 +355,12 @@
 				}, "duration": 3000, "waitDuration": 0},
 				{ "type": "text", "speaker": "Team Skull Grunt A", "text": "Yo, yo, yo! Look who we found out and about! Tryna act tough? Well, knock it out!" },
 				{ "type": "text", "speaker": "Team Skull Grunt B", "text": "Y'all talk big with your island trial, but here's Team Skull to cramp your style!" },
-				{ "type": "text", "speaker": "Ilima", "text": "It's island $@start-italics|@$challenge$@end-italics|@$, actually. Anyway, <name>, if we may continue—", "auto": true },
+				{ "type": "load-player-name" },
+				{ "type": "text", "speaker": "Ilima", "text": "It's island $@start-italics|@$challenge$@end-italics|@$, actually. Anyway, %c%, if we may continue—", "auto": true, "values": [-1] },
 				{ "type": "text", "speaker": "Team Skull Grunt A", "text": "Hey! Hold up! We're challengin' ya here!" },
 				{ "type": "text", "speaker": "Team Skull Grunt B", "text": "Yeah, c'mon! You're supposed to be all intimidated with the boot-quakin' and stuff!" },
-				{ "type": "text", "speaker": "Ilima", "text": "Oh, $@start-italics|@$fine$@end-italics|@$... if you must. <name>, may I have you deal with these two for me?" },
+				{ "type": "load-player-name" },
+				{ "type": "text", "speaker": "Ilima", "text": "Oh, $@start-italics|@$fine$@end-italics|@$... if you must. %c%, may I have you deal with these two for me?", "values": [-1] },
 				{ "type": "text", "speaker": "Ilima", "text": "In the meantime, I will be doing anything else.^^ Be back soon!" }
 			]
 		},
@@ -447,7 +449,17 @@
 				{ "type": "transform-speaker", "speaker": "Ilima", "transform": "translate(-50%, 0%) scale(1.6)", "duration": 3000, "waitDuration": 0 },
 				{ "type": "go-out-from-onscreen", "speaker": "Lillie", "direction": "right", "duration": 2000, "waitDuration": 0, "additionalLeft": -0.12 },
 				{ "type": "go-out-from-onscreen", "speaker": "Hau", "direction": "left", "duration": 3000, "waitDuration": 0 },
-				{ "type": "text", "speaker": "Ilima", "text": "Prepare to face the magnificent Pokémon of captain Ilima!", "then": "fade-out-background" }
+				{ "type": "text", "speaker": "Ilima", "text": "Behold the magnificent Pokémon of the one and only captain Ilima!", "then": "fade-out-background" }
+			]
+		},
+		"route-2-2-dialogue-won": {
+			"callbacks": {},
+			"events": [],
+			"effects": [
+				{ "type": "get-speaker", "name": "Ilima", "class": "Ilima" },
+				{ "type": "text", "speaker": "Ilima", "text": "Well done! That was certainly a battle." },
+				{ "type": "text", "speaker": "Ilima", "text": "I mean no offense, but I $@start-italics|@$was$@end-italics|@$ going easy on you, since you helped with those thugs." },
+				{ "type": "text", "speaker": "Ilima", "text": "Maybe one day, we'll be able to have another battle." }
 			]
 		}
 	},

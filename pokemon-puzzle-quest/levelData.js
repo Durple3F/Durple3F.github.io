@@ -582,31 +582,31 @@ const levelData = [
 			{
 				name: "Ilima",
 				pokemon: [
-					{ id: "Yungoos", level: 9, pokeball: "ultraball", activeMoves: ["Tackle", "Pursuit", "Leer"] },
-					{ id: "Smeargle", level: 10, pokeball: "ultraball", activeMoves: ["Ember", "Tackle"] },
+					{ id: "Yungoos", level: 9, name: "Reginald", pokeball: "ultraball", activeMoves: ["Tackle", "Pursuit", "Leer"] },
+					{ id: "Smeargle", level: 10, name: "Inkwell", pokeball: "ultraball", activeMoves: ["Ember", "Tackle"] },
 				]
 			},
 			{
 				name: "Ilima",
 				pokemon: [
-					{ id: "Yungoos", level: 9, pokeball: "ultraball", activeMoves: ["Tackle", "Pursuit", "Leer"] },
-					{ id: "Smeargle", level: 10, pokeball: "ultraball", activeMoves: ["Water Gun", "Tackle"] },
+					{ id: "Yungoos", level: 9, name: "Reginald", pokeball: "ultraball", activeMoves: ["Tackle", "Pursuit", "Leer"] },
+					{ id: "Smeargle", level: 10, name: "Inkwell", pokeball: "ultraball", activeMoves: ["Water Gun", "Tackle"] },
 				]
 			},
 			{
 				name: "Ilima",
 				pokemon: [
-					{ id: "Yungoos", level: 9, pokeball: "ultraball", activeMoves: ["Tackle", "Pursuit", "Leer"] },
-					{ id: "Smeargle", level: 10, pokeball: "ultraball", activeMoves: ["Leafage", "Tackle"] },
+					{ id: "Yungoos", level: 9, name: "Reginald", pokeball: "ultraball", activeMoves: ["Tackle", "Pursuit", "Leer"] },
+					{ id: "Smeargle", level: 10, name: "Inkwell", pokeball: "ultraball", activeMoves: ["Leafage", "Tackle"] },
 				]
 			},
 		],
 		effects: [
-			// { type: "dialogue", source: "route-2-2-dialogue-1" },
+			{ type: "dialogue", source: "route-2-2-dialogue-1" },
 
-			// { type: "change-music", music: "SM Trainer Battle" },
-			// { type: "fight", trainer: 0 },
-			// { type: "fight", trainer: 1 },
+			{ type: "change-music", music: "SM Trainer Battle" },
+			{ type: "fight", trainer: 0 },
+			{ type: "fight", trainer: 1 },
 
 			{ type: "dialogue", source: "route-2-2-dialogue-2" },
 			{ type: "load-player-info", key: "chosen-starter" },
@@ -624,10 +624,8 @@ const levelData = [
 			{ type: "fight", trainer: 4, label: "Grass" },
 			{ type: "jump", jumpTo: "Win Check" },
 
-			{ type: "jump-if-lost", jumpTo: "lost", label: "Win Check" },
-			{ type: "dialogue", source: "rival-battle-1-dialogue-won" },
-			{ type: "jump", jumpTo: Infinity },
-			{ type: "dialogue", source: "rival-battle-1-dialogue-lost", label: "lost" },
+			{ type: "jump-if-lost", jumpTo: Infinity, label: "Win Check" },
+			{ type: "dialogue", source: "route-2-2-dialogue-won" },
 		]
 	},
 ]

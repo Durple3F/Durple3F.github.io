@@ -1,10 +1,12 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-4/10 (16.9k lines):
+4/10 (17.0k lines):
 	- Many improvements to level 2-2.
 	- Working on a system to add backgrounds to the game.
 	- Like, SO MUCH work. I made it so that the backgrounds can be preloaded, and intelligently speed up/slow down how fast they're working in the background to generate the frames used in the animations. I HOPE that the effect is seamless.
 	- Added different types of pokeballs for the little animation where the pokeball is thrown in fights.
+	- Dialogue can now refer to the player by name.
+	- There was a bug that I encountered where using any move seemed to have no effect on the opponent, while their moves affected you. That bug was very easy to fix, but I swear, that bug was terrifying.
 
 4/9 (16.5k lines):
 	- Added a way to see what locations a pokemon is available in.

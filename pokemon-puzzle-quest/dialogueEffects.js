@@ -1,4 +1,11 @@
 const dialogueEffects = {
+	"load-player-name": {
+		execute: (resolve, effect, progress, options) => {
+			let effectIndex = progress.effectIndex
+			dialogueProgress.info[effectIndex] = playerName
+			resolve()
+		}
+	},
 	"remove-speaker": {
 		execute: (resolve, effect, progress, options) => {
 			let speaker = options.speaker

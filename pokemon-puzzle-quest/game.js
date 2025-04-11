@@ -1360,7 +1360,6 @@ class Round{
 			power += options.additionalPower
 		}
 		power = this.getEffectivePower(attackerTrainer, attacker, move, power)
-		console.log(power)
 		
 		let category = options.category ?? move.category ?? "Physical"
 		let type = options.type ?? move.type ?? "Typeless"
@@ -2588,6 +2587,7 @@ class Round{
 		})
 
 		tags.moveList = tags.sideBottom.children(".move-list")
+		tags.moveList.empty()
 		tags.moves = []
 		
 		tags.sideMiddle.css({opacity: "0"})
