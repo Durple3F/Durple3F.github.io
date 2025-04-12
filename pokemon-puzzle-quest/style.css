@@ -550,7 +550,7 @@ body {
 }
 .board-center > #screen {
 	width: 50%;
-	image-rendering: pixelated;
+	/* image-rendering: pixelated; */
 }
 .board-center > #screen-tooltip {
 	position: absolute;
