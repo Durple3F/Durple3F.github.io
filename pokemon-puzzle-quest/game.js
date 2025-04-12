@@ -1108,7 +1108,7 @@ class Round{
 		for (let p of canEvolve){
 			let evolutions = p.data.evolutions
 			let possibilities = evolutions.filter(evo => {
-				return checkIfPokemonMeetsRequirements(p, evo.unlock) || true
+				return checkIfPokemonMeetsRequirements(p, evo.unlock)
 			})
 			//TODO if there are multiple options, the player should get to choose
 			if (!possibilities.length) continue

@@ -211,7 +211,7 @@ const pokemonMoveData = {
 		pp: 20,
 		power: null,
 		accuracy: 100,
-		rechargeTurns: 1,
+		rechargeTurns: 10,
 		energy: {
 			purple: 4
 		},
@@ -237,7 +237,7 @@ const pokemonMoveData = {
 		pp: 10,
 		power: null,
 		accuracy: 100,
-		rechargeTurns: 1,
+		rechargeTurns: 5,
 		energy: {
 			purple: 6,
 			red: 6
@@ -550,7 +550,7 @@ const pokemonMoveData = {
 		pp: 20,
 		power: null,
 		accuracy: 100,
-		rechargeTurns: 1,
+		rechargeTurns: 10,
 		energy: {
 			purple: 10
 		},
@@ -625,7 +625,7 @@ const pokemonMoveData = {
 		pp: 40,
 		power: null,
 		accuracy: 100,
-		rechargeTurns: 1,
+		rechargeTurns: 7,
 		energy: {
 			purple: 5
 		},
@@ -670,7 +670,7 @@ const pokemonMoveData = {
 		pp: 20,
 		power: null,
 		accuracy: 60,
-		rechargeTurns: 4,
+		rechargeTurns: 10,
 		energy: {
 			purple: 8
 		},
@@ -749,7 +749,7 @@ const pokemonMoveData = {
 		pp: 30,
 		power: null,
 		accuracy: 100,
-		rechargeTurns: 1,
+		rechargeTurns: 5,
 		energy: {
 			purple: 4
 		},
@@ -875,7 +875,7 @@ const pokemonMoveData = {
 		pp: 20,
 		power: 20,
 		accuracy: 100,
-		rechargeTurns: 2,
+		rechargeTurns: 5,
 		energy: {
 			yellow: 12
 		},
@@ -1213,7 +1213,7 @@ const pokemonMoveData = {
 		pp: 40,
 		power: null,
 		accuracy: 95,
-		rechargeTurns: 1,
+		rechargeTurns: 7,
 		energy: {
 			green: 4,
 			blue: 8
@@ -1260,7 +1260,7 @@ const pokemonMoveData = {
 		pp: 20,
 		power: null,
 		accuracy: 55,
-		rechargeTurns: 1,
+		rechargeTurns: 5,
 		energy: {
 			purple: 6
 		},
@@ -1291,7 +1291,7 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "apply-status-effect", statusEffect: "confused", target: "opponent" },
-			{ type: "shuffle" }
+			{ type: "shuffle-board" }
 		],
 	},
 	"Swift": {
@@ -1344,7 +1344,7 @@ const pokemonMoveData = {
 		pp: 30,
 		power: null,
 		accuracy: 100,
-		rechargeTurns: 1,
+		rechargeTurns: 7,
 		energy: {
 			purple: 6
 		},
