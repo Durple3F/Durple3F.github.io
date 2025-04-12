@@ -1,4 +1,4 @@
-const versionNumber = "v0.12.2"
+const versionNumber = "v0.12.3"
 let lang = "en"
 let playerName
 
@@ -1062,8 +1062,10 @@ function continueGame(){
 function handleVisibilityChange(){
 	if (document.hidden){
 		if (gameRound) gameRound.stopTicks()
+		background.stopTicks()
 	} else {
 		if (gameRound) gameRound.startTicks()
+		background.startTicks()
 	}
 }
 

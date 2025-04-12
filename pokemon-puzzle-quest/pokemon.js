@@ -178,6 +178,11 @@ class Pokemon{
 						turns: Math.floor(Math.random() * 4) + 2
 					}
 				} break
+				case "fear-frozen": {
+					status = {
+						name: "fear-frozen"
+					}
+				} break
 				default:
 					console.warn("You never handled", status)
 					status = {

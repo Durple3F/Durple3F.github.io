@@ -6,6 +6,8 @@ function startScene(name, options){
 	let gameIsHidden = $("#game").css("display") === "none"
 	gameTag.empty()
 
+	$(".popover").fadeOut().remove()
+
 	currentSceneInfo.name = name
 	currentSceneInfo.options = options
 
@@ -545,7 +547,10 @@ function startScene(name, options){
 						allBoxes.removeClass("selected")
 						if (!alreadySelected){
 							box.addClass("selected")
-							viewPokemonInfo(pokemon)
+							let options = {
+								canRename: true
+							}
+							viewPokemonInfo(pokemon, options)
 							.then(() => savePokemon(pokemon))
 							.then(() => box.removeClass("selected"))
 						}
@@ -568,7 +573,10 @@ function startScene(name, options){
 				// console.log(p)
 				delay(100).then(() => {
 					if (!mouse.isDown){
-						viewPokemonInfo(pokemon)
+						let options = {
+							canRename: true
+						}
+						viewPokemonInfo(pokemon, options)
 						.then(() => savePokemon(pokemon))
 					} else {
 						heldPokemon = pokemon
@@ -1254,11 +1262,54 @@ function viewPokemonInfo(pokemon, options={}){
 	clearModal(modal)
 	modal.modal("show")
 	modal.addClass("wide").addClass("summary")
-	modal.find(".modal-header").addClass("justify-content-center")
-	modal.find(".modal-title").text(pokemon.name)
-	modal.find(".modal-title").addClass("display-6")
+	let header = modal.find(".modal-header")
+	header.addClass("justify-content-center")
 	let btn = $(`<button class='btn btn-primary'>Done</button>`)
 	modal.find(".modal-footer").append(btn)
+
+	let nameTag = $(`<span>${pokemon.name}</span>`)
+	let title = modal.find(".modal-title")
+	title.append(nameTag).addClass("display-6")
+	if (options.canRename){
+		title.addClass("w-100").addClass("d-flex")
+		.addClass("justify-content-center").addClass("align-items-center")
+		let renameInput = $(`<input class='form-control m-0 w-50 text-center'>`)
+		title.append(renameInput)
+		renameInput.css({
+			"font-size": "calc(1.375rem + 1.5vw - 0.3em + 0.5px)"
+		})
+		renameInput.hide()
+		let renameBtn = $(`<button class='btn btn-sm h-50 ms-1 btn-primary'>
+			<i class="bi bi-pencil-fill"></i>
+		</button>`)
+		title.append(renameBtn)
+
+		const beginRename = () => {
+			// renameBtn.fadeOut(100)
+			nameTag.fadeOut(100, () => renameInput.fadeIn(100))
+			renameInput.val(pokemon.name)
+		}
+
+		const changeName = () => {
+			let val = renameInput.val()
+			pokemon.name = val
+			nameTag.text(val)
+			renameInput.fadeOut(100, () => nameTag.fadeIn(100))
+		}
+		renameInput.change(changeName)
+
+		let renaming = false
+		const toggleRename = () => {
+			if (!renaming){
+				beginRename()
+				renaming = true
+			} else {
+				changeName()
+				renaming = false
+			}
+		}
+		renameBtn.click(toggleRename)
+	}
 
 	let body = modal.find(".modal-body")
 	if (options.dex){

@@ -535,6 +535,7 @@ class Round{
 		let matches = this.board.getAllMatches()
 		let contents = this.board.contents
 		let activeTrainer = this.trainers[this.activePlayerIndex]
+		let activePokemon = activeTrainer.activePokemon
 
 		let promise = new Promise(resolve => {
 			if (matches.length > 0){
@@ -566,6 +567,16 @@ class Round{
 					this.board.explodeTile(tile)
 				}
 				this.handleEffects(matches)
+
+				//A pokemon that is frozen in fear snaps out of it if any match made has a length of 5 or more.
+				if (activePokemon.hasStatus("fear-frozen")){
+					for (let match of matches){
+						if (match.length >= 5){
+							activePokemon.removeStatusesWithName("fear-frozen")
+							break
+						}
+					}
+				}
 	
 				//Add those matches to the current combo
 				matches.forEach(m => this.matchesInCombo.push(m))
@@ -2145,12 +2156,10 @@ class Round{
 
 		return animations.promise
 	}
-	shuffleBoard(){
+	performShuffle(locationMap, duration){
 		let now = Date.now()
-		let duration = 500
-		let eachTileTime = 100
 		let promises = []
-		let newLocationMap = this.board.getShuffleLocationMap()
+		let newLocationMap = locationMap
 		newLocationMap.forEach((spot, tile) => {
 			let animation = getEmptyAnimationBatch()
 			animation.info.round = this
@@ -2169,6 +2178,14 @@ class Round{
 		.then(() => this.timeStep())
 
 		return promise
+	}
+	shuffleBoard(duration=500){
+		let newLocationMap = this.board.getShuffleLocationMap()
+		return this.performShuffle(newLocationMap, duration)
+	}
+	shuffleTiles(tiles, duration=250){
+		let newLocationMap = this.board.getShuffleLocationMap(tiles)
+		return this.performShuffle(newLocationMap, duration)
 	}
 
 	animateSwitchLocations(tile1, tile2, options){
@@ -2919,6 +2936,16 @@ class Round{
 		if (this.moveQueue.length) return Promise.resolve()
 		if (this.currentlySwappingPokemon) return Promise.resolve()
 		if (this.trainers[0].activePokemon === pokemon) return Promise.resolve()
+
+		//If the trainer's active pokemon is frozen in fear, they can't swap.
+		let trainer = this.trainers[trainerIndex]
+		let activePokemon = trainer.activePokemon
+		if (activePokemon && activePokemon.hasStatus("fear-frozen")){
+			let text = getLocaleString("error-cant-switch-fear-frozen", lang)
+			this.createAnnouncement("general", text, 1500)
+			return Promise.resolve()
+		}
+		
 		let turn = this.turn
 		let promise = this.animateSendOutPokemon(trainerIndex, pokemon)
 		.then(() => {
@@ -3630,7 +3657,20 @@ class Board{
 			let curHeight = top + bottom + 1
 			
 			if (curWidth < width){
-				let addLeft = left < right ? true : right < left ? false : !!Math.round(Math.random())
+				let canAddLeft = minX - 1 >= 0
+				let canAddRight = maxX + 1 < this.width
+				let addLeft = true
+				if (left < right && canAddLeft){
+					addLeft = true
+				} else if (right < left && canAddRight){
+					addLeft = false
+				} else if (canAddLeft && canAddRight){
+					addLeft = !!Math.round(Math.random())
+				} else if (canAddLeft){
+					addLeft = true
+				} else {
+					addLeft = false
+				}
 				let newX
 				if (addLeft){
 					newX = minX - 1
@@ -3649,7 +3689,20 @@ class Board{
 				newTiles.forEach(t => selection.push(t))
 			}
 			if (curHeight < height){
-				let addTop = top < bottom ? true : bottom < top ? false : !!Math.round(Math.random())
+				let canAddTop = minY - 1 >= 0
+				let canAddBottom = maxY + 1 < this.height
+				let addTop = true
+				if (top < bottom && canAddTop){
+					addTop = true
+				} else if (bottom < top && canAddBottom){
+					addTop = false
+				} else if (canAddTop && canAddBottom){
+					addTop = !!Math.round(Math.random())
+				} else if (canAddTop){
+					addTop = true
+				} else {
+					addTop = false
+				}
 				let newY
 				if (addTop){
 					newY = minY - 1
@@ -3864,17 +3917,27 @@ class Board{
 		return goodDistance && !isLocked
 	}
 
-	getShuffleLocationMap(){
+	getShuffleLocationMap(tilesToShuffle){
 		let newLocationMap = new Map()
 		let spots = []
 		let tiles = []
-		for (let i = 0; i < this.width; i++){
-			for (let j = 0; j < this.height; j++){
-				spots.push([i, j])
+
+		if (tilesToShuffle){
+			for (let i = 0; i < tilesToShuffle.length; i++){
+				let tile = tilesToShuffle[i]
+				spots.push([tile.x, tile.y])
+				tiles.push(tile)
 			}
-		}
-		for (let i = 0; i < this.contents.length; i++){
-			tiles.push(this.contents[i])
+		} else {
+			for (let i = 0; i < this.width; i++){
+				for (let j = 0; j < this.height; j++){
+					spots.push([i, j])
+				}
+			}
+			let contents = this.tilesOnScreen()
+			for (let i = 0; i < contents.length; i++){
+				tiles.push(contents[i])
+			}
 		}
 
 		shuffleArray(spots)
@@ -3991,6 +4054,10 @@ function beginRound(trainerData){
 	//randomly choose new pokemon to add from that list.
 	while (trainerData.targetPokemon > pokemonData.length){
 		let possiblePokemon = trainerData.possiblePokemon
+		let allowDuplicates = trainerData.canPickDuplicates ?? false
+		if (!allowDuplicates){
+			possiblePokemon = possiblePokemon.filter(data => !pokemonData.includes(data))
+		}
 		let weights = possiblePokemon.map(pokemonData => {
 			return pokemonData.weight ?? 1
 		})

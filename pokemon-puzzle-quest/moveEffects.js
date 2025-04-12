@@ -81,6 +81,13 @@ const pokemonMoveEffects = {
 				.then(() => resolve())
 		}
 	},
+	"shuffle-tiles": {
+		execute: (resolve, effect, params, game, options) => {
+			let selection = params.selection ?? []
+			game.shuffleTiles(selection)
+				.then(() => resolve())
+		}
+	},
 	"end-turn": {
 		execute: (resolve, effect, params, game, options) => {
 			game.currentlyEndingTurn = true

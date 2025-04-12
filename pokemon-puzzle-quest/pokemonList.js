@@ -688,6 +688,48 @@ const pokemonData = {
 			},
 		]
 	},
+	"Gastly": {
+		name: "Gastly",
+		number: "92",
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0092Gastly.png",
+			"largeShiny": "src/img/shiny-pokemon/092-Gastly.png",
+			"home": "src/img/tiny-pokemon/Gastly.png"
+		},
+		sounds: {
+			cry: "src/audio/cries/gastly.mp3"
+		},
+		types: ["Ghost", "Poison"],
+		tags: [],
+		stats: {
+			hp: 30,
+			attack: 35,
+			defense: 30,
+			specialAttack: 100,
+			specialDefense: 35,
+			speed: 80
+		},
+		expYield: 62,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 1,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 3,
+			purple: 3
+		},
+		learnset: [
+			{ name: "Lick", unlock: { type: "level", amount: 1 } },
+			{ name: "Confuse Ray", unlock: { type: "level", amount: 1 } },
+			{ name: "Hypnosis", unlock: { type: "level", amount: 4 } },
+			{ name: "Mean Look", unlock: { type: "level", amount: 8 } },
+		]
+	},
 	"Drowzee": {
 		name: "Drowzee",
 		number: "96",

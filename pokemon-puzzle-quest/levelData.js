@@ -183,7 +183,8 @@ const levelData = [
 			{ type: "stop-music", label: "Jimmy" },
 			{ type: "dialogue", source: "route-1-2-dialogue" },
 			{ type: "change-music", music: "SM Trainer Battle" },
-			{ type: "fight", trainer: 2 }
+			{ type: "fight", trainer: 2 },
+			{ type: "jump-if-lost", jumpTo: Infinity },
 		]
 	},
 	//Spinarak, Ledyba, Grubbin? | Audrey
@@ -248,7 +249,8 @@ const levelData = [
 			{ type: "stop-music", label: "Audrey" },
 			{ type: "dialogue", source: "route-1-3-dialogue" },
 			{ type: "change-music", music: "SM Trainer Battle" },
-			{ type: "fight", trainer: 2 }
+			{ type: "fight", trainer: 2 },
+			{ type: "jump-if-lost", jumpTo: Infinity }
 		]
 	},
 	// Rival Battle 2
@@ -538,6 +540,7 @@ const levelData = [
 			{
 				isWild: true,
 				targetPokemon: 5,
+				canPickDuplicates: false,
 				possiblePokemon: [
 					{ id: "Abra", levelMin: 6, levelMax: 8, weight: 4 },
 					{ id: "Pichu", levelMin: 6, levelMax: 8, weight: 4 },
@@ -554,6 +557,7 @@ const levelData = [
 		],
 		effects: [
 			{ type: "fight", trainer: 0 },
+			{ type: "jump-if-lost", jumpTo: Infinity },
 		]
 	},
 	//2-2: Battle with Team Skull Grunts + Ilima
@@ -606,7 +610,9 @@ const levelData = [
 
 			{ type: "change-music", music: "SM Trainer Battle" },
 			{ type: "fight", trainer: 0 },
+			{ type: "jump-if-lost", jumpTo: Infinity },
 			{ type: "fight", trainer: 1 },
+			{ type: "jump-if-lost", jumpTo: Infinity },
 
 			{ type: "dialogue", source: "route-2-2-dialogue-2" },
 			{ type: "load-player-info", key: "chosen-starter" },
@@ -628,6 +634,7 @@ const levelData = [
 			{ type: "dialogue", source: "route-2-2-dialogue-won" },
 		]
 	},
+	//2-3: Smeargle, Drowzee, Abra, + others | Krystal
 	{
 		id: "Route 2-3",
 		category: "Route 2",
@@ -637,17 +644,33 @@ const levelData = [
 		trainers: [
 			{
 				isWild: true,
-				targetPokemon: 5,
+				targetPokemon: 4,
+				canPickDuplicates: false,
 				possiblePokemon: [
-					// { id: "Smeargle", levelMin: 7, levelMax: 10, weight: 4 },
+					{ id: "Smeargle", levelMin: 7, levelMax: 10, weight: 4 },
 					{ id: "Drowzee", levelMin: 7, levelMax: 10, weight: 4 },
-					// { id: "Meowth-Alola", levelMin: 7, levelMax: 10, weight: 2 },
-					// { id: "Abra", levelMin: 7, levelMax: 10, weight: 2 },
+					{ id: "Abra", levelMin: 7, levelMax: 10, weight: 3 },
+					{ id: "Meowth-Alola", levelMin: 7, levelMax: 10, weight: 2 },
+					{ id: "Yungoos", levelMin: 7, levelMax: 10, weight: 1 },
+					{ id: "Rattata-Alola", levelMin: 7, levelMax: 10, weight: 1 },
 				]
-			}
+			},
+			{
+				name: "Krystal",
+				class: "Beauty-Gen7",
+				pokemon: [
+					{ id: "Gastly", level: 9, name: "Gastlé No. 3 by Krystal" }
+				]
+			},
 		],
 		effects: [
-			{ type: "fight", trainer: 0 },
+			// { type: "fight", trainer: 0 },
+			// { type: "jump-if-lost", jumpTo: Infinity },
+			// { type: "change-music", music: "SM Trainer Battle" },
+			// { type: "dialogue", source: "route-2-3-dialogue" },
+			// { type: "fight", trainer: 1 },
+			// { type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "dialogue", source: "route-2-3-dialogue-won" },
 		]
 	},
 ]

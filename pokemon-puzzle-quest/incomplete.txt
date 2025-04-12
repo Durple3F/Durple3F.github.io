@@ -7,6 +7,7 @@ Incomplete move lists:
   Slowpoke (lv 9)
   Magnemite (lv 8)
   Grimer-Alola (lv 7)
+  Gastly (lv 1)
   Drowzee (lv 1)
   Ledyba (lv 8)
   Spinarak (lv 8)
@@ -31,6 +32,7 @@ Missing Evolutions:
   Slowpoke
   Magnemite
   Grimer-Alola
+  Gastly
   Drowzee
   Ledyba
   Spinarak

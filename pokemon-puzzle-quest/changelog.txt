@@ -1,10 +1,12 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-4/11 (17.2k lines):
-	- Added Drowzee, Charjabug
-	- Added Hypnosis, Charge
+4/11 (17.5k lines):
+	- Added Drowzee, Charjabug, Gastly
+	- Added Hypnosis, Charge, Confuse Ray, Mean Look
 	- Ember's burned tiles no longer last forever.
 	- Charge was difficult to do. Fun fact about the tooltips I've been using this whole time: For whatever reason, they have to figure out what content they're about to show <i>twice.</i> So that miniscule amount of computation happens twice for no reason.
+	- You can now rename your pokemon.
+	- Route 2-3 is in a state I'm pretty happy with.
 
 4/10 (17.0k lines):
 	- Many improvements to level 2-2.

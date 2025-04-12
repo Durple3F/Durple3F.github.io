@@ -4,8 +4,9 @@
 	
 	"initiative-tutorial": "Initiative<br>Each turn, both Pokémon gain Initiative based on their speed stats. When a player matches 4 or more tiles in a row, they get a free turn.",
 	"choose-pokemon": "Choose Pokémon",
+	"error-cant-switch-fear-frozen": "Your active Pokémon is too frozen in fear to retreat!",
 
-	"pokemon-move-requirement-level": "Your Pokemon needs to be at least level %c% to use this move.",
+	"pokemon-move-requirement-level": "Your Pokémon needs to be at least level %c% to use this move.",
 	"pokemon-move-requirement-level-error": "Your Pokémon needs to be at least... wait, they're high enough level. Huh????",
 
 	"ask-to-rename-pokemon": "What would you like to name your %c%?",
@@ -95,7 +96,7 @@
 					"left": "-=8%",
 					"opacity": 1
 				}},
-				{ "type": "text", "speaker": "Madison", "text": "Gully here has been single handedly making people buy a new order of fries for years." },
+				{ "type": "text", "speaker": "Madison", "text": "Gully here has been single-handedly making people buy a new order of fries for years." },
 				{ "type": "text", "speaker": "Madison", "text": "He's a $@start-italics|@$smart$@end-italics|@$ little kleptomaniac, isn't he?" },
 				{ "type": "text", "speaker": "Madison", "text": "But now you that know my secret... I can't let you go telling people about it!" }
 			]
@@ -461,6 +462,75 @@
 				{ "type": "text", "speaker": "Ilima", "text": "I mean no offense, but I $@start-italics|@$was$@end-italics|@$ going easy on you, since you helped with those thugs." },
 				{ "type": "text", "speaker": "Ilima", "text": "Maybe one day, we'll be able to have another battle." }
 			]
+		},
+		"route-2-3-dialogue": {
+			"events": [
+				{ "type": "animate-speaker", "speaker": "Krystal", "css": {
+					"top": "-=2%"
+				}, "duration": 300, "waitDuration": 0},
+				{ "type": "animate-speaker", "speaker": "Krystal", "css": {
+					"top": "+=2%"
+				}, "duration": 500, "waitDuration": 0}
+			],
+			"effects": [
+				{ "type": "get-speaker", "name": "Krystal", "class": "Beauty-Gen7" },
+				{ "type": "text", "speaker": "Krystal", "text": "Would you mind helping me with something, dear?" },
+				{ "type": "display-image", "src": "src/img/pokemon-sprites/gastly.png", "name": "Gastly", "position": {
+					"type": "relative",
+					"relative": "Krystal"
+				}},
+				{ "type": "style-image", "image": "Gastly", "css": {
+					"opacity": 0
+				}},
+				{ "type": "style-speaker", "speaker": "Krystal", "css": {
+					"z-index": 5
+				}},
+				{ "type": "text", "speaker": "Krystal", "text": "I'm working to create a very special perfume. A $@start-italics|@$signature scent$@end-italics|@$ of mine." },
+				{ "type": "animate-speaker", "speaker": "Krystal",
+				  "duration": 500, "waitDuration": 0, "css": {
+					"left": "+=8%"
+				}},
+				{ "type": "animate-image", "image": "Gastly", "duration": 500, "css": {
+					"left": "-=8%",
+					"opacity": 1
+				}},
+				{ "type": "text", "speaker": "Krystal", "text": "I find that, if my perfume battles, her scent becomes... more appealing. It helps to release those $@start-italics|@$richer$@end-italics|@$ notes." },
+				{ "type": "text", "speaker": "Krystal", "text": "The last time she battled, her scent gained these ^^wonderful^^ whiffs of lavender." },
+				{ "type": "text", "speaker": "Krystal", "text": "Let's see what new scrents she can unlock from battling $@start-italics|@$you!$@end-italics|@$" }
+			]
+		},
+		"route-2-3-dialogue-won": {
+			"events": [
+				{ "type": "animate-speaker", "speaker": "Krystal", "css": {
+					"top": "-=4%",
+					"rotate": "-20deg"
+				}, "duration": 700, "waitDuration": 0},
+				{ "type": "animate-speaker", "speaker": "Krystal", "css": {
+					"top": "+=4%",
+					"rotate": "0deg"
+				}, "duration": 500, "waitDuration": 0}
+			],
+			"effects": [
+				{ "type": "get-speaker", "name": "Krystal", "class": "Beauty-Gen7" },
+				{ "type": "style-speaker", "speaker": "Krystal", "css": {
+					"z-index": 5,
+					"left": "+=8%"
+				}},
+				{ "type": "wait", "waitDuration": 20 },
+				{ "type": "display-image", "src": "src/img/pokemon-sprites/gastly.png", "name": "Gastly", "position": {
+					"type": "relative",
+					"relative": "Krystal"
+				}},
+				{ "type": "style-image", "image": "Gastly", "css": {
+					"transform": "rotate(10deg)",
+					"left": "-=8%",
+					"height": "70%",
+					"opacity": 0.8
+				}},
+				{ "type": "text", "speaker": "Krystal", "text": "Oof... that scent is downright overbearing." },
+				{ "type": "text", "speaker": "Krystal", "text": "Wait, do I detect a hint of^^...^^ just $@start-italics|@$what$@end-italics|@$ is this new texture in her aroma?" },
+				{ "type": "text", "speaker": "Krystal", "text": "That's... heavenly! Thank you, dear. Once I get my baby back into shape, she'll produce the most sought-after, limited-edition scent in Alola!" }
+			]
 		}
 	},
 	"pokemon": {
@@ -496,6 +566,9 @@
 		},
 		"Grimer-Alola": {
 			"name": "Grimer"
+		},
+		"Gastly": {
+			"name": "Gastly"
 		},
 		"Drowzee": {
 			"name": "Drowzee"
@@ -582,6 +655,11 @@
 			"name": "Charm",
 			"description": "Lowers the opponent's attack stat by 1 stage.",
 			"shortDescription": "Lowers enemy attack"
+		},
+		"Confuse Ray": {
+			"name": "Confuse Ray",
+			"description": "Applies Confused. Then, the user chooses a tile. A 3x3 area of tiles centered around that tile are shuffled.",
+			"shortDescription": "Confuses and shuffles tiles."
 		},
 		"Copycat": {
 			"name": "Copycat",
@@ -672,6 +750,11 @@
 			"name": "Lick",
 			"description": "Deals damage. Lowers the chance of Grass tiles spawning by 50%, and makes Dark tiles more likely to spawn instead. Dark tiles are worth 1 purple energy AND 1 red energy each.",
 			"shortDescription": "Deals light damage and spawns Dark tiles"
+		},
+		"Mean Look": {
+			"name": "Mean Look",
+			"description": "Applies Frozen in Fear. A Frozen in Fear Pokémon can't be switched out by any means.",
+			"shortDescription": "Freezes opponent in fear"
 		},
 		"Mud-Slap": {
 			"name": "Mud-Slap",
@@ -845,6 +928,10 @@
 		"asleep": {
 			"name": "Asleep",
 			"description": "This Pokémon gets half as much energy from matches, rounded up."
+		},
+		"fear-frozen": {
+			"name": "Frozen in Fear",
+			"description": "This Pokémon can't be switched out voluntarily. If its owner matches 5 tiles in a row, it will snap back to reality."
 		}
 	},
 	"levels": {

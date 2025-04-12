@@ -215,6 +215,13 @@ const pokemonStatusData = {
 		canReplace: ["drowsy"],
 		name: "asleep"
 	},
+	"fear-frozen": {
+		image: "src/img/icons/evil-eyes.png",
+		color: "rgb(95, 15, 98)",
+		stacks: false,
+		class: "debuff",
+		name: "fear-frozen"
+	},
 }
 for (let statusName in pokemonStatusData){
 	let statusType = pokemonStatusData[statusName]

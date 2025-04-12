@@ -169,8 +169,8 @@ function advanceCurrentDialogue() {
 				let relativeTo = dialogueProgress.speakers.find(s => s.id === name)
 				let relativeTag = relativeTo.tag
 				let offset = relativeTag.position()
-				let width = relativeTag.width()
 				let height = relativeTag.height()
+				let width = relativeTag.width() || height
 				let totalWidth = dialogueContainer.width()
 				let totalHeight = dialogueContainer.height()
 				image.css({

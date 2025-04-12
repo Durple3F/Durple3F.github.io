@@ -172,7 +172,7 @@ class Background{
 		}
 		
 		this.frameRate = (frameRate * 0.5)|0
-		this.interval = setInterval(this.tick.bind(this), this.frameRate)
+		this.startTicks()
 		this.loadAnimation("ilima-radial")
 		this.playAnimation("none")
 		// this.playAnimation("ilima-radial")
@@ -220,6 +220,14 @@ class Background{
 
 		ctx.putImageData(newImageData, 0, 0)
 		this.frame = (this.frame + 1) % this.framesInAnimation
+	}
+
+	startTicks(){
+		clearInterval(this.interval)
+		this.interval = setInterval(this.tick.bind(this), this.frameRate)
+	}
+	stopClicks(){
+		clearInterval(this.interval)
 	}
 
 	newImageData(){

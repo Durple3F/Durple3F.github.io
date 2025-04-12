@@ -8,13 +8,20 @@ All trainer icons are from https://play.pokemonshowdown.com/sprites/trainers/
 Also the pokemon cries are from there too https://play.pokemonshowdown.com/audio/cries/
 - Beliot419 made the sprites for:
   - Hau
+  - Kukui
+  - Lillie
+  - The Masked Royal
+  - Ilima
   - Youngster Gen 7
+  - Young Athlete F
   - Lass Gen 7
   - Rising Star
   - Teacher Gen 7
-  - The Masked Royal
+  - Beauty Gen 7
 - kyledove made the sprites for:
-  - Preschooler Gen 7
+  - Preschooler F Gen 7
+- ZacWeavile made the sprites for:
+  - Team Skull Grunt
 
 Cursed icon from https://www.flaticon.com/free-icon/circle_1725004?term=magic&related_id=1725004
 

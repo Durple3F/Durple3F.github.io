@@ -204,6 +204,33 @@ const pokemonMoveData = {
 			}
 		],
 	},
+	"Confuse Ray": {
+		name: "Confuse Ray",
+		type: "Ghost",
+		category: "Status",
+		strategy: "debuff-opponent",
+		pp: 10,
+		power: null,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			purple: 6,
+			red: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Confuse Ray part 1.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "apply-status-effect", statusEffect: "confused", target: "opponent" },
+			{ type: "load-value", value: 1 },
+			{ type: "choose-tiles", count: -1, target: "user" },
+			{ type: "load-value", value: 3 },
+			{ type: "load-value", value: 3 },
+			{ type: "expand-tile-selection", selection: -3, width: -2, height: -1 },
+			{ type: "shuffle-tiles", selection: -1 }
+		],
+	},
 	"Copycat": {
 		name: "Copycat",
 		type: "Normal",
@@ -739,6 +766,27 @@ const pokemonMoveData = {
 			{ type: "load-value", value: -1 },
 			{ type: "multiply-numbers" },
 			{ type: "change-tile-weight", tileType: "black", add: -1 },
+		],
+	},
+	"Mean Look": {
+		name: "Mean Look",
+		type: "Normal",
+		category: "Status",
+		strategy: "debuff-opponent",
+		pp: 5,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 10,
+		energy: {
+			orange: 5,
+			purple: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Mean Look.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "apply-status-effect", statusEffect: "fear-frozen", target: "opponent" }
 		],
 	},
 	"Mud-Slap": {
