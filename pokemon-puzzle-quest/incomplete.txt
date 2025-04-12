@@ -1,13 +1,14 @@
 Incomplete move lists:
   Butterfree (lv 0)
   Rattata-Alola (lv 10)
+  Spearow (lv 8)
   Pikachu (lv 8)
   Zubat (lv 5)
   Meowth-Alola (lv 8)
   Slowpoke (lv 9)
   Magnemite (lv 8)
   Grimer-Alola (lv 7)
-  Gastly (lv 1)
+  Gastly (lv 8)
   Drowzee (lv 1)
   Ledyba (lv 8)
   Spinarak (lv 8)
@@ -25,6 +26,7 @@ Incomplete move lists:
 
 Missing Evolutions:
   Rattata-Alola
+  Spearow
   Pikachu
   Zubat
   Meowth-Alola

@@ -24,6 +24,31 @@ const pokemonMoveData = {
 			{ type: "heal", target: "user", amount: -2, min: -1 },
 		],
 	},
+	"Assurance": {
+		name: "Assurance",
+		type: "Dark",
+		category: "Physical",
+		strategy: "basic-damage",
+		pp: 10,
+		power: 60,
+		accuracy: 100,
+		rechargeTurns: 4,
+		energy: {
+			orange: 8,
+			yellow: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Assurance.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-pokemon-data", target: "opponent", key: "damagedThisTurn" },
+			{ type: "jump-if-truthy", jumpTo: "double-damage" },
+			{ type: "damage" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "damage", damageMult: 2, label: "double-damage" },
+		],
+	},
 	"Astonish": {
 		name: "Astonish",
 		type: "Ghost",
@@ -120,7 +145,7 @@ const pokemonMoveData = {
 		rechargeTurns: 1,
 		energy: {
 			green: 8,
-			orange: 4
+			orange: 6
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Bug Bite.mp3"

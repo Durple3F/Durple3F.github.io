@@ -546,6 +546,9 @@
 		"Rattata-Alola": {
 			"name": "Rattata"
 		},
+		"Spearow": {
+			"name": "Spearow"
+		},
 		"Pikachu": {
 			"name": "Pikachu"
 		},
@@ -624,6 +627,11 @@
 			"name": "Absorb",
 			"description": "Deals damage. Then, heals the user for 50% of the damage dealt.",
 			"shortDescription": "Steals a little HP"
+		},
+		"Assurance": {
+			"name": "Assurance",
+			"description": "Deals damage. This move deals double damage if its target was dealt damage earlier this turn.",
+			"shortDescription": "Deals extra followup damage"
 		},
 		"Astonish": {
 			"name": "Astonish",
@@ -967,6 +975,10 @@
 		"Route 2-3": {
 			"name": "Route 2-3",
 			"description": "You begin to explore the rest of Melemele Island."
+		},
+		"Route 2-4": {
+			"name": "Route 2-4",
+			"description": "You continue to explore the rest of Melemele Island."
 		}
 	},
 	"route-categories": {

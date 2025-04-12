@@ -235,6 +235,48 @@ const pokemonData = {
 			},
 		]
 	},
+	"Spearow": {
+		name: "Spearow",
+		number: "21",
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0021Spearow.png",
+			"largeShiny": "src/img/shiny-pokemon/021-Spearow.png",
+			"home": "src/img/tiny-pokemon/Spearow.png"
+		},
+		sounds: {
+			cry: "src/audio/cries/spearow.mp3"
+		},
+		types: ["Normal", "Flying"],
+		tags: [],
+		stats: {
+			hp: 40,
+			attack: 60,
+			defense: 30,
+			specialAttack: 31,
+			specialDefense: 31,
+			speed: 70
+		},
+		expYield: 52,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 1
+		},
+		energyMastery: {
+			yellow: 5,
+			orange: 2
+		},
+		learnset: [
+			{ name: "Peck", unlock: { type: "level", amount: 1 } },
+			{ name: "Growl", unlock: { type: "level", amount: 1 } },
+			{ name: "Leer", unlock: { type: "level", amount: 4 } },
+			{ name: "Assurance", unlock: { type: "level", amount: 8 } },
+		]
+	},
 	"Pikachu": {
 		name: "Pikachu",
 		number: "25",

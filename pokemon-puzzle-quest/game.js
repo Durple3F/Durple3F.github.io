@@ -671,6 +671,14 @@ class Round{
 		this.matchesInCombo.length = 0
 		this.resetCurrentlySelecting()
 		this.resetCascade()
+
+		//Reset necessary data for pokemon.
+		for (let trainer of this.trainers){
+			for (let pokemon of trainer.pokemon){
+				let data = pokemon.gameRoundData
+				data.damagedThisTurn = false
+			}
+		}
 		
 		let trainer = this.trainers[this.activePlayerIndex]
 		let otherTrainer = this.trainers[this.inactivePlayerIndex]
@@ -1419,6 +1427,12 @@ class Round{
 		}
 		damage *= typeMult
 
+		if ("damageMult" in options){
+			console.log(damage)
+			damage *= options.damageMult
+			console.log(damage)
+		}
+
 		//Damage can be set to a specific value
 		if (options.fixed && options.damage !== undefined){
 			damage = options.damage
@@ -1445,6 +1459,10 @@ class Round{
 			}
 			defender.hp -= damage
 			result.damageDealt = damage
+
+			if (damage > 0){
+				defender.gameRoundData.damagedThisTurn = true
+			}
 		}
 
 		if (result.damageDealt > 0 || result.damageDealt < 0){

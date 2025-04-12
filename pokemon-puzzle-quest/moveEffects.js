@@ -113,11 +113,16 @@ const pokemonMoveEffects = {
 				damageOptions.toTrainer = toTrainer
 			}
 
-			if (effect.additivePower !== undefined) {
-				let additivePower = params.additivePower ?? 0
+			if ("additivePower" in effect) {
+				let additivePower = params.additivePower
 				damageOptions.additionalPower = damageOptions.additionalPower ?? 0
 				damageOptions.additionalPower += additivePower
 			}
+			if ("damageMult" in effect){
+				damageOptions.damageMult = damageOptions.damageMult ?? 1
+				damageOptions.damageMult *= effect.damageMult
+			}
+
 			let result = game.dealDamage(damageOptions)
 			moveUseObj.info[effectIndex] = result.damageDealt
 			resolve()
@@ -734,6 +739,17 @@ const pokemonMoveEffects = {
 		targetDefault: "user",
 		execute: (resolve, effect, params, game, options) => {
 			let result = options.target.turnsActive
+			resolve(result)
+		}
+	},
+	"get-pokemon-data": {
+		update: false,
+		hasTarget: true,
+		targetType: "pokemon",
+		targetDefault: "user",
+		execute: (resolve, effect, params, game, options) => {
+			let key = effect.key
+			let result = options.target.gameRoundData[key]
 			resolve(result)
 		}
 	},

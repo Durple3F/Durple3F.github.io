@@ -664,13 +664,40 @@ const levelData = [
 			},
 		],
 		effects: [
-			// { type: "fight", trainer: 0 },
-			// { type: "jump-if-lost", jumpTo: Infinity },
-			// { type: "change-music", music: "SM Trainer Battle" },
+			{ type: "fight", trainer: 0 },
+			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "dialogue", source: "route-2-3-dialogue" },
+			{ type: "change-music", music: "SM Trainer Battle" },
+			{ type: "fight", trainer: 1 },
+			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "dialogue", source: "route-2-3-dialogue-won" },
+		]
+	},
+	//2-4: 
+	{
+		id: "Route 2-4",
+		category: "Route 2",
+		name: "Route 2-4",
+		music: "SM Wild Pokemon Battle",
+		icon: "4",
+		trainers: [
+			{
+				isWild: true,
+				targetPokemon: 4,
+				canPickDuplicates: true,
+				possiblePokemon: [
+					{ id: "Spearow", levelMin: 8, levelMax: 10, weight: 4 },
+				]
+			},
+		],
+		effects: [
+			{ type: "fight", trainer: 0 },
+			{ type: "jump-if-lost", jumpTo: Infinity },
 			// { type: "dialogue", source: "route-2-3-dialogue" },
+			// { type: "change-music", music: "SM Trainer Battle" },
 			// { type: "fight", trainer: 1 },
 			// { type: "jump-if-lost", jumpTo: Infinity },
-			{ type: "dialogue", source: "route-2-3-dialogue-won" },
+			// { type: "dialogue", source: "route-2-3-dialogue-won" },
 		]
 	},
 ]

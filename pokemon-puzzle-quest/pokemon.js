@@ -105,6 +105,7 @@ class Pokemon{
 			}
 		}
 
+		this.gameRoundData = {}
 		this.statusEffects = []
 
 		//You can only have 4 moves active at once
@@ -519,6 +520,7 @@ class Pokemon{
 		this.turnsActive = 0
 		this.turnsParticipated = 0
 		this.moveUsage.forEach(usage => usage.recharge = 0)
+		this.gameRoundData = {}
 
 		this.resetEnergyMastery()
 	}

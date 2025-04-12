@@ -1,4 +1,4 @@
-const versionNumber = "v0.12.3"
+const versionNumber = "v0.12.4"
 let lang = "en"
 let playerName
 
