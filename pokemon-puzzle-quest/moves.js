@@ -116,9 +116,9 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			purple: 12,
-			green: 4,
-			yellow: 4
+			// purple: 12,
+			// green: 4,
+			// yellow: 4
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Bite.mp3"
@@ -127,7 +127,10 @@ const pokemonMoveData = {
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
 			{ type: "load-value", value: 1 },
-			{ type: "choose-tiles", count: -1, target: "user" },
+			{ type: "load-value", value: 4 },
+			{ type: "load-value", value: 2 },
+			{ type: "load-value", value: 2 },
+			{ type: "choose-tiles", count: -4, max: -3, maxWidth: -2, maxHeight: -1, target: "user", text: "choose" },
 			{ type: "load-value", value: 2 },
 			{ type: "load-value", value: 2 },
 			{ type: "expand-tile-selection", selection: -3, width: -2, height: -1 },
@@ -172,7 +175,7 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			// yellow: 6
+			yellow: 6
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Charge.mp3"
@@ -190,6 +193,7 @@ const pokemonMoveData = {
 				name: "charge-charged-up",
 				type: "power-alteration",
 				stacks: false,
+				volatile: true,
 				lostOnSwap: true,
 				lostOnBatonPass: true,
 				numberOfApplications: 1,
@@ -359,6 +363,7 @@ const pokemonMoveData = {
 				name: "defense-curl-curled-up",
 				type: "power-alteration",
 				stacks: false,
+				volatile: true,
 				lostOnSwap: true,
 				lostOnBatonPass: true,
 				appliesTo: {
@@ -453,6 +458,7 @@ const pokemonMoveData = {
 				name: "echoed-voice-cost-reduction",
 				type: "cost-alteration",
 				stacks: false,
+				volatile: true,
 				appliesTo: {
 					name: "Echoed Voice"
 				},
@@ -525,6 +531,7 @@ const pokemonMoveData = {
 				name: "fake-out-cost-reduction",
 				type: "cost-alteration",
 				stacks: false,
+				volatile: true,
 				lostOnSwap: true,
 				appliesTo: {
 					name: "Fake Out"
@@ -538,6 +545,7 @@ const pokemonMoveData = {
 				name: "fake-out-turns-out",
 				type: "hidden",
 				stacks: true,
+				volatile: true,
 				lostOnSwap: true
 			} },
 		]
@@ -1464,8 +1472,8 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			green: 5,
-			yellow: 3
+			// green: 5,
+			// yellow: 3
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Vice Grip.mp3"
@@ -1480,7 +1488,7 @@ const pokemonMoveData = {
 			{ type: "choose-tiles", count: -1, target: "user" },
 			{
 				type: "apply-status-to-tiles", selection: "group", which: -1,
-				status: { name: "Locked", type: "debuff", duration: 1 }
+				status: { name: "Locked", type: "debuff", duration: 10 }
 			}
 		],
 	},

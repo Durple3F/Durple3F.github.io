@@ -11,6 +11,8 @@
 
 	"ask-to-rename-pokemon": "What would you like to name your %c%?",
 	"error-cant-remove-last-pokemon": "You can't put your only Pokémon into the PC.",
+	"error-cant-delete-box-isnt-empty": "You can't delete a non-empty box because, like, I don't know where to put those poor homeless Pokémon.",
+	"error-cant-delete-no-boxes-left": "This is your only box left. Please make a new one first.",
 	"error-no-usable-pokemon": "All your Pokémon are currently fainted.",
 	"select-number-tiles-plural": "Select %c% tiles",
 	"select-number-tiles-single": "Select a tile",
@@ -646,8 +648,9 @@
 		},
 		"Bite": {
 			"name": "Bite",
-			"description": "Deals damage. Then, the user picks a tile. A 2x2 area of tiles centered on that tile are each removed.",
-			"shortDescription": "Deals some damage and removes tiles"
+			"description": "Deals damage. Then, the user chooses up to a 2x2 area of tiles. A 2x2 area around those tiles are each removed.",
+			"shortDescription": "Deals some damage and removes tiles",
+			"choose": "Choose up to 4 tiles in a 2x2 square."
 		},
 		"Bug Bite": {
 			"name": "Bug Bite",
@@ -893,7 +896,7 @@
 		},
 		"Vise Grip": {
 			"name": "Vise Grip",
-			"description": "Deals damage. Then, if the target is still active, the user chooses a tile. That tile becomes Locked for 3 turns. A tile with Locked can't be swapped normally.",
+			"description": "Deals damage. Then, if the target is still active, the user chooses a tile. That tile becomes Locked for 10 turns. Other trainers can't swap Locked tiles.",
 			"shortDescription": "Damages and locks a tile"
 		},
 		"Water Gun": {
@@ -994,6 +997,7 @@
 		"toggle-exp-share": "Exp gained in fights is shared between all active Pokémon?",
 		"toggle-hard-mode": "Hard mode (Rival chooses the more effective Pokémon)",
 
+		"rename-save": "Rename Save",
 		"delete-save": "DELETE SAVE",
 		"delete-save-confirm": "Really delete save data, super for sure?",
 		"delete-save-failure": "Failed to delete save data.",

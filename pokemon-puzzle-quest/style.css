@@ -100,13 +100,13 @@ body {
 	--type-fairy: #ee70ee;
 	--type-electric: #fabf00;
 	--type-dragon: #5160e1;
-	--type-dark: #50403d;
+	--type-dark: #86548b;
 	--type-bug: #91a110;
 
 	--won-color: gold;
 	--dialogue-font-size: min(5vh, 3vw);
 	--large-button-font-size: calc(var(--dialogue-font-size) * 0.7);
-	--active-pokemon-box-size: max(4em, 10vh);
+	--active-pokemon-box-size: min(5vw, 10vh);
 	--ui-primary-bg: rgb(75, 117, 232);
 }
 
@@ -1187,7 +1187,7 @@ body {
 	font-family: DP_Pro, Arial;
 	display: flex;
 	flex-direction: column;
-	justify-content: space-evenly;
+	justify-content: center;
 	align-items: center;
 }
 #pc > #pc-header {
@@ -1195,11 +1195,11 @@ body {
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
-	height: 20%;
+	max-height: 20%;
 	width: 100%;
 }
 #pc > #pc-header > #pc-box-name {
-	font-size: max(3em, 5vh);
+	font-size: min(3em, 5vh);
 	height: 100%;
 	width: 60%;
 	display: flex;
@@ -1210,6 +1210,7 @@ body {
 	background-position: center;
 	background-repeat: no-repeat;
 	image-rendering: pixelated;
+	cursor: pointer;
 }
 #pc > #pc-header > .button {
 	font-size: 3em;
@@ -1221,12 +1222,14 @@ body {
 }
 #pc > #pc-header > #pc-prev-box-btn {
 	margin-right: 0.2em;
+	font-size: var(--dialogue-font-size);
 }
 #pc > #pc-header > #pc-next-box-btn {
 	margin-left: 0.2em;
+	font-size: var(--dialogue-font-size);
 }
 #pc > #pc-box {
-	height: 70%;
+	height: min(70%, 40vw);
 	width: 70%;
 	background-size: contain;
 	background-position: center;

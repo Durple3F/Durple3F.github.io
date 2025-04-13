@@ -149,39 +149,46 @@ class Pokemon{
 				case "confused": {
 					status = {
 						name: "confused",
+						volatile: true,
 						turns: Math.floor(Math.random() * 4) + 2
 					}
 				} break
 				case "poisoned": {
 					status = {
-						name: "poisoned"
+						name: "poisoned",
+						volatile: false
 					}
 				} break
 				case "paralyzed": {
 					status = {
-						name: "paralyzed"
+						name: "paralyzed",
+						volatile: false
 					}
 				} break
 				case "invulnerable": {
 					status = {
 						name: "invulnerable",
+						volatile: true,
 						turns: 1
 					}
 				} break
 				case "drowsy": {
 					status = {
-						name: "drowsy"
+						name: "drowsy",
+						volatile: true
 					}
 				} break
 				case "asleep": {
 					status = {
 						name: "asleep",
+						volatile: false,
 						turns: Math.floor(Math.random() * 4) + 2
 					}
 				} break
 				case "fear-frozen": {
 					status = {
-						name: "fear-frozen"
+						name: "fear-frozen",
+						volatile: true
 					}
 				} break
 				default:
@@ -206,6 +213,10 @@ class Pokemon{
 			for (let key in oldStatus){
 				status[key] = oldStatus[key]
 			}
+		}
+
+		if (!("volatile" in status)){
+			status.volatile = true
 		}
 
 		if (!status.name || !status.type){
@@ -326,6 +337,14 @@ class Pokemon{
 			shouldRemove = this.statusEffects.some(status => {
 				return status.name === name
 			})
+		}
+	}
+	removeVolatileStatuses(){
+		for (let statusEffect of this.statusEffects){
+			if (statusEffect.volatile){
+				this.removeStatus(statusEffect)
+				continue
+			}
 		}
 	}
 

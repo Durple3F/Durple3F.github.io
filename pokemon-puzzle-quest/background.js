@@ -226,7 +226,7 @@ class Background{
 		clearInterval(this.interval)
 		this.interval = setInterval(this.tick.bind(this), this.frameRate)
 	}
-	stopClicks(){
+	stopTicks(){
 		clearInterval(this.interval)
 	}
 

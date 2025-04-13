@@ -326,9 +326,12 @@ function getPlayerPokemon(saveId){
 function loadPlayerPokemon(dataList){
 	return new Promise(resolve => {
 		let pokemonMinimumCaughtTotal = 0
+		let pokemonMinimumShinyCaughtTotal = 0
 		let pokemonMinimumCaught = {}
+		let pokemonMinimumShinyCaught = {}
 		for (let pokemonId in pokemonData){
 			pokemonMinimumCaught[pokemonId] = 0
+			pokemonMinimumShinyCaught[pokemonId] = 0
 		}
 
 		dataList.forEach(obj => {
@@ -338,8 +341,13 @@ function loadPlayerPokemon(dataList){
 			if (obj.pokemonId in pokemonData){
 				pokemonMinimumCaught[obj.pokemonId]++
 				pokemonMinimumCaughtTotal++
-				caughtPokemon.push(pokemon)
 
+				if (obj.isShiny){
+					pokemonMinimumShinyCaught[obj.pokemonId]++
+					pokemonMinimumShinyCaughtTotal++
+				}
+
+				caughtPokemon.push(pokemon)
 				if (obj.activeSlot !== -1){
 					playerActivePokemon[obj.activeSlot] = pokemon
 				}
@@ -352,14 +360,23 @@ function loadPlayerPokemon(dataList){
 		for (let pokemonId in pokemonMinimumCaught){
 			let stats = pokemonStats[pokemonId]
 			let minimum = pokemonMinimumCaught[pokemonId]
-			if (stats.caught < minimum){
-				stats.caught = minimum
+			if (stats["caught"] < minimum){
+				stats["caught"] = minimum
+			}
+			let minimumShiny = pokemonMinimumShinyCaught[pokemonId]
+			if (stats["caught-shiny"] < minimumShiny){
+				stats["caught-shiny"] = minimumShiny
 			}
 		}
 		let totalCaught = playerSaveInfo["total-pokemon-caught"]
 		if (totalCaught < pokemonMinimumCaughtTotal){
 			console.log("Changed it")
 			playerSaveInfo["total-pokemon-caught"] = pokemonMinimumCaughtTotal
+		}
+		let totalShinyCaught = playerSaveInfo["total-shiny-pokemon-caught"]
+		if (totalShinyCaught < pokemonMinimumShinyCaughtTotal){
+			console.log("Changed it")
+			playerSaveInfo["total-shiny-pokemon-caught"] = pokemonMinimumShinyCaughtTotal
 		}
 
 		//If this leaves empty slots in the player's party, remove them.
@@ -427,10 +444,6 @@ function makeNewSaveFile(){
 	let promise = Promise.resolve()
 	let chosenName
 	promise = promise.then(() => askToNameSave())
-	.then(name => {
-		chosenName = name
-		playerName = name || undefined
-	})
 	.then(() => new Promise(resolve => {
 		const transaction = db.transaction(["save-file"], "readwrite")
 		const saveFileStore = transaction.objectStore("save-file")
@@ -482,11 +495,17 @@ function askToNameSave(){
 	})
 
 	modal.modal("show")
+
+	promise = promise.then(name => {
+		playerName = name || null
+	})
+
 	return promise
 }
 function newPlayerSaveData(){
 	let data = {}
 	data["total-pokemon-caught"] = 0
+	data["total-shiny-pokemon-caught"] = 0
 	data["pokemon-caught-stats"] = {}
 	data["unlocked-pokedex"] = false
 	data["seen-dialogue"] = []
@@ -505,11 +524,13 @@ function normalizeSave(saveInfo){
 		pokemonStats[pokemonId] = stats
 		stats["caught"] = oldValue["caught"] ?? 0
 		stats["seen"] = oldValue["seen"] ?? 0
+		stats["caught-shiny"] = oldValue["caught-shiny"] ?? 0
+		stats["seen-shiny"] = oldValue["seen-shiny"] ?? 0
 	}
 
 	let starter = saveInfo["chosen-starter"]
-	if (starter && pokemonStats[starter].caught === 0){
-		pokemonStats[starter].caught++
+	if (starter && pokemonStats[starter]["caught"] === 0){
+		pokemonStats[starter]["caught"]++
 	}
 }
 function logPokemonAs(reason, pokemon){
@@ -522,6 +543,9 @@ function logPokemonAs(reason, pokemon){
 	}
 }
 
+function getNextBoxName(pcBoxData){
+	return `Box ${pcBoxData.length + 1}`
+}
 function makeNewBox(saveId, name){
 	let promise = new Promise(resolve => {
 		let uuid = window.crypto.randomUUID()
@@ -533,6 +557,7 @@ function makeNewBox(saveId, name){
 			owner: saveId,
 			theme: "forest_frlg"
 		}
+		normalizeBoxObj(box)
 		const request = boxStore.put(box)
 		request.onsuccess = event => {
 			resolve(uuid)
@@ -587,8 +612,9 @@ function getPlayerBoxes(saveId){
 		const request = saveIndex.getAll([saveId])
 		
 		request.onsuccess = event => {
-			let result = event.target.result
-			resolve(result)
+			let boxObjList = event.target.result
+			boxObjList.forEach(boxObj => normalizeBoxObj(boxObj))
+			resolve(boxObjList)
 		}
 	})
 	return promise
@@ -607,6 +633,98 @@ function getPokemonFromBox(boxId){
 	})
 	return promise
 }
+function normalizeBoxObj(boxObj){
+	boxObj.useSlots = boxObj.useSlots ?? true
+	boxObj.slotsX = boxObj.slotsX ?? 10
+	boxObj.slotsY = boxObj.slotsY ?? 10
+	boxObj.minX = boxObj.minX ?? 0.05
+	boxObj.maxX = boxObj.maxX ?? 0.95
+	boxObj.minY = boxObj.minY ?? 0.05
+	boxObj.maxY = boxObj.maxY ?? 0.95
+}
+function deletePCBox(uuid){
+	let promise = new Promise(resolve => {
+		const transaction = db.transaction(["boxes"], "readwrite")
+		const boxStore = transaction.objectStore("boxes")
+		const index = boxStore.index("uuid")
+		const cursor = index.openCursor()
+		
+		cursor.onsuccess = event => {
+			const cur = event.target.result
+			if (cur){
+				if (cur.value.uuid === uuid){
+					console.log("Deleted")
+					boxStore.delete(cur.primaryKey)
+					resolve(true)
+				}
+				cur.continue()
+			} else {
+				resolve(false)
+			}
+		}
+	})
+	return promise
+}
+
+function putPokemonInBox(boxObj, pokemon){
+	let promises = []
+	let boxId = boxObj.uuid
+	if (boxObj.useSlots){
+		let findPokemonPromise = getPokemonFromBox(boxId)
+		//Once we get the data regarding which pokemon are
+		//already in the last box, figure out which slot is open next.
+		findPokemonPromise.then(pokemonList => {
+			let otherPokemon = pokemonList.filter(p => p !== pokemon)
+			let slotNumberList = otherPokemon.map(p => {
+				return determinePCBoxSlotNumber(boxObj, p.pcBoxX, p.pcBoxY)
+			})
+			let chosenSlotNumbers = null
+			for (let i = 0; i < boxObj.slotsY; i++){
+				for (let j = 0; j < boxObj.slotsX; j++){
+					let testNumbers = [j, i]
+					let alreadyTaken = slotNumberList.some(slots => {
+						return slots.every((slotNumber, index) => slotNumber === testNumbers[index])
+					})
+					if (!alreadyTaken){
+						chosenSlotNumbers = testNumbers
+						break
+					}
+				}
+				if (chosenSlotNumbers){
+					break
+				}
+			}
+
+			//If we're able to fit them somewhere
+			if (chosenSlotNumbers){
+				let coords = determinePCBoxSlotCoordsFromSlotNumbers(boxObj, chosenSlotNumbers[0], chosenSlotNumbers[1])
+				pokemon.pcBox = boxId
+				pokemon.pcBoxX = coords[0]
+				pokemon.pcBoxY = coords[1]
+			}
+			//Otherwise just make a new box and try to stick 'em there
+			else {
+				let saveId = pokemon.owner
+				getPlayerBoxes(saveId)
+				.then(boxes => {
+					let newBoxName = getNextBoxName(boxes)
+					return makeNewBox(saveId, newBoxName)
+				})
+				.then(boxId => getPlayerBoxes(saveId))
+				.then(boxObjList => {
+					let lastBox = boxObjList[boxObjList.length - 1]
+					return putPokemonInBox(lastBox, pokemon)
+				})
+			}
+		})
+	} else {
+		pokemon.pcBox = boxId
+		pokemon.pcBoxX = Math.random()
+		pokemon.pcBoxY = Math.random()
+	}
+	return Promise.all(promises)
+}
+
 
 function findLevelInDatabase(level, saveId){
 	let promise = new Promise(resolve => {

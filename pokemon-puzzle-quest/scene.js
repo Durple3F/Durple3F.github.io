@@ -343,11 +343,18 @@ function startScene(name, options){
 		case "pc": {
 			fadeInGame()
 			let pcBoxData
-			getPlayerBoxes(playerSaveId)
-			.then(val => {
-				pcBoxData = val
-				loadBox(0)
-			})
+			let currentBox = null
+			let currentBoxIndex = -1
+			const resetBoxData = index => {
+				currentBox = null
+				currentBoxIndex = -1
+				getPlayerBoxes(playerSaveId)
+				.then(val => {
+					pcBoxData = val
+					loadBox(index)
+				})
+			}
+			resetBoxData(0)
 
 			let pcTag = $(`<div id='pc'></div>`)
 			gameTag.append(pcTag)
@@ -359,25 +366,34 @@ function startScene(name, options){
 			pcHeader.append(prevBoxBtn)
 			let boxName = $(`<div id='pc-box-name'></div>`)
 			pcHeader.append(boxName)
+
+			boxName.click(() => {
+				let oldIndex = currentBoxIndex
+				viewBoxInfo(currentBox)
+				.then(shouldReset => {
+					if (shouldReset){
+						let newIndex = oldIndex > 0 ? oldIndex - 1 : 0
+						resetBoxData(newIndex)
+					} else {
+						resetBoxData(oldIndex)
+					}
+				})
+			})
+
 			let nextBoxBtn = $(`<div id='pc-next-box-btn' class='button'><i class='bi bi-caret-right-fill'></i></div>`)
 			pcHeader.append(nextBoxBtn)
 
 			let pcBox = $(`<div id='pc-box'></div>`)
 			pcTag.append(pcBox)
 
-			const pcTick = () => {
-
-			}
-			let pcInterval = setInterval(pcTick, 10)
-
-			let currentBox = null
 			let currentBoxPokemon = []
 			const loadBox = index => {
 				let box = pcBoxData[index]
+				currentBox = box
+				currentBoxIndex = index
 				displayBox(box)
 			}
 			const displayBox = box => {
-				currentBox = box
 				let theme = boxThemeData[box.theme]
 				if (!theme) return
 				boxName.css({
@@ -392,7 +408,12 @@ function startScene(name, options){
 				getPokemonFromBox(box.uuid)
 				.then(pokemonList => {
 					pcBox.html("")
+					//Remove all of the old pokemon
 					currentBoxPokemon.splice(0, currentBoxPokemon.length)
+
+					pokemonList.sort((a, b) => {
+						return a.pcBoxY - b.pcBoxY
+					})
 					pokemonList.forEach(p => {
 						let pokemon = new Pokemon(p.name, p.pokemonId, p)
 						currentBoxPokemon.push(pokemon)
@@ -482,7 +503,8 @@ function startScene(name, options){
 					loadBox(index + 1)
 				} else {
 					//Make a new box
-					makeNewBox(playerSaveId, `Box ${pcBoxData.length + 1}`)
+					let newName = getNextBoxName(pcBoxData)
+					makeNewBox(playerSaveId, newName)
 					.then(() => getPlayerBoxes(playerSaveId))
 					.then(val => {
 						pcBoxData = val
@@ -620,6 +642,7 @@ function startScene(name, options){
 				})
 
 				//Were we hovering over an active pokemon slot?
+				let promises = []
 				let hovered = document.elementsFromPoint(mouse.x, mouse.y)
 				let hoveredActiveBox = [...hovered].find(elem => $(elem).hasClass("active-pokemon-box"))
 				// let hoveredBox = [...hovered].find(elem => elem === pcBox[0])
@@ -639,14 +662,47 @@ function startScene(name, options){
 					top -= realBoxSize.offsetY
 					left = left / realBoxSize.width
 					top = top / realBoxSize.height
-					let tooLeft = left < 0.05
-					let tooTop = top < 0.05
-					let tooRight = left > 0.95
-					let tooBottom = top > 0.95
-					if (tooLeft) left = 0.05
-					if (tooTop) top = 0.05
-					if (tooRight) left = 0.95
-					if (tooBottom) top = 0.95
+					let minBoxX = currentBox.minX
+					let maxBoxX = currentBox.maxX
+					let minBoxY = currentBox.minY
+					let maxBoxY = currentBox.maxY
+					let shouldUseSlots = currentBox.useSlots
+
+					if (shouldUseSlots){
+						let slotNumbers = determinePCBoxSlotNumber(currentBox, left, top)
+						let otherPokemonInSameSlot = currentBoxPokemon.filter(boxPokemon => {
+							if (heldPokemon === boxPokemon) return false
+							let otherSlotNumbers = determinePCBoxSlotNumber(currentBox, boxPokemon.pcBoxX, boxPokemon.pcBoxY)
+							let matches = otherSlotNumbers.every((number, index) => number === slotNumbers[index])
+							return matches
+						})
+						let coords = determinePCBoxSlotCoords(currentBox, left, top)
+						if (otherPokemonInSameSlot.length){
+							let oldLeft = heldPokemon.pcBoxX
+							let oldTop = heldPokemon.pcBoxY
+							left = coords[0]
+							top = coords[1]
+							console.log(oldLeft, oldTop)
+							otherPokemonInSameSlot.forEach(otherPokemon => {
+								otherPokemon.pcBoxX = oldLeft
+								otherPokemon.pcBoxY = oldTop
+								promises.push(savePokemon(otherPokemon))
+							})
+							console.log(otherPokemonInSameSlot)
+						} else {
+							left = coords[0]
+							top = coords[1]
+						}
+					} else {
+						let tooLeft = left < minBoxX
+						let tooTop = top < minBoxY
+						let tooRight = left > maxBoxX
+						let tooBottom = top > maxBoxY
+						if (tooLeft) left = minBoxX
+						if (tooTop) top = minBoxY
+						if (tooRight) left = maxBoxX
+						if (tooBottom) top = maxBoxY
+					}
 
 					//Don't let the player remove their last pokemon
 					let onlyOnePokemon = playerActivePokemon.filter(p => p).length === 1
@@ -675,7 +731,10 @@ function startScene(name, options){
 
 					currentBoxPokemon.push(heldPokemon)
 				}
-				savePokemon(heldPokemon)
+				
+				promises.push(savePokemon(heldPokemon))
+
+				Promise.all(promises)
 				.then(() => loadBox(pcBoxData.indexOf(currentBox)))
 				heldPokemonTag = null
 				heldPokemon = null
@@ -712,6 +771,11 @@ function startScene(name, options){
 			}
 
 			updateBoxes()
+
+			const pcTick = () => {
+
+			}
+			let pcInterval = setInterval(pcTick, 10)
 
 			let confirmText = getLocaleString("confirm", lang)
 			let confirmButton = $(`<button class='btn big-btn btn-primary m-3'>${confirmText}</button>`)
@@ -784,15 +848,15 @@ function startScene(name, options){
 				let pokemonNameTag = $(`<div class='pokemon-name'></div>`)
 				textSection.append(pokemonNameTag)
 				let name = getLocaleString("name", lang, ["pokemon", pokemonId])
-				if (stats.seen === 0 && stats.caught === 0){
+				if (stats["seen"] === 0 && stats["caught"] === 0){
 					name = name.replaceAll(/./g, "?")
 				}
 				pokemonNameTag.html(name)
 
-				if (stats.seen === 0 && stats.caught === 0){
+				if (stats["seen"] === 0 && stats["caught"] === 0){
 					section.addClass("not-seen")
 				}
-				if (stats.caught === 0){
+				if (stats["caught"] === 0){
 					section.addClass("not-caught")
 				} else {
 					section.addClass("caught")
@@ -864,31 +928,39 @@ function catchPokemon(pokemon){
 	let resolvePromise
 	let promise = new Promise(resolve => resolvePromise = resolve)
 
+	let promises = []
 	pokemon.owner = playerSaveId
 	caughtPokemon.push(pokemon)
 	if (playerActivePokemon.length < 6){
 		playerActivePokemon.push(pokemon)
 	} else {
 		let lastBox = playerPCBoxes[playerPCBoxes.length - 1]
-		pokemon.pcBox = lastBox.uuid
-		pokemon.pcBoxX = Math.random()
-		pokemon.pcBoxY = Math.random()
+		promises.push(putPokemonInBox(lastBox, pokemon))
 	}
 
 	//Later, asking to rename pokemon whenever you catch one should be optional.
 	//TODO
-	askToRenamePokemon(pokemon)
+	promises.push(askToRenamePokemon(pokemon))
+
+	Promise.all(promises)
 	.then(() => savePokemon(pokemon))
 	.then(() => {
-		// let total = getPlayerSaveInfo("total-pokemon-caught", 0, Number)
-		// setPlayerSaveInfo("total-pokemon-caught", total + 1)
 		let total = playerSaveInfo["total-pokemon-caught"] || 0
 		playerSaveInfo["total-pokemon-caught"] = total + 1
 		return logPokemonAs("caught", pokemon)
 	})
 	.then(() => {
+		if (pokemon.isShiny){
+			let total = playerSaveInfo["total-shiny-pokemon-caught"] || 0
+			playerSaveInfo["total-shiny-pokemon-caught"] = total + 1
+			return logPokemonAs("caught-shiny", pokemon)
+		}
+		return Promise.resolve()
+	})
+	.then(() => {
 		resolvePromise()
 	})
+	
 
 	return promise
 }
@@ -982,7 +1054,9 @@ function beginLevel(levelID){
 			level.status = "won"
 			promise = promise.then(() => saveLevelStatus(level, "won"))
 		}
-		changeScene("route", {name: "Route 1"})
+		
+		let routeName = level.category
+		changeScene("route", {name: routeName})
 		console.log(promise)
 		return promise
 	})
@@ -1348,12 +1422,18 @@ function viewPokemonInfo(pokemon, options={}){
 					<img src='${image}' class='pokemon-image'>
 				</div>
 			</div>
-			<div class='move-section'>
-			</div>
+			<div class='move-section'></div>
 		</div>
 	`)
 	body.append(content)
 	let pokemonSection = content.children(".pokemon-section")
+
+	let typeSection = $(`<div class='type-section d-flex justify-content-center'></div>`)
+	pokemonSection.append(typeSection)
+	pokemon.types.forEach(type => {
+		typeSection.append(`<span class='m-1'>${type}</span>`)
+	})
+	
 	let statsSection = $(`<div class='stats-section'>`)
 	pokemonSection.append(statsSection)
 	let statsHTML = getStatsHTML(pokemon, {
@@ -1455,14 +1535,151 @@ function viewPokemonInfo(pokemon, options={}){
 	})
 	modal.on("hidden.bs.modal", () => {
 		moveSection.children(".move").popover("hide")
-		// if (playerActivePokemon.owner === playerSaveId){
-		// 	savePokemon(pokemon)
-		// 	.then(() => resolvePromise())
-		// } else {
-		// 	resolvePromise()
-		// }
 		resolvePromise()
 	})
+	return promise
+}
+
+function viewBoxInfo(box){
+	let resolvePromise
+	let promise = new Promise(resolve => resolvePromise = resolve)
+	let boxId = box.uuid
+	let saveId = box.owner
+	console.log(box)
+
+	let modal = $("#modal")
+	clearModal(modal)
+	modal.modal("show")
+	// modal.addClass("wide")
+	let header = modal.find(".modal-header")
+	header.addClass("justify-content-center")
+	
+	let nameTag = $(`<span>${box.name}</span>`)
+	let title = header.find(".modal-title")
+	title.append(nameTag).addClass("display-6")
+
+	//Renaming
+	if (true){
+		title.addClass("w-100").addClass("d-flex")
+		.addClass("justify-content-center").addClass("align-items-center")
+		let renameInput = $(`<input class='form-control m-0 w-50 text-center'>`)
+		title.append(renameInput)
+		renameInput.css({
+			"font-size": "calc(1.375rem + 1.5vw - 0.3em + 0.5px)"
+		})
+		renameInput.hide()
+		let renameBtn = $(`<button class='btn btn-sm h-50 ms-1 btn-primary'>
+			<i class="bi bi-pencil-fill"></i>
+		</button>`)
+		title.append(renameBtn)
+
+		const beginRename = () => {
+			// renameBtn.fadeOut(100)
+			nameTag.fadeOut(100, () => renameInput.fadeIn(100))
+			renameInput.val(box.name)
+		}
+
+		const changeName = () => {
+			let val = renameInput.val()
+			box.name = val
+			nameTag.text(val)
+			renameInput.fadeOut(100, () => nameTag.fadeIn(100))
+		}
+		renameInput.change(changeName)
+
+		let renaming = false
+		const toggleRename = () => {
+			if (!renaming){
+				beginRename()
+				renaming = true
+			} else {
+				changeName()
+				renaming = false
+			}
+		}
+		renameBtn.click(toggleRename)
+	}
+
+	let body = modal.find(".modal-body")
+
+	let toggleSection = $("<div class='d-flex justify-content-start'>")
+	body.append(toggleSection)
+	let toggleUseGridSection = $("<div class='d-flex justify-content-start'>")
+	toggleSection.append(toggleUseGridSection)
+	let toggleUseGrid = $("<input type='checkbox' id='pcBoxToggleUseGrid'>")
+	toggleUseGridSection.append(toggleUseGrid)
+	toggleUseGrid.prop("checked", box.useSlots)
+	toggleUseGridSection.append("<label for='pcBoxToggleUseGrid'>Snap to Grid?</label>")
+	toggleUseGrid.on("change", () => {
+		box.useSlots = toggleUseGrid.prop("checked")
+	})
+
+	let footer = modal.find(".modal-footer")
+	footer.addClass("d-flex").addClass("justify-content-between")
+
+	//You can only click the delete button if the box is empty and you have another box.
+	let deleteConditionsMet = {
+		empty: false,
+		notLastBox: false
+	}
+	let deleteBtn = $(`<button class='btn btn-danger' disabled>Delete</button>`)
+	footer.append(deleteBtn)
+	const decideDeleteActiveness = () => {
+		let good = Object.keys(deleteConditionsMet).every(key => deleteConditionsMet[key])
+		deleteBtn.css("pointer-events", "auto")
+
+		if (good){
+			deleteBtn.off("click").on("click", deleteBox)
+			.popover("dispose").prop("disabled", false)
+			.css("cursor", "pointer")
+		} else {
+			let message
+			if (!deleteConditionsMet.empty){
+				message = getLocaleString("error-cant-delete-box-isnt-empty", lang)
+			} else if (!deleteConditionsMet.notLastBox){
+				message = getLocaleString("error-cant-delete-no-boxes-left", lang)
+			}
+
+			deleteBtn.popover("dispose").css("cursor", "default")
+			if (message){
+				deleteBtn.popover({
+					content: message,
+					trigger: "hover",
+					placement: "left"
+				})
+			}
+		}
+	}
+	const deleteBox = () => {
+		deletePCBox(boxId)
+		.then(() => {
+			deleted = true
+			modal.modal("hide")
+		})
+	}
+	getPokemonFromBox(boxId)
+	.then(pokemonDataList => {
+		deleteConditionsMet.empty = pokemonDataList.length === 0
+		decideDeleteActiveness()
+	})
+	getPlayerBoxes(saveId)
+	.then(boxList => {
+		deleteConditionsMet.notLastBox = boxList.length >= 2
+		decideDeleteActiveness()
+	})
+
+	let btn = $(`<button class='btn btn-primary'>Done</button>`)
+	footer.append(btn)
+	btn.click(() => {
+		modal.modal("hide")
+	})
+	let deleted = false
+	modal.on("hidden.bs.modal", () => {
+		let save = !deleted ? saveBoxObj(box) : Promise.resolve()
+		let shouldReset = deleted
+		save.then(() => resolvePromise(shouldReset))
+	})
+
 	return promise
 }
 
@@ -1471,6 +1688,14 @@ function getStatsHTML(pokemon, options={}){
 	let pure = options.pure ?? false
 	//Stats
 	let stats = $(`<div class='stats'></div>`)
+	if (!abbreviate && !pure){
+		let statTag = $("<div class='stat'></div>")
+		statTag.append(`<span class='stat-name'>Level</span>`)
+		let statVal = $(`<span class='stat-val'>${pokemon.level}</span>`)
+		statTag.append(statVal)
+		stats.append(statTag)
+	}
+	
 	for (let stat in pokemon.data.stats){
 		let statName = abbreviate ? getStatAbbr(stat) : getStatName(stat)
 		let val, effectiveVal
@@ -1493,7 +1718,11 @@ function getStatsHTML(pokemon, options={}){
 			.append("<i class='bi bi-arrow-down'></i>")
 		} 
 
-		statVal.append(effectiveVal.toFixed(0))
+		if (stat === "hp" && !abbreviate && !pure){
+			statVal.append(`${pokemon.hp} / ${effectiveVal.toFixed(0)}`)
+		} else {
+			statVal.append(effectiveVal.toFixed(0))
+		}
 		statTag.append(statVal)
 		stats.append(statTag)
 	}
@@ -1586,4 +1815,40 @@ function getMoveHTML(move, useLongDescription=false){
 	}
 	tag.append(moveCostTag)
 	return tag
+}
+
+function determinePCBoxSlotNumber(boxObj, x, y){
+	let minBoxX = boxObj.minX
+	let maxBoxX = boxObj.maxX
+	let minBoxY = boxObj.minY
+	let maxBoxY = boxObj.maxY
+	let slotsX = boxObj.slotsX
+	let slotsY = boxObj.slotsY
+	let remainingX = maxBoxX - minBoxX
+	let remainingY = maxBoxY - minBoxY
+	let slotSpaceX = remainingX / slotsX
+	let slotSpaceY = remainingY / slotsY
+	let playerSlotChosenX = Math.round((x - minBoxX) / slotSpaceX)
+	let playerSlotChosenY = Math.round((y - minBoxY) / slotSpaceY)
+	return [playerSlotChosenX, playerSlotChosenY]
+}
+function determinePCBoxSlotCoords(boxObj, x, y){
+	let slotNumbers = determinePCBoxSlotNumber(boxObj, x, y)
+	let coords = determinePCBoxSlotCoordsFromSlotNumbers(boxObj, slotNumbers[0], slotNumbers[1])
+	return coords
+}
+function determinePCBoxSlotCoordsFromSlotNumbers(boxObj, slotNumberX, slotNumberY){
+	let minBoxX = boxObj.minX
+	let maxBoxX = boxObj.maxX
+	let minBoxY = boxObj.minY
+	let maxBoxY = boxObj.maxY
+	let slotsX = boxObj.slotsX
+	let slotsY = boxObj.slotsY
+	let remainingX = maxBoxX - minBoxX
+	let remainingY = maxBoxY - minBoxY
+	let slotSpaceX = remainingX / slotsX
+	let slotSpaceY = remainingY / slotsY
+	let left = minBoxX + slotNumberX * slotSpaceX
+	let top = minBoxY + slotNumberY * slotSpaceY
+	return [left, top]
 }

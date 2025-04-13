@@ -1445,41 +1445,12 @@ const pokemonData = {
 			purple: 3
 		},
 		learnset: [
-			{
-				name: "Pound",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "Growl",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "Water Gun",
-				unlock: {
-					type: "level",
-					amount: 3
-				}
-			},
-			{
-				name: "Disarming Voice",
-				unlock: {
-					type: "level",
-					amount: 6
-				}
-			},
-			{
-				name: "Aqua Jet",
-				unlock: {
-					type: "level",
-					amount: 9
-				}
-			}
+			{ name: "Pound", unlock: { type: "level", amount: 1 } },
+			{ name: "Growl", unlock: { type: "level", amount: 1 } },
+			{ name: "Water Gun", unlock: { type: "level", amount: 3 } },
+			{ name: "Disarming Voice", unlock: { type: "level", amount: 6 } },
+			{ name: "Aqua Jet", unlock: { type: "level", amount: 9 } },
+			{ name: "Bite", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {

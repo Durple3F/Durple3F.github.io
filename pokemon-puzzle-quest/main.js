@@ -1,4 +1,4 @@
-const versionNumber = "v0.12.4"
+const versionNumber = "v0.12.5"
 let lang = "en"
 let playerName
 
@@ -199,6 +199,9 @@ function loadSprites(list){
 	sprites.batches.push(batch)
 	let promise = Promise.all(batch)
 	return promise
+}
+function unloadSprite(name){
+	delete sprites.images[name]
 }
 
 const sounds = {}
@@ -894,11 +897,57 @@ function openSettings(){
 	}
 
 	//SAVE FILE SETTINGS
-	let deleteSaveSection = $("<div class='d-flex justify-content-between w-50 mx-auto'></div>")
-	body.append(deleteSaveSection)
+	let saveButtonSection = $("<div class='d-flex justify-content-around w-75 mx-auto'></div>")
+	body.append(saveButtonSection)
+
+	let renameText = getLocaleString("rename-save", lang, ["settings"])
+	let renameSaveButton = $(`<button class='btn btn-primary'>${renameText}</button>`)
+	saveButtonSection.append(renameSaveButton)
+	renameSaveButton.click(() => {
+		modal.modal("hide")
+		delay(400)
+		.then(() => askToNameSave())
+		.then(() => openSettings())
+	})
+
+	let getTransferText = getLocaleString("get-transfer-string", lang, ["settings"])
+	let getTransferSuccessText = getLocaleString("get-transfer-string-success", lang, ["settings"])
+	let getTransferButton = $(`<button class='btn btn-secondary'>${getTransferText}</button>`)
+	saveButtonSection.append(getTransferButton)
+	getTransferButton.click(() => {
+		getSaveTransferString(playerSaveId)
+		.then(transferString => {
+			let elem = document.createElement("input")
+			elem.value = transferString
+			elem.select()
+			elem.setSelectionRange(0, transferString.length)
+			navigator.clipboard.writeText(elem.value)
+			getTransferButton.text(getTransferSuccessText)
+			delay(1000).then(() => {
+				getTransferButton.text(getTransferText)
+			})
+		})
+	})
+
+	let importText = getLocaleString("import-save-file", lang, ["settings"])
+	let importPromptText = getLocaleString("import-save-file-prompt", lang, ["settings"])
+	let importSuccessText = getLocaleString("import-save-file-success", lang, ["settings"])
+	let importButton = $(`<button class='btn btn-secondary'>${importText}</button>`)
+	saveButtonSection.append(importButton)
+	importButton.click(() => {
+		let transferString = prompt(importPromptText)
+		if (!transferString) return
+		transferSaveFromString(transferString)
+		.then(() => {
+			alert(importSuccessText)
+			modal.modal("hide")
+			loadResources()
+		})
+	})
+
 	let deleteText = getLocaleString("delete-save", lang, ["settings"])
 	let deleteSaveButton = $(`<button class='btn btn-danger'>${deleteText}</button>`)
-	deleteSaveSection.append(deleteSaveButton)
+	saveButtonSection.append(deleteSaveButton)
 	deleteSaveButton.click(() => {
 		let text = getLocaleString("delete-save-confirm", lang, ["settings"])
 		let sure = confirm(text)
@@ -919,45 +968,10 @@ function openSettings(){
 			})
 		}
 	})
-
-	let getTransferText = getLocaleString("get-transfer-string", lang, ["settings"])
-	let getTransferSuccessText = getLocaleString("get-transfer-string-success", lang, ["settings"])
-	let getTransferButton = $(`<button class='btn btn-secondary'>${getTransferText}</button>`)
-	deleteSaveSection.append(getTransferButton)
-	getTransferButton.click(() => {
-		getSaveTransferString(playerSaveId)
-		.then(transferString => {
-			let elem = document.createElement("input")
-			elem.value = transferString
-			elem.select()
-			elem.setSelectionRange(0, transferString.length)
-			navigator.clipboard.writeText(elem.value)
-			getTransferButton.text(getTransferSuccessText)
-			delay(1000).then(() => {
-				getTransferButton.text(getTransferText)
-			})
-		})
-	})
 	if (!playerSaveId){
 		deleteSaveButton.attr("disabled", true)
 		getTransferButton.attr("disabled", true)
 	}
-
-	let importText = getLocaleString("import-save-file", lang, ["settings"])
-	let importPromptText = getLocaleString("import-save-file-prompt", lang, ["settings"])
-	let importSuccessText = getLocaleString("import-save-file-success", lang, ["settings"])
-	let importButton = $(`<button class='btn btn-secondary'>${importText}</button>`)
-	deleteSaveSection.append(importButton)
-	importButton.click(() => {
-		let transferString = prompt(importPromptText)
-		if (!transferString) return
-		transferSaveFromString(transferString)
-		.then(() => {
-			alert(importSuccessText)
-			modal.modal("hide")
-			loadResources()
-		})
-	})
 
 	//BOTTOM BUTTONS
 
@@ -999,7 +1013,10 @@ function openChangelog(){
 	$.ajax({
 		url: "changelog.txt",
 		success: function(data){
-			body.html(data.replaceAll("\n", "<br>"))
+			let content = $("<div>")
+			content.css("user-select", "text")
+			content.html(data.replaceAll("\n", "<br>"))
+			body.append(content)
 		},
 		error: function(){
 			body.html("Error getting changelog :/")
@@ -1061,11 +1078,11 @@ function continueGame(){
 
 function handleVisibilityChange(){
 	if (document.hidden){
-		if (gameRound) gameRound.stopTicks()
 		background.stopTicks()
+		if (gameRound) gameRound.stopTicks()
 	} else {
-		if (gameRound) gameRound.startTicks()
 		background.startTicks()
+		if (gameRound) gameRound.startTicks()
 	}
 }
 

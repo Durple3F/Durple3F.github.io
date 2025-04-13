@@ -133,7 +133,7 @@ class Round{
 				unloadSound(soundName)
 			}
 			for (let imageName of imagesToUnload){
-				console.log("unload", imageName)
+				unloadSprite(imageName)
 			}
 		})
 	}
@@ -244,6 +244,11 @@ class Round{
 					}
 				}
 			}
+			for (let trainer of this.trainers){
+				for (let pokemon of trainer.pokemon){
+					pokemon.removeVolatileStatuses()
+				}
+			}
 
 			//Remove activeness from both trainer's tags.
 			for (let trainer of this.trainers){
@@ -262,9 +267,14 @@ class Round{
 					return this.showEndScreen("You win")
 				})
 			} else if (this.result === "lose"){
-				this.promise = this.promise.then(() => {
-					return this.showEndScreen("You lose")
-				})
+				let toGive = this.calculateEXPGained()
+				let skipEndScreen = Object.keys(toGive).every(key => toGive[key] === 0)
+
+				if (!skipEndScreen){
+					this.promise = this.promise.then(() => {
+						return this.showEndScreen("You lose")
+					})
+				}
 			}
 			
 			//Once the round is over, save the player's info.
@@ -275,8 +285,8 @@ class Round{
 			.then(() => {
 				this.removeAllStatusEffects()
 				this.savePlayerPokemon()
-				resolve(result)
-				this.resolveRound(result)
+				resolve(this.result)
+				this.resolveRound(this.result)
 			})
 		})
 		return promise
@@ -376,15 +386,20 @@ class Round{
 		//Maybe this swap ends in no changes. If so, swap 'em back.
 		this.applyLocationChanges(map)
 		let matches = this.board.getAllMatches()
+		
+		//This part only gets triggered if the player failed to make a match 
 		if (matches.length === 0 && !this.currentlyReversingSwap){
 			this.currentlyReversingSwap = true
 			promise = promise.then(() => {
 				return this.animateSwitchLocations(tile1, tile2).promise
 			})
 		}
+		//This gets triggered once a failed match is finished reversing
+		//because reversing a swap will of course also create 0 matches
 		else if (this.currentlyReversingSwap){
 			this.currentlyReversingSwap = false
 		}
+		//This is the real one that triggers only when matches are made
 		else {
 			let turn = this.turn
 			promise = promise.then(() => this.timeStep())
@@ -1223,7 +1238,7 @@ class Round{
 		let promise = Promise.resolve()
 		if (selectType === "tiles"){
 			let selected = this.selectedTiles
-			let count = this.currentlySelecting.count
+			let count = this.currentlySelecting.min
 			let waitTime = 500
 			for (let i = selected.length; i < count; i++){
 				promise = promise.then(() => delay(waitTime))
@@ -1242,8 +1257,8 @@ class Round{
 		}
 	}
 	computerMakeSwap(){
-		let allSwaps = this.board.getAllPotentialMoves()
 		let trainer = this.trainers[this.activePlayerIndex]
+		let allSwaps = this.determineAvailableSwaps(trainer)
 		let pokemon = trainer.activePokemon
 
 		//Remove all swaps that intend to swap a tile with Locked
@@ -1518,8 +1533,9 @@ class Round{
 		return moves
 	}
 	canUseStruggle(trainerIndex){
-		let allSwaps = this.board.getAllPotentialMoves()
-		return allSwaps.length === 0
+		let trainer = this.trainers[trainerIndex]
+		let allSwaps = this.determineAvailableSwaps(trainer)
+		return allSwaps.length === 0 || this.struggleTest
 	}
 
 	attemptToUseMove(event){
@@ -2078,13 +2094,13 @@ class Round{
 		} else if (selectType === "tiles"){
 			if (!config.confirmMoveSelection){
 				let valid = this.selectionIsValid()
-				let maxed = this.selectedTiles.length === this.currentlySelecting.count
+				let maxed = this.selectedTiles.length === this.currentlySelecting.max
 				if (valid && maxed){
 					this.submitSelection()
 				}
 			}
+			this.updateConfirmButton()
 		}
-		this.updateConfirmButton()
 	}
 	deselectTile(tile){
 		if (tile === this.selectedTile){
@@ -2093,6 +2109,7 @@ class Round{
 		let index = this.selectedTiles.indexOf(tile)
 		this.selectedTiles.splice(index, 1)
 		this.tileSelectionType = null
+		this.updateConfirmButton()
 	}
 	deselectAllTiles(){
 		while (this.selectedTiles.length){
@@ -2100,8 +2117,29 @@ class Round{
 		}
 	}
 	selectionIsValid(){
+		let selected = this.selectedTiles
 		let selecting = this.currentlySelecting
-		return this.selectedTiles.length === selecting.count
+		if (selecting.min){
+			let enough = selected.length >= selecting.min && selected.length <= selecting.max
+			if (!enough) return false
+		}
+		let bounds = this.board.getBoundsOfSelection(selected)
+		let width = (bounds[1] - bounds[0] + 1) || 0
+		let height = (bounds[3] - bounds[2] + 1) || 0
+		if (selecting.minWidth){
+			if (width < selecting.minWidth) return false
+		}
+		if (selecting.maxWidth){
+			if (width > selecting.maxWidth) return false
+		}
+		if (selecting.minHeight){
+			if (height < selecting.minHeight) return false
+		}
+		if (selecting.maxHeight){
+			if (height > selecting.maxHeight) return false
+		}
+		
+		return true
 	}
 	resetCurrentlySelecting(){
 		this.currentlySelecting = {
@@ -2238,13 +2276,21 @@ class Round{
 		for (let tile of this.board.tilesOnScreen()){
 			tile.spriteHighlightTarget = 0
 		}
-		let allMoves = this.board.getAllPotentialMoves()
-		for (let move of allMoves){
-			let tile1 = move[0]
-			let tile2 = move[1]
+		let trainer = this.trainers[0]
+		let allSwaps = this.determineAvailableSwaps(trainer)
+		for (let swap of allSwaps){
+			let tile1 = swap[0]
+			let tile2 = swap[1]
 			tile1.spriteHighlightTarget = 1
 			tile2.spriteHighlightTarget = 1
 		}
+	}
+	determineAvailableSwaps(trainer){
+		let swaps = this.board.getAllPotentialMoves()
+		swaps = swaps.filter(swap => {
+			return this.board.couldSwap(trainer, swap[0], swap[1])
+		})
+		return swaps
 	}
 
 	createAnnouncement(type, text, duration=1500){
@@ -2314,7 +2360,8 @@ class Round{
 		if (this.currentlySelecting.type === "swap"){
 			if (this.selectedTile && this.tileSelectionType === "hold"){
 				if (!chosenTile) return
-				let canSwap = this.board.couldSwap(this.selectedTile, chosenTile)
+				let trainer = this.trainers[0]
+				let canSwap = this.board.couldSwap(trainer, this.selectedTile, chosenTile)
 				if (chosenTile !== this.selectedTile && canSwap){
 					this.animateSwitchLocations(chosenTile, this.selectedTile)
 					this.deselectTile(this.selectedTile)
@@ -2331,7 +2378,8 @@ class Round{
 
 		if (selectType === "swap"){
 			if (this.selectedTile){
-				let canSwap = this.board.couldSwap(this.selectedTile, chosenTile)
+				let trainer = this.trainers[0]
+				let canSwap = this.board.couldSwap(trainer, this.selectedTile, chosenTile)
 				if (chosenTile === this.selectedTile){
 					this.deselectTile(this.selectedTile)
 				} else if (canSwap) {
@@ -2349,7 +2397,7 @@ class Round{
 			if (alreadySelected){
 				this.deselectTile(chosenTile)
 			} else {
-				if (this.selectedTiles.length < this.currentlySelecting.count){
+				if (this.selectedTiles.length < this.currentlySelecting.max){
 					this.selectTile(chosenTile, 0)
 				} else {
 					let firstTile = this.selectedTiles[0]
@@ -2890,6 +2938,7 @@ class Round{
 
 		//Transfer half of the old pokemon's energy into the new pokemon.
 		//Remove any turnsActive from the old pokemon.
+		//Remove volatile statuses too.
 		if (oldActive !== pokemon){
 			oldActive.turnsActive = 0
 			let energy = getEmptyEnergy()
@@ -2898,6 +2947,7 @@ class Round{
 				oldActive.energy[color] = 0
 			}
 			this.giveEnergy(energy, trainer, pokemon)
+			oldActive.removeVolatileStatuses()
 		}
 
 		//Remove all iniative from the new pokemon
@@ -2939,6 +2989,11 @@ class Round{
 			name += " the " + pokemonName
 		}
 		html.append(`<div class='name'>${name} (Lv. ${pokemon.level})</div>`)
+
+		let types = pokemon.getEffectiveTypes()
+		let typesTag = $("<div>")
+		html.append(typesTag)
+		typesTag.append(`<span>${types.join(" / ")}</span>`)
 
 		let stats = getStatsHTML(pokemon)
 		html.append(stats)
@@ -3043,6 +3098,11 @@ class Round{
 			let pokemon = trainer.activePokemon
 			let pokemonIndex = trainer.pokemon.indexOf(pokemon)
 			let availableMoves = this.getAvailableMoves(i)
+
+			let struggle = pokemonMoveData["Struggle"]
+			if (!availableMoves.includes(struggle)){
+				availableMoves.splice(0, 0, struggle)
+			}
 
 			let presentTags = tags.moves
 			let movesToConsider = []
@@ -3903,7 +3963,8 @@ class Board{
 	getAllPotentialMoves(){
 		let alreadyConsidered = []
 		let allMoves = []
-		for (let tile of this.contents){
+		let contents = this.tilesOnScreen()
+		for (let tile of contents){
 			let moves = []
 			let dirs = []
 			for (let dir of UNITVECTORS){
@@ -3926,13 +3987,16 @@ class Board{
 		return allMoves
 	}
 
-	couldSwap(tile1, tile2){
+	couldSwap(trainer, tile1, tile2){
 		let goodDistance = distance(tile1.x, tile1.y, tile2.x, tile2.y) === 1
-		let isLocked = (
-			tile1.hasStatus("Locked") ||
-			tile2.hasStatus("Locked")
-		)
-		return goodDistance && !isLocked
+		let locked = [tile1, tile2].some(tile => {
+			let lockedStatuses = tile.getStatuses("Locked")
+			let bad = lockedStatuses.some(statusEffect => {
+				return statusEffect.sourceTrainer !== trainer
+			})
+			return bad
+		})
+		return goodDistance && !locked
 	}
 
 	getShuffleLocationMap(tilesToShuffle){
@@ -4038,6 +4102,11 @@ class Tile{
 			return status.name === name
 		})
 	}
+	getStatuses(name){
+		return this.statusEffects.filter(status => {
+			return status.name === name
+		})
+	}
 	removeStatus(statusEffect){
 		let index = this.statusEffects.indexOf(statusEffect)
 		if (index !== -1){
@@ -4111,6 +4180,9 @@ function beginRound(trainerData){
 		}
 		let pokemon = new Pokemon(options.name, options.id, options)
 		logPokemonAs("seen", pokemon)
+		if (pokemon.isShiny){
+			logPokemonAs("seen-shiny", pokemon)
+		}
 		return pokemon
 	})
 

@@ -49,11 +49,33 @@ const pokemonMoveEffects = {
 			let promise = options.promise
 			let target = options.target
 			let count = params.count ?? 1
+			let max = params.max ?? count
+			let minWidth = params.minWidth ?? null
+			let maxWidth = params.maxWidth ?? null
+			let minHeight = params.minHeight ?? null
+			let maxHeight = params.maxHeight ?? null
 			game.currentlySelecting = {
 				player: target,
 				type: "tiles",
-				count: count
+				min: count,
+				max: max,
+				minWidth: minWidth,
+				maxWidth: maxWidth,
+				minHeight: minHeight,
+				maxHeight: maxHeight,
 			}
+			let textName = effect.text
+			if (textName){
+				let move = moveUseObj.move
+				let message = getLocaleString(textName, lang, ["moves", move.name])
+				game.currentlySelecting.message = message
+			} else {
+				let plural = count !== 1
+				let localeId = plural ? "select-number-tiles-plural" : "select-number-tiles-single"
+				let text = getLocaleString(localeId, lang)
+				text = applyReplacements(text, [count])
+			}
+			
 			game.currentlySelecting.callback = () => {
 				moveUseObj.info[effectIndex] = game.selectedTiles.map(t => t)
 			}
@@ -65,10 +87,7 @@ const pokemonMoveEffects = {
 					game.computerMakeSelection()
 				})
 			} else {
-				let plural = count !== 1
-				let localeId = plural ? "select-number-tiles-plural" : "select-number-tiles-single"
-				let text = getLocaleString(localeId, lang)
-				text = text.replaceAll("%c", count)
+				let text = game.currentlySelecting.message
 				gameRound.selectionWindow.find(".message").text(text)
 				game.createAnnouncement("general", text)
 				game.selectionBegin()
@@ -181,13 +200,6 @@ const pokemonMoveEffects = {
 			resolve()
 		}
 	},
-	"apply-debuff": {
-		execute: (resolve, effect, params, game, options) => {
-			let debuff = effect.debuff
-			options.target.statusEffects.push(debuff)
-			resolve()
-		}
-	},
 	"get-stat": {
 		update: false,
 		execute: (resolve, effect, params, game, options) => {
@@ -218,6 +230,18 @@ const pokemonMoveEffects = {
 			let pokemon = moveUseObj.pokemon
 			let move = moveUseObj.move
 			target.addStatusEffect(statusEffect, trainer, pokemon, move)
+			resolve()
+		}
+	},
+	"apply-debuff": {
+		execute: (resolve, effect, params, game, options) => {
+			let debuff = effect.debuff
+
+			if (!("volatile" in debuff)){
+				debuff.volatile = true
+			}
+
+			options.target.statusEffects.push(debuff)
 			resolve()
 		}
 	},
@@ -926,7 +950,6 @@ const pokemonMoveEffects = {
 			let moveUseObj = options.moveUse
 			let effectIndex = options.effectIndex
 			let test = params.test ?? moveUseObj.info[effectIndex - 1]
-			console.log(test)
 			if (test) {
 				moveUseObj.nextEffectIndex = options.index
 			}

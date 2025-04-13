@@ -1,5 +1,29 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
+4/13 (18.2k lines):
+	- Moves that let you select tiles can now allow you to select more than one.
+
+4/12 (18.2k lines):
+	- Turns out I was spelling one function name wrong somewhere so background performance was terrible.
+	- Changed the color of Dark moves.
+	- Made it easier to say which status effects are removed at the end of a battle.
+	- Fixed Vise Grip's duration.
+	- You can move your own locked tiles now.
+	- Oops, Charge had no cost.
+	- The game now skips the end screen if none of your pokemon gained XP in the battle.
+	- You can now select text in this changelog.
+	- You can now rename your save.
+	- You can now see the current hp/level/types of pokemon in the pc.
+	- You can now see a pokemon's types during battle.
+	- The game now tracks how many of each pokemon you've seen/caught in shiny variations.
+	- When you move pokemon in a PC, they now can snap to a grid.
+	- When you catch a pokemon, if your last box is set to use that grid, it's placed in the next available slot.
+	- Boxes that use the grid allow you to quickly swap two pokemon around.
+	- You can now delete boxes.
+	- You can now rename boxes.
+	- Fixed Struggle not appearing when it should.
+	- When you finish a level, it returns you to that level's section of the level select screen.
+
 4/11 (17.7k lines):
 	- Added Drowzee, Charjabug, Gastly, Spearow
 	- Added Hypnosis, Charge, Confuse Ray, Mean Look, Assurance
