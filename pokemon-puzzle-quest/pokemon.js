@@ -494,7 +494,7 @@ class Pokemon{
 		let energy = this.energy
 		let maxEnergy = this.maxEnergy
 		//If the energy has a decimal component, no it doesn't.
-		amount = Math.floor(amount)
+		amount = Math.round(amount)
 		if (energy[color] + amount < 0){
 			result = energy[color] * -1
 			energy[color] = 0

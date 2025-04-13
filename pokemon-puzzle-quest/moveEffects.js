@@ -107,6 +107,21 @@ const pokemonMoveEffects = {
 				.then(() => resolve())
 		}
 	},
+	"shift-tiles": {
+		execute: (resolve, effect, params, game, options) => {
+			let selection = params.selection ?? []
+			let xOffset = params.xOffset ?? 0
+			let yOffset = params.yOffset ?? 0
+			let locationMap = new Map()
+			for (let tile of selection){
+				let x = (tile.x + xOffset) % game.board.width
+				let y = (tile.y + yOffset) % game.board.height
+				let location = [x, y]
+				locationMap.set(tile, location)
+			}
+			game.animateMoveTiles(locationMap, 250)
+		}
+	},
 	"end-turn": {
 		execute: (resolve, effect, params, game, options) => {
 			game.currentlyEndingTurn = true
@@ -404,6 +419,23 @@ const pokemonMoveEffects = {
 			resolve()
 		}
 	},
+	"select-row": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let moveUseObj = options.moveUse
+			let effectIndex = options.effectIndex
+			let y = params.y
+			let contents = game.board.tilesOnScreen()
+			let chosenTiles = []
+			for (let tile of contents) {
+				if (tile.y === y) {
+					chosenTiles.push(tile)
+				}
+			}
+			moveUseObj.info[effectIndex] = chosenTiles
+			resolve()
+		}
+	},
 	"select-column": {
 		update: false,
 		execute: (resolve, effect, params, game, options) => {
@@ -501,6 +533,22 @@ const pokemonMoveEffects = {
 			}
 			game.applyGravity()
 				.then(() => resolve())
+		}
+	},
+	"get-tile-x": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let tile = params.tile
+			let result = tile.x
+			resolve(result)
+		}
+	},
+	"get-tile-y": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let tile = params.tile
+			let result = tile.y
+			resolve(result)
 		}
 	},
 	"get-board-height": {

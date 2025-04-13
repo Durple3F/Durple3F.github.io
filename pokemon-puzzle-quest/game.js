@@ -76,6 +76,10 @@ class Round{
 		
 		$("#flee-btn").off("click").on("click", () => this.fleeBattle())
 
+		//Reset aliasing
+		let setting = config["antialiasing"] ? "smooth" : "pixelated"
+		$("#screen").css("image-rendering", setting)
+
 		this.loadResources()
 		let p = this.roundStartAnimation()
 		p.then(() => this.begin())
@@ -508,9 +512,22 @@ class Round{
 	giveEnergy(energy, trainer, pokemon){
 		pokemon = pokemon || trainer.activePokemon
 
+		let toAdd = addEnergies(getEmptyEnergy(), energy)
+		//If the pokemon has any effects that alter energy gain, apply those here.
+		let energyStatuses = pokemon.getStatusesOfType("energy-gain-alteration")
+		if (energyStatuses.length){
+			for (let statusEffect of energyStatuses){
+				let modification = statusEffect.modification
+				for (let type in toAdd){
+					let add = toAdd[type]
+					toAdd[type] = applyModification(add, modification)
+				}
+			}
+		}
+
 		//Add little floaty bits for the energy they just gained/lost
-		for (let type in energy){
-			let amt = energy[type]
+		for (let type in toAdd){
+			let amt = toAdd[type]
 			if (amt){
 				let bar = trainer.tags.energyBars[type][0]
 				let cssColor = getCSSEnergyColor(type)
@@ -528,7 +545,7 @@ class Round{
 			}
 		}
 
-		return pokemon.gainEnergy(energy)
+		return pokemon.gainEnergy(toAdd)
 	}
 
 	beginMove(){
@@ -1654,12 +1671,7 @@ class Round{
 			let applies = this.doesThisApplyToMove(move, statusEffect.appliesTo, effectiveType)
 			if (applies){
 				let modification = statusEffect.modification
-				let operation = modification.operation ?? "add"
-				let change = modification.change
-				switch (operation){
-					case "add": power += change; break
-					case "multiply": power *= change; break
-				}
+				power = applyModification(power, modification)
 			}
 		}
 		return power
@@ -2212,23 +2224,26 @@ class Round{
 
 		return animations.promise
 	}
-	performShuffle(locationMap, duration){
+	animateMoveTile(tile, spot, duration=250){
 		let now = Date.now()
+		let animation = getEmptyAnimationBatch()
+		animation.info.round = this
+
+		let a = animTemplates["displace"](tile, spot[0], spot[1], now, duration)
+		animation.batch.push(a)
+
+		this.addAnimation(animation)
+		animation.promise = animation.promise.then(() => {
+			this.board.changeLocation(tile, spot[0], spot[1])
+		})
+		return animation.promise
+	}
+	animateMoveTiles(locationMap, duration){
 		let promises = []
 		let newLocationMap = locationMap
 		newLocationMap.forEach((spot, tile) => {
-			let animation = getEmptyAnimationBatch()
-			animation.info.round = this
-			promises.push(animation.promise)
-
-			let delay = animation.batch.length * 50
-			let a = animTemplates["displace"](tile, spot[0], spot[1], now, duration)
-			animation.batch.push(a)
-
-			animation.callback = () => {
-				this.board.changeLocation(tile, spot[0], spot[1])
-			}
-			this.addAnimation(animation)
+			let p = this.animateMoveTile(tile, spot, duration)
+			promises.push(p)
 		})
 		let promise = Promise.all(promises)
 		.then(() => this.timeStep())
@@ -2237,11 +2252,11 @@ class Round{
 	}
 	shuffleBoard(duration=500){
 		let newLocationMap = this.board.getShuffleLocationMap()
-		return this.performShuffle(newLocationMap, duration)
+		return this.animateMoveTiles(newLocationMap, duration)
 	}
 	shuffleTiles(tiles, duration=250){
 		let newLocationMap = this.board.getShuffleLocationMap(tiles)
-		return this.performShuffle(newLocationMap, duration)
+		return this.animateMoveTiles(newLocationMap, duration)
 	}
 
 	animateSwitchLocations(tile1, tile2, options){

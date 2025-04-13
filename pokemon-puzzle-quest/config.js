@@ -5,6 +5,8 @@ const config = {
 	showFPS: "dev",
 	skipSeenDialogue: false,
 	expShare: true,
+	hardMode: false,
+	antialiasing: true,
 	textSpeed: 40,
 
 	volumes: {

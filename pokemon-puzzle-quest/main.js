@@ -1,4 +1,4 @@
-const versionNumber = "v0.12.5"
+const versionNumber = "v0.12.6"
 let lang = "en"
 let playerName
 
@@ -874,6 +874,14 @@ function openSettings(){
 		{
 			text: "toggle-hard-mode",
 			key: "hardMode"
+		},
+		{
+			text: "toggle-pixelated-screen",
+			key: "antialiasing",
+			onclick: val => {
+				let setting = val ? "smooth" : "pixelated"
+				$("#screen").css("image-rendering", setting)
+			}
 		}
 	]
 	for (let toggle of toggleInfo){
@@ -893,6 +901,9 @@ function openSettings(){
 		checkbox.change(() => {
 			let checked = checkbox[0].checked
 			config[key] = checked
+			if (toggle.onclick){
+				toggle.onclick(checked)
+			}
 		})
 	}
 

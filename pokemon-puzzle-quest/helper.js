@@ -330,3 +330,14 @@ function fixLearnsets() {
 		}
 	}
 }
+
+function applyModification(val, modification){
+	let operation = modification.operation
+	let change = modification.change
+	switch (operation){
+		case "add": return val + change
+		case "multiply": return val * change
+	}
+	console.warn("You never handled", operation)
+	return val
+}

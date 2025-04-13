@@ -560,6 +560,9 @@
 		"Meowth-Alola": {
 			"name": "Meowth"
 		},
+		"Growlithe": {
+			"name": "Growlithe"
+		},
 		"Abra": {
 			"name": "Abra"
 		},
@@ -707,6 +710,11 @@
 			"description": "Deals damage. There's a 50% chance for this move to inflict Burn on 3 random tiles for 5 turns. At the start of each turn, the opponent takes damage for each Burned tile on the board.",
 			"shortDescription": "Damages and might burn tiles"
 		},
+		"Fairy Wing": {
+			"name": "Fairy Wind",
+			"description": "Deals damage. Then, shifts a row of the user's choice 3 tiles to the right.",
+			"shortDescription": "Shifts a row to the right"
+		},
 		"Fake Out": {
 			"name": "Fake Out",
 			"description": "Deals damage, then ends the turn. As long as the user has been the active Pokémon for more than two turns, this move's purple energy cost increases by 7.",
@@ -736,6 +744,11 @@
 			"name": "Harden",
 			"description": "Gives the user the Invulnerable status for one turn. It can't take damage for as long as it has that status. Then ends the turn.",
 			"shortDescription": "Temporary invulnerability"
+		},
+		"Howl": {
+			"name": "Howl",
+			"description": "This Pokémon's energy gain is increased by 50% until their next turn.",
+			"shortDescription": "Temporarily doubles energy"
 		},
 		"Hypnosis": {
 			"name": "Hypnosis",
@@ -996,6 +1009,7 @@
 		"toggle-skip-seen-dialogue": "Skip seen dialogue?",
 		"toggle-exp-share": "Exp gained in fights is shared between all active Pokémon?",
 		"toggle-hard-mode": "Hard mode (Rival chooses the more effective Pokémon)",
+		"toggle-pixelated-screen": "Antialiasing",
 
 		"rename-save": "Rename Save",
 		"delete-save": "DELETE SAVE",

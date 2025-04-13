@@ -478,6 +478,48 @@ const pokemonData = {
 			},
 		]
 	},
+	"Growlithe": {
+		name: "Growlithe",
+		number: "58",
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0058Growlithe.png",
+			"largeShiny": "src/img/shiny-pokemon/058-Growlithe.png",
+			"home": "src/img/tiny-pokemon/Growlithe.png"
+		},
+		sounds: {
+			cry: "src/audio/cries/growlithe.mp3"
+		},
+		types: ["Fire"],
+		tags: [],
+		stats: {
+			hp: 55,
+			attack: 70,
+			defense: 45,
+			specialAttack: 70,
+			specialDefense: 50,
+			speed: 60
+		},
+		expYield: 70,
+		evYield: {
+			hp: 0,
+			attack: 1,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			red: 3,
+			yellow: 3
+		},
+		learnset: [
+			{ name: "Ember", unlock: { type: "level", amount: 1 } },
+			{ name: "Leer", unlock: { type: "level", amount: 1 } },
+			{ name: "Howl", unlock: { type: "level", amount: 4 } },
+			{ name: "Bite", unlock: { type: "level", amount: 8 } },
+		]
+	},
 	"Abra": {
 		name: "Abra",
 		number: "63",
@@ -1450,7 +1492,6 @@ const pokemonData = {
 			{ name: "Water Gun", unlock: { type: "level", amount: 3 } },
 			{ name: "Disarming Voice", unlock: { type: "level", amount: 6 } },
 			{ name: "Aqua Jet", unlock: { type: "level", amount: 9 } },
-			{ name: "Bite", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {
@@ -1665,6 +1706,48 @@ const pokemonData = {
 			{ name: "Bug Bite", unlock: { type: "level", amount: 1 } },
 			{ name: "Charge", unlock: { type: "level", amount: 1 } }, //NOTE: Should be learned upon evolution.
 			{ name: "Bite", unlock: { type: "level", amount: 15 } },
+		]
+	},
+	"Cutiefly": {
+		name: "Cutiefly",
+		number: "742",
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0742Cutiefly.png",
+			"largeShiny": "src/img/shiny-pokemon/742-Cutiefly.png",
+			"home": "src/img/tiny-pokemon/Cutiefly.png"
+		},
+		sounds: {
+			cry: "src/audio/cries/cutiefly.mp3"
+		},
+		tags: [],
+		types: ["Bug", "Fairy"],
+		stats: {
+			hp: 40,
+			attack: 45,
+			defense: 40,
+			specialAttack: 55,
+			specialDefense: 40,
+			speed: 84
+		},
+		expYield: 61,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 1
+		},
+		energyMastery: {
+			yellow: 1,
+			green: 3,
+			blue: 1,
+			purple: 1
+		},
+		learnset: [
+			{ name: "Absorb", unlock: { type: "level", amount: 1 } },
+			{ name: "Fairy Wind", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Comfey": {

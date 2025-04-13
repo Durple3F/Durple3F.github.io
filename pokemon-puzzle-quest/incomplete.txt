@@ -5,6 +5,7 @@ Incomplete move lists:
   Pikachu (lv 8)
   Zubat (lv 5)
   Meowth-Alola (lv 8)
+  Growlithe (lv 8)
   Slowpoke (lv 9)
   Magnemite (lv 8)
   Grimer-Alola (lv 7)
@@ -31,6 +32,7 @@ Missing Evolutions:
   Zubat
   Meowth-Alola
   Abra
+  Growlithe
   Slowpoke
   Magnemite
   Grimer-Alola

@@ -1,7 +1,11 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-4/13 (18.2k lines):
+4/13 (18.3k lines):
 	- Moves that let you select tiles can now allow you to select more than one.
+	- Added a toggle for the antialiasing. Annoyingly, it looks better without it on my screen.
+	- Fixed the PC Box coordinates at weird sizes. Fencepost problem.
+	- Added Growlithe
+	- Added Howl
 
 4/12 (18.2k lines):
 	- Turns out I was spelling one function name wrong somewhere so background performance was terrible.

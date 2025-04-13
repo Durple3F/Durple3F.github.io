@@ -686,7 +686,9 @@ const levelData = [
 				targetPokemon: 4,
 				canPickDuplicates: true,
 				possiblePokemon: [
-					{ id: "Spearow", levelMin: 8, levelMax: 10, weight: 4 },
+					// { id: "Spearow", levelMin: 8, levelMax: 10, weight: 4 },
+					// { id: "Growlithe", levelMin: 8, levelMax: 10, weight: 4 },
+					{ id: "Cutiefly", levelMin: 8, levelMax: 10, weight: 4 },
 				]
 			},
 		],

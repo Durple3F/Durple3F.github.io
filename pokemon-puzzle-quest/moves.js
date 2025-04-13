@@ -30,12 +30,12 @@ const pokemonMoveData = {
 		category: "Physical",
 		strategy: "basic-damage",
 		pp: 10,
-		power: 60,
+		power: 40, //Originally 60
 		accuracy: 100,
 		rechargeTurns: 4,
 		energy: {
-			orange: 8,
-			yellow: 6
+			orange: 6,
+			yellow: 4
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Assurance.mp3"
@@ -116,9 +116,9 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			// purple: 12,
-			// green: 4,
-			// yellow: 4
+			purple: 12,
+			green: 4,
+			yellow: 4
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Bite.mp3"
@@ -498,6 +498,35 @@ const pokemonMoveData = {
 			}
 		],
 	},
+	"Fairy Wind": {
+		name: "Fairy Wind",
+		type: "Fairy",
+		category: "Special",
+		strategy: "basic-damage",
+		pp: 30,
+		power: 40,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			green: 4,
+			blue: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Fairy Wind.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "load-value", value: 1 },
+			{ type: "choose-tiles", count: -1, target: "user" },
+			{ type: "load-value", value: 0 },
+			{ type: "get-element-from-list", list: -2, index: -1 },
+			{ type: "get-tile-y", tile: -1 },
+			{ type: "select-row", y: -1 },
+			{ type: "load-value", value: 3 },
+			{ type: "load-value", value: 0 },
+			{ type: "shift-tiles", selection: -3, xOffset: -2, yOffset: -1 },
+		],
+	},
 	"Fake Out": {
 		name: "Fake Out",
 		type: "Normal",
@@ -658,7 +687,7 @@ const pokemonMoveData = {
 		strategy: "last-priority",
 		pp: 30,
 		power: null,
-		accuracy: 0,
+		accuracy: null,
 		rechargeTurns: 5,
 		energy: {},
 		sounds: {
@@ -668,6 +697,38 @@ const pokemonMoveData = {
 			{ type: "play-sound", name: "attack" },
 			{ type: "apply-status-effect", statusEffect: "invulnerable", target: "user" },
 			{ type: "end-turn" }
+		],
+	},
+	"Howl": {
+		name: "Howl",
+		type: "Normal",
+		category: "Status",
+		strategy: "buff-user",
+		pp: 40,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 3,
+		energy: {
+			blue: 5,
+			green: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Howl.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "howl-psyched-up",
+				type: "energy-gain-alteration",
+				stacks: false,
+				volatile: true,
+				turns: 1,
+				appliesTo: {},
+				modification: {
+					change: 1.5,
+					operation: "multiply"
+				}
+			} },
 		],
 	},
 	"Hypnosis": {
@@ -1472,8 +1533,8 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			// green: 5,
-			// yellow: 3
+			green: 5,
+			yellow: 3
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Vice Grip.mp3"

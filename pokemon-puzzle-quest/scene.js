@@ -252,7 +252,7 @@ function startScene(name, options){
 				levelList.forEach(level => {
 					let btn = getLevelButtonHtml(level)
 					btn.popover({
-						placement: "top",
+						placement: "bottom",
 						trigger: "focus",
 						html: true,
 						content: () => getPopover(level)
@@ -1828,6 +1828,8 @@ function determinePCBoxSlotNumber(boxObj, x, y){
 	let remainingY = maxBoxY - minBoxY
 	let slotSpaceX = remainingX / slotsX
 	let slotSpaceY = remainingY / slotsY
+	x -= (slotSpaceX * 0.5)
+	y -= (slotSpaceY * 0.5)
 	let playerSlotChosenX = Math.round((x - minBoxX) / slotSpaceX)
 	let playerSlotChosenY = Math.round((y - minBoxY) / slotSpaceY)
 	return [playerSlotChosenX, playerSlotChosenY]
@@ -1848,7 +1850,7 @@ function determinePCBoxSlotCoordsFromSlotNumbers(boxObj, slotNumberX, slotNumber
 	let remainingY = maxBoxY - minBoxY
 	let slotSpaceX = remainingX / slotsX
 	let slotSpaceY = remainingY / slotsY
-	let left = minBoxX + slotNumberX * slotSpaceX
-	let top = minBoxY + slotNumberY * slotSpaceY
+	let left = minBoxX + slotNumberX * slotSpaceX + (slotSpaceX * 0.5)
+	let top = minBoxY + slotNumberY * slotSpaceY + (slotSpaceY * 0.5)
 	return [left, top]
 }

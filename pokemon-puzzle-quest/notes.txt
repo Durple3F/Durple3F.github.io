@@ -19,7 +19,6 @@ TODO
 - Hau should ask at the beginning whether to pick the better or worse starter
 - Hau and Team Skull should get special battle themes
 - Give Curse a special cost depending on whether the user is Ghost type
-- Add a quality setting for having the pixelated screen
 - Add an animation when a shiny pokemon enters
 - Add a section in the pokedex where you can see how many you've caught/seen/etc
-- Make Bite allow you to choose 2 tiles to decide the full range of the bite
+- Pokedex entries
