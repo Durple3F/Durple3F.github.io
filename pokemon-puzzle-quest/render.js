@@ -84,7 +84,7 @@ function renderTile(tile, board, round, w, h, xOffset, yOffset, options){
 }
 
 function renderStatusEffects(tile, board, round, w, h, xOffset, yOffset){
-	let currentCount = 0
+	let circlesPlaced = 0
 	let diff = TWOPI * -0.125
 	let statusEffects = tile.statusEffects
 	let tileCenterX = tile.spriteCenterX
@@ -93,27 +93,52 @@ function renderStatusEffects(tile, board, round, w, h, xOffset, yOffset){
 	let tileHeight = tile.spriteHeight
 	for (let i = 0; i < statusEffects.length; i++){
 		let status = statusEffects[i]
-		let angle = (currentCount + 1) * diff
-		let statusCenterX = tileCenterX + tileWidth * Math.cos(angle) * 0.5
-		let statusCenterY = tileCenterY + tileHeight * Math.sin(angle) * 0.5
-		let statusWidth = tileWidth * 0.5
-		let statusHeight = tileHeight * 0.5
-		let statusX = statusCenterX - statusWidth * 0.5
-		let statusY = statusCenterY - statusHeight * 0.5
-		let circleWidth = statusWidth * 0.97
-		let circleHeight = statusHeight * 0.97
-		let circleX = statusCenterX - circleWidth * 0.5
-		let circleY = statusCenterY - circleHeight * 0.5
-		let circleType = `${status.color}-circle`
+		let data = tileStatusData[status.name]
+		let hasSpriteSheet = data.hasSpriteSheet
 
-		ctx.save()
-		ctx.filter = `opacity(${status.spriteOpacity})`
-		ctx.drawImage(sprites.images[circleType], circleX, circleY, circleWidth, circleHeight)
-		let sprite = sprites.images["status-" + status.name]
-		ctx.drawImage(sprite, statusX, statusY, statusWidth, statusHeight)
-		ctx.restore()
+		if (hasSpriteSheet){
+			let sheetData = data.spriteSheetData
+			let sheet = sprites.images["status-" + status.name]
+			let frames = sheetData.frames
+			let framesPerSprite = data.framesPerSprite
+			let frameIndex = Math.floor(status.frameIndex / framesPerSprite)
+			status.frameIndex += 1
+			status.frameIndex %= frames.length * framesPerSprite
+			let curFrame = frames[frameIndex].frame
+			let x = tile.spriteX
+			let y = tile.spriteY
+			let w = tile.spriteWidth
+			let h = tile.spriteHeight
 
-		currentCount++
+			ctx.save()
+			ctx.globalAlpha = status.spriteOpacity
+			ctx.drawImage(sheet, curFrame.x, curFrame.y, curFrame.w, curFrame.h, x, y, w, h)
+			ctx.restore()
+		}
+		else if (!hasSpriteSheet){
+			let angle = (circlesPlaced + 1) * diff
+			let statusCenterX = tileCenterX + tileWidth * Math.cos(angle) * 0.5
+			let statusCenterY = tileCenterY + tileHeight * Math.sin(angle) * 0.5
+			let statusWidth = tileWidth * 0.5
+			let statusHeight = tileHeight * 0.5
+			let statusX = statusCenterX - statusWidth * 0.5
+			let statusY = statusCenterY - statusHeight * 0.5
+			let circleWidth = statusWidth * 0.97
+			let circleHeight = statusHeight * 0.97
+			let circleX = statusCenterX - circleWidth * 0.5
+			let circleY = statusCenterY - circleHeight * 0.5
+			let circleType = `${status.color}-circle`
+
+			ctx.save()
+			ctx.globalAlpha = status.spriteOpacity
+			ctx.drawImage(sprites.images[circleType], circleX, circleY, circleWidth, circleHeight)
+			let sprite = sprites.images["status-" + status.name]
+			ctx.drawImage(sprite, statusX, statusY, statusWidth, statusHeight)
+			ctx.restore()
+
+			circlesPlaced++
+		}
+		
 	}
 }
 

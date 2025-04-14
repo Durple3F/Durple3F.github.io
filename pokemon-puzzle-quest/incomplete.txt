@@ -23,6 +23,7 @@ Incomplete move lists:
   Yungoos (lv 7)
   Grubbin (lv 15)
   Charjabug (lv 15)
+  Cutiefly (lv 6)
   Comfey (lv 0)
 
 Missing Evolutions:
@@ -49,6 +50,7 @@ Missing Evolutions:
   Pikipek
   Yungoos
   Charjabug
+  Cutiefly
 
 Missing Abilities:
   - All

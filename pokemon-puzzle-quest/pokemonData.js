@@ -190,7 +190,7 @@ const pokemonStatusData = {
 		color: "#ffcf00",
 		stacks: false,
 		class: "debuff",
-		name: "poisoned"
+		name: "paralyzed"
 	},
 	"invulnerable": {
 		image: "src/img/icons/shield.png",
@@ -254,7 +254,24 @@ const tileStatusData = {
 	},
 	"Cursed": {
 		url: "src/img/icons/curse.png"
+	},
+	"Stun Spore": {
+		stacks: false,
+		infectious: 0.1,
+		url: "src/img/spritesheets/stun spore.png",
+		hasSpriteSheet: true,
+		spriteSheetJsonUrl: "src/img/spritesheets/stun spore.json",
+		framesPerSprite: 5
 	}
+}
+for (let tileStatusName in tileStatusData){
+	let status = tileStatusData[tileStatusName]
+	status.name = status.name ?? tileStatusName
+	status.id = tileStatusName
+	status.stacks = status.stacks ?? true
+	status.infectious = status.infectious ?? 0
+	status.hasSpriteSheet = status.hasSpriteSheet ?? false
+	status.framesPerSprite = status.framesPerSprite ?? 1
 }
 
 const natures = [
@@ -394,16 +411,33 @@ function getEffectParams(effect, effectIndex, moveUseObj){
 
 function getAllStatusSprites(){
 	let arr = []
-	for (let name in tileStatusData){
-		let status = tileStatusData[name]
+	for (let id in tileStatusData){
+		let status = tileStatusData[id]
 		if (status.url){
 			arr.push({
-				name: "status-"+name,
+				name: "status-"+id,
 				url: status.url
 			})
 		}
 	}
 	return arr
+}
+function loadStatusSprite(statusData){
+	let promises = []
+	if (statusData.url){
+		let spriteName = "status-"+statusData.id
+		let p = loadSprite(spriteName, statusData.url)
+		promises.push(p)
+	}
+	if (statusData.hasSpriteSheet){
+		let p = download(statusData.spriteSheetJsonUrl, "json")
+		promises.push(p)
+		p.then(obj => {
+			statusData.spriteSheetData = obj
+		})
+	}
+
+	return Promise.all(promises)
 }
 
 function isPokemonUsable(pokemon){

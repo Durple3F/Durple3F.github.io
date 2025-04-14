@@ -1,11 +1,16 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-4/13 (18.3k lines):
+4/14 (18.6k lines):
+	- Status effects can now have an actual image overlaying the tile instead of just a tiny circle.
+	- Added Stun Spore, which needed that.
+
+4/13 (18.5k lines):
 	- Moves that let you select tiles can now allow you to select more than one.
 	- Added a toggle for the antialiasing. Annoyingly, it looks better without it on my screen.
 	- Fixed the PC Box coordinates at weird sizes. Fencepost problem.
-	- Added Growlithe
-	- Added Howl
+	- Added Growlithe, Cutiefly
+	- Added Howl, Fairy Wind
+	- Started work on making status effects for tiles that show up like, on the tile itself. Having them appear in little circles was always just the easiest option.
 
 4/12 (18.2k lines):
 	- Turns out I was spelling one function name wrong somewhere so background performance was terrible.

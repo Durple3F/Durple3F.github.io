@@ -1748,6 +1748,7 @@ const pokemonData = {
 		learnset: [
 			{ name: "Absorb", unlock: { type: "level", amount: 1 } },
 			{ name: "Fairy Wind", unlock: { type: "level", amount: 1 } },
+			{ name: "Stun Spore", unlock: { type: "level", amount: 6 } },
 		]
 	},
 	"Comfey": {

@@ -1245,6 +1245,32 @@ const pokemonMoveData = {
 			{ type: "damage", label: "tiny-damage" }
 		],
 	},
+	"Stun Spore": {
+		name: "Stun Spore",
+		type: "Grass",
+		category: "Status",
+		strategy: "debuff-opponent",
+		pp: 30,
+		power: null,
+		accuracy: 75,
+		rechargeTurns: 5,
+		energy: {
+			yellow: 4,
+			green: 4,
+			blue: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Stun Spore.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "load-value", value: 5 },
+			{ type: "select-random-tiles", count: -1 },
+			{ type: "apply-status-to-tiles", selection: "group", which: -1,
+				status: { name: "Stun Spore", type: "debuff", duration: 5 }
+			}
+		],
+	},
 	"Sketch": {
 		name: "Sketch",
 		type: "Normal",

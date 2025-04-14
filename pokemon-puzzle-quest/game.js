@@ -746,7 +746,7 @@ class Round{
 		}
 		let contents = this.board.tilesOnScreen()
 
-		//Handle start-of-turn status effects
+		//Handle start-of-turn status effects but for tiles this time
 		let cursed
 		for (let tile of contents){
 			if (!this.board.isOnScreen(tile)) continue
@@ -794,6 +794,72 @@ class Round{
 				damage: damage,
 				fixed: true
 			})
+		}
+		//Deal with Stun Spore
+		if (true){
+			let stunSporeTiles = contents.filter(tile => tile.hasStatus("Stun Spore"))
+			if (stunSporeTiles.length >= 20){
+				let trainers = []
+				let statusInfo = []
+				for (let tile of stunSporeTiles){
+					let stunSpores = tile.getStatuses("Stun Spore")
+					for (let status of stunSpores){
+						if (!trainers.includes(status.sourceTrainer)){
+							trainers.push(status.sourceTrainer)
+							statusInfo.push([
+								status.sourceTrainer, status.sourcePokemon, status.sourceMove
+							])
+						}
+					}
+				}
+				let randomException = randomChoice(stunSporeTiles)
+				let index = stunSporeTiles.indexOf(randomException)
+				stunSporeTiles.splice(index, 1)
+				for (let tile of stunSporeTiles){
+					tile.removeStatusesWithName("Stun Spore")
+				}
+				for (let index in trainers){
+					let trainer = trainers[index]
+					let info = statusInfo[index]
+					let otherTrainers = this.trainers.filter(t => {
+						return trainer !== t
+					})
+					for (let otherTrainer of otherTrainers){
+						let activePokemon = otherTrainer.activePokemon
+						activePokemon.addStatusEffect("paralyzed", info[0], info[1], info[2])
+					}
+				}
+			}
+		}
+		//Get infectious tiles
+		let infectiousTiles = []
+		for (let tile of contents){
+			let statusEffects = tile.statusEffects
+			for (let status of statusEffects){
+				let statusName = status.name
+				let data = tileStatusData[statusName]
+				if (data.infectious){
+					infectiousTiles.push([tile, status])
+				}
+			}
+		}
+		//Infect tiles
+		for (let pair of infectiousTiles){
+			let tile = pair[0]
+			let status = pair[1]
+			let statusName = status.name
+			let data = tileStatusData[statusName]
+			let adjacent = this.board.getAdjacentTiles(tile)
+			for (let tile2 of adjacent){
+				let rand = Math.random()
+				if (rand < data.infectious){
+					tile2.addStatusEffect(
+						status,
+						status.sourceTrainer, status.sourcePokemon, status.sourceMove,
+						status.color
+					)
+				}
+			}
 		}
 
 		//Reduce status effect durations
@@ -2645,7 +2711,7 @@ class Round{
 				let img = $(`<img class='status-effect' src='${data.image}'>`)
 				img.css("background-color", data.color)
 
-				let popoverHTML = () => {
+				const popoverHTML = () => {
 					let html = ""
 					let name = getLocaleString("name", lang, ["status-effects", data.name])
 					let description = getLocaleString("description", lang, ["status-effects", data.name])
@@ -3647,7 +3713,7 @@ class Board{
 		let weights = this.tileTypes.map(t => this.tileWeights[t])
 		return weightedRandom(this.tileTypes, weights).item
 	}
-
+	
 	findTileAt(x, y){
 		tilesFound++
 		let mapKey = x+","+y
@@ -3688,6 +3754,11 @@ class Board{
 
 	getColumn(x){
 		return this.contents.filter(t => t.x === x).sort((a, b) => a.y - b.y)
+	}
+
+	getAdjacentTiles(tile){
+		let contents = this.tilesOnScreen()
+		return contents.filter(t => distance(t.x, t.y, tile.x, tile.y) === 1)
 	}
 
 	getBoundsOfSelection(tiles){
@@ -4110,7 +4181,17 @@ class Tile{
 		statusEffect.sourceTrainer = owner
 		statusEffect.color = color
 		statusEffect.turns = status?.duration ?? null
+
+		let id = statusEffect.id ?? statusEffect.name
+		let data = tileStatusData[id]
+		let stacksAble = data.stacks === true ? Infinity : data.stacks === false ? 1 : data.stacks
+		let stacksCurrent = this.getStatuses(statusEffect.name).length
+		if (stacksCurrent >= stacksAble){
+			return false
+		}
+
 		this.statusEffects.push(statusEffect)
+		return true
 	}
 	hasStatus(name){
 		return this.statusEffects.some(status => {
@@ -4128,17 +4209,36 @@ class Tile{
 			this.statusEffects.splice(index, 1)
 		}
 	}
+	removeStatusesWithName(name){
+		let shouldRemove = this.statusEffects.some(status => {
+			return status.name === name
+		})
+		while (shouldRemove){
+			let statusEffect = this.statusEffects.find(status => {
+				return status.name === name
+			})
+			this.removeStatus(statusEffect)
+			shouldRemove = this.statusEffects.some(status => {
+				return status.name === name
+			})
+		}
+	}
 }
 
 class TileStatus{
 	constructor(status){
-		this.spriteOpacity = 0.3
-
+		if (status instanceof TileStatus){
+			status = status.originalData
+		}
+		this.originalData = status
 		for (let key in status){
 			this[key] = status[key]
 		}
+		this.spriteOpacity = 0
 		this.duration = this?.duration ?? null
 		this.turns = this.duration
+		
+		this.frameIndex = 0
 	}
 
 	tick(){

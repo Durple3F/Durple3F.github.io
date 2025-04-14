@@ -866,6 +866,11 @@
 			"description": "An attack of desperation only useful when there are no available moves. It also hurts its user a little, before ending the current turn.",
 			"shortDescription": "Reshuffle board"
 		},
+		"Stun Spore": {
+			"name": "Stun Spore",
+			"description": "Applies the Stun Spore status to 5 random tiles. At the start of each turn, if there are 20 or more tiles with Stun Spore, all but one Stun Spore is removed and the opponent is paralyzed. At the start of each turn, for each tile adjacent to a tile with Stun Spore, that tile has a 10% chance to gain Stun Spore.",
+			"shortDescription": "Infects tiles"
+		},
 		"Supersonic": {
 			"name": "Supersonic",
 			"description": "Applies Confused. After a Confused Pokémon uses a move, there's a 50% chance for their turn to end.",
@@ -932,6 +937,10 @@
 		"burn": {
 			"name": "Burn",
 			"description": "This Pokémon's physical moves are half as powerful, and at the start of its turn, it takes 1/16 of its max HP in damage. Currently not implemented. TODO."
+		},
+		"paralyzed": {
+			"name": "Paralyzed",
+			"description": "The next time this Pokémon tries to use a move, it will fail, and it will lose Paralyzed."
 		},
 		"confused": {
 			"name": "Confused",

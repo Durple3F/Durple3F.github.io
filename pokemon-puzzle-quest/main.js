@@ -1,4 +1,4 @@
-const versionNumber = "v0.12.6"
+const versionNumber = "v0.12.7"
 let lang = "en"
 let playerName
 
@@ -160,6 +160,7 @@ function getCSSEnergyColor(type){
 
 const sprites = {
 	images: {},
+	complete: {},
 	batches: []
 }
 function handleSpriteLoad(){
@@ -181,10 +182,11 @@ function loadSprite(name, url){
 	let img = new Image()
 	img.src = url
 	sprites.images[name] = img
+	sprites.complete[name] = false
 	let promise = new Promise((resolve, reject) => {
 		img.onload = function(){
 			handleSpriteLoad()
-			loadedResources[0]++
+			sprites.complete[name] = true
 			resolve()
 		}
 		img.onerror = reject
@@ -202,6 +204,7 @@ function loadSprites(list){
 }
 function unloadSprite(name){
 	delete sprites.images[name]
+	delete sprites.complete[name]
 }
 
 const sounds = {}
@@ -645,7 +648,7 @@ function loadResources(){
 			return {name: key, url: tileIconUrls[key]}
 		})
 	)
-	sprites = sprites.concat(getAllStatusSprites())
+	// sprites = sprites.concat(getAllStatusSprites())
 	loadedResources[1] = sprites.length
 
 	let soundsToLoad = [
@@ -686,16 +689,30 @@ function loadResources(){
 	}
 	update()
 
-	let promise = Promise.all([
+	let promises = [
 		loadSprites(sprites),
 		loadSounds(soundsToLoad),
 		downloadLocale(lang).then(() => new Promise(resolve => {
 			localeFinished++
 			resolve()
 		}))
-	])
+	]
+	sprites.forEach(sprite => {
+		let p = loadSprite(sprite.name, sprite.url)
+		.then(() => loadedResources[0]++)
+
+		promises.push(p)
+	})
+	for (let tileStatusName in tileStatusData){
+		let data = tileStatusData[tileStatusName]
+		loadedResources[1]++
+		let p = loadStatusSprite(data)
+		.then(() => loadedResources[0]++)
+		promises.push(p)
+	}
+
 	let interval = setInterval(update, 100)
-	promise = promise
+	let promise = Promise.all(promises)
 	.then(() => openDatabase())
 	.then(() => doesSaveDataExist())
 	//If we found data, show the save files. Otherwise, just move on.

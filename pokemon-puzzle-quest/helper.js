@@ -341,3 +341,19 @@ function applyModification(val, modification){
 	console.warn("You never handled", operation)
 	return val
 }
+
+function download(url, type="json"){
+	return new Promise(resolve => {
+		$.ajax({
+			url: url,
+			dataType: type,
+			success: function(data){
+				resolve(data)
+			},
+			error: function(){
+				download(url)
+				.then(val => resolve(val))
+			}
+		})
+	})
+}
