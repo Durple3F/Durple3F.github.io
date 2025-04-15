@@ -688,7 +688,11 @@ const levelData = [
 				possiblePokemon: [
 					// { id: "Spearow", levelMin: 8, levelMax: 10, weight: 4 },
 					// { id: "Growlithe", levelMin: 8, levelMax: 10, weight: 4 },
-					{ id: "Cutiefly", levelMin: 8, levelMax: 10, weight: 4 },
+					// { id: "Cutiefly", levelMin: 8, levelMax: 10, weight: 4 },
+					{ id: "Makuhita", levelMin: 9, levelMax: 10, weight: 2 },
+					// { id: "Smeargle", levelMin: 8, levelMax: 10, weight: 2 },
+					// { id: "Yungoos", levelMin: 8, levelMax: 10, weight: 1 },
+					// { id: "Rattata-Alola", levelMin: 8, levelMax: 10, weight: 1 },
 				]
 			},
 		],

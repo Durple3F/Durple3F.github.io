@@ -398,9 +398,9 @@ const pokemonMoveEffects = {
 			let effectIndex = options.effectIndex
 			let condition = effect.conditionExpression
 			let args = effect.conditionArguments
-				.map(index => {
-					return moveUseObj.info[effectIndex + index]
-				})
+			.map(index => {
+				return moveUseObj.info[effectIndex + index]
+			})
 			let expression = applyReplacements(condition, args)
 			let contents = game.board.tilesOnScreen()
 			let chosenTiles = []
@@ -411,12 +411,13 @@ const pokemonMoveEffects = {
 					x: x, y: y
 				}
 				let result = math.evaluate(expression, scope)
+				console.log(expression, scope, result)
 				if (result) {
 					chosenTiles.push(tile)
 				}
 			}
-			moveUseObj.info[effectIndex] = chosenTiles
-			resolve()
+			console.log(chosenTiles)
+			resolve(chosenTiles)
 		}
 	},
 	"select-row": {

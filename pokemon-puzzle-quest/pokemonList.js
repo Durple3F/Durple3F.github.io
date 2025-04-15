@@ -1205,9 +1205,50 @@ const pokemonData = {
 			},
 		]
 	},
+	"Makuhita": {
+		name: "Makuhita",
+		number: "296",
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0296Makuhita.png",
+			"largeShiny": "src/img/shiny-pokemon/296-Makuhita.png",
+			"home": "src/img/tiny-pokemon/Makuhita.png"
+		},
+		sounds: {
+			cry: "src/audio/cries/makuhita.mp3"
+		},
+		types: ["Fighting"],
+		tags: [],
+		stats: {
+			hp: 72,
+			attack: 60,
+			defense: 30,
+			specialAttack: 20,
+			specialDefense: 30,
+			speed: 25
+		},
+		expYield: 47,
+		evYield: {
+			hp: 1,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 3,
+			red: 2
+		},
+		learnset: [
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Focus Energy", unlock: { type: "level", amount: 1 } },
+			{ name: "Sand Attack", unlock: { type: "level", amount: 4 } },
+		]
+	},
 	"Bonsly": {
 		name: "Bonsly",
-		number: "278",
+		number: "438",
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0438Bonsly.png",
@@ -1872,4 +1913,8 @@ for (let name in pokemonData) {
 	let modifier = match[2] ?? ""
 	justDigits = justDigits.padStart(targetDigits, "0")
 	pokemon.number = justDigits + modifier
+	let same = Object.values(pokemonData).filter(p => p.number === pokemon.number)
+	if (same.length !== 1){
+		console.warning("These pokemon share a number", same, pokemon)
+	}
 }

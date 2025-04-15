@@ -596,6 +596,9 @@
 		"Wingull": {
 			"name": "Wingull"
 		},
+		"Makuhita": {
+			"name": "Makuhita"
+		},
 		"Bonsly": {
 			"name": "Bonsly"
 		},
@@ -840,6 +843,11 @@
 			"description": "The opponent must swap to a different Pokémon if possible. Then ends the turn.",
 			"shortDescription": "Forces opponent to switch",
 			"choose-pokemon": "Choose a Pokémon to swap to."
+		},
+		"Sand Attack": {
+			"name": "Sand Attack",
+			"description": "A random diamond-shaped area of tiles are given the Energy Down status. When an opponent removes those tiles, they're worth 1 less energy each.",
+			"shortDescription": "Weakens an area of tiles"
 		},
 		"Scratch": {
 			"name": "Scratch",

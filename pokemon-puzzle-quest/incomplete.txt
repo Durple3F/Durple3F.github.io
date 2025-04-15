@@ -15,6 +15,7 @@ Incomplete move lists:
   Spinarak (lv 8)
   Wingull (lv 10)
   Bonsly (lv 1)
+  Makuhita (lv 4)
   Happiny (lv 4)
   Rowlet (lv 12)
   Litten (lv 9)
@@ -43,6 +44,7 @@ Missing Evolutions:
   Spinarak
   Wingull
   Bonsly
+  Makuhita
   Happiny
   Rowlet
   Litten

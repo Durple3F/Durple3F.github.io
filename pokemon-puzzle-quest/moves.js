@@ -1197,6 +1197,42 @@ const pokemonMoveData = {
 			{ type: "swap-pokemon", target: "opponent", pokemon: -1 },
 		],
 	},
+	"Sand Attack": {
+		name: "Sand Attack",
+		type: "Ground",
+		category: "Status",
+		strategy: "debuff-opponent",
+		pp: 15,
+		power: null,
+		accuracy: 100,
+		rechargeTurns: 4,
+		energy: {
+			orange: 4,
+			green: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Sand Attack.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "load-value", value: 1 },
+			{ type: "select-random-tiles", count: -1 },
+			{ type: "load-value", value: 0 },
+			{ type: "get-element-from-list", list: -2, index: -1 },
+			{ type: "get-tile-x", tile: -1 },
+			{ type: "get-tile-y", tile: -2 },
+			{ type: "load-value", value: 2 },
+			{ 
+				type: "select-tiles",
+				conditionExpression: "((x - %c%)^2 + (y - %c%)^2)^0.5 <= %c%",
+				conditionArguments: [-3, -2, -1]
+			},
+			{
+				type: "apply-status-to-tiles", selection: "group", which: -1,
+				status: { name: "Energy Down", type: "debuff", duration: null }
+			},
+		],
+	},
 	"Scratch": {
 		name: "Scratch",
 		type: "Normal",

@@ -1,8 +1,9 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-4/14 (18.6k lines):
+4/14 (18.7k lines):
 	- Status effects can now have an actual image overlaying the tile instead of just a tiny circle.
 	- Added Stun Spore, which needed that.
+	- Added Sand Attack
 
 4/13 (18.5k lines):
 	- Moves that let you select tiles can now allow you to select more than one.
