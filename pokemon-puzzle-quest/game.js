@@ -916,7 +916,7 @@ class Round{
 
 		promise = promise.then(() => this.checkForWinner())
 		if (this.activePlayer === "enemy"){
-			promise = promise.then(() => this.computerMakeMoves())
+			promise = promise.then(() => this.computerTakeTurn())
 		}
 
 		promise = promise.then(() => this.updateEverything())
@@ -1256,27 +1256,12 @@ class Round{
 		return promise
 	}
 
-	computerMakeMoves(){
+	computerTakeTurn(){
 		let promise = Promise.resolve()
-		promise = promise.then(() => delay(250))
-		let trainerIndex = this.activePlayerIndex
-		let availableMoves = this.getAvailableMoves(trainerIndex)
-		let payableMoves = availableMoves.filter(move => {
-			let payability = this.canPayCost(move, trainerIndex)
-			return Object.keys(payability).every(key => payability[key] === true)
-		})
-		let goodMoves = this.computerApplicableMoves(payableMoves)
-		if (goodMoves.length){
-			let randomMove = randomChoice(goodMoves)
-			let trainer = this.trainers[trainerIndex]
-			let pokemon = trainer.activePokemon
-			this.payForMove(trainer, pokemon, randomMove)
-			promise = promise.then(() => {
-				return this.beginToUseMove(trainer, pokemon, randomMove)
-			})
-		}
-
 		let turn = this.turn
+
+		promise = promise.then(() => this.computerMakeMoves())
+
 		promise = promise.then(() => {
 			if (this.hasEnded) return Promise.resolve()
 			return delay(250).then(() => {
@@ -1288,8 +1273,58 @@ class Round{
 				}
 			})
 		})
-
 		return promise
+	}
+	computerMakeMoves(){
+		let resolvePromise
+		let totalPromise = new Promise(resolve => resolvePromise = resolve)
+		let promise = Promise.resolve()
+		let trainerIndex = this.activePlayerIndex
+		const makeMove = () => {
+			let availableMoves = this.getAvailableMoves(trainerIndex)
+			let payableMoves = availableMoves.filter(move => {
+				let payability = this.canPayCost(move, trainerIndex)
+				return Object.keys(payability).every(key => payability[key] === true)
+			})
+			let unpayableMoves = availableMoves.filter(move => {
+				return !payableMoves.includes(move)
+			})
+			let goodMoves = this.computerApplicableMoves(payableMoves)
+			if (goodMoves.length){
+				let trainer = this.trainers[trainerIndex]
+				let pokemon = trainer.activePokemon
+				//REMEMBER: DOING NOTHING IS AN OPTION
+				let possibleActions = ["nothing"].concat(goodMoves)
+				let actionWeights = possibleActions.map(action => {
+					return this.getActionWeight(
+						trainer, pokemon, action,
+						payableMoves, unpayableMoves
+					)
+				})
+				console.log(possibleActions, actionWeights)
+				let output = weightedRandom(possibleActions, actionWeights)
+				let randomAction = output.item
+				let randomIndex = output.index
+				if (randomAction !== "nothing"){
+					let randomMove = randomAction
+					this.payForMove(trainer, pokemon, randomMove)
+					promise = promise.then(() => {
+						return this.beginToUseMove(trainer, pokemon, randomMove)
+					})
+					promise = promise.then(() => delay(250))
+					promise = promise.then(() => makeMove())
+				} else {
+					//We decided that doing nothing was the better option.
+					resolvePromise()
+				}
+			} else {
+				//We can't do anything, end the moves.
+				resolvePromise()
+			}
+		}
+		makeMove()
+
+		return totalPromise
 	}
 	computerApplicableMoves(moveList){
 		let pokemon = this.trainers[1].activePokemon
@@ -1453,6 +1488,22 @@ class Round{
 
 		return promise
 	}
+	getActionWeight(trainer, pokemon, action, payableMoves, unpayableMoves){
+		//Action is either: a move, or nothing.
+		//Doing nothing is technically an action you can take.
+		let strategyData = getStrategyData(action)
+		let options = {
+			game: this,
+			trainer: trainer,
+			pokemon: pokemon,
+			action: action,
+			payableMoves: payableMoves,
+			unpayableMoves: unpayableMoves,
+			allowRecursion: true
+		}
+		let weight = strategyData.chooseWeight(options)
+		return weight
+	}
 
 	dealDamage(options){
 		let result = {}
@@ -1516,13 +1567,11 @@ class Round{
 		if (damage === undefined){
 			damage = (attacker.level * 2 / 5 + 2) * power * atk / def / 50 + 2
 		}
+		//STAB
 		if (attacker.getEffectiveTypes().includes(type)){
 			damage *= 1.5
 		}
-		let typeMult = 1
-		for (let defType of defender.getEffectiveTypes()){
-			typeMult *= typeEffectiveness[type][defType]
-		}
+		let typeMult = getSuperEffectiveMult(type, defender.getEffectiveTypes())
 		damage *= typeMult
 
 		if ("damageMult" in options){
@@ -1679,15 +1728,18 @@ class Round{
 	}
 	//Returns an object that contains info about how much more of each color that
 	//the trainer must collect to use this move
-	canPayForMove(trainer, pokemon, move){
+	canPayForMove(trainer, pokemon, move, energyYouHave){
+		if (!energyYouHave) {
+			energyYouHave = pokemon.energy
+		}
 		let able = true
 		let cost = this.getEffectiveCost(trainer, pokemon, move)
 		let energyCost = cost.energyCost
 		let needed = getEmptyEnergy()
 		for (let color of colors){
-			if (energyCost[color] > pokemon.energy[color]){
+			if (energyCost[color] > energyYouHave[color]){
 				able = false
-				needed[color] += energyCost[color] - pokemon.energy[color]
+				needed[color] += energyCost[color] - energyYouHave[color]
 			}
 		}
 		return {result: able, needed: needed}

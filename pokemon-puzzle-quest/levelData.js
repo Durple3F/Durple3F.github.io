@@ -684,26 +684,33 @@ const levelData = [
 			{
 				isWild: true,
 				targetPokemon: 4,
-				canPickDuplicates: true,
+				canPickDuplicates: false,
 				possiblePokemon: [
-					// { id: "Spearow", levelMin: 8, levelMax: 10, weight: 4 },
-					// { id: "Growlithe", levelMin: 8, levelMax: 10, weight: 4 },
-					// { id: "Cutiefly", levelMin: 8, levelMax: 10, weight: 4 },
+					{ id: "Spearow", levelMin: 8, levelMax: 10, weight: 4 },
+					{ id: "Growlithe", levelMin: 8, levelMax: 10, weight: 4 },
+					{ id: "Cutiefly", levelMin: 8, levelMax: 10, weight: 4 },
 					{ id: "Makuhita", levelMin: 9, levelMax: 10, weight: 2 },
-					// { id: "Smeargle", levelMin: 8, levelMax: 10, weight: 2 },
-					// { id: "Yungoos", levelMin: 8, levelMax: 10, weight: 1 },
-					// { id: "Rattata-Alola", levelMin: 8, levelMax: 10, weight: 1 },
+					{ id: "Smeargle", levelMin: 8, levelMax: 10, weight: 2 },
+					{ id: "Yungoos", levelMin: 8, levelMax: 10, weight: 1 },
+					{ id: "Rattata-Alola", levelMin: 8, levelMax: 10, weight: 1 },
+				]
+			},
+			{
+				name: "Krystal",
+				class: "Beauty-Gen7",
+				pokemon: [
+					{ id: "Cotttonee", level: 10, name: "Soozle" }
 				]
 			},
 		],
 		effects: [
 			{ type: "fight", trainer: 0 },
 			{ type: "jump-if-lost", jumpTo: Infinity },
-			// { type: "dialogue", source: "route-2-3-dialogue" },
-			// { type: "change-music", music: "SM Trainer Battle" },
-			// { type: "fight", trainer: 1 },
-			// { type: "jump-if-lost", jumpTo: Infinity },
-			// { type: "dialogue", source: "route-2-3-dialogue-won" },
+			{ type: "dialogue", source: "route-2-4-dialogue" },
+			{ type: "change-music", music: "SM Trainer Battle" },
+			{ type: "fight", trainer: 1 },
+			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "dialogue", source: "route-2-4-dialogue-won" },
 		]
 	},
 ]

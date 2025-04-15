@@ -9,8 +9,8 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 2,
 		energy: {
-			green: 5,
-			red: 2
+			green: 6,
+			red: 3
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Absorb part 1.mp3"
@@ -699,6 +699,34 @@ const pokemonMoveData = {
 			{ type: "end-turn" }
 		],
 	},
+	"Helping Hand": {
+		name: "Helping Hand",
+		type: "Normal",
+		category: "Status",
+		strategy: "special",
+		pp: 20,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 5,
+		energy: {
+			blue: 4,
+			purple: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Helping Hand.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-move-list", target: "user", sort: "recharge",
+				direction: "descending", except: ["Helping Hand"] },
+			{ type: "get-list-length", list: -1 },
+			{ type: "load-value", value: 1 },
+			{ type: "jump-if-less-than", jumpTo: Infinity },
+			{ type: "random-choice-from-list", list: -4 },
+			{ type: "load-value", value: -5 },
+			{ type: "change-move-cooldown", target: "user", move: -2, amount: -1 },
+		],
+	},
 	"Howl": {
 		name: "Howl",
 		type: "Normal",
@@ -1205,7 +1233,7 @@ const pokemonMoveData = {
 		pp: 15,
 		power: null,
 		accuracy: 100,
-		rechargeTurns: 4,
+		rechargeTurns: 5,
 		energy: {
 			orange: 4,
 			green: 4

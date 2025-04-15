@@ -1,9 +1,17 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
+4/15 (19.1k lines):
+	- Opponents will avoid using a move if its cost makes it harder to use a move they'd like to use more.
+	- Added Cottonee
+	- Added Helping Hand, a move that I added custom AI for!
+	- Added the rest of 2-4.
+
 4/14 (18.7k lines):
 	- Status effects can now have an actual image overlaying the tile instead of just a tiny circle.
 	- Added Stun Spore, which needed that.
 	- Added Sand Attack
+	- Opponents can now use as many moves as they want during their turn, just like you.
+	- Opponents no longer just use any random move they can, and I can program some basic strategy in.
 
 4/13 (18.5k lines):
 	- Moves that let you select tiles can now allow you to select more than one.

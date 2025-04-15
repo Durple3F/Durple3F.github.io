@@ -357,3 +357,14 @@ function download(url, type="json"){
 		})
 	})
 }
+
+function getSuperEffectiveMult(type, defTypes){
+	let typeMult = 1
+	for (let defType of defTypes){
+		if (!(type in typeEffectiveness)){
+			console.trace(type)
+		}
+		typeMult *= typeEffectiveness[type][defType]
+	}
+	return typeMult
+}

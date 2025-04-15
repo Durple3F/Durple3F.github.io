@@ -145,6 +145,13 @@ const NPCTrainerData = {
 			trainer: "src/img/trainers/beauty-gen7.png"
 		}
 	},
+	"Backpacker-Gen7-F": {
+		name: "Backpacker",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/backpackerf.png"
+		}
+	},
 	"Team-Skull-Grunt": {
 		name: "Team Skull Grunt",
 		type: "trainer",

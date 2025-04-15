@@ -17,6 +17,7 @@ Incomplete move lists:
   Bonsly (lv 1)
   Makuhita (lv 4)
   Happiny (lv 4)
+  Cottonee (lv 6)
   Rowlet (lv 12)
   Litten (lv 9)
   Popplio (lv 9)
@@ -46,6 +47,7 @@ Missing Evolutions:
   Bonsly
   Makuhita
   Happiny
+  Cottonee
   Rowlet
   Litten
   Popplio

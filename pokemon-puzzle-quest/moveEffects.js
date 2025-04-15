@@ -774,6 +774,59 @@ const pokemonMoveEffects = {
 			resolve()
 		}
 	},
+	"get-move-list": {
+		update: false,
+		hasTarget: true,
+		targetType: "pokemon",
+		targetDefault: "user",
+		execute: (resolve, effect, params, game, options) => {
+			let target = options.target
+			let moves = target.activeMoves
+			let sort = effect.sort
+			let exceptions = effect.except ?? []
+			let result
+
+			for (let exception of exceptions){
+				let index = moves.findIndex(move => move.name === exception)
+				if (index !== -1){
+					moves.splice(index, 1)
+				}
+			}
+
+			if (sort === "recharge"){
+				result = moves.sort((move1, move2) => {
+					let moveIndex1 = target.moves.indexOf(move1)
+					let moveIndex2 = target.moves.indexOf(move2)
+					let moveRecharge1 = target.moveUsage[moveIndex1].recharge
+					let moveRecharge2 = target.moveUsage[moveIndex2].recharge
+					return moveRecharge1 - moveRecharge2
+				})
+			} else {
+				console.warn("Never handled", sort)
+			}
+
+			resolve(result)
+		}
+	},
+	"change-move-cooldown": {
+		update: false,
+		hasTarget: true,
+		targetType: "pokemon",
+		targetDefault: "user",
+		execute: (resolve, effect, params, game, options) => {
+			let target = options.target
+			let move = params.move
+			let amount = params.amount ?? 0
+			let index = target.moves.indexOf(move)
+			let usage
+			if (index !== -1){
+				usage = target.moveUsage[index]
+				usage.recharge += amount
+			}
+
+			resolve(usage.recharge)
+		}
+	},
 	"multiply-energy": {
 		update: false,
 		execute: (resolve, effect, params, game, options) => {

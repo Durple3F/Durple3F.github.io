@@ -1337,6 +1337,49 @@ const pokemonData = {
 			},
 		]
 	},
+	"Cottonee": {
+		name: "Cottonee",
+		number: "546",
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0546Cottonee.png",
+			"largeShiny": "src/img/shiny-pokemon/546-Cottonee.png",
+			"home": "src/img/tiny-pokemon/Cottonee.png"
+		},
+		sounds: {
+			cry: "src/audio/cries/cottonee.mp3"
+		},
+		types: ["Grass", "Fairy"],
+		tags: [],
+		stats: {
+			hp: 40,
+			attack: 27,
+			defense: 60,
+			specialAttack: 37,
+			specialDefense: 50,
+			speed: 66
+		},
+		expYield: 56,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 1
+		},
+		energyMastery: {
+			green: 2,
+			blue: 2,
+			purple: 2
+		},
+		learnset: [
+			{ name: "Absorb", unlock: { type: "level", amount: 1 } },
+			{ name: "Helping Hand", unlock: { type: "level", amount: 1 } },
+			{ name: "Fairy Wind", unlock: { type: "level", amount: 3 } },
+			{ name: "Stun Spore", unlock: { type: "level", amount: 6 } },
+		]
+	},
 	"Rowlet": {
 		name: "Rowlet",
 		number: "722",
@@ -1370,7 +1413,7 @@ const pokemonData = {
 		},
 		energyMastery: {
 			green: 5,
-			purple: 3
+			yellow: 3
 		},
 		learnset: [
 			{
