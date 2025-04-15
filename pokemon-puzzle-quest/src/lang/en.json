@@ -660,6 +660,9 @@
 		"Pichu": {
 			"name": "Pichu"
 		},
+		"Misdreavus": {
+			"name": "Misdreavus"
+		},
 		"Smeargle": {
 			"name": "Smeargle"
 		},
@@ -668,6 +671,9 @@
 		},
 		"Makuhita": {
 			"name": "Makuhita"
+		},
+		"Drifloon": {
+			"name": "Drifloon"
 		},
 		"Bonsly": {
 			"name": "Bonsly"
@@ -863,6 +869,11 @@
 			"name": "Mean Look",
 			"description": "Applies Frozen in Fear. A Frozen in Fear Pokémon can't be switched out by any means.",
 			"shortDescription": "Freezes opponent in fear"
+		},
+		"Minimize": {
+			"name": "Minimize",
+			"description": "Until the start of the user's next turn, their damage-dealing moves have their costs halved (rounded up), and their power reduced by 25%.",
+			"shortDescription": "Reduces move costs and powers"
 		},
 		"Mud-Slap": {
 			"name": "Mud-Slap",
@@ -1093,6 +1104,10 @@
 		"Route 2-4": {
 			"name": "Route 2-4",
 			"description": "You continue to explore the rest of Melemele Island."
+		},
+		"Route 2-5": {
+			"name": "Route 2-5",
+			"description": "A small cemetery sits on the outskirts of the island."
 		}
 	},
 	"route-categories": {

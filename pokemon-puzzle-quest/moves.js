@@ -260,6 +260,33 @@ const pokemonMoveData = {
 			{ type: "shuffle-tiles", selection: -1 }
 		],
 	},
+	"Confusion": {
+		name: "Confusion",
+		type: "Psychic",
+		category: "Special",
+		strategy: "basic-damage",
+		pp: 25,
+		power: 50,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			yellow: 5,
+			purple: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Confusion part 1.mp3",
+			"activate": "src/audio/attacks/Confusion part 2.mp3",
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "random-number", min: 1, max: 10 },
+			{ type: "load-value", value: 0 },
+			{ type: "jump-if-less-than", jumpTo: Infinity },
+			{ type: "play-sound", name: "activate" },
+			{ type: "apply-status-effect", statusEffect: "confused", target: "opponent" }
+		],
+	},
 	"Copycat": {
 		name: "Copycat",
 		type: "Normal",
@@ -909,6 +936,56 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "apply-status-effect", statusEffect: "fear-frozen", target: "opponent" }
+		],
+	},
+	"Minimize": {
+		name: "Minimize",
+		type: "Normal",
+		category: "Status",
+		strategy: "special",
+		pp: 10,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 5,
+		energy: {
+			yellow: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Minimize.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "minimize-cost-reduction",
+				type: "cost-alteration",
+				stacks: false,
+				volatile: true,
+				appliesTo: {
+					logic: "not",
+					name: "Minimize"
+				},
+				turns: 1,
+				modification: {
+					change: 0.5,
+					operation: "multiply"
+				},
+				energyCost: {}
+			} },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "minimize-power-reduction",
+				type: "power-alteration",
+				stacks: false,
+				volatile: true,
+				appliesTo: {
+					logic: "not",
+					name: "Minimize"
+				},
+				turns: 1,
+				modification: {
+					change: 0.75,
+					operation: "multiply"
+				}
+			} },
 		],
 	},
 	"Mud-Slap": {
@@ -1715,6 +1792,13 @@ const pokemonMoveData = {
 	},
 };
 
+for (let moveName in pokemonMoveData){
+	let move = pokemonMoveData[moveName]
+	move.tags = move.tags ?? []
+	if (move.power){
+		move.tags.push("damage-dealing")
+	}
+}
 for (let name in pokemonData) {
 	pokemonData[name].learnset.splice(0, 0, {
 		name: "Struggle",

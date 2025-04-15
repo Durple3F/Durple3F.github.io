@@ -1301,6 +1301,10 @@ class Round{
 						payableMoves, unpayableMoves
 					)
 				})
+				// actionWeights = actionWeights.map((weight, index) => {
+				// 	if (index === 0) return weight
+				// 	return Math.pow(weight, 1.2)
+				// })
 				console.log(possibleActions, actionWeights)
 				let output = weightedRandom(possibleActions, actionWeights)
 				let randomAction = output.item
@@ -1726,6 +1730,13 @@ class Round{
 
 		return payability
 	}
+	canPayEnergyCost(energyYouHave, energyCost){
+		for (let color in energyCost){
+			let canPay = energyYouHave[color] >= energyCost[color]
+			if (!canPay) return false
+		}
+		return true
+	}
 	//Returns an object that contains info about how much more of each color that
 	//the trainer must collect to use this move
 	canPayForMove(trainer, pokemon, move, energyYouHave){
@@ -1772,9 +1783,20 @@ class Round{
 			let effectiveType = this.getEffectiveMoveType(trainer, pokemon, move)
 			let applies = this.doesThisApplyToMove(move, statusEffect.appliesTo, effectiveType)
 			if (applies){
-				let modification = statusEffect.energyCost
-				for (let color in modification){
-					energyCost[color] = (energyCost[color] ?? 0) + modification[color]
+				let energyModification = statusEffect.energyCost
+				let modification = statusEffect.modification
+				let colorsToModify = Object.keys(energyModification)
+				//If no colors are listed, it means to apply the change to every color.
+				if (colorsToModify.length === 0){
+					colors.forEach(color => colorsToModify.push(color))
+				}
+				for (let color of colorsToModify){
+					let val = energyCost[color] ?? 0
+					val += energyModification[color] ?? 0
+					if (modification){
+						val = applyModification(val, modification)
+					}
+					energyCost[color] = Math.ceil(val)
 				}
 			}
 		}
@@ -1809,13 +1831,14 @@ class Round{
 		if (appliesTo.types){
 			good.push(appliesTo.types.includes(type))
 		}
-		if (appliesTo.logic === "and"){
+		let logic = appliesTo.logic
+		if (logic === "and"){
 			return good.every(v => v)
-		} else if (appliesTo.logic === "or"){
+		} else if (logic === "or"){
 			return good.some(v => v)
-		} else if (appliesTo.logic === "nor"){
+		} else if (logic === "nor" || logic === "not"){
 			return !good.some(v => v)
-		} else if (appliesTo.logic === "nand"){
+		} else if (logic === "nand"){
 			return !good.every(v => v)
 		} else {
 			return good.every(v => v)

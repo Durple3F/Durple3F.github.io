@@ -45,27 +45,9 @@ const pokemonData = {
 			}
 		],
 		learnset: [
-			{
-				name: "Tackle",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "String Shot",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "Bug Bite",
-				unlock: {
-					type: "level",
-					amount: 9
-				}
-			}
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "String Shot", unlock: { type: "level", amount: 1 } },
+			{ name: "Bug Bite", unlock: { type: "level", amount: 9 } }
 		]
 	},
 	"Metapod": {
@@ -397,18 +379,10 @@ const pokemonData = {
 			purple: 2
 		},
 		learnset: [
-			{
-				name: "Absorb",
-				unlock: { type: "level", amount: 1 }
-			},
-			{
-				name: "Supersonic",
-				unlock: { type: "level", amount: 1 }
-			},
-			{
-				name: "Astonish",
-				unlock: { type: "level", amount: 1 }
-			},
+			{ name: "Absorb", unlock: { type: "level", amount: 1 } },
+			{ name: "Supersonic", unlock: { type: "level", amount: 1 } },
+			{ name: "Astonish", unlock: { type: "level", amount: 5 } },
+			{ name: "Mean Look", unlock: { type: "level", amount: 10 } },
 		]
 	},
 	"Meowth-Alola": {
@@ -1086,6 +1060,52 @@ const pokemonData = {
 			},
 		]
 	},
+	"Misdreavus": {
+		name: "Misdreavus",
+		number: "200",
+		imageFacing: "right",
+		imageSources: {
+			"large": "src/img/pokemon/0200Misdreavus.png",
+			"largeShiny": "src/img/shiny-pokemon/200-Misdreavus.png",
+			"home": "src/img/tiny-pokemon/Misdreavus.png"
+		},
+		sounds: {
+			cry: "src/audio/cries/misdreavus.mp3"
+		},
+		types: ["Ghost"],
+		tags: [],
+		stats: {
+			hp: 60,
+			attack: 60,
+			defense: 60,
+			specialAttack: 85,
+			specialDefense: 85,
+			speed: 85
+		},
+		expYield: 87,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 1,
+			speed: 0
+		},
+		energyMastery: {
+			red: 3,
+			purple: 3
+		},
+		evolutions: [
+			
+		],
+		learnset: [
+			{ name: "Growl", unlock: { type: "level", amount: 1 } },
+			{ name: "Confusion", unlock: { type: "level", amount: 1 } },
+			{ name: "Astonish", unlock: { type: "level", amount: 10 } },
+			{ name: "Confuse Ray", unlock: { type: "level", amount: 14 } },
+			{ name: "Mean Look", unlock: { type: "level", amount: 19 } },
+		]
+	},
 	"Smeargle": {
 		name: "Smeargle",
 		number: "235",
@@ -1244,6 +1264,46 @@ const pokemonData = {
 			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
 			{ name: "Focus Energy", unlock: { type: "level", amount: 1 } },
 			{ name: "Sand Attack", unlock: { type: "level", amount: 4 } },
+		]
+	},
+	"Drifloon": {
+		name: "Drifloon",
+		number: "425",
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0425Drifloon.png",
+			"largeShiny": "src/img/shiny-pokemon/425-Drifloon.png",
+			"home": "src/img/tiny-pokemon/Drifloon.png"
+		},
+		sounds: {
+			cry: "src/audio/cries/drifloon.mp3"
+		},
+		types: ["Ghost", "Flying"],
+		tags: ["Starter"],
+		stats: {
+			hp: 90,
+			attack: 50,
+			defense: 34,
+			specialAttack: 60,
+			specialDefense: 44,
+			speed: 70
+		},
+		expYield: 70,
+		evYield: {
+			hp: 1,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			yellow: 2,
+			purple: 5,
+		},
+		learnset: [
+			{ name: "Minimize", unlock: { type: "level", amount: 1 } },
+			{ name: "Astonish", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Bonsly": {

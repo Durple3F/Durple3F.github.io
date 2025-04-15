@@ -673,7 +673,7 @@ const levelData = [
 			{ type: "dialogue", source: "route-2-3-dialogue-won" },
 		]
 	},
-	//2-4: 
+	//2-4: Spearow, Growlithe, Cutiefly, Makuhita + others | Ashley
 	{
 		id: "Route 2-4",
 		category: "Route 2",
@@ -696,8 +696,8 @@ const levelData = [
 				]
 			},
 			{
-				name: "Krystal",
-				class: "Beauty-Gen7",
+				name: "Ashley",
+				class: "Backpacker-Gen7-F",
 				pokemon: [
 					{ id: "Cotttonee", level: 10, name: "Soozle" }
 				]
@@ -711,6 +711,36 @@ const levelData = [
 			{ type: "fight", trainer: 1 },
 			{ type: "jump-if-lost", jumpTo: Infinity },
 			{ type: "dialogue", source: "route-2-4-dialogue-won" },
+		]
+	},
+	//2-5: 
+	{
+		id: "Route 2-5",
+		category: "Route 2",
+		name: "Route 2-5",
+		music: "SM Wild Pokemon Battle",
+		icon: "5",
+		trainers: [
+			{
+				isWild: true,
+				targetPokemon: 4,
+				canPickDuplicates: true,
+				possiblePokemon: [
+					// { id: "Zubat", levelMin: 8, levelMax: 11, weight: 4 },
+					// { id: "Gastly", levelMin: 8, levelMax: 11, weight: 4 },
+					// { id: "Misdreavus", levelMin: 8, levelMax: 11, weight: 4 },
+					{ id: "Drifloon", levelMin: 8, levelMax: 11, weight: 4 },
+				]
+			},
+		],
+		effects: [
+			{ type: "fight", trainer: 0 },
+			// { type: "jump-if-lost", jumpTo: Infinity },
+			// { type: "dialogue", source: "route-2-4-dialogue" },
+			// { type: "change-music", music: "SM Trainer Battle" },
+			// { type: "fight", trainer: 1 },
+			// { type: "jump-if-lost", jumpTo: Infinity },
+			// { type: "dialogue", source: "route-2-4-dialogue-won" },
 		]
 	},
 ]

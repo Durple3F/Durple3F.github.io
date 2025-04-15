@@ -13,7 +13,9 @@ Incomplete move lists:
   Drowzee (lv 1)
   Ledyba (lv 8)
   Spinarak (lv 8)
+  Misdreavus (lv 19)
   Wingull (lv 10)
+  Drifloon (lv 1)
   Bonsly (lv 1)
   Makuhita (lv 4)
   Happiny (lv 4)
@@ -43,6 +45,7 @@ Missing Evolutions:
   Drowzee
   Ledyba
   Spinarak
+  Misreavus
   Wingull
   Bonsly
   Makuhita

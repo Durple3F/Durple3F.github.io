@@ -33,10 +33,10 @@ const moveUseStrategy = {
 			let energyYouHave = pokemon.energy
 			let resultWeight = favoriteMoveWeight
 			if (favoriteMove){
+				let favoriteCost = game.getEffectiveCost(trainer, pokemon, favoriteMove).energyCost
 				for (let action of options.payableMoves){
 					let hypotheticalEnergy = addEnergies(energyYouHave, getEmptyEnergy())
-					let cost = action.energy
-					let favoriteCost = favoriteMove.energy
+					let cost = game.getEffectiveCost(trainer, pokemon, action).energyCost
 					let becameBelow = false
 					for (let color in cost){
 						if (!favoriteCost[color]) continue
@@ -101,6 +101,17 @@ const moveUseStrategy = {
 			return 1
 		}
 	},
+	"Absorb": {
+		chooseWeight: options => {
+			let pokemon = options.pokemon
+			let strategy = moveUseStrategy["basic-damage"]
+			let weight = strategy.chooseWeight(options)
+			if (pokemon.hp < pokemon.maxhp){
+				weight *= 1.5
+			}
+			return weight
+		}
+	},
 	"Helping Hand": {
 		chooseWeight: options => {
 			let pokemon = options.pokemon
@@ -119,6 +130,52 @@ const moveUseStrategy = {
 				return acc + weight
 			}, 0)
 			return sum
+		}
+	},
+	"Minimize": {
+		chooseWeight: options => {
+			let game = options.game
+			let trainer = options.trainer
+			let pokemon = options.pokemon
+			let minimize = pokemonMoveData["Minimize"]
+			let energyYouHave = pokemon.energy
+			let unpayableMoves = options.unpayableMoves
+			let payableMoves = options.payableMoves
+			//If we have no damage-dealing moves we can use, but
+			//by using Minimize we could use a damage-dealing move,
+			//then Minimize is a good choice.
+			let result = 0
+			if (payableMoves.some(move => {
+				return move.tags.includes("damage-dealing")
+			})) {
+				return result
+			}
+			
+			let minimizeCost = game.getEffectiveCost(trainer, pokemon, minimize).energyCost
+			let energyAfterMinimize = addEnergies(energyYouHave, multiplyEnergies(minimizeCost, -1))
+			let couldDoMove = false
+			let availableMove
+			for (let move of unpayableMoves){
+				if (!move.tags.includes("damage-dealing")){
+					continue
+				}
+				let energyCost = multiplyEnergies(move.energy, 0.5)
+				let canPay = game.canPayEnergyCost(energyAfterMinimize, energyCost)
+				if (canPay){
+					couldDoMove = true
+					availableMove = move
+					break
+				} else {
+					couldDoMove = false
+					continue
+				}
+			}
+			if (availableMove){
+				result = getActionWeightSimple(availableMove, options, false)
+				result = Math.pow(result, 1.1)
+			}
+
+			return result
 		}
 	},
 }
