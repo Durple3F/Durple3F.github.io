@@ -825,6 +825,11 @@
 			"description": "Lowers the opponent's attack stat by 1 stage.",
 			"shortDescription": "Lowers enemy attack"
 		},
+		"Gust": {
+			"name": "Gust",
+			"description": "Deals damage. Then, shifts the entire board away from the user by 1 tile.",
+			"shortDescription": "Shifts entire board"
+		},
 		"Harden": {
 			"name": "Harden",
 			"description": "Gives the user the Invulnerable status for one turn. It can't take damage for as long as it has that status. Then ends the turn.",
@@ -910,6 +915,11 @@
 			"description": "Has a 90% chance to apply poisoned to the opponent.",
 			"shortDescription": "Applies poisoned"
 		},
+		"Poison Powder": {
+			"name": "Poison Powder",
+			"description": "Applies the Poison Powder status to 5 random tiles. At the start of each turn, if there are 20 or more tiles with Poison Powder, all but one Poison Powder is removed and the opponent falls asleep. At the start of each turn, for each tile adjacent to a tile with Poison Powder, that tile has a 7% chance to gain Poison Powder.",
+			"shortDescription": "Infects tiles with poison"
+		},
 		"Poison Sting": {
 			"name": "Poison Sting",
 			"description": "Deals damage. Then, has a 30% chance to apply poisoned to the opponent.",
@@ -956,6 +966,11 @@
 			"description": "This Pokémon learns how to use the move the opponent most recently used. If they haven't used a move, this move does nothing.",
 			"shortDescription": "Learns the enemy's last move."
 		},
+		"Sleep Powder": {
+			"name": "Sleep Powder",
+			"description": "Applies the Sleep Powder status to 5 random tiles. At the start of each turn, if there are 20 or more tiles with Sleep Powder, all but one Sleep Powder is removed and the opponent falls asleep. At the start of each turn, for each tile adjacent to a tile with Sleep Powder, that tile has a 10% chance to gain Sleep Powder.",
+			"shortDescription": "Infects tiles with sleep"
+		},
 		"String Shot": {
 			"name": "String Shot",
 			"description": "Lowers the opponent's speed stat by 2 stages.",
@@ -969,7 +984,7 @@
 		"Stun Spore": {
 			"name": "Stun Spore",
 			"description": "Applies the Stun Spore status to 5 random tiles. At the start of each turn, if there are 20 or more tiles with Stun Spore, all but one Stun Spore is removed and the opponent is paralyzed. At the start of each turn, for each tile adjacent to a tile with Stun Spore, that tile has a 10% chance to gain Stun Spore.",
-			"shortDescription": "Infects tiles"
+			"shortDescription": "Infects tiles with paralyzed"
 		},
 		"Supersonic": {
 			"name": "Supersonic",

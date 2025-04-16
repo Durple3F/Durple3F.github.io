@@ -96,13 +96,7 @@ const pokemonData = {
 			}
 		],
 		learnset: [
-			{  //NOTE: Should be learned upon evolution.
-				name: "Harden",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			}
+			{ name: "Harden", unlock: { type: "level", amount: 1 } }  //NOTE: Should be learned upon evolution.
 		]
 	},
 	"Butterfree": {
@@ -137,10 +131,22 @@ const pokemonData = {
 			speed: 0
 		},
 		energyMastery: {
-			
+			yellow: 2,
+			green: 4,
+			blue: 4,
+			purple: 3
 		},
 		learnset: [
-
+			{ name: "Gust", unlock: { type: "level", amount: 1 } },
+			{ name: "Harden", unlock: { type: "level", amount: 1 } },
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "String Shot", unlock: { type: "level", amount: 1 } },
+			{ name: "Bug Bite", unlock: { type: "level", amount: 1 } },
+			{ name: "Supersonic", unlock: { type: "level", amount: 4 } },
+			{ name: "Confusion", unlock: { type: "level", amount: 8 } },
+			{ name: "Poison Powder", unlock: { type: "level", amount: 12 } },
+			{ name: "Stun Spore", unlock: { type: "level", amount: 12 } },
+			{ name: "Sleep Powder", unlock: { type: "level", amount: 12 } },
 		]
 	},
 	"Rattata-Alola": {
@@ -1768,7 +1774,7 @@ const pokemonData = {
 		sounds: {
 			cry: "src/audio/cries/grubbin.mp3"
 		},
-		tags: ["Starter"],
+		tags: [],
 		types: ["Bug"],
 		stats: {
 			hp: 47,

@@ -74,6 +74,7 @@ const pokemonMoveEffects = {
 				let localeId = plural ? "select-number-tiles-plural" : "select-number-tiles-single"
 				let text = getLocaleString(localeId, lang)
 				text = applyReplacements(text, [count])
+				game.currentlySelecting.message = text
 			}
 			
 			game.currentlySelecting.callback = () => {
@@ -112,14 +113,56 @@ const pokemonMoveEffects = {
 			let selection = params.selection ?? []
 			let xOffset = params.xOffset ?? 0
 			let yOffset = params.yOffset ?? 0
+			let board = game.board
+			let width = board.width
+			let height = board.height
+			let tilesMovedOffscreen = []
 			let locationMap = new Map()
 			for (let tile of selection){
-				let x = (tile.x + xOffset) % game.board.width
-				let y = (tile.y + yOffset) % game.board.height
+				// let x = (tile.x + xOffset) % game.board.width
+				// let y = (tile.y + yOffset) % game.board.height
+				let x = tile.x + xOffset
+				let y = tile.y + yOffset
+				if (x >= width || y >= height){
+					tilesMovedOffscreen.push(tile)
+				}
 				let location = [x, y]
 				locationMap.set(tile, location)
 			}
+
+			let unfilledCoords = []
+			selection.forEach(tile => {
+				let x = tile.x
+				let y = tile.y
+				let other = selection.find(tile2 => {
+					if (tile === tile2) return false
+					let coord = locationMap.get(tile2)
+					if (x === coord[0] && y === coord[1]){
+						return true
+					} else {
+						return false
+					}
+				})
+				if (!other){
+					unfilledCoords.push([x, y])
+				}
+			})
+			unfilledCoords.forEach(coord => {
+				let startingX = coord[0] - xOffset
+				let startingY = coord[1] - yOffset
+				let tile = board.getNextTile(startingX, startingY)
+				board.add(tile)
+				locationMap.set(tile, coord)
+			})
+			console.log(unfilledCoords)
+
 			game.animateMoveTiles(locationMap, 250)
+			.then(() => {
+				tilesMovedOffscreen.forEach(tile => {
+					board.remove(tile)
+				})
+				resolve()
+			})
 		}
 	},
 	"end-turn": {
@@ -411,12 +454,10 @@ const pokemonMoveEffects = {
 					x: x, y: y
 				}
 				let result = math.evaluate(expression, scope)
-				console.log(expression, scope, result)
 				if (result) {
 					chosenTiles.push(tile)
 				}
 			}
-			console.log(chosenTiles)
 			resolve(chosenTiles)
 		}
 	},
@@ -452,6 +493,13 @@ const pokemonMoveEffects = {
 			}
 			moveUseObj.info[effectIndex] = chosenTiles
 			resolve()
+		}
+	},
+	"select-all-tiles": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let contents = game.board.tilesOnScreen()
+			resolve(contents)
 		}
 	},
 	"expand-tile-selection": {
@@ -943,6 +991,15 @@ const pokemonMoveEffects = {
 			let list = params.list
 			moveUseObj.info[effectIndex] = list.length
 			resolve()
+		}
+	},
+	"get-side-number": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let trainers = game.trainers
+			let trainer = options.moveUse.trainer
+			let result = trainers[0] === trainer ? effect.left : effect.right
+			resolve(result)
 		}
 	},
 	"load-value": {

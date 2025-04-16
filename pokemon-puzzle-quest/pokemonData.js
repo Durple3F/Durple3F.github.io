@@ -262,7 +262,23 @@ const tileStatusData = {
 		hasSpriteSheet: true,
 		spriteSheetJsonUrl: "src/img/spritesheets/stun spore.json",
 		framesPerSprite: 5
-	}
+	},
+	"Sleep Powder": {
+		stacks: false,
+		infectious: 0.1,
+		url: "src/img/spritesheets/sleep powder.png",
+		hasSpriteSheet: true,
+		spriteSheetJsonUrl: "src/img/spritesheets/sleep powder.json",
+		framesPerSprite: 5
+	},
+	"Poison Powder": {
+		stacks: false,
+		infectious: 0.07,
+		url: "src/img/spritesheets/poison powder.png",
+		hasSpriteSheet: true,
+		spriteSheetJsonUrl: "src/img/spritesheets/poison powder.json",
+		framesPerSprite: 5
+	},
 }
 for (let tileStatusName in tileStatusData){
 	let status = tileStatusData[tileStatusName]

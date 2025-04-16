@@ -1,6 +1,6 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-4/15 (19.4k lines):
+4/15 (19.6k lines):
 	- Opponents will avoid using a move if its cost makes it harder to use a move they'd like to use more.
 	- Added Cottonee, Misdreavus, Drifloon
 	- Added Helping Hand, a move that I added custom AI for! Pretty proud of finally being able to set up some decision-making :). It's still kinda random, but having weights towards using better moves is nice.
@@ -8,6 +8,8 @@
 	- Added Minimize, another move that needed custom AI!
 	- Added AI to Absorb.
 	- Added the rest of 2-4.
+	- Fairy Wind now no longer loops the screen.
+	- Added Gust, Poison Powder, Sleep Powder
 
 4/14 (18.7k lines):
 	- Status effects can now have an actual image overlaying the tile instead of just a tiny circle.

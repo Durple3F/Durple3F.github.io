@@ -795,7 +795,7 @@ class Round{
 				fixed: true
 			})
 		}
-		//Deal with Stun Spore
+		//Deal with Stun Spore, Sleep Powder, and Poison Powder
 		if (true){
 			let stunSporeTiles = contents.filter(tile => tile.hasStatus("Stun Spore"))
 			if (stunSporeTiles.length >= 20){
@@ -827,6 +827,72 @@ class Round{
 					for (let otherTrainer of otherTrainers){
 						let activePokemon = otherTrainer.activePokemon
 						activePokemon.addStatusEffect("paralyzed", info[0], info[1], info[2])
+					}
+				}
+			}
+			let sleepPowderTiles = contents.filter(tile => tile.hasStatus("Sleep Powder"))
+			if (sleepPowderTiles.length >= 20){
+				let trainers = []
+				let statusInfo = []
+				for (let tile of sleepPowderTiles){
+					let sleepPowders = tile.getStatuses("Sleep Powder")
+					for (let status of sleepPowders){
+						if (!trainers.includes(status.sourceTrainer)){
+							trainers.push(status.sourceTrainer)
+							statusInfo.push([
+								status.sourceTrainer, status.sourcePokemon, status.sourceMove
+							])
+						}
+					}
+				}
+				let randomException = randomChoice(sleepPowderTiles)
+				let index = sleepPowderTiles.indexOf(randomException)
+				sleepPowderTiles.splice(index, 1)
+				for (let tile of sleepPowderTiles){
+					tile.removeStatusesWithName("Sleep Powder")
+				}
+				for (let index in trainers){
+					let trainer = trainers[index]
+					let info = statusInfo[index]
+					let otherTrainers = this.trainers.filter(t => {
+						return trainer !== t
+					})
+					for (let otherTrainer of otherTrainers){
+						let activePokemon = otherTrainer.activePokemon
+						activePokemon.addStatusEffect("asleep", info[0], info[1], info[2])
+					}
+				}
+			}
+			let poisonPowderTiles = contents.filter(tile => tile.hasStatus("Poison Powder"))
+			if (poisonPowderTiles.length >= 20){
+				let trainers = []
+				let statusInfo = []
+				for (let tile of poisonPowderTiles){
+					let poisonPowders = tile.getStatuses("Poison Powder")
+					for (let status of poisonPowders){
+						if (!trainers.includes(status.sourceTrainer)){
+							trainers.push(status.sourceTrainer)
+							statusInfo.push([
+								status.sourceTrainer, status.sourcePokemon, status.sourceMove
+							])
+						}
+					}
+				}
+				let randomException = randomChoice(poisonPowderTiles)
+				let index = poisonPowderTiles.indexOf(randomException)
+				poisonPowderTiles.splice(index, 1)
+				for (let tile of poisonPowderTiles){
+					tile.removeStatusesWithName("Poison Powder")
+				}
+				for (let index in trainers){
+					let trainer = trainers[index]
+					let info = statusInfo[index]
+					let otherTrainers = this.trainers.filter(t => {
+						return trainer !== t
+					})
+					for (let otherTrainer of otherTrainers){
+						let activePokemon = otherTrainer.activePokemon
+						activePokemon.addStatusEffect("poisoned", info[0], info[1], info[2])
 					}
 				}
 			}
@@ -914,6 +980,7 @@ class Round{
 			}
 		}
 
+		promise = promise.then(() => this.updateEverything())
 		promise = promise.then(() => this.checkForWinner())
 		if (this.activePlayer === "enemy"){
 			promise = promise.then(() => this.computerTakeTurn())

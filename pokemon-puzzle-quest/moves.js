@@ -543,6 +543,7 @@ const pokemonMoveData = {
 		},
 		effects: [
 			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
 			{ type: "load-value", value: 1 },
 			{ type: "choose-tiles", count: -1, target: "user" },
 			{ type: "load-value", value: 0 },
@@ -705,6 +706,31 @@ const pokemonMoveData = {
 					amount: -1
 				}
 			}
+		],
+	},
+	"Gust": {
+		name: "Gust",
+		type: "Flying",
+		category: "Special",
+		strategy: "basic-damage",
+		pp: 35,
+		power: 40,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			blue: 8
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Gust.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "load-value", value: 1 },
+			{ type: "get-side-number", left: 1, right: -1 },
+			{ type: "load-value", value: 0 },
+			{ type: "select-all-tiles", y: -1 },
+			{ type: "shift-tiles", selection: -1, xOffset: -3, yOffset: -2 },
 		],
 	},
 	"Harden": {
@@ -1163,6 +1189,32 @@ const pokemonMoveData = {
 			{ type: "apply-status-effect", statusEffect: "poisoned", target: "opponent" },
 		],
 	},
+	"Poison Powder": {
+		name: "Poison Powder",
+		type: "Grass",
+		category: "Status",
+		strategy: "debuff-opponent",
+		pp: 35,
+		power: null,
+		accuracy: 75,
+		rechargeTurns: 5,
+		energy: {
+			red: 4,
+			green: 4,
+			purple: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Poison Powder part 1.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "load-value", value: 5 },
+			{ type: "select-random-tiles", count: -1 },
+			{ type: "apply-status-to-tiles", selection: "group", which: -1,
+				status: { name: "Poison Powder", type: "debuff", duration: 5 }
+			}
+		],
+	},
 	"Poison Sting": {
 		name: "Poison Sting",
 		type: "Poison",
@@ -1386,29 +1438,29 @@ const pokemonMoveData = {
 			{ type: "damage", label: "tiny-damage" }
 		],
 	},
-	"Stun Spore": {
-		name: "Stun Spore",
+	"Sleep Powder": {
+		name: "Sleep Powder",
 		type: "Grass",
 		category: "Status",
 		strategy: "debuff-opponent",
-		pp: 30,
+		pp: 15,
 		power: null,
 		accuracy: 75,
 		rechargeTurns: 5,
 		energy: {
-			yellow: 4,
+			orange: 4,
 			green: 4,
 			blue: 4
 		},
 		sounds: {
-			"attack": "src/audio/attacks/Stun Spore.mp3"
+			"attack": "src/audio/attacks/Sleep Powder part 1.mp3"
 		},
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "load-value", value: 5 },
 			{ type: "select-random-tiles", count: -1 },
 			{ type: "apply-status-to-tiles", selection: "group", which: -1,
-				status: { name: "Stun Spore", type: "debuff", duration: 5 }
+				status: { name: "Sleep Powder", type: "debuff", duration: 5 }
 			}
 		],
 	},
@@ -1486,6 +1538,32 @@ const pokemonMoveData = {
 			{ type: "recoil-percent", percent: 0.25 },
 			{ type: "shuffle-board" },
 			{ type: "end-turn" }
+		],
+	},
+	"Stun Spore": {
+		name: "Stun Spore",
+		type: "Grass",
+		category: "Status",
+		strategy: "debuff-opponent",
+		pp: 30,
+		power: null,
+		accuracy: 75,
+		rechargeTurns: 5,
+		energy: {
+			yellow: 4,
+			green: 4,
+			blue: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Stun Spore.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "load-value", value: 5 },
+			{ type: "select-random-tiles", count: -1 },
+			{ type: "apply-status-to-tiles", selection: "group", which: -1,
+				status: { name: "Stun Spore", type: "debuff", duration: 5 }
+			}
 		],
 	},
 	"Supersonic": {
