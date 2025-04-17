@@ -603,6 +603,58 @@
 				{ "type": "wait", "waitDuration": 0, "then": "loop" },
 				{ "type": "text", "speaker": "Ashley", "text": "Aw, dang. Well, I guess she'll be pretty tired tonight. Let's get you rested up, okay?" }
 			]
+		},
+		"route-2-5-dialogue": {
+			"events": [],
+			"effects": [
+				{ "type": "get-speaker", "name": "Narrator", "class": "Narrator" },
+				{ "type": "text", "speaker": "Narrator", "text": "You decide not to have a trainer battle in the cemetery because something tells you that these trainers might not be interested right now." }
+			]
+		},
+		"route-2-6-dialogue": {
+			"events": [],
+			"effects": [
+				{ "type": "get-speaker", "name": "Ikue", "class": "Pokemon-Breeder-Gen7-F" },
+				{ "type": "come-in-from-offscreen", "speaker": "Ikue", "direction": "left", "duration": 1000, "waitDuration": 0 },
+				{ "type": "text", "speaker": "Ikue", "text": "Hey! You, uh— trainer person! You look like you've got some strong Pokémon! I need your help, come on!" },
+				{ "type": "text", "speaker": "Ikue", "text": "A bunch of those weird Skull guys are making a ruckus on the berry farm! Pa's tring to drive them out, but they just won't take a hint!" },
+				{ "type": "go-out-from-onscreen", "speaker": "Ikue", "direction": "right", "duration": 1000, "waitDuration": 0 },
+				{ "type": "animate", "selector": "#dialogue", "css": {
+					"opacity": 0
+				}, "duration": 1000, "waitDuration": 1000 },
+				{ "type": "remove-speaker", "speaker": "Ikue" },
+				{ "type": "get-speaker", "name": "Jay", "class": "Pokemon-Breeder-Gen7" },
+				{ "type": "get-speaker", "name": "Team Skull Grunt C", "class": "Team-Skull-Grunt", "position": "left", "facing": "right" },
+				{ "type": "style-speaker", "speaker": "Team Skull Grunt C", "css": {
+					"filter": "unset",
+					"left": "-=5%",
+					"top": "+=3%"
+				}},
+				{ "type": "get-speaker", "name": "Team Skull Grunt D", "class": "Team-Skull-Grunt", "position": "left", "facing": "right" },
+				{ "type": "style-speaker", "speaker": "Team Skull Grunt D", "css": {
+					"filter": "unset",
+					"left": "+=5%",
+					"top": "+=3%"
+				}},
+				{ "type": "animate", "selector": "#dialogue", "css": {
+					"opacity": 1
+				}, "duration": 1000, "waitDuration": 100 },
+				{ "type": "bounce", "speaker": "Team Skull Grunt C", "duration": 300, "waitDuration": 0 },
+				{ "type": "text", "speaker": "Team Skull Grunt C", "text": "Yo, I'm not gonna say it again, old man— hand over the berries!" },
+				{ "type": "bounce", "speaker": "Team Skull Grunt D", "duration": 300, "waitDuration": 0 },
+				{ "type": "text", "speaker": "Team Skull Grunt D", "text": "Yeah, hand 'em over! Us Team Skull guys got a sweet tooth!" },
+				{ "type": "text", "speaker": "Jay", "text": "These berries ain't for people. I'd be happy to give them to any Pokémon for free, but never to thieves like you!" },
+				{ "type": "bounce", "speaker": "Team Skull Grunt C", "duration": 300, "waitDuration": 0 },
+				{ "type": "text", "speaker": "Team Skull Grunt C", "text": "So you're saying I'm lower than a Pokémon? I already got self-esteem issues, man!" },
+				{ "type": "text", "speaker": "Jay", "text": "This here's a berry farm, not a free sample station. Now get, before I let out the Tauros!" },
+				{ "type": "get-speaker", "name": "Ikue", "class": "Pokemon-Breeder-Gen7-F", "position": "right", "facing": "left" },
+				{ "type": "style-speaker", "speaker": "Ikue", "css": {
+					"filter": "unset",
+					"left": "+=10%"
+				}},
+				{ "type": "come-in-from-offscreen", "speaker": "Ikue", "direction": "left", "duration": 1000, "waitDuration": 0 },
+				{ "type": "text", "speaker": "Ikue", "text": "Pa, I brought backup! Stranger, think you could help drive these pests out for us?" }
+			]
 		}
 	},
 	"pokemon": {
@@ -659,6 +711,9 @@
 		},
 		"Pichu": {
 			"name": "Pichu"
+		},
+		"Murkrow": {
+			"name": "Murkrow"
 		},
 		"Misdreavus": {
 			"name": "Misdreavus"
@@ -759,6 +814,11 @@
 			"name": "Confuse Ray",
 			"description": "Applies Confused. Then, the user chooses a tile. A 3x3 area of tiles centered around that tile are shuffled.",
 			"shortDescription": "Confuses and shuffles tiles."
+		},
+		"Confusion": {
+			"name": "Confusion",
+			"description": "Deals damage. Then, 50% of the time, applies Confused.",
+			"shortDescription": "Deals some damage and confuses"
 		},
 		"Copycat": {
 			"name": "Copycat",
@@ -1123,6 +1183,10 @@
 		"Route 2-5": {
 			"name": "Route 2-5",
 			"description": "A small cemetery sits on the outskirts of the island."
+		},
+		"Route 2-6": {
+			"name": "Route 2-6",
+			"description": "Team Skull is causing some trouble at a berry farm."
 		}
 	},
 	"route-categories": {

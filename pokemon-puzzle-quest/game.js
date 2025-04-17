@@ -1363,10 +1363,11 @@ class Round{
 				//REMEMBER: DOING NOTHING IS AN OPTION
 				let possibleActions = ["nothing"].concat(goodMoves)
 				let actionWeights = possibleActions.map(action => {
-					return this.getActionWeight(
+					let options = this.getActionWeightOptions(
 						trainer, pokemon, action,
 						payableMoves, unpayableMoves
 					)
+					return this.getActionWeight(options)
 				})
 				// actionWeights = actionWeights.map((weight, index) => {
 				// 	if (index === 0) return weight
@@ -1559,10 +1560,14 @@ class Round{
 
 		return promise
 	}
-	getActionWeight(trainer, pokemon, action, payableMoves, unpayableMoves){
+	getActionWeight(options){
 		//Action is either: a move, or nothing.
 		//Doing nothing is technically an action you can take.
-		let strategyData = getStrategyData(action)
+		let strategyData = getStrategyData(options.action)
+		let weight = strategyData.chooseWeight(options)
+		return weight
+	}
+	getActionWeightOptions(trainer, pokemon, action, payableMoves, unpayableMoves){
 		let options = {
 			game: this,
 			trainer: trainer,
@@ -1572,8 +1577,7 @@ class Round{
 			unpayableMoves: unpayableMoves,
 			allowRecursion: true
 		}
-		let weight = strategyData.chooseWeight(options)
-		return weight
+		return options
 	}
 
 	dealDamage(options){
@@ -3512,7 +3516,6 @@ class Round{
 			if (thisMove.highlightOnHover){
 				let onTag = isMouseSomewhereIn(moveTag)
 				if (onTag){
-					console.log(onTag)
 					moveTag.trigger("mouseenter")
 				}
 			}
@@ -3894,6 +3897,7 @@ class Board{
 		return coords
 	}
 
+	//Note: Selects the entire column, regardless of whether the player can see it.
 	getColumn(x){
 		return this.contents.filter(t => t.x === x).sort((a, b) => a.y - b.y)
 	}
@@ -4033,7 +4037,8 @@ class Board{
 
 	matchesIfSwapped(tile1, tile2){
 		let locationMap = new Map()
-		for (let tile of this.contents){
+		let contents = this.tilesOnScreen()
+		for (let tile of contents){
 			let x = tile.x
 			let y = tile.y
 			if (tile === tile1){
@@ -4160,7 +4165,8 @@ class Board{
 
 	getAllMatches(){
 		let allMatches = []
-		for (let tile of this.contents){
+		let contents = this.tilesOnScreen()
+		for (let tile of contents){
 			let matches = this.getAllMatchesForTile(tile)
 			if (matches.length){
 				for (let match of matches){
@@ -4180,7 +4186,8 @@ class Board{
 	countTiles(options){
 		let type = options.type
 		let count = 0
-		for (let tile of this.contents){
+		let contents = this.tilesOnScreen()
+		for (let tile of contents){
 			if (tile.type === type){
 				count++
 			}
@@ -4657,7 +4664,7 @@ function healAllPokemon(pokemonList){
 		pokemon.hp = pokemon.maxhp
 		//Remove all status effects
 		pokemon.statusEffects.forEach(statusEffect => {
-			p.removeStatus(statusEffect)
+			pokemon.removeStatus(statusEffect)
 		})
 
 		promises.push(savePokemon(pokemon))

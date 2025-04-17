@@ -291,6 +291,10 @@ class Pokemon{
 			for (let statusEffect of result.added){
 				this.statusEffects.splice(index, 0, statusEffect)
 				index++
+				
+				if (!statusEffect.class){
+					console.warn("No class given for ", statusEffect)
+				}
 			}
 			//Remove the old ones
 			for (let statusEffect of result.replaced){

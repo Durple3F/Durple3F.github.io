@@ -123,7 +123,7 @@ const pokemonMoveEffects = {
 				// let y = (tile.y + yOffset) % game.board.height
 				let x = tile.x + xOffset
 				let y = tile.y + yOffset
-				if (x >= width || y >= height){
+				if (x >= width || y >= height || x < 0 || y < 0){
 					tilesMovedOffscreen.push(tile)
 				}
 				let location = [x, y]
@@ -308,6 +308,19 @@ const pokemonMoveEffects = {
 			let target = options.target
 			let statusName = effect.statusName
 			target.removeStatusesWithName(statusName)
+			resolve()
+		}
+	},
+	"remove-all-status-effects": {
+		hasTarget: true,
+		targetType: "pokemon",
+		targetDefault: "user",
+		execute: (resolve, effect, params, game, options) => {
+			let target = options.target
+			let statusEffects = target.statusEffects
+			for (let statusEffect of statusEffects){
+				target.removeStatus(statusEffect)
+			}
 			resolve()
 		}
 	},

@@ -6,8 +6,9 @@ const moveUseStrategy = {
 			//things we could do if we wait.
 			let favoriteMove
 			let favoriteMoveWeight = 0
+			let payableMoves = options.payableMoves
 			let unpayableMoves = options.unpayableMoves
-			let actionWeights = unpayableMoves.map(action => {
+			unpayableMoves.concat(payableMoves).forEach(action => {
 				let weight = 0
 				if (options.allowRecursion){
 					weight = getActionWeightSimple(action, options, false)
@@ -22,7 +23,12 @@ const moveUseStrategy = {
 
 				return weight
 			})
-			let sum = actionWeights.reduce((acc, v) => acc + v, 0)
+
+			//If our favorite move is one of the payable ones,
+			//we probably shouldn't do nothing right now.
+			if (payableMoves.includes(favoriteMove)){
+				return 0
+			}
 
 			//Although, if there are moves we can use right now,
 			//that wouldn't prevent us from using other moves,
@@ -34,13 +40,16 @@ const moveUseStrategy = {
 			let resultWeight = favoriteMoveWeight
 			if (favoriteMove){
 				let favoriteCost = game.getEffectiveCost(trainer, pokemon, favoriteMove).energyCost
-				for (let action of options.payableMoves){
+				for (let action of payableMoves){
 					let hypotheticalEnergy = addEnergies(energyYouHave, getEmptyEnergy())
 					let cost = game.getEffectiveCost(trainer, pokemon, action).energyCost
 					let becameBelow = false
 					for (let color in cost){
 						if (!favoriteCost[color]) continue
-						if (hypotheticalEnergy[color] - cost[color] < favoriteCost[color]){
+						if (
+							hypotheticalEnergy[color] - cost[color] < favoriteCost[color] &&
+							hypotheticalEnergy[color] >= favoriteCost[color]
+						){
 							becameBelow = true
 							break
 						}
@@ -112,6 +121,28 @@ const moveUseStrategy = {
 			return weight
 		}
 	},
+	"Copycat": {
+		chooseWeight: options => {
+			let game = options.game
+			let trainer = options.trainer
+			let pokemon = options.pokemon
+			let otherTrainer = game.trainers.find(t => t !== trainer)
+			let prevMoves = game.moveUseHistory.filter(moveUseObj => {
+				return moveUseObj.trainer === otherTrainer
+			})
+			if (!prevMoves.length) return 0
+
+			let lastMoveUse = prevMoves[prevMoves.length - 1]
+			let lastMove = lastMoveUse.move
+			let newOptions = game.getActionWeightOptions(
+				trainer, pokemon, lastMove,
+				[], []
+			)
+			let weight = game.getActionWeight(newOptions)
+			
+			return weight
+		}
+	},
 	"Helping Hand": {
 		chooseWeight: options => {
 			let pokemon = options.pokemon
@@ -178,6 +209,35 @@ const moveUseStrategy = {
 			return result
 		}
 	},
+	"Haze": {
+		chooseWeight: options => {
+			let game = options.game
+			let trainer = options.trainer
+			//Notably, this is not the move's user, it's the active pokemon.
+			let pokemon = trainer.activePokemon
+			let otherTrainer = game.trainers.find(t => t !== trainer)
+			let otherPokemon = otherTrainer.activePokemon
+
+			let weight = 0
+			//Each 'debuff' that your active pokemon has counts towards this move's weight.
+			let statusEffects = pokemon.statusEffects
+			for (let statusEffect of statusEffects){
+				if (statusEffect.class === "debuff"){
+					weight += 10
+				}
+			}
+
+			//Each 'buff' that the opponent has counts towards this move's weight.
+			let statusEffects2 = otherPokemon.statusEffects
+			for (let statusEffect of statusEffects2){
+				if (statusEffect.class === "buff"){
+					weight += 10
+				}
+			}
+
+			return weight
+		}
+	},
 }
 
 function getActionWeightSimple(action, options, allowRecursion=false){
@@ -205,6 +265,6 @@ function getStrategyData(move){
 	if (strategy in moveUseStrategy){
 		return moveUseStrategy[strategy]
 	}
-	console.warn("You never handled", strategy)
+	console.warn("You never handled", strategy, move)
 	return moveUseStrategy["do-nothing"]
 }

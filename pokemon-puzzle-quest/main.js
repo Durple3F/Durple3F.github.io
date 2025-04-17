@@ -1,4 +1,4 @@
-const versionNumber = "v0.12.11"
+const versionNumber = "v0.12.12"
 let lang = "en"
 let playerName
 
@@ -408,7 +408,9 @@ function getRandomTileType(){
 }
 
 function clearModal(modal){
+	let shown = modal.hasClass("show")
 	modal.removeClass().addClass("modal").addClass("fade")
+	if (shown) modal.addClass("show")
 	modal.find(".modal-header").empty().append("<div class='modal-title'>")
 	modal.find(".modal-header").removeClass().addClass("modal-header")
 	modal.find(".modal-header > .modal-title").empty()

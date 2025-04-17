@@ -1066,6 +1066,52 @@ const pokemonData = {
 			},
 		]
 	},
+	"Murkrow": {
+		name: "Murkrow",
+		number: "198",
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0198Murkrow.png",
+			"largeShiny": "src/img/shiny-pokemon/198-Murkrow.png",
+			"home": "src/img/tiny-pokemon/Murkrow.png"
+		},
+		sounds: {
+			cry: "src/audio/cries/murkrow.mp3"
+		},
+		types: ["Dark", "Flying"],
+		tags: [],
+		stats: {
+			hp: 60,
+			attack: 85,
+			defense: 42,
+			specialAttack: 85,
+			specialDefense: 42,
+			speed: 91
+		},
+		expYield: 81,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 1
+		},
+		energyMastery: {
+			orange: 2,
+			yellow: 1,
+			purple: 3
+		},
+		evolutions: [
+			
+		],
+		learnset: [
+			{ name: "Peck", unlock: { type: "level", amount: 1 } },
+			{ name: "Astonish", unlock: { type: "level", amount: 1 } },
+			{ name: "Gust", unlock: { type: "level", amount: 5 } },
+			{ name: "Haze", unlock: { type: "level", amount: 11 } },
+		]
+	},
 	"Misdreavus": {
 		name: "Misdreavus",
 		number: "200",

@@ -186,6 +186,7 @@ const pokemonMoveData = {
 				type: "apply-debuff", target: "user", debuff: {
 					type: "stat",
 					stat: "specialDefense",
+					class: "buff",
 					amount: 1
 				}
 			},
@@ -227,6 +228,7 @@ const pokemonMoveData = {
 			{
 				type: "apply-debuff", target: "opponent", debuff: {
 					type: "stat",
+					class: "debuff",
 					stat: "attack",
 					amount: -1
 				}
@@ -281,7 +283,7 @@ const pokemonMoveData = {
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
 			{ type: "random-number", min: 1, max: 10 },
-			{ type: "load-value", value: 0 },
+			{ type: "load-value", value: 6 },
 			{ type: "jump-if-less-than", jumpTo: Infinity },
 			{ type: "play-sound", name: "activate" },
 			{ type: "apply-status-effect", statusEffect: "confused", target: "opponent" }
@@ -343,15 +345,15 @@ const pokemonMoveData = {
 			{ type: "jump-if-includes", jumpTo: "Ghost"},
 			{
 				type: "apply-debuff", target: "user",
-				debuff: { type: "stat", stat: "speed", amount: -1 }
+				debuff: { type: "stat", stat: "speed", class: "debuff", amount: -1 }
 			},
 			{
 				type: "apply-debuff", target: "user",
-				debuff: { type: "stat", stat: "attack", amount: 1 }
+				debuff: { type: "stat", stat: "attack", class: "buff", amount: 1 }
 			},
 			{
 				type: "apply-debuff", target: "user",
-				debuff: { type: "stat", stat: "defense", amount: 1 }
+				debuff: { type: "stat", stat: "defense", class: "buff", amount: 1 }
 			},
 			{ type: "jump", jumpTo: Infinity},
 			{ type: "load-value", value: 1, label: "Ghost" },
@@ -383,6 +385,7 @@ const pokemonMoveData = {
 				type: "apply-debuff", target: "user", debuff: {
 					type: "stat",
 					stat: "defense",
+					class: "buff",
 					amount: 1
 				}
 			},
@@ -452,6 +455,7 @@ const pokemonMoveData = {
 				type: "apply-debuff", target: "user", debuff: {
 					type: "stat",
 					stat: "speed",
+					class: "buff",
 					amount: 1
 				}
 			},
@@ -506,7 +510,7 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			red: 12
+			red: 8
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Ember.mp3"
@@ -628,6 +632,7 @@ const pokemonMoveData = {
 				type: "apply-debuff", target: "opponent", debuff: {
 					type: "stat",
 					stat: "specialDefense",
+					class: "debuff",
 					amount: -2
 				}
 			}
@@ -677,6 +682,7 @@ const pokemonMoveData = {
 				type: "apply-debuff", target: "user", debuff: {
 					type: "stat",
 					stat: "attack",
+					class: "buff",
 					amount: 2
 				}
 			}
@@ -703,6 +709,7 @@ const pokemonMoveData = {
 				type: "apply-debuff", target: "opponent", debuff: {
 					type: "stat",
 					stat: "attack",
+					class: "debuff",
 					amount: -1
 				}
 			}
@@ -750,6 +757,27 @@ const pokemonMoveData = {
 			{ type: "play-sound", name: "attack" },
 			{ type: "apply-status-effect", statusEffect: "invulnerable", target: "user" },
 			{ type: "end-turn" }
+		],
+	},
+	"Haze": {
+		name: "Haze",
+		type: "Ice",
+		category: "Status",
+		strategy: "special",
+		pp: 30,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 5,
+		energy: {
+			red: 5,
+			blue: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Haze.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "remove-all-status-effects", target: "opponent" },
 		],
 	},
 	"Helping Hand": {
@@ -878,7 +906,7 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			green: 12
+			green: 8
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Leafage.mp3"
@@ -912,6 +940,7 @@ const pokemonMoveData = {
 				type: "apply-debuff", target: "opponent", debuff: {
 					type: "stat",
 					stat: "defense",
+					class: "debuff",
 					amount: -1
 				}
 			}
@@ -1062,6 +1091,7 @@ const pokemonMoveData = {
 				type: "apply-debuff", target: "user", debuff: {
 					type: "stat",
 					stat: "specialAttack",
+					class: "buff",
 					amount: 2
 				}
 			}
@@ -1158,6 +1188,7 @@ const pokemonMoveData = {
 				type: "apply-debuff", target: "opponent", debuff: {
 					type: "stat",
 					stat: "attack",
+					class: "debuff",
 					amount: -1
 				}
 			},
@@ -1515,6 +1546,7 @@ const pokemonMoveData = {
 				type: "apply-debuff", target: "opponent", debuff: {
 					type: "stat",
 					stat: "speed",
+					class: "debuff",
 					amount: -2
 				}
 			}
@@ -1671,6 +1703,7 @@ const pokemonMoveData = {
 				type: "apply-debuff", target: "opponent", debuff: {
 					type: "stat",
 					stat: "defense",
+					class: "debuff",
 					amount: -1
 				}
 			}
@@ -1808,7 +1841,7 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			blue: 12
+			blue: 8
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Water Gun.mp3"

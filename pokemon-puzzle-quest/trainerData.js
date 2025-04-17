@@ -152,6 +152,20 @@ const NPCTrainerData = {
 			trainer: "src/img/trainers/backpackerf.png"
 		}
 	},
+	"Pokemon-Breeder-Gen7": {
+		name: "Pokémon Breeder",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/pokemonbreeder-gen7.png"
+		}
+	},
+	"Pokemon-Breeder-Gen7-F": {
+		name: "Pokémon Breeder",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/pokemonbreederf-gen7.png"
+		}
+	},
 	"Team-Skull-Grunt": {
 		name: "Team Skull Grunt",
 		type: "trainer",

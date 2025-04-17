@@ -30,6 +30,32 @@ const dialogueEffects = {
 			resolve()
 		}
 	},
+	"bounce": {
+		hasSpeaker: true,
+		execute: (resolve, effect, progress, options) => {
+			let speaker = options.speaker
+			let tag = speaker.tag
+			let duration = effect.duration
+			let waitDuration = effect.waitDuration ?? duration
+			let stepHeight = options.dialogueTag.height() * 0.035
+
+			$({ val: 0 }).animate({ val: 1 }, {
+				duration: duration,
+				easing: "linear",
+				step: function(){
+					let p = this.val
+					let stepP = (Math.max(p, 1-p) - 0.5)*2
+					let y = (-stepHeight) + (stepP ** 2) * stepHeight
+					tag.css("transform", "translateY("+y+"px)")
+				},
+				complete: function(){
+					
+				}
+			})
+			
+			delay(waitDuration).then(() => resolve())
+		}
+	},
 	"wait": {
 		execute: (resolve, effect, progress, options) => {
 			let wait = effect.waitDuration
@@ -193,6 +219,18 @@ const dialogueEffects = {
 			let animationName = effect.name
 			background.playAnimation(animationName)
 			resolve()
+		}
+	},
+	"animate": {
+		hasTarget: false,
+		execute: (resolve, effect, progress, options) => {
+			let selector = effect.selector
+			let tag = $(selector)
+			let css = effect.css
+			let duration = effect.duration
+			let waitDuration = effect.waitDuration ?? duration
+			tag.animate(css, duration)
+			delay(waitDuration).then(() => resolve())
 		}
 	}
 }

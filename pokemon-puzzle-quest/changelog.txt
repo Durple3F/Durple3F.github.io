@@ -1,5 +1,12 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
+4/16 (19.9k lines):
+	- Added Murkrow
+	- Added Haze + AI
+	- Fixed lots of little bugs.
+	- Route 2-5
+	- Added AI to Copycat
+
 4/15 (19.6k lines):
 	- Opponents will avoid using a move if its cost makes it harder to use a move they'd like to use more.
 	- Added Cottonee, Misdreavus, Drifloon
@@ -10,6 +17,7 @@
 	- Added the rest of 2-4.
 	- Fairy Wind now no longer loops the screen.
 	- Added Gust, Poison Powder, Sleep Powder
+	- Some work on 2-5
 
 4/14 (18.7k lines):
 	- Status effects can now have an actual image overlaying the tile instead of just a tiny circle.

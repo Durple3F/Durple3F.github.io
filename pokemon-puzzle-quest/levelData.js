@@ -713,7 +713,7 @@ const levelData = [
 			{ type: "dialogue", source: "route-2-4-dialogue-won" },
 		]
 	},
-	//2-5: 
+	//2-5: Zubat, Gastly, Misdreavus, Drifloon, Murkrow
 	{
 		id: "Route 2-5",
 		category: "Route 2",
@@ -723,24 +723,52 @@ const levelData = [
 		trainers: [
 			{
 				isWild: true,
-				targetPokemon: 4,
-				canPickDuplicates: true,
+				targetPokemon: 5,
+				canPickDuplicates: false,
 				possiblePokemon: [
-					// { id: "Zubat", levelMin: 8, levelMax: 11, weight: 4 },
-					// { id: "Gastly", levelMin: 8, levelMax: 11, weight: 4 },
-					// { id: "Misdreavus", levelMin: 8, levelMax: 11, weight: 4 },
+					{ id: "Zubat", levelMin: 8, levelMax: 11, weight: 4 },
+					{ id: "Gastly", levelMin: 8, levelMax: 11, weight: 4 },
+					{ id: "Misdreavus", levelMin: 8, levelMax: 11, weight: 4 },
 					{ id: "Drifloon", levelMin: 8, levelMax: 11, weight: 4 },
+					{ id: "Murkrow", levelMin: 8, levelMax: 11, weight: 2 },
 				]
 			},
 		],
 		effects: [
 			{ type: "fight", trainer: 0 },
-			// { type: "jump-if-lost", jumpTo: Infinity },
-			// { type: "dialogue", source: "route-2-4-dialogue" },
-			// { type: "change-music", music: "SM Trainer Battle" },
-			// { type: "fight", trainer: 1 },
-			// { type: "jump-if-lost", jumpTo: Infinity },
-			// { type: "dialogue", source: "route-2-4-dialogue-won" },
+			{ type: "dialogue", source: "route-2-5-dialogue" },
+		]
+	},
+	//2-6: Battle with Team Skull Grunts + Ikue
+	{
+		id: "Route 2-6",
+		category: "Route 2",
+		name: "Route 2-6",
+		music: "SM Wild Pokemon Battle",
+		icon: "6",
+		trainers: [
+			{
+				name: "Ikue",
+				class: "Pokemon-Breeder-Gen7-F",
+				pokemon: [
+					{ id: "Pikachu", level: 12 }
+				]
+			},
+			{
+				name: "Team Skull Grunt C",
+				class: "Team-Skull-Grunt",
+				pokemon: [
+					{ id: "Drowzee", level: 12 },
+					{ id: "Zubat", level: 10 },
+					{ id: "Spinarak", level: 10 },
+					{ id: "Meowth-Alola", level: 10 },
+				]
+			},
+		],
+		effects: [
+			{ type: "dialogue", source: "route-2-6-dialogue" },
+			{ type: "fight", trainer: 1 },
+			{ type: "jump-if-lost", jumpTo: Infinity },
 		]
 	},
 ]
