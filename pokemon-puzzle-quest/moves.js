@@ -688,6 +688,60 @@ const pokemonMoveData = {
 			}
 		],
 	},
+	"Fury Attack": {
+		name: "Fury Attack",
+		type: "Normal",
+		category: "Physical",
+		strategy: "basic-damage",
+		pp: 20,
+		power: 15,
+		accuracy: 85,
+		rechargeTurns: 1,
+		energy: {
+			orange: 5,
+			yellow: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Fury Attack 1hit.mp3"
+		},
+		effects: [
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "fury-attack-attacking",
+				type: "hidden",
+				stacks: true,
+				volatile: true,
+				turns: 1
+			} },
+		],
+		onTurnEnd: [
+			{ type: "get-status-stacks", target: "user", statusName: "fury-attack-attacking" },
+			{ type: "load-value", value: 0 },
+			{ type: "jump-if-equal", jumpTo: Infinity },
+			{ type: "remove-status-effect", target: "user", statusName: "fury-attack-attacking" },
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "get-cascade" },
+			{ type: "load-value", value: 2},
+			{ type: "jump-if-less-than", jumpTo: Infinity },
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "get-cascade" },
+			{ type: "load-value", value: 3},
+			{ type: "jump-if-less-than", jumpTo: Infinity },
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "get-cascade" },
+			{ type: "load-value", value: 4},
+			{ type: "jump-if-less-than", jumpTo: Infinity },
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "get-cascade" },
+			{ type: "load-value", value: 5},
+			{ type: "jump-if-less-than", jumpTo: Infinity },
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" }
+		]
+	},
 	"Growl": {
 		name: "Growl",
 		type: "Normal",

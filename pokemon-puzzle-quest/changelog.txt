@@ -1,11 +1,14 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-4/16 (19.9k lines):
+4/16 (20.0k lines)!!!!!:
 	- Added Murkrow
 	- Added Haze + AI
 	- Fixed lots of little bugs.
 	- Route 2-5
 	- Added AI to Copycat
+	- Tweaked AI for when it is appropriate to do nothing.
+	- Moves can now do something at the end of your turn.
+	- Added Fury Attack, a move that does things at the end of your turn.
 
 4/15 (19.6k lines):
 	- Opponents will avoid using a move if its cost makes it harder to use a move they'd like to use more.

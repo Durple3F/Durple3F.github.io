@@ -880,6 +880,11 @@
 			"description": "Raises the user's attack stat by 2 stages.",
 			"shortDescription": "Raises user's attack"
 		},
+		"Fury Attack": {
+			"name": "Fury Attack",
+			"description": "At the end of your turn, deals damage a number of times equal to the number of matches made that turn (max 5).",
+			"shortDescription": "Damage per match this turn"
+		},
 		"Growl": {
 			"name": "Growl",
 			"description": "Lowers the opponent's attack stat by 1 stage.",

@@ -1001,47 +1001,67 @@ class Round{
 			return
 		}
 
+		let promise = Promise.resolve()
+		//Find any end-of-turn effects that moves may have.
+		for (let trainer of this.trainers){
+			let activePokemon = trainer.activePokemon
+			let activeMoves = activePokemon.activeMoves
+			for (let move of activeMoves){
+				if (move.onTurnEnd){
+					promise = promise.then(() => {
+						return this.triggerMoveEffects(
+							trainer, activePokemon, move, "onTurnEnd"
+						)
+					})
+				}
+			}
+		}
+
 		//Reduce initiative
-		let initiatives = this.initiativeValues
-		let newInitiative = initiatives[this.activePlayerIndex] - this.maxInitiative
-		initiatives[this.activePlayerIndex] = Math.max(0, newInitiative)
-		this.updateInitiative(this.activePlayerIndex, false)
+		promise = promise.then(() => {
+			let initiatives = this.initiativeValues
+			let newInitiative = initiatives[this.activePlayerIndex] - this.maxInitiative
+			initiatives[this.activePlayerIndex] = Math.max(0, newInitiative)
+			this.updateInitiative(this.activePlayerIndex, false)
 
-		let activeTrainer = this.trainers[this.activePlayerIndex]
-		let activePokemon = activeTrainer.activePokemon
+			let activeTrainer = this.trainers[this.activePlayerIndex]
+			let activePokemon = activeTrainer.activePokemon
 
-		//A Drowsy pokemon becomes asleep.
-		if (activePokemon.hasStatus("drowsy")){
-			let drowsy = activePokemon.getStatuses("drowsy")[0]
-			if (this.currentCascade >= 2){
-				activePokemon.removeStatusesWithName("drowsy")
-			} else if (drowsy) {
-				let sourceTrainer = drowsy.sourceTrainer
-				let sourcePokemon = drowsy.sourcePokemon
-				let sourceMove = drowsy.sourceMove
-				activePokemon.addStatusEffect("asleep", sourceTrainer, sourcePokemon, sourceMove)
+			//A Drowsy pokemon becomes asleep.
+			if (activePokemon.hasStatus("drowsy")){
+				let drowsy = activePokemon.getStatuses("drowsy")[0]
+				if (this.currentCascade >= 2){
+					activePokemon.removeStatusesWithName("drowsy")
+				} else if (drowsy) {
+					let sourceTrainer = drowsy.sourceTrainer
+					let sourcePokemon = drowsy.sourcePokemon
+					let sourceMove = drowsy.sourceMove
+					activePokemon.addStatusEffect("asleep", sourceTrainer, sourcePokemon, sourceMove)
+				}
 			}
-		}
 
-		let nextPlayer = this.getNextPlayer()
-		if (nextPlayer !== this.activePlayerIndex){
-			this.prepareToChangeTurns(nextPlayer)
-		}
+			let nextPlayer = this.getNextPlayer()
+			if (nextPlayer !== this.activePlayerIndex){
+				this.prepareToChangeTurns(nextPlayer)
+			}
 
-		this.currentlyReversingSwap = false
-		this.updateEverything()
-		this.turn++
-		let newTurn = this.turn
+			this.currentlyReversingSwap = false
+			this.updateEverything()
+			this.turn++
+			let newTurn = this.turn
+			
+			if (this.hasBegun){
+				if (this.activePlayer === "player"){
+					delay(300).then(() => this.turnStart(newTurn))
+				} else {
+					this.waitUntilNoAnnouncements(() => {
+						return delay(300).then(() => this.turnStart(newTurn))
+					})
+				}
+			}
+		})
 		
-		if (this.hasBegun){
-			if (this.activePlayer === "player"){
-				delay(300).then(() => this.turnStart(newTurn))
-			} else {
-				this.waitUntilNoAnnouncements(() => {
-					return delay(300).then(() => this.turnStart(newTurn))
-				})
-			}
-		}
+		return promise
 	}
 
 	prepareToChangeTurns(newPlayer){
@@ -2221,7 +2241,7 @@ class Round{
 				this.currentlyEndingTurn = true
 				// this.turnEnd(this.turn)
 				promise = promise.then(() => {
-					this.turnEnd(turn)
+					return this.turnEnd(turn)
 				})
 			}
 

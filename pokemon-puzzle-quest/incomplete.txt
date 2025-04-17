@@ -1,7 +1,7 @@
 Incomplete move lists:
   Butterfree (lv 12)
   Rattata-Alola (lv 10)
-  Spearow (lv 8)
+  Spearow (lv 11)
   Pikachu (lv 8)
   Zubat (lv 5)
   Meowth-Alola (lv 8)

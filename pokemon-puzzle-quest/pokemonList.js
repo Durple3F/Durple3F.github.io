@@ -263,6 +263,7 @@ const pokemonData = {
 			{ name: "Growl", unlock: { type: "level", amount: 1 } },
 			{ name: "Leer", unlock: { type: "level", amount: 4 } },
 			{ name: "Assurance", unlock: { type: "level", amount: 8 } },
+			{ name: "Fury Attack", unlock: { type: "level", amount: 11 } },
 		]
 	},
 	"Pikachu": {
@@ -1688,6 +1689,7 @@ const pokemonData = {
 			{ name: "Water Gun", unlock: { type: "level", amount: 3 } },
 			{ name: "Disarming Voice", unlock: { type: "level", amount: 6 } },
 			{ name: "Aqua Jet", unlock: { type: "level", amount: 9 } },
+			{ name: "Fury Attack", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {

@@ -900,6 +900,14 @@ const pokemonMoveEffects = {
 			resolve()
 		}
 	},
+	"get-cascade": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let result = game.currentCascade
+			console.log(result)
+			resolve(result)
+		}
+	},
 	"get-initiative": {
 		update: false,
 		execute: (resolve, effect, params, game, options) => {
