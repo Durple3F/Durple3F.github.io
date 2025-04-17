@@ -1368,7 +1368,12 @@ class Round{
 		let promise = Promise.resolve()
 		let trainerIndex = this.activePlayerIndex
 		const makeMove = () => {
+			let trainer = this.trainers[trainerIndex]
+			let pokemon = trainer.activePokemon
 			let availableMoves = this.getAvailableMoves(trainerIndex)
+			availableMoves = availableMoves.filter(move => {
+				return !this.getEffectiveMoveDisability(trainer, pokemon, move)
+			})
 			let payableMoves = availableMoves.filter(move => {
 				let payability = this.canPayCost(move, trainerIndex)
 				return Object.keys(payability).every(key => payability[key] === true)
@@ -1378,8 +1383,6 @@ class Round{
 			})
 			let goodMoves = this.computerApplicableMoves(payableMoves)
 			if (goodMoves.length){
-				let trainer = this.trainers[trainerIndex]
-				let pokemon = trainer.activePokemon
 				//REMEMBER: DOING NOTHING IS AN OPTION
 				let possibleActions = ["nothing"].concat(goodMoves)
 				let actionWeights = possibleActions.map(action => {
@@ -1785,6 +1788,10 @@ class Round{
 		let trainer = this.trainers[trainerIndex]
 		let pokemon = trainer.pokemon[pokemonIndex]
 		let move = pokemon.moves[moveIndex]
+		if (this.getEffectiveMoveDisability(trainer, pokemon, move)){
+			this.createAnnouncement("general", "That move has been disabled.")
+			return
+		}
 		let moveUsage = pokemon.moveUsage[moveIndex]
 		if (moveUsage.recharge){
 			this.createAnnouncement("general", "That move is recharging.")
@@ -1910,6 +1917,18 @@ class Round{
 	getEffectiveMoveType(trainer, pokemon, move){
 		return move.type
 	}
+	getEffectiveMoveDisability(trainer, pokemon, move){
+		let disabled = false
+		let disableEffects = pokemon.getStatusesOfType("disability")
+		for (let statusEffect of disableEffects){
+			let effectiveType = this.getEffectiveMoveType(trainer, pokemon, move)
+			let applies = this.doesThisApplyToMove(move, statusEffect.appliesTo, effectiveType)
+			if (applies){
+				disabled = true
+			}
+		}
+		return disabled
+	}
 
 	doesThisApplyToMove(move, appliesTo, type) {
 		let good = []
@@ -1919,7 +1938,7 @@ class Round{
 		if (appliesTo.names){
 			good.push(appliesTo.names.includes(move.name))
 		}
-		if (appliesTo.types){
+		if (type && appliesTo.types){
 			good.push(appliesTo.types.includes(type))
 		}
 		let logic = appliesTo.logic
@@ -2159,6 +2178,39 @@ class Round{
 			alert("Something broke during this move's execution. Please send me a screenshot of the console. (F12)")
 		}
 		promise.then(val => new Promise(res => {
+			//If the value is intended to have replacements applied, those happen now.
+			if (effect.replacementsForResultObj){
+				let replacementsList = effect.replacementsForResultObj
+				replacementsList.forEach(replacementObj => {
+					let path = replacementObj.path
+					let values = replacementObj.replacements.map(givenIndex => {
+						let index
+						if (givenIndex < 0) {
+							index = effectIndex + givenIndex
+						} else {
+							index = givenIndex
+						}
+						return moveUseObj.info[index]
+					})
+					let lastObj = val
+					for (let key of path){
+						if (key in lastObj){
+							lastObj = lastObj[key]
+						}
+					}
+					if (!lastObj){
+						console.warn("WEE OO WEE OO failed to find data", path, values, lastObj, val)
+					} else {
+						let key = replacementObj.key
+						if (typeof lastObj[key] === "string"){
+							lastObj[key] = applyReplacements(lastObj[key], values)
+						} else {
+							console.warn("WEE OO WEE OO failed to find data", path, values, lastObj, val)
+						}
+					}
+				})
+			}
+			//If the value is given, save it.
 			if (val !== undefined){
 				moveUseObj.info[effectIndex] = val
 			}
@@ -3294,6 +3346,12 @@ class Round{
 				moveUseList = moveUseList.filter(moveUseObj => {
 					return moveUseObj.trainer !== trainer
 				})
+				if (highlight.except){
+					moveUseList = moveUseList.filter(moveUseObj => {
+						let move = moveUseObj.move
+						return !this.doesThisApplyToMove(move, highlight.except, undefined)
+					})
+				}
 				if (moveUseList.length === 0) return
 				let lastMoveUse = moveUseList[moveUseList.length - 1]
 				let thatTrainer = lastMoveUse.trainer
@@ -3538,6 +3596,13 @@ class Round{
 				if (onTag){
 					moveTag.trigger("mouseenter")
 				}
+			}
+
+			let isDisabled = this.getEffectiveMoveDisability(thisTrainer, thisPokemon, thisMove)
+			if (isDisabled){
+				moveTag.addClass("disabled")
+			} else {
+				moveTag.removeClass("disabled")
 			}
 
 			if (usable && this.canUseMovesRightNow(trainerIndex)){

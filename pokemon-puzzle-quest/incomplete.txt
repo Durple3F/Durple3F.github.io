@@ -10,7 +10,7 @@ Incomplete move lists:
   Magnemite (lv 8)
   Grimer-Alola (lv 7)
   Gastly (lv 8)
-  Drowzee (lv 1)
+  Drowzee (lv 9)
   Ledyba (lv 8)
   Spinarak (lv 8)
   Murkrow (lv 11)

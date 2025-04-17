@@ -288,7 +288,7 @@ const pokemonMoveEffects = {
 			let pokemon = moveUseObj.pokemon
 			let move = moveUseObj.move
 			target.addStatusEffect(statusEffect, trainer, pokemon, move)
-			resolve()
+			resolve(statusEffect)
 		}
 	},
 	"apply-debuff": {
@@ -761,6 +761,15 @@ const pokemonMoveEffects = {
 			resolve(result)
 		}
 	},
+	"get-move-name": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let move = params.move
+			let result = move.name
+			console.log(move)
+			resolve(result)
+		}
+	},
 	"get-last-move": {
 		update: false,
 		hasTarget: true,
@@ -774,11 +783,18 @@ const pokemonMoveEffects = {
 					return moveUseObj.trainer === target
 				})
 			}
+			if (effect.except){
+				moveUseList = moveUseList.filter(moveUseObj => {
+					let move = moveUseObj.move
+					return !game.doesThisApplyToMove(move, effect.except, undefined)
+				})
+			}
 			let moveUseObj = moveUseList[moveUseList.length - 1]
 			if (!moveUseObj){
 				resolve(undefined)
 				return
 			}
+			console.log(moveUseObj.move)
 			let result = moveUseObj.move
 			resolve(result)
 		}

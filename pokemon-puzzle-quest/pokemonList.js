@@ -830,20 +830,10 @@ const pokemonData = {
 			purple: 6
 		},
 		learnset: [
-			{
-				name: "Pound",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "Hypnosis",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
+			{ name: "Pound", unlock: { type: "level", amount: 1 } },
+			{ name: "Hypnosis", unlock: { type: "level", amount: 1 } },
+			{ name: "Disable", unlock: { type: "level", amount: 5 } },
+			{ name: "Confusion", unlock: { type: "level", amount: 9 } },
 		]
 	},
 	"Ledyba": {
@@ -1689,7 +1679,7 @@ const pokemonData = {
 			{ name: "Water Gun", unlock: { type: "level", amount: 3 } },
 			{ name: "Disarming Voice", unlock: { type: "level", amount: 6 } },
 			{ name: "Aqua Jet", unlock: { type: "level", amount: 9 } },
-			{ name: "Fury Attack", unlock: { type: "level", amount: 1 } },
+			{ name: "Disable", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {

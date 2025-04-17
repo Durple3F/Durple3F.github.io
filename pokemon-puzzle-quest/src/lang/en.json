@@ -835,6 +835,11 @@
 			"description": "Raises the user's defense stat by 1 stage.",
 			"shortDescription": "Raises defense and buffs other moves"
 		},
+		"Disable": {
+			"name": "Disable",
+			"description": "Disables the move used most recently by the opponent for 10 turns.",
+			"shortDescription": "Disables a move"
+		},
 		"Disarming Voice": {
 			"name": "Disarming Voice",
 			"description": "Deals damage. Has a 50% chance to confuse the opponent. Ends the turn.",

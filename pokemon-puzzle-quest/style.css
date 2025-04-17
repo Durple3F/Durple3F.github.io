@@ -852,6 +852,7 @@ body {
 	width: 100%;
 }
 .move {
+	position: relative;
 	border-radius: 0.25em;
 	--background-color: var(var(--player-color));
 	background-color: var(--move-unusable);
@@ -1122,6 +1123,26 @@ body {
 	text-align: center;
 	transform: translate(-50%, -50%);
 	color: white;
+}
+
+.move > .disabled-container {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	top: 0; left: 0;
+	z-index: 10;
+}
+.move > .disabled-container > img {
+	position: absolute;
+	height: 0;
+	width: 0;
+	top: 50%; left: 50%;
+	transform: translate(-50%, -50%);
+	transition: height 0.3s, width 0.3s;
+}
+.move.disabled > .disabled-container > img {
+	height: calc(100% + 1em);
+	width: calc(100% + 1em);
 }
 
 .pokemon-stats {

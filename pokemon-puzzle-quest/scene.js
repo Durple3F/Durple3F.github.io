@@ -1814,6 +1814,11 @@ function getMoveHTML(move, useLongDescription=false){
 		}
 	}
 	tag.append(moveCostTag)
+
+	let disabledContainer = $("<div class='disabled-container'>")
+	disabledContainer.append("<img src='src/img/big red x.png'>")
+	tag.append(disabledContainer)
+
 	return tag
 }
 

@@ -143,6 +143,30 @@ const moveUseStrategy = {
 			return weight
 		}
 	},
+	"Disable": {
+		chooseWeight: options => {
+			let game = options.game
+			let trainer = options.trainer
+			let pokemon = options.pokemon
+			let otherTrainer = game.trainers.find(t => t !== trainer)
+			let prevMoves = game.moveUseHistory.filter(moveUseObj => {
+				return moveUseObj.trainer === otherTrainer &&
+				moveUseObj.move.name !== "Struggle"
+			})
+			if (!prevMoves.length) return 0
+
+			let otherPokemon = otherTrainer.activePokemon
+			let lastMoveUse = prevMoves[prevMoves.length - 1]
+			let lastMove = lastMoveUse.move
+			let newOptions = game.getActionWeightOptions(
+				otherTrainer, otherPokemon, lastMove,
+				[], []
+			)
+			let weight = game.getActionWeight(newOptions) * 10
+			
+			return weight
+		}
+	},
 	"Helping Hand": {
 		chooseWeight: options => {
 			let pokemon = options.pokemon

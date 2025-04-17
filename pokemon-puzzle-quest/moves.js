@@ -406,6 +406,54 @@ const pokemonMoveData = {
 			} },
 		],
 	},
+	"Disable": {
+		name: "Disable",
+		type: "Normal",
+		category: "Status",
+		strategy: "special",
+		pp: 20,
+		power: null,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			// orange: 6,
+			// purple: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Disable.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-last-move", target: "opponent", except: { name: "Struggle" } },
+			{ type: "jump-if-truthy", jumpTo: "add-disability" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "get-move-name", move: -3, label: "add-disability" },
+			{ type: "apply-status-effect", target: "opponent", statusEffect: {
+				name: "disable-disability",
+				type: "disability",
+				stacks: false,
+				volatile: true,
+				lostOnSwap: true,
+				batonPassable: false,
+				turns: 11, //It should be 10, but add 1 because their turn is about to start anyway
+				appliesTo: {
+					name: "%c%"
+				},
+			}, replacementsForResultObj: [
+				{
+					path: ["appliesTo"],
+					key: "name",
+					replacements: [-1]
+				}
+			] },
+		],
+		highlightOnHover: {
+			type: "last-enemy-move",
+			except: {
+				name: "Struggle"
+			}
+		}
+	},
 	"Disarming Voice": {
 		name: "Disarming Voice",
 		type: "Fairy",
@@ -1334,7 +1382,7 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			red: 6
+			// red: 6
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Pound.mp3"
