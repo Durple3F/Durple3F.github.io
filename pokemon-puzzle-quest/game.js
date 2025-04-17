@@ -272,7 +272,7 @@ class Round{
 				})
 			} else if (this.result === "lose"){
 				let toGive = this.calculateEXPGained()
-				let skipEndScreen = Object.keys(toGive).every(key => toGive[key] === 0)
+				let skipEndScreen = Object.keys(toGive).every(key => toGive[key].exp === 0)
 
 				if (!skipEndScreen){
 					this.promise = this.promise.then(() => {
@@ -1177,7 +1177,10 @@ class Round{
 		let playing = false
 		const pretendToGiveEXP = (chooseable, pokemon, fromLevel) => {
 			let barContainer = chooseable.children(".exp-bar")
-			let gained = toGive[pokemon.uuid] || 0
+			let gained = 0
+			if (pokemon.uuid in toGive){
+				gained = toGive[pokemon.uuid].exp
+			}
 			let originalLevel = pokemon.level
 			let newLevel = pokemon.getLevelFromEXP(pokemon.exp + gained)
 			let expPastNewLevel = pokemon.exp + gained - pokemon.getEXPNeededForLevel(newLevel)
@@ -1245,8 +1248,9 @@ class Round{
 		let learnedMoves = []
 		for (let i = 0; i < pokemon.length; i++){
 			let p = pokemon[i]
-			let gained = toGive[p.uuid] || 0
-			if (gained){
+			let gained = 0
+			if (p.uuid in toGive){
+				gained = toGive[p.uuid].exp
 				p.exp += gained
 				let newLevel = p.recalculateLevel()
 				if (newLevel > p.level){
@@ -1262,7 +1266,13 @@ class Round{
 						learnedMoves.push(obj)
 					}
 				}
+
+				let evYield = toGive[p.uuid].evYield
+				for (let statName in evYield){
+					p.evs[statName] += evYield[statName]
+				}
 			}
+			
 			savePokemon(p)
 		}
 		let announcementBox = $("<div class='d-flex text-center flex-column align-items-stretch'></div>")
@@ -1629,7 +1639,7 @@ class Round{
 		power = this.getEffectivePower(attackerTrainer, attacker, move, power)
 		
 		let category = options.category ?? move.category ?? "Physical"
-		let type = options.type ?? this.getEffectiveMoveType(attackerTrainer, attacker, move) ?? "Typeless"
+		let damageType = options.type ?? this.getEffectiveMoveType(attackerTrainer, attacker, move) ?? "Typeless"
 
 		let burned = attacker.hasStatus("burn")
 		if (burned && category === "Physical"){
@@ -1646,6 +1656,8 @@ class Round{
 			defender = defenderTrainer.activePokemon
 		}
 
+		//Note: this doesn't mean the attack stat specifically.
+		//If the pokemon uses a special move, this represents the special attack stat.
 		let atk, def
 		if (category === "Physical"){
 			atk = attacker.getEffectiveStat("attack")
@@ -1666,10 +1678,10 @@ class Round{
 			damage = (attacker.level * 2 / 5 + 2) * power * atk / def / 50 + 2
 		}
 		//STAB
-		if (attacker.getEffectiveTypes().includes(type)){
+		if (attacker.getEffectiveTypes().includes(damageType)){
 			damage *= 1.5
 		}
-		let typeMult = getSuperEffectiveMult(type, defender.getEffectiveTypes())
+		let typeMult = getSuperEffectiveMult(damageType, defender.getEffectiveTypes())
 		damage *= typeMult
 
 		if ("damageMult" in options){
@@ -1904,14 +1916,26 @@ class Round{
 	getEffectivePower(trainer, pokemon, move, power){
 		power = (power ?? move.power) || 0
 		let powerEffects = pokemon.getStatusesOfType("power-alteration")
+		let effectiveType = this.getEffectiveMoveType(trainer, pokemon, move)
 		for (let statusEffect of powerEffects){
-			let effectiveType = this.getEffectiveMoveType(trainer, pokemon, move)
 			let applies = this.doesThisApplyToMove(move, statusEffect.appliesTo, effectiveType)
 			if (applies){
 				let modification = statusEffect.modification
 				power = applyModification(power, modification)
 			}
 		}
+
+		//Abilities that modify power
+		if (pokemon.hasAbility("Torrent") && effectiveType === "Water" && pokemon.hp / pokemon.maxhp <= 1/3){
+			power *= 1.5
+		}
+		if (pokemon.hasAbility("Blaze") && effectiveType === "Fire" && pokemon.hp / pokemon.maxhp <= 1/3){
+			power *= 1.5
+		}
+		if (pokemon.hasAbility("Overgrow") && effectiveType === "Grass" && pokemon.hp / pokemon.maxhp <= 1/3){
+			power *= 1.5
+		}
+
 		return power
 	}
 	getEffectiveMoveType(trainer, pokemon, move){
@@ -3272,9 +3296,36 @@ class Round{
 			},
 			html: true,
 			trigger: "hover",
-			placement: trainerIndex === 0 ? "right" : "left"
-		})
+			placement: "bottom"
+			// placement: trainerIndex === 0 ? "right" : "left"
+		});
 		tags.pokemonName.text(name)
+
+		colors.forEach(c => {
+			tags.energyBars[c].popover("dispose").popover({
+				content: () => {
+					return pokemon.energy[c] + " / " + pokemon.maxEnergy[c]
+				},
+				html: true,
+				placement: "bottom",
+				trigger: "hover",
+				customClass: "popover-for-energy-bar",
+				offset: () => {
+					let chars = (pokemon.energy[c] + " / " + pokemon.maxEnergy[c]).length
+					if (c === "red" && trainerIndex === 0){
+						return [chars * 4 - 20, 10]
+					}
+					if (c === "purple" && trainerIndex === 1){
+						return [-chars * 4 + 20, 10]
+					}
+					return [0, 10]
+				},
+				// boundary: $("#popover-viewport")[0],
+				// container: "#popover-viewport",
+				// viewport: "#popover-viewport"
+			})
+		})
+
 		this.resetPokemonMoves(false)
 		this.resetPokeballs()
 		this.updateEverything()
@@ -3293,6 +3344,12 @@ class Round{
 		let typesTag = $("<div>")
 		html.append(typesTag)
 		typesTag.append(`<span>${types.join(" / ")}</span>`)
+
+		let abilityTag = $("<div>")
+		html.append(abilityTag)
+		let abilityName = getLocaleString("name", lang, ["abilities", pokemon.ability.id])
+		let abilityDescription = getLocaleString("shortDescription", lang, ["abilities", pokemon.ability.id])
+		abilityTag.append(`<span>${abilityName}: ${abilityDescription}</span>`)
 
 		let stats = getStatsHTML(pokemon)
 		html.append(stats)
@@ -3706,6 +3763,10 @@ class Round{
 		for (let yours of yourPokemon){
 			let totalEXP = 0
 			let youLevel = yours.level
+			let result = {}
+			result.evYield = {}
+			let currentEvCount = Object.keys(yours.evs).reduce((acc, key) => acc + yours.evs[key], 0)
+			let evMax = 510
 			for (let p of defeatedPokemon){
 				let base = p.data.expYield
 				let themLevel = p.level
@@ -3713,8 +3774,22 @@ class Round{
 				let exp = (base * themLevel * 0.2) *
 				Math.pow((2*themLevel + 10) / (themLevel + youLevel + 10), 2.5)
 				totalEXP += exp
+
+				let evYield = p.data.evYield
+				for (let statName in evYield){
+					let evAdd = evYield[statName]
+					if (currentEvCount + evAdd < evMax){
+						//Good, we can add it all.
+						result.evYield[statName] = evAdd
+						currentEvCount += evAdd
+					} else {
+						result.evYield[statName] = evMax - currentEvCount
+						currentEvCount = evMax
+					}
+				}
 			}
-			resultMap[yours.uuid] = Math.round(totalEXP)
+			result.exp = Math.round(totalEXP)
+			resultMap[yours.uuid] = result
 		}
 		console.log(resultMap)
 		return resultMap
@@ -4744,6 +4819,7 @@ function healAllPokemon(pokemonList){
 	playSound("healing")
 	let promises = []
 	pokemonList.forEach(pokemon => {
+		pokemon.resetEverything()
 		pokemon.fainted = false
 		//Full health
 		pokemon.hp = pokemon.maxhp

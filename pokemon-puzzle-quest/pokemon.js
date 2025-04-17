@@ -85,9 +85,9 @@ class Pokemon{
 			//Choose a random ability this pokemon may have.
 			let which = options?.addHiddenAbility ? "hiddenAbilities" : "abilities"
 			let possibleAbilities = this.data[which]
-			let abilityName = randomChoice(possibleAbilities)
-			if (abilityName){
-				this.ability = abilityData[abilityName]
+			let abilityId = randomChoice(possibleAbilities)
+			if (abilityId){
+				this.ability = abilityData[abilityId]
 			}
 		}
 		if (!this.ability){
@@ -510,6 +510,10 @@ class Pokemon{
 			energy[color] += amount
 		}
 		return result
+	}
+
+	hasAbility(abilityId){
+		return this.ability?.id === abilityId
 	}
 
 	getBonusEnergy(type){

@@ -1,5 +1,5 @@
 let currentSceneInfo = {}
-function startScene(name, options){
+function startScene(name, options) {
 	let resolvePromise
 	let promise = new Promise(resolve => resolvePromise = resolve)
 	let gameTag = $("#game")
@@ -12,22 +12,22 @@ function startScene(name, options){
 	currentSceneInfo.options = options
 
 	const fadeInGame = () => {
-		if (gameIsHidden){
+		if (gameIsHidden) {
 			gameTag.fadeIn()
 			gameTag.css("opacity", "0")
 		}
 	}
 
-	switch (name){
+	switch (name) {
 		case "fight": {
 			//This is all handled by the level effects.
 			//This one's just here in case I need it later.
-			if (!gameIsHidden){
+			if (!gameIsHidden) {
 				gameTag.fadeOut()
 			}
 		} break
 		case "choose-starter": {
-			if (gameIsHidden){
+			if (gameIsHidden) {
 				gameTag.fadeIn()
 			}
 			changeMusic("Route 201 (Day)")
@@ -49,7 +49,7 @@ function startScene(name, options){
 
 			let chooseTag = newChooseTag()
 			gameTag.append(chooseTag)
-			
+
 			let starterPokemon = Object.keys(pokemonData).filter(k => {
 				return pokemonData[k].tags.includes("Starter")
 			})
@@ -59,16 +59,16 @@ function startScene(name, options){
 			const confirmChoice = pokemon => {
 				chooseTag.find(".ball").popover("dispose")
 				delay(250).then(() => $(".popover").remove())
-				let caught = new Pokemon(pokemon.name, pokemon.id, {level: 5})
+				let caught = new Pokemon(pokemon.name, pokemon.id, { level: 5 })
 				catchPokemon(caught)
-				.then(() => {
-					playerSaveInfo["chosen-starter"] = pokemon.id
-					playerSaveInfo["started-game"] = true
-					return savePlayerInfo()
-				})
-				.then(() => {
-					resolvePromise()
-				})
+					.then(() => {
+						playerSaveInfo["chosen-starter"] = pokemon.id
+						playerSaveInfo["started-game"] = true
+						return savePlayerInfo()
+					})
+					.then(() => {
+						resolvePromise()
+					})
 			}
 			const choose = (event, pokemon) => {
 				let oldActive = $(".choose-starter > .ball.active")
@@ -78,7 +78,7 @@ function startScene(name, options){
 				let button = chooseTag.children(".confirm")
 				button.off("click")
 				let chosen = target.hasClass("active")
-				if (chosen){
+				if (chosen) {
 					button.fadeIn().click(() => confirmChoice(pokemon))
 				} else {
 					button.fadeOut()
@@ -96,9 +96,9 @@ function startScene(name, options){
 				let group = groups[currentIndex]
 				let tags = []
 				if (!group) return
-				for (let i = 0; i < group.length; i++){
+				for (let i = 0; i < group.length; i++) {
 					let pokemon = group[i]
-					let tag = $(`<div class='ball ball-${i+1}'>
+					let tag = $(`<div class='ball ball-${i + 1}'>
 					<img src='src/img/balls/pokeball.png'>
 					</div>`)
 					chooseTag.append(tag)
@@ -110,7 +110,7 @@ function startScene(name, options){
 					chooseTag.append(`<img class='invisible-image' src='${image}'>`)
 				}
 
-				for (let pair of tags){
+				for (let pair of tags) {
 					let tag = pair[0]
 					let pokemon = pair[1]
 					tag.click(event => choose(event, pokemon))
@@ -122,21 +122,21 @@ function startScene(name, options){
 					})
 				}
 
-				if (currentIndex === 0){
-					$("#game > .left").removeClass("active").animate({opacity: 0})
+				if (currentIndex === 0) {
+					$("#game > .left").removeClass("active").animate({ opacity: 0 })
 				} else {
-					$("#game > .left").addClass("active").animate({opacity: 1})
+					$("#game > .left").addClass("active").animate({ opacity: 1 })
 				}
 
-				if (currentIndex === groups.length - 1){
-					$("#game > .right").removeClass("active").animate({opacity: 0})
+				if (currentIndex === groups.length - 1) {
+					$("#game > .right").removeClass("active").animate({ opacity: 0 })
 				} else {
-					$("#game > .right").addClass("active").animate({opacity: 1})
+					$("#game > .right").addClass("active").animate({ opacity: 1 })
 				}
 			}
 			const changeGroup = (indexMod, firstLeft, secondLeft) => {
 				if (currentIndex === 0 && indexMod < 0 ||
-					  currentIndex === groups.length - 1 && indexMod > 0){
+					currentIndex === groups.length - 1 && indexMod > 0) {
 					return
 				}
 				currentIndex += indexMod
@@ -146,7 +146,7 @@ function startScene(name, options){
 				})
 				chooseTag.animate({
 					left: firstLeft
-				}, 400).queue(function(){
+				}, 400).queue(function () {
 					$(this).remove()
 				})
 				chooseTag = newChooseTag()
@@ -164,7 +164,7 @@ function startScene(name, options){
 			$("#game > .left").click(prevGroup)
 			$("#game > .right").click(nextGroup)
 
-			for (let i = 0; i < starterPokemon.length; i++){
+			for (let i = 0; i < starterPokemon.length; i++) {
 				let arr = i % 3 === 0 ? [] : groups[groups.length - 1]
 				if (i % 3 === 0) groups.push(arr)
 				arr.push(pokemonData[starterPokemon[i]])
@@ -175,7 +175,7 @@ function startScene(name, options){
 			fadeInGame()
 			let routeName = options.name
 
-			if (routeName === "Route 1"){
+			if (routeName === "Route 1") {
 				changeMusic("Route 201 (Day)")
 			}
 
@@ -200,7 +200,7 @@ function startScene(name, options){
 			let determinePokemonCenterActiveness = () => {
 				let healData = canPokemonBeHealed(playerActivePokemon)
 				console.log(healData)
-				if (healData.pokemon.length){
+				if (healData.pokemon.length) {
 					pokemonCenterBtn.attr("disabled", false)
 				} else {
 					pokemonCenterBtn.attr("disabled", true)
@@ -220,7 +220,7 @@ function startScene(name, options){
 				listTag.children(".highlight").removeClass("highlight")
 				let categoryBtn = listTag.children(`[data-category="${routeName}"]`)
 				categoryBtn.addClass("highlight")
-				if (!!shownCategory){
+				if (!!shownCategory) {
 					routeTag.fadeOut(300, () => {
 						change()
 						routeTag.fadeIn(300)
@@ -231,7 +231,7 @@ function startScene(name, options){
 			}
 
 			determineUnlockedLevels()
-			for (let categoryId in levelCategoryData){
+			for (let categoryId in levelCategoryData) {
 				let category = levelCategoryData[categoryId]
 				if (!category.unlocked) continue
 
@@ -259,21 +259,21 @@ function startScene(name, options){
 					})
 					levelButtons.push(btn)
 					routeTag.append(btn)
-					btn.on("mouseenter", function(){
+					btn.on("mouseenter", function () {
 						let popoverId = btn.attr("aria-describedby")
-						if (!popoverId){
+						if (!popoverId) {
 							btn.popover("show")
 						}
 					})
-					function waitBeforeHiding(){
+					function waitBeforeHiding() {
 						let popoverId = btn.attr("aria-describedby")
-						setTimeout(function(){
+						setTimeout(function () {
 							let p = $("#" + popoverId)
 							let onPopover = isMouseSomewhereIn(p)
 							let onBtn = isMouseSomewhereIn(btn)
 							// console.log(currentHoveredElement, onPopover, inPopover, onBtn, inBtn)
 							//If the mouse is NOWHERE RELATED TO THE LEVEL
-							if (!onPopover && !onBtn){
+							if (!onPopover && !onBtn) {
 								btn.popover("hide")
 							} else {
 								p.off("mouseleave")
@@ -297,10 +297,10 @@ function startScene(name, options){
 				btn.click(() => confirmChoice(level))
 
 				let desc = getLocaleString("description", lang, ["levels", level.id], null)
-				if (level.description){
+				if (level.description) {
 					desc = getLocaleString(level.description, lang)
 				}
-				if (desc){
+				if (desc) {
 					content.append(`<div class='desc'>${desc}</div>`)
 				}
 
@@ -308,7 +308,7 @@ function startScene(name, options){
 			}
 			const confirmChoice = level => {
 				let usablePokemon = getUsablePokemon(playerActivePokemon)
-				if (usablePokemon.length){
+				if (usablePokemon.length) {
 					$(".level-button").popover("hide")
 					resolvePromise(level.id)
 				} else {
@@ -324,8 +324,8 @@ function startScene(name, options){
 				target.toggleClass("clicked")
 				oldActive.removeClass("clicked")
 				let chosen = target.hasClass("clicked")
-				if (chosen){
-					
+				if (chosen) {
+
 				}
 			}
 			changeCategory(routeName)
@@ -349,10 +349,10 @@ function startScene(name, options){
 				currentBox = null
 				currentBoxIndex = -1
 				getPlayerBoxes(playerSaveId)
-				.then(val => {
-					pcBoxData = val
-					loadBox(index)
-				})
+					.then(val => {
+						pcBoxData = val
+						loadBox(index)
+					})
 			}
 			resetBoxData(0)
 
@@ -370,14 +370,14 @@ function startScene(name, options){
 			boxName.click(() => {
 				let oldIndex = currentBoxIndex
 				viewBoxInfo(currentBox)
-				.then(shouldReset => {
-					if (shouldReset){
-						let newIndex = oldIndex > 0 ? oldIndex - 1 : 0
-						resetBoxData(newIndex)
-					} else {
-						resetBoxData(oldIndex)
-					}
-				})
+					.then(shouldReset => {
+						if (shouldReset) {
+							let newIndex = oldIndex > 0 ? oldIndex - 1 : 0
+							resetBoxData(newIndex)
+						} else {
+							resetBoxData(oldIndex)
+						}
+					})
 			})
 
 			let nextBoxBtn = $(`<div id='pc-next-box-btn' class='button'><i class='bi bi-caret-right-fill'></i></div>`)
@@ -406,21 +406,21 @@ function startScene(name, options){
 				})
 
 				getPokemonFromBox(box.uuid)
-				.then(pokemonList => {
-					pcBox.html("")
-					//Remove all of the old pokemon
-					currentBoxPokemon.splice(0, currentBoxPokemon.length)
+					.then(pokemonList => {
+						pcBox.html("")
+						//Remove all of the old pokemon
+						currentBoxPokemon.splice(0, currentBoxPokemon.length)
 
-					pokemonList.sort((a, b) => {
-						return a.pcBoxY - b.pcBoxY
+						pokemonList.sort((a, b) => {
+							return a.pcBoxY - b.pcBoxY
+						})
+						pokemonList.forEach(p => {
+							let pokemon = new Pokemon(p.name, p.pokemonId, p)
+							currentBoxPokemon.push(pokemon)
+							displayPokemon(pokemon)
+						})
+						updatePCButtons()
 					})
-					pokemonList.forEach(p => {
-						let pokemon = new Pokemon(p.name, p.pokemonId, p)
-						currentBoxPokemon.push(pokemon)
-						displayPokemon(pokemon)
-					})
-					updatePCButtons()
-				})
 			}
 			const displayPokemon = p => {
 				let pokemon = new Pokemon(p.name, p.pokemonId, p)
@@ -454,11 +454,11 @@ function startScene(name, options){
 			let allImages
 			const updateBoxes = () => {
 				activePokemonTag.html("")
-				for (let i = 0; i < 6; i++){
+				for (let i = 0; i < 6; i++) {
 					let container = $(`<div class='active-pokemon-box col col-5'></div>`)
 					let p = playerActivePokemon[i]
 					container.attr("data-index", i)
-					if (p){
+					if (p) {
 						container.attr("data-pokemon-id", p.uuid)
 						let images = p.data.imageSources
 						let image = images.home ?? pokemon.getImage()
@@ -472,51 +472,51 @@ function startScene(name, options){
 				}
 				allBoxes = activePokemonTag.children(".active-pokemon-box")
 				allImages = allBoxes.children(".pokemon-image")
-				allImages.on("mousedown", function(event){
+				allImages.on("mousedown", function (event) {
 					event.preventDefault()
 				})
 			}
 			const updatePCButtons = () => {
 				let index = pcBoxData.indexOf(currentBox)
-				if (index === 0){
+				if (index === 0) {
 					prevBoxBtn.css({
 						"pointer-events": "none"
 					})
-					.animate({opacity: 0})
+						.animate({ opacity: 0 })
 				} else {
 					prevBoxBtn.css({
 						"pointer-events": ""
 					})
-					.animate({opacity: 1})
+						.animate({ opacity: 1 })
 				}
-				if (index === pcBoxData.length - 1){
+				if (index === pcBoxData.length - 1) {
 					nextBoxBtn.children(".bi").removeClass("bi-caret-right-fill")
-					.addClass("bi-plus")
+						.addClass("bi-plus")
 				} else {
 					nextBoxBtn.children(".bi").removeClass("bi-plus")
-					.addClass("bi-caret-right-fill")
+						.addClass("bi-caret-right-fill")
 				}
 			}
 			const nextPCBox = () => {
 				let index = pcBoxData.indexOf(currentBox)
-				if (index < pcBoxData.length - 1){
+				if (index < pcBoxData.length - 1) {
 					loadBox(index + 1)
 				} else {
 					//Make a new box
 					let newName = getNextBoxName(pcBoxData)
 					makeNewBox(playerSaveId, newName)
-					.then(() => getPlayerBoxes(playerSaveId))
-					.then(val => {
-						pcBoxData = val
-						loadBox(index + 1)
-						updatePCButtons()
-					})
+						.then(() => getPlayerBoxes(playerSaveId))
+						.then(val => {
+							pcBoxData = val
+							loadBox(index + 1)
+							updatePCButtons()
+						})
 				}
 			}
 			nextBoxBtn.click(nextPCBox)
 			const prevPCBox = () => {
 				let index = pcBoxData.indexOf(currentBox)
-				if (index > 0){
+				if (index > 0) {
 					loadBox(index - 1)
 				}
 			}
@@ -531,7 +531,7 @@ function startScene(name, options){
 				let screenRatio = boxWidth / boxHeight
 				let boxRatio = bgWidth / bgHeight
 				let realBoxWidth, realBoxHeight, realBoxOffsetX, realBoxOffsetY
-				if (screenRatio < boxRatio){
+				if (screenRatio < boxRatio) {
 					realBoxHeight = boxWidth / bgWidth * bgHeight
 					realBoxOffsetY = (boxHeight - realBoxHeight) * 0.5
 					realBoxWidth = boxWidth
@@ -564,20 +564,20 @@ function startScene(name, options){
 				stopHolding()
 				if (!pokemon) return
 				delay(100).then(() => {
-					if (!mouse.isDown){
+					if (!mouse.isDown) {
 						let alreadySelected = box.hasClass("selected")
 						allBoxes.removeClass("selected")
-						if (!alreadySelected){
+						if (!alreadySelected) {
 							box.addClass("selected")
 							let options = {
 								canRename: true
 							}
 							viewPokemonInfo(pokemon, options)
-							.then(() => savePokemon(pokemon))
-							.then(() => box.removeClass("selected"))
+								.then(() => savePokemon(pokemon))
+								.then(() => box.removeClass("selected"))
 						}
 					} else {
-						if (pokemon){
+						if (pokemon) {
 							heldPokemon = playerActivePokemon[index]
 							beginHolding(heldPokemon)
 							box.children("img").hide()
@@ -594,12 +594,12 @@ function startScene(name, options){
 				if (!pokemon) return
 				// console.log(p)
 				delay(100).then(() => {
-					if (!mouse.isDown){
+					if (!mouse.isDown) {
 						let options = {
 							canRename: true
 						}
 						viewPokemonInfo(pokemon, options)
-						.then(() => savePokemon(pokemon))
+							.then(() => savePokemon(pokemon))
 					} else {
 						heldPokemon = pokemon
 						beginHolding(heldPokemon)
@@ -616,11 +616,11 @@ function startScene(name, options){
 				let image = images.home ?? pokemon.getImage()
 				tag.attr("src", image)
 				$("body").append(tag)
-				.css("cursor", "pointer")
+					.css("cursor", "pointer")
 				holdInterval = setInterval(dragPokemon, 10)
 			}
 			const dragPokemon = () => {
-				if (!mouse.isDown){
+				if (!mouse.isDown) {
 					stopHolding()
 				}
 				if (!heldPokemonTag) return
@@ -633,10 +633,10 @@ function startScene(name, options){
 			const stopHolding = () => {
 				clearInterval(holdInterval)
 				if (!heldPokemon) return
-				if (heldPokemonTag){
+				if (heldPokemonTag) {
 					heldPokemonTag.remove()
 				}
-				
+
 				$("body").css({
 					cursor: ""
 				})
@@ -646,9 +646,9 @@ function startScene(name, options){
 				let hovered = document.elementsFromPoint(mouse.x, mouse.y)
 				let hoveredActiveBox = [...hovered].find(elem => $(elem).hasClass("active-pokemon-box"))
 				// let hoveredBox = [...hovered].find(elem => elem === pcBox[0])
-				if (hoveredActiveBox){
+				if (hoveredActiveBox) {
 					let index = $(hoveredActiveBox).attr("data-index")
-					if (index){
+					if (index) {
 						swapActivePokemon(heldPokemon, parseInt(index))
 					}
 				}
@@ -668,7 +668,7 @@ function startScene(name, options){
 					let maxBoxY = currentBox.maxY
 					let shouldUseSlots = currentBox.useSlots
 
-					if (shouldUseSlots){
+					if (shouldUseSlots) {
 						let slotNumbers = determinePCBoxSlotNumber(currentBox, left, top)
 						let otherPokemonInSameSlot = currentBoxPokemon.filter(boxPokemon => {
 							if (heldPokemon === boxPokemon) return false
@@ -677,7 +677,7 @@ function startScene(name, options){
 							return matches
 						})
 						let coords = determinePCBoxSlotCoords(currentBox, left, top)
-						if (otherPokemonInSameSlot.length){
+						if (otherPokemonInSameSlot.length) {
 							let oldLeft = heldPokemon.pcBoxX
 							let oldTop = heldPokemon.pcBoxY
 							left = coords[0]
@@ -710,18 +710,18 @@ function startScene(name, options){
 					let satisfiesActiveRule = !onlyOnePokemon || !active
 					console.log(left, top)
 
-					if (satisfiesActiveRule){
+					if (satisfiesActiveRule) {
 						heldPokemon.pcBox = currentBox.uuid
 						heldPokemon.pcBoxX = left
 						heldPokemon.pcBoxY = top
-						
+
 						let boxIndex = currentBoxPokemon.indexOf(heldPokemon)
-						if (boxIndex !== -1){
+						if (boxIndex !== -1) {
 							currentBoxPokemon.splice(boxIndex, 1)
 						}
 
 						let index = playerActivePokemon.indexOf(heldPokemon)
-						if (index !== -1){
+						if (index !== -1) {
 							playerActivePokemon[index] = undefined
 						}
 					} else {
@@ -731,11 +731,11 @@ function startScene(name, options){
 
 					currentBoxPokemon.push(heldPokemon)
 				}
-				
+
 				promises.push(savePokemon(heldPokemon))
 
 				Promise.all(promises)
-				.then(() => loadBox(pcBoxData.indexOf(currentBox)))
+					.then(() => loadBox(pcBoxData.indexOf(currentBox)))
 				heldPokemonTag = null
 				heldPokemon = null
 				updateBoxes()
@@ -744,10 +744,10 @@ function startScene(name, options){
 				let p2 = playerActivePokemon[index]
 				let p1Index = playerActivePokemon.indexOf(p1)
 				playerActivePokemon[index] = p1
-				if (p1Index !== -1){
+				if (p1Index !== -1) {
 					playerActivePokemon[p1Index] = undefined
 				}
-				if (p2){
+				if (p2) {
 					p2.pcBox = p1.pcBox
 					p2.pcBoxX = p1.pcBoxX
 					p2.pcBoxY = p1.pcBoxY
@@ -756,7 +756,7 @@ function startScene(name, options){
 				p1.pcBoxX = null
 				p1.pcBoxY = null
 				savePokemon(p1)
-				if (p2){
+				if (p2) {
 					playerActivePokemon[p1Index] = p2
 					savePokemon(p2)
 				}
@@ -782,19 +782,19 @@ function startScene(name, options){
 			adminTag.append(confirmButton)
 			confirmButton.click(() => {
 				leaveScene()
-				changeScene("route", {name: "Route 1"})
+				changeScene("route", { name: "Route 1" })
 			})
 
 			let pokedexText = getLocaleString("pokedex", lang)
 			let pokedexButton = $(`<button class='btn big-btn btn-primary m-3'>${pokedexText}</button>`)
-			if (playerSaveInfo["unlocked-pokedex"]){
+			if (playerSaveInfo["unlocked-pokedex"]) {
 				adminTag.append(pokedexButton)
 				pokedexButton.click(() => {
 					leaveScene()
 					changeScene("pokedex")
 				})
 			}
-			
+
 		} break
 		case "pokedex": {
 			fadeInGame()
@@ -805,18 +805,18 @@ function startScene(name, options){
 			pokedexTag.append(dexWindow)
 
 			let pokemonList = Object.values(pokemonData)
-			.sort((a, b) => {
-				let aId = a.number
-				let bId = b.number
-				if (aId < bId) return -1
-				if (aId > bId) return 1
-				return 0
-			})
+				.sort((a, b) => {
+					let aId = a.number
+					let bId = b.number
+					if (aId < bId) return -1
+					if (aId > bId) return 1
+					return 0
+				})
 
 			let pokemonStats = playerSaveInfo["pokemon-caught-stats"]
 			let pokemonListTag = $("<div class='pokemon-list'>")
 			dexWindow.append(pokemonListTag)
-			for (let data of pokemonList){
+			for (let data of pokemonList) {
 				let pokemonId = data.id
 				let pokemonOptions = {
 					isShiny: false
@@ -826,7 +826,7 @@ function startScene(name, options){
 				let section = $(`<div class='pokemon-section'></div>`)
 
 				section.click(() => {
-					viewPokemonInfo(pokemon, {pure: true, dex: true})
+					viewPokemonInfo(pokemon, { pure: true, dex: true })
 				})
 
 				let imageSection = $(`<div class='pokemon-image-section'>`)
@@ -848,20 +848,20 @@ function startScene(name, options){
 				let pokemonNameTag = $(`<div class='pokemon-name'></div>`)
 				textSection.append(pokemonNameTag)
 				let name = getLocaleString("name", lang, ["pokemon", pokemonId])
-				if (stats["seen"] === 0 && stats["caught"] === 0){
+				if (stats["seen"] === 0 && stats["caught"] === 0) {
 					name = name.replaceAll(/./g, "?")
 				}
 				pokemonNameTag.html(name)
 
-				if (stats["seen"] === 0 && stats["caught"] === 0){
+				if (stats["seen"] === 0 && stats["caught"] === 0) {
 					section.addClass("not-seen")
 				}
-				if (stats["caught"] === 0){
+				if (stats["caught"] === 0) {
 					section.addClass("not-caught")
 				} else {
 					section.addClass("caught")
 				}
-				
+
 				section.append(textSection)
 				pokemonListTag.append(section)
 			}
@@ -902,13 +902,13 @@ function startScene(name, options){
 	return promise
 }
 
-function changeScene(name, options){
+function changeScene(name, options) {
 	let resolvePromise
 	let promise = new Promise(resolve => resolvePromise = resolve)
 	let gameTag = $("#game")
-	$(".popover").fadeOut().queue(function(){$(this).remove()})
+	$(".popover").fadeOut().queue(function () { $(this).remove() })
 
-	if (name !== currentSceneInfo.name){
+	if (name !== currentSceneInfo.name) {
 		let toHide = gameTag.css("display") === "none" ? $("#board") : gameTag
 		toHide.fadeOut(() => {
 			gameTag.removeClass("choosing-starter")
@@ -917,21 +917,21 @@ function changeScene(name, options){
 	} else {
 		resolvePromise()
 	}
-	
-	if (name){
+
+	if (name) {
 		promise = promise.then(() => startScene(name, options))
 	}
 	return promise
 }
 
-function catchPokemon(pokemon){
+function catchPokemon(pokemon) {
 	let resolvePromise
 	let promise = new Promise(resolve => resolvePromise = resolve)
 
 	let promises = []
 	pokemon.owner = playerSaveId
 	caughtPokemon.push(pokemon)
-	if (playerActivePokemon.length < 6){
+	if (playerActivePokemon.length < 6) {
 		playerActivePokemon.push(pokemon)
 	} else {
 		let lastBox = playerPCBoxes[playerPCBoxes.length - 1]
@@ -943,29 +943,29 @@ function catchPokemon(pokemon){
 	promises.push(askToRenamePokemon(pokemon))
 
 	Promise.all(promises)
-	.then(() => savePokemon(pokemon))
-	.then(() => {
-		let total = playerSaveInfo["total-pokemon-caught"] || 0
-		playerSaveInfo["total-pokemon-caught"] = total + 1
-		return logPokemonAs("caught", pokemon)
-	})
-	.then(() => {
-		if (pokemon.isShiny){
-			let total = playerSaveInfo["total-shiny-pokemon-caught"] || 0
-			playerSaveInfo["total-shiny-pokemon-caught"] = total + 1
-			return logPokemonAs("caught-shiny", pokemon)
-		}
-		return Promise.resolve()
-	})
-	.then(() => {
-		resolvePromise()
-	})
-	
+		.then(() => savePokemon(pokemon))
+		.then(() => {
+			let total = playerSaveInfo["total-pokemon-caught"] || 0
+			playerSaveInfo["total-pokemon-caught"] = total + 1
+			return logPokemonAs("caught", pokemon)
+		})
+		.then(() => {
+			if (pokemon.isShiny) {
+				let total = playerSaveInfo["total-shiny-pokemon-caught"] || 0
+				playerSaveInfo["total-shiny-pokemon-caught"] = total + 1
+				return logPokemonAs("caught-shiny", pokemon)
+			}
+			return Promise.resolve()
+		})
+		.then(() => {
+			resolvePromise()
+		})
+
 
 	return promise
 }
 
-function askToRenamePokemon(pokemon){
+function askToRenamePokemon(pokemon) {
 	let resolvePromise
 	let promise = new Promise(resolve => resolvePromise = resolve)
 	let modal = $("#modal")
@@ -1000,13 +1000,13 @@ function askToRenamePokemon(pokemon){
 }
 
 let currentLevelProgress
-function beginLevel(levelID){
+function beginLevel(levelID) {
 	let level = getLevelDataById(levelID)
-	if (level.music){
+	if (level.music) {
 		changeMusic(level.music)
 	}
 
-	if (gameRound){
+	if (gameRound) {
 		clearInterval(gameRound.tickInterval)
 	}
 	gameRound = undefined
@@ -1024,50 +1024,50 @@ function beginLevel(levelID){
 	level.attempts++
 	let levelResult
 	let promise = advanceCurrentLevel()
-	.then(val => {
-		let promise = Promise.resolve()
-		let info = currentLevelProgress.info
-		//If you're marked as losing a "fight" effect, then you lose the whole level.
-		let effects = currentLevelProgress.effects
-		let lostFights = effects.filter((effect, i) => {
-			return info[i] === "lose" && effect.type === "fight"
-		})
-		
-		let forgiving = currentLevelProgress.level.forgiving
-		if (lostFights.length && !forgiving){
-			levelResult = "lose"
-		} else if (lostFights.length && forgiving) {
-			//TODO Maybe one day, add an extra challenge to go back and finish the level without losing once
-			levelResult = "win"
-		} else {
-			levelResult = "win"
-		}
+		.then(val => {
+			let promise = Promise.resolve()
+			let info = currentLevelProgress.info
+			//If you're marked as losing a "fight" effect, then you lose the whole level.
+			let effects = currentLevelProgress.effects
+			let lostFights = effects.filter((effect, i) => {
+				return info[i] === "lose" && effect.type === "fight"
+			})
 
-		let shouldHeal = playerActivePokemon.every(pokemon => pokemon.fainted)
-		if (shouldHeal){
-			healAllPokemon(playerActivePokemon)
-		}
-		
-		if (levelResult === "lose"){
-			console.log("You lose :(")
-		} else {
-			level.status = "won"
-			promise = promise.then(() => saveLevelStatus(level, "won"))
-		}
-		
-		let routeName = level.category
-		changeScene("route", {name: routeName})
-		console.log(promise)
-		return promise
-	})
-	.then(() => {
-		console.log(playerSaveInfo)
-		return savePlayerInfo()
-	})
-	
+			let forgiving = currentLevelProgress.level.forgiving
+			if (lostFights.length && !forgiving) {
+				levelResult = "lose"
+			} else if (lostFights.length && forgiving) {
+				//TODO Maybe one day, add an extra challenge to go back and finish the level without losing once
+				levelResult = "win"
+			} else {
+				levelResult = "win"
+			}
+
+			let shouldHeal = playerActivePokemon.every(pokemon => pokemon.fainted)
+			if (shouldHeal) {
+				healAllPokemon(playerActivePokemon)
+			}
+
+			if (levelResult === "lose") {
+				console.log("You lose :(")
+			} else {
+				level.status = "won"
+				promise = promise.then(() => saveLevelStatus(level, "won"))
+			}
+
+			let routeName = level.category
+			changeScene("route", { name: routeName })
+			console.log(promise)
+			return promise
+		})
+		.then(() => {
+			console.log(playerSaveInfo)
+			return savePlayerInfo()
+		})
+
 	return promise
 }
-function advanceCurrentLevel(){
+function advanceCurrentLevel() {
 	let resolvePromise
 	let promise = new Promise(resolve => resolvePromise = resolve)
 	let level = currentLevelProgress.level
@@ -1078,7 +1078,7 @@ function advanceCurrentLevel(){
 	let effect = effects[effectIndex]
 	let params = getEffectParams(effect, effectIndex, currentLevelProgress)
 
-	if (effectIndex >= effects.length){
+	if (effectIndex >= effects.length) {
 		resolvePromise()
 		return promise
 	}
@@ -1086,19 +1086,19 @@ function advanceCurrentLevel(){
 	// console.log(effect, effectIndex, params)
 
 	let index
-	if (effect.jumpTo){
-		if (typeof effect.jumpTo === "string"){
+	if (effect.jumpTo) {
+		if (typeof effect.jumpTo === "string") {
 			index = effects.findIndex(e => e.label === effect.jumpTo)
 		} else {
 			index = effect.jumpTo
 		}
 	}
 
-	switch (effect.type){
+	switch (effect.type) {
 		case "stop-music": {
-			for (let soundName in sounds){
+			for (let soundName in sounds) {
 				let type = sounds[soundName].type
-				if (type === "music"){
+				if (type === "music") {
 					stopSound(soundName)
 				}
 			}
@@ -1112,7 +1112,7 @@ function advanceCurrentLevel(){
 		case "fight": {
 			changeScene("fight")
 			let displayed = $("#board").css("display") !== "none"
-			if (!displayed){
+			if (!displayed) {
 				$("#game").fadeOut()
 				$("#board").fadeIn()
 			}
@@ -1120,23 +1120,23 @@ function advanceCurrentLevel(){
 			let trainerIndex = effect.trainer ?? 0
 			let trainerData = level.trainers[trainerIndex]
 			beginRound(trainerData)
-			.then(val => new Promise(res => {
-				currentLevelProgress.info[effectIndex] = val
-				if (val === "lose"){
-					currentLevelProgress.endEarly = true
-				} else if (val === "win"){
-					//Cool you win nothing special happens
-				} else {
-					console.warn("Fight ended with unexpected result", val)
-				}
-				res(val)
-			}))
-			.then(resolvePromise)
-			
+				.then(val => new Promise(res => {
+					currentLevelProgress.info[effectIndex] = val
+					if (val === "lose") {
+						currentLevelProgress.endEarly = true
+					} else if (val === "win") {
+						//Cool you win nothing special happens
+					} else {
+						console.warn("Fight ended with unexpected result", val)
+					}
+					res(val)
+				}))
+				.then(resolvePromise)
+
 			let NPCData = NPCTrainerData[trainerData.name] ?? {}
 			//If the opponent is wild
-			if (!NPCData.type){
-				
+			if (!NPCData.type) {
+
 			}
 		} break
 		case "dialogue": {
@@ -1144,17 +1144,17 @@ function advanceCurrentLevel(){
 			let dialogueName = effect.source
 			let seenDialogue = playerSaveInfo["seen-dialogue"]
 			let shouldSkip = config.skipSeenDialogue && seenDialogue.includes(dialogueName)
-			if (shouldSkip){
+			if (shouldSkip) {
 				resolvePromise()
 			} else {
 				let dialogue = getLocaleString(dialogueName, lang, ["dialogue"], {})
 				beginDialogue(dialogue)
-				.then(() => {
-					if (!seenDialogue.includes(dialogueName)){
-						seenDialogue.push(dialogueName)
-					}
-					resolvePromise()
-				})
+					.then(() => {
+						if (!seenDialogue.includes(dialogueName)) {
+							seenDialogue.push(dialogueName)
+						}
+						resolvePromise()
+					})
 			}
 		} break
 		case "random-number": {
@@ -1190,7 +1190,7 @@ function advanceCurrentLevel(){
 			let lostFights = effects.filter((effect, i) => {
 				return info[i] === "lose" && effect.type === "fight"
 			})
-			if (lostFights.length){
+			if (lostFights.length) {
 				currentLevelProgress.nextEffectIndex = index
 			}
 			resolvePromise()
@@ -1199,12 +1199,12 @@ function advanceCurrentLevel(){
 			let test = currentLevelProgress.info[effectIndex - 2]
 			let against = currentLevelProgress.info[effectIndex - 1]
 			let index
-			if (typeof effect.jumpTo === "string"){
+			if (typeof effect.jumpTo === "string") {
 				index = effects.findIndex(e => e.label === effect.jumpTo)
 			} else {
 				index = effect.jumpTo
 			}
-			if (test === against){
+			if (test === against) {
 				currentLevelProgress.nextEffectIndex = index
 			}
 			resolvePromise()
@@ -1212,8 +1212,8 @@ function advanceCurrentLevel(){
 		case "jump-if-less-than": {
 			let test = currentLevelProgress.info[effectIndex - 2]
 			let against = currentLevelProgress.info[effectIndex - 1]
-			
-			if (test < against){
+
+			if (test < against) {
 				currentLevelProgress.nextEffectIndex = index
 			}
 			resolvePromise()
@@ -1229,9 +1229,9 @@ function advanceCurrentLevel(){
 	promise = promise.then(val => {
 		// if (currentLevelProgress.endEarly) return Promise.resolve(val)
 
-		if (effects[currentLevelProgress.nextEffectIndex]){
+		if (effects[currentLevelProgress.nextEffectIndex]) {
 			return advanceCurrentLevel()
-			.then(() => Promise.resolve(val))
+				.then(() => Promise.resolve(val))
 		}
 
 		return Promise.resolve(val)
@@ -1240,7 +1240,7 @@ function advanceCurrentLevel(){
 	return promise
 }
 
-function choosePokemon(message, pokemon, minChooseable=1, maxChooseable=1){
+function choosePokemon(message, pokemon, minChooseable = 1, maxChooseable = 1) {
 	let resolvePromise
 	let promise = new Promise(resolve => resolvePromise = resolve)
 
@@ -1254,25 +1254,25 @@ function choosePokemon(message, pokemon, minChooseable=1, maxChooseable=1){
 	let chosen = []
 
 	const choose = (i) => {
-		if (chosen.includes(i)){
+		if (chosen.includes(i)) {
 			let index = chosen.indexOf(i)
 			chosen.splice(index, 1)
 		} else {
 			chosen.push(i)
-			if (chosen.length > maxChooseable){
+			if (chosen.length > maxChooseable) {
 				let unchosenI = chosen.shift()
 			}
 		}
-		
+
 		container.children().children(".chooseable").removeClass("active")
-		for (let j = 0; j < chosen.length; j++){
-			container.children().children("[data-choose="+chosen[j]+"]").addClass("active")
+		for (let j = 0; j < chosen.length; j++) {
+			container.children().children("[data-choose=" + chosen[j] + "]").addClass("active")
 		}
 
 		checkLegality()
 	}
 	const checkLegality = () => {
-		if (chosen.length >= minChooseable && chosen.length <= maxChooseable){
+		if (chosen.length >= minChooseable && chosen.length <= maxChooseable) {
 			btn.attr("disabled", false)
 		} else {
 			btn.attr("disabled", true)
@@ -1281,7 +1281,7 @@ function choosePokemon(message, pokemon, minChooseable=1, maxChooseable=1){
 
 	let body = modal.find(".modal-body")
 	let container = $(`<div class='d-flex flex-wrap justify-content-between container'></div>`)
-	for (let i = 0; i < pokemon.length; i++){
+	for (let i = 0; i < pokemon.length; i++) {
 		let p = pokemon[i]
 		let box = $(`<div class='col col-6'></div>`)
 		let chooseable = $(`<div class='chooseable m-1' data-choose='${i}'></div>`)
@@ -1307,14 +1307,14 @@ function choosePokemon(message, pokemon, minChooseable=1, maxChooseable=1){
 		bar.css("width", healthP * 100 + "%")
 		bar.css("background-color", color)
 		box.append(chooseable)
-		chooseable.click(function(event){
+		chooseable.click(function (event) {
 			let chosen = $(event.currentTarget).attr("data-choose")
 			choose(parseInt(chosen))
 		})
 		container.append(box)
 	}
 	body.append(container)
-	if (minChooseable > 0){
+	if (minChooseable > 0) {
 		choose(0)
 	}
 	checkLegality()
@@ -1328,7 +1328,7 @@ function choosePokemon(message, pokemon, minChooseable=1, maxChooseable=1){
 	})
 	return promise
 }
-function viewPokemonInfo(pokemon, options={}){
+function viewPokemonInfo(pokemon, options = {}) {
 	let resolvePromise
 	let promise = new Promise(resolve => resolvePromise = resolve)
 
@@ -1344,9 +1344,9 @@ function viewPokemonInfo(pokemon, options={}){
 	let nameTag = $(`<span>${pokemon.name}</span>`)
 	let title = modal.find(".modal-title")
 	title.append(nameTag).addClass("display-6")
-	if (options.canRename){
+	if (options.canRename) {
 		title.addClass("w-100").addClass("d-flex")
-		.addClass("justify-content-center").addClass("align-items-center")
+			.addClass("justify-content-center").addClass("align-items-center")
 		let renameInput = $(`<input class='form-control m-0 w-50 text-center'>`)
 		title.append(renameInput)
 		renameInput.css({
@@ -1374,7 +1374,7 @@ function viewPokemonInfo(pokemon, options={}){
 
 		let renaming = false
 		const toggleRename = () => {
-			if (!renaming){
+			if (!renaming) {
 				beginRename()
 				renaming = true
 			} else {
@@ -1386,32 +1386,40 @@ function viewPokemonInfo(pokemon, options={}){
 	}
 
 	let body = modal.find(".modal-body")
-	if (options.dex){
-		body.css("padding-top", 0)
-		let tabs = $("<ul class='nav nav-tabs mb-1 justify-content-center'>")
-		body.append(tabs)
 
-		const changeTab = event => {
-			tabs.find(".active").removeClass("active")
-			let tab = $(event.currentTarget)
-			tab.find(".nav-link").addClass("active")
-			let className = "." + tab.attr("data-target-class")
-			body.children(".info").fadeOut(() => {
-				body.children(className).fadeIn()
-			})
-		}
+	body.css("padding-top", 0)
+	let tabs = $("<ul class='nav nav-tabs mb-1 justify-content-center'>")
+	body.append(tabs)
 
-		let infoTab = $(`<li class='nav-item' data-target-class='pokemon-info'>
-			<a class="nav-link active" href="#">Info</a>
-		</li>`)
-		tabs.append(infoTab)
+	let shownSection
+	const changeTab = event => {
+		tabs.find(".active").removeClass("active")
+		let tab = $(event.currentTarget)
+		tab.find(".nav-link").addClass("active")
+		let className = "." + tab.attr("data-target-class")
+		let toFadeIn = sections.children(className)
+		shownSection.fadeOut(400, () => {
+			shownSection.appendTo(sections)
+			shownSection = toFadeIn
+			toFadeIn.fadeIn()
+		})
+	}
+	
+	let infoTab = $(`<li class='nav-item' data-target-class='pokemon-info'>
+		<a class="nav-link active" href="#">Info</a>
+	</li>`)
+	tabs.append(infoTab)
 
+	if (options.dex) {
 		let findingTab = $(`<li class='nav-item' data-target-class='location-info'>
 			<a class="nav-link" href="#">Locations</a>
 		</li>`)
 		tabs.append(findingTab)
-		tabs.children().click(changeTab)
 	}
+
+	//SECTIONS
+	let sections = $("<div class='info-sections'>")
+	body.append(sections)
 
 	//POKEMON
 	let image = pokemon.getImage()
@@ -1425,7 +1433,8 @@ function viewPokemonInfo(pokemon, options={}){
 			<div class='move-section'></div>
 		</div>
 	`)
-	body.append(content)
+	sections.append(content)
+	shownSection = content
 	let pokemonSection = content.children(".pokemon-section")
 
 	let typeSection = $(`<div class='type-section d-flex justify-content-center'></div>`)
@@ -1433,7 +1442,7 @@ function viewPokemonInfo(pokemon, options={}){
 	pokemon.types.forEach(type => {
 		typeSection.append(`<span class='m-1'>${type}</span>`)
 	})
-	
+
 	let statsSection = $(`<div class='stats-section'>`)
 	pokemonSection.append(statsSection)
 	let statsHTML = getStatsHTML(pokemon, {
@@ -1449,17 +1458,17 @@ function viewPokemonInfo(pokemon, options={}){
 
 	const toggleSelect = (move, moveTag) => {
 		let activeIndex = pokemon.activeMoves.indexOf(move)
-		if (activeIndex === -1){
-			if (pokemon.activeMoves.length >= 4){
+		if (activeIndex === -1) {
+			if (pokemon.activeMoves.length >= 4) {
 				createAnnouncement("general", "A Pokemon can't have more than 4 active moves.")
 			} else {
 				let added = pokemon.addActiveMove(move)
-				if (added){
+				if (added) {
 					moveTag.addClass("active-move")
 				}
 			}
 		} else {
-			if (pokemon.activeMoves.length === 1){
+			if (pokemon.activeMoves.length === 1) {
 				createAnnouncement("general", "A Pokemon must have at least 1 active move.")
 			} else {
 				pokemon.activeMoves.splice(activeIndex, 1)
@@ -1469,21 +1478,21 @@ function viewPokemonInfo(pokemon, options={}){
 	}
 
 	let moveSection = content.children(".move-section")
-	for (let i = 0; i < pokemon.moves.length; i++){
+	for (let i = 0; i < pokemon.moves.length; i++) {
 		let move = pokemon.moves[i]
 		if (move.name === "Struggle") continue
 
 		let available = pokemon.movesUnlockedMap[i]
 		let requirements = pokemon.data.learnset[i].unlock
 		//If move is not available and the move should be hidden, skip the rest of this
-		if (!available && requirements.type === "hidden"){
+		if (!available && requirements.type === "hidden") {
 			continue
 		}
 
 		let moveTag = getMoveHTML(move, true)
 
 		//If this isn't even really a pokemon, don't bother marking things as available/not.
-		if (options.pure){
+		if (options.pure) {
 			moveSection.append(moveTag)
 			moveTag.popover({
 				placement: "left",
@@ -1493,7 +1502,7 @@ function viewPokemonInfo(pokemon, options={}){
 			continue
 		}
 
-		if (!available){
+		if (!available) {
 			moveTag.addClass("unavailable")
 			moveTag.popover({
 				placement: "left",
@@ -1502,13 +1511,13 @@ function viewPokemonInfo(pokemon, options={}){
 			})
 		} else {
 			moveTag.css("cursor", "pointer")
-			moveTag.click(function(){
+			moveTag.click(function () {
 				toggleSelect(move, moveTag)
 			})
 		}
 
 		let activeIndex = pokemon.activeMoves.indexOf(move)
-		if (activeIndex !== -1){
+		if (activeIndex !== -1) {
 			moveTag.addClass('active-move')
 		}
 
@@ -1517,19 +1526,167 @@ function viewPokemonInfo(pokemon, options={}){
 	content.append(moveSection)
 
 	//LOCATIONS
-	if (options.dex){
+	if (options.dex) {
 		let info = $(`<div class='info location-info'>`)
-		body.append(info)
+		sections.append(info)
 		info.hide()
 
-		for (let level of levelData){
-			if (level.obtainablePokemon.includes(pokemon.data.id)){
+		for (let level of levelData) {
+			if (level.obtainablePokemon.includes(pokemon.data.id)) {
 				let name = getLocaleString("name", lang, ["levels", level.id])
 				info.append(name)
 			}
 		}
 	}
 
+	//NATURES & OTHER INFO
+	if (!options.dex) {
+		let info = $(`<div class='info advanced-info'>`)
+		sections.append(info)
+		info.hide()
+		let tab = $(`<li class='nav-item' data-target-class='advanced-info'>
+			<a class="nav-link" href="#">Misc</a>
+		</li>`)
+		tabs.append(tab)
+
+		let abilitySection = $("<div class='ability-section'>")
+		info.append(abilitySection)
+		let abilityName = getLocaleString("name", lang, ["abilities", pokemon.ability.id])
+		abilitySection.append(`<h4>Ability: ${abilityName}</h4>`)
+		let abilityDescription = getLocaleString("longDescription", lang, ["abilities", pokemon.ability.id])
+		abilitySection.append(`<p>${abilityDescription}</p>`)
+		let natureName = getLocaleString("name", lang, ["natures", pokemon.nature.name])
+		abilitySection.append(`<h4>Nature: ${natureName}</h4>`)
+		let natureDesc = getLocaleString("description", lang, ["natures", pokemon.nature.name])
+		abilitySection.append(`<p>${natureDesc}</p>`)
+
+		let chartSection = $("<div class='charts'>")
+		info.append(chartSection)
+		let ivCanvas = $("<canvas>")
+		chartSection.append(ivCanvas)
+		let evCanvas = $("<canvas>")
+		chartSection.append(evCanvas)
+
+		const ivData = {
+			labels: [
+				'HP',
+				'Attack',
+				'Defense',
+				'Special Attack',
+				'Special Defense',
+				'Speed'
+			],
+			datasets: [{
+				label: 'Individual Values',
+				data: statNames.map(statName => pokemon.ivs[statName]),
+				fill: true,
+				backgroundColor: 'rgba(255, 99, 132, 0.2)',
+				borderColor: 'rgb(255, 99, 132)',
+				pointBackgroundColor: 'rgb(255, 99, 132)',
+				pointBorderColor: '#fff',
+				pointHoverBackgroundColor: '#fff',
+				pointHoverBorderColor: 'rgb(255, 99, 132)'
+			}]
+		};
+		const evData = {
+			labels: [
+				'HP',
+				'Attack',
+				'Defense',
+				'Special Attack',
+				'Special Defense',
+				'Speed'
+			],
+			datasets: [{
+				label: 'Effort Values',
+				data: statNames.map(statName => pokemon.evs[statName]),
+				fill: true,
+				backgroundColor: 'rgba(54, 162, 235, 0.2)',
+				borderColor: 'rgb(54, 162, 235)',
+				pointBackgroundColor: 'rgb(54, 162, 235)',
+				pointBorderColor: '#fff',
+				pointHoverBackgroundColor: '#fff',
+				pointHoverBorderColor: 'rgb(54, 162, 235)'
+			}]
+		};
+		new Chart(evCanvas, {
+			type: 'radar',
+			data: evData,
+			options: {
+				responsive: false,
+				elements: {
+					line: {
+						borderWidth: 3
+					}
+				},
+				scales: {
+					r: {
+						angleLines: {
+							display: false
+						},
+						grid: {
+							display: false,
+							drawOnChartArea: false,
+							drawTicks: false,
+						},
+						pointLabels: {
+							backdropColor: "rgba(0, 0, 0, 0)",
+							color: "white"
+						},
+						ticks: {
+							backdropColor: "rgba(0, 0, 0, 0)",
+							color: "white",
+							beginAtZero: true,
+							callback: function (value, index, values) {
+								if (Math.floor(value) === value) {
+									return value;
+								}
+							}
+						},
+						min: 0
+					}
+				}
+			},
+		})
+		new Chart(ivCanvas, {
+			type: 'radar',
+			data: ivData,
+			options: {
+				responsive: false,
+				elements: {
+					line: {
+						borderWidth: 3
+					}
+				},
+				scales: {
+					r: {
+						angleLines: {
+							display: false
+						},
+						grid: {
+							display: false,
+							drawOnChartArea: false,
+							drawTicks: false,
+						},
+						pointLabels: {
+							backdropColor: "rgba(0, 0, 0, 0)",
+							color: "white"
+						},
+						ticks: {
+							backdropColor: "rgba(0, 0, 0, 0)",
+							color: "white",
+							beginAtZero: true,
+							maxTicksLimit: 2
+						},
+						min: 0,
+						max: 32
+					}
+				}
+			},
+		})
+	}
+
+	tabs.children().click(changeTab)
 	btn.click(() => {
 		modal.modal("hide")
 	})
@@ -1540,7 +1697,7 @@ function viewPokemonInfo(pokemon, options={}){
 	return promise
 }
 
-function viewBoxInfo(box){
+function viewBoxInfo(box) {
 	let resolvePromise
 	let promise = new Promise(resolve => resolvePromise = resolve)
 	let boxId = box.uuid
@@ -1553,15 +1710,15 @@ function viewBoxInfo(box){
 	// modal.addClass("wide")
 	let header = modal.find(".modal-header")
 	header.addClass("justify-content-center")
-	
+
 	let nameTag = $(`<span>${box.name}</span>`)
 	let title = header.find(".modal-title")
 	title.append(nameTag).addClass("display-6")
 
 	//Renaming
-	if (true){
+	if (true) {
 		title.addClass("w-100").addClass("d-flex")
-		.addClass("justify-content-center").addClass("align-items-center")
+			.addClass("justify-content-center").addClass("align-items-center")
 		let renameInput = $(`<input class='form-control m-0 w-50 text-center'>`)
 		title.append(renameInput)
 		renameInput.css({
@@ -1589,7 +1746,7 @@ function viewBoxInfo(box){
 
 		let renaming = false
 		const toggleRename = () => {
-			if (!renaming){
+			if (!renaming) {
 				beginRename()
 				renaming = true
 			} else {
@@ -1628,20 +1785,20 @@ function viewBoxInfo(box){
 		let good = Object.keys(deleteConditionsMet).every(key => deleteConditionsMet[key])
 		deleteBtn.css("pointer-events", "auto")
 
-		if (good){
+		if (good) {
 			deleteBtn.off("click").on("click", deleteBox)
-			.popover("dispose").prop("disabled", false)
-			.css("cursor", "pointer")
+				.popover("dispose").prop("disabled", false)
+				.css("cursor", "pointer")
 		} else {
 			let message
-			if (!deleteConditionsMet.empty){
+			if (!deleteConditionsMet.empty) {
 				message = getLocaleString("error-cant-delete-box-isnt-empty", lang)
-			} else if (!deleteConditionsMet.notLastBox){
+			} else if (!deleteConditionsMet.notLastBox) {
 				message = getLocaleString("error-cant-delete-no-boxes-left", lang)
 			}
 
 			deleteBtn.popover("dispose").css("cursor", "default")
-			if (message){
+			if (message) {
 				deleteBtn.popover({
 					content: message,
 					trigger: "hover",
@@ -1652,21 +1809,21 @@ function viewBoxInfo(box){
 	}
 	const deleteBox = () => {
 		deletePCBox(boxId)
-		.then(() => {
-			deleted = true
-			modal.modal("hide")
-		})
+			.then(() => {
+				deleted = true
+				modal.modal("hide")
+			})
 	}
 	getPokemonFromBox(boxId)
-	.then(pokemonDataList => {
-		deleteConditionsMet.empty = pokemonDataList.length === 0
-		decideDeleteActiveness()
-	})
+		.then(pokemonDataList => {
+			deleteConditionsMet.empty = pokemonDataList.length === 0
+			decideDeleteActiveness()
+		})
 	getPlayerBoxes(saveId)
-	.then(boxList => {
-		deleteConditionsMet.notLastBox = boxList.length >= 2
-		decideDeleteActiveness()
-	})
+		.then(boxList => {
+			deleteConditionsMet.notLastBox = boxList.length >= 2
+			decideDeleteActiveness()
+		})
 
 	let btn = $(`<button class='btn btn-primary'>Done</button>`)
 	footer.append(btn)
@@ -1683,23 +1840,23 @@ function viewBoxInfo(box){
 	return promise
 }
 
-function getStatsHTML(pokemon, options={}){
+function getStatsHTML(pokemon, options = {}) {
 	let abbreviate = options.abbreviate ?? true
 	let pure = options.pure ?? false
 	//Stats
 	let stats = $(`<div class='stats'></div>`)
-	if (!abbreviate && !pure){
+	if (!abbreviate && !pure) {
 		let statTag = $("<div class='stat'></div>")
 		statTag.append(`<span class='stat-name'>Level</span>`)
 		let statVal = $(`<span class='stat-val'>${pokemon.level}</span>`)
 		statTag.append(statVal)
 		stats.append(statTag)
 	}
-	
-	for (let stat in pokemon.data.stats){
+
+	for (let stat in pokemon.data.stats) {
 		let statName = abbreviate ? getStatAbbr(stat) : getStatName(stat)
 		let val, effectiveVal
-		if (pure){
+		if (pure) {
 			val = pokemon.data.stats[stat]
 			effectiveVal = val
 		} else {
@@ -1710,15 +1867,15 @@ function getStatsHTML(pokemon, options={}){
 		statTag.append(`<span class='stat-name'>${statName}</span>`)
 		let statVal = $("<span class='stat-val'></span>")
 
-		if (effectiveVal > val){
+		if (effectiveVal > val) {
 			statVal.addClass("up")
-			.append("<i class='bi bi-arrow-up'></i>")
-		} else if (effectiveVal < val){
+				.append("<i class='bi bi-arrow-up'></i>")
+		} else if (effectiveVal < val) {
 			statVal.addClass("down")
-			.append("<i class='bi bi-arrow-down'></i>")
-		} 
+				.append("<i class='bi bi-arrow-down'></i>")
+		}
 
-		if (stat === "hp" && !abbreviate && !pure){
+		if (stat === "hp" && !abbreviate && !pure) {
 			statVal.append(`${pokemon.hp} / ${effectiveVal.toFixed(0)}`)
 		} else {
 			statVal.append(effectiveVal.toFixed(0))
@@ -1728,12 +1885,12 @@ function getStatsHTML(pokemon, options={}){
 	}
 	return stats
 }
-function getMasteryHTML(pokemon, options={}){
+function getMasteryHTML(pokemon, options = {}) {
 	let abbreviate = options.abbreviate ?? true
 	let pure = options.pure ?? false
 	let stats = $(`<div class='stats mastery'></div>`)
 	let energyMastery
-	if (pure){
+	if (pure) {
 		energyMastery = pokemon.data.energyMastery
 	} else {
 		energyMastery = pokemon.energyMastery
@@ -1741,9 +1898,9 @@ function getMasteryHTML(pokemon, options={}){
 	let colorOrder = Object.keys(energyMastery).sort((a, b) => {
 		return colors.indexOf(a) - colors.indexOf(b)
 	})
-	for (let type of colorOrder){
+	for (let type of colorOrder) {
 		let val = energyMastery[type]
-		if (val || colors.includes(type)){
+		if (val || colors.includes(type)) {
 			let icon = getEnergyIcon(type)
 			let tag = $("<div class='mastery-icon'></div>")
 			let left = $("<div class='mastery-left'></div>")
@@ -1752,7 +1909,7 @@ function getMasteryHTML(pokemon, options={}){
 			left.append(img)
 			tag.append(left)
 
-			if (!abbreviate){
+			if (!abbreviate) {
 				let typeName = getTypeFromTileType(type)
 				let name = `${typeName} Affinity`
 				let nameTag = $("<span class='mastery-name'></span>")
@@ -1769,9 +1926,9 @@ function getMasteryHTML(pokemon, options={}){
 	return stats
 }
 
-function getMoveHTML(move, useLongDescription=false){
+function getMoveHTML(move, useLongDescription = false) {
 	let tag = $("<div class='move'></div>")
-	
+
 	let moveTop = $("<div class='move-top'></div>")
 	let moveName = getLocaleString("name", lang, ["moves", move.name])
 	moveTop.append(`<div class='move-name'>${moveName}</div>`)
@@ -1783,7 +1940,7 @@ function getMoveHTML(move, useLongDescription=false){
 	moveRecharge.hide()
 	let typeIcon = getTypeIcon(move.type)
 	moveType.append(`<img src='${getTypeIcon(move.category)}'>`)
-	if (typeIcon){
+	if (typeIcon) {
 		moveType.append(`<img src='${typeIcon}'>`)
 	}
 	moveTop.append(moveType)
@@ -1795,21 +1952,21 @@ function getMoveHTML(move, useLongDescription=false){
 	tag.append(`<div class='move-desc'>${desc}</div>`)
 
 	let moveCostTag = $("<div class='move-cost'></div>")
-	if (!move.specialCost){
-		for (let i = 0; i < colors.length; i++){
+	if (!move.specialCost) {
+		for (let i = 0; i < colors.length; i++) {
 			let color = colors[i]
 			let cost = $("<div class='cost-part energy'></div>")
-			cost.addClass("energy-"+color)
+			cost.addClass("energy-" + color)
 			cost.attr("data-cost", color)
 			let costValue = move.energy[color] ?? 0
-			
+
 			let icon = $("<span class='icon'></span>")
 			cost.append(icon)
 			cost.append(`<span class='cost'>${costValue}</span>`)
-			if (!costValue){
+			if (!costValue) {
 				cost.children().hide()
 			}
-			
+
 			moveCostTag.append(cost)
 		}
 	}
@@ -1822,7 +1979,7 @@ function getMoveHTML(move, useLongDescription=false){
 	return tag
 }
 
-function determinePCBoxSlotNumber(boxObj, x, y){
+function determinePCBoxSlotNumber(boxObj, x, y) {
 	let minBoxX = boxObj.minX
 	let maxBoxX = boxObj.maxX
 	let minBoxY = boxObj.minY
@@ -1839,12 +1996,12 @@ function determinePCBoxSlotNumber(boxObj, x, y){
 	let playerSlotChosenY = Math.round((y - minBoxY) / slotSpaceY)
 	return [playerSlotChosenX, playerSlotChosenY]
 }
-function determinePCBoxSlotCoords(boxObj, x, y){
+function determinePCBoxSlotCoords(boxObj, x, y) {
 	let slotNumbers = determinePCBoxSlotNumber(boxObj, x, y)
 	let coords = determinePCBoxSlotCoordsFromSlotNumbers(boxObj, slotNumbers[0], slotNumbers[1])
 	return coords
 }
-function determinePCBoxSlotCoordsFromSlotNumbers(boxObj, slotNumberX, slotNumberY){
+function determinePCBoxSlotCoordsFromSlotNumbers(boxObj, slotNumberX, slotNumberY) {
 	let minBoxX = boxObj.minX
 	let maxBoxX = boxObj.maxX
 	let minBoxY = boxObj.minY

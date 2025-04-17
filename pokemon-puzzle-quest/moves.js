@@ -1904,7 +1904,7 @@ const pokemonMoveData = {
 		name: "Thunder Wave",
 		type: "Electric",
 		category: "Status",
-		strategy: "basic-damage",
+		strategy: "buff-user",
 		pp: 20,
 		power: null,
 		accuracy: 90,

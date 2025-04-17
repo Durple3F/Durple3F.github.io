@@ -1,72 +1,103 @@
 Incomplete move lists:
-  Butterfree (lv 12)
-  Rattata-Alola (lv 10)
-  Spearow (lv 11)
-  Pikachu (lv 8)
-  Zubat (lv 15)
-  Meowth-Alola (lv 8)
-  Growlithe (lv 8)
-  Slowpoke (lv 9)
-  Magnemite (lv 8)
-  Grimer-Alola (lv 7)
-  Gastly (lv 8)
-  Drowzee (lv 9)
-  Ledyba (lv 8)
-  Spinarak (lv 8)
-  Murkrow (lv 11)
-  Misdreavus (lv 19)
-  Wingull (lv 10)
-  Drifloon (lv 12)
-  Bonsly (lv 1)
-  Makuhita (lv 4)
-  Happiny (lv 4)
-  Cottonee (lv 6)
-  Rowlet (lv 12)
-  Litten (lv 9)
-  Popplio (lv 9)
-  Pikipek (lv 7)
-  Yungoos (lv 7)
-  Grubbin (lv 15)
-  Charjabug (lv 15)
-  Cutiefly (lv 6)
-  Comfey (lv 0)
+	Butterfree (lv 12)
+	Rattata-Alola (lv 10)
+	Spearow (lv 11)
+	Pikachu (lv 8)
+	Zubat (lv 15)
+	Meowth-Alola (lv 8)
+	Growlithe (lv 8)
+	Slowpoke (lv 9)
+	Magnemite (lv 8)
+	Grimer-Alola (lv 7)
+	Gastly (lv 8)
+	Drowzee (lv 9)
+	Ledyba (lv 8)
+	Spinarak (lv 8)
+	Murkrow (lv 11)
+	Misdreavus (lv 19)
+	Wingull (lv 10)
+	Drifloon (lv 12)
+	Bonsly (lv 1)
+	Makuhita (lv 4)
+	Happiny (lv 4)
+	Cottonee (lv 6)
+	Rowlet (lv 12)
+	Litten (lv 9)
+	Popplio (lv 9)
+	Pikipek (lv 7)
+	Yungoos (lv 7)
+	Grubbin (lv 15)
+	Charjabug (lv 15)
+	Cutiefly (lv 6)
+	Comfey (lv 0)
 
 Missing Evolutions:
-  Rattata-Alola
-  Spearow
-  Pikachu
-  Zubat
-  Meowth-Alola
-  Abra
-  Growlithe
-  Slowpoke
-  Magnemite
-  Grimer-Alola
-  Gastly
-  Drowzee
-  Ledyba
-  Spinarak
-  Murkrow
-  Misreavus
-  Wingull
-  Bonsly
-  Makuhita
-  Happiny
-  Cottonee
-  Rowlet
-  Litten
-  Popplio
-  Pikipek
-  Yungoos
-  Charjabug
-  Cutiefly
+	Rattata-Alola
+	Spearow
+	Pikachu
+	Zubat
+	Meowth-Alola
+	Abra
+	Growlithe
+	Slowpoke
+	Magnemite
+	Grimer-Alola
+	Gastly
+	Drowzee
+	Ledyba
+	Spinarak
+	Murkrow
+	Misreavus
+	Wingull
+	Bonsly
+	Makuhita
+	Happiny
+	Cottonee
+	Rowlet
+	Litten
+	Popplio
+	Pikipek
+	Yungoos
+	Charjabug
+	Cutiefly
 
 Missing Abilities:
-  - All
-  - Popplio has an ability but it does nothing
+	Caterpie
+	Metapod
+	Butterfree
+	Rattata-Alola
+	Spearow
+	Pikachu
+	Zubat
+	Meowth-Alola
+	Growlithe
+	Abra
+	Slowpoke
+	Magnemite
+	Grimer-Alola
+	Gastly
+	Drowzee
+	Ledyba
+	Spinarak
+	Pichu
+	Murkrow
+	Misdreavus
+	Smeargle
+	Wingull
+	Makuhita
+	Drifloon
+	Bonsly
+	Happiny
+	Cottonee
+	Pikipek
+	Yungoos
+	Grubbin
+	Charjabug
+	Cutiefly
+	Comfey
 
 Missing Shiny Variations:
-  - None! :)
+	- None! :)
 
 
 

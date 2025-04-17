@@ -337,6 +337,9 @@ function getStatAbbr(stat){
 		return "SPD"
 	}
 }
+const statNames = [
+	"hp", "attack", "defense", "specialAttack", "specialDefense", "speed"
+]
 function getStatName(stat){
 	switch (stat){
 		case "hp":

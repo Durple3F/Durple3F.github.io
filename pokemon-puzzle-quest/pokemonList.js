@@ -1501,6 +1501,8 @@ const pokemonData = {
 		},
 		types: ["Grass"],
 		tags: ["Starter"],
+		abilities: ["Overgrow"],
+		hiddenAbilities: ["Long Reach"],
 		stats: {
 			hp: 68,
 			attack: 55,
@@ -1581,6 +1583,8 @@ const pokemonData = {
 		},
 		types: ["Fire"],
 		tags: ["Starter"],
+		abilities: ["Blaze"],
+		hiddenAbilities: ["Intimidate"],
 		stats: {
 			hp: 45,
 			attack: 65,
@@ -1722,27 +1726,9 @@ const pokemonData = {
 			orange: 2
 		},
 		learnset: [
-			{
-				name: "Peck",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "Growl",
-				unlock: {
-					type: "level",
-					amount: 3
-				}
-			},
-			{
-				name: "Echoed Voice",
-				unlock: {
-					type: "level",
-					amount: 3
-				}
-			},
+			{ name: "Peck", unlock: { type: "level", amount: 1 } },
+			{ name: "Growl", unlock: { type: "level", amount: 3 } },
+			{ name: "Echoed Voice", unlock: { type: "level", amount: 7 } },
 		]
 	},
 	"Yungoos": {
