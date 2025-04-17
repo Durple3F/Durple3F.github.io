@@ -162,7 +162,10 @@ const moveUseStrategy = {
 				otherTrainer, otherPokemon, lastMove,
 				[], []
 			)
-			let weight = game.getActionWeight(newOptions) * 10
+			let weight = 20
+			if (options.allowRecursion){
+				weight = getActionWeightSimple(lastMove, newOptions, false) * 10
+			}
 			
 			return weight
 		}

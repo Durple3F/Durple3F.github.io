@@ -390,6 +390,7 @@ const pokemonData = {
 			{ name: "Supersonic", unlock: { type: "level", amount: 1 } },
 			{ name: "Astonish", unlock: { type: "level", amount: 5 } },
 			{ name: "Mean Look", unlock: { type: "level", amount: 10 } },
+			{ name: "Poison Fang", unlock: { type: "level", amount: 15 } },
 		]
 	},
 	"Meowth-Alola": {
@@ -1347,6 +1348,9 @@ const pokemonData = {
 		learnset: [
 			{ name: "Minimize", unlock: { type: "level", amount: 1 } },
 			{ name: "Astonish", unlock: { type: "level", amount: 1 } },
+			{ name: "Gust", unlock: { type: "level", amount: 4 } },
+			{ name: "Focus Energy", unlock: { type: "level", amount: 8 } },
+			{ name: "Payback", unlock: { type: "level", amount: 12 } },
 		]
 	},
 	"Bonsly": {

@@ -283,17 +283,18 @@ const pokemonMoveEffects = {
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
 			let target = options.target
-			let statusEffect = effect.statusEffect
+			let statusEffect = window.structuredClone(effect.statusEffect)
 			let trainer = moveUseObj.trainer
 			let pokemon = moveUseObj.pokemon
 			let move = moveUseObj.move
+			
 			target.addStatusEffect(statusEffect, trainer, pokemon, move)
 			resolve(statusEffect)
 		}
 	},
 	"apply-debuff": {
 		execute: (resolve, effect, params, game, options) => {
-			let debuff = effect.debuff
+			let debuff = window.structuredClone(effect.debuff)
 
 			if (!("volatile" in debuff)){
 				debuff.volatile = true
@@ -766,7 +767,6 @@ const pokemonMoveEffects = {
 		execute: (resolve, effect, params, game, options) => {
 			let move = params.move
 			let result = move.name
-			console.log(move)
 			resolve(result)
 		}
 	},
@@ -794,7 +794,6 @@ const pokemonMoveEffects = {
 				resolve(undefined)
 				return
 			}
-			console.log(moveUseObj.move)
 			let result = moveUseObj.move
 			resolve(result)
 		}

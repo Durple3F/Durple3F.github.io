@@ -416,8 +416,8 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			// orange: 6,
-			// purple: 6
+			orange: 4,
+			purple: 6
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Disable.mp3"
@@ -1299,6 +1299,37 @@ const pokemonMoveData = {
 			{ type: "swap-tiles", selection: -1 },
 		],
 	},
+	"Poison Fang": {
+		name: "Poison Fang",
+		type: "Poison",
+		category: "Physical",
+		strategy: "basic-damage",
+		pp: 15,
+		power: 50,
+		accuracy: 100,
+		rechargeTurns: 3,
+		energy: {
+			purple: 7,
+			yellow: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Poison Fang.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-status-stacks", statusName: "poisoned" },
+			{ type: "load-value", value: 1 },
+			{ type: "jump-if-less-than", jumpTo: "small-damage" },
+			{ type: "load-value", value: 20 },
+			{ type: "damage", additivePower: -1 },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "damage", label: "small-damage" },
+			{ type: "random-number", min: 1, max: 10 },
+			{ type: "load-value", value: 6 },
+			{ type: "jump-if-less-than", jumpTo: Infinity },
+			{ type: "apply-status-effect", statusEffect: "poisoned", target: "opponent" },
+		],
+	},
 	"Poison Gas": {
 		name: "Poison Gas",
 		type: "Poison",
@@ -1382,7 +1413,7 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			// red: 6
+			red: 6
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Pound.mp3"

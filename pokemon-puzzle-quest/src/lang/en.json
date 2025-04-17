@@ -980,6 +980,11 @@
 			"description": "Lowers the opponent's attack stat by 1 stage. Then, the user chooses two tiles. Those tiles are swapped.",
 			"shortDescription": "Debuffs opponent and disrupts board"
 		},
+		"Poison Fang": {
+			"name": "Poison Fang",
+			"description": "Deals damage and has a 50% chance to poison the target. If the target was already poisoned, instead it deals damage with 20 additional power.",
+			"shortDescription": "Deals some damage and might poison"
+		},
 		"Poison Gas": {
 			"name": "Poison Gas",
 			"description": "Has a 90% chance to apply poisoned to the opponent.",

@@ -3,6 +3,7 @@
 4/17 (20.2k lines):
 	- Moves can now encode data into status effects they create.
 	- Added Disable, which took some doing, lemme tell ya. +AI
+	- Disable fixes... it immediately broke... :(
 
 4/16 (20.0k lines)!!!!!:
 	- Added Murkrow
