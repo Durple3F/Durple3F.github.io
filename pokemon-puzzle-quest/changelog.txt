@@ -1,6 +1,6 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-4/17 (20.4k lines):
+4/17 (20.6k lines):
 	- Moves can now encode data into status effects they create.
 	- Added Disable, which took some doing, lemme tell ya. +AI
 	- Disable fixes... it immediately broke... :(
@@ -9,6 +9,7 @@
 	- EVs work now. I guess past me never actually made those get applied to pokemon. Oops.
 	- Added some charts to show the pokemon's IV/EVs.
 	- Added tooltips to the energy bars.
+	- Route 2-6
 
 4/16 (20.0k lines)!!!!!:
 	- Added Murkrow

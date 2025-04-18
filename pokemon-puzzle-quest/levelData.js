@@ -769,6 +769,7 @@ const levelData = [
 			{ type: "dialogue", source: "route-2-6-dialogue" },
 			{ type: "fight", trainer: 1 },
 			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "dialogue", source: "route-2-6-dialogue-won" },
 		]
 	},
 ]

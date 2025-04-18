@@ -612,6 +612,9 @@
 			]
 		},
 		"route-2-6-dialogue": {
+			"callbacks": {
+				
+			},
 			"events": [],
 			"effects": [
 				{ "type": "get-speaker", "name": "Ikue", "class": "Pokemon-Breeder-Gen7-F" },
@@ -654,6 +657,51 @@
 				}},
 				{ "type": "come-in-from-offscreen", "speaker": "Ikue", "direction": "left", "duration": 1000, "waitDuration": 0 },
 				{ "type": "text", "speaker": "Ikue", "text": "Pa, I brought backup! Stranger, think you could help drive these pests out for us?" }
+			]
+		},
+		"route-2-6-dialogue-won": {
+			"callbacks": {
+				"move-1": { "type": "go-out-from-onscreen", "speaker": "Team Skull Grunt C", "direction": "left", "duration": 1000, "waitDuration": 0, "then": "flip-2" },
+				"flip-2": { "type": "transform-speaker", "speaker": "Team Skull Grunt D", "transform": "scaleX(-1)",
+				"duration": 700, "waitDuration": 400, "then": "move-2"},
+				"move-2": { "type": "go-out-from-onscreen", "speaker": "Team Skull Grunt D", "direction": "left", "duration": 1000, "waitDuration": 0 }
+			},
+			"events": [
+				{ "type": "transform-speaker", "speaker": "Team Skull Grunt C", "transform": "scaleX(-1)",
+				  "duration": 500, "waitDuration": 100, "then": "move-1"}
+			],
+			"effects": [
+				{ "type": "get-speaker", "name": "Team Skull Grunt C", "class": "Team-Skull-Grunt", "position": "left", "facing": "right" },
+				{ "type": "style-speaker", "speaker": "Team Skull Grunt C", "css": {
+					"filter": "unset",
+					"left": "-=5%",
+					"top": "+=3%"
+				}},
+				{ "type": "get-speaker", "name": "Team Skull Grunt D", "class": "Team-Skull-Grunt", "position": "left", "facing": "right" },
+				{ "type": "style-speaker", "speaker": "Team Skull Grunt D", "css": {
+					"filter": "unset",
+					"left": "+=5%",
+					"top": "+=3%"
+				}},
+				{ "type": "get-speaker", "name": "Jay", "class": "Pokemon-Breeder-Gen7" },
+				{ "type": "style-speaker", "speaker": "Jay", "css": {
+					"filter": "unset",
+					"left": "-=5%"
+				}},
+				{ "type": "get-speaker", "name": "Ikue", "class": "Pokemon-Breeder-Gen7-F" },
+				{ "type": "style-speaker", "speaker": "Ikue", "css": {
+					"filter": "unset",
+					"left": "+=5%"
+				}},
+				{ "type": "text", "speaker": "Team Skull Grunt C", "text": "Man... we lost again?! All we wanted was a couple berries, and maybe, like... mild bragging rights!" },
+				{ "type": "text", "speaker": "Team Skull Grunt D", "text": "Bro, we're outta Pokémon, we're outta berries... and now we're even outta our league! This stinks!" },
+				{ "type": "text", "speaker": "Team Skull Grunt C", "text": "Let's get outta here before the old man^^ makes us mulch!" },
+				{ "type": "bounce", "speaker": "Ikue", "duration": 300, "waitDuration": 0 },
+				{ "type": "text", "speaker": "Ikue", "text": "Whew, that was incredible! Thanks stranger, you were a real help!" },
+				{ "type": "bounce", "speaker": "Jay", "duration": 300, "waitDuration": 0 },
+				{ "type": "text", "speaker": "Jay", "text": "Yep, if you ever want something, come on down to the farm and we'll give you as many berries as you'd like." },
+				{ "type": "bounce", "speaker": "Ikue", "duration": 300, "waitDuration": 0 },
+				{ "type": "text", "speaker": "Ikue", "text": "Maybe one day that line'll be important if I ever decide to program held items into this thing! Don't hold your breath!" }
 			]
 		}
 	},

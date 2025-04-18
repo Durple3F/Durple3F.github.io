@@ -1163,7 +1163,7 @@ const pokemonData = {
 			cry: "src/audio/cries/smeargle.mp3"
 		},
 		types: ["Normal"],
-		tags: ["Starter"],
+		tags: [],
 		stats: {
 			hp: 55,
 			attack: 20,
@@ -1323,7 +1323,7 @@ const pokemonData = {
 			cry: "src/audio/cries/drifloon.mp3"
 		},
 		types: ["Ghost", "Flying"],
-		tags: ["Starter"],
+		tags: [],
 		stats: {
 			hp: 90,
 			attack: 50,
