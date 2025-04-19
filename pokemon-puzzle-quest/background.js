@@ -2,7 +2,7 @@ const backgroundAnimations = {
 	"none": {
 		name: "none",
 		type: "none",
-		frameCount: 0
+		frameCount: 1
 	},
 	"rainbow-radial": {
 		name: "rainbow-radial",
@@ -164,7 +164,7 @@ class Background{
 		this.framesInAnimation = 100
 		this.gradientT = 0
 		this.colorCache = {}
-		this.frameCache = []
+		this.resize()
 
 		for (let key in backgroundAnimations){
 			let animation = backgroundAnimations[key]
@@ -302,7 +302,6 @@ class Background{
 		animation.framesDrawn++
 		if (animation.framesDrawn >= animation.frameCount){
 			animation.complete = true
-			animation.resolve()
 		} else {
 			animation.incompleteFrame = this.newImageData()
 		}
@@ -322,6 +321,14 @@ class Background{
 		this.frame = 0
 		this.framesInAnimation = animation.frameCount
 		this.animation = animation
+
+		if (!animation.complete){
+			if (this.loadingAnimation && this.loadingAnimation !== animation){
+				this.loadingAnimationQueue.splice(0, 0, this.loadingAnimation)
+				this.loadingAnimation = undefined
+				this.loadAnimation(animation)
+			}
+		}
 	}
 	clearAnimation(animation){
 		if (!animation) return
@@ -389,10 +396,6 @@ class Background{
 		canvas.width = this.width
 		canvas.height = this.height
 		this.colorCache = {}
-		this.frameCache = {}
-		for (let i = 0; i < this.framesInAnimation; i++){
-			this.frameCache[i] = null
-		}
 
 		//Unfortunately, resizing the screen means all our animation caches are gone.
 		for (let key in this.loadedAnimations){
@@ -403,5 +406,8 @@ class Background{
 		})
 		this.clearAnimation(this.loadingAnimation)
 		this.clearAnimation(this.animation)
+		if (this.animation){
+			this.playAnimation(this.animation)
+		}
 	}
 }

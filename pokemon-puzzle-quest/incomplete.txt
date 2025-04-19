@@ -1,6 +1,7 @@
 Incomplete move lists:
 	Butterfree (lv 12)
 	Rattata-Alola (lv 10)
+	Raticate-Alola (lv 1)
 	Spearow (lv 11)
 	Pikachu (lv 8)
 	Zubat (lv 15)
@@ -26,13 +27,13 @@ Incomplete move lists:
 	Popplio (lv 9)
 	Pikipek (lv 7)
 	Yungoos (lv 7)
+	Gumshoos (lv 1)
 	Grubbin (lv 15)
 	Charjabug (lv 15)
 	Cutiefly (lv 6)
 	Comfey (lv 0)
 
 Missing Evolutions:
-	Rattata-Alola
 	Spearow
 	Pikachu
 	Zubat
@@ -57,7 +58,6 @@ Missing Evolutions:
 	Litten
 	Popplio
 	Pikipek
-	Yungoos
 	Charjabug
 	Cutiefly
 
@@ -66,6 +66,7 @@ Missing Abilities:
 	Metapod
 	Butterfree
 	Rattata-Alola
+	Raticate-Alola
 	Spearow
 	Pikachu
 	Zubat
@@ -91,6 +92,7 @@ Missing Abilities:
 	Cottonee
 	Pikipek
 	Yungoos
+	Gumshoos
 	Grubbin
 	Charjabug
 	Cutiefly

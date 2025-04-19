@@ -185,42 +185,56 @@ const pokemonData = {
 			orange: 2,
 			purple: 3
 		},
+		evolutions: [
+			{ name: "Raticate-Alola", unlock: { type: "level", amount: 20 } }
+		],
 		learnset: [
-			{
-				name: "Tackle",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "Tail Whip",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "Quick Attack",
-				unlock: {
-					type: "level",
-					amount: 4
-				}
-			},
-			{
-				name: "Focus Energy",
-				unlock: {
-					type: "level",
-					amount: 7
-				}
-			},
-			{
-				name: "Bite",
-				unlock: {
-					type: "level",
-					amount: 10
-				}
-			},
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Tail Whip", unlock: { type: "level", amount: 1 } },
+			{ name: "Quick Attack", unlock: { type: "level", amount: 4 } },
+			{ name: "Focus Energy", unlock: { type: "level", amount: 7 } },
+			{ name: "Bite", unlock: { type: "level", amount: 10 } },
+		]
+	},
+	"Raticate-Alola": {
+		name: "Raticate",
+		id: "Raticate-Alola",
+		number: "20a",
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0020Raticate-Alola.png",
+			"largeShiny": "src/img/shiny-pokemon/020-Raticate-Alola.png",
+			"home": "src/img/tiny-pokemon/Raticate-Alola.png"
+		},
+		sounds: {
+			cry: "src/audio/cries/raticate.mp3"
+		},
+		types: ["Dark", "Normal"],
+		tags: [],
+		stats: {
+			hp: 75,
+			attack: 71,
+			defense: 70,
+			specialAttack: 40,
+			specialDefense: 80,
+			speed: 77
+		},
+		expYield: 145,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 2
+		},
+		energyMastery: {
+			orange: 3,
+			purple: 4,
+			yellow: 2
+		},
+		learnset: [
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Spearow": {
@@ -1766,28 +1780,56 @@ const pokemonData = {
 			purple: 5,
 			green: 2
 		},
+		evolutions: [
+			{ name: "Gumshoos", unlock: { type: "level", amount: 20 } }
+		],
 		learnset: [
-			{
-				name: "Tackle",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "Leer",
-				unlock: {
-					type: "level",
-					amount: 3
-				}
-			},
-			{
-				name: "Payback",
-				unlock: {
-					type: "level",
-					amount: 7
-				}
-			},
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Leer", unlock: { type: "level", amount: 3 } },
+			{ name: "Payback", unlock: { type: "level", amount: 7 } },
+		]
+	},
+	"Gumshoos": {
+		name: "Gumshoos",
+		number: "735",
+		imageFacing: "right",
+		imageSources: {
+			"large": "src/img/pokemon/0735Gumshoos.png",
+			"largeShiny": "src/img/shiny-pokemon/735-Gumshoos.png",
+			"home": "src/img/tiny-pokemon/Gumshoos.png"
+		},
+		sounds: {
+			cry: "src/audio/cries/gumshoos.mp3"
+		},
+		tags: [],
+		types: ["Normal"],
+		stats: {
+			hp: 88,
+			attack: 110,
+			defense: 60,
+			specialAttack: 55,
+			specialDefense: 60,
+			speed: 45
+		},
+		expYield: 146,
+		evYield: {
+			hp: 0,
+			attack: 2,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 2,
+			purple: 6,
+			green: 2
+		},
+		learnset: [
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Leer", unlock: { type: "level", amount: 1 } },
+			{ name: "Payback", unlock: { type: "level", amount: 1 } },
+			{ name: "Sand Attack", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Grubbin": {

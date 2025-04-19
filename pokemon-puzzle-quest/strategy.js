@@ -170,6 +170,35 @@ const moveUseStrategy = {
 			return weight
 		}
 	},
+	"Haze": {
+		chooseWeight: options => {
+			let game = options.game
+			let trainer = options.trainer
+			//Notably, this is not the move's user, it's the active pokemon.
+			let pokemon = trainer.activePokemon
+			let otherTrainer = game.trainers.find(t => t !== trainer)
+			let otherPokemon = otherTrainer.activePokemon
+
+			let weight = 0
+			//Each 'debuff' that your active pokemon has counts towards this move's weight.
+			let statusEffects = pokemon.statusEffects
+			for (let statusEffect of statusEffects){
+				if (statusEffect.class === "debuff"){
+					weight += 10
+				}
+			}
+
+			//Each 'buff' that the opponent has counts towards this move's weight.
+			let statusEffects2 = otherPokemon.statusEffects
+			for (let statusEffect of statusEffects2){
+				if (statusEffect.class === "buff"){
+					weight += 10
+				}
+			}
+
+			return weight
+		}
+	},
 	"Helping Hand": {
 		chooseWeight: options => {
 			let pokemon = options.pokemon
@@ -236,31 +265,25 @@ const moveUseStrategy = {
 			return result
 		}
 	},
-	"Haze": {
+	"Pursuit": {
+		chooseWeight: options => {
+			//If we can use another damage dealing move first, that's better.
+			let payableMoves = options.payableMoves
+			if (payableMoves.some(move => move.tags.includes("damage-dealing"))){
+				return 0
+			}
+			let strategy = moveUseStrategy["basic-damage"]
+			let weight = strategy.chooseWeight(options)
+			return weight
+		}
+	},
+	"Super Fang": {
 		chooseWeight: options => {
 			let game = options.game
 			let trainer = options.trainer
-			//Notably, this is not the move's user, it's the active pokemon.
-			let pokemon = trainer.activePokemon
 			let otherTrainer = game.trainers.find(t => t !== trainer)
 			let otherPokemon = otherTrainer.activePokemon
-
-			let weight = 0
-			//Each 'debuff' that your active pokemon has counts towards this move's weight.
-			let statusEffects = pokemon.statusEffects
-			for (let statusEffect of statusEffects){
-				if (statusEffect.class === "debuff"){
-					weight += 10
-				}
-			}
-
-			//Each 'buff' that the opponent has counts towards this move's weight.
-			let statusEffects2 = otherPokemon.statusEffects
-			for (let statusEffect of statusEffects2){
-				if (statusEffect.class === "buff"){
-					weight += 10
-				}
-			}
+			let weight = otherPokemon.hp * 0.5 * 10
 
 			return weight
 		}

@@ -963,6 +963,11 @@
 			"description": "This Pokémon's energy gain is increased by 50% until their next turn.",
 			"shortDescription": "Temporarily doubles energy"
 		},
+		"Hyper Fang": {
+			"name": "Hyper Fang",
+			"description": "Deals damage. Then, removes 30 initiative from the opponent.",
+			"shortDescription": "Deals light damage and slows opponent"
+		},
 		"Hypnosis": {
 			"name": "Hypnosis",
 			"description": "Has an 80% to apply Sleep to the opponent. Otherwise, it will apply Drowsy. When a Drowsy Pokémon ends their turn, they may become Asleep, and lose Drowsy. An Asleep Pokémon gets half as much energy (rounded up) from matches.",
@@ -1108,6 +1113,11 @@
 			"name": "Stun Spore",
 			"description": "Applies the Stun Spore status to 5 random tiles. At the start of each turn, if there are 20 or more tiles with Stun Spore, all but one Stun Spore is removed and the opponent is paralyzed. At the start of each turn, for each tile adjacent to a tile with Stun Spore, that tile has a 10% chance to gain Stun Spore.",
 			"shortDescription": "Infects tiles with paralyzed"
+		},
+		"Super Fang": {
+			"name": "Super Fang",
+			"description": "Deals damage equal to half the target's remaining HP.",
+			"shortDescription": "Cuts enemy HP in half"
 		},
 		"Supersonic": {
 			"name": "Supersonic",

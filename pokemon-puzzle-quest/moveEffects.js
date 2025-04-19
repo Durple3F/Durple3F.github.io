@@ -190,6 +190,9 @@ const pokemonMoveEffects = {
 				damageOptions.toTrainer = toTrainer
 			}
 
+			if ("amount" in effect){
+				damageOptions.damage = params.amount
+			}
 			if ("additivePower" in effect) {
 				let additivePower = params.additivePower
 				damageOptions.additionalPower = damageOptions.additionalPower ?? 0
@@ -198,6 +201,9 @@ const pokemonMoveEffects = {
 			if ("damageMult" in effect){
 				damageOptions.damageMult = damageOptions.damageMult ?? 1
 				damageOptions.damageMult *= effect.damageMult
+			}
+			if ("fixed" in effect){
+				damageOptions.fixed = effect.fixed
 			}
 
 			let result = game.dealDamage(damageOptions)
@@ -256,6 +262,17 @@ const pokemonMoveEffects = {
 			let result = game.dealDamage(damageOptions)
 			moveUseObj.info[effectIndex] = result.damageDealt
 			resolve()
+		}
+	},
+	"get-hp": {
+		update: false,
+		hasTarget: true,
+		targetType: "pokemon",
+		targetDefault: "user",
+		execute: (resolve, effect, params, game, options) => {
+			let target = options.target
+			let result = target.hp
+			resolve(result)
 		}
 	},
 	"get-stat": {
@@ -1059,8 +1076,14 @@ const pokemonMoveEffects = {
 			let val1 = moveUseObj.info[effectIndex - 2]
 			let val2 = moveUseObj.info[effectIndex - 1]
 			let val = val1 * val2
-			moveUseObj.info[effectIndex] = val
-			resolve()
+			if (effect.round === "up"){
+				val = Math.ceil(val)
+			} else if (effect.round === "down"){
+				val = Math.floor(val)
+			} else if (effect.round === "round" || effect.round === true){
+				val = Math.round(val)
+			}
+			resolve(val)
 		}
 	},
 	"add-numbers": {

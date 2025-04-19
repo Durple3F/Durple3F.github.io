@@ -1,6 +1,11 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-4/17 (20.6k lines):
+4/18 (20.8k lines):
+	- Fixed some bugs with backgrounds. I am not a fan of that code.
+	- Added Alolan Raticate and Gumshoos
+	- Added AI to Pursuit.
+
+4/17 (20.7k lines):
 	- Moves can now encode data into status effects they create.
 	- Added Disable, which took some doing, lemme tell ya. +AI
 	- Disable fixes... it immediately broke... :(
@@ -10,6 +15,7 @@
 	- Added some charts to show the pokemon's IV/EVs.
 	- Added tooltips to the energy bars.
 	- Route 2-6
+	- Added Hyper Fang, Super Fang
 
 4/16 (20.0k lines)!!!!!:
 	- Added Murkrow

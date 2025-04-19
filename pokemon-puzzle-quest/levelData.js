@@ -744,7 +744,6 @@ const levelData = [
 		id: "Route 2-6",
 		category: "Route 2",
 		name: "Route 2-6",
-		music: "SM Wild Pokemon Battle",
 		icon: "6",
 		trainers: [
 			{
@@ -767,9 +766,33 @@ const levelData = [
 		],
 		effects: [
 			{ type: "dialogue", source: "route-2-6-dialogue" },
+			{ type: "change-music", music: "SM Trainer Battle" },
 			{ type: "fight", trainer: 1 },
 			{ type: "jump-if-lost", jumpTo: Infinity },
 			{ type: "dialogue", source: "route-2-6-dialogue-won" },
+		]
+	},
+	//2-7: Trial 1
+	{
+		id: "Route 2-7",
+		category: "Route 2",
+		name: "Route 2-7",
+		icon: "7",
+		trainers: [
+			{
+				isWild: true,
+				pokemon: [
+					{ id: "Yungoos", level: 11, activeMoves: ["Sand Attack", "Tackle", "Hyper Fang", "Leer"] },
+					{ id: "Yungoos", level: 11, activeMoves: ["Sand Attack", "Tackle", "Super Fang", "Leer"] },
+					{ id: "Gumshoos", level: 11, activeMoves: ["Sand Attack", "Bite", "Super Fang", "Leer"] },
+					{ id: "Rattata-Alola", level: 11, activeMoves: ["Quick Attack", "Tail Whip", "Hyper Fang", "Tackle"] },
+					{ id: "Rattata-Alola", level: 11, activeMoves: ["Quick Attack", "Tail Whip", "Super Fang", "Tackle"] },
+					{ id: "Raticate-Alola", level: 11, activeMoves: ["Focus Energy", "Tail Whip", "Super Fang", "Tackle"] },
+				]
+			},
+		],
+		effects: [
+			{ type: "fight", trainer: 0 },
 		]
 	},
 ]

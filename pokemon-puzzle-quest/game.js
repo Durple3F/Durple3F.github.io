@@ -1689,6 +1689,9 @@ class Round{
 			damage *= options.damageMult
 			console.log(damage)
 		}
+		
+		//I'm going to reduce how much damage things deal across the board, just a smidge.
+		damage *= 0.8
 
 		//Damage can be set to a specific value
 		if (options.fixed && options.damage !== undefined){
@@ -1696,8 +1699,6 @@ class Round{
 		}
 
 		//Finalize how much damage is intended to be dealt.
-		//I'm going to reduce how much damage things deal across the board, just a smidge.
-		damage *= 0.8
 		damage = Math.round(damage)
 
 		//If the receiving Pokemon has Invulnerable, set damage dealt to 0.

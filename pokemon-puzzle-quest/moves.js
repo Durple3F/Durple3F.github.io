@@ -942,6 +942,37 @@ const pokemonMoveData = {
 			} },
 		],
 	},
+	"Hyper Fang": {
+		name: "Hyper Fang",
+		type: "Normal",
+		category: "Physical",
+		strategy: "basic-damage",
+		pp: 15,
+		power: 80,
+		accuracy: 90,
+		rechargeTurns: 2,
+		energy: {
+			red: 5,
+			orange: 10,
+			yellow: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Hyper Fang.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "get-initiative", target: "opponent" },
+			{ type: "load-value", value: -30 },
+			{ type: "add-numbers" },
+			{ type: "load-value", value: 0 },
+			{ type: "jump-if-less-than", jumpTo: "zero" },
+			{ type: "set-initiative", target: "opponent", initiative: -3 },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "load-value", value: 0, label: "zero" },
+			{ type: "set-initiative", target: "opponent", initiative: -1 },
+		],
+	},
 	"Hypnosis": {
 		name: "Hypnosis",
 		type: "Normal",
@@ -1428,7 +1459,7 @@ const pokemonMoveData = {
 		name: "Pursuit",
 		type: "Dark",
 		category: "Physical",
-		strategy: "basic-damage",
+		strategy: "special",
 		pp: 20,
 		power: 40,
 		accuracy: 100,
@@ -1729,6 +1760,31 @@ const pokemonMoveData = {
 			{ type: "apply-status-to-tiles", selection: "group", which: -1,
 				status: { name: "Stun Spore", type: "debuff", duration: 5 }
 			}
+		],
+	},
+	"Super Fang": {
+		name: "Super Fang",
+		type: "Normal",
+		category: "Physical",
+		strategy: "special",
+		tags: ["damage-dealing"],
+		pp: 10,
+		power: null,
+		accuracy: 90,
+		rechargeTurns: 2,
+		energy: {
+			orange: 10,
+			purple: 10
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Super Fang.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-hp", target: "opponent" },
+			{ type: "load-value", value: 0.5 },
+			{ type: "multiply-numbers", round: "up" },
+			{ type: "damage", amount: -1, fixed: true },
 		],
 	},
 	"Supersonic": {
