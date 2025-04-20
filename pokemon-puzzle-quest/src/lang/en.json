@@ -439,7 +439,7 @@
 				{ "type": "reset-position", "speaker": "Ilima", "position": "right" },
 				{ "type": "come-in-from-offscreen", "speaker": "Ilima", "direction": "right", "additionalLeft": -0.06, "duration": 5000, "waitDuration": 2000},
 				{ "type": "transform-speaker", "speaker": "Hau", "transform": "scaleX(1)", "duration": 300, "waitDuration": 0 },
-				{ "type": "text", "speaker": "Ilima", "text": "(Yes, I'm coming, I'm coming... you have a strong grip...)", "auto": true, "fontSize": 0.7 },
+				{ "type": "text", "speaker": "Ilima", "text": "(Yes, I'm coming, I'm coming... how are you so strong?)", "auto": true, "fontSize": 0.7 },
 				{ "type": "text", "speaker": "Ilima", "text": "Hello again. In recognition of your efforts, I am obliged to battle with you so as to test your worth in the island challenge, and what have you." },
 				{ "type": "animate-speaker", "speaker": "Ilima", "css": {
 					"left": "50%",
@@ -703,6 +703,84 @@
 				{ "type": "bounce", "speaker": "Ikue", "duration": 300, "waitDuration": 0 },
 				{ "type": "text", "speaker": "Ikue", "text": "Maybe one day that line'll be important if I ever decide to program held items into this thing! Don't hold your breath!" }
 			]
+		},
+		"route-2-7-dialogue": {
+			"events": [
+				{ "type": "transform-speaker", "speaker": "Ilima", "transform": "translateX(0%)", "duration": 1000, "waitDuration": 0 }
+			],
+			"effects": [
+				{ "type": "get-speaker", "name": "Ilima", "class": "Ilima" },
+				{ "type": "get-speaker", "name": "Hau", "class": "Hau", "position": "left", "facing": "right" },
+				{ "type": "style-speaker", "speaker": "Hau", "css": {
+					"filter": "unset",
+					"left": "+=6%"
+				}},
+				{ "type": "get-speaker", "name": "Lillie", "class": "Lillie", "position": "left", "facing": "right" },
+				{ "type": "style-speaker", "speaker": "Lillie", "css": {
+					"filter": "unset",
+					"left": "-=6%",
+					"top": "+=2.5%"
+				}},
+				{ "type": "text", "speaker": "Ilima", "text": "Ah, welcome, challenger! You're just in time for the commencement of the Trial of Melemele Island's Verdant Cavern!" },
+				{ "type": "text", "speaker": "Ilima", "text": "Which, yes, may $@start-italics|@$technically$@end-italics|@$ consist of nothing more than a small rodent infestation, but don't let that diminish the gravity of the task!" },
+				{ "type": "text", "speaker": "Hau", "text": "$@start-italics|@$Ooooh,$@end-italics|@$ are we fighting a boss already?! I can't wait!" },
+				{ "type": "go-out-from-onscreen", "speaker": "Hau", "direction": "right", "duration": 1500, "waitDuration": 600 },
+				{ "type": "transform-speaker", "speaker": "Ilima", "transform": "translateX(20%)", "duration": 300, "waitDuration": 150 },
+				{ "type": "text", "speaker": "Ilima", "text": "No... it's really just a few Yungoos and Rattata...$@wait-20|@$ ^^oh, he's already gone. Look, can I be honest with the two of you?" },
+				{ "type": "choice", "speaker": "Ilima", "choices": [
+					{ "text": "Yes", "value": true, "default": true },
+					{ "text": "No, I wanna fight rats", "value": false }
+				] },
+				{ "type": "set-variable", "name": "fight-ilima" },
+				{ "type": "load-value", "value": false },
+				{ "type": "jump-if-equal", "jumpTo": "skipTo" },
+
+				{ "type": "text", "speaker": "Ilima", "text": "Look, there's nothing exciting in that cave. I'm paid to oversee something that feels special, and this cave thing definitely works for $@start-italics|@$some$@end-italics|@$ people, but..." },
+				{ "type": "text", "speaker": "Ilima", "text": "I mean, it's literally just 3 Rattata. One of them's a little bigger than the others." },
+				{ "type": "text", "speaker": "Ilima", "text": "This whole thing is just a formality, I just need to check that you're $@start-italics|@$capable$@end-italics|@$ trainers, not stupid ones." },
+				{ "type": "text", "speaker": "Ilima", "text": "Let's just have a battle, instead. I've got some more capable Pokémon on me." },
+				{ "type": "jump-if-equal", "jumpTo": "end" },
+
+				{ "type": "text", "speaker": "Ilima", "text": "Oh. Well, alright. Have fun, I guess. I'll be waiting out here.", "label": "skipTo" }
+			]
+		},
+		"route-2-7-dialogue-won-1": {
+			"events": [],
+			"effects": [
+				{ "type": "get-speaker", "name": "Ilima", "class": "Ilima", "position": "left", "facing": "right" },
+				{ "type": "get-speaker", "name": "Hau", "class": "Hau", "position": "right", "facing": "left" },
+				{ "type": "style-speaker", "speaker": "Hau", "css": {
+					"filter": "unset",
+					"left": "-=6%"
+				}},
+				{ "type": "get-speaker", "name": "Lillie", "class": "Lillie", "position": "right", "facing": "left" },
+				{ "type": "style-speaker", "speaker": "Lillie", "css": {
+					"filter": "unset",
+					"left": "+=6%",
+					"top": "+=2.5%"
+				}},
+				{ "type": "text", "speaker": "Ilima", "text": "Ah, you've returned victorious! I could practically $@start-italics|@$feel$@end-italics|@$ the energy of your climactic battle coming from the cave." },
+				{ "type": "text", "speaker": "Ilima", "text": "Now, with your triumph over this trial, I am $@font-size:0.6|@$mildly enthused$@font-size:1|@$ to present the three of you with these emblems as proof of your mastery." },
+				{ "type": "text", "speaker": "Lillie", "text": "But I didn't do anything..." },
+				{ "type": "text", "speaker": "Ilima", "text": "Nonsense! Young lady, you endured the $@start-italics|@$bone-chilling$@end-italics|@$ atmosphere of the Verdant Cavern! And, quite honestly, I ordered these in bulk." }
+			]
+		},
+		"route-2-7-dialogue-won-2": {
+			"events": [],
+			"effects": [
+				{ "type": "get-speaker", "name": "Ilima", "class": "Ilima", "position": "right", "facing": "left" },
+				{ "type": "get-speaker", "name": "Lillie", "class": "Lillie", "position": "left", "facing": "right" },
+				{ "type": "style-speaker", "speaker": "Lillie", "css": {
+					"filter": "unset",
+					"top": "+=2.5%"
+				}},
+				{ "type": "text", "speaker": "Ilima", "text": "Well done! That was quite invigorating. I daresay that you've earned your passage— not through pest control, but through panache!" },
+				{ "type": "text", "speaker": "Ilima", "text": "I should really offer this little opportunity to more trial-goers. As it stands, I have to wait here until... whoever that other child was finishes." },
+				{ "type": "text", "speaker": "Ilima", "text": "I really must start imposing time limits on trial attempts. Maybe install signage?" },
+				{ "type": "text", "speaker": "Ilima", "text": "Well, it's no matter now. Here, both of you, take these emblems as proof of your passage." },
+				{ "type": "text", "speaker": "Lillie", "text": "But I didn't do anything..." },
+				{ "type": "text", "speaker": "Ilima", "text": "Young lady, I am close to certain that you could defeat 3 rats. Please just take the emblem." }
+			]
 		}
 	},
 	"pokemon": {
@@ -717,6 +795,9 @@
 		},
 		"Rattata-Alola": {
 			"name": "Rattata"
+		},
+		"Raticate-Alola": {
+			"name": "Raticate"
 		},
 		"Spearow": {
 			"name": "Spearow"
@@ -802,6 +883,9 @@
 		"Yungoos": {
 			"name": "Yungoos"
 		},
+		"Gumshoos": {
+			"name": "Gumshoos"
+		},
 		"Grubbin": {
 			"name": "Grubbin"
 		},
@@ -813,6 +897,9 @@
 		},
 		"Comfey": {
 			"name": "Comfey"
+		},
+		"Komala": {
+			"name": "Komala"
 		}
 	},
 	"moves": {
@@ -836,6 +923,11 @@
 			"description": "Deals damage. If the opponent has any benched Pokémon remaining, this move also attacks one of them of your choice, with 20 less power.",
 			"shortDescription": "Damages a benched Pokémon",
 			"choose-pokemon": "Choose a Pokémon for Aqua Jet to deal damage to."
+		},
+		"Bide": {
+			"name": "Bide",
+			"description": "After two turns, this move deals damage equal to the opponent equal to twice the damage received since it was used. The user can't use moves in the meantime.",
+			"shortDescription": "Deals double the damage received"
 		},
 		"Bite": {
 			"name": "Bite",
@@ -966,7 +1058,7 @@
 		"Hyper Fang": {
 			"name": "Hyper Fang",
 			"description": "Deals damage. Then, removes 30 initiative from the opponent.",
-			"shortDescription": "Deals light damage and slows opponent"
+			"shortDescription": "Deals damage and slows opponent"
 		},
 		"Hypnosis": {
 			"name": "Hypnosis",
@@ -1184,7 +1276,7 @@
 	"abilities": {
 		"No Ability": {
 			"name": "No Ability",
-			"shortDescription": "No effect blah blah blah blah blah blah blah blah blah blah",
+			"shortDescription": "No effect",
 			"longDescription": "This Pokémon has no ability. This is probably because I am slow."
 		},
 		"Blaze": {
@@ -1384,6 +1476,10 @@
 		"Route 2-6": {
 			"name": "Route 2-6",
 			"description": "Team Skull is causing some trouble at a berry farm."
+		},
+		"Route 2-7": {
+			"name": "Route 2-7",
+			"description": "You arrive at Verdant Cavern, where Ilima is hosting his Island Challenge."
 		}
 	},
 	"route-categories": {

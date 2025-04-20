@@ -149,6 +149,7 @@ class Pokemon{
 				case "confused": {
 					status = {
 						name: "confused",
+						class: "debuff",
 						volatile: true,
 						turns: Math.floor(Math.random() * 4) + 2
 					}
@@ -156,18 +157,21 @@ class Pokemon{
 				case "poisoned": {
 					status = {
 						name: "poisoned",
+						class: "debuff",
 						volatile: false
 					}
 				} break
 				case "paralyzed": {
 					status = {
 						name: "paralyzed",
+						class: "debuff",
 						volatile: false
 					}
 				} break
 				case "invulnerable": {
 					status = {
 						name: "invulnerable",
+						class: "debuff",
 						volatile: true,
 						turns: 1
 					}
@@ -175,12 +179,14 @@ class Pokemon{
 				case "drowsy": {
 					status = {
 						name: "drowsy",
+						class: "debuff",
 						volatile: true
 					}
 				} break
 				case "asleep": {
 					status = {
 						name: "asleep",
+						class: "debuff",
 						volatile: false,
 						turns: Math.floor(Math.random() * 4) + 2
 					}
@@ -188,6 +194,7 @@ class Pokemon{
 				case "fear-frozen": {
 					status = {
 						name: "fear-frozen",
+						class: "debuff",
 						volatile: true
 					}
 				} break
@@ -217,6 +224,13 @@ class Pokemon{
 
 		if (!("volatile" in status)){
 			status.volatile = true
+		}
+		if (!status.tags){
+			status.tags = []
+		}
+		status.gameData = {}
+		if (status.tags.includes("count-damage-received")){
+			status.gameData.damageReceived = 0
 		}
 
 		if (!status.name || !status.type){

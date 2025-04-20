@@ -1720,6 +1720,19 @@ class Round{
 
 			if (damage > 0){
 				defender.gameRoundData.damagedThisTurn = true
+
+				//If the defender has any status effects that remember how much
+				//damage they were dealt, count that.
+				let countsDamage = defender.statusEffects
+				.filter(statusEffect => {
+					if (!statusEffect.tags){
+						console.log(statusEffect)
+					}
+					return statusEffect.tags.includes("count-damage-received")
+				})
+				countsDamage.forEach(statusEffect => {
+					statusEffect.gameData.damageReceived += damage
+				})
 			}
 		}
 
@@ -1779,6 +1792,18 @@ class Round{
 		let trainer = this.trainers[trainerIndex]
 		let allSwaps = this.determineAvailableSwaps(trainer)
 		return allSwaps.length === 0 || this.struggleTest
+	}
+	getCurrentlyUsableMoves(trainerIndex){
+		let trainer = this.trainers[trainerIndex]
+		let pokemon = trainer.activePokemon
+		let moves = this.getAvailableMoves(trainerIndex)
+		moves = moves.filter(move => {
+			return this.canPayForMove(trainer, pokemon, move)
+		})
+		moves = moves.filter(move => {
+			return !this.getEffectiveMoveDisability(trainer, pokemon, move)
+		})
+		return moves
 	}
 
 	attemptToUseMove(event){
@@ -2868,7 +2893,12 @@ class Round{
 			let trainer = this.trainers[trainerIndex]
 			let pokemonList = trainer.pokemon
 			let pokemon = pokemonList[pokemonIndex]
-			let popoverContent = pokemon.name
+			let popoverContent
+			if (trainerIndex === 0){
+				popoverContent = pokemon.name
+			} else {
+				popoverContent = getLocaleString("name", lang, ["pokemon", pokemon.pokemonId])
+			}
 			if (trainerIndex === 0 && config.pokemonSwapOutInfo){
 				popoverContent += `<br><span class='tiny-tutorial'>Swapping ends your turn.<br>It will enter with half the active pokemon's energy.</span>`
 			}
@@ -4612,7 +4642,8 @@ function beginRound(trainerData){
 	})
 
 	//If it's wild, shuffle the pokemon.
-	if (trainerData.isWild){
+	let shouldShuffle = "shuffle" in trainerData ? trainerData.shuffle : !!trainerData.isWild
+	if (shouldShuffle){
 		shuffleArray(enemyPokemon)
 	}
 

@@ -106,6 +106,64 @@ const pokemonMoveData = {
 			{ type: "damage", toPokemon: -2, additivePower: -1 }
 		],
 	},
+	"Bide": {
+		name: "Bide",
+		type: "Normal",
+		category: "Physical",
+		strategy: "special",
+		pp: 10,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 5,
+		energy: {
+			red: 4,
+			blue: 8
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Bide part 1.mp3",
+			"activate": "src/audio/attacks/Bide part 2.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "bide-using-bide",
+				type: "disability",
+				tags: ["count-damage-received"],
+				stacks: false,
+				volatile: true,
+				lostOnSwap: true,
+				lostOnBatonPass: true,
+				appliesTo: {
+					logic: "not"
+				},
+			} },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "bide-wait-time",
+				type: "hidden",
+				stacks: false,
+				volatile: true,
+				lostOnSwap: true,
+				lostOnBatonPass: true,
+				turns: 2
+			} },
+		],
+		onTurnStart: [
+			{ type: "get-status-stacks", statusName: "bide-using-bide" },
+			{ type: "jump-if-truthy", jumpTo: "bide-check" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "get-status-stacks", statusName: "bide-wait-time", label: "bide-check" },
+			{ type: "jump-if-truthy", jumpTo: Infinity },
+			{ type: "get-status-gamedata", key: "damageReceived", statusName: "bide-using-bide" },
+			{ type: "load-value", value: 1 },
+			{ type: "jump-if-less-than", jumpTo: "remove-status" },
+			{ type: "play-sound", name: "activate" },
+			{ type: "get-status-gamedata", key: "damageReceived", statusName: "bide-using-bide" },
+			{ type: "load-value", value: 2 },
+			{ type: "multiply-numbers" },
+			{ type: "damage", amount: -1 },
+			{ type: "remove-status-effect", target: "user", statusName: "bide-using-bide", label: "remove-status" },
+		]
+	},
 	"Bite": {
 		name: "Bite",
 		type: "Dark",

@@ -849,6 +849,7 @@ const pokemonData = {
 			{ name: "Hypnosis", unlock: { type: "level", amount: 1 } },
 			{ name: "Disable", unlock: { type: "level", amount: 5 } },
 			{ name: "Confusion", unlock: { type: "level", amount: 9 } },
+			{ name: "Bide", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Ledyba": {
@@ -1701,7 +1702,7 @@ const pokemonData = {
 			{ name: "Water Gun", unlock: { type: "level", amount: 3 } },
 			{ name: "Disarming Voice", unlock: { type: "level", amount: 6 } },
 			{ name: "Aqua Jet", unlock: { type: "level", amount: 9 } },
-			{ name: "Disable", unlock: { type: "level", amount: 1 } },
+			{ name: "Bide", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {
@@ -2008,6 +2009,45 @@ const pokemonData = {
 		},
 		learnset: [
 			{ name: "Wrap", unlock: { type: "level", amount: 1 } },
+		]
+	},
+	"Komala": {
+		name: "Komala",
+		number: "775",
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0775Komala.png",
+			"largeShiny": "src/img/shiny-pokemon/775-Komala.png",
+			"home": "src/img/tiny-pokemon/Komala.png"
+		},
+		sounds: {
+			cry: "src/audio/cries/komala.mp3"
+		},
+		tags: [],
+		types: ["Normal"],
+		stats: {
+			hp: 65,
+			attack: 115,
+			defense: 65,
+			specialAttack: 75,
+			specialDefense: 95,
+			speed: 65
+		},
+		expYield: 168,
+		evYield: {
+			hp: 0,
+			attack: 2,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 3,
+			purple: 2,
+		},
+		learnset: [
+			{ name: "Defense Curl", unlock: { type: "level", amount: 1 } },
 		]
 	},
 };

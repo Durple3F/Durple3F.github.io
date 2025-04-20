@@ -781,18 +781,73 @@ const levelData = [
 		trainers: [
 			{
 				isWild: true,
+				shuffle: false,
 				pokemon: [
 					{ id: "Yungoos", level: 11, activeMoves: ["Sand Attack", "Tackle", "Hyper Fang", "Leer"] },
-					{ id: "Yungoos", level: 11, activeMoves: ["Sand Attack", "Tackle", "Super Fang", "Leer"] },
-					{ id: "Gumshoos", level: 11, activeMoves: ["Sand Attack", "Bite", "Super Fang", "Leer"] },
+					{ id: "Yungoos", level: 11, activeMoves: ["Bide", "Tackle", "Super Fang", "Leer"] },
+					{ id: "Gumshoos", level: 13, activeMoves: ["Sand Attack", "Bite", "Super Fang", "Leer"] },
+				]
+			},
+			{
+				isWild: true,
+				shuffle: false,
+				pokemon: [
 					{ id: "Rattata-Alola", level: 11, activeMoves: ["Quick Attack", "Tail Whip", "Hyper Fang", "Tackle"] },
 					{ id: "Rattata-Alola", level: 11, activeMoves: ["Quick Attack", "Tail Whip", "Super Fang", "Tackle"] },
-					{ id: "Raticate-Alola", level: 11, activeMoves: ["Focus Energy", "Tail Whip", "Super Fang", "Tackle"] },
+					{ id: "Raticate-Alola", level: 13, activeMoves: ["Focus Energy", "Tail Whip", "Super Fang", "Tackle"] },
+				]
+			},
+			{
+				isWild: true,
+				shuffle: false,
+				pokemon: [
+					{ id: "Yungoos", level: 11, activeMoves: ["Sand Attack", "Tackle", "Hyper Fang", "Leer"] },
+					{ id: "Rattata-Alola", level: 11, activeMoves: ["Quick Attack", "Tail Whip", "Hyper Fang", "Tackle"] },
+					{ id: "Yungoos", level: 11, activeMoves: ["Bide", "Tackle", "Super Fang", "Leer"] },
+					{ id: "Rattata-Alola", level: 11, activeMoves: ["Quick Attack", "Tail Whip", "Super Fang", "Tackle"] },
+					{ id: "Gumshoos", level: 13, activeMoves: ["Sand Attack", "Bite", "Super Fang", "Leer"] },
+					{ id: "Raticate-Alola", level: 13, activeMoves: ["Focus Energy", "Tail Whip", "Super Fang", "Tackle"] },
+				]
+			},
+			{
+				name: "Ilima",
+				pokemon: [
+					{ id: "Gumshoos", level: 15, name: "Reginald", pokeball: "ultraball", activeMoves: ["Bite", "Hyper Fang", "Super Fang", "Leer"] },
+					{ id: "Smeargle", level: 15, name: "Inkwell", pokeball: "ultraball", activeMoves: ["Tackle", "Ember", "Leafage", "Water Gun"] },
+					{ id: "Komala", level: 15, name: "Nibsby", pokeball: "ultraball", activeMoves: ["Yawn", "Bite", "Pound", "Focus Energy"] },
 				]
 			},
 		],
 		effects: [
-			{ type: "fight", trainer: 0 },
+			{ type: "dialogue", source: "route-2-7-dialogue" },
+			// { type: "get-val-from-obj", key: "fight-ilima", obj: -1 },
+			// { type: "load-value", value: true },
+			// { type: "jump-if-equal", jumpTo: "fight-ilima" },
+			// { type: "jump", jumpTo: "fight-rats" },
+			
+			// { type: "load-setting", key: "hardMode", label: "fight-ilima" },
+			// { type: "fight", trainer: 3, label: "Ilima" },
+			// { type: "dialogue", source: "route-2-7-dialogue-won-2" },
+			// { type: "jump", jumpTo: Infinity },
+
+			// { type: "load-setting", key: "hardMode", label: "fight-rats" },
+			// { type: "load-value", value: true },
+			// { type: "jump-if-equal", jumpTo: "hardMode" },
+			// { type: "jump", jumpTo: "easyMode" },
+
+			// { type: "random-number", min: 1, max: 10, label: "easyMode" },
+			// { type: "load-value", value: 6 },
+			// { type: "jump-if-less-than", jumpTo: "Moon" },
+			// { type: "fight", trainer: 0, label: "Sun" },
+			// { type: "jump", jumpTo: "win-check" },
+			// { type: "fight", trainer: 1, label: "Moon" },
+			// { type: "jump", jumpTo: "win-check" },
+
+			{ type: "fight", trainer: 2, label: "hardMode" },
+			// { type: "jump", jumpTo: "win-check" },
+			
+			// { type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
+			{ type: "dialogue", source: "route-2-7-dialogue-won-1" },
 		]
 	},
 ]

@@ -121,6 +121,33 @@ const moveUseStrategy = {
 			return weight
 		}
 	},
+	"Bide": {
+		chooseWeight: options => {
+			let game = options.game
+			let trainer = options.trainer
+			let pokemon = options.pokemon
+			let otherTrainer = game.trainers.find(t => t !== trainer)
+			let otherTrainerIndex = game.trainers.indexOf(otherTrainer)
+			let otherPokemon = otherTrainer.activePokemon
+
+			//Weight is based on the weight of the opponent making a move.
+			let theirUsableMoves = game.getCurrentlyUsableMoves(otherTrainerIndex)
+			let totalWeight = 0
+			theirUsableMoves.forEach(move => {
+				let newOptions = game.getActionWeightOptions(
+					otherTrainer, otherPokemon, move,
+					[], []
+				)
+				let weight = 5
+				if (options.allowRecursion){
+					weight = getActionWeightSimple(move, newOptions, false) * 3
+				}
+				totalWeight += weight
+			})
+
+			return totalWeight
+		}
+	},
 	"Copycat": {
 		chooseWeight: options => {
 			let game = options.game

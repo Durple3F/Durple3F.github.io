@@ -232,5 +232,79 @@ const dialogueEffects = {
 			tag.animate(css, duration)
 			delay(waitDuration).then(() => resolve())
 		}
-	}
+	},
+	"choice": {
+		execute: (resolve, effect, progress, options) => {
+			let choices = effect.choices
+			let modal = $("#modal")
+			clearModal(modal)
+			modal.modal("show")
+			let result
+			let body = modal.find(".modal-body")
+			let container = $(`<div class='container d-flex justify-content-around'>`)
+			body.append(container)
+			let buttons = $()
+
+			const handleClick = event => {
+				let tag = $(event.currentTarget)
+				choose(tag)
+			}
+			const choose = tag => {
+				buttons.removeClass("chosen").removeClass("btn-info")
+				tag.addClass("chosen").addClass("btn-info")
+				let choice = tag.data("choice")
+				result = choice.value
+			}
+
+			choices.forEach(choice => {
+				let button = $("<button class='btn btn-primary dialogue-choice'>")
+				button.text(choice.text)
+				button.data("choice", choice)
+				container.append(button)
+				buttons = buttons.add(button)
+				if (choice.default){
+					choose(button)
+				}
+				button.click(handleClick)
+			})
+			
+			let btn = $(`<button class='btn btn-primary'>Confirm</button>`)
+			modal.find(".modal-footer").append(btn)
+			btn.click(() => {
+				modal.modal("hide")
+			})
+
+			modal.on("hidden.bs.modal", () => {
+				resolve(result)
+			})
+		}
+	},
+	"set-variable": {
+		execute: (resolve, effect, progress, options) => {
+			let variables = progress.variables
+			let effectIndex = progress.effectIndex
+			let info = progress.info
+			let name = effect.name
+			variables[name] = info[effectIndex - 1]
+			resolve(info[effectIndex - 1])
+		}
+	},
+	"load-value": {
+		execute: (resolve, effect, progress, options) => {
+			let value = effect.value
+			resolve(value)
+		}
+	},
+	"jump-if-equal": {
+		execute: (resolve, effect, progress, options) => {
+			let effectIndex = progress.effectIndex
+			let test = progress.info[effectIndex - 2]
+			let against = progress.info[effectIndex - 1]
+			
+			if (test === against) {
+				progress.nextEffectIndex = options.index
+			}
+			resolve()
+		}
+	},
 }

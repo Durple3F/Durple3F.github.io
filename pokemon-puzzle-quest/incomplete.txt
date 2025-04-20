@@ -32,6 +32,7 @@ Incomplete move lists:
 	Charjabug (lv 15)
 	Cutiefly (lv 6)
 	Comfey (lv 0)
+	Komala (lv 0)
 
 Missing Evolutions:
 	Spearow
@@ -97,6 +98,7 @@ Missing Abilities:
 	Charjabug
 	Cutiefly
 	Comfey
+	Komala
 
 Missing Shiny Variations:
 	- None! :)

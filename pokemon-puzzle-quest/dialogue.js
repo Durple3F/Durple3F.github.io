@@ -5,7 +5,7 @@ const textCharacterDurationMap = {
 	"?": 10,
 	"?!": 10,
 	"...": 20,
-	"—": 20,
+	"—": 10,
 	"^^": 0, //This one's for events
 }
 const textColors = {
@@ -28,17 +28,21 @@ const dialogueStyleData = {
 
 let dialogueProgress
 
-function beginDialogue(dialogueData) {
-	$("#dialogue-container").fadeIn()
-	dialogueProgress = {
+function newDialogueProgressData(dialogueData){
+	return {
 		dialogue: dialogueData,
 		info: [],
 		effectIndex: -1,
 		nextEffectIndex: 0,
 		eventIndex: 0,
 		speakers: [],
-		intervals: {}
+		intervals: {},
+		variables: {}
 	}
+}
+function beginDialogue(dialogueData) {
+	$("#dialogue-container").fadeIn()
+	dialogueProgress = newDialogueProgressData(dialogueData)
 
 	let boardIsVisible = $("#board").css("display") !== "none"
 	if (boardIsVisible) {
@@ -65,6 +69,11 @@ function beginDialogue(dialogueData) {
 
 	let totalPromise = Promise.any(promises)
 
+	totalPromise = totalPromise
+	.then(() => new Promise(resolve => {
+		resolve(dialogueProgress)
+	}))
+
 	totalPromise
 		.then(() => {
 			$("#dialogue-container").fadeOut()
@@ -90,6 +99,7 @@ function advanceCurrentDialogue() {
 	dialogueProgress.effectIndex = dialogueProgress.nextEffectIndex
 	let effectIndex = dialogueProgress.effectIndex
 	let effect = effects[effectIndex]
+	let effectType = effect.type
 	dialogueProgress.nextEffectIndex++
 	let eventIndex = dialogueProgress.eventIndex
 
@@ -104,7 +114,7 @@ function advanceCurrentDialogue() {
 	let textBox = dialogueTag.children(".text-box")
 	let nameplate = textBox.children(".nameplate")
 
-	switch (effect.type) {
+	switch (effectType) {
 		case "get-speaker": {
 			let speaker = {}
 			dialogueProgress.speakers.push(speaker)
@@ -215,7 +225,12 @@ function advanceCurrentDialogue() {
 		default:
 			try {
 				carryOutDialogueEvent(effect, dialogueProgress)
-				.then(() => resolvePromise())
+				.then(val => {
+					if (val){
+						dialogueProgress.info[effectIndex] = val
+					}
+					resolvePromise()
+				})
 			} catch (error){
 				console.error(error)
 			}
@@ -224,7 +239,9 @@ function advanceCurrentDialogue() {
 	promise = promise.then(() => {
 		if (effects[dialogueProgress.nextEffectIndex]) {
 			return advanceCurrentDialogue()
-				.then(() => Promise.resolve())
+			.then(() => {
+				Promise.resolve()
+			})
 		}
 
 		return Promise.resolve()
@@ -281,6 +298,7 @@ function carryOutDialogueEvent(effect, dialogueProgress) {
 	let callbacks = dialogueProgress.dialogue.callbacks || {}
 	let effects = dialogueData.effects
 	let effectIndex = dialogueProgress.effectIndex
+	let effectType = effect.type
 
 	let options = {}
 	let dialogueContainer = $("#dialogue-container")
@@ -294,9 +312,39 @@ function carryOutDialogueEvent(effect, dialogueProgress) {
 	options.textBox = textBox
 	options.nameplate = nameplate
 
+	let params = getEffectParams(effect, effectIndex, dialogueProgress)
+	options.params = params
 	if (effect.speaker) {
 		options.name = effect.speaker
 		options.speaker = dialogueProgress.speakers.find(s => s.id === options.name)
+	}
+
+	let needsIndexes = {
+		"jump-if-less-than": true,
+		"jump-if-equal": true,
+		"jump-if-includes": true,
+		"jump": true,
+	}
+	let index
+	if (effect.jumpTo){
+		if (typeof effect.jumpTo === "string"){
+			if (effect.jumpTo === "end"){
+				index = Infinity
+			} else {
+				index = effects.findIndex(e => e.label === effect.jumpTo)
+			}
+		} else {
+			index = effect.jumpTo
+		}
+		if (!index && index !== 0){
+			console.warn("Move produced a strange jump index", dialogueProgress)
+		}
+	}
+	if (needsIndexes[effectType] && index === undefined){
+		console.warn("Didn't get an index!", dialogueProgress)
+	}
+	if (index !== undefined){
+		options.index = index
 	}
 
 	let effectData = dialogueEffects[effect.type]
@@ -405,6 +453,9 @@ function carryOutDialogueEvent(effect, dialogueProgress) {
 						} else if (style.substring(0, 4) === "wait") {
 							let dur = Number(style.substring(5))
 							word.addedDuration = textSpeed * dur
+						} else if (style.substring(0, 9) === "font-size"){
+							let sizeFactor = Number(style.substring(10))
+							currentAdditionalStyle["font-size"] = sizeFactor+"em"
 						} else if (style === "start-italics") {
 							currentAdditionalStyle["font-style"] = "italic"
 						} else if (style === "end-italics") {
@@ -543,6 +594,7 @@ function carryOutDialogueEvent(effect, dialogueProgress) {
 					resolvePromise()
 				}
 
+				dialogueTag.off("click")
 				dialogueTag.on("click", skipDialogue)
 				textBox.css("cursor", "")
 				textBox.children(".text-continue").hide()

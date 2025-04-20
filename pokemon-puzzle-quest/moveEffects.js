@@ -316,6 +316,9 @@ const pokemonMoveEffects = {
 			if (!("volatile" in debuff)){
 				debuff.volatile = true
 			}
+			if (!("tags" in debuff)){
+				debuff.tags = []
+			}
 
 			options.target.statusEffects.push(debuff)
 			resolve()
@@ -351,6 +354,20 @@ const pokemonMoveEffects = {
 			let target = options.target
 			let statusName = effect.statusName
 			let result = target.getStatuses(statusName).length
+			resolve(result)
+		}
+	},
+	"get-status-gamedata": {
+		update: false,
+		hasTarget: true,
+		targetType: "pokemon",
+		targetDefault: "user",
+		execute: (resolve, effect, params, game, options) => {
+			let target = options.target
+			let statusName = effect.statusName
+			let status = target.getStatuses(statusName)[0]
+			let key = effect.key
+			let result = status.gameData[key]
 			resolve(result)
 		}
 	},

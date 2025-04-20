@@ -1,5 +1,13 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
+4/19 (21.2k lines):
+	- Added Bide + AI.
+	- I really thought there were more moves in pokemon that were just "deal damage" but like, looking through the list, they've really hit a lot of the design space that I was hoping they would. Bide is a cool move. Shame they took it out of every game past gen 7. Which seems to have happened more than a few times.
+	- Dialogue can now include choices that affect what happens.
+	- Added quite a lot of dialogue to 2-7, and wouldn't you know it, it uses that feature I just programmed.
+	- Dialogue can now affect its font size.
+	- Added Komala
+
 4/18 (20.8k lines):
 	- Fixed some bugs with backgrounds. I am not a fan of that code.
 	- Added Alolan Raticate and Gumshoos

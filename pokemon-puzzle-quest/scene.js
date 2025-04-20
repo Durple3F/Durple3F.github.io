@@ -1145,10 +1145,15 @@ function advanceCurrentLevel() {
 			let seenDialogue = playerSaveInfo["seen-dialogue"]
 			let shouldSkip = config.skipSeenDialogue && seenDialogue.includes(dialogueName)
 			if (shouldSkip) {
+				let data = newDialogueProgressData()
+				currentLevelProgress.info[effectIndex] = data.variables
 				resolvePromise()
 			} else {
 				let dialogue = getLocaleString(dialogueName, lang, ["dialogue"], {})
 				beginDialogue(dialogue)
+					.then(val => {
+						currentLevelProgress.info[effectIndex] = val.variables
+					})
 					.then(() => {
 						if (!seenDialogue.includes(dialogueName)) {
 							seenDialogue.push(dialogueName)
@@ -1162,6 +1167,11 @@ function advanceCurrentLevel() {
 			let max = effect.max ?? 10
 			let val = Math.floor(Math.random() * (max - min + 1)) + min
 			currentLevelProgress.info[effectIndex] = val
+			resolvePromise()
+		} break
+		case "get-val-from-obj": {
+			let obj = params.obj
+			currentLevelProgress.info[effectIndex] = obj[effect.key]
 			resolvePromise()
 		} break
 		case "load-player-info": {
