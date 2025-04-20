@@ -44,7 +44,16 @@ const levelCategoryData = {
 				"Route 1-7"
 			]
 		}
-	}
+	},
+	"Route 3": {
+		id: "Route 3",
+		startsUnlocked: false,
+		prerequisites: {
+			levelsBeaten: [
+				"Route 2-7"
+			]
+		}
+	},
 }
 
 const levelData = [
@@ -820,36 +829,38 @@ const levelData = [
 		],
 		effects: [
 			{ type: "dialogue", source: "route-2-7-dialogue" },
-			// { type: "get-val-from-obj", key: "fight-ilima", obj: -1 },
-			// { type: "load-value", value: true },
-			// { type: "jump-if-equal", jumpTo: "fight-ilima" },
-			// { type: "jump", jumpTo: "fight-rats" },
+			{ type: "get-val-from-obj", key: "fight-ilima", obj: -1 },
+			{ type: "load-value", value: true },
+			{ type: "jump-if-equal", jumpTo: "fight-ilima" },
+			{ type: "jump", jumpTo: "fight-rats" },
 			
-			// { type: "load-setting", key: "hardMode", label: "fight-ilima" },
-			// { type: "fight", trainer: 3, label: "Ilima" },
-			// { type: "dialogue", source: "route-2-7-dialogue-won-2" },
-			// { type: "jump", jumpTo: Infinity },
+			{ type: "load-setting", key: "hardMode", label: "fight-ilima" },
+			{ type: "fight", trainer: 3, label: "Ilima" },
+			{ type: "dialogue", source: "route-2-7-dialogue-won-2" },
+			{ type: "jump", jumpTo: Infinity },
 
-			// { type: "load-setting", key: "hardMode", label: "fight-rats" },
-			// { type: "load-value", value: true },
-			// { type: "jump-if-equal", jumpTo: "hardMode" },
-			// { type: "jump", jumpTo: "easyMode" },
+			{ type: "load-setting", key: "hardMode", label: "fight-rats" },
+			{ type: "load-value", value: true },
+			{ type: "jump-if-equal", jumpTo: "hardMode" },
+			{ type: "jump", jumpTo: "easyMode" },
 
-			// { type: "random-number", min: 1, max: 10, label: "easyMode" },
-			// { type: "load-value", value: 6 },
-			// { type: "jump-if-less-than", jumpTo: "Moon" },
-			// { type: "fight", trainer: 0, label: "Sun" },
-			// { type: "jump", jumpTo: "win-check" },
-			// { type: "fight", trainer: 1, label: "Moon" },
-			// { type: "jump", jumpTo: "win-check" },
+			{ type: "random-number", min: 1, max: 10, label: "easyMode" },
+			{ type: "load-value", value: 6 },
+			{ type: "jump-if-less-than", jumpTo: "Moon" },
+			{ type: "fight", trainer: 0, label: "Sun" },
+			{ type: "jump", jumpTo: "win-check" },
+			{ type: "fight", trainer: 1, label: "Moon" },
+			{ type: "jump", jumpTo: "win-check" },
 
 			{ type: "fight", trainer: 2, label: "hardMode" },
-			// { type: "jump", jumpTo: "win-check" },
+			{ type: "jump", jumpTo: "win-check" },
 			
-			// { type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
+			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
 			{ type: "dialogue", source: "route-2-7-dialogue-won-1" },
 		]
 	},
+
+	//3-1: Mankey, Delibird, Cutiefly, Spearow, Yungoos, Rattata-Alola
 ]
 
 for (let categoryId in levelCategoryData){

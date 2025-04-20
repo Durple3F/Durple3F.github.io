@@ -309,6 +309,18 @@ const pokemonMoveEffects = {
 			resolve(statusEffect)
 		}
 	},
+	"apply-status-effect-to-game": {
+		execute: (resolve, effect, params, game, options) => {
+			let moveUseObj = options.moveUse
+			let statusEffect = window.structuredClone(effect.statusEffect)
+			let trainer = moveUseObj.trainer
+			let pokemon = moveUseObj.pokemon
+			let move = moveUseObj.move
+			
+			game.addStatusEffect(statusEffect, trainer, pokemon, move)
+			resolve(statusEffect)
+		}
+	},
 	"apply-debuff": {
 		execute: (resolve, effect, params, game, options) => {
 			let debuff = window.structuredClone(effect.debuff)
@@ -482,7 +494,7 @@ const pokemonMoveEffects = {
 			resolve()
 		}
 	},
-	"select-tiles": {
+	"select-tiles-with-expression": {
 		update: false,
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
@@ -547,6 +559,9 @@ const pokemonMoveEffects = {
 		update: false,
 		execute: (resolve, effect, params, game, options) => {
 			let contents = game.board.tilesOnScreen()
+			if ("targetType" in effect){
+				contents = contents.filter(tile => tile.type === effect.targetType)
+			}
 			resolve(contents)
 		}
 	},

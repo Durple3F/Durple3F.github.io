@@ -444,34 +444,12 @@ const pokemonData = {
 			purple: 5
 		},
 		learnset: [
-			{
-				name: "Fake Out",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "Growl",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "Feint",
-				unlock: {
-					type: "level",
-					amount: 4
-				}
-			},
-			{
-				name: "Scratch",
-				unlock: {
-					type: "level",
-					amount: 8
-				}
-			},
+			{ name: "Fake Out", unlock: { type: "level", amount: 1 } },
+			{ name: "Growl", unlock: { type: "level", amount: 1 } },
+			{ name: "Feint", unlock: { type: "level", amount: 4 } },
+			{ name: "Scratch", unlock: { type: "level", amount: 8 } },
+			{ name: "Pay Day", unlock: { type: "level", amount: 12 } },
+			{ name: "Pay Day", unlock: { type: "level", amount: 16 } },
 		]
 	},
 	"Growlithe": {
@@ -1702,7 +1680,6 @@ const pokemonData = {
 			{ name: "Water Gun", unlock: { type: "level", amount: 3 } },
 			{ name: "Disarming Voice", unlock: { type: "level", amount: 6 } },
 			{ name: "Aqua Jet", unlock: { type: "level", amount: 9 } },
-			{ name: "Bide", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {

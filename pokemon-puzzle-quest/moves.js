@@ -1309,6 +1309,30 @@ const pokemonMoveData = {
 			{ type: "apply-status-effect", statusEffect: "paralyzed", target: "opponent" }
 		],
 	},
+	"Pay Day": {
+		name: "Pay Day",
+		type: "Normal",
+		category: "Physical",
+		strategy: "basic-damage",
+		pp: 20,
+		power: 40,
+		accuracy: 100,
+		rechargeTurns: 3,
+		energy: {
+			yellow: 8,
+			purple: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Pay Day.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "select-all-tiles", targetType: "yellow" },
+			{ type: "change-tile-type", selection: "group", which: -1, targetType: "rainbow" },
+			{ type: "damage" },
+			{ type: "end-turn" }
+		],
+	},
 	"Payback": {
 		name: "Payback",
 		type: "Dark",
@@ -1633,7 +1657,7 @@ const pokemonMoveData = {
 			{ type: "get-tile-y", tile: -2 },
 			{ type: "load-value", value: 2 },
 			{ 
-				type: "select-tiles",
+				type: "select-tiles-with-expression",
 				conditionExpression: "((x - %c%)^2 + (y - %c%)^2)^0.5 <= %c%",
 				conditionArguments: [-3, -2, -1]
 			},
@@ -2038,7 +2062,7 @@ const pokemonMoveData = {
 			{ type: "random-number", min: -1, max: -2, useArgs: true },
 			{ type: "select-column", x: -1 },
 			// { 
-			// 	type: "select-tiles",
+			// 	type: "select-tiles-with-expression",
 			// 	conditionExpression: "x == %c%",
 			// 	conditionArguments: [-1]
 			// },

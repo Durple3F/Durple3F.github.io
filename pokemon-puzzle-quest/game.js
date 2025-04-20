@@ -55,6 +55,7 @@ class Round{
 		this.currentlySwappingPokemon = false
 		this.currentCascade = 0
 		this.matchesInCombo = []
+		this.statusEffects = []
 
 		this.moveUseHistory = []
 
@@ -80,6 +81,7 @@ class Round{
 		let setting = config["antialiasing"] ? "smooth" : "pixelated"
 		$("#screen").css("image-rendering", setting)
 
+		this.determineTileWeights()
 		this.loadResources()
 		let p = this.roundStartAnimation()
 		p.then(() => this.begin())
@@ -551,6 +553,7 @@ class Round{
 	beginMove(){
 		this.matchesInCombo.length = 0
 		this.currentlyCarryingOutSwap = true
+		this.determineTileWeights()
 	}
 
 	endMove(turn){
@@ -962,6 +965,19 @@ class Round{
 				tile.removeStatus(status)
 			}
 		}
+		//One last time for the game itself
+		let toRemoveFromGame = []
+		for (let status of this.statusEffects){
+			if (typeof status.turns === "number"){
+				status.turns--
+				if (status.turns <= 0){
+					toRemoveFromGame.push(status)
+				}
+			}
+		}
+		for (let status of toRemoveFromGame){
+			this.removeStatus(status)
+		}
 
 		let promise = Promise.resolve()
 
@@ -980,6 +996,7 @@ class Round{
 			}
 		}
 
+		promise = promise.then(() => this.determineTileWeights())
 		promise = promise.then(() => this.updateEverything())
 		promise = promise.then(() => this.checkForWinner())
 		if (this.activePlayer === "enemy"){
@@ -3413,6 +3430,42 @@ class Round{
 			return this.turnEnd(turn)
 		})
 		return promise
+	}
+
+	addStatusEffect(statusEffect){
+		this.statusEffects.push(statusEffect)
+	}
+	removeStatus(statusEffect){
+		let index = this.statusEffects.indexOf(statusEffect)
+		if (index !== -1){
+			this.statusEffects.splice(index, 1)
+		}
+	}
+	determineTileWeights(){
+		let tileWeights = {}
+		for (let type of this.board.tileTypes){
+			if (colors.includes(type)){
+				tileWeights[type] = 1
+			} else {
+				tileWeights[type] = 0
+			}
+		}
+		tileWeights.rainbow = 0.3
+
+		let tileWeightStatuses = this.statusEffects.filter(statusEffect => {
+			return statusEffect.type === "tile-weight-alteration"
+		})
+		for (let statusEffect of tileWeightStatuses){
+			let weightModifications = statusEffect.weights
+			for (let type in weightModifications){
+				let modification = weightModifications[type]
+				tileWeights[type] = applyModification(tileWeights[type], modification)
+			}
+		}
+
+		for (let key in tileWeights){
+			this.board.tileWeights[key] = tileWeights[key]
+		}
 	}
 
 	getTrainerOfPokemon(pokemon){

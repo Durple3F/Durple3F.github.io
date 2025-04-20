@@ -5,7 +5,7 @@ Incomplete move lists:
 	Spearow (lv 11)
 	Pikachu (lv 8)
 	Zubat (lv 15)
-	Meowth-Alola (lv 8)
+	Meowth-Alola (lv 16)
 	Growlithe (lv 8)
 	Slowpoke (lv 9)
 	Magnemite (lv 8)

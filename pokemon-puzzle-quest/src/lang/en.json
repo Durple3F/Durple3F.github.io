@@ -1110,6 +1110,11 @@
 			"description": "Deals damage. Applies Paralyzed. When a Paralyzed Pokémon uses a move, the move does nothing, and they lose Paralyzed.",
 			"shortDescription": "Deals light damage and paralyzes"
 		},
+		"Pay Day": {
+			"name": "Pay Day",
+			"description": "Replaces all Electric tiles on the board with Rainbow tiles. Then deals damage.",
+			"shortDescription": "Replaces Electric tiles with Rainbow"
+		},
 		"Payback": {
 			"name": "Payback",
 			"description": "Deals damage. If the user's speed stat is less than the speed stat of their opponent, this move's power increases by 50.",
@@ -1488,6 +1493,9 @@
 		},
 		"Route 2": {
 			"name": "Route 2"
+		},
+		"Route 3": {
+			"name": "Route 3"
 		}
 	},
 	"settings": {

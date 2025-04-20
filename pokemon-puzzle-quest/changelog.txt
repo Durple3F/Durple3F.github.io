@@ -1,5 +1,9 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
+4/20 (21.3k lines):
+	- Moves can now add temporary effects that change how often tiles appear.
+	- Added Pay Day
+
 4/19 (21.2k lines):
 	- Added Bide + AI.
 	- I really thought there were more moves in pokemon that were just "deal damage" but like, looking through the list, they've really hit a lot of the design space that I was hoping they would. Bide is a cool move. Shame they took it out of every game past gen 7. Which seems to have happened more than a few times.
