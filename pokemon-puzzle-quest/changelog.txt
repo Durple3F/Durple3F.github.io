@@ -1,9 +1,9 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-4/21 (22.1k lines):
-	- Added Delibird
-	- Added Present + AI
-	- Added Hustle, Hustle
+4/21 (22.2k lines):
+	- Added Delibird, Crabrawler
+	- Added Present + AI, Baby-Doll Eyes, Rock Smash
+	- Added Hustle, Insomnia, Hyper Cutter, Iron Fist
 
 4/20 (21.9k lines):
 	- Moves can now add temporary effects that change how often tiles appear.

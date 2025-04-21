@@ -4,6 +4,7 @@
 	
 	"initiative-tutorial": "Initiative<br>Each turn, both Pokémon gain Initiative based on their speed stats. When a player matches 4 or more tiles in a row, they get a free turn.",
 	"choose-pokemon": "Choose Pokémon",
+	"error-cant-switch-status": "A status effect prevents this Pokémon from switching out.",
 	"error-cant-switch-fear-frozen": "Your active Pokémon is too frozen in fear to retreat!",
 
 	"pokemon-move-requirement-level": "Your Pokémon needs to be at least level %c% to use this move.",
@@ -898,6 +899,9 @@
 		"Charjabug": {
 			"name": "Charjabug"
 		},
+		"Crabrawler": {
+			"name": "Crabrawler"
+		},
 		"Cutiefly": {
 			"name": "Cutiefly"
 		},
@@ -929,6 +933,11 @@
 			"description": "Deals damage. If the opponent has any benched Pokémon remaining, this move also attacks one of them of your choice, with 20 less power.",
 			"shortDescription": "Damages a benched Pokémon",
 			"choose-pokemon": "Choose a Pokémon for Aqua Jet to deal damage to."
+		},
+		"Baby-Doll Eyes": {
+			"name": "Baby-Doll Eyes",
+			"description": "Lowers the opponent's attack stat by 1 stage. Then, the opponent becomes unable to switch Pokémon for a turn.",
+			"shortDescription": "Lowers enemy attack and prevents switching"
 		},
 		"Bide": {
 			"name": "Bide",
@@ -1197,6 +1206,11 @@
 			"shortDescription": "Forces opponent to switch",
 			"choose-pokemon": "Choose a Pokémon to swap to."
 		},
+		"Rock Smash": {
+			"name": "Rock Smash",
+			"description": "Deals damage. The user chooses a tile. All tiles of the same type connected in a contiguous group are removed.",
+			"shortDescription": "Removes a chain of same-color tiles"
+		},
 		"Sand Attack": {
 			"name": "Sand Attack",
 			"description": "A random diamond-shaped area of tiles are given the Energy Down status. When an opponent removes those tiles, they're worth 1 less energy each.",
@@ -1336,10 +1350,20 @@
 			"shortDescription": "Raises Attack by 50%, but adds a random extra cost to moves each turn",
 			"longDescription": "This Pokémon's Attack stat is increased by 50%. However, at the beginning of this Pokémon's turn, each of its moves have a random additional cost added."
 		},
+		"Hyper Cutter": {
+			"name": "Hyper Cutter",
+			"shortDescription": "Other Pokémon can't lower this Pokémon's Attack stages",
+			"longDescription": "Other Pokémon can't give this Pokémon status effects which lower its Attack stat by any number of stages."
+		},
 		"Insomnia": {
 			"name": "Insomnia",
 			"shortDescription": "Can't be put to sleep",
 			"longDescription": "This Pokémon can't be put to sleep during battle."
+		},
+		"Iron Fist": {
+			"name": "Iron Fist",
+			"shortDescription": "This Pokémon's punching moves get +20% power",
+			"longDescription": "The power of punching moves used by this Pokémon are increased by 20%."
 		},
 		"Overgrow": {
 			"name": "Overgrow",

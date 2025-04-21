@@ -1820,41 +1820,13 @@ const pokemonData = {
 			purple: 3
 		},
 		learnset: [
-			{
-				name: "Scratch",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "Growl",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "Ember",
-				unlock: {
-					type: "level",
-					amount: 3
-				}
-			},
-			{
-				name: "Lick",
-				unlock: {
-					type: "level",
-					amount: 6
-				}
-			},
-			{
-				name: "Roar",
-				unlock: {
-					type: "level",
-					amount: 9
-				}
-			}
+			{ name: "Scratch", unlock: { type: "level", amount: 1 } },
+			{ name: "Growl", unlock: { type: "level", amount: 1 } },
+			{ name: "Ember", unlock: { type: "level", amount: 3 } },
+			{ name: "Lick", unlock: { type: "level", amount: 6 } },
+			{ name: "Roar", unlock: { type: "level", amount: 9 } },
+			{ name: "Fury Swipes", unlock: { type: "level", amount: 12 } },
+			{ name: "Bite", unlock: { type: "level", amount: 15 } },
 		]
 	},
 	"Popplio": {
@@ -1904,6 +1876,7 @@ const pokemonData = {
 			{ name: "Water Gun", unlock: { type: "level", amount: 3 } },
 			{ name: "Disarming Voice", unlock: { type: "level", amount: 6 } },
 			{ name: "Aqua Jet", unlock: { type: "level", amount: 9 } },
+			{ name: "Baby-Doll Eyes", unlock: { type: "level", amount: 12 } },
 		]
 	},
 	"Pikipek": {
@@ -2148,6 +2121,53 @@ const pokemonData = {
 			{ name: "Bug Bite", unlock: { type: "level", amount: 1 } },
 			{ name: "Charge", unlock: { type: "level", amount: 1 } }, //NOTE: Should be learned upon evolution.
 			{ name: "Bite", unlock: { type: "level", amount: 15 } },
+		]
+	},
+	"Crabrawler": {
+		name: "Crabrawler",
+		number: "739",
+		weight: {
+			pounds: 15.4,
+			kilograms: 7.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0739Crabrawler.png",
+			"largeShiny": "src/img/shiny-pokemon/739-Crabrawler.png",
+			"home": "src/img/tiny-pokemon/Crabrawler.png"
+		},
+		sounds: {
+			cry: "src/audio/cries/crabrawler.mp3"
+		},
+		tags: [],
+		types: ["Fighting"],
+		abilities: ["Hyper Cutter", "Iron Fist"],
+		hiddenAbilities: ["Anger Point"],
+		stats: {
+			hp: 47,
+			attack: 82,
+			defense: 57,
+			specialAttack: 42,
+			specialDefense: 47,
+			speed: 63
+		},
+		expYield: 68,
+		evYield: {
+			hp: 0,
+			attack: 1,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 4,
+			blue: 2
+		},
+		learnset: [
+			{ name: "Vise Grip", unlock: { type: "level", amount: 1 } },
+			{ name: "Rock Smash", unlock: { type: "level", amount: 5 } },
+			{ name: "Leer", unlock: { type: "level", amount: 9 } },
 		]
 	},
 	"Cutiefly": {

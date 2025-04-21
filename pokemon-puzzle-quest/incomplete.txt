@@ -25,8 +25,8 @@ Incomplete move lists:
 	Happiny (lv 4)
 	Cottonee (lv 6)
 	Rowlet (lv 12)
-	Litten (lv 9)
-	Popplio (lv 9)
+	Litten (lv 15)
+	Popplio (lv 12)
 	Pikipek (lv 7)
 	Yungoos (lv 7)
 	Gumshoos (lv 1)
@@ -88,7 +88,6 @@ Missing Abilities:
 	Pichu
 	Murkrow
 	Misdreavus
-	Delibird (2/3)
 	Smeargle
 	Wingull
 	Makuhita

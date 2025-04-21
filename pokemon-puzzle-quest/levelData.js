@@ -505,7 +505,7 @@ const levelData = [
 				name: "Joseph",
 				class: "Rising-Star",
 				pokemon: [
-					{ id: "Grimer-Alola", level: 8 }
+					{ id: "Grimer-Alola", pokeball: "greatball", level: 8 }
 				]
 			},
 			{
@@ -732,7 +732,7 @@ const levelData = [
 		trainers: [
 			{
 				isWild: true,
-				targetPokemon: 5,
+				targetPokemon: 4,
 				canPickDuplicates: false,
 				possiblePokemon: [
 					{ id: "Zubat", levelMin: 8, levelMax: 11, weight: 4 },
@@ -870,11 +870,16 @@ const levelData = [
 		trainers: [
 			{
 				isWild: true,
-				targetPokemon: 5,
+				targetPokemon: 4,
 				canPickDuplicates: true,
 				possiblePokemon: [
+					{ id: "Crabrawler", levelMin: 9, levelMax: 12, weight: 4 },
 					// { id: "Mankey", levelMin: 9, levelMax: 12, weight: 4 },
-					{ id: "Delibird", levelMin: 9, levelMax: 12, weight: 4 },
+					// { id: "Delibird", levelMin: 9, levelMax: 12, weight: 4 },
+					// { id: "Spearow", levelMin: 9, levelMax: 12, weight: 2 },
+					// { id: "Cutiefly", levelMin: 9, levelMax: 12, weight: 2 },
+					// { id: "Yungoos", levelMin: 9, levelMax: 12, weight: 0.5 },
+					// { id: "Rattata-Alola", levelMin: 9, levelMax: 12, weight: 0.5 },
 				]
 			},
 		],
@@ -989,6 +994,7 @@ function determineUnlockedLevels(){
 const pokeballSpriteData = {
 	types: {
 		"pokeball": [0, 3],
+		"greatball": [0, 29],
 		"ultraball": [0, 55]
 	},
 	sprites: {

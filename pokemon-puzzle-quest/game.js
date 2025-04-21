@@ -2036,6 +2036,9 @@ class Round{
 		if (pokemon.hasAbility("Overgrow") && effectiveType === "Grass" && pokemon.hp / pokemon.maxhp <= 1/3){
 			power *= 1.5
 		}
+		if (pokemon.hasAbility("Iron Fist") && move.tags.includes("punching")){
+			power *= 1.2
+		}
 
 		return power
 	}
@@ -3478,6 +3481,11 @@ class Round{
 		let activePokemon = trainer.activePokemon
 		if (activePokemon && activePokemon.hasStatus("fear-frozen")){
 			let text = getLocaleString("error-cant-switch-fear-frozen", lang)
+			this.createAnnouncement("general", text, 1500)
+			return Promise.resolve()
+		}
+		else if (activePokemon && activePokemon.getStatusesOfType("cant-switch").length){
+			let text = getLocaleString("error-cant-switch-status", lang)
 			this.createAnnouncement("general", text, 1500)
 			return Promise.resolve()
 		}

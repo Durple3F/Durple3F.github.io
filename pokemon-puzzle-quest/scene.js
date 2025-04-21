@@ -875,8 +875,9 @@ function startScene(name, options) {
 			let allPokemonSections = pokemonListTag.children(".pokemon-section")
 			let bgUpAmt = 0
 			const pcTick = () => {
-				bgUpAmt += 1
-				let amt = bgUpAmt / 5
+				bgUpAmt = Date.now() % 1000000000
+				let amt = bgUpAmt / 100
+				console.log(amt)
 				allPokemonSections.css("background-position", `top ${amt}px left`)
 			}
 			let dexInterval = setInterval(pcTick, 10)

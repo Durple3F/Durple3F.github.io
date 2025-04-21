@@ -110,12 +110,51 @@ const pokemonMoveData = {
 			{ type: "damage", toPokemon: -2, additivePower: -1 }
 		],
 	},
+	//Temporarily prevents switching out
+	"Baby-Doll Eyes": {
+		name: "Baby-Doll Eyes",
+		type: "Fairy",
+		category: "Status",
+		strategy: "debuff-opponent",
+		pp: 30,
+		power: null,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			purple: 4,
+			yellow: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Baby-Doll Eyes.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{
+				type: "apply-debuff", target: "opponent", debuff: {
+					type: "stat",
+					class: "debuff",
+					stat: "attack",
+					amount: -1
+				}
+			},
+			{ type: "apply-status-effect", target: "opponent", statusEffect: {
+				name: "baby-doll-eyes-cant-switch",
+				type: "cant-switch",
+				stacks: false,
+				volatile: true,
+				lostOnSwap: true,
+				turns: 2,
+				lostOnBatonPass: true
+			} },
+		],
+	},
 	//Deals damage on a delay
 	"Bide": {
 		name: "Bide",
 		type: "Normal",
 		category: "Physical",
 		strategy: "special",
+		tags: ["damage-dealing"],
 		pp: 10,
 		power: null,
 		accuracy: null,
@@ -562,6 +601,7 @@ const pokemonMoveData = {
 		type: "Fairy",
 		category: "Special",
 		strategy: "basic-damage",
+		tags: ["sound-based"],
 		pp: 15,
 		power: 40,
 		accuracy: null,
@@ -624,6 +664,7 @@ const pokemonMoveData = {
 		type: "Normal",
 		category: "Special",
 		strategy: "basic-damage",
+		tags: ["sound-based"],
 		pp: 15,
 		power: 40,
 		accuracy: 100,
@@ -767,6 +808,7 @@ const pokemonMoveData = {
 			} },
 		]
 	},
+	//Lowers opponent's special defense 2
 	"Fake Tears": {
 		name: "Fake Tears",
 		type: "Normal",
@@ -794,6 +836,7 @@ const pokemonMoveData = {
 			}
 		],
 	},
+	//Removes invulnerable
 	"Feint": {
 		name: "Feint",
 		type: "Normal",
@@ -816,6 +859,7 @@ const pokemonMoveData = {
 			{ type: "damage" }
 		]
 	},
+	//Raises attack 2
 	"Focus Energy": {
 		name: "Focus Energy",
 		type: "Normal",
@@ -844,6 +888,7 @@ const pokemonMoveData = {
 			}
 		],
 	},
+	//Attacks once per match made this turn
 	"Fury Attack": {
 		name: "Fury Attack",
 		type: "Normal",
@@ -898,6 +943,7 @@ const pokemonMoveData = {
 			{ type: "damage" }
 		]
 	},
+	//Lowers its own cost this turn
 	"Fury Swipes": {
 		name: "Fury Swipes",
 		type: "Normal",
@@ -936,11 +982,13 @@ const pokemonMoveData = {
 			{ type: "remove-status-effect", target: "user", statusName: "fury-swipes-cost-reduction" },
 		]
 	},
+	//Lowers opponent's attack
 	"Growl": {
 		name: "Growl",
 		type: "Normal",
 		category: "Status",
 		strategy: "debuff-opponent",
+		tags: ["sound-based"],
 		pp: 40,
 		power: null,
 		accuracy: 100,
@@ -1807,6 +1855,7 @@ const pokemonMoveData = {
 		type: "Normal",
 		category: "Status",
 		strategy: "special",
+		tags: ["sound-based"],
 		pp: 20,
 		power: null,
 		accuracy: null,
@@ -1831,6 +1880,34 @@ const pokemonMoveData = {
 			{ type: "load-value", value: 0 },
 			{ type: "get-element-from-list", list: -2, index: -1 },
 			{ type: "swap-pokemon", target: "opponent", pokemon: -1 },
+		],
+	},
+	"Rock Smash": {
+		name: "Rock Smash",
+		type: "Fighting",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: [],
+		pp: 15,
+		power: 40,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Rock Smash.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "is-active-pokemon-viable", target: "opponent" },
+			{ type: "jump-if-truthy", jumpTo: "choose" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "load-value", value: 1, label: "choose" },
+			{ type: "choose-tiles", count: -1, target: "user" },
+			{ type: "select-similar-tiles-surrounding", selection: -1 },
+			{ type: "remove-tiles", selection: -1 },
 		],
 	},
 	"Sand Attack": {
@@ -2099,6 +2176,7 @@ const pokemonMoveData = {
 		type: "Normal",
 		category: "Status",
 		strategy: "debuff-opponent",
+		tags: ["sound-based"],
 		pp: 20,
 		power: null,
 		accuracy: 55,

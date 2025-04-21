@@ -278,6 +278,14 @@ class Pokemon{
 		(this.hasAbility("Vital Spirit") && this.hasAbility("Insomnia"))){
 			prevented = true
 		}
+		//Pokemon with Hyper Cutter can't have their Attack lowered by stages
+		else if (status.type === "stat" &&
+			status.sourcePokemon !== this &&
+			status.stat === "attack" &&
+			status.amount < 0
+		){
+			prevented = true
+		}
 
 		//There are some status effects that don't stack
 		let data = pokemonStatusData[status.name]

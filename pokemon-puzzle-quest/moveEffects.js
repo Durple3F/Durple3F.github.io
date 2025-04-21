@@ -628,6 +628,31 @@ const pokemonMoveEffects = {
 			resolve(contents)
 		}
 	},
+	"select-similar-tiles-surrounding": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let selection = params.selection ?? []
+			let contents = game.board.tilesOnScreen()
+			let result = []
+			let toCheck = [].concat(selection)
+			while (toCheck.length){
+				let tile = toCheck.shift()
+				result.push(tile)
+				let nearby = contents.filter(t => {
+					if (result.includes(t)) return false
+					if (toCheck.includes(t)) return false
+					if (tile.type !== t.type) return false
+					let dx = Math.abs(tile.x - t.x)
+					let dy = Math.abs(tile.y - t.y)
+					return dx <= 1 && dy <= 1
+				})
+				if (nearby){
+					nearby.forEach(t => toCheck.push(t))
+				}
+			}
+			resolve(result)
+		}
+	},
 	"expand-tile-selection": {
 		update: false,
 		execute: (resolve, effect, params, game, options) => {
