@@ -1561,9 +1561,10 @@ function viewPokemonInfo(pokemon, options = {}) {
 
 		let abilitySection = $("<div class='ability-section'>")
 		info.append(abilitySection)
-		let abilityName = getLocaleString("name", lang, ["abilities", pokemon.ability.id])
+		let ability = pokemon.getEffectiveAbility()
+		let abilityName = getLocaleString("name", lang, ["abilities", ability.id])
 		abilitySection.append(`<h4>Ability: ${abilityName}</h4>`)
-		let abilityDescription = getLocaleString("longDescription", lang, ["abilities", pokemon.ability.id])
+		let abilityDescription = getLocaleString("longDescription", lang, ["abilities", ability.id])
 		abilitySection.append(`<p>${abilityDescription}</p>`)
 		let natureName = getLocaleString("name", lang, ["natures", pokemon.nature.name])
 		abilitySection.append(`<h4>Nature: ${natureName}</h4>`)

@@ -265,19 +265,23 @@ class Pokemon{
 			prevented = true
 		}
 		//Poison and Steel type pokemon can't be poisoned
-		if (status.name === "poisoned" && types.includes("Poison") ||
+		else if (status.name === "poisoned" && types.includes("Poison") ||
 				status.name === "poisoned" && types.includes("Steel")){
 			prevented = true
 		}
 		//Electric pokemon can't be paralyzed
-		if (status.name === "paralyzed" && types.includes("Electric")){
+		else if (status.name === "paralyzed" && types.includes("Electric")){
+			prevented = true
+		}
+		//Pokemon with Vital Spirit can't become asleep
+		else if (status.name === "asleep" && this.hasAbility("Vital Spirit")){
 			prevented = true
 		}
 
 		//There are some status effects that don't stack
 		let data = pokemonStatusData[status.name]
 		let existingCopies = statusEffects.filter(s => s.name === status.name)
-		let stacksAllowed = status.stacks ?? data.stacks
+		let stacksAllowed = status.stacks ?? data?.stacks ?? true
 		if (typeof stacksAllowed === "boolean"){
 			stacksAllowed = stacksAllowed ? Infinity : 1
 		}
@@ -317,6 +321,20 @@ class Pokemon{
 		} else {
 			for (let status of result.added){
 				this.statusEffects.push(status)
+			}
+		}
+		
+		if (this.hasAbility("Defiant")){
+			let addedFromAnotherSource = result.added.filter(statusEffect => {
+				return statusEffect.sourcePokemon !== this
+			})
+			if (addedFromAnotherSource.length){
+				this.addStatusEffect({
+					type: "stat",
+					class: "debuff",
+					stat: "attack",
+					amount: 1
+				}, this.trainer, this, undefined)
 			}
 		}
 
@@ -526,8 +544,19 @@ class Pokemon{
 		return result
 	}
 
+	getEffectiveAbility(){
+		return this.ability
+	}
 	hasAbility(abilityId){
-		return this.ability?.id === abilityId
+		let ability = this.getEffectiveAbility()
+		return ability?.id === abilityId
+	}
+	hasHiddenAbility(){
+		let data = this.data
+		let ability = this.ability
+		let abilityId = ability.id
+		let hiddenAbilityIds = data.hiddenAbilities
+		return hiddenAbilityIds.includes(abilityId)
 	}
 
 	getBonusEnergy(type){
@@ -594,6 +623,7 @@ class Pokemon{
 			copy[key] = this[key]
 		}
 		copy.skipGivingMoves = true
+		copy.addHiddenAbility = this.hasHiddenAbility()
 		let changeName = this.name === this.pokemonName
 		let newName = changeName ? null : this.name
 		let oldActive = this.activeMoves

@@ -76,7 +76,7 @@ const moveUseStrategy = {
 			let moveType = game.getEffectiveMoveType(trainer, pokemon, move)
 			let typeMult = getSuperEffectiveMult(moveType, defTypes)
 			let stabBonus = atkTypes.includes(moveType) ? 1.5 : 1
-			let power = move.power
+			let power = options.power ?? move.power
 
 			let result = power * typeMult * stabBonus
 			if (isNaN(result)) {
@@ -170,6 +170,21 @@ const moveUseStrategy = {
 			return weight
 		}
 	},
+	"Covet": {
+		chooseWeight: options => {
+			let game = options.game
+			let trainer = options.trainer
+			let otherTrainer = game.trainers.find(t => t !== trainer)
+			let otherPokemon = otherTrainer.activePokemon
+			let strategy = moveUseStrategy["basic-damage"]
+			let weight = strategy.chooseWeight(options)
+			let theirEnergy = Object.values(otherPokemon.energy)
+			let max = Math.max(...theirEnergy)
+			weight += max * 5
+			
+			return weight
+		}
+	},
 	"Disable": {
 		chooseWeight: options => {
 			let game = options.game
@@ -193,6 +208,27 @@ const moveUseStrategy = {
 			if (options.allowRecursion){
 				weight = getActionWeightSimple(lastMove, newOptions, false) * 10
 			}
+			
+			return weight
+		}
+	},
+	"Fury Swipes": {
+		chooseWeight: options => {
+			let game = options.game
+			let trainer = options.trainer
+			let pokemon = trainer.activePokemon
+			let move = options.action
+			let strategy = moveUseStrategy["basic-damage"]
+			let weight = strategy.chooseWeight(options)
+			let energyYouHave = pokemon.energy
+			let energyCost = move.energy
+			let multiples = Object.keys(energyYouHave).map(key => {
+				if (!energyCost[key]) return Infinity
+				return energyYouHave[key] / energyCost[key]
+			})
+			let min = Math.min(...multiples)
+			if (min < 1) min = 1
+			weight *= min
 			
 			return weight
 		}
@@ -292,6 +328,47 @@ const moveUseStrategy = {
 			return result
 		}
 	},
+	"Low Kick": {
+		chooseWeight: options => {
+			let game = options.game
+			let trainer = options.trainer
+			let otherTrainer = game.trainers.find(t => t !== trainer)
+			let otherPokemon = otherTrainer.activePokemon
+			//unfortunate terminology.
+			let newOptions = {}
+			for (let key in options){
+				newOptions[key] = options[key]
+			}
+			console.log(newOptions)
+			let heaviness = otherPokemon?.data?.weight?.kilograms
+			let power = options.action.power
+			if (heaviness < 10) power += 20
+			else if (heaviness < 25) power += 40
+			else if (heaviness < 50) power += 60
+			else if (heaviness < 100) power += 80
+			else if (heaviness < 200) power += 100
+			else power += 120
+			newOptions.power = power
+
+			let strategy = moveUseStrategy["basic-damage"]
+			let weight = strategy.chooseWeight(newOptions)
+			
+			return weight
+		}
+	},
+	"Pay Day": {
+		chooseWeight: options => {
+			let game = options.game
+			let board = game.board
+			let yellowTiles = board.tilesOnScreen()
+			.filter(tile => tile.type === "yellow")
+			let strategy = moveUseStrategy["basic-damage"]
+			let weight = strategy.chooseWeight(options)
+			weight += 5 * yellowTiles.length
+			
+			return weight
+		}
+	},
 	"Pursuit": {
 		chooseWeight: options => {
 			//If we can use another damage dealing move first, that's better.
@@ -301,6 +378,22 @@ const moveUseStrategy = {
 			}
 			let strategy = moveUseStrategy["basic-damage"]
 			let weight = strategy.chooseWeight(options)
+			return weight
+		}
+	},
+	"Seismic Toss": {
+		chooseWeight: options => {
+			let game = options.game
+			let trainer = options.trainer
+			let move = options.action
+			let otherTrainer = game.trainers.find(t => t !== trainer)
+			let pokemon = trainer.activePokemon
+			let otherPokemon = otherTrainer.activePokemon
+			let otherTypes = otherPokemon.getEffectiveTypes()
+			let damageType = game.getEffectiveMoveType(otherTrainer, otherPokemon, move)
+			let isImmune = !getSuperEffectiveMult(damageType, otherTypes)
+			let weight = isImmune ? 0 : pokemon.level * 2
+			
 			return weight
 		}
 	},

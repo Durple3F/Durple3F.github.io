@@ -207,6 +207,7 @@ class Round{
 		for (let trainer of this.trainers){
 			for (let pokemon of trainer.pokemon){
 				pokemon.resetEverything()
+				pokemon.trainer = trainer
 			}
 		}
 
@@ -243,13 +244,16 @@ class Round{
 			this.hasEnded = true
 			clearInterval(this.tickInterval)
 			//Empty both trainer's energy pools
+			//and have them forget the Trainer they belong to.
 			for (let trainer of this.trainers){
 				for (let pokemon of trainer.pokemon){
+					delete pokemon.trainer
 					for (let color in pokemon.energy){
 						pokemon.energy[color] = 0
 					}
 				}
 			}
+			//Remove volatile statuses
 			for (let trainer of this.trainers){
 				for (let pokemon of trainer.pokemon){
 					pokemon.removeVolatileStatuses()
@@ -454,6 +458,18 @@ class Round{
 		let activeTrainer = this.trainers[this.activePlayerIndex]
 		let activePokemon = activeTrainer.activePokemon
 		let otherTrainer = this.trainers[this.inactivePlayerIndex]
+		let otherPokemon = otherTrainer.activePokemon
+
+		if (otherPokemon.hasAbility("Anger Point") && matches.some(match => {
+			return match.length >= 5
+		})){
+			otherPokemon.addStatusEffect({
+				type: "stat",
+				class: "buff",
+				stat: "attack",
+				amount: 6
+			}, otherTrainer, otherPokemon, undefined)
+		}
 
 		let energiesToAdd = []
 		let energy = getEmptyEnergy()
@@ -1713,6 +1729,9 @@ class Round{
 		//Damage can be set to a specific value
 		if (options.fixed && options.damage !== undefined){
 			damage = options.damage
+		}
+		if (options.finalImmunityCheck && typeMult === 0){
+			damage = 0
 		}
 
 		//Finalize how much damage is intended to be dealt.
@@ -3395,8 +3414,9 @@ class Round{
 
 		let abilityTag = $("<div>")
 		html.append(abilityTag)
-		let abilityName = getLocaleString("name", lang, ["abilities", pokemon.ability.id])
-		let abilityDescription = getLocaleString("shortDescription", lang, ["abilities", pokemon.ability.id])
+		let ability = pokemon.getEffectiveAbility()
+		let abilityName = getLocaleString("name", lang, ["abilities", ability.id])
+		let abilityDescription = getLocaleString("shortDescription", lang, ["abilities", ability.id])
 		abilityTag.append(`<span>${abilityName}: ${abilityDescription}</span>`)
 
 		let stats = getStatsHTML(pokemon)
@@ -4672,6 +4692,10 @@ function beginRound(trainerData){
 		//Only wild pokemon are allowed to have a chance to be shiny.
 		else if (!isWild){
 			options.isShiny = false
+		}
+
+		if (isWild && Math.random() < 0.1){
+			options.addHiddenAbility = true
 		}
 
 		if (data.levelMin && data.levelMax){

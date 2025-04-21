@@ -14,6 +14,8 @@ text background #3b3838
 gradient linear-gradient(-30deg, #d5b01a80 0%, #f3be43a0 100%);
 mask radial-gradient(ellipse at center, black 67%, transparent 71%);
 
+SOMETIMES status effects don't have moves attaches to them BE AWARE
+
 TODO
 - Hau should ask at the beginning whether to pick the better or worse starter
 - Hau and Team Skull should get special battle themes
@@ -22,4 +24,3 @@ TODO
 - Add an animation when a shiny pokemon enters
 - Add a section in the pokedex where you can see how many you've caught/seen/etc
 - Pokedex entries
-- Stun Spore places a status effect onto tiles that is animated.

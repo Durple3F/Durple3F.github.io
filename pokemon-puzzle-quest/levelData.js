@@ -861,6 +861,26 @@ const levelData = [
 	},
 
 	//3-1: Mankey, Delibird, Cutiefly, Spearow, Yungoos, Rattata-Alola
+	{
+		id: "Route 3-1",
+		category: "Route 3",
+		name: "Route 3-1",
+		music: "SM Wild Pokemon Battle",
+		icon: "1",
+		trainers: [
+			{
+				isWild: true,
+				targetPokemon: 5,
+				canPickDuplicates: true,
+				possiblePokemon: [
+					{ id: "Mankey", levelMin: 9, levelMax: 12, weight: 4 },
+				]
+			},
+		],
+		effects: [
+			{ type: "fight", trainer: 0 },
+		]
+	},
 ]
 
 for (let categoryId in levelCategoryData){

@@ -2,6 +2,10 @@ const pokemonData = {
 	"Caterpie": {
 		name: "Caterpie",
 		number: "10",
+		weight: {
+			pounds: 6.4,
+			kilograms: 2.9
+		},
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0010Caterpie.png",
@@ -53,6 +57,10 @@ const pokemonData = {
 	"Metapod": {
 		name: "Metapod",
 		number: "11",
+		weight: {
+			pounds: 21.8,
+			kilograms: 9.9
+		},
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0011Metapod.png",
@@ -102,6 +110,10 @@ const pokemonData = {
 	"Butterfree": {
 		name: "Butterfree",
 		number: "12",
+		weight: {
+			pounds: 70.5,
+			kilograms: 32.0
+		},
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0012Butterfree.png",
@@ -153,6 +165,10 @@ const pokemonData = {
 		name: "Rattata",
 		id: "Rattata-Alola",
 		number: "19a",
+		weight: {
+			pounds: 8.4,
+			kilograms: 3.8
+		},
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0019Rattata-Alola.png",
@@ -200,6 +216,10 @@ const pokemonData = {
 		name: "Raticate",
 		id: "Raticate-Alola",
 		number: "20a",
+		weight: {
+			pounds: 56.2,
+			kilograms: 25.5
+		},
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0020Raticate-Alola.png",
@@ -240,6 +260,10 @@ const pokemonData = {
 	"Spearow": {
 		name: "Spearow",
 		number: "21",
+		weight: {
+			pounds: 4.4,
+			kilograms: 2.0
+		},
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0021Spearow.png",
@@ -283,6 +307,10 @@ const pokemonData = {
 	"Pikachu": {
 		name: "Pikachu",
 		number: "25",
+		weight: {
+			pounds: 13.2,
+			kilograms: 6.0
+		},
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0025Pikachu.png",
@@ -366,6 +394,10 @@ const pokemonData = {
 	"Zubat": {
 		name: "Zubat",
 		number: "41",
+		weight: {
+			pounds: 16.5,
+			kilograms: 7.5
+		},
 		imageFacing: "right",
 		imageSources: {
 			"large": "src/img/pokemon/0041Zubat.png",
@@ -411,6 +443,10 @@ const pokemonData = {
 		name: "Meowth",
 		id: "Meowth-Alola",
 		number: "52a",
+		weight: {
+			pounds: 9.3,
+			kilograms: 4.2
+		},
 		imageFacing: "right",
 		imageSources: {
 			"large": "src/img/pokemon/0052Meowth-Alola.png",
@@ -449,12 +485,67 @@ const pokemonData = {
 			{ name: "Feint", unlock: { type: "level", amount: 4 } },
 			{ name: "Scratch", unlock: { type: "level", amount: 8 } },
 			{ name: "Pay Day", unlock: { type: "level", amount: 12 } },
-			{ name: "Pay Day", unlock: { type: "level", amount: 16 } },
+			{ name: "Bite", unlock: { type: "level", amount: 16 } },
+		]
+	},
+	"Mankey": {
+		name: "Mankey",
+		number: "56",
+		weight: {
+			pounds: 61.7,
+			kilograms: 28
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0056Mankey.png",
+			"largeShiny": "src/img/shiny-pokemon/056-Mankey.png",
+			"home": "src/img/tiny-pokemon/Mankey.png"
+		},
+		sounds: {
+			cry: "src/audio/cries/mankey.mp3"
+		},
+		types: ["Fighting"],
+		tags: [],
+		abilities: ["Anger Point", "Vital Spirit"],
+		hiddenAbilities: ["Defiant"],
+		stats: {
+			hp: 40,
+			attack: 80,
+			defense: 35,
+			specialAttack: 35,
+			specialDefense: 45,
+			speed: 70
+		},
+		expYield: 61,
+		evYield: {
+			hp: 0,
+			attack: 1,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 3,
+			red: 2
+		},
+		learnset: [
+			{ name: "Covet", unlock: { type: "level", amount: 1 } },
+			{ name: "Scratch", unlock: { type: "level", amount: 1 } },
+			{ name: "Leer", unlock: { type: "level", amount: 1 } },
+			{ name: "Focus Energy", unlock: { type: "level", amount: 1 } },
+			{ name: "Fury Swipes", unlock: { type: "level", amount: 5 } },
+			{ name: "Low Kick", unlock: { type: "level", amount: 8 } },
+			{ name: "Seismic Toss", unlock: { type: "level", amount: 12 } },
 		]
 	},
 	"Growlithe": {
 		name: "Growlithe",
 		number: "58",
+		weight: {
+			pounds: 41.9,
+			kilograms: 19.0
+		},
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0058Growlithe.png",
@@ -497,6 +588,10 @@ const pokemonData = {
 	"Abra": {
 		name: "Abra",
 		number: "63",
+		weight: {
+			pounds: 43.0,
+			kilograms: 19.5
+		},
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0063Abra.png",
@@ -541,6 +636,10 @@ const pokemonData = {
 	"Slowpoke": {
 		name: "Slowpoke",
 		number: "79",
+		weight: {
+			pounds: 79.4,
+			kilograms: 36.0
+		},
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0079Slowpoke.png",
@@ -615,6 +714,10 @@ const pokemonData = {
 	"Magnemite": {
 		name: "Magnemite",
 		number: "81",
+		weight: {
+			pounds: 13.2,
+			kilograms: 6.0
+		},
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0081Magnemite.png",
@@ -682,6 +785,10 @@ const pokemonData = {
 		name: "Grimer",
 		id: "Grimer-Alola",
 		number: "88a",
+		weight: {
+			pounds: 92.6,
+			kilograms: 42.0
+		},
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0088Grimer-Alola.png",
@@ -749,6 +856,10 @@ const pokemonData = {
 	"Gastly": {
 		name: "Gastly",
 		number: "92",
+		weight: {
+			pounds: 0.2,
+			kilograms: 0.1
+		},
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0092Gastly.png",
@@ -791,6 +902,10 @@ const pokemonData = {
 	"Drowzee": {
 		name: "Drowzee",
 		number: "96",
+		weight: {
+			pounds: 71.4,
+			kilograms: 32.4
+		},
 		imageFacing: "right",
 		imageSources: {
 			"large": "src/img/pokemon/0096Drowzee.png",
@@ -833,6 +948,10 @@ const pokemonData = {
 	"Ledyba": {
 		name: "Ledyba",
 		number: "165",
+		weight: {
+			pounds: 23.8,
+			kilograms: 10.8
+		},
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0165Ledyba.png",
@@ -892,6 +1011,10 @@ const pokemonData = {
 	"Spinarak": {
 		name: "Spinarak",
 		number: "167",
+		weight: {
+			pounds: 18.7,
+			kilograms: 8.5
+		},
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0167Spinarak.png",
@@ -958,6 +1081,10 @@ const pokemonData = {
 	"Pichu": {
 		name: "Pichu",
 		number: "172",
+		weight: {
+			pounds: 4.4,
+			kilograms: 2.0
+		},
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0172Pichu.png",
@@ -1054,6 +1181,10 @@ const pokemonData = {
 	"Murkrow": {
 		name: "Murkrow",
 		number: "198",
+		weight: {
+			pounds: 4.6,
+			kilograms: 2.1
+		},
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0198Murkrow.png",
@@ -1100,6 +1231,10 @@ const pokemonData = {
 	"Misdreavus": {
 		name: "Misdreavus",
 		number: "200",
+		weight: {
+			pounds: 2.2,
+			kilograms: 1.0
+		},
 		imageFacing: "right",
 		imageSources: {
 			"large": "src/img/pokemon/0200Misdreavus.png",
@@ -1146,6 +1281,10 @@ const pokemonData = {
 	"Smeargle": {
 		name: "Smeargle",
 		number: "235",
+		weight: {
+			pounds: 127.9,
+			kilograms: 58.0
+		},
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0235Smeargle.png",
@@ -1195,6 +1334,10 @@ const pokemonData = {
 	"Wingull": {
 		name: "Wingull",
 		number: "278",
+		weight: {
+			pounds: 20.9,
+			kilograms: 9.5
+		},
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0278Wingull.png",
@@ -1265,6 +1408,10 @@ const pokemonData = {
 	"Makuhita": {
 		name: "Makuhita",
 		number: "296",
+		weight: {
+			pounds: 190.5,
+			kilograms: 86.4
+		},
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0296Makuhita.png",
@@ -1306,6 +1453,10 @@ const pokemonData = {
 	"Drifloon": {
 		name: "Drifloon",
 		number: "425",
+		weight: {
+			pounds: 2.6,
+			kilograms: 1.2
+		},
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0425Drifloon.png",
@@ -1349,6 +1500,10 @@ const pokemonData = {
 	"Bonsly": {
 		name: "Bonsly",
 		number: "438",
+		weight: {
+			pounds: 33.1,
+			kilograms: 15.0
+		},
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0438Bonsly.png",
@@ -1389,6 +1544,10 @@ const pokemonData = {
 	"Happiny": {
 		name: "Happiny",
 		number: "440",
+		weight: {
+			pounds: 53.8,
+			kilograms: 24.4
+		},
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0440Happiny.png",
@@ -1440,6 +1599,10 @@ const pokemonData = {
 	"Cottonee": {
 		name: "Cottonee",
 		number: "546",
+		weight: {
+			pounds: 1.3,
+			kilograms: 0.6
+		},
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0546Cottonee.png",
@@ -1483,6 +1646,10 @@ const pokemonData = {
 	"Rowlet": {
 		name: "Rowlet",
 		number: "722",
+		weight: {
+			pounds: 3.3,
+			kilograms: 1.5
+		},
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0722Rowlet.png",
@@ -1565,6 +1732,10 @@ const pokemonData = {
 	"Litten": {
 		name: "Litten",
 		number: "725",
+		weight: {
+			pounds: 9.5,
+			kilograms: 4.3
+		},
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0725Litten.png",
@@ -1640,6 +1811,10 @@ const pokemonData = {
 	"Popplio": {
 		name: "Popplio",
 		number: "728",
+		weight: {
+			pounds: 16.5,
+			kilograms: 7.5
+		},
 		imageFacing: "right",
 		imageSources: {
 			"large": "src/img/pokemon/0728Popplio.png",
@@ -1685,6 +1860,10 @@ const pokemonData = {
 	"Pikipek": {
 		name: "Pikipek",
 		number: "731",
+		weight: {
+			pounds: 2.6,
+			kilograms: 1.2
+		},
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0731Pikipek.png",
@@ -1726,6 +1905,10 @@ const pokemonData = {
 	"Yungoos": {
 		name: "Yungoos",
 		number: "734",
+		weight: {
+			pounds: 13.2,
+			kilograms: 6.0
+		},
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0734Yungoos.png",
@@ -1770,6 +1953,10 @@ const pokemonData = {
 	"Gumshoos": {
 		name: "Gumshoos",
 		number: "735",
+		weight: {
+			pounds: 31.3,
+			kilograms: 14.2
+		},
 		imageFacing: "right",
 		imageSources: {
 			"large": "src/img/pokemon/0735Gumshoos.png",
@@ -1813,6 +2000,10 @@ const pokemonData = {
 	"Grubbin": {
 		name: "Grubbin",
 		number: "736",
+		weight: {
+			pounds: 9.7,
+			kilograms: 4.4
+		},
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0736Grubbin.png",
@@ -1865,6 +2056,10 @@ const pokemonData = {
 	"Charjabug": {
 		name: "Charjabug",
 		number: "737",
+		weight: {
+			pounds: 23.1,
+			kilograms: 10.5
+		},
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0737Charjabug.png",
@@ -1909,6 +2104,10 @@ const pokemonData = {
 	"Cutiefly": {
 		name: "Cutiefly",
 		number: "742",
+		weight: {
+			pounds: 0.4,
+			kilograms: 0.2
+		},
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0742Cutiefly.png",
@@ -1952,6 +2151,10 @@ const pokemonData = {
 	"Comfey": {
 		name: "Comfey",
 		number: "764",
+		weight: {
+			pounds: 0.7,
+			kilograms: 0.3
+		},
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0764Comfey.png",
@@ -1991,6 +2194,10 @@ const pokemonData = {
 	"Komala": {
 		name: "Komala",
 		number: "775",
+		weight: {
+			pounds: 43.9,
+			kilograms: 19.9
+		},
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0775Komala.png",
@@ -2097,6 +2304,9 @@ for (let name in pokemonData) {
 	}
 	if (!pokemon.hiddenAbilities) {
 		pokemon.hiddenAbilities = []
+	}
+	if (!pokemon.weight){
+		console.warn(pokemon, "is missing a weight")
 	}
 
 	//Make sure all dex numbers are 4 digits long.

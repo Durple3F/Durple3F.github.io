@@ -1,8 +1,15 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-4/20 (21.3k lines):
+4/20 (21.9k lines):
 	- Moves can now add temporary effects that change how often tiles appear.
-	- Added Pay Day
+	- Added Mankey
+	- Added Pay Day, Covet, Fury Swipes, Low Kick, Seismic Toss
+	- Custom AI for each one of Pay Day, Covet, Fury Swipes, Low Kick, Seismic Toss
+	- Why does Fury Swipes even exist?? Fury Attack is right there.
+	- I was like, y'know what? Low Kick is a cool move. Every single pokemon has a weight attached to it now.
+	- Added Vital Spirit, Anger Point, Defiant
+	- One day this will be remembered as Mankey Easter
+	- Wild pokemon can now spawn with hidden abilities 1/10 of the time.
 
 4/19 (21.2k lines):
 	- Added Bide + AI.

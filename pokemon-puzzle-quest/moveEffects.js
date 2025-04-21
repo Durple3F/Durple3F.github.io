@@ -205,6 +205,9 @@ const pokemonMoveEffects = {
 			if ("fixed" in effect){
 				damageOptions.fixed = effect.fixed
 			}
+			if ("finalImmunityCheck" in effect){
+				damageOptions.finalImmunityCheck = effect.finalImmunityCheck
+			}
 
 			let result = game.dealDamage(damageOptions)
 			moveUseObj.info[effectIndex] = result.damageDealt
@@ -296,6 +299,28 @@ const pokemonMoveEffects = {
 			resolve()
 		}
 	},
+	"get-weight": {
+		update: false,
+		hasTarget: true,
+		targetType: "pokemon",
+		targetDefault: "user",
+		execute: (resolve, effect, params, game, options) => {
+			let target = options.target
+			let result = target?.data?.weight?.kilograms ?? 0
+			resolve(result)
+		}
+	},
+	"get-level": {
+		update: false,
+		hasTarget: true,
+		targetType: "pokemon",
+		targetDefault: "user",
+		execute: (resolve, effect, params, game, options) => {
+			let target = options.target
+			let result = target.level
+			resolve(result)
+		}
+	},
 	"apply-status-effect": {
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
@@ -323,16 +348,22 @@ const pokemonMoveEffects = {
 	},
 	"apply-debuff": {
 		execute: (resolve, effect, params, game, options) => {
+			let moveUseObj = options.moveUse
 			let debuff = window.structuredClone(effect.debuff)
+			let target = options.target
+			let trainer = moveUseObj.trainer
+			let pokemon = moveUseObj.pokemon
+			let move = moveUseObj.move
 
-			if (!("volatile" in debuff)){
-				debuff.volatile = true
-			}
-			if (!("tags" in debuff)){
-				debuff.tags = []
-			}
+			// if (!("volatile" in debuff)){
+			// 	debuff.volatile = true
+			// }
+			// if (!("tags" in debuff)){
+			// 	debuff.tags = []
+			// }
 
-			options.target.statusEffects.push(debuff)
+			target.addStatusEffect(debuff, trainer, pokemon, move)
+			// options.target.statusEffects.push(debuff)
 			resolve()
 		}
 	},

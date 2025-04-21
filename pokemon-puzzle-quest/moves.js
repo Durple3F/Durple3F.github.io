@@ -1,4 +1,5 @@
 const pokemonMoveData = {
+	//Steals some hp
 	"Absorb": {
 		name: "Absorb",
 		type: "Grass",
@@ -24,6 +25,7 @@ const pokemonMoveData = {
 			{ type: "heal", target: "user", amount: -2, min: -1 },
 		],
 	},
+	//Deals more damage if opponent took damage this turn
 	"Assurance": {
 		name: "Assurance",
 		type: "Dark",
@@ -49,6 +51,7 @@ const pokemonMoveData = {
 			{ type: "damage", damageMult: 2, label: "double-damage" },
 		],
 	},
+	//Damages and reduces opponent's initiative
 	"Astonish": {
 		name: "Astonish",
 		type: "Ghost",
@@ -74,6 +77,7 @@ const pokemonMoveData = {
 			{ type: "set-initiative", target: "opponent", initiative: -1 },
 		],
 	},
+	//Damages a non-active pokemon
 	"Aqua Jet": {
 		name: "Aqua Jet",
 		type: "Water",
@@ -106,6 +110,7 @@ const pokemonMoveData = {
 			{ type: "damage", toPokemon: -2, additivePower: -1 }
 		],
 	},
+	//Deals damage on a delay
 	"Bide": {
 		name: "Bide",
 		type: "Normal",
@@ -164,6 +169,7 @@ const pokemonMoveData = {
 			{ type: "remove-status-effect", target: "user", statusName: "bide-using-bide", label: "remove-status" },
 		]
 	},
+	//Removes a chunk of the board
 	"Bite": {
 		name: "Bite",
 		type: "Dark",
@@ -195,6 +201,7 @@ const pokemonMoveData = {
 			{ type: "remove-tiles", selection: -1 }
 		],
 	},
+	//Steals energy
 	"Bug Bite": {
 		name: "Bug Bite",
 		type: "Bug",
@@ -223,6 +230,7 @@ const pokemonMoveData = {
 			{ type: "gain-energy", amounts: -1, target: "user" }
 		],
 	},
+	//Increases the power of the user's next electric move
 	"Charge": {
 		name: "Charge",
 		type: "Electric",
@@ -266,6 +274,7 @@ const pokemonMoveData = {
 			} },
 		],
 	},
+	//Lowers opponent's attack
 	"Charm": {
 		name: "Charm",
 		type: "Fairy",
@@ -293,6 +302,7 @@ const pokemonMoveData = {
 			}
 		],
 	},
+	//Shuffles part of the board
 	"Confuse Ray": {
 		name: "Confuse Ray",
 		type: "Ghost",
@@ -320,6 +330,7 @@ const pokemonMoveData = {
 			{ type: "shuffle-tiles", selection: -1 }
 		],
 	},
+	//Damages and applies confusion
 	"Confusion": {
 		name: "Confusion",
 		type: "Psychic",
@@ -347,6 +358,7 @@ const pokemonMoveData = {
 			{ type: "apply-status-effect", statusEffect: "confused", target: "opponent" }
 		],
 	},
+	//Copies opponent's last move
 	"Copycat": {
 		name: "Copycat",
 		type: "Normal",
@@ -376,6 +388,36 @@ const pokemonMoveData = {
 			type: "last-enemy-move"
 		}
 	},
+	//Steals energy
+	"Covet": {
+		name: "Covet",
+		type: "Normal",
+		category: "Physical",
+		strategy: "special",
+		pp: 25,
+		power: 60,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			orange: 8,
+			blue: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Covet.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "load-value", value: 2 },
+			{ type: "select-energy-colors", search: "most-full", target: "opponent", count: -1 },
+			{ type: "load-value", value: -6 },
+			{ type: "gain-energy", count: -1, colors: -2, target: "opponent" },
+			{ type: "load-value", value: -1 },
+			{ type: "multiply-energy", amounts: -2, scale: -1 },
+			{ type: "gain-energy", amounts: -1, target: "user" }
+		],
+	},
+	//Does different stuff depending on its user's types
 	"Curse": {
 		name: "Curse",
 		type: "Ghost",
@@ -422,6 +464,7 @@ const pokemonMoveData = {
 			}
 		],
 	},
+	//Increases the power of certain moves the user uses later
 	"Defense Curl": {
 		name: "Defense Curl",
 		type: "Normal",
@@ -464,6 +507,7 @@ const pokemonMoveData = {
 			} },
 		],
 	},
+	//Makes the opponent unable to use their last move
 	"Disable": {
 		name: "Disable",
 		type: "Normal",
@@ -512,6 +556,7 @@ const pokemonMoveData = {
 			}
 		}
 	},
+	//Damages and applies confusion
 	"Disarming Voice": {
 		name: "Disarming Voice",
 		type: "Fairy",
@@ -539,6 +584,7 @@ const pokemonMoveData = {
 			{ type: "end-turn", label: "end" }
 		],
 	},
+	//Makes a match for the user
 	"Double Team": {
 		name: "Double Team",
 		type: "Normal",
@@ -846,6 +892,44 @@ const pokemonMoveData = {
 			{ type: "jump-if-less-than", jumpTo: Infinity },
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" }
+		]
+	},
+	"Fury Swipes": {
+		name: "Fury Swipes",
+		type: "Normal",
+		category: "Physical",
+		strategy: "special",
+		pp: 15,
+		power: 18,
+		accuracy: 80,
+		rechargeTurns: 0,
+		energy: {
+			orange: 3,
+			yellow: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Fury Swipes 1hit.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "fury-swipes-cost-reduction",
+				type: "cost-alteration",
+				stacks: false,
+				volatile: true,
+				appliesTo: {
+					name: "Fury Swipes"
+				},
+				turns: 1,
+				energyCost: {
+					orange: -1,
+					yellow: -1
+				}
+			} }
+		],
+		onTurnEnd: [
+			{ type: "remove-status-effect", target: "user", statusName: "fury-swipes-cost-reduction" },
 		]
 	},
 	"Growl": {
@@ -1163,6 +1247,62 @@ const pokemonMoveData = {
 			{ type: "change-tile-weight", tileType: "black", add: -1 },
 		],
 	},
+	"Low Kick": {
+		name: "Low Kick",
+		type: "Fighting",
+		category: "Physical",
+		strategy: "special",
+		tags: ["damage-dealing"],
+		pp: 20,
+		power: 0,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			orange: 5,
+			red: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Low Kick.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-weight", target: "opponent" },
+			{ type: "load-value", value: 10 },
+			{ type: "jump-if-less-than", jumpTo: "damage-1" },
+			{ type: "get-weight", target: "opponent" },
+			{ type: "load-value", value: 25 },
+			{ type: "jump-if-less-than", jumpTo: "damage-2" },
+			{ type: "get-weight", target: "opponent" },
+			{ type: "load-value", value: 50 },
+			{ type: "jump-if-less-than", jumpTo: "damage-3" },
+			{ type: "get-weight", target: "opponent" },
+			{ type: "load-value", value: 100 },
+			{ type: "jump-if-less-than", jumpTo: "damage-4" },
+			{ type: "get-weight", target: "opponent" },
+			{ type: "load-value", value: 200 },
+			{ type: "jump-if-less-than", jumpTo: "damage-5" },
+			{ type: "jump", jumpTo: "damage-6" },
+
+			{ type: "load-value", value: 20, label: "damage-1" },
+			{ type: "damage", additivePower: -1 },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "load-value", value: 40, label: "damage-2" },
+			{ type: "damage", additivePower: -1 },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "load-value", value: 60, label: "damage-3" },
+			{ type: "damage", additivePower: -1 },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "load-value", value: 80, label: "damage-4" },
+			{ type: "damage", additivePower: -1 },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "load-value", value: 100, label: "damage-5" },
+			{ type: "damage", additivePower: -1 },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "load-value", value: 120, label: "damage-6" },
+			{ type: "damage", additivePower: -1 },
+			{ type: "jump", jumpTo: Infinity },
+		],
+	},
 	"Mean Look": {
 		name: "Mean Look",
 		type: "Normal",
@@ -1313,7 +1453,7 @@ const pokemonMoveData = {
 		name: "Pay Day",
 		type: "Normal",
 		category: "Physical",
-		strategy: "basic-damage",
+		strategy: "special",
 		pp: 20,
 		power: 40,
 		accuracy: 100,
@@ -1686,6 +1826,29 @@ const pokemonMoveData = {
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
 			{ type: "end-turn" }
+		],
+	},
+	"Seismic Toss": {
+		name: "Seismic Toss",
+		type: "Fighting",
+		category: "Physical",
+		strategy: "special",
+		tags: ["damage-dealing"],
+		pp: 20,
+		power: null,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			orange: 8,
+			green: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Seismic Toss.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-level", target: "user" },
+			{ type: "damage", amount: -1, fixed: true, finalImmunityCheck: true },
 		],
 	},
 	"Shadow Sneak": {

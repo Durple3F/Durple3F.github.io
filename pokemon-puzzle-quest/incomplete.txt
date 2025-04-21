@@ -6,6 +6,7 @@ Incomplete move lists:
 	Pikachu (lv 8)
 	Zubat (lv 15)
 	Meowth-Alola (lv 16)
+	Mankey (lv 12)
 	Growlithe (lv 8)
 	Slowpoke (lv 9)
 	Magnemite (lv 8)
@@ -39,6 +40,7 @@ Missing Evolutions:
 	Pikachu
 	Zubat
 	Meowth-Alola
+	Mankey
 	Abra
 	Growlithe
 	Slowpoke
@@ -91,6 +93,9 @@ Missing Abilities:
 	Bonsly
 	Happiny
 	Cottonee
+	Rowlet (1/2)
+	Litten (1/2)
+	Popplio (1/2)
 	Pikipek
 	Yungoos
 	Gumshoos
