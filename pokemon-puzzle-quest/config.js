@@ -7,6 +7,7 @@ const config = {
 	expShare: true,
 	hardMode: false,
 	antialiasing: true,
+	cpuSpeed: 2,
 	textSpeed: 40,
 
 	volumes: {

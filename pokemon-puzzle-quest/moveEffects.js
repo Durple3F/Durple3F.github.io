@@ -215,9 +215,14 @@ const pokemonMoveEffects = {
 		}
 	},
 	"heal": {
+		hasTarget: true,
+		targetType: "pokemon",
+		targetDefault: "user",
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
 			let effectIndex = options.effectIndex
+			let target = options.target
+			let toTrainer = game.getTrainerOfPokemon(target)
 
 			let amount = params.amount ?? 0
 			let min = params.min ?? 0
@@ -227,8 +232,8 @@ const pokemonMoveEffects = {
 			let damageOptions = {
 				from: moveUseObj.pokemon,
 				fromTrainer: moveUseObj.trainer,
-				to: moveUseObj.pokemon,
-				toTrainer: moveUseObj.trainer,
+				to: target,
+				toTrainer: toTrainer,
 				move: moveUseObj.move
 			}
 
@@ -275,6 +280,17 @@ const pokemonMoveEffects = {
 		execute: (resolve, effect, params, game, options) => {
 			let target = options.target
 			let result = target.hp
+			resolve(result)
+		}
+	},
+	"get-max-hp": {
+		update: false,
+		hasTarget: true,
+		targetType: "pokemon",
+		targetDefault: "user",
+		execute: (resolve, effect, params, game, options) => {
+			let target = options.target
+			let result = target.maxhp
 			resolve(result)
 		}
 	},
@@ -473,6 +489,22 @@ const pokemonMoveEffects = {
 
 			moveUseObj.info[effectIndex] = result
 			resolve()
+		}
+	},
+	"get-energy-capacities": {
+		update: false,
+		hasTarget: true,
+		targetType: "pokemon",
+		targetDefault: "user",
+		execute: (resolve, effect, params, game, options) => {
+			let target = options.target
+			let result = {}
+
+			for (let color of colors) {
+				result[color] = target.maxEnergy[color] ?? 0
+			}
+
+			resolve(result)
 		}
 	},
 	"change-tile-weight": {

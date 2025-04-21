@@ -274,7 +274,8 @@ class Pokemon{
 			prevented = true
 		}
 		//Pokemon with Vital Spirit can't become asleep
-		else if (status.name === "asleep" && this.hasAbility("Vital Spirit")){
+		else if ((status.name === "asleep" || status.name === "drowsy") && 
+		(this.hasAbility("Vital Spirit") && this.hasAbility("Insomnia"))){
 			prevented = true
 		}
 
@@ -436,7 +437,13 @@ class Pokemon{
 		let numerator = 2 + Math.max(0, stage)
 		let denominator = 2 + Math.max(0, -stage)
 		let modifier = numerator / denominator
-		return val * modifier
+		let effectiveStat = val * modifier
+
+		if (stat === "attack" && this.hasAbility("Hustle")){
+			effectiveStat *= 1.5
+		}
+
+		return effectiveStat
 	}
 
 	getEffectiveTypes(){

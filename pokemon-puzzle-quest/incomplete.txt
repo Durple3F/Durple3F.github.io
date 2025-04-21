@@ -17,6 +17,7 @@ Incomplete move lists:
 	Spinarak (lv 8)
 	Murkrow (lv 11)
 	Misdreavus (lv 19)
+	Delibird (lv 1)
 	Wingull (lv 10)
 	Drifloon (lv 12)
 	Bonsly (lv 1)
@@ -52,6 +53,7 @@ Missing Evolutions:
 	Spinarak
 	Murkrow
 	Misreavus
+	Delibird
 	Wingull
 	Bonsly
 	Makuhita
@@ -86,6 +88,7 @@ Missing Abilities:
 	Pichu
 	Murkrow
 	Misdreavus
+	Delibird (2/3)
 	Smeargle
 	Wingull
 	Makuhita

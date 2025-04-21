@@ -997,10 +997,44 @@ class Round{
 
 		let promise = Promise.resolve()
 
+		//If it's the cpu's turn, wait a little bit
+		if (this.activePlayer !== "player"){
+			promise = promise.then(() => delay(300))
+		}
+
 		//Find any start-of-turn effects that moves may have.
+		//Also start-of-turn abilities!
 		for (let trainer of this.trainers){
+			let trainerIndex = this.trainers.indexOf(trainer)
 			let activePokemon = trainer.activePokemon
 			let activeMoves = activePokemon.activeMoves
+
+			//Hustle
+			if (this.activePlayerIndex === trainerIndex && activePokemon.hasAbility("Hustle")){
+				for (let move of activeMoves){
+					let statusEffect = {
+						name: "hustle-cost-increase",
+						type: "cost-alteration",
+						stacks: true,
+						volatile: true,
+						appliesTo: {
+							name: move.name
+						},
+						turns: 1,
+						energyCost: {}
+					}
+					let modification = statusEffect.energyCost
+					let cost = move.energy
+					let totalEnergy = Object.values(cost).reduce((acc, val) => acc + val, 0)
+					let toAdd = Math.ceil(totalEnergy / 1.5)
+					for (let i = 0; i < toAdd; i++){
+						let color = randomChoice(colors)
+						modification[color] = (modification[color] ?? 0) + 1
+					}
+					activePokemon.addStatusEffect(statusEffect, trainer, activePokemon, undefined)
+				}
+			}
+
 			for (let move of activeMoves){
 				if (move.onTurnStart){
 					promise = promise.then(() => {
@@ -1012,6 +1046,7 @@ class Round{
 			}
 		}
 
+		this.updateEverything()
 		promise = promise.then(() => this.determineTileWeights())
 		promise = promise.then(() => this.updateEverything())
 		promise = promise.then(() => this.checkForWinner())
@@ -1087,9 +1122,13 @@ class Round{
 				if (this.activePlayer === "player"){
 					delay(300).then(() => this.turnStart(newTurn))
 				} else {
-					this.waitUntilNoAnnouncements(() => {
-						return delay(300).then(() => this.turnStart(newTurn))
-					})
+					if (config["cpuSpeed"] === 1){
+						this.waitUntilNoAnnouncements(() => {
+							return delay(300).then(() => this.turnStart(newTurn))
+						})
+					} else {
+						this.turnStart(newTurn)
+					}
 				}
 			}
 		})
@@ -3725,6 +3764,7 @@ class Round{
 				}
 
 				if (shownCost !== realCost){
+					console.log("Now!")
 					let animatingTowards = numberTag.attr("data-counter-target")
 					animatingTowards = Number(animatingTowards)
 					if (animatingTowards !== realCost){

@@ -873,7 +873,8 @@ const levelData = [
 				targetPokemon: 5,
 				canPickDuplicates: true,
 				possiblePokemon: [
-					{ id: "Mankey", levelMin: 9, levelMax: 12, weight: 4 },
+					// { id: "Mankey", levelMin: 9, levelMax: 12, weight: 4 },
+					{ id: "Delibird", levelMin: 9, levelMax: 12, weight: 4 },
 				]
 			},
 		],

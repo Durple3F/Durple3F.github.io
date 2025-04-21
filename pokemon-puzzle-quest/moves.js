@@ -618,6 +618,7 @@ const pokemonMoveData = {
 			{ type: "perform-swap", swap: -3, label: "move" }
 		],
 	},
+	//Temporarily reduces its own cost
 	"Echoed Voice": {
 		name: "Echoed Voice",
 		type: "Normal",
@@ -652,6 +653,7 @@ const pokemonMoveData = {
 			} }
 		],
 	},
+	//Places status effects on tiles
 	"Ember": {
 		name: "Ember",
 		type: "Fire",
@@ -681,6 +683,7 @@ const pokemonMoveData = {
 			}
 		],
 	},
+	//Shifts a row of tiles
 	"Fairy Wind": {
 		name: "Fairy Wind",
 		type: "Fairy",
@@ -711,6 +714,7 @@ const pokemonMoveData = {
 			{ type: "shift-tiles", selection: -3, xOffset: -2, yOffset: -1 },
 		],
 	},
+	//Permanently changes its power mid-battle
 	"Fake Out": {
 		name: "Fake Out",
 		type: "Normal",
@@ -1675,6 +1679,64 @@ const pokemonMoveData = {
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
 			{ type: "end-turn" }
+		],
+	},
+	"Present": {
+		name: "Present",
+		type: "Normal",
+		category: "Physical",
+		strategy: "special",
+		tags: ["damage-dealing"],
+		pp: 15,
+		power: 0,
+		accuracy: 90,
+		rechargeTurns: 1,
+		energy: {
+			blue: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Present damage.mp3",
+			"heal": "src/audio/attacks/Present heal.mp3",
+		},
+		effects: [
+			{ type: "random-number", min: 1, max: 10 },
+			{ type: "load-value", value: 2 },
+			{ type: "jump-if-less-than", jumpTo: "energy" },
+			{ type: "random-number", min: 1, max: 9 },
+			{ type: "load-value", value: 2 },
+			{ type: "jump-if-less-than", jumpTo: "heal" },
+			{ type: "random-number", min: 1, max: 8 },
+			{ type: "load-value", value: 5 },
+			{ type: "jump-if-less-than", jumpTo: "damage-1" },
+			{ type: "random-number", min: 1, max: 4 },
+			{ type: "load-value", value: 4 },
+			{ type: "jump-if-less-than", jumpTo: "damage-2" },
+			{ type: "jump", jumpTo: "damage-3" },
+
+			{ type: "play-sound", name: "attack", label: "damage-1" },
+			{ type: "load-value", value: 40 },
+			{ type: "damage", additivePower: -1 },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "play-sound", name: "attack", label: "damage-2" },
+			{ type: "load-value", value: 80 },
+			{ type: "damage", additivePower: -1 },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "play-sound", name: "attack", label: "damage-3" },
+			{ type: "load-value", value: 120 },
+			{ type: "damage", additivePower: -1 },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "play-sound", name: "heal", label: "heal" },
+			{ type: "wait", duration: 500 },
+			{ type: "get-hp", target: "opponent" },
+			{ type: "load-value", value: 0.25 },
+			{ type: "multiply-numbers", round: "up" },
+			{ type: "heal", target: "opponent", amount: -1 },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "play-sound", name: "heal", label: "energy" },
+			{ type: "wait", duration: 500 },
+			{ type: "get-energy-capacities", target: "opponent" },
+			{ type: "gain-energy", amounts: -1, target: "opponent" },
+			{ type: "jump", jumpTo: Infinity },
 		],
 	},
 	"Pursuit": {

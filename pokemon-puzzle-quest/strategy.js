@@ -334,12 +334,11 @@ const moveUseStrategy = {
 			let trainer = options.trainer
 			let otherTrainer = game.trainers.find(t => t !== trainer)
 			let otherPokemon = otherTrainer.activePokemon
-			//unfortunate terminology.
 			let newOptions = {}
 			for (let key in options){
 				newOptions[key] = options[key]
 			}
-			console.log(newOptions)
+			//unfortunate terminology.
 			let heaviness = otherPokemon?.data?.weight?.kilograms
 			let power = options.action.power
 			if (heaviness < 10) power += 20
@@ -366,6 +365,19 @@ const moveUseStrategy = {
 			let weight = strategy.chooseWeight(options)
 			weight += 5 * yellowTiles.length
 			
+			return weight
+		}
+	},
+	"Present": {
+		chooseWeight: options => {
+			let newOptions = {}
+			for (let key in options){
+				newOptions[key] = options[key]
+			}
+			let power = options.action.power + 120	
+			newOptions.power = power
+			let strategy = moveUseStrategy["basic-damage"]
+			let weight = strategy.chooseWeight(newOptions)
 			return weight
 		}
 	},

@@ -1278,6 +1278,55 @@ const pokemonData = {
 			{ name: "Mean Look", unlock: { type: "level", amount: 19 } },
 		]
 	},
+	"Delibird": {
+		name: "Delibird",
+		number: "225",
+		weight: {
+			pounds: 35.3,
+			kilograms: 16.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0225Delibird.png",
+			"largeShiny": "src/img/shiny-pokemon/225-Delibird.png",
+			"home": "src/img/tiny-pokemon/Delibird.png"
+		},
+		sounds: {
+			cry: "src/audio/cries/delibird.mp3"
+		},
+		types: ["Ice", "Flying"],
+		tags: [],
+		abilities: ["Vital Spirit", "Hustle"],
+		hiddenAbilities: ["Insomnia"],
+		stats: {
+			hp: 45,
+			attack: 55,
+			defense: 45,
+			specialAttack: 65,
+			specialDefense: 45,
+			speed: 75
+		},
+		expYield: 116,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 1
+		},
+		energyMastery: {
+			red: 1,
+			orange: 1,
+			yellow: 1,
+			green: 1,
+			blue: 3,
+			purple: 1
+		},
+		learnset: [
+			{ name: "Present", unlock: { type: "level", amount: 1 } },
+		]
+	},
 	"Smeargle": {
 		name: "Smeargle",
 		number: "235",
