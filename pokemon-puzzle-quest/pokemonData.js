@@ -255,6 +255,9 @@ const tileStatusData = {
 	"Cursed": {
 		url: "src/img/icons/curse.png"
 	},
+	"Bubbly": {
+		url: "src/img/icons/bubble.png"
+	},
 	"Stun Spore": {
 		stacks: false,
 		infectious: 0.1,

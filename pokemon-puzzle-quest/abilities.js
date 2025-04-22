@@ -10,6 +10,10 @@ const abilityData = {
 	"Blaze": {
 		id: "Blaze"
 	},
+	//At the end of each turn, 20% chance to cure one non-volatile status
+	"Compound Eyes": {
+		id: "Compound Eyes"
+	},
 	//Get a stage of attack when you get a stat debuff
 	"Defiant": {
 		id: "Defiant"
@@ -37,6 +41,22 @@ const abilityData = {
 	//Increase grass power at low hp
 	"Overgrow": {
 		id: "Overgrow"
+	},
+	//If it was damaged during a turn, its speed increases by 50% during the next turn.
+	"Run Away": {
+		id: "Run Away"
+	},
+	//At the end of each turn, 20% chance to cure one non-volatile status
+	"Shed Skin": {
+		id: "Shed Skin"
+	},
+	//Blocks status effects from the opponent 20% of the time
+	"Shield Dust": {
+		id: "Shield Dust"
+	},
+	//Powers up not very effective moves
+	"Tinted Lens": {
+		id: "Tinted Lens"
 	},
 	//Increase water power at low hp
 	"Torrent": {

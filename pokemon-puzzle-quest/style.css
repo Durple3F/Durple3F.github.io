@@ -1040,11 +1040,14 @@ body {
 	font-size: 1.3em;
 	padding-left: 0.3em;
 	padding-right: 0.3em;
+	position: relative;
+	z-index: 5;
 }
 .move > .move-top > .move-type {
 	height: 1em;
 	display: flex;
 	align-items: center;
+	z-index: 5;
 }
 .move > .move-top > .move-type > img {
 	height: 100%;
@@ -1078,6 +1081,8 @@ body {
 .move > .move-desc {
 	padding: 0.5em;
 	padding-top: 0;
+	position: relative;
+	z-index: 5;
 }
 
 .move > .move-cost {
@@ -1085,11 +1090,13 @@ body {
 	justify-content: space-evenly;
 	align-items: center;
 	padding-bottom: 0.5em;
+	z-index: 5;
 }
 .move > .move-cost > .energy {
 	position: relative;
 	height: 1.5em; width: 1.5em;
 	transition: filter 0.5s;
+	z-index: 5;
 }
 .move > .move-cost > .energy > .icon {
 	position: absolute;
@@ -1149,6 +1156,43 @@ body {
 .move.disabled > .disabled-container > img {
 	height: calc(100% + 1em);
 	width: calc(100% + 1em);
+}
+
+.move > .effectiveness-container {
+	border-radius: inherit;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	top: 0; left: 0;
+	z-index: 1;
+	overflow: hidden;
+}
+.move > .effectiveness-container > .effectiveness {
+	position: absolute;
+	height: 3em;
+	width: 100%;
+	top: 0%; left: 100%;
+	transform: translate(-50%, -50%) rotate(45deg);
+	opacity: 0;
+	transition: opacity 0.3s;
+}
+.move[data-effectiveness="super-effective"]  > .effectiveness-container > .super-effective {
+	opacity: 1;
+}
+.move[data-effectiveness="not-very-effective"]  > .effectiveness-container > .not-very-effective {
+	opacity: 1;
+}
+.move  > .effectiveness-container > .super-effective {
+	background: linear-gradient(180deg,
+	rgba(248, 255, 46, 1) 0%,
+	rgba(199, 113, 87, 1) 50%,
+	rgba(248, 255, 46, 1) 100%);
+}
+.move  > .effectiveness-container > .not-very-effective {
+	background: linear-gradient(180deg,
+	rgba(194, 39, 65, 1) 0%,
+	rgba(194, 39, 65, 1) 50%,
+	rgba(194, 39, 65, 1) 100%);
 }
 
 .pokemon-stats {

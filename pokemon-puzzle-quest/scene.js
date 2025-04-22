@@ -1988,6 +1988,11 @@ function getMoveHTML(move, useLongDescription = false) {
 	disabledContainer.append("<img src='src/img/big red x.png'>")
 	tag.append(disabledContainer)
 
+	let effectivenessContainer = $("<div class='effectiveness-container'>")
+	effectivenessContainer.append("<div class='effectiveness super-effective'>")
+	effectivenessContainer.append("<div class='effectiveness not-very-effective'>")
+	tag.append(effectivenessContainer)
+
 	return tag
 }
 

@@ -1,9 +1,13 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-4/21 (22.2k lines):
+4/22 (22.5k lines):
+	- Added Shed Skin, Compound Eyes, Tinted Lens
+	- Added a rough type effectiveness indicator to moves.
+
+4/21 (22.4k lines):
 	- Added Delibird, Crabrawler
-	- Added Present + AI, Baby-Doll Eyes, Rock Smash
-	- Added Hustle, Insomnia, Hyper Cutter, Iron Fist
+	- Added Present + AI, Baby-Doll Eyes, Rock Smash, Bubble Beam
+	- Added Hustle, Insomnia, Hyper Cutter, Iron Fist, Shield Dust, Run Away
 
 4/20 (21.9k lines):
 	- Moves can now add temporary effects that change how often tiles appear.

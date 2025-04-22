@@ -214,6 +214,7 @@ function getPokemonSaveObj(pokemon){
 	if (obj.ability === "No Ability"){
 		delete obj.ability
 	}
+	obj.hadHiddenAbility = pokemon.hadHiddenAbility
 	obj.pcBox = pokemon.pcBox
 	obj.pcBoxX = pokemon.pcBoxX
 	obj.pcBoxY = pokemon.pcBoxY

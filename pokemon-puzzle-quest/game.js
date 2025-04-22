@@ -429,7 +429,8 @@ class Round{
 		let result = addEnergies(base, getEmptyEnergy())
 
 		let energyModifiers = [
-			"Energy Down"
+			"Energy Down",
+			"Bubbly"
 		]
 		let statusEffects = tile.statusEffects.filter(s => {
 			return energyModifiers.includes(s.name)
@@ -448,6 +449,9 @@ class Round{
 					mod[key] = -1
 					result = addEnergies(result, mod)
 				}
+			}
+			else if (name === "Bubbly" && trainer === sourceTrainer){
+				result["blue"] += 1
 			}
 		}
 
@@ -1069,7 +1073,52 @@ class Round{
 			return
 		}
 
+		let activePlayerIndex = this.activePlayerIndex
 		let promise = Promise.resolve()
+		//End-of-turn abilities
+		for (let trainer of this.trainers){
+			let trainerIndex = this.trainers.indexOf(trainer)
+			let activePokemon = trainer.activePokemon
+			//If a pokemon with run away is damaged in a turn,
+			//its speed increases during the next turn
+			//otherwise it loses this buff
+			if (activePokemon.hasAbility("Run Away")){
+				let damaged = activePokemon.gameRoundData.damagedThisTurn
+				activePokemon.removeStatusesWithName("run-away-boosted")
+				if (damaged){
+					activePokemon.addStatusEffect({
+						name: "run-away-boosted",
+						type: "stat",
+						class: "buff",
+						stat: "speed",
+						amount: 2
+					}, activePokemon.trainer, activePokemon, undefined)
+				}
+			}
+			//Pokemon with Shed Skin have a chance to cure a status at the end of their turn
+			if (trainerIndex === activePlayerIndex && activePokemon.hasAbility("Shed Skin")){
+				let canRemove = activePokemon.statusEffects
+				.filter(statusEffect => !statusEffect.volatile)
+				if (canRemove.length && Math.random() < 0.2){
+					let randomStatus = randomChoice(canRemove)
+					activePokemon.removeStatus(randomStatus)
+				}
+			}
+			//Pokemon with compound eyes raise their SpAtk on a short match sometimes
+			if (trainerIndex === activePlayerIndex && activePokemon.hasAbility("Compound Eyes")){
+				let matches = this.matchesInCombo
+				if (matches.length === 1 && matches[0].length === 3 && Math.random() < 0.5){
+					activePokemon.addStatusEffect({
+						name: "compound-eyes-boosted",
+						type: "stat",
+						class: "buff",
+						stat: "specialAttack",
+						amount: 1
+					}, activePokemon.trainer, activePokemon, undefined)
+				}
+			}
+		}
+
 		//Find any end-of-turn effects that moves may have.
 		for (let trainer of this.trainers){
 			let activePokemon = trainer.activePokemon
@@ -1760,6 +1809,11 @@ class Round{
 			console.log(damage)
 			damage *= options.damageMult
 			console.log(damage)
+		}
+
+		//Tinted Lens powers up not very effective moves
+		if (typeMult <= 0.5 && attacker.hasAbility("Tinted Lens")){
+			damage *= 2
 		}
 		
 		//I'm going to reduce how much damage things deal across the board, just a smidge.
@@ -3750,6 +3804,23 @@ class Round{
 
 			let type = this.getEffectiveMoveType(thisTrainer, thisPokemon, thisMove)
 			moveTag.attr("data-move-type", type)
+
+			if (thisMove.tags.includes("damage-dealing")){
+				let otherTrainer = this.trainers.find(t => t !== thisTrainer)
+				let otherPokemon = otherTrainer.activePokemon
+				let defendingTypes = otherPokemon.getEffectiveTypes()
+				let typeMult = getSuperEffectiveMult(type, defendingTypes)
+
+				if (typeMult > 1){
+					moveTag.attr("data-effectiveness", "super-effective")
+				} else if (typeMult <= 0.5){
+					moveTag.attr("data-effectiveness", "not-very-effective")
+				} else {
+					moveTag.attr("data-effectiveness", "")
+				}
+			} else {
+				moveTag.attr("data-effectiveness", "")
+			}
 			
 			let usable = true
 			for (let i = 0; i < costParts.length; i++){

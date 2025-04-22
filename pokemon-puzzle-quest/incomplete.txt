@@ -32,6 +32,7 @@ Incomplete move lists:
 	Gumshoos (lv 1)
 	Grubbin (lv 15)
 	Charjabug (lv 15)
+	Crabrawler (lv 13)
 	Cutiefly (lv 6)
 	Comfey (lv 0)
 	Komala (lv 0)
@@ -65,11 +66,9 @@ Missing Evolutions:
 	Pikipek
 	Charjabug
 	Cutiefly
+	Crabrawler
 
 Missing Abilities:
-	Caterpie
-	Metapod
-	Butterfree
 	Rattata-Alola
 	Raticate-Alola
 	Spearow

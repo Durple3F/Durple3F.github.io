@@ -950,6 +950,11 @@
 			"shortDescription": "Deals some damage and removes tiles",
 			"choose": "Choose up to 4 tiles in a 2x2 square."
 		},
+		"Bubble Beam": {
+			"name": "Bubble Beam",
+			"description": "Deals damage. Gives 8 random non-Water tiles the Bubbly status effect. Being Bubbly adds 1 blue energy to the tile's energy value.",
+			"shortDescription": "Gives tiles Bubbly"
+		},
 		"Bug Bite": {
 			"name": "Bug Bite",
 			"description": "Deals damage. Then, drains 2 energy from the opponent's three most full energy types and gives it to the user.",
@@ -1337,8 +1342,13 @@
 		},
 		"Blaze": {
 			"name": "Blaze",
-			"shortDescription": "Your Fire moves are stronger at low health",
+			"shortDescription": "Fire moves are stronger at low health",
 			"longDescription": "Fire moves that this Pokémon uses while at less than or equal to 1/3 HP have their power increased by 50%."
+		},
+		"Compound Eyes": {
+			"name": "Compound Eyes",
+			"shortDescription": "On a match that doesn't combo, raises Special Attack 1 stage 50% of the time",
+			"longDescription": "At the end of this Pokémon's turn, if it makes only one match of exactly three tiles, this ability has a 50% chance to raise its Special Attack by 1 stage."
 		},
 		"Defiant": {
 			"name": "Defiant",
@@ -1367,12 +1377,32 @@
 		},
 		"Overgrow": {
 			"name": "Overgrow",
-			"shortDescription": "Your Grass moves are stronger at low health",
+			"shortDescription": "Grass moves are stronger at low health",
 			"longDescription": "Grass moves that this Pokémon uses while at less than or equal to 1/3 HP have their power increased by 50%."
+		},
+		"Run Away": {
+			"name": "Run Away",
+			"shortDescription": "Raises Speed 2 stages if damaged last turn",
+			"longDescription": "At the end of each turn, if this Pokémon was dealt damage during that turn, its Speed stat is raised 2 stages during the next turn."
+		},
+		"Shed Skin": {
+			"name": "Shed Skin",
+			"shortDescription": "At the end of its turn, 20% chance to cure one status",
+			"longDescription": "At the end of this Pokémon's turn, it has a 20% chance to recover from one non-volatile status that it has."
+		},
+		"Shield Dust": {
+			"name": "Shield Dust",
+			"shortDescription": "Prevents receiving status effects from opponent 20% of the time",
+			"longDescription": "If this Pokémon receives a status effect from another trainer, it has a 20% chance to prevent it."
+		},
+		"Tinted Lens": {
+			"name": "Tinted Lens",
+			"shortDescription": "\"Not very effective\" moves used do double damage.",
+			"longDescription": "As a move this Pokémon uses deals damage, if the type effectiveness of that damage is 0.5 or less, its damage is doubled."
 		},
 		"Torrent": {
 			"name": "Torrent",
-			"shortDescription": "Your Water moves are stronger at low health",
+			"shortDescription": "Water moves are stronger at low health",
 			"longDescription": "Water moves that this Pokémon uses while at less than or equal to 1/3 HP have their power increased by 50%."
 		},
 		"Vital Spirit": {

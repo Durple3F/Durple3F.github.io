@@ -538,15 +538,15 @@ const pokemonMoveEffects = {
 			let conditions = effect?.conditions ?? {}
 			let chosenTiles = []
 			let chooseable = game.board.tilesOnScreen()
-				.filter(t => {
-					if (conditions.notTypes) {
-						let notTypes = conditions.notTypes
-						if (notTypes.includes(t.type)) {
-							return false
-						}
+			.filter(t => {
+				if (conditions.notTypes) {
+					let notTypes = conditions.notTypes
+					if (notTypes.includes(t.type)) {
+						return false
 					}
-					return true
-				})
+				}
+				return true
+			})
 			for (let i = 0; i < count; i++) {
 				let canChoose = chooseable
 					.filter(t => !chosenTiles.includes(t))

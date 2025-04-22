@@ -240,6 +240,37 @@ const pokemonMoveData = {
 			{ type: "remove-tiles", selection: -1 }
 		],
 	},
+	//Makes tiles give extra blue energy
+	"Bubble Beam": {
+		name: "Bubble Beam",
+		type: "Water",
+		category: "Special",
+		strategy: "basic-damage",
+		pp: 20,
+		power: 65,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			blue: 8,
+			yellow: 8
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Bubble Beam.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "load-value", value: 8 },
+			{ 
+				type: "select-random-tiles", count: -1,
+				conditions: { notTypes: ["blue"] }
+			},
+			{
+				type: "apply-status-to-tiles", selection: "group", which: -1,
+				status: { name: "Bubbly", type: "buff", duration: null }
+			}
+		],
+	},
 	//Steals energy
 	"Bug Bite": {
 		name: "Bug Bite",
@@ -1893,7 +1924,9 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			
+			orange: 6,
+			yellow: 4,
+			green: 4
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Rock Smash.mp3"

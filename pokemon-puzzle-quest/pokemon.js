@@ -75,19 +75,30 @@ class Pokemon{
 		})
 
 		//Decide which abilities this pokemon has
+		this.hadHiddenAbility = options?.hadHiddenAbility
 		if (options?.ability){
 			if (typeof options.ability === "string" && options.ability in abilityData){
 				this.ability = abilityData[options.ability]
 			} else {
 				this.ability = options.ability
 			}
+
+			if (this.hadHiddenAbility === undefined){
+				this.hadHiddenAbility = this.data.hiddenAbilities.includes(this.ability)
+			}
 		} else {
 			//Choose a random ability this pokemon may have.
-			let which = options?.addHiddenAbility ? "hiddenAbilities" : "abilities"
+			let which = "abilities"
+			if (options?.addHiddenAbility && this.data.hiddenAbilities.length){
+				which = "hiddenAbilities"
+			}
 			let possibleAbilities = this.data[which]
 			let abilityId = randomChoice(possibleAbilities)
 			if (abilityId){
 				this.ability = abilityData[abilityId]
+			}
+			if (options?.addHiddenAbility){
+				this.hadHiddenAbility = true
 			}
 		}
 		if (!this.ability){
@@ -279,10 +290,18 @@ class Pokemon{
 			prevented = true
 		}
 		//Pokemon with Hyper Cutter can't have their Attack lowered by stages
-		else if (status.type === "stat" &&
+		else if (this.hasAbility("Hyper Cutter") &&
+			status.type === "stat" &&
 			status.sourcePokemon !== this &&
 			status.stat === "attack" &&
 			status.amount < 0
+		){
+			prevented = true
+		}
+		//Pokemon with Shield Dust prevent receiving statuses from other trainers 20% of the time
+		else if (this.hasAbility("Shield Dust") &&
+			status.sourceTrainer !== this.trainer &&
+			Math.random() < 0.2
 		){
 			prevented = true
 		}
@@ -632,13 +651,14 @@ class Pokemon{
 		let copy = {}
 		let toCopy = [
 			"uuid", "owner", "level", "nature",
-			"ivs", "evs", "exp", "isShiny"
+			"ivs", "evs", "exp", "isShiny",
+			"hadHiddenAbility"
 		]
 		for (let key of toCopy){
 			copy[key] = this[key]
 		}
 		copy.skipGivingMoves = true
-		copy.addHiddenAbility = this.hasHiddenAbility()
+		copy.addHiddenAbility = this.hasHiddenAbility() || this.hadHiddenAbility
 		let changeName = this.name === this.pokemonName
 		let newName = changeName ? null : this.name
 		let oldActive = this.activeMoves

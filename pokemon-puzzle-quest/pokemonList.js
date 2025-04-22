@@ -17,6 +17,8 @@ const pokemonData = {
 		},
 		types: ["Bug"],
 		tags: [],
+		abilities: ["Shield Dust"],
+		hiddenAbilities: ["Run Away"],
 		stats: {
 			hp: 45,
 			attack: 30,
@@ -72,6 +74,8 @@ const pokemonData = {
 		},
 		types: ["Bug"],
 		tags: [],
+		abilities: ["Shed Skin"],
+		hiddenAbilities: [],
 		stats: {
 			hp: 50,
 			attack: 20,
@@ -125,6 +129,8 @@ const pokemonData = {
 		},
 		types: ["Bug", "Flying"],
 		tags: [],
+		abilities: ["Compound Eyes"],
+		hiddenAbilities: ["Tinted Lens"],
 		stats: {
 			hp: 60,
 			attack: 45,
@@ -2168,6 +2174,7 @@ const pokemonData = {
 			{ name: "Vise Grip", unlock: { type: "level", amount: 1 } },
 			{ name: "Rock Smash", unlock: { type: "level", amount: 5 } },
 			{ name: "Leer", unlock: { type: "level", amount: 9 } },
+			{ name: "Bubble Beam", unlock: { type: "level", amount: 13 } },
 		]
 	},
 	"Cutiefly": {

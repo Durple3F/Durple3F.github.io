@@ -24,3 +24,4 @@ TODO
 - Add an animation when a shiny pokemon enters
 - Add a section in the pokedex where you can see how many you've caught/seen/etc
 - Pokedex entries
+- Currently if you put a pokemon off the grid in pc box it just sits there in the void
