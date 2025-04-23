@@ -1160,6 +1160,45 @@ const pokemonMoveData = {
 			{ type: "change-move-cooldown", target: "user", move: -2, amount: -1 },
 		],
 	},
+	"Hone Claws": {
+		name: "Hone Claws",
+		type: "Dark",
+		category: "Status",
+		strategy: "buff-user",
+		pp: 15,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 1,
+		energy: {
+			red: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Hone Claws.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-types", target: "user" },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "hone-claws-cost-alteration",
+				type: "cost-alteration",
+				stacks: true,
+				volatile: true,
+				numberOfApplications: 1,
+				appliesTo: {
+					types: "%c%"
+				},
+				energyCost: {
+					greatestColor: -4
+				}
+			}, replacementsForResultObj: [
+				{
+					path: ["appliesTo"],
+					key: "types",
+					value: -1
+				}
+			] },
+		],
+	},
 	"Howl": {
 		name: "Howl",
 		type: "Normal",
@@ -2511,6 +2550,38 @@ const pokemonMoveData = {
 			{ type: "damage", additivePower: -1 }
 		],
 	},
+	//Removes a group of tiles along a diagonal
+	"Wing Attack": {
+		name: "Wing Attack",
+		type: "Flying",
+		category: "Physical",
+		strategy: "basic-damage",
+		pp: 35,
+		power: 60,
+		accuracy: 100,
+		rechargeTurns: 0,
+		energy: {
+			// blue: 12,
+			// yellow: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Wing Attack.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "random-number", min: -45, max: 45 },
+			{ 
+				type: "select-tiles-with-expression",
+				conditionExpression: "abs((tan(%c% deg) * x) - y + ((h*0.5) - (tan(%c% deg) * (w*0.5))))/sqrt(tan(%c% deg)^2 + 1) <= 0.5",
+				conditionArguments: [-1, -1, -1]
+			},
+			{ type: "remove-tiles", selection: -1 }
+		]
+	},
 	"Wrap": {
 		name: "Wrap",
 		type: "Normal",
@@ -2565,6 +2636,9 @@ for (let moveName in pokemonMoveData){
 	move.tags = move.tags ?? []
 	if (move.power){
 		move.tags.push("damage-dealing")
+	}
+	if (move.additionalEffects && move.additionalEffects.length){
+		move.tags.push("has-additional-effects")
 	}
 }
 for (let name in pokemonData) {

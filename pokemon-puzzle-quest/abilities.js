@@ -42,6 +42,10 @@ const abilityData = {
 	"Iron Fist": {
 		id: "Iron Fist"
 	},
+	//Cost reductions to your moves from opponents are 50% as effective
+	"Keen Eyes": {
+		id: "Keen Eyes"
+	},
 	//TODO
 	"Liquid Voice": {
 		id: "Liquid Voice"
@@ -69,6 +73,10 @@ const abilityData = {
 	//At the end of each turn, 20% chance to cure one non-volatile status
 	"Shed Skin": {
 		id: "Shed Skin"
+	},
+	//Additional abilities don't trigger but all move power is increased 30%
+	"Sheer Force": {
+		id: "Sheer Force"
 	},
 	//Blocks status effects from the opponent 20% of the time
 	"Shield Dust": {

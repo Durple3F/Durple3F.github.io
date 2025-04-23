@@ -1749,6 +1749,55 @@ const pokemonData = {
 			{ name: "Charm", unlock: { type: "level", amount: 12 } },
 		]
 	},
+	"Rufflet": {
+		name: "Rufflet",
+		number: "627",
+		weight: {
+			pounds: 23.1,
+			kilograms: 10.5
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0627Rufflet.png",
+			"largeShiny": "src/img/shiny-pokemon/627-Rufflet.png",
+			"home": "src/img/tiny-pokemon/0627Rufflet.png"
+		},
+		sounds: {
+			cry: "src/audio/cries/rufflet.mp3"
+		},
+		types: ["Normal", "Flying"],
+		tags: ["Starter"],
+		abilities: ["Keen Eye", "Sheer Force"],
+		hiddenAbilities: ["Hustle"],
+		stats: {
+			hp: 70,
+			attack: 83,
+			defense: 50,
+			specialAttack: 37,
+			specialDefense: 50,
+			speed: 60
+		},
+		expYield: 70,
+		evYield: {
+			hp: 0,
+			attack: 1,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 1,
+			blue: 3,
+			purple: 1
+		},
+		learnset: [
+			{ name: "Peck", unlock: { type: "level", amount: 1 } },
+			{ name: "Leer", unlock: { type: "level", amount: 1 } },
+			{ name: "Hone Claws", unlock: { type: "level", amount: 6 } },
+			{ name: "Wing Attack", unlock: { type: "level", amount: 1 } },
+		]
+	},
 	"Rowlet": {
 		name: "Rowlet",
 		number: "722",

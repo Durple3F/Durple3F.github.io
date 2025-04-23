@@ -1,8 +1,11 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-4/23 (22.8k lines):
-	- Added Own Tempo, Leaf Guard
+4/23 (23.0k lines):
+	- Added Rufflet
+	- Added Hone Claws, Wing Attack
+	- Added Own Tempo, Leaf Guard, Keen Eyes
 	- Added a trainer battle to 3-1
+	- Sheer Force is a really cool ability and now I wanna program it.
 
 4/22 (22.6k lines):
 	- Added Petilil

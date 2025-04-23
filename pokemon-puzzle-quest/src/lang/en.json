@@ -902,6 +902,9 @@
 		"Petilil": {
 			"name": "Petilil"
 		},
+		"Rufflet": {
+			"name": "Rufflet"
+		},
 		"Rowlet": {
 			"name": "Rowlet"
 		},
@@ -1111,6 +1114,11 @@
 			"name": "Helping Hand",
 			"description": "Reduces the cooldown of the move with the user's highest cooldown by 5.",
 			"shortDescription": "Reduces highest cooldown"
+		},
+		"Hone Claws": {
+			"name": "Hone Claws",
+			"description": "The next time that Pokémon uses a move which shares a type with it, the greatest color component(s) in that move's cost is reduced by 4.",
+			"shortDescription": "Next same-type move costs less"
 		},
 		"Howl": {
 			"name": "Howl",
@@ -1354,6 +1362,11 @@
 			"description": "Deals damage. This move's power increases by 2 for every Water tile on the board.",
 			"shortDescription": "Damage based on Water tiles"
 		},
+		"Wing Attack": {
+			"name": "Wing Attack",
+			"description": "Deals damage. Then, a random line is chosen such that the line passes through the center of the board and has an angle between -45 and 45 degrees. All tiles with a distance of 0.5 or less from that line are removed.",
+			"shortDescription": "Removes tiles along a diagonal"
+		},
 		"Wrap": {
 			"name": "Wrap",
 			"description": "Gives 2-5 tiles on the board the Wrap status. When an opponent removes those tiles, this move deals them damage.",
@@ -1416,6 +1429,11 @@
 			"name": "Iron Fist",
 			"shortDescription": "This Pokémon's punching moves get +20% power",
 			"longDescription": "The power of punching moves used by this Pokémon are increased by 20%."
+		},
+		"Keen Eyes": {
+			"name": "Keen Eyes",
+			"shortDescription": "Other Pokémon raise this Pokémon's move costs half as much",
+			"longDescription": "The effects of statuses imposed by other Pokémon which raise the costs of this Pokémon's moves are reduced by 50%."
 		},
 		"Leaf Guard": {
 			"name": "Leaf Guard",
@@ -1651,7 +1669,11 @@
 		},
 		"Route 3-1": {
 			"name": "Route 3-1",
-			"description": ""
+			"description": "On your way to the next trial, you climb through a rocky pass overlooking Kala'e Bay."
+		},
+		"Route 3-2": {
+			"name": "Route 3-2",
+			"description": "You feel the shadows of flying Pokémon pass over your head as you continue."
 		}
 	},
 	"route-categories": {

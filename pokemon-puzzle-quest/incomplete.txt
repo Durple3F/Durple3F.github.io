@@ -24,7 +24,8 @@ Incomplete move lists:
 	Makuhita (lv 4)
 	Happiny (lv 4)
 	Cottonee (lv 6)
-	Petilil (lv 0)
+	Petilil (lv 12)
+	Rufflet (lv 0)
 	Rowlet (lv 12)
 	Litten (lv 15)
 	Popplio (lv 12)
@@ -62,6 +63,7 @@ Missing Evolutions:
 	Happiny
 	Cottonee
 	Petilil
+	Rufflet
 	Rowlet
 	Litten
 	Popplio
@@ -96,6 +98,7 @@ Missing Abilities:
 	Bonsly
 	Happiny
 	Cottonee
+	Rufflet
 	Rowlet (1/2)
 	Litten (1/2)
 	Popplio (1/2)

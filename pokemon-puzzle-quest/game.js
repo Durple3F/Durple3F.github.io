@@ -2050,26 +2050,68 @@ class Round{
 		}
 		let energyCost = cost.energyCost
 		
+		let hasKeenEyes = pokemon.hasAbility("Keen Eyes")
 		let costEffects = pokemon.getStatusesOfType("cost-alteration")
 		for (let statusEffect of costEffects){
 			let effectiveType = this.getEffectiveMoveType(trainer, pokemon, move)
+			let fromOtherTrainer = statusEffect.sourceTrainer !== trainer
+			let fromOtherPokemon = statusEffect.sourcePokemon !== pokemon
 			let applies = this.doesThisApplyToMove(move, statusEffect.appliesTo, effectiveType)
 			if (applies){
-				let energyModification = statusEffect.energyCost
+				let energyModification = window.structuredClone(statusEffect.energyCost)
 				let modification = statusEffect.modification
-				let colorsToModify = Object.keys(energyModification)
+				let keys = Object.keys(energyModification)
+				let colorsToModify = keys.filter(key => colors.includes(key))
+
+				//Some of these effects affect the greatest color(s) in the cost.
+				if (keys.includes("greatestColor")){
+					let greatestValue = Object.values(move.energy).reduce((acc, val) => {
+						return acc > val ? acc : val
+					}, -Infinity)
+					let greatestColors = Object.keys(move.energy).filter(key => {
+						return move.energy[key] === greatestValue
+					})
+					for (let greatestColor of greatestColors){
+						if (!colorsToModify.includes(greatestColor)){
+							colorsToModify.push(greatestColor)
+						}
+						if (!energyModification[greatestColor]){
+							energyModification[greatestColor] = 0
+						}
+						energyModification[greatestColor] += energyModification["greatestColor"]
+					}
+				}
+
 				//If no colors are listed, it means to apply the change to every color.
 				if (colorsToModify.length === 0){
 					colors.forEach(color => colorsToModify.push(color))
 				}
+
+				//Apply changes
 				for (let color of colorsToModify){
-					let val = energyCost[color] ?? 0
+					if (!(color in energyCost)){
+						energyCost[color] = 0
+					}
+					let val = energyCost[color]
 					val += energyModification[color] ?? 0
 					if (modification){
 						val = applyModification(val, modification)
 					}
-					energyCost[color] = Math.ceil(val)
+					let change = Math.ceil(val) - energyCost[color]
+
+					//Keen Eyes reduces the effects of cost increases imposed by other trainers
+					if (change > 0 && hasKeenEyes && fromOtherPokemon){
+						change = Math.ceil(change * 0.5)
+					}
+
+					energyCost[color] += change
 				}
+			}
+		}
+		//No part of the energy cost may be below zero.
+		for (let color in energyCost){
+			if (energyCost[color] < 0){
+				energyCost[color] = 0
 			}
 		}
 
@@ -2099,6 +2141,9 @@ class Round{
 		}
 		if (pokemon.hasAbility("Iron Fist") && move.tags.includes("punching")){
 			power *= 1.2
+		}
+		if (pokemon.hasAbility("Sheer Force") && move.tags.includes("has-additional-effects")){
+			power *= 1.3
 		}
 
 		return power
@@ -2165,7 +2210,10 @@ class Round{
 			originalTrigger: trigger,
 			completed: false,
 			info: [],
-			effectIndex: 0
+			effectIndex: 0,
+			//Decides whether we should perform a check at the end of the move's
+			//finishing to see whether a player should win, or pokemon should switch out.
+			checkBetweenEffects: true
 		}
 		let promise = new Promise(resolve => moveUseObj.resolve = resolve)
 		moveUseObj.promise = promise
@@ -2180,6 +2228,7 @@ class Round{
 		let promise = moveUseObj.promise
 		// console.log(moveUseObj)
 
+		let changed = false
 		let statusEffects = pokemon.statusEffects
 		for (let statusEffect of statusEffects){
 			//If having used that move just spent an application of a status effect,
@@ -2189,6 +2238,7 @@ class Round{
 				let applies = this.doesThisApplyToMove(move, statusEffect.appliesTo, type)
 				if (applies){
 					promise = promise.then(() => {
+						changed = true
 						statusEffect.numberOfApplications--
 						if (statusEffect.numberOfApplications <= 0){
 							pokemon.removeStatus(statusEffect)
@@ -2197,6 +2247,12 @@ class Round{
 				}
 			}
 		}
+
+		promise = promise.then(() => {
+			if (changed){
+				this.updateEverything()
+			}
+		})
 
 		let hasParalyzed = pokemon.hasStatus("paralyzed")
 		if (hasParalyzed){
@@ -2367,34 +2423,57 @@ class Round{
 			alert("Something broke during this move's execution. Please send me a screenshot of the console. (F12)")
 		}
 		promise.then(val => new Promise(res => {
+			let lastObj = val
 			//If the value is intended to have replacements applied, those happen now.
 			if (effect.replacementsForResultObj){
 				let replacementsList = effect.replacementsForResultObj
 				replacementsList.forEach(replacementObj => {
 					let path = replacementObj.path
-					let values = replacementObj.replacements.map(givenIndex => {
+					if (replacementObj.replacements){
+						let values = replacementObj.replacements.map(givenIndex => {
+							let index
+							if (givenIndex < 0) {
+								index = effectIndex + givenIndex
+							} else {
+								index = givenIndex
+							}
+							return moveUseObj.info[index]
+						})
+						for (let key of path){
+							if (key in lastObj){
+								lastObj = lastObj[key]
+							}
+						}
+						if (!lastObj){
+							console.warn("WEE OO WEE OO failed to find data", path, values, lastObj, val)
+						} else {
+							let key = replacementObj.key
+							if (typeof lastObj[key] === "string"){
+								lastObj[key] = applyReplacements(lastObj[key], values)
+							} else {
+								console.warn("WEE OO WEE OO failed to find data", path, values, lastObj, val)
+							}
+						}
+					} else if (replacementObj.value){
+						let givenIndex = replacementObj.value
 						let index
 						if (givenIndex < 0) {
 							index = effectIndex + givenIndex
 						} else {
 							index = givenIndex
 						}
-						return moveUseObj.info[index]
-					})
-					let lastObj = val
-					for (let key of path){
-						if (key in lastObj){
-							lastObj = lastObj[key]
+						let value = moveUseObj.info[index]
+
+						for (let key of path){
+							if (key in lastObj){
+								lastObj = lastObj[key]
+							}
 						}
-					}
-					if (!lastObj){
-						console.warn("WEE OO WEE OO failed to find data", path, values, lastObj, val)
-					} else {
-						let key = replacementObj.key
-						if (typeof lastObj[key] === "string"){
-							lastObj[key] = applyReplacements(lastObj[key], values)
+						if (!lastObj){
+							console.warn("WEE OO WEE OO failed to find data", path, value, lastObj, val)
 						} else {
-							console.warn("WEE OO WEE OO failed to find data", path, values, lastObj, val)
+							let key = replacementObj.key
+							lastObj[key] = value
 						}
 					}
 				})
@@ -2488,7 +2567,15 @@ class Round{
 
 			return promise
 		})
-		.then(() => this.checkForWinner())
+		.then(() => {
+			if (moveUseObj && moveUseObj.checkBetweenEffects){
+				console.log("Checkin'")
+				return this.checkForWinner()
+			}
+			return Promise.resolve()
+		})
+		
+		
 
 		return promise
 	}
@@ -3850,7 +3937,6 @@ class Round{
 				}
 
 				if (shownCost !== realCost){
-					console.log("Now!")
 					let animatingTowards = numberTag.attr("data-counter-target")
 					animatingTowards = Number(animatingTowards)
 					if (animatingTowards !== realCost){

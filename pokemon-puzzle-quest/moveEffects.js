@@ -20,6 +20,35 @@ const pokemonMoveEffects = {
 			delay(duration).then(() => resolve())
 		}
 	},
+	"trigger": {
+		update: false,
+		hasTarget: true,
+		targetType: "pokemon",
+		targetDefault: "user",
+		execute: (resolve, effect, params, game, options) => {
+			let key = effect.key
+			let moveUseObj = options.moveUse
+			let move = moveUseObj.move
+			let trainer = moveUseObj.trainer
+			let pokemon = moveUseObj.pokemon
+			
+			//Pokemon with Sheer Force get no additional effects
+			if (key === "additionalEffects" && pokemon.hasAbility("Sheer Force")){
+				resolve()
+				return
+			}
+			if (!move[key]){
+				resolve()
+				return
+			}
+
+			moveUseObj.checkBetweenEffects = false
+			game.triggerMoveEffects(
+				trainer, pokemon, move, key
+			)
+			resolve()
+		}
+	},
 	"swap-tiles": {
 		execute: (resolve, effect, params, game, options) => {
 			let selection = params.selection
@@ -169,7 +198,7 @@ const pokemonMoveEffects = {
 		execute: (resolve, effect, params, game, options) => {
 			game.currentlyEndingTurn = true
 			game.endMove(game.turn)
-				.then(() => resolve())
+			.then(() => resolve())
 		}
 	},
 	"damage": {
@@ -598,13 +627,21 @@ const pokemonMoveEffects = {
 				return moveUseObj.info[effectIndex + index]
 			})
 			let expression = applyReplacements(condition, args)
+			let width = game.board.width
+			let height = game.board.height
 			let contents = game.board.tilesOnScreen()
 			let chosenTiles = []
 			for (let tile of contents) {
 				let x = tile.x
 				let y = tile.y
 				let scope = {
-					x: x, y: y
+					x: x, y: y,
+					cx: x + 0.5,
+					cy: y + 0.5,
+					w: width,
+					h: height,
+					cw: (width * 0.5) + 0.5,
+					ch: (height * 0.5) + 0.5
 				}
 				let result = math.evaluate(expression, scope)
 				if (result) {
