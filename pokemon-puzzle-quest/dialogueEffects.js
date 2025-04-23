@@ -191,6 +191,57 @@ const dialogueEffects = {
 			delay(waitDuration).then(() => resolve())
 		}
 	},
+	"animate-speaker-nameplate": {
+		hasTarget: false,
+		execute: (resolve, effect, progress, options) => {
+			let tag = $("#dialogue").find(".nameplate")
+			let css = effect.css
+			let duration = effect.duration ?? 0
+			let wait = effect.waitDuration ?? duration
+			if (duration || true) {
+				console.log(css, duration)
+				tag.animate(css, duration)
+			}
+	
+			if (wait) {
+				delay(wait).then(() => resolve())
+			} else {
+				resolve()
+			}
+		}
+	},
+	"transform-speaker-nameplate": {
+		hasTarget: false,
+		execute: (resolve, effect, progress, options) => {
+			let tag = $("#dialogue").find(".nameplate")
+			let duration = effect.duration ?? 0
+			let wait = effect.waitDuration ?? duration
+			let transform = effect.transform
+			let filter = effect.filter
+
+			if (transform) {
+				tag.css("transition", `${duration}ms transform`)
+			}
+			if (filter) {
+				tag.css("filter", `${duration}ms filter`)
+			}
+			
+			delay(10).then(() => {
+				if (transform) {
+					tag.css("transform", transform)
+				}
+				if (filter) {
+					tag.css("filter", filter)
+				}
+			})
+	
+			if (wait) {
+				delay(10 + wait).then(() => resolve())
+			} else {
+				resolve()
+			}
+		}
+	},
 	"clear-text": {
 		execute: (resolve, effect, progress, options) => {
 			options.textBox.children(".text").empty()

@@ -10,8 +10,8 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 2,
 		energy: {
-			green: 6,
-			red: 3
+			green: 3,
+			red: 2
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Absorb part 1.mp3"
@@ -1042,6 +1042,31 @@ const pokemonMoveData = {
 			}
 		],
 	},
+	//Converts tiles in a diagonal pattern
+	"Growth": {
+		name: "Growth",
+		type: "Normal",
+		category: "Status",
+		strategy: "buff-user",
+		pp: 20,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 1,
+		energy: {
+			green: 5,
+			blue: 2
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Growth.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "load-value", value: 3 },
+			{ type: "select-random-tiles", count: -1, conditions: { types: ["green"] } },
+			{ type: "select-tiles-diagonal-to", selection: -1 },
+			{ type: "change-tile-type", selection: "group", which: -1, targetType: "green" },
+		],
+	},
 	"Gust": {
 		name: "Gust",
 		type: "Flying",
@@ -1405,6 +1430,31 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "apply-status-effect", statusEffect: "fear-frozen", target: "opponent" }
+		],
+	},
+	"Mega Drain": {
+		name: "Mega Drain",
+		type: "Grass",
+		category: "Special",
+		strategy: "basic-damage",
+		pp: 15,
+		power: 40,
+		accuracy: 100,
+		rechargeTurns: 2,
+		energy: {
+			green: 6,
+			red: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Mega Drain part 1.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "load-value", value: 0.5 },
+			{ type: "multiply-numbers" },
+			{ type: "load-value", value: 1 },
+			{ type: "heal", target: "user", amount: -2, min: -1 },
 		],
 	},
 	"Minimize": {

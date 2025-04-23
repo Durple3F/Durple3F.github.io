@@ -1698,6 +1698,57 @@ const pokemonData = {
 			{ name: "Stun Spore", unlock: { type: "level", amount: 6 } },
 		]
 	},
+	"Petilil": {
+		name: "Petilil",
+		number: "548",
+		weight: {
+			pounds: 14.6,
+			kilograms: 6.6
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0548Petilil.png",
+			"largeShiny": "src/img/shiny-pokemon/548-Petilil.png",
+			"home": "src/img/tiny-pokemon/Petilil.png"
+		},
+		sounds: {
+			cry: "src/audio/cries/petilil.mp3"
+		},
+		types: ["Grass"],
+		tags: ["Starter"],
+		abilities: ["Chlorophyll", "Own Tempo"],
+		hiddenAbilities: ["Leaf Guard"],
+		stats: {
+			hp: 45,
+			attack: 35,
+			defense: 50,
+			specialAttack: 70,
+			specialDefense: 50,
+			speed: 30
+		},
+		expYield: 56,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 1,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			yellow: 1,
+			green: 3,
+			blue: 1
+		},
+		learnset: [
+			{ name: "Absorb", unlock: { type: "level", amount: 1 } },
+			{ name: "Growth", unlock: { type: "level", amount: 1 } },
+			{ name: "Helping Hand", unlock: { type: "level", amount: 3 } },
+			{ name: "Stun Spore", unlock: { type: "level", amount: 6 } },
+			{ name: "Mega Drain", unlock: { type: "level", amount: 9 } },
+			{ name: "Charm", unlock: { type: "level", amount: 12 } },
+		]
+	},
 	"Rowlet": {
 		name: "Rowlet",
 		number: "722",

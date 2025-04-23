@@ -860,7 +860,7 @@ const levelData = [
 		]
 	},
 
-	//3-1: Mankey, Delibird, Cutiefly, Spearow, Yungoos, Rattata-Alola
+	//3-1: Mankey, Delibird, Crabrawler + others | Tatiana
 	{
 		id: "Route 3-1",
 		category: "Route 3",
@@ -874,17 +874,28 @@ const levelData = [
 				canPickDuplicates: true,
 				possiblePokemon: [
 					{ id: "Crabrawler", levelMin: 9, levelMax: 12, weight: 4 },
-					// { id: "Mankey", levelMin: 9, levelMax: 12, weight: 4 },
-					// { id: "Delibird", levelMin: 9, levelMax: 12, weight: 4 },
-					// { id: "Spearow", levelMin: 9, levelMax: 12, weight: 2 },
-					// { id: "Cutiefly", levelMin: 9, levelMax: 12, weight: 2 },
-					// { id: "Yungoos", levelMin: 9, levelMax: 12, weight: 0.5 },
-					// { id: "Rattata-Alola", levelMin: 9, levelMax: 12, weight: 0.5 },
+					{ id: "Mankey", levelMin: 9, levelMax: 12, weight: 4 },
+					{ id: "Delibird", levelMin: 9, levelMax: 12, weight: 4 },
+					{ id: "Spearow", levelMin: 9, levelMax: 12, weight: 2 },
+					{ id: "Cutiefly", levelMin: 9, levelMax: 12, weight: 2 },
+					{ id: "Yungoos", levelMin: 9, levelMax: 12, weight: 1 },
+					{ id: "Rattata-Alola", levelMin: 9, levelMax: 12, weight: 1 },
+				]
+			},
+			{
+				name: "Tatiana",
+				class: "Rising-Star-F",
+				pokemon: [
+					{ id: "Petilil", level: 13, pokeball: "greatball", name: "Doomleaf" }
 				]
 			},
 		],
 		effects: [
 			{ type: "fight", trainer: 0 },
+			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "dialogue", source: "route-3-1-dialogue" },
+			{ type: "change-music", music: "SM Trainer Battle" },
+			{ type: "fight", trainer: 1 },
 		]
 	},
 ]

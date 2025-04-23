@@ -1,7 +1,13 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-4/22 (22.5k lines):
-	- Added Shed Skin, Compound Eyes, Tinted Lens
+4/23 (22.8k lines):
+	- Added Own Tempo, Leaf Guard
+	- Added a trainer battle to 3-1
+
+4/22 (22.6k lines):
+	- Added Petilil
+	- Added Growth, Mega Drain
+	- Added Shed Skin, Compound Eyes, Tinted Lens, Chlorophyll
 	- Added a rough type effectiveness indicator to moves.
 
 4/21 (22.4k lines):

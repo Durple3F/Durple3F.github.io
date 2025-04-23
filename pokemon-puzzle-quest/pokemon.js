@@ -289,6 +289,10 @@ class Pokemon{
 		(this.hasAbility("Vital Spirit") && this.hasAbility("Insomnia"))){
 			prevented = true
 		}
+		//Pokemon with Vital Spirit can't become asleep
+		else if (status.name === "confused" && this.hasAbility("Own Tempo")){
+			prevented = true
+		}
 		//Pokemon with Hyper Cutter can't have their Attack lowered by stages
 		else if (this.hasAbility("Hyper Cutter") &&
 			status.type === "stat" &&
@@ -304,6 +308,13 @@ class Pokemon{
 			Math.random() < 0.2
 		){
 			prevented = true
+		}
+		//Pokemon with Leaf Guard prevent receiving statuses from other trainers based on green energy
+		else if (this.hasAbility("Leaf Guard") && status.sourceTrainer !== this.trainer){
+			let fullness = this.energy.green / this.maxEnergy.green * 0.5
+			if (Math.random() < fullness){
+				prevented = true
+			}
 		}
 
 		//There are some status effects that don't stack

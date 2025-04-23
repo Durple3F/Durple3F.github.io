@@ -24,6 +24,7 @@ Incomplete move lists:
 	Makuhita (lv 4)
 	Happiny (lv 4)
 	Cottonee (lv 6)
+	Petilil (lv 0)
 	Rowlet (lv 12)
 	Litten (lv 15)
 	Popplio (lv 12)
@@ -60,6 +61,7 @@ Missing Evolutions:
 	Makuhita
 	Happiny
 	Cottonee
+	Petilil
 	Rowlet
 	Litten
 	Popplio

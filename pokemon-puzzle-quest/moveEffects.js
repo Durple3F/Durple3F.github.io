@@ -538,15 +538,25 @@ const pokemonMoveEffects = {
 			let conditions = effect?.conditions ?? {}
 			let chosenTiles = []
 			let chooseable = game.board.tilesOnScreen()
-			.filter(t => {
-				if (conditions.notTypes) {
-					let notTypes = conditions.notTypes
+			if (conditions.types) {
+				let types = conditions.types
+				chooseable = chooseable.filter(t => {
+					if (!types.includes(t.type)) {
+						return false
+					}
+					return true
+				})
+			}
+			if (conditions.notTypes) {
+				let notTypes = conditions.notTypes
+				chooseable = chooseable.filter(t => {
 					if (notTypes.includes(t.type)) {
 						return false
 					}
-				}
-				return true
-			})
+					return true
+				})
+			}
+			
 			for (let i = 0; i < count; i++) {
 				let canChoose = chooseable
 					.filter(t => !chosenTiles.includes(t))
@@ -555,6 +565,26 @@ const pokemonMoveEffects = {
 			}
 			moveUseObj.info[effectIndex] = chosenTiles
 			resolve()
+		}
+	},
+	"select-tiles-diagonal-to": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let selection = params.selection ?? []
+			let chosenTiles = []
+			let chooseable = game.board.tilesOnScreen()
+
+			chosenTiles = chooseable.filter(tile => {
+				let tx1 = tile.x
+				let ty1 = tile.y
+				return selection.some(tile2 => {
+					let dx = Math.abs(tx1 - tile2.x)
+					let dy = Math.abs(ty1 - tile2.y)
+					return dx === 1 && dy === 1
+				})
+			})
+			
+			resolve(chosenTiles)
 		}
 	},
 	"select-tiles-with-expression": {

@@ -276,7 +276,9 @@ function changeDialogueStyle(speaker) {
 	textBox.children(".text").css("font-family", style.textBoxFont)
 	textBox.children(".text-continue").css("background-image", style.textBoxTextContinueBackground)
 	let namePlateTag = textBox.children(".nameplate")
-	namePlateTag.css("opacity", style.namePlateOpacity)
+	if ("namePlateOpacity" in style){
+		namePlateTag.css("opacity", style.namePlateOpacity)
+	}
 	namePlateTag.children(".text").css("background-image", style.namePlateTextBackground)
 	namePlateTag.children(".text-background").css("background-color", style.namePlateBackgroundColor)
 	namePlateTag.children(".text-background-2").css("background-image", style.namePlateBackground2)
@@ -618,23 +620,6 @@ function carryOutDialogueEvent(effect, dialogueProgress) {
 				tag.css("transition", `${duration}ms transform`)
 				delay(10).then(() => tag.css("transform", transform))
 				delay(10 + wait).then(() => resolvePromise())
-			} break
-			case "animate-speaker-nameplate": {
-				let tag = $("#dialogue").find(".nameplate")
-				let css = effect.css
-				let duration = effect.duration ?? 0
-				let wait = effect.waitDuration ?? duration
-				if (duration) {
-					$(tag).animate(css, duration)
-				} else {
-					$(tag).css(css)
-				}
-
-				if (wait) {
-					delay(wait).then(() => resolvePromise())
-				} else {
-					resolvePromise()
-				}
 			} break
 			case "animate-speaker": {
 				let speaker = options.speaker

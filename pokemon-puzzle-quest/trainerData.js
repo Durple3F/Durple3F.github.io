@@ -9,7 +9,6 @@ const defaultDialogueStyle = {
 	textBoxTextBackground: "linear-gradient(4deg, #222, #000)",
 	textBoxTextContinueBackground: "radial-gradient(black, black)",
 	textBoxFont: "unset",
-	namePlateOpacity: 1,
 	namePlateTextBackground: "linear-gradient(-182deg, white 20%, skyblue 80%)",
 	namePlateBackgroundColor: "var(--ui-primary-bg)",
 	namePlateBackground2: "repeating-linear-gradient( -0.5deg, transparent, transparent 0.1em, rgba(125, 143, 247, 0.266) 0.15em, transparent 0.25em )",
@@ -129,6 +128,13 @@ const NPCTrainerData = {
 		type: "trainer",
 		imageSources: {
 			trainer: "src/img/trainers/risingstar.png"
+		}
+	},
+	"Rising-Star-F": {
+		name: "Rising Star",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/risingstarf.png"
 		}
 	},
 	"Teacher-Gen7": {

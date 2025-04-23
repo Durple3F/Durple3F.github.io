@@ -509,6 +509,13 @@ class Round{
 			energy = multiplyEnergies(energy, 0.5, "up")
 		}
 
+		//Pokemon with Chlorophyll get bonus green energy
+		if (energy.green <= 0 && activePokemon.hasAbility("Chlorophyll")){
+			let greatest = Object.values(energy)
+			.reduce((acc, val) => acc > val ? acc : val, -Infinity)
+			energy.green += Math.floor(greatest / 3)
+		}
+
 		this.giveEnergy(energy, activeTrainer, activePokemon)
 
 		//Deal with status effects that do something when those tiles are matched

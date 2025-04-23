@@ -10,6 +10,10 @@ const abilityData = {
 	"Blaze": {
 		id: "Blaze"
 	},
+	//Adds green energy if you match things that aren't green
+	"Chlorophyll": {
+		id: "Chlorophyll"
+	},
 	//At the end of each turn, 20% chance to cure one non-volatile status
 	"Compound Eyes": {
 		id: "Compound Eyes"
@@ -22,6 +26,10 @@ const abilityData = {
 	"Hustle": {
 		id: "Hustle"
 	},
+	//Prevents receiving statuses that lower Attack
+	"Hyper Cutter": {
+		id: "Hyper Cutter"
+	},
 	//Literally just Vital Spirit again
 	"Insomnia": {
 		id: "Insomnia"
@@ -30,6 +38,10 @@ const abilityData = {
 	"Intimidate": {
 		id: "Intimidate"
 	},
+	//Gives a bonus to specifically moves tagged with "punching"
+	"Iron Fist": {
+		id: "Iron Fist"
+	},
 	//TODO
 	"Liquid Voice": {
 		id: "Liquid Voice"
@@ -37,6 +49,14 @@ const abilityData = {
 	//TODO
 	"Long Reach": {
 		id: "Long Reach"
+	},
+	//Blocks status effects from the opponent based on green energy
+	"Leaf Guard": {
+		id: "Leaf Guard"
+	},
+	//Can't be confused
+	"Own Tempo": {
+		id: "Own Tempo"
 	},
 	//Increase grass power at low hp
 	"Overgrow": {
