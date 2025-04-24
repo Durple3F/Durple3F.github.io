@@ -71,11 +71,14 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
 			{ type: "get-initiative", target: "opponent" },
 			{ type: "load-value", value: 0.5 },
 			{ type: "multiply-numbers" },
 			{ type: "set-initiative", target: "opponent", initiative: -1 },
-		],
+		]
 	},
 	//Damages a non-active pokemon
 	"Aqua Jet": {
@@ -97,6 +100,9 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
 			{ type: "get-viable-pokemon", target: "opponent" },
 			{ type: "get-active-pokemon", target: "opponent" },
 			{ type: "remove-element-from-list", list: -2, element: -1 },
@@ -108,7 +114,7 @@ const pokemonMoveData = {
 			{ type: "get-element-from-list", list: -2, index: -1 },
 			{ type: "load-value", value: -20 },
 			{ type: "damage", toPokemon: -2, additivePower: -1 }
-		],
+		]
 	},
 	//Temporarily prevents switching out
 	"Baby-Doll Eyes": {
@@ -229,6 +235,9 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
 			{ type: "load-value", value: 1 },
 			{ type: "load-value", value: 4 },
 			{ type: "load-value", value: 2 },
@@ -238,7 +247,7 @@ const pokemonMoveData = {
 			{ type: "load-value", value: 2 },
 			{ type: "expand-tile-selection", selection: -3, width: -2, height: -1 },
 			{ type: "remove-tiles", selection: -1 }
-		],
+		]
 	},
 	//Makes tiles give extra blue energy
 	"Bubble Beam": {
@@ -260,6 +269,9 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
 			{ type: "load-value", value: 8 },
 			{ 
 				type: "select-random-tiles", count: -1,
@@ -269,7 +281,7 @@ const pokemonMoveData = {
 				type: "apply-status-to-tiles", selection: "group", which: -1,
 				status: { name: "Bubbly", type: "buff", duration: null }
 			}
-		],
+		]
 	},
 	//Steals energy
 	"Bug Bite": {
@@ -291,6 +303,9 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
 			{ type: "load-value", value: 3 },
 			{ type: "select-energy-colors", search: "most-full", target: "opponent", count: -1 },
 			{ type: "load-value", value: -2 },
@@ -298,7 +313,7 @@ const pokemonMoveData = {
 			{ type: "load-value", value: -1 },
 			{ type: "multiply-energy", amounts: -2, scale: -1 },
 			{ type: "gain-energy", amounts: -1, target: "user" }
-		],
+		]
 	},
 	//Increases the power of the user's next electric move
 	"Charge": {
@@ -372,7 +387,7 @@ const pokemonMoveData = {
 			}
 		],
 	},
-	//Shuffles part of the board
+	//Confuses opponent and shuffles part of the board
 	"Confuse Ray": {
 		name: "Confuse Ray",
 		type: "Ghost",
@@ -421,12 +436,15 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
 			{ type: "random-number", min: 1, max: 10 },
 			{ type: "load-value", value: 6 },
 			{ type: "jump-if-less-than", jumpTo: Infinity },
 			{ type: "play-sound", name: "activate" },
 			{ type: "apply-status-effect", statusEffect: "confused", target: "opponent" }
-		],
+		]
 	},
 	//Copies opponent's last move
 	"Copycat": {
@@ -478,6 +496,9 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
 			{ type: "load-value", value: 2 },
 			{ type: "select-energy-colors", search: "most-full", target: "opponent", count: -1 },
 			{ type: "load-value", value: -6 },
@@ -485,7 +506,7 @@ const pokemonMoveData = {
 			{ type: "load-value", value: -1 },
 			{ type: "multiply-energy", amounts: -2, scale: -1 },
 			{ type: "gain-energy", amounts: -1, target: "user" }
-		],
+		]
 	},
 	//Does different stuff depending on its user's types
 	"Curse": {
@@ -648,12 +669,15 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
 			{ type: "random-number", min: 1, max: 10 },
 			{ type: "load-value", value: 6 },
 			{ type: "jump-if-less-than", jumpTo: "end" },
 			{ type: "apply-status-effect", statusEffect: "confused", target: "opponent" },
 			{ type: "end-turn", label: "end" }
-		],
+		]
 	},
 	//Makes a match for the user
 	"Double Team": {
@@ -744,6 +768,9 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
 			{ type: "random-number", min: 1, max: 10 },
 			{ type: "load-value", value: 6 },
 			{ type: "jump-if-less-than", jumpTo: Infinity },
@@ -753,7 +780,7 @@ const pokemonMoveData = {
 				type: "apply-status-to-tiles", selection: "group", which: -1,
 				status: { name: "Burn", type: "debuff", duration: 5 }
 			}
-		],
+		]
 	},
 	//Shifts a row of tiles
 	"Fairy Wind": {
@@ -775,6 +802,9 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
 			{ type: "load-value", value: 1 },
 			{ type: "choose-tiles", count: -1, target: "user" },
 			{ type: "load-value", value: 0 },
@@ -784,7 +814,7 @@ const pokemonMoveData = {
 			{ type: "load-value", value: 3 },
 			{ type: "load-value", value: 0 },
 			{ type: "shift-tiles", selection: -3, xOffset: -2, yOffset: -1 },
-		],
+		]
 	},
 	//Permanently changes its power mid-battle
 	"Fake Out": {
@@ -1085,12 +1115,15 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
 			{ type: "load-value", value: 1 },
 			{ type: "get-side-number", left: 1, right: -1 },
 			{ type: "load-value", value: 0 },
 			{ type: "select-all-tiles", y: -1 },
 			{ type: "shift-tiles", selection: -1, xOffset: -3, yOffset: -2 },
-		],
+		]
 	},
 	"Harden": {
 		name: "Harden",
@@ -1251,6 +1284,9 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
 			{ type: "get-initiative", target: "opponent" },
 			{ type: "load-value", value: -30 },
 			{ type: "add-numbers" },
@@ -1260,7 +1296,7 @@ const pokemonMoveData = {
 			{ type: "jump", jumpTo: Infinity },
 			{ type: "load-value", value: 0, label: "zero" },
 			{ type: "set-initiative", target: "opponent", initiative: -1 },
-		],
+		]
 	},
 	"Hypnosis": {
 		name: "Hypnosis",
@@ -1306,6 +1342,9 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
 			{ type: "load-value", value: 1 },
 			{
 				type: "select-random-tiles", count: -1,
@@ -1316,7 +1355,7 @@ const pokemonMoveData = {
 				type: "apply-status-to-tiles", selection: "group", which: -1,
 				status: { name: "Infested", type: "debuff", duration: null }
 			},
-		],
+		]
 	},
 	"Leafage": {
 		name: "Leafage",
@@ -1336,10 +1375,13 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
 			{ type: "load-value", value: 3 },
 			{ type: "select-random-tiles", count: -1 },
 			{ type: "change-tile-type", selection: "group", which: -1, targetType: "green" },
-		],
+		]
 	},
 	"Leer": {
 		name: "Leer",
@@ -1387,12 +1429,15 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
 			{ type: "load-value", value: 0.5 },
 			{ type: "change-tile-weight", tileType: "green", factor: -1 },
 			{ type: "load-value", value: -1 },
 			{ type: "multiply-numbers" },
 			{ type: "change-tile-weight", tileType: "black", add: -1 },
-		],
+		]
 	},
 	"Low Kick": {
 		name: "Low Kick",
@@ -1564,6 +1609,9 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
 			{ type: "load-value", value: 2 },
 			{ type: "select-random-tiles", count: -1 },
 			{
@@ -1759,7 +1807,7 @@ const pokemonMoveData = {
 		name: "Poison Gas",
 		type: "Poison",
 		category: "Status",
-		strategy: "basic-damage",
+		strategy: "debuff-opponent",
 		pp: 40,
 		power: null,
 		accuracy: 90,
@@ -1822,6 +1870,9 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
 			{ type: "random-number", min: 1, max: 10 },
 			{ type: "load-value", value: 4 },
 			{ type: "jump-if-less-than", jumpTo: Infinity },
@@ -2452,6 +2503,9 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
 			{ type: "random-number", min: 1, max: 10 },
 			{ type: "load-value", value: 6 },
 			{ type: "jump-if-less-than", jumpTo: Infinity },
@@ -2461,7 +2515,7 @@ const pokemonMoveData = {
 				type: "apply-status-to-tiles", selection: "group", which: -1,
 				status: { name: "Static", type: "buff", duration: null }
 			}
-		],
+		]
 	},
 	"Thunder Wave": {
 		name: "Thunder Wave",
@@ -2516,6 +2570,9 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
 			{ type: "is-active-pokemon-viable", target: "opponent" },
 			{ type: "jump-if-truthy", jumpTo: "grip" },
 			{ type: "jump", jumpTo: Infinity },
@@ -2525,7 +2582,7 @@ const pokemonMoveData = {
 				type: "apply-status-to-tiles", selection: "group", which: -1,
 				status: { name: "Locked", type: "debuff", duration: 10 }
 			}
-		],
+		]
 	},
 	"Water Gun": {
 		name: "Water Gun",
@@ -2561,8 +2618,8 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 0,
 		energy: {
-			// blue: 12,
-			// yellow: 4
+			blue: 12,
+			yellow: 4
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Wing Attack.mp3"
