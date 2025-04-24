@@ -171,6 +171,55 @@ const dialogueEffects = {
 			resolve()
 		}
 	},
+	"move-back-and-forth": {
+		hasTarget: true,
+		execute: (resolve, effect, progress, options) => {
+			let tag = options.target
+			let states = effect.states
+			let name = effect.name
+			let state = 0
+			let moveScale = 1.4
+			let duration = 1000
+			let initialLeft = tag.position().left
+			const animateNext = () => {
+				if (state === 0){
+					$({val: 0}).animate({val: 1}, {
+						duration: duration,
+						step: function(){
+							let p = this.val
+							let x = initialLeft + p * moveScale * tag.width()
+							let transform = "scaleX(-1)"
+							tag.css("transform", transform)
+							tag.css("left", x)
+							tag.css("z-index", "auto")
+						},
+						complete: function(){
+							state = 1
+							animateNext()
+						}
+					})
+				} else if (state === 1){
+					$({val: 0}).animate({val: 1}, {
+						duration: duration,
+						step: function(){
+							let p = 1 - this.val
+							let x = initialLeft + p * moveScale * tag.width()
+							let transform = ""
+							tag.css("transform", transform)
+							tag.css("left", x)
+							tag.css("z-index", -1)
+						},
+						complete: function(){
+							state = 0
+							animateNext()
+						}
+					})
+				}
+			}
+			animateNext()
+			resolve()
+		}
+	},
 	"style-background": {
 		hasTarget: false,
 		execute: (resolve, effect, progress, options) => {

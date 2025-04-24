@@ -25,6 +25,42 @@ const pokemonMoveData = {
 			{ type: "heal", target: "user", amount: -2, min: -1 },
 		],
 	},
+	//Removes a V-shaped selection of tiles
+	"Air Cutter": {
+		name: "Air Cutter",
+		type: "Flying",
+		category: "Special",
+		strategy: "basic-damage",
+		pp: 25,
+		power: 60,
+		accuracy: 95,
+		rechargeTurns: 1,
+		energy: {
+			// blue: 12,
+			// yellow: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Air Cutter.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "load-value", value: 1 },
+			{ type: "choose-tiles", count: -1, target: "user", text: "choose" },
+			{ type: "select-tiles-around-given-tile", selection: -1,
+				diffs: [
+					[-2, -2],
+					[-1, -1],
+					[2, -2],
+					[1, -1],
+				]
+			},
+			{ type: "remove-tiles", selection: -1 }
+		]
+	},
 	//Deals more damage if opponent took damage this turn
 	"Assurance": {
 		name: "Assurance",
@@ -2757,7 +2793,7 @@ const pokemonMoveData = {
 		pp: 35,
 		power: 60,
 		accuracy: 100,
-		rechargeTurns: 0,
+		rechargeTurns: 1,
 		energy: {
 			blue: 12,
 			yellow: 4

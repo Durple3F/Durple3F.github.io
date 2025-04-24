@@ -806,6 +806,44 @@
 				{ "type": "text", "speaker": "Tatiana", "text": "You've wandered into the as-of-yet-unwritten chapter seven, page one: $@start-italics|@$The Duel of Destiny$@end-italics|@$." },
 				{ "type": "text", "speaker": "Tatiana", "text": "Let's make it a good one! Feel free to throw in some plot twists— let the battle begin!" }
 			]
+		},
+		"route-3-2-dialogue": {
+			"events": [],
+			"effects": [
+				{ "type": "get-speaker", "name": "Narrator", "class": "Narrator" },
+				{ "type": "text", "speaker": "Narrator", "text": "You round a corner along the path, and see a trainer walking two Pokémon on leashes." },
+				{ "type": "text", "speaker": "Narrator", "text": "One leash is taut, dragging behind him, and the other is flapping constantly, as the Pokémon races around the trainer." },
+				{ "type": "get-speaker", "name": "Makana", "class": "Ace-Trainer-Gen7" },
+				{ "type": "display-image", "src": "src/img/pokemon-sprites/rockruff masters.png", "name": "Rockruff", "position": {
+					"type": "relative",
+					"relative": "Makana",
+					"widthFactor": 0.5,
+					"heightFactor": 0.5
+				}},
+				{ "type": "style-image", "image": "Rockruff", "css": {
+					"left": "-=3%",
+					"top": "+=40%"
+				}},
+				{ "type": "display-image", "src": "src/img/pokemon-sprites/slowpoke masters.png", "name": "Slowpoke", "position": {
+					"type": "relative",
+					"relative": "Makana",
+					"widthFactor": 0.5,
+					"heightFactor": 0.5
+				}},
+				{ "type": "style-image", "image": "Slowpoke", "css": {
+					"left": "+=50%",
+					"top": "+=40%"
+				}},
+				{ "type": "animate-image", "image": "Slowpoke", "duration": 120000, "waitDuration": 0,
+				"css": {
+					"left": "-=30%"
+				}},
+				{ "type": "move-back-and-forth", "name": "Rockruff-Run", "targetType": "image", "image": "Rockruff"},
+				{ "type": "text", "speaker": "Makana", "text": "Rockruff, $@start-italics|@$heel!$@end-italics|@$ Slowpoke, $@start-italics|@$hurry!$@end-italics|@$" },
+				{ "type": "text", "speaker": "Makana", "text": "I'm just trying to walk my Pokémon, but they're making it $@start-italics|@$so$@end-italics|@$ hard." },
+				{ "type": "text", "speaker": "Makana", "text": "It's $@start-italics|@$supposed$@end-italics|@$ to be good for bonding, but it's more like being dragged around by one and $@start-italics|@$trying$@end-italics|@$ to drag the other." },
+				{ "type": "text", "speaker": "Makana", "text": "Care for a battle? Rockruff really needs to vent some energy, and my arms are starting to hurt." }
+			]
 		}
 	},
 	"pokemon": {
@@ -941,6 +979,9 @@
 		"Cutiefly": {
 			"name": "Cutiefly"
 		},
+		"Oricorio": {
+			"name": "Oricorio"
+		},
 		"Rockruff": {
 			"name": "Rockruff"
 		},
@@ -956,6 +997,12 @@
 			"name": "Absorb",
 			"description": "Deals damage. Then, heals the user for 50% of the damage dealt.",
 			"shortDescription": "Steals a little HP"
+		},
+		"Air Cutter": {
+			"name": "Air Cutter",
+			"description": "Deals damage. The user chooses a tile. Then, that tile and a V-shaped selection around it are removed.",
+			"shortDescription": "Removes a V of tiles.",
+			"choose": "Choose a tile to cut a V-shape around."
 		},
 		"Assurance": {
 			"name": "Assurance",
@@ -1289,6 +1336,11 @@
 			"name": "Rock Smash",
 			"description": "Deals damage. The user chooses a tile. All tiles of the same type connected in a contiguous group are removed.",
 			"shortDescription": "Removes a chain of same-color tiles"
+		},
+		"Rock Throw": {
+			"name": "Rock Throw",
+			"description": "Deals damage. The user chooses a tile. All tiles in that column are removed.",
+			"shortDescription": "Removes a column of tiles"
 		},
 		"Sand Attack": {
 			"name": "Sand Attack",
@@ -1733,6 +1785,10 @@
 		"Route 3-2": {
 			"name": "Route 3-2",
 			"description": "You feel the shadows of flying Pokémon pass over your head as you continue."
+		},
+		"Route 3-3": {
+			"name": "Route 3-3",
+			"description": ""
 		}
 	},
 	"route-categories": {

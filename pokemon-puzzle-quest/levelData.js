@@ -898,7 +898,7 @@ const levelData = [
 			{ type: "fight", trainer: 1 },
 		]
 	},
-	//3-2: 
+	//3-2: Rufflet, Vullaby, Bagon + others | Makana
 	{
 		id: "Route 3-2",
 		category: "Route 3",
@@ -930,11 +930,49 @@ const levelData = [
 			},
 		],
 		effects: [
-			// { type: "fight", trainer: 0 },
-			// { type: "jump-if-lost", jumpTo: Infinity },
-			// { type: "dialogue", source: "route-3-1-dialogue" },
-			// { type: "change-music", music: "SM Trainer Battle" },
+			{ type: "fight", trainer: 0 },
+			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "dialogue", source: "route-3-2-dialogue" },
+			{ type: "change-music", music: "SM Trainer Battle" },
 			{ type: "fight", trainer: 1 },
+		]
+	},
+	//3-3:
+	{
+		id: "Route 3-3",
+		category: "Route 3",
+		name: "Route 3-3",
+		music: "SM Wild Pokemon Battle",
+		icon: "3",
+		trainers: [
+			{
+				isWild: true,
+				targetPokemon: 4,
+				canPickDuplicates: true,
+				possiblePokemon: [
+					{ id: "Oricorio", form: "Pom-Pom", levelMin: 10, levelMax: 13, weight: 4 },
+					// { id: "Vullaby", levelMin: 10, levelMax: 13, weight: 4 },
+					// { id: "Bagon", levelMin: 10, levelMax: 13, weight: 2 },
+					// { id: "Spearow", levelMin: 10, levelMax: 13, weight: 3 },
+					// { id: "Cutiefly", levelMin: 10, levelMax: 13, weight: 2 },
+					// { id: "Yungoos", levelMin: 10, levelMax: 13, weight: 1 },
+				]
+			},
+			{
+				name: "Makana",
+				class: "Ace-Trainer-Gen7",
+				pokemon: [
+					{ id: "Rockruff", level: 13 },
+					{ id: "Slowpoke", level: 14 },
+				]
+			},
+		],
+		effects: [
+			{ type: "fight", trainer: 0 },
+			// { type: "jump-if-lost", jumpTo: Infinity },
+			// { type: "dialogue", source: "route-3-2-dialogue" },
+			// { type: "change-music", music: "SM Trainer Battle" },
+			// { type: "fight", trainer: 1 },
 		]
 	},
 ]

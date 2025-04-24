@@ -649,6 +649,37 @@ const pokemonMoveEffects = {
 			resolve(chosenTiles)
 		}
 	},
+	"select-tiles-around-given-tile": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let selection = params.selection ?? []
+			let chosenTiles = []
+			let chooseable = game.board.tilesOnScreen()
+			let diffs = effect.diffs
+			let includeOriginal = effect.includeOriginal ?? true
+
+			console.log(selection)
+			
+			for (let tile of selection){
+				let x = tile.x
+				let y = tile.y
+				for ( let diff of diffs){
+					let seekX = x + diff[0]
+					let seekY = y + diff[1]
+					let toAdd = chooseable.filter(t => {
+						return t.x === seekX && t.y === seekY
+					})
+					toAdd.forEach(t => chosenTiles.push(t))
+				}
+			}
+			if (includeOriginal){
+				selection.forEach(t => chosenTiles.push(t))
+			}
+			chosenTiles = noDuplicates(chosenTiles)
+			
+			resolve(chosenTiles)
+		}
+	},
 	"select-tiles-with-expression": {
 		update: false,
 		execute: (resolve, effect, params, game, options) => {

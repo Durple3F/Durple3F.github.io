@@ -37,6 +37,7 @@ Incomplete move lists:
 	Grubbin (lv 15)
 	Charjabug (lv 15)
 	Crabrawler (lv 13)
+	Oricorio (lv 13)
 	Cutiefly (lv 6)
 	Rockruff (lv 8)
 	Comfey (lv 0)
@@ -112,6 +113,7 @@ Missing Abilities:
 	Gumshoos
 	Grubbin
 	Charjabug
+	Oricorio
 	Cutiefly
 	Comfey
 	Komala

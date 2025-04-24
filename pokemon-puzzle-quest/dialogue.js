@@ -183,6 +183,14 @@ function advanceCurrentDialogue() {
 				let width = relativeTag.width() || height
 				let totalWidth = dialogueContainer.width()
 				let totalHeight = dialogueContainer.height()
+
+				if ("widthFactor" in position){
+					width *= position.widthFactor
+				}
+				if ("heightFactor" in position){
+					height *= position.heightFactor
+				}
+
 				image.css({
 					"position": "absolute",
 					"top": offset.top + (totalHeight * (position?.top ?? 0)),

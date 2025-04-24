@@ -1,11 +1,13 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-4/24 (23.6k lines):
+4/24 (23.9k lines):
 	- Added Bagon, Rockruff
-	- Added Pluck, Dragon Breath, Rock Throw
+	- Added Pluck, Dragon Breath, Rock Throw, Air Cutter
 	- Added Big Pecks, Overcoat, Weak Armor, Rock Head, Steadfast
 	- Recoded how recoil damage is done to be consistent
 	- Oops, Haze was missing a name/description!
+	- Added a trainer battle to 3-2
+	- Added Oricorio, which I think deserves its own entry here for being the first pokemon with forms.
 
 4/23 (23.0k lines):
 	- Added Rufflet, Vullaby

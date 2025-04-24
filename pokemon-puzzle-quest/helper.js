@@ -239,16 +239,35 @@ function getMatchTypes(match){
 	return result
 }
 
-function getPokemonImage(pData, key, shiny){
+function getPokemonImage(pData, key, shiny, pokemon){
+	let imageSources = pData.imageSources
+	if (pData.hasForms && pokemon?.form){
+		let formData = pData.forms[pokemon.form]
+		if (formData?.imageSources){
+			imageSources = formData.imageSources
+		}
+	}
 	if (key === "large"){
 		if (shiny){
-			return pData.imageSources.largeShiny ?? this.data.imageSources.large
+			return imageSources["largeShiny"] ?? imageSources["large"]
 		} else {
-			return pData.imageSources.large
+			return imageSources["large"]
 		}
+	} else if (key === "home"){
+		return imageSources["home"]
 	} else {
 		console.warn("YOU NEVER HANDLED", key)
 	}
+}
+function getPokemonSounds(pData, pokemon){
+	let sounds = pData.sounds
+	if (pData.hasForms && pokemon?.form){
+		let formData = pData.forms[pokemon.form]
+		if (formData?.sounds){
+			sounds = formData.sounds
+		}
+	}
+	return sounds
 }
 
 function fixLearnsets() {

@@ -14,6 +14,7 @@ class Pokemon{
 		let defaultName = getLocaleString("name", lang, ["pokemon", this.pokemonId])
 		this.name = name ?? defaultName ?? this.data.name
 		this.pokemonName = this.data.name
+		this.form = options?.form ?? this.data.defaultForm ?? null
 		this.types = []
 		this.data.types.forEach(type => this.types.push(type))
 		this.level = options?.level ?? 1
@@ -647,6 +648,20 @@ class Pokemon{
 		this.gameRoundData = {}
 
 		this.resetEnergyMastery()
+		
+		if (this.data.hasForms && this.form){
+			let formData = this.data.forms[this.form]
+			if (formData.types){
+				formData.types.forEach(type => {
+					if (!this.types.includes(type)){
+						this.types.push(type)
+					}
+				})
+			}
+		}
+		if (this.data.hasForms && !this.form){
+			console.error("Somehow",this,"has no form listed for it")
+		}
 	}
 
 	getEXPNeededForLevel(level){
@@ -709,7 +724,10 @@ class Pokemon{
 		return changes
 	}
 
-	getImage(){
-		return getPokemonImage(this.data, "large", this.isShiny)
+	getImage(key="large"){
+		return getPokemonImage(this.data, key, this.isShiny, this)
+	}
+	getAllSounds(){
+		return getPokemonSounds(this.data, this)
 	}
 }

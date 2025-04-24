@@ -109,7 +109,8 @@ class Round{
 				imagesToUnload.push(imgName)
 
 				//Preload cry
-				let cryUrl = pokemon.data.sounds.cry
+				let sounds = pokemon.getAllSounds()
+				let cryUrl = sounds?.cry
 				if (cryUrl){
 					let cryName = `${pokemonId}-cry`
 					loadSound(cryName, "cry", cryUrl)
@@ -3558,7 +3559,8 @@ class Round{
 		//Remove all iniative from the new pokemon
 		this.initiativeValues[trainerIndex] = 0
 
-		let cryUrl = pokemon.data.sounds.cry
+		let sounds = pokemon.getAllSounds()
+		let cryUrl = sounds?.cry
 		if (cryUrl){
 			let cryName = `${pokemonId}-cry`
 			loadSound(cryName, "sound", cryUrl)
@@ -4943,6 +4945,9 @@ function beginRound(trainerData){
 		}
 		if (data.name){
 			options.name = data.name
+		}
+		if (data.form){
+			options.form = data.form
 		}
 		if (data.pokeball){
 			options.pokeballType = data.pokeball

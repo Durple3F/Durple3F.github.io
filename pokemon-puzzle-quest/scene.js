@@ -424,8 +424,7 @@ function startScene(name, options) {
 			}
 			const displayPokemon = p => {
 				let pokemon = new Pokemon(p.name, p.pokemonId, p)
-				let images = pokemon.data.imageSources
-				let source = images.home ?? pokemon.getImage()
+				let source = pokemon.getImage("home")
 
 				let size = getRealBoxSize()
 				let left = pokemon.pcBoxX * size.width + size.offsetX
@@ -460,8 +459,7 @@ function startScene(name, options) {
 					container.attr("data-index", i)
 					if (p) {
 						container.attr("data-pokemon-id", p.uuid)
-						let images = p.data.imageSources
-						let image = images.home ?? pokemon.getImage()
+						let image = p.getImage("home")
 						let img = $(`<img src='${image}' class='pokemon-image'>`)
 						img.css("opacity", 1)
 						container.append(img)
@@ -612,8 +610,7 @@ function startScene(name, options) {
 				let tag = $(`<img id='pokemon-dragger'>`)
 				tag.css("opacity", 0)
 				heldPokemonTag = tag
-				let images = pokemon.data.imageSources
-				let image = images.home ?? pokemon.getImage()
+				let image = pokemon.getImage("home")
 				tag.attr("src", image)
 				$("body").append(tag)
 					.css("cursor", "pointer")
