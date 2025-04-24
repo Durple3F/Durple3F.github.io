@@ -1,11 +1,18 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
+4/24 (23.6k lines):
+	- Added Bagon, Rockruff
+	- Added Pluck, Dragon Breath, Rock Throw
+	- Added Big Pecks, Overcoat, Weak Armor, Rock Head, Steadfast
+	- Recoded how recoil damage is done to be consistent
+	- Oops, Haze was missing a name/description!
+
 4/23 (23.0k lines):
-	- Added Rufflet
-	- Added Hone Claws, Wing Attack
-	- Added Own Tempo, Leaf Guard, Keen Eyes
+	- Added Rufflet, Vullaby
+	- Added Hone Claws, Wing Attack, Flatter
+	- Added Own Tempo, Leaf Guard, Keen Eye, Sheer Force
 	- Added a trainer battle to 3-1
-	- Sheer Force is a really cool ability and now I wanna program it.
+	- Sheer Force is a really cool ability and now a bunch of moves have their "additional effects" stored separately from their standard effects to allow for it.
 
 4/22 (22.6k lines):
 	- Added Petilil

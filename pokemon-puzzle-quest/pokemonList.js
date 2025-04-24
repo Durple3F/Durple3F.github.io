@@ -1505,6 +1505,56 @@ const pokemonData = {
 			{ name: "Sand Attack", unlock: { type: "level", amount: 4 } },
 		]
 	},
+	"Bagon": {
+		name: "Bagon",
+		number: "371",
+		weight: {
+			pounds: 92.8,
+			kilograms: 42.1
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0371Bagon.png",
+			"largeShiny": "src/img/shiny-pokemon/371-Bagon.png",
+			"home": "src/img/tiny-pokemon/Bagon.png"
+		},
+		sounds: {
+			cry: "src/audio/cries/bagon.mp3"
+		},
+		types: ["Dragon"],
+		tags: [],
+		abilities: ["Rock Head"],
+		hiddenAbilities: ["Sheer Force"],
+		stats: {
+			hp: 45,
+			attack: 75,
+			defense: 60,
+			specialAttack: 40,
+			specialDefense: 30,
+			speed: 50
+		},
+		expYield: 60,
+		evYield: {
+			hp: 0,
+			attack: 1,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			red: 2,
+			orange: 2,
+			blue: 1,
+			purple: 2
+		},
+		learnset: [
+			{ name: "Ember", unlock: { type: "level", amount: 1 } },
+			{ name: "Leer", unlock: { type: "level", amount: 1 } },
+			{ name: "Bite", unlock: { type: "level", amount: 5 } },
+			{ name: "Dragon Breath", unlock: { type: "level", amount: 10 } },
+		]
+	},
 	"Drifloon": {
 		name: "Drifloon",
 		number: "425",
@@ -1760,7 +1810,7 @@ const pokemonData = {
 		imageSources: {
 			"large": "src/img/pokemon/0627Rufflet.png",
 			"largeShiny": "src/img/shiny-pokemon/627-Rufflet.png",
-			"home": "src/img/tiny-pokemon/0627Rufflet.png"
+			"home": "src/img/tiny-pokemon/Rufflet.png"
 		},
 		sounds: {
 			cry: "src/audio/cries/rufflet.mp3"
@@ -1795,7 +1845,55 @@ const pokemonData = {
 			{ name: "Peck", unlock: { type: "level", amount: 1 } },
 			{ name: "Leer", unlock: { type: "level", amount: 1 } },
 			{ name: "Hone Claws", unlock: { type: "level", amount: 6 } },
-			{ name: "Wing Attack", unlock: { type: "level", amount: 1 } },
+			{ name: "Wing Attack", unlock: { type: "level", amount: 12 } },
+		]
+	},
+	"Vullaby": {
+		name: "Vullaby",
+		number: "629",
+		weight: {
+			pounds: 19.8,
+			kilograms: 9.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0629Vullaby.png",
+			"largeShiny": "src/img/shiny-pokemon/629-Vullaby.png",
+			"home": "src/img/tiny-pokemon/Vullaby.png"
+		},
+		sounds: {
+			cry: "src/audio/cries/vullaby.mp3"
+		},
+		types: ["Dark", "Flying"],
+		tags: ["Starter"],
+		abilities: ["Big Pecks", "Overcoat"],
+		hiddenAbilities: ["Weak Armor"],
+		stats: {
+			hp: 70,
+			attack: 55,
+			defense: 75,
+			specialAttack: 45,
+			specialDefense: 65,
+			speed: 60
+		},
+		expYield: 74,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 1,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			blue: 4,
+			purple: 2
+		},
+		learnset: [
+			{ name: "Gust", unlock: { type: "level", amount: 1 } },
+			{ name: "Leer", unlock: { type: "level", amount: 1 } },
+			{ name: "Flatter", unlock: { type: "level", amount: 6 } },
+			{ name: "Pluck", unlock: { type: "level", amount: 12 } },
 		]
 	},
 	"Rowlet": {
@@ -1983,6 +2081,7 @@ const pokemonData = {
 			{ name: "Disarming Voice", unlock: { type: "level", amount: 6 } },
 			{ name: "Aqua Jet", unlock: { type: "level", amount: 9 } },
 			{ name: "Baby-Doll Eyes", unlock: { type: "level", amount: 12 } },
+			{ name: "Astonish", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {
@@ -2322,6 +2421,55 @@ const pokemonData = {
 			{ name: "Absorb", unlock: { type: "level", amount: 1 } },
 			{ name: "Fairy Wind", unlock: { type: "level", amount: 1 } },
 			{ name: "Stun Spore", unlock: { type: "level", amount: 6 } },
+		]
+	},
+	"Rockruff": {
+		name: "Rockruff",
+		number: "744",
+		weight: {
+			pounds: 20.3,
+			kilograms: 9.2
+		},
+		imageFacing: "right",
+		imageSources: {
+			"large": "src/img/pokemon/0744Rockruff.png",
+			"largeShiny": "src/img/shiny-pokemon/744-Rockruff.png",
+			"home": "src/img/tiny-pokemon/Rockruff.png"
+		},
+		sounds: {
+			cry: "src/audio/cries/rockruff.mp3"
+		},
+		types: ["Rock"],
+		tags: [],
+		abilities: ["Keen Eye", "Vital Spirit"],
+		hiddenAbilities: ["Steadfast"],
+		stats: {
+			hp: 45,
+			attack: 65,
+			defense: 40,
+			specialAttack: 30,
+			specialDefense: 40,
+			speed: 60
+		},
+		expYield: 56,
+		evYield: {
+			hp: 0,
+			attack: 1,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 3,
+			blue: 2,
+		},
+		learnset: [
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Leer", unlock: { type: "level", amount: 1 } },
+			{ name: "Sand Attack", unlock: { type: "level", amount: 4 } },
+			{ name: "Double Team", unlock: { type: "level", amount: 8 } },
+			{ name: "Rock Throw", unlock: { type: "level", amount: 12 } },
 		]
 	},
 	"Comfey": {

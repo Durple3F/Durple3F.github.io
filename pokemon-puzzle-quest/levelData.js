@@ -886,7 +886,7 @@ const levelData = [
 				name: "Tatiana",
 				class: "Rising-Star-F",
 				pokemon: [
-					{ id: "Petilil", level: 13, pokeball: "greatball", name: "Doomleaf" }
+					{ id: "Petilil", level: 13, pokeball: "greatball", name: "Direvine the Destroyer" }
 				]
 			},
 		],
@@ -909,31 +909,32 @@ const levelData = [
 			{
 				isWild: true,
 				targetPokemon: 4,
-				canPickDuplicates: true,
+				canPickDuplicates: false,
 				possiblePokemon: [
 					{ id: "Rufflet", levelMin: 10, levelMax: 12, weight: 4 },
-					// { id: "Mankey", levelMin: 9, levelMax: 12, weight: 4 },
-					// { id: "Delibird", levelMin: 9, levelMax: 12, weight: 4 },
-					// { id: "Spearow", levelMin: 9, levelMax: 12, weight: 2 },
-					// { id: "Cutiefly", levelMin: 9, levelMax: 12, weight: 2 },
-					// { id: "Yungoos", levelMin: 9, levelMax: 12, weight: 1 },
-					// { id: "Rattata-Alola", levelMin: 9, levelMax: 12, weight: 1 },
+					{ id: "Vullaby", levelMin: 10, levelMax: 12, weight: 4 },
+					{ id: "Bagon", levelMin: 10, levelMax: 12, weight: 2 },
+					{ id: "Spearow", levelMin: 10, levelMax: 12, weight: 3 },
+					{ id: "Cutiefly", levelMin: 10, levelMax: 12, weight: 2 },
+					{ id: "Yungoos", levelMin: 10, levelMax: 12, weight: 1 },
+					{ id: "Rattata-Alola", levelMin: 10, levelMax: 12, weight: 1 },
 				]
 			},
 			{
-				name: "Tatiana",
-				class: "Rising-Star-F",
+				name: "Makana",
+				class: "Ace-Trainer-Gen7",
 				pokemon: [
-					{ id: "Petilil", level: 13, pokeball: "greatball", name: "Doomleaf" }
+					{ id: "Rockruff", level: 13 },
+					{ id: "Slowpoke", level: 14 },
 				]
 			},
 		],
 		effects: [
-			{ type: "fight", trainer: 0 },
+			// { type: "fight", trainer: 0 },
 			// { type: "jump-if-lost", jumpTo: Infinity },
 			// { type: "dialogue", source: "route-3-1-dialogue" },
 			// { type: "change-music", music: "SM Trainer Battle" },
-			// { type: "fight", trainer: 1 },
+			{ type: "fight", trainer: 1 },
 		]
 	},
 ]

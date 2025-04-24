@@ -14,6 +14,7 @@ function downloadLocale(name){
 			url: url,
 			success: function(data){
 				locale[name] = data
+				checkLocale(locale[name], name)
 				resolve()
 			},
 			error: function(){
@@ -22,6 +23,46 @@ function downloadLocale(name){
 			}
 		})
 	})
+}
+function checkLocale(locale, langName){
+	if (locale["pokemon"]){
+		Object.values(pokemonData)
+		.forEach(pData => {
+			let id = pData.id
+			let locData = locale["pokemon"][id]
+			if (!locData){
+				console.warn("Locale data is missing pokemon data for ",id,langName)
+			}
+		})
+	} else {
+		console.warn("Locale data is missing pokemon data", langName)
+	}
+
+	if (locale["moves"]){
+		Object.values(pokemonMoveData)
+		.forEach(mData => {
+			let moveName = mData.name
+			let locData = locale["moves"][moveName]
+			if (!locData){
+				console.warn("Locale data is missing move data for",moveName,langName)
+			}
+		})
+	} else {
+		console.warn("Locale data is missing move data", langName)
+	}
+
+	if (locale["abilities"]){
+		Object.values(abilityData)
+		.forEach(aData => {
+			let abilityId = aData.id
+			let locData = locale["abilities"][abilityId]
+			if (!locData){
+				console.warn("Locale data is missing ability data for",abilityId,langName)
+			}
+		})
+	} else {
+		console.warn("Locale data is missing ability data", langName)
+	}
 }
 
 function getLocaleString(id, lang, path, defaultResult=`% STRING MISSING %`){

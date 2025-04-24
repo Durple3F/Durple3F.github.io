@@ -42,11 +42,12 @@ const pokemonMoveEffects = {
 				return
 			}
 
-			moveUseObj.checkBetweenEffects = false
+			// moveUseObj.checkBetweenEffects = false
 			game.triggerMoveEffects(
 				trainer, pokemon, move, key
-			)
-			resolve()
+			).then(() => resolve())
+			// console.log(game.moveQueue)
+			// resolve()
 		}
 	},
 	"swap-tiles": {
@@ -202,10 +203,9 @@ const pokemonMoveEffects = {
 		}
 	},
 	"damage": {
-		delay: 400,
+		delay: 200,
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
-			let effectIndex = options.effectIndex
 			let damageOptions = {
 				from: moveUseObj.pokemon,
 				fromTrainer: moveUseObj.trainer,
@@ -239,8 +239,7 @@ const pokemonMoveEffects = {
 			}
 
 			let result = game.dealDamage(damageOptions)
-			moveUseObj.info[effectIndex] = result.damageDealt
-			resolve()
+			resolve(result.damageDealt)
 		}
 	},
 	"heal": {
@@ -282,23 +281,31 @@ const pokemonMoveEffects = {
 			resolve()
 		}
 	},
-	"recoil-percent": {
+	"recoil-damage": {
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
-			let effectIndex = options.effectIndex
+			let amount = params.amount
+			let fixed = !!effect.fixed
+			let pokemon = moveUseObj.pokemon
 
-			let damage = moveUseObj.pokemon.hp * effect.percent
+			//Rock Head prevents recoil
+			if (pokemon.hasAbility("Rock Head")){
+				resolve(0)
+				return
+			}
+
+			let damage = amount
 			let damageOptions = {
-				from: moveUseObj.pokemon,
+				from: pokemon,
 				fromTrainer: moveUseObj.trainer,
 				move: moveUseObj.move,
-				to: moveUseObj.pokemon,
+				to: pokemon,
 				toTrainer: moveUseObj.trainer,
-				damage: damage
+				damage: damage,
+				fixed: fixed
 			}
 			let result = game.dealDamage(damageOptions)
-			moveUseObj.info[effectIndex] = result.damageDealt
-			resolve()
+			resolve(result.damageDealt)
 		}
 	},
 	"get-hp": {
@@ -496,8 +503,6 @@ const pokemonMoveEffects = {
 	},
 	"gain-energy": {
 		execute: (resolve, effect, params, game, options) => {
-			let moveUseObj = options.moveUse
-			let effectIndex = options.effectIndex
 			let target = options.target
 			let energyColors = params.colors ?? []
 			let count = params.count ?? 1
@@ -515,9 +520,7 @@ const pokemonMoveEffects = {
 			}
 
 			result = game.giveEnergy(amounts, target, target.activePokemon)
-
-			moveUseObj.info[effectIndex] = result
-			resolve()
+			resolve(result)
 		}
 	},
 	"get-energy-capacities": {
@@ -534,6 +537,36 @@ const pokemonMoveEffects = {
 			}
 
 			resolve(result)
+		}
+	},
+	"get-energy-values": {
+		update: false,
+		hasTarget: true,
+		targetType: "pokemon",
+		targetDefault: "user",
+		execute: (resolve, effect, params, game, options) => {
+			let target = options.target
+			let result = {}
+			let colors = params.colors
+
+			for (let color of colors) {
+				result[color] = target.energy[color] ?? 0
+			}
+			console.log(result)
+			resolve(result)
+		}
+	},
+	"multiply-energy": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let moveUseObj = options.moveUse
+			let effectIndex = options.effectIndex
+			let amounts = params.amounts ?? {}
+			let scale = params.scale ?? 1
+			let round = effect.round
+			let result = multiplyEnergies(amounts, scale, round)
+			moveUseObj.info[effectIndex] = result
+			resolve()
 		}
 	},
 	"change-tile-weight": {
@@ -1107,18 +1140,6 @@ const pokemonMoveEffects = {
 			resolve(usage.recharge)
 		}
 	},
-	"multiply-energy": {
-		update: false,
-		execute: (resolve, effect, params, game, options) => {
-			let moveUseObj = options.moveUse
-			let effectIndex = options.effectIndex
-			let amounts = params.amounts ?? {}
-			let scale = params.scale ?? 1
-			let result = multiplyEnergies(amounts, scale)
-			moveUseObj.info[effectIndex] = result
-			resolve()
-		}
-	},
 	"get-cascade": {
 		update: false,
 		execute: (resolve, effect, params, game, options) => {
@@ -1140,9 +1161,26 @@ const pokemonMoveEffects = {
 	"set-initiative": {
 		update: true,
 		execute: (resolve, effect, params, game, options) => {
-			let index = game.trainers.indexOf(options.target)
-			let initiative = params.initiative
-			game.initiativeValues[index] = Math.floor(initiative)
+			let trainer = options.target
+			let pokemon = trainer.activePokemon
+			let index = game.trainers.indexOf(trainer)
+			let oldInitiative = game.initiativeValues[index]
+			let initiative = Math.floor(params.initiative ?? 0)
+			let change = initiative - oldInitiative
+			game.initiativeValues[index] = initiative
+			console.log(initiative, index)
+
+			//Pokemon with Steadfast get a stat boost on having their initiative lowered
+			if (change < 0 && pokemon.hasAbility("Steadfast")){
+				pokemon.addStatusEffect({
+					name: "steadfast-sped-up",
+					type: "stat",
+					class: "debuff",
+					stat: "speed",
+					amount: 1
+				}, trainer, pokemon, undefined)
+			}
+
 			resolve()
 		}
 	},

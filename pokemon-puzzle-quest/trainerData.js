@@ -95,6 +95,13 @@ const NPCTrainerData = {
 		},
 		textStyle: {}
 	},
+	"Ace-Trainer-Gen7": {
+		name: "Ace Trainer",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/acetrainer-gen7.png"
+		}
+	},
 	"Youngster-Gen7": {
 		name: "Youngster",
 		type: "trainer",

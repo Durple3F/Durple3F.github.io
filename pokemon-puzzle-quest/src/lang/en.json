@@ -887,6 +887,9 @@
 		"Makuhita": {
 			"name": "Makuhita"
 		},
+		"Bagon": {
+			"name": "Bagon"
+		},
 		"Drifloon": {
 			"name": "Drifloon"
 		},
@@ -904,6 +907,9 @@
 		},
 		"Rufflet": {
 			"name": "Rufflet"
+		},
+		"Vullaby": {
+			"name": "Vullaby"
 		},
 		"Rowlet": {
 			"name": "Rowlet"
@@ -934,6 +940,9 @@
 		},
 		"Cutiefly": {
 			"name": "Cutiefly"
+		},
+		"Rockruff": {
+			"name": "Rockruff"
 		},
 		"Comfey": {
 			"name": "Comfey"
@@ -1045,6 +1054,11 @@
 			"description": "Raises the user's speed stat by 1 stage. Then, makes a random match somewhere on the board without ending the user's turn.",
 			"shortDescription": "Raises speed & makes a match"
 		},
+		"Dragon Breath": {
+			"name": "Dragon Breath",
+			"description": "Deals damage. Then, 50% of the time, applies Paralyzed.",
+			"shortDescription": "Deals some damage and paralyzes"
+		},
 		"Echoed Voice": {
 			"name": "Echoed Voice",
 			"description": "Deals damage. This move's yellow energy cost is reduced by 6 during your next turn.",
@@ -1074,6 +1088,11 @@
 			"name": "Feint",
 			"description": "Removes the Invulnerable status from the opponent. Then, deals damage.",
 			"shortDescription": "Deals damage through invulnerability"
+		},
+		"Flatter": {
+			"name": "Flatter",
+			"description": "Applies Confused to the opponent. However, the opponent's Special Attack is raised a stage. After a Confused Pokémon uses a move, there's a 50% chance for their turn to end.",
+			"shortDescription": "Confuses the opponent but buffs them"
 		},
 		"Focus Energy": {
 			"name": "Focus Energy",
@@ -1109,6 +1128,11 @@
 			"name": "Harden",
 			"description": "Gives the user the Invulnerable status for one turn. It can't take damage for as long as it has that status. Then ends the turn.",
 			"shortDescription": "Temporary invulnerability"
+		},
+		"Haze": {
+			"name": "Haze",
+			"description": "Removes all status effects from the opponent.",
+			"shortDescription": "Removes enemy statuses"
 		},
 		"Helping Hand": {
 			"name": "Helping Hand",
@@ -1210,6 +1234,11 @@
 			"description": "Lowers the opponent's attack stat by 1 stage. Then, the user chooses two tiles. Those tiles are swapped.",
 			"shortDescription": "Debuffs opponent and disrupts board"
 		},
+		"Pluck": {
+			"name": "Pluck",
+			"description": "Deals damage. Then, drains half of the energy from the opponent's tmost full energy type and gives it to the user.",
+			"shortDescription": "Deals some damage and drains energy"
+		},
 		"Poison Fang": {
 			"name": "Poison Fang",
 			"description": "Deals damage and has a 50% chance to poison the target. If the target was already poisoned, instead it deals damage with 20 additional power.",
@@ -1298,8 +1327,8 @@
 		},
 		"Struggle": {
 			"name": "Struggle",
-			"description": "An attack of desperation only useful when there are no available moves. It also hurts its user a little, before ending the current turn.",
-			"shortDescription": "Reshuffle board"
+			"description": "An attack of desperation only useful when there are no available moves. It also deals recoil damage to its user equal to 1/4 their max HP, before ending the current turn.",
+			"shortDescription": "Shuffle board"
 		},
 		"Stun Spore": {
 			"name": "Stun Spore",
@@ -1390,6 +1419,11 @@
 			"shortDescription": "Maxes out Attack when the opponent matches 5+ tiles in a row.",
 			"longDescription": "When the opponent makes a match of 5 or more tiles in a row, this Pokémon's Attack increases by 6 stages."
 		},
+		"Big Pecks": {
+			"name": "Big Pecks",
+			"shortDescription": "Other Pokémon can't lower this Pokémon's Defense stages",
+			"longDescription": "Other Pokémon can't give this Pokémon status effects which lower its Defense stat by any number of stages."
+		},
 		"Blaze": {
 			"name": "Blaze",
 			"shortDescription": "Fire moves are stronger at low health",
@@ -1430,8 +1464,8 @@
 			"shortDescription": "This Pokémon's punching moves get +20% power",
 			"longDescription": "The power of punching moves used by this Pokémon are increased by 20%."
 		},
-		"Keen Eyes": {
-			"name": "Keen Eyes",
+		"Keen Eye": {
+			"name": "Keen Eye",
 			"shortDescription": "Other Pokémon raise this Pokémon's move costs half as much",
 			"longDescription": "The effects of statuses imposed by other Pokémon which raise the costs of this Pokémon's moves are reduced by 50%."
 		},
@@ -1440,15 +1474,25 @@
 			"shortDescription": "Prevents receiving status effects from opponent based on green energy",
 			"longDescription": "If this Pokémon receives a status effect from another trainer, it has a chance to prevent it equal to 50% of how full its green energy is."
 		},
-		"Own Tempo": {
-			"name": "Own Tempo",
-			"shortDescription": "Can't be confused",
-			"longDescription": "This Pokémon can't be confused during battle."
+		"Overcoat": {
+			"name": "Overcoat",
+			"shortDescription": "Spore and Powder moves don't affect this Pokémon",
+			"longDescription": "When Sleep Powder, Stun Spore, or Poison Powder trigger, this Pokémon isn't affected by them."
 		},
 		"Overgrow": {
 			"name": "Overgrow",
 			"shortDescription": "Grass moves are stronger at low health",
 			"longDescription": "Grass moves that this Pokémon uses while at less than or equal to 1/3 HP have their power increased by 50%."
+		},
+		"Own Tempo": {
+			"name": "Own Tempo",
+			"shortDescription": "Can't be confused",
+			"longDescription": "This Pokémon can't be confused during battle."
+		},
+		"Rock Head": {
+			"name": "Rock Head",
+			"shortDescription": "This Pokémon doesn't take recoil",
+			"longDescription": "Moves that deal recoil damage to their user don't deal recoil to this Pokémon."
 		},
 		"Run Away": {
 			"name": "Run Away",
@@ -1460,10 +1504,20 @@
 			"shortDescription": "At the end of its turn, 20% chance to cure one status",
 			"longDescription": "At the end of this Pokémon's turn, it has a 20% chance to recover from one non-volatile status that it has."
 		},
+		"Sheer Force": {
+			"name": "Sheer Force",
+			"shortDescription": "Prevents additional effects, but increases power",
+			"longDescription": "When this Pokémon uses a move, if it has additional effects, its power is increased by 30%, but any additional effects of the move are prevented."
+		},
 		"Shield Dust": {
 			"name": "Shield Dust",
 			"shortDescription": "Prevents receiving status effects from opponent 20% of the time",
 			"longDescription": "If this Pokémon receives a status effect from another trainer, it has a 20% chance to prevent it."
+		},
+		"Steadfast": {
+			"name": "Steadfast",
+			"shortDescription": "Raises Speed a stage when its initiative is lowered",
+			"longDescription": "When this Pokémon's initiative is lowered, its Speed is increased by a stage."
 		},
 		"Tinted Lens": {
 			"name": "Tinted Lens",
@@ -1479,6 +1533,11 @@
 			"name": "Vital Spirit",
 			"shortDescription": "Can't be put to sleep",
 			"longDescription": "This Pokémon can't be put to sleep during battle."
+		},
+		"Weak Armor": {
+			"name": "Weak Armor",
+			"shortDescription": "Getting hit with Physical moves lowers Defense by a stage and raises Speed by two stages",
+			"longDescription": "When another Pokémon deals damage to this Pokémon with a Physical move, its Defense is lowered by one stage, but its Speed is raised by two stages."
 		}
 	},
 	"natures": {

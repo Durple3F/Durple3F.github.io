@@ -302,6 +302,15 @@ class Pokemon{
 		){
 			prevented = true
 		}
+		//Pokemon with Big Pecks can't have their Defense lowered by stages
+		else if (this.hasAbility("Big Pecks") &&
+			status.type === "stat" &&
+			status.sourcePokemon !== this &&
+			status.stat === "defense" &&
+			status.amount < 0
+		){
+			prevented = true
+		}
 		//Pokemon with Shield Dust prevent receiving statuses from other trainers 20% of the time
 		else if (this.hasAbility("Shield Dust") &&
 			status.sourceTrainer !== this.trainer &&

@@ -713,6 +713,35 @@ const pokemonMoveData = {
 			{ type: "perform-swap", swap: -3, label: "move" }
 		],
 	},
+	//50% chance to paralyze opponent
+	"Dragon Breath": {
+		name: "Dragon Breath",
+		type: "Dragon",
+		category: "Special",
+		strategy: "basic-damage",
+		pp: 20,
+		power: 60,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			green: 6,
+			yellow: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Dragon Breath.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "random-number", min: 1, max: 10 },
+			{ type: "load-value", value: 6 },
+			{ type: "jump-if-less-than", jumpTo: Infinity },
+			{ type: "apply-status-effect", statusEffect: "paralyzed", target: "opponent" }
+		]
+	},
 	//Temporarily reduces its own cost
 	"Echoed Voice": {
 		name: "Echoed Voice",
@@ -920,6 +949,36 @@ const pokemonMoveData = {
 			{ type: "damage" }
 		]
 	},
+	//Confuses the opponent but also buffs them
+	"Flatter": {
+		name: "Flatter",
+		type: "Dark",
+		category: "Status",
+		strategy: "debuff-opponent",
+		pp: 15,
+		power: null,
+		accuracy: 100,
+		rechargeTurns: 5,
+		energy: {
+			orange: 3,
+			purple: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Flatter.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "apply-status-effect", statusEffect: "confused", target: "opponent" },
+			{
+				type: "apply-debuff", target: "opponent", debuff: {
+					type: "stat",
+					stat: "specialAttack",
+					class: "buff",
+					amount: 1
+				}
+			}
+		]
+	},
 	//Raises attack 2
 	"Focus Energy": {
 		name: "Focus Energy",
@@ -1097,6 +1156,7 @@ const pokemonMoveData = {
 			{ type: "change-tile-type", selection: "group", which: -1, targetType: "green" },
 		],
 	},
+	//Pushes the entire board to the side
 	"Gust": {
 		name: "Gust",
 		type: "Flying",
@@ -1125,6 +1185,7 @@ const pokemonMoveData = {
 			{ type: "shift-tiles", selection: -1, xOffset: -3, yOffset: -2 },
 		]
 	},
+	//Become invulnerable for a turn
 	"Harden": {
 		name: "Harden",
 		type: "Normal",
@@ -1144,6 +1205,7 @@ const pokemonMoveData = {
 			{ type: "end-turn" }
 		],
 	},
+	//Removes **every** status effect from the opponent
 	"Haze": {
 		name: "Haze",
 		type: "Ice",
@@ -1165,6 +1227,7 @@ const pokemonMoveData = {
 			{ type: "remove-all-status-effects", target: "opponent" },
 		],
 	},
+	//Reduces move cooldown
 	"Helping Hand": {
 		name: "Helping Hand",
 		type: "Normal",
@@ -1193,6 +1256,7 @@ const pokemonMoveData = {
 			{ type: "change-move-cooldown", target: "user", move: -2, amount: -1 },
 		],
 	},
+	//Reduces move costs so that the biggest cost color is reduced
 	"Hone Claws": {
 		name: "Hone Claws",
 		type: "Dark",
@@ -1232,6 +1296,7 @@ const pokemonMoveData = {
 			] },
 		],
 	},
+	//Energy gain is multiplied this turn
 	"Howl": {
 		name: "Howl",
 		type: "Normal",
@@ -1264,6 +1329,7 @@ const pokemonMoveData = {
 			} },
 		],
 	},
+	//Reduces enemy initiative by a scalar
 	"Hyper Fang": {
 		name: "Hyper Fang",
 		type: "Normal",
@@ -1298,6 +1364,7 @@ const pokemonMoveData = {
 			{ type: "set-initiative", target: "opponent", initiative: -1 },
 		]
 	},
+	//Puts the opponent to sleep
 	"Hypnosis": {
 		name: "Hypnosis",
 		type: "Normal",
@@ -1772,6 +1839,39 @@ const pokemonMoveData = {
 			{ type: "swap-tiles", selection: -1 },
 		],
 	},
+	"Pluck": {
+		name: "Pluck",
+		type: "Flying",
+		category: "Physical",
+		strategy: "special",
+		pp: 20,
+		power: 60,
+		accuracy: 100,
+		rechargeTurns: 3,
+		energy: {
+			blue: 4,
+			red: 2
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Pluck.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "load-value", value: 1 },
+			{ type: "select-energy-colors", search: "most-full", target: "opponent", count: -1 },
+			{ type: "get-energy-values", colors: -1, target: "opponent" },
+			{ type: "load-value", value: -0.5 },
+			{ type: "multiply-energy", amounts: -2, scale: -1, round: "down" },
+			{ type: "gain-energy", amounts: -1, target: "opponent" },
+			{ type: "load-value", value: -1 },
+			{ type: "multiply-energy", amounts: -2, scale: -1 },
+			{ type: "gain-energy", amounts: -1, target: "user" }
+		],
+	},
 	"Poison Fang": {
 		name: "Poison Fang",
 		type: "Poison",
@@ -2074,6 +2174,9 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
 			{ type: "is-active-pokemon-viable", target: "opponent" },
 			{ type: "jump-if-truthy", jumpTo: "choose" },
 			{ type: "jump", jumpTo: Infinity },
@@ -2081,7 +2184,42 @@ const pokemonMoveData = {
 			{ type: "choose-tiles", count: -1, target: "user" },
 			{ type: "select-similar-tiles-surrounding", selection: -1 },
 			{ type: "remove-tiles", selection: -1 },
+		]
+	},
+	"Rock Throw": {
+		name: "Rock Throw",
+		type: "Rock",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: [],
+		pp: 15,
+		power: 50,
+		accuracy: 90,
+		rechargeTurns: 1,
+		energy: {
+			red: 4,
+			orange: 6,
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Rock Throw.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
 		],
+		additionalEffects: [
+			{ type: "is-active-pokemon-viable", target: "opponent" },
+			{ type: "jump-if-truthy", jumpTo: "choose" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "load-value", value: 1, label: "choose" },
+			{ type: "choose-tiles", count: -1, target: "user" },
+			{ type: "load-value", value: 0 },
+			{ type: "get-element-from-list", list: -2, index: -1 },
+			{ type: "get-tile-x", tile: -1 },
+			{ type: "select-column", x: -1 },
+			{ type: "remove-tiles", selection: -1 },
+		]
 	},
 	"Sand Attack": {
 		name: "Sand Attack",
@@ -2288,7 +2426,10 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
-			{ type: "recoil-percent", percent: 0.25 },
+			{ type: "get-max-hp", target: "user" },
+			{ type: "load-value", value: 0.25 },
+			{ type: "multiply-numbers", round: "up" },
+			{ type: "recoil-damage", amount: -1, fixed: true },
 			{ type: "shuffle-board" },
 			{ type: "end-turn" }
 		],
@@ -2691,6 +2832,9 @@ const pokemonMoveData = {
 for (let moveName in pokemonMoveData){
 	let move = pokemonMoveData[moveName]
 	move.tags = move.tags ?? []
+	if (!move.id){
+		move.id = moveName
+	}
 	if (move.power){
 		move.tags.push("damage-dealing")
 	}

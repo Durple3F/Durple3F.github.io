@@ -41,6 +41,7 @@ class Round{
 			this.initiativeValues[i] = 0
 		})
 		this.maxInitiative = 100
+		this.struggleTest = false
 
 		this.result = null
 		this.hasBegun = false
@@ -856,7 +857,9 @@ class Round{
 					})
 					for (let otherTrainer of otherTrainers){
 						let activePokemon = otherTrainer.activePokemon
-						activePokemon.addStatusEffect("paralyzed", info[0], info[1], info[2])
+						if (!activePokemon.hasAbility("Overcoat")){
+							activePokemon.addStatusEffect("paralyzed", info[0], info[1], info[2])
+						}
 					}
 				}
 			}
@@ -889,7 +892,9 @@ class Round{
 					})
 					for (let otherTrainer of otherTrainers){
 						let activePokemon = otherTrainer.activePokemon
-						activePokemon.addStatusEffect("asleep", info[0], info[1], info[2])
+						if (!activePokemon.hasAbility("Overcoat")){
+							activePokemon.addStatusEffect("asleep", info[0], info[1], info[2])
+						}
 					}
 				}
 			}
@@ -922,7 +927,9 @@ class Round{
 					})
 					for (let otherTrainer of otherTrainers){
 						let activePokemon = otherTrainer.activePokemon
-						activePokemon.addStatusEffect("poisoned", info[0], info[1], info[2])
+						if (!activePokemon.hasAbility("Overcoat")){
+							activePokemon.addStatusEffect("poisoned", info[0], info[1], info[2])
+						}
 					}
 				}
 			}
@@ -1590,7 +1597,7 @@ class Round{
 		if (selectType === "tiles"){
 			let selected = this.selectedTiles
 			let count = this.currentlySelecting.min
-			let waitTime = 500
+			let waitTime = 200
 			for (let i = selected.length; i < count; i++){
 				promise = promise.then(() => delay(waitTime))
 				.then(() => {
@@ -1869,6 +1876,24 @@ class Round{
 				countsDamage.forEach(statusEffect => {
 					statusEffect.gameData.damageReceived += damage
 				})
+
+				//Weak Armor
+				if (defender.hasAbility("Weak Armor")){
+					defender.addStatusEffect({
+						name: "weak-armor-weakened",
+						type: "stat",
+						class: "debuff",
+						stat: "defense",
+						amount: -1
+					}, defender.trainer, defender, undefined)
+					defender.addStatusEffect({
+						name: "weak-armor-boosted",
+						type: "stat",
+						class: "buff",
+						stat: "speed",
+						amount: 2
+					}, defender.trainer, defender, undefined)
+				}
 			}
 		}
 
@@ -2050,7 +2075,7 @@ class Round{
 		}
 		let energyCost = cost.energyCost
 		
-		let hasKeenEyes = pokemon.hasAbility("Keen Eyes")
+		let hasKeenEyes = pokemon.hasAbility("Keen Eye")
 		let costEffects = pokemon.getStatusesOfType("cost-alteration")
 		for (let statusEffect of costEffects){
 			let effectiveType = this.getEffectiveMoveType(trainer, pokemon, move)
@@ -2099,7 +2124,7 @@ class Round{
 					}
 					let change = Math.ceil(val) - energyCost[color]
 
-					//Keen Eyes reduces the effects of cost increases imposed by other trainers
+					//Keen Eye reduces the effects of cost increases imposed by other trainers
 					if (change > 0 && hasKeenEyes && fromOtherPokemon){
 						change = Math.ceil(change * 0.5)
 					}

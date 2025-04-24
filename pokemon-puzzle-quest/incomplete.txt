@@ -22,10 +22,12 @@ Incomplete move lists:
 	Drifloon (lv 12)
 	Bonsly (lv 1)
 	Makuhita (lv 4)
+	Bagon (lv 10)
 	Happiny (lv 4)
 	Cottonee (lv 6)
 	Petilil (lv 12)
-	Rufflet (lv 0)
+	Rufflet (lv 12)
+	Vullaby (lv 12)
 	Rowlet (lv 12)
 	Litten (lv 15)
 	Popplio (lv 12)
@@ -36,6 +38,7 @@ Incomplete move lists:
 	Charjabug (lv 15)
 	Crabrawler (lv 13)
 	Cutiefly (lv 6)
+	Rockruff (lv 8)
 	Comfey (lv 0)
 	Komala (lv 0)
 
@@ -60,16 +63,19 @@ Missing Evolutions:
 	Wingull
 	Bonsly
 	Makuhita
+	Bagon
 	Happiny
 	Cottonee
 	Petilil
 	Rufflet
+	Vullaby
 	Rowlet
 	Litten
 	Popplio
 	Pikipek
 	Charjabug
 	Cutiefly
+	Rockruff
 	Crabrawler
 
 Missing Abilities:
@@ -98,7 +104,6 @@ Missing Abilities:
 	Bonsly
 	Happiny
 	Cottonee
-	Rufflet
 	Rowlet (1/2)
 	Litten (1/2)
 	Popplio (1/2)

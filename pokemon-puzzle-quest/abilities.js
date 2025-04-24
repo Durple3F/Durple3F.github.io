@@ -6,6 +6,10 @@ const abilityData = {
 	"Anger Point": {
 		id: "Anger Point"
 	},
+	//Prevents receiving statuses that lower Defense
+	"Big Pecks": {
+		id: "Big Pecks"
+	},
 	//Increases fire power at low hp
 	"Blaze": {
 		id: "Blaze"
@@ -22,7 +26,7 @@ const abilityData = {
 	"Defiant": {
 		id: "Defiant"
 	},
-	//TODO
+	//Power to all moves is increased, but a random tax is added every turn
 	"Hustle": {
 		id: "Hustle"
 	},
@@ -34,25 +38,13 @@ const abilityData = {
 	"Insomnia": {
 		id: "Insomnia"
 	},
-	//TODO
-	"Intimidate": {
-		id: "Intimidate"
-	},
 	//Gives a bonus to specifically moves tagged with "punching"
 	"Iron Fist": {
 		id: "Iron Fist"
 	},
 	//Cost reductions to your moves from opponents are 50% as effective
-	"Keen Eyes": {
-		id: "Keen Eyes"
-	},
-	//TODO
-	"Liquid Voice": {
-		id: "Liquid Voice"
-	},
-	//TODO
-	"Long Reach": {
-		id: "Long Reach"
+	"Keen Eye": {
+		id: "Keen Eye"
 	},
 	//Blocks status effects from the opponent based on green energy
 	"Leaf Guard": {
@@ -62,9 +54,17 @@ const abilityData = {
 	"Own Tempo": {
 		id: "Own Tempo"
 	},
+	//Spore moves don't trigger
+	"Overcoat": {
+		id: "Overcoat"
+	},
 	//Increase grass power at low hp
 	"Overgrow": {
 		id: "Overgrow"
+	},
+	//Prevents recoil damage
+	"Rock Head": {
+		id: "Rock Head"
 	},
 	//If it was damaged during a turn, its speed increases by 50% during the next turn.
 	"Run Away": {
@@ -82,6 +82,10 @@ const abilityData = {
 	"Shield Dust": {
 		id: "Shield Dust"
 	},
+	//Raises speed when initiative is lowered
+	"Steadfast": {
+		id: "Steadfast"
+	},
 	//Powers up not very effective moves
 	"Tinted Lens": {
 		id: "Tinted Lens"
@@ -94,4 +98,19 @@ const abilityData = {
 	"Vital Spirit": {
 		id: "Vital Spirit"
 	},
+	//Stats change on being hit with Physical moves
+	"Weak Armor": {
+		id: "Weak Armor"
+	},
 }
+
+Object.values(pokemonData).map(pData => {
+	return pData.abilities.concat(pData.hiddenAbilities)
+})
+.flat()
+.filter((v,i,s) => s.indexOf(v)===i)
+.forEach(abilityName => {
+	if (!abilityData[abilityName]){
+		console.warn(abilityName,"does nothing")
+	}
+})
