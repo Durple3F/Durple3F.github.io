@@ -150,7 +150,7 @@ class Pokemon{
 		this.pcBoxY = options?.pcBoxY ?? null
 	}
 
-	addStatusEffect(status, owner, pokemon, source){
+	addStatusEffect(status, owner, pokemon, source=undefined){
 		if (typeof status === "string"){
 			switch (status){
 				// case "burn": {

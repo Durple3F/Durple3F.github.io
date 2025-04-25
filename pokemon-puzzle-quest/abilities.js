@@ -26,6 +26,10 @@ const abilityData = {
 	"Defiant": {
 		id: "Defiant"
 	},
+	//You heal for energy that you don't gain due to being full
+	"Gluttony": {
+		id: "Gluttony"
+	},
 	//Power to all moves is increased, but a random tax is added every turn
 	"Hustle": {
 		id: "Hustle"
@@ -70,6 +74,14 @@ const abilityData = {
 	"Run Away": {
 		id: "Run Away"
 	},
+	//On an orange 4-match, increase speed
+	"Sand Veil": {
+		id: "Sand Veil"
+	},
+	//On an orange 4-match, increase next Rock/Ground/Steel move's power
+	"Sand Force": {
+		id: "Sand Force"
+	},
 	//At the end of each turn, 20% chance to cure one non-volatile status
 	"Shed Skin": {
 		id: "Shed Skin"
@@ -82,9 +94,25 @@ const abilityData = {
 	"Shield Dust": {
 		id: "Shield Dust"
 	},
+	//Grants a power boost after a 5-match
+	"Sniper": {
+		id: "Sniper"
+	},
+	//Paralyzes on contact sometimes
+	"Static": {
+		id: "Static"
+	},
 	//Raises speed when initiative is lowered
 	"Steadfast": {
 		id: "Steadfast"
+	},
+	//On damage that makes contact attacker is slowed
+	"Tangling Hair": {
+		id: "Tangling Hair"
+	},
+	//Reduces stats during damage calc for Fire and Ice moves
+	"Thick Fat": {
+		id: "Thick Fat"
 	},
 	//Powers up not very effective moves
 	"Tinted Lens": {

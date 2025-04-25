@@ -5,6 +5,7 @@ Incomplete move lists:
 	Spearow (lv 11)
 	Pikachu (lv 8)
 	Zubat (lv 15)
+	Diglett-Alola (lv 12)
 	Meowth-Alola (lv 16)
 	Mankey (lv 12)
 	Growlithe (lv 8)
@@ -47,6 +48,7 @@ Missing Evolutions:
 	Spearow
 	Pikachu
 	Zubat
+	Diglet-Alola
 	Meowth-Alola
 	Mankey
 	Abra
@@ -80,9 +82,6 @@ Missing Evolutions:
 	Crabrawler
 
 Missing Abilities:
-	Rattata-Alola
-	Raticate-Alola
-	Spearow
 	Pikachu
 	Zubat
 	Meowth-Alola

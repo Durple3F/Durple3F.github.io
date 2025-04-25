@@ -948,14 +948,15 @@ const levelData = [
 			{
 				isWild: true,
 				targetPokemon: 4,
-				canPickDuplicates: true,
+				canPickDuplicates: false,
 				possiblePokemon: [
 					{ id: "Oricorio", form: "Pom-Pom", levelMin: 10, levelMax: 13, weight: 4 },
-					// { id: "Vullaby", levelMin: 10, levelMax: 13, weight: 4 },
-					// { id: "Bagon", levelMin: 10, levelMax: 13, weight: 2 },
-					// { id: "Spearow", levelMin: 10, levelMax: 13, weight: 3 },
-					// { id: "Cutiefly", levelMin: 10, levelMax: 13, weight: 2 },
-					// { id: "Yungoos", levelMin: 10, levelMax: 13, weight: 1 },
+					{ id: "Cottonee", levelMin: 10, levelMax: 13, weight: 4 },
+					{ id: "Petilil", levelMin: 10, levelMax: 13, weight: 4 },
+					{ id: "Cutiefly", levelMin: 10, levelMax: 13, weight: 2 },
+					{ id: "Caterpie", levelMin: 10, levelMax: 13, weight: 1 },
+					{ id: "Metapod", levelMin: 10, levelMax: 13, weight: 1 },
+					{ id: "Butterfree", levelMin: 10, levelMax: 13, weight: 0.5 },
 				]
 			},
 			{

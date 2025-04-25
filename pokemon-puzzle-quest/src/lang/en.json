@@ -497,9 +497,9 @@
 					"left": "-=8%",
 					"opacity": 1
 				}},
-				{ "type": "text", "speaker": "Krystal", "text": "I find that, if my perfume battles, her scent becomes... more appealing. It helps to release those $@start-italics|@$richer$@end-italics|@$ notes." },
+				{ "type": "text", "speaker": "Krystal", "text": "I find that, if my $@red|perfume@$ battles, her scent becomes... more appealing. It helps to release those $@start-italics|@$richer$@end-italics|@$ notes." },
 				{ "type": "text", "speaker": "Krystal", "text": "The last time she battled, her scent gained these ^^wonderful^^ whiffs of lavender." },
-				{ "type": "text", "speaker": "Krystal", "text": "Let's see what new scrents she can unlock from battling $@start-italics|@$you!$@end-italics|@$" }
+				{ "type": "text", "speaker": "Krystal", "text": "Let's see what new scents she can unlock from battling $@start-italics|@$you!$@end-italics|@$" }
 			]
 		},
 		"route-2-3-dialogue-won": {
@@ -547,20 +547,21 @@
 					"opacity": 0
 				}},
 				{ "type": "style-speaker", "speaker": "Ashley", "css": {
+					"filter": "unset",
 					"z-index": 5
 				}},
 				{ "type": "text", "speaker": "Ashley", "text": "Howdy! I just saw you while I was setting up my camp for the night." },
 				{ "type": "text", "speaker": "Ashley", "text": "I'm all set for the night, now! So, wanna battle while the sun's still up?" },
 				{ "type": "animate-speaker", "speaker": "Ashley",
 				  "duration": 500, "waitDuration": 0, "css": {
-					"left": "+=8%"
+					"left": "-=8%"
 				}},
 				{ "type": "animate-image", "image": "Cottonee", "duration": 500, "css": {
-					"left": "-=12%",
+					"left": "+=12%",
 					"opacity": 1
 				}},
 				{ "type": "text", "speaker": "Ashley", "text": "I don't have a lot of Pokémon, I packed light. All I've got is Soozle, here." },
-				{ "type": "text", "speaker": "Ashley", "text": "We've been camping together for years! She makes a $@start-italics|@$great$@end-italics|@$ pillow, too." }
+				{ "type": "text", "speaker": "Ashley", "text": "We've been camping together for years! She makes a $@start-italics|@$great$@end-italics|@$ pillow." }
 			]
 		},
 		"route-2-4-dialogue-won": {
@@ -870,6 +871,9 @@
 		},
 		"Zubat": {
 			"name": "Zubat"
+		},
+		"Diglett-Alola": {
+			"name": "Diglett"
 		},
 		"Meowth-Alola": {
 			"name": "Meowth"
@@ -1246,6 +1250,11 @@
 			"description": "Until the start of the user's next turn, their damage-dealing moves have their costs halved (rounded up), and their power reduced by 25%.",
 			"shortDescription": "Reduces move costs and powers"
 		},
+		"Metal Claw": {
+			"name": "Metal Claw",
+			"description": "Deals damage. Has a 50% chance to raise the user's Attack by a stage.",
+			"shortDescription": "Damages and may raise Attack"
+		},
 		"Mud-Slap": {
 			"name": "Mud-Slap",
 			"description": "Deals damage. 2 random tiles are given the Energy Down status. When an opponent removes those tiles, they're worth 1 less energy each.",
@@ -1496,6 +1505,11 @@
 			"shortDescription": "Raises this Pokémon's Attack 1 stage when its opponent lowers its stats",
 			"longDescription": "When this Pokémon receives a debuff from another source that lowers its stats, its Attack is increased by 1 stage."
 		},
+		"Gluttony": {
+			"name": "Gluttony",
+			"shortDescription": "Heals when it's too full to gain energy",
+			"longDescription": "When this Pokémon would gain energy but doesn't while its energy is too full, it heals 1 HP for each energy not gained."
+		},
 		"Hustle": {
 			"name": "Hustle",
 			"shortDescription": "Raises Attack by 50%, but adds a random extra cost to moves each turn",
@@ -1551,6 +1565,16 @@
 			"shortDescription": "Raises Speed 2 stages if damaged last turn",
 			"longDescription": "At the end of each turn, if this Pokémon was dealt damage during that turn, its Speed stat is raised 2 stages during the next turn."
 		},
+		"Sand Veil": {
+			"name": "Sand Veil",
+			"shortDescription": "On a Fighting-type 4-in-a-row, increase Speed a stage",
+			"longDescription": "When a match of 4 Fighting tiles is made, this Pokémon's Speed increases by 1 stage."
+		},
+		"Sand Force": {
+			"name": "Sand Force",
+			"shortDescription": "On a Fighting-type 4-in-a-row, increase the power of the next Rock/Ground/Steel move used",
+			"longDescription": "When a match of 4 Fighting tiles is made, the power of the next Rock-, Ground-, or Steel-type move this Pokémon uses is increased by 50%."
+		},
 		"Shed Skin": {
 			"name": "Shed Skin",
 			"shortDescription": "At the end of its turn, 20% chance to cure one status",
@@ -1566,10 +1590,30 @@
 			"shortDescription": "Prevents receiving status effects from opponent 20% of the time",
 			"longDescription": "If this Pokémon receives a status effect from another trainer, it has a 20% chance to prevent it."
 		},
+		"Sniper": {
+			"name": "Sniper",
+			"shortDescription": "On a 5-in-a-row, next move's power is doubled",
+			"longDescription": "When this Pokémon makes a 5-in-a-row match during this Pokémon's turn, the power of its next move is doubled."
+		},
+		"Static": {
+			"name": "Static",
+			"shortDescription": "Paralyzes the attacker when they make contact with this Pokémon 30% of the time",
+			"longDescription": "Whenever another Pokémon deals damage to this Pokémon through a move that makes contact, this ability has a 30% chance to apply Paralyzed to the attacker."
+		},
 		"Steadfast": {
 			"name": "Steadfast",
 			"shortDescription": "Raises Speed a stage when its initiative is lowered",
 			"longDescription": "When this Pokémon's initiative is lowered, its Speed is increased by a stage."
+		},
+		"Tangling Hair": {
+			"name": "Tangling Hair",
+			"shortDescription": "Lowers an attacker's Speed when they make contact with this Pokémon",
+			"longDescription": "Whenever another Pokémon deals damage to this Pokémon through a move that makes contact, the attacker has their Speed reduced by a stage."
+		},
+		"Thick Fat": {
+			"name": "Thick Fat",
+			"shortDescription": "Reduces damage taken from Fire- or Ice-type moves.",
+			"longDescription": "When this Pokémon receives damage from a Fire- or Ice-type move, the attacker's relevant attack stat is reduced by 50%."
 		},
 		"Tinted Lens": {
 			"name": "Tinted Lens",

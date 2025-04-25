@@ -186,6 +186,8 @@ const pokemonData = {
 		},
 		types: ["Dark", "Normal"],
 		tags: [],
+		abilities: ["Gluttony", "Hustle"],
+		hiddenAbilities: ["Thick Fat"],
 		stats: {
 			hp: 30,
 			attack: 56,
@@ -237,6 +239,8 @@ const pokemonData = {
 		},
 		types: ["Dark", "Normal"],
 		tags: [],
+		abilities: ["Gluttony", "Hustle"],
+		hiddenAbilities: ["Thick Fat"],
 		stats: {
 			hp: 75,
 			attack: 71,
@@ -281,6 +285,8 @@ const pokemonData = {
 		},
 		types: ["Normal", "Flying"],
 		tags: [],
+		abilities: ["Keen Eye"],
+		hiddenAbilities: ["Sniper"],
 		stats: {
 			hp: 40,
 			attack: 60,
@@ -328,6 +334,8 @@ const pokemonData = {
 		},
 		types: ["Electric"],
 		tags: [],
+		abilities: ["Static"],
+		hiddenAbilities: ["Lightning Rod"],
 		stats: {
 			hp: 35,
 			attack: 55,
@@ -443,6 +451,56 @@ const pokemonData = {
 			{ name: "Astonish", unlock: { type: "level", amount: 5 } },
 			{ name: "Mean Look", unlock: { type: "level", amount: 10 } },
 			{ name: "Poison Fang", unlock: { type: "level", amount: 15 } },
+		]
+	},
+	"Diglett-Alola": {
+		name: "Diglett-Alola",
+		number: "50",
+		weight: {
+			pounds: 2.2,
+			kilograms: 1.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0050Diglett-Alola.png",
+			"largeShiny": "src/img/shiny-pokemon/050-Diglett.png",
+			"home": "src/img/tiny-pokemon/Diglett-Alola.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/diglett.mp3"
+		},
+		types: ["Ground", "Steel"],
+		tags: [],
+		abilities: ["Sand Veil", "Tangling Hair"],
+		hiddenAbilities: ["Sand Force"],
+		stats: {
+			hp: 10,
+			attack: 55,
+			defense: 30,
+			specialAttack: 35,
+			specialDefense: 45,
+			speed: 90
+		},
+		expYield: 53,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 1
+		},
+		energyMastery: {
+			orange: 3,
+			yellow: 2,
+			purple: 1
+		},
+		learnset: [
+			{ name: "Sand Attack", unlock: { type: "level", amount: 1 } },
+			{ name: "Metal Claw", unlock: { type: "level", amount: 1 } },
+			{ name: "Growl", unlock: { type: "level", amount: 4 } },
+			{ name: "Astonish", unlock: { type: "level", amount: 8 } },
+			{ name: "Mud-Slap", unlock: { type: "level", amount: 12 } },
 		]
 	},
 	"Meowth-Alola": {

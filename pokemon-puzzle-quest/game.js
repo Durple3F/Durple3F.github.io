@@ -466,15 +466,69 @@ class Round{
 		let otherTrainer = this.trainers[this.inactivePlayerIndex]
 		let otherPokemon = otherTrainer.activePokemon
 
-		if (otherPokemon.hasAbility("Anger Point") && matches.some(match => {
-			return match.length >= 5
+		//On a 5-match:
+		if (matches.some(match => match.length >= 5)){
+			//Anger Point gives benefits when the opponent makes a 5-match
+			if (otherPokemon.hasAbility("Anger Point")){
+				otherPokemon.addStatusEffect({
+					type: "stat",
+					class: "buff",
+					stat: "attack",
+					amount: 6
+				}, otherTrainer, otherPokemon, undefined)
+			}
+
+			//Pokemon with Sniper double their next move's power
+			if (activePokemon.hasAbility("Sniper")){
+				activePokemon.addStatusEffect({
+					name: "sniper-powered-up",
+					type: "power-alteration",
+					stacks: false,
+					volatile: true,
+					lostOnSwap: true,
+					lostOnBatonPass: true,
+					numberOfApplications: 1,
+					appliesTo: {},
+					modification: {
+						change: 2,
+						operation: "multiply"
+					}
+				}, activeTrainer, activePokemon, undefined)
+			}
+		}
+
+		//On an Orange 4-match:
+		if (matches.some(match => {
+			return match.length === 4 && match.every(tile => tile.type === "orange")
 		})){
-			otherPokemon.addStatusEffect({
-				type: "stat",
-				class: "buff",
-				stat: "attack",
-				amount: 6
-			}, otherTrainer, otherPokemon, undefined)
+			//Sand Veil speeds you up
+			if (activePokemon.hasAbility("Sand Veil")){
+				activePokemon.addStatusEffect({
+					type: "stat",
+					class: "buff",
+					stat: "speed",
+					amount: 1
+				}, activeTrainer, activePokemon, undefined)
+			}
+			//Sand Force gives you a power boost
+			if (activePokemon.hasAbility("Sand Force")){
+				activePokemon.addStatusEffect({
+					name: "sand-force-powered-up",
+					type: "power-alteration",
+					stacks: false,
+					volatile: true,
+					lostOnSwap: true,
+					lostOnBatonPass: true,
+					numberOfApplications: 1,
+					appliesTo: {
+						types: ["Rock", "Ground", "Steel"]
+					},
+					modification: {
+						change: 1.5,
+						operation: "multiply"
+					}
+				}, activeTrainer, activePokemon, undefined)
+			}
 		}
 
 		let energiesToAdd = []
@@ -576,7 +630,31 @@ class Round{
 			}
 		}
 
-		return pokemon.gainEnergy(toAdd)
+		let energyGained = pokemon.gainEnergy(toAdd)
+		
+		if (pokemon.hasAbility("Gluttony")){
+			let notGainedTotal = 0
+			for (let color of colors){
+				if (!(color in toAdd)) continue
+				let notGained = toAdd[color] - (energyGained[color] || 0)
+				if (notGained && pokemon.energy[color] === pokemon.maxEnergy[color]){
+					notGainedTotal += notGained
+				}
+			}
+			if (notGainedTotal){
+				this.dealDamage({
+					from: pokemon,
+					fromTrainer: trainer,
+					move: undefined,
+					to: pokemon,
+					toTrainer: trainer,
+					damage: -notGainedTotal,
+					fixed: true
+				})
+			}
+		}
+
+		return energyGained
 	}
 
 	beginMove(){
@@ -1759,29 +1837,6 @@ class Round{
 		if (!attacker){
 			attacker = attackerTrainer.activePokemon
 		}
-		let move = options.move
-		if (!move){
-			let trainerIndex = this.trainers.indexOf(attackerTrainer)
-			let possibleMoves = this.getAvailableMoves(trainerIndex)
-			move = possibleMoves[0]
-			console.warn("Where did this damage come from??")
-			console.trace()
-		}
-
-		let power = options.power ?? move.power
-		if (options.additionalPower !== undefined){
-			power += options.additionalPower
-		}
-		power = this.getEffectivePower(attackerTrainer, attacker, move, power)
-		
-		let category = options.category ?? move.category ?? "Physical"
-		let damageType = options.type ?? this.getEffectiveMoveType(attackerTrainer, attacker, move) ?? "Typeless"
-
-		let burned = attacker.hasStatus("burn")
-		if (burned && category === "Physical"){
-			power *= 0.5
-		}
-
 		let defenderTrainer = options.toTrainer
 		if (!defenderTrainer){
 			let possible = this.trainers.filter(trainer => trainer !== attackerTrainer)
@@ -1792,47 +1847,78 @@ class Round{
 			defender = defenderTrainer.activePokemon
 		}
 
-		//Note: this doesn't mean the attack stat specifically.
-		//If the pokemon uses a special move, this represents the special attack stat.
-		let atk, def
-		if (category === "Physical"){
-			atk = attacker.getEffectiveStat("attack")
-			def = defender.getEffectiveStat("defense")
-		} else if (category === "Special") {
-			atk = attacker.getEffectiveStat("specialAttack")
-			def = defender.getEffectiveStat("specialDefense")
-		} else if (category === "Status") {
-			//This should never run
-			atk = attacker.getEffectiveStat("attack")
-			def = defender.getEffectiveStat("defense")
-		} else {
-			console.warn("UNKNOWN CATEGORY", category)
-		}
-
 		let damage = options.damage
-		if (damage === undefined){
-			damage = (attacker.level * 2 / 5 + 2) * power * atk / def / 50 + 2
-		}
-		//STAB
-		if (attacker.getEffectiveTypes().includes(damageType)){
-			damage *= 1.5
-		}
-		let typeMult = getSuperEffectiveMult(damageType, defender.getEffectiveTypes())
-		damage *= typeMult
+		if (!options.fixed){
+			let move = options.move
+			if (!move){
+				let trainerIndex = this.trainers.indexOf(attackerTrainer)
+				let possibleMoves = this.getAvailableMoves(trainerIndex)
+				move = possibleMoves[0]
+				console.warn("Where did this damage come from??")
+				console.trace()
+			}
 
-		if ("damageMult" in options){
-			console.log(damage)
-			damage *= options.damageMult
-			console.log(damage)
-		}
+			let power = options.power ?? move.power
+			if (options.additionalPower !== undefined){
+				power += options.additionalPower
+			}
+			power = this.getEffectivePower(attackerTrainer, attacker, move, power)
+			
+			let category = options.category ?? move.category ?? "Physical"
+			let damageType = options.type ?? this.getEffectiveMoveType(attackerTrainer, attacker, move) ?? "Typeless"
+	
+			let burned = attacker.hasStatus("burn")
+			if (burned && category === "Physical"){
+				power *= 0.5
+			}
+	
+			//Note: this doesn't mean the attack stat specifically.
+			//If the pokemon uses a special move, this represents the special attack stat.
+			let atk, def
+			if (category === "Physical"){
+				atk = attacker.getEffectiveStat("attack")
+				def = defender.getEffectiveStat("defense")
+			} else if (category === "Special") {
+				atk = attacker.getEffectiveStat("specialAttack")
+				def = defender.getEffectiveStat("specialDefense")
+			} else if (category === "Status") {
+				//This should never run
+				atk = attacker.getEffectiveStat("attack")
+				def = defender.getEffectiveStat("defense")
+			} else {
+				console.warn("UNKNOWN CATEGORY", category)
+			}
 
-		//Tinted Lens powers up not very effective moves
-		if (typeMult <= 0.5 && attacker.hasAbility("Tinted Lens")){
-			damage *= 2
+			//Thick Fat reduces Fire & Ice atk
+			if (
+				(damageType === "Fire" || damageType === "Ice") &&
+				defender.hasAbility("Thick Fat")
+			){
+				atk *= 0.5
+			}
+	
+			if (damage === undefined){
+				damage = (attacker.level * 2 / 5 + 2) * power * atk / def / 50 + 2
+			}
+			//STAB
+			if (attacker.getEffectiveTypes().includes(damageType)){
+				damage *= 1.5
+			}
+			let typeMult = getSuperEffectiveMult(damageType, defender.getEffectiveTypes())
+			damage *= typeMult
+	
+			if ("damageMult" in options){
+				damage *= options.damageMult
+			}
+	
+			//Tinted Lens powers up not very effective moves
+			if (typeMult <= 0.5 && attacker.hasAbility("Tinted Lens")){
+				damage *= 2
+			}
+			
+			//I'm going to reduce how much damage things deal across the board, just a smidge.
+			damage *= 0.8
 		}
-		
-		//I'm going to reduce how much damage things deal across the board, just a smidge.
-		damage *= 0.8
 
 		//Damage can be set to a specific value
 		if (options.fixed && options.damage !== undefined){
@@ -1894,6 +1980,28 @@ class Round{
 						stat: "speed",
 						amount: 2
 					}, defender.trainer, defender, undefined)
+				}
+				//Tangling Hair
+				if (defender.hasAbility("Tangling Hair")){
+					if (attacker !== defender && move?.tags?.includes("makes-contact")){
+						attacker.addStatusEffect({
+							name: "tangling-hair-weakened",
+							type: "stat",
+							class: "debuff",
+							stat: "speed",
+							amount: -1
+						}, defender.trainer, defender, undefined)
+					}
+				}
+				//Static
+				if (defender.hasAbility("Static")){
+					if (
+						attacker !== defender &&
+						move?.tags?.includes("makes-contact") &&
+						Math.random() < 0.3
+					){
+						attacker.addStatusEffect("paralyzed", attackerTrainer, attacker, undefined)
+					}
 				}
 			}
 		}

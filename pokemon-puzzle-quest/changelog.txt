@@ -1,13 +1,17 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-4/24 (23.9k lines):
-	- Added Bagon, Rockruff
-	- Added Pluck, Dragon Breath, Rock Throw, Air Cutter
+4/25 (24.0k lines):
+	- Added Sand Veil, Tangling Hair, Sand Force, Gluttony, Thick Fat, Sniper, Static
+
+4/24 (24.0k lines):
+	- Added Bagon, Rockruff, Oricorio, Diglett-Alola
+	- Added Pluck, Dragon Breath, Rock Throw, Air Cutter, Metal Claw
 	- Added Big Pecks, Overcoat, Weak Armor, Rock Head, Steadfast
 	- Recoded how recoil damage is done to be consistent
 	- Oops, Haze was missing a name/description!
 	- Added a trainer battle to 3-2
-	- Added Oricorio, which I think deserves its own entry here for being the first pokemon with forms.
+	- Added a whole bunch of code to deal with forms. I'm not looking forward to any more forms.
+	- Fixed an issue where if a PC box was set to snap to grid, you could place pokemon on grid coordinates outside of the avilable area.
 
 4/23 (23.0k lines):
 	- Added Rufflet, Vullaby

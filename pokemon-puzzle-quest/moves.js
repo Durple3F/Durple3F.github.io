@@ -36,8 +36,8 @@ const pokemonMoveData = {
 		accuracy: 95,
 		rechargeTurns: 1,
 		energy: {
-			// blue: 12,
-			// yellow: 4
+			blue: 10,
+			yellow: 4
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Air Cutter.mp3"
@@ -67,6 +67,7 @@ const pokemonMoveData = {
 		type: "Dark",
 		category: "Physical",
 		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
 		pp: 10,
 		power: 40, //Originally 60
 		accuracy: 100,
@@ -93,6 +94,7 @@ const pokemonMoveData = {
 		type: "Ghost",
 		category: "Physical",
 		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
 		pp: 15,
 		power: 30,
 		accuracy: 100,
@@ -196,7 +198,7 @@ const pokemonMoveData = {
 		type: "Normal",
 		category: "Physical",
 		strategy: "special",
-		tags: ["damage-dealing"],
+		tags: ["damage-dealing", "makes-contact"],
 		pp: 10,
 		power: null,
 		accuracy: null,
@@ -256,6 +258,7 @@ const pokemonMoveData = {
 		type: "Dark",
 		category: "Physical",
 		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
 		pp: 25,
 		power: 60,
 		accuracy: 100,
@@ -325,6 +328,7 @@ const pokemonMoveData = {
 		type: "Bug",
 		category: "Physical",
 		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
 		pp: 20,
 		power: 60,
 		accuracy: 100,
@@ -518,6 +522,7 @@ const pokemonMoveData = {
 		type: "Normal",
 		category: "Physical",
 		strategy: "special",
+		tags: ["damage-dealing", "makes-contact"],
 		pp: 25,
 		power: 60,
 		accuracy: 100,
@@ -887,6 +892,7 @@ const pokemonMoveData = {
 		type: "Normal",
 		category: "Physical",
 		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
 		pp: 10,
 		power: 40,
 		accuracy: 100,
@@ -1050,6 +1056,7 @@ const pokemonMoveData = {
 		type: "Normal",
 		category: "Physical",
 		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
 		pp: 20,
 		power: 15,
 		accuracy: 85,
@@ -1105,6 +1112,7 @@ const pokemonMoveData = {
 		type: "Normal",
 		category: "Physical",
 		strategy: "special",
+		tags: ["damage-dealing", "makes-contact"],
 		pp: 15,
 		power: 18,
 		accuracy: 80,
@@ -1371,6 +1379,7 @@ const pokemonMoveData = {
 		type: "Normal",
 		category: "Physical",
 		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
 		pp: 15,
 		power: 80,
 		accuracy: 90,
@@ -1431,6 +1440,7 @@ const pokemonMoveData = {
 		type: "Bug",
 		category: "Special",
 		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
 		pp: 20,
 		power: 20,
 		accuracy: 100,
@@ -1518,6 +1528,7 @@ const pokemonMoveData = {
 		type: "Ghost",
 		category: "Physical",
 		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
 		pp: 30,
 		power: 30,
 		accuracy: 100,
@@ -1547,7 +1558,7 @@ const pokemonMoveData = {
 		type: "Fighting",
 		category: "Physical",
 		strategy: "special",
-		tags: ["damage-dealing"],
+		tags: ["damage-dealing", "makes-contact"],
 		pp: 20,
 		power: 0,
 		accuracy: 100,
@@ -1642,6 +1653,42 @@ const pokemonMoveData = {
 			{ type: "multiply-numbers" },
 			{ type: "load-value", value: 1 },
 			{ type: "heal", target: "user", amount: -2, min: -1 },
+		],
+	},
+	"Metal Claw": {
+		name: "Metal Claw",
+		type: "Steel",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 35,
+		power: 50,
+		accuracy: 95,
+		rechargeTurns: 1,
+		energy: {
+			yellow: 6,
+			blue: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Metal Claw.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "random-number", min: 1, max: 10 },
+			{ type: "load-value", value: 6 },
+			{ type: "jump-if-less-than", jumpTo: Infinity },
+			{
+				type: "apply-debuff", target: "user", debuff: {
+					type: "stat",
+					stat: "attack",
+					class: "buff",
+					amount: 1
+				}
+			}
 		],
 	},
 	"Minimize": {
@@ -1756,6 +1803,7 @@ const pokemonMoveData = {
 		type: "Electric",
 		category: "Physical",
 		strategy: "debuff-opponent",
+		tags: ["damage-dealing", "makes-contact"],
 		pp: 20,
 		power: 20,
 		accuracy: 100,
@@ -1769,6 +1817,7 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
+			//This isn't an additional effect because I say so
 			{ type: "apply-status-effect", statusEffect: "paralyzed", target: "opponent" }
 		],
 	},
@@ -1801,6 +1850,7 @@ const pokemonMoveData = {
 		type: "Dark",
 		category: "Physical",
 		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
 		pp: 10,
 		power: 50,
 		accuracy: 100,
@@ -1828,6 +1878,7 @@ const pokemonMoveData = {
 		type: "Flying",
 		category: "Physical",
 		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
 		pp: 35,
 		power: 35,
 		accuracy: 100,
@@ -1880,6 +1931,7 @@ const pokemonMoveData = {
 		type: "Flying",
 		category: "Physical",
 		strategy: "special",
+		tags: ["damage-dealing", "makes-contact"],
 		pp: 20,
 		power: 60,
 		accuracy: 100,
@@ -1913,6 +1965,7 @@ const pokemonMoveData = {
 		type: "Poison",
 		category: "Physical",
 		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
 		pp: 15,
 		power: 50,
 		accuracy: 100,
@@ -2020,6 +2073,7 @@ const pokemonMoveData = {
 		type: "Normal",
 		category: "Physical",
 		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
 		pp: 35,
 		power: 40,
 		accuracy: 100,
@@ -2099,6 +2153,7 @@ const pokemonMoveData = {
 		type: "Dark",
 		category: "Physical",
 		strategy: "special",
+		tags: ["damage-dealing", "makes-contact"],
 		pp: 20,
 		power: 40,
 		accuracy: 100,
@@ -2141,6 +2196,7 @@ const pokemonMoveData = {
 		type: "Normal",
 		category: "Physical",
 		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
 		pp: 30,
 		power: 40,
 		accuracy: 100,
@@ -2194,6 +2250,7 @@ const pokemonMoveData = {
 		type: "Fighting",
 		category: "Physical",
 		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
 		tags: [],
 		pp: 15,
 		power: 40,
@@ -2298,6 +2355,7 @@ const pokemonMoveData = {
 		type: "Normal",
 		category: "Physical",
 		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
 		pp: 35,
 		power: 40,
 		accuracy: 100,
@@ -2319,7 +2377,7 @@ const pokemonMoveData = {
 		type: "Fighting",
 		category: "Physical",
 		strategy: "special",
-		tags: ["damage-dealing"],
+		tags: ["damage-dealing", "makes-contact"],
 		pp: 20,
 		power: null,
 		accuracy: 100,
@@ -2342,6 +2400,7 @@ const pokemonMoveData = {
 		type: "Ghost",
 		category: "Physical",
 		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
 		pp: 30,
 		power: 40,
 		accuracy: 100,
@@ -2400,7 +2459,12 @@ const pokemonMoveData = {
 		accuracy: null,
 		rechargeTurns: 1,
 		energy: {
-			
+			red: 3,
+			orange: 3,
+			yellow: 3,
+			green: 3,
+			blue: 3,
+			purple: 3,
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Sketch part 1.mp3"
@@ -2452,6 +2516,7 @@ const pokemonMoveData = {
 		type: "Typeless",
 		category: "Physical",
 		strategy: "last-priority",
+		tags: ["damage-dealing", "makes-contact"],
 		pp: 1,
 		power: 50,
 		rechargeTurns: 0,
@@ -2501,7 +2566,7 @@ const pokemonMoveData = {
 		type: "Normal",
 		category: "Physical",
 		strategy: "special",
-		tags: ["damage-dealing"],
+		tags: ["damage-dealing", "makes-contact"],
 		pp: 10,
 		power: null,
 		accuracy: 90,
@@ -2590,6 +2655,7 @@ const pokemonMoveData = {
 		type: "Normal",
 		category: "Physical",
 		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
 		pp: 35,
 		power: 40,
 		accuracy: 100,
@@ -2733,6 +2799,7 @@ const pokemonMoveData = {
 		type: "Normal",
 		category: "Physical",
 		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
 		pp: 30,
 		power: 55,
 		accuracy: 100,
@@ -2790,6 +2857,7 @@ const pokemonMoveData = {
 		type: "Flying",
 		category: "Physical",
 		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
 		pp: 35,
 		power: 60,
 		accuracy: 100,
@@ -2821,6 +2889,7 @@ const pokemonMoveData = {
 		type: "Normal",
 		category: "Physical",
 		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
 		pp: 20,
 		power: 15,
 		accuracy: 90,
@@ -2871,10 +2940,13 @@ for (let moveName in pokemonMoveData){
 	if (!move.id){
 		move.id = moveName
 	}
-	if (move.power){
+	if (move.power && !move.tags.includes("damage-dealing")){
 		move.tags.push("damage-dealing")
 	}
-	if (move.additionalEffects && move.additionalEffects.length){
+	if (move.additionalEffects &&
+		move.additionalEffects.length &&
+		!move.tags.includes("has-additional-effects")
+	){
 		move.tags.push("has-additional-effects")
 	}
 }

@@ -665,6 +665,17 @@ function startScene(name, options) {
 					let maxBoxY = currentBox.maxY
 					let shouldUseSlots = currentBox.useSlots
 
+					//Clamp coordinates
+					let tooLeft = left < minBoxX
+					let tooTop = top < minBoxY
+					let tooRight = left > maxBoxX
+					let tooBottom = top > maxBoxY
+					if (tooLeft) left = minBoxX
+					if (tooTop) top = minBoxY
+					if (tooRight) left = maxBoxX
+					if (tooBottom) top = maxBoxY
+
+					//If there are slots, figure out the coords closest to the given coords.
 					if (shouldUseSlots) {
 						let slotNumbers = determinePCBoxSlotNumber(currentBox, left, top)
 						let otherPokemonInSameSlot = currentBoxPokemon.filter(boxPokemon => {
@@ -690,15 +701,6 @@ function startScene(name, options) {
 							left = coords[0]
 							top = coords[1]
 						}
-					} else {
-						let tooLeft = left < minBoxX
-						let tooTop = top < minBoxY
-						let tooRight = left > maxBoxX
-						let tooBottom = top > maxBoxY
-						if (tooLeft) left = minBoxX
-						if (tooTop) top = minBoxY
-						if (tooRight) left = maxBoxX
-						if (tooBottom) top = maxBoxY
 					}
 
 					//Don't let the player remove their last pokemon
