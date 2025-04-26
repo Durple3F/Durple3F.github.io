@@ -1683,20 +1683,25 @@ class Round{
 			let selected = this.selectedTiles
 			let count = this.currentlySelecting.min
 			let waitTime = 200
-			for (let i = selected.length; i < count; i++){
-				promise = promise.then(() => delay(waitTime))
-				.then(() => {
+			promise = promise.then(() => delay(waitTime))
+			const selectTile = () => {
+				promise = promise.then(() => {
 					//TODO make the computer's choices smart again!
 					//for now they just random
 					let pickable = this.board.tilesOnScreen()
 					let randomTile = randomChoice(pickable)
 					this.selectTile(randomTile, this.activePlayerIndex)
+
+					delay(waitTime).then(() => {
+						if (selected.length < count){
+							selectTile()
+						} else {
+							this.submitSelection()
+						}
+					})
 				})
 			}
-			promise = promise.then(() => delay(waitTime))
-			.then(() => {
-				this.submitSelection()
-			})
+			selectTile()
 		}
 	}
 	computerMakeSwap(){

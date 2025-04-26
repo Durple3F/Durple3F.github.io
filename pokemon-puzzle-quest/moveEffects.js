@@ -79,6 +79,9 @@ const pokemonMoveEffects = {
 			let promise = options.promise
 			let target = options.target
 			let count = params.count ?? 1
+			if (isNaN(count)){
+				count = 1
+			}
 			let max = params.max ?? count
 			let minWidth = params.minWidth ?? null
 			let maxWidth = params.maxWidth ?? null
@@ -184,7 +187,6 @@ const pokemonMoveEffects = {
 				board.add(tile)
 				locationMap.set(tile, coord)
 			})
-			console.log(unfilledCoords)
 
 			game.animateMoveTiles(locationMap, 250)
 			.then(() => {

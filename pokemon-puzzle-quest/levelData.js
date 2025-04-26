@@ -976,6 +976,37 @@ const levelData = [
 			// { type: "fight", trainer: 1 },
 		]
 	},
+	//3-3:
+	{
+		id: "Route 3-4",
+		category: "Route 3",
+		name: "Route 3-4",
+		music: "SM Wild Pokemon Battle",
+		icon: "4",
+		trainers: [
+			{
+				isWild: true,
+				pokemon: [
+					{ id: "Cottonee", levelMin: 100, levelMax: 1000, activeMoves: ["Fairy Wind"] },
+				]
+			},
+			{
+				name: "Makana",
+				class: "Ace-Trainer-Gen7",
+				pokemon: [
+					{ id: "Rockruff", level: 13 },
+					{ id: "Slowpoke", level: 14 },
+				]
+			},
+		],
+		effects: [
+			{ type: "fight", trainer: 0 },
+			// { type: "jump-if-lost", jumpTo: Infinity },
+			// { type: "dialogue", source: "route-3-2-dialogue" },
+			// { type: "change-music", music: "SM Trainer Battle" },
+			// { type: "fight", trainer: 1 },
+		]
+	},
 ]
 
 for (let categoryId in levelCategoryData){

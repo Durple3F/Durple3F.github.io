@@ -8,3 +8,5 @@ TODO
 - Add an animation when a shiny pokemon enters
 - Add a section in the pokedex where you can see how many you've caught/seen/etc
 - Pokedex entries
+- For some reason the loading bar at the beginning gets big long why does it do that why do they always do this to me
+- Fairy Wind caused a crash
