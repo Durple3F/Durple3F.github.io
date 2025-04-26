@@ -405,10 +405,14 @@ class Round{
 			promise = promise.then(() => {
 				return this.animateSwitchLocations(tile1, tile2).promise
 			})
+			// .then(() => {
+			// 	this.currentlyReversingSwap = false
+			// })
 		}
 		//This gets triggered once a failed match is finished reversing
 		//because reversing a swap will of course also create 0 matches
 		else if (this.currentlyReversingSwap){
+			this.currentlyCarryingOutSwap = false
 			this.currentlyReversingSwap = false
 		}
 		//This is the real one that triggers only when matches are made
