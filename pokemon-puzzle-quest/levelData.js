@@ -57,7 +57,7 @@ const levelCategoryData = {
 }
 
 const levelData = [
-	// Rival Battle 1
+	//1-1: Rival Battle 1
 	{
 		id: "Route 1-1",
 		category: "Route 1",
@@ -130,7 +130,7 @@ const levelData = [
 			{ type: "dialogue", source: "rival-battle-1-dialogue-lost", label: "lost" },
 		]
 	},
-	//Caterpie, Pikipek, Pichu? | Jimmy
+	//1-2: Caterpie, Pikipek, Pichu? | Jimmy
 	{
 		id: "Route 1-2",
 		category: "Route 1",
@@ -196,7 +196,7 @@ const levelData = [
 			{ type: "jump-if-lost", jumpTo: Infinity },
 		]
 	},
-	//Spinarak, Ledyba, Grubbin? | Audrey
+	//1-3: Spinarak, Ledyba, Grubbin? | Audrey
 	{
 		id: "Route 1-3",
 		category: "Route 1",
@@ -262,7 +262,7 @@ const levelData = [
 			{ type: "jump-if-lost", jumpTo: Infinity }
 		]
 	},
-	// Rival Battle 2
+	//1-4: Rival Battle 2
 	{
 		id: "Route 1-4",
 		category: "Route 1",
@@ -347,7 +347,7 @@ const levelData = [
 			{ type: "jump", jumpTo: Infinity },
 		]
 	},
-	//Wingull, Yungoos, Ratatta-Alola, Slowpoke? | Kevin / Madison
+	//1-5: Wingull, Yungoos, Ratatta-Alola, Slowpoke? | Kevin / Madison
 	{
 		id: "Route 1-5",
 		category: "Route 1",
@@ -441,12 +441,11 @@ const levelData = [
 			{ type: "jump", jumpTo: Infinity },
 		]
 	},
-	//Magnemite, Meowth-Alola, Grimer-Alola + Lillie Dialogue
+	//1-6: Magnemite, Meowth-Alola, Grimer-Alola + Lillie Dialogue
 	{
 		id: "Route 1-6",
 		category: "Route 1",
 		name: "Route 1-6",
-		description: "route-1-6-description",
 		icon: "6",
 		trainers: [
 			{
@@ -471,12 +470,11 @@ const levelData = [
 			{ type: "save-player-info", key: "unlocked-pokedex", value: -1 }
 		]
 	},
-	//Trainer school teacher's challenge
+	//1-7 Trainer school teacher's challenge
 	{
 		id: "Route 1-7",
 		category: "Route 1",
 		name: "Route 1-7",
-		description: "route-1-7-description",
 		icon: "7",
 		music: "SM Trainers' School",
 		trainers: [

@@ -211,6 +211,9 @@ function startScene(name, options) {
 
 			let shownCategory
 			const changeCategory = routeName => {
+				if (shownCategory === routeName){
+					return
+				}
 				const change = () => {
 					if (shownCategory === routeName) return
 					let routeLevels = getLevelsInCategory(routeName)
@@ -825,7 +828,7 @@ function startScene(name, options) {
 				let section = $(`<div class='pokemon-section'></div>`)
 
 				section.click(() => {
-					viewPokemonInfo(pokemon, { pure: true, dex: true })
+					viewPokemonInfo(pokemon, { pure: true, dex: true, canSwitchActiveMoves: false })
 				})
 
 				let imageSection = $(`<div class='pokemon-image-section'>`)
@@ -1341,6 +1344,8 @@ function choosePokemon(message, pokemon, minChooseable = 1, maxChooseable = 1) {
 function viewPokemonInfo(pokemon, options = {}) {
 	let resolvePromise
 	let promise = new Promise(resolve => resolvePromise = resolve)
+	let canSwitchActiveMoves = options.canSwitchActiveMoves ?? true
+	console.log(pokemon, options)
 
 	let modal = $("#modal")
 	clearModal(modal)
@@ -1351,7 +1356,8 @@ function viewPokemonInfo(pokemon, options = {}) {
 	let btn = $(`<button class='btn btn-primary'>Done</button>`)
 	modal.find(".modal-footer").append(btn)
 
-	let nameTag = $(`<span>${pokemon.name}</span>`)
+	let message = options.message ?? pokemon.name
+	let nameTag = $(`<span>${message}</span>`)
 	let title = modal.find(".modal-title")
 	title.append(nameTag).addClass("display-6")
 	if (options.canRename) {
@@ -1488,21 +1494,28 @@ function viewPokemonInfo(pokemon, options = {}) {
 	}
 
 	let moveSection = content.children(".move-section")
-	for (let i = 0; i < pokemon.moves.length; i++) {
-		let move = pokemon.moves[i]
-		if (move.name === "Struggle") continue
 
-		let available = pokemon.movesUnlockedMap[i]
+	for (let move of pokemon.moves) {
+		if (move.name === "Struggle") continue
+		
+		let added = false
+		let i = pokemon.moves.indexOf(move)
+		let moveIsUnlocked = pokemon.movesUnlockedMap[i]
 		let requirements = pokemon.data.learnset[i].unlock
 		//If move is not available and the move should be hidden, skip the rest of this
-		if (!available && requirements.type === "hidden") {
+		if (!moveIsUnlocked && requirements.type === "hidden") {
 			continue
 		}
 
 		let moveTag = getMoveHTML(move, true)
+		if (options.highlightedMoves?.includes(move)){
+			added = true
+			moveSection.prepend(moveTag)
+		}
 
 		//If this isn't even really a pokemon, don't bother marking things as available/not.
 		if (options.pure) {
+			added = true
 			moveSection.append(moveTag)
 			moveTag.popover({
 				placement: "left",
@@ -1512,14 +1525,15 @@ function viewPokemonInfo(pokemon, options = {}) {
 			continue
 		}
 
-		if (!available) {
+		if (!moveIsUnlocked) {
 			moveTag.addClass("unavailable")
 			moveTag.popover({
 				placement: "left",
 				trigger: "hover",
 				content: getReasonPokemonDoesntMeetRequirements(pokemon, move)
 			})
-		} else {
+		}
+		if (moveIsUnlocked && canSwitchActiveMoves) {
 			moveTag.css("cursor", "pointer")
 			moveTag.click(function () {
 				toggleSelect(move, moveTag)
@@ -1530,8 +1544,13 @@ function viewPokemonInfo(pokemon, options = {}) {
 		if (activeIndex !== -1) {
 			moveTag.addClass('active-move')
 		}
+		if (activeIndex === -1 && options.showOnlyActiveMoves){
+			continue
+		}
 
-		moveSection.append(moveTag)
+		if (!added){
+			moveSection.append(moveTag)
+		}
 	}
 	content.append(moveSection)
 

@@ -1,11 +1,12 @@
 {
-	"route-1-6-description": "After your battle with Hau, you continue towards Hau'oli City.",
-	"route-1-7-description": "You reach the trainers' school with Lillie, and get mistaken for somebody else.",
 	
 	"initiative-tutorial": "Initiative<br>Each turn, both Pokémon gain Initiative based on their speed stats. When a player matches 4 or more tiles in a row, they get a free turn.",
 	"choose-pokemon": "Choose Pokémon",
 	"error-cant-switch-status": "A status effect prevents this Pokémon from switching out.",
 	"error-cant-switch-fear-frozen": "Your active Pokémon is too frozen in fear to retreat!",
+	
+	"new-moves-message-plural": "%c% learned new moves!",
+	"new-moves-message-single": "%c% learned a new move!",
 
 	"pokemon-move-requirement-level": "Your Pokémon needs to be at least level %c% to use this move.",
 	"pokemon-move-requirement-level-error": "Your Pokémon needs to be at least... wait, they're high enough level. Huh????",
@@ -622,7 +623,7 @@
 				{ "type": "get-speaker", "name": "Ikue", "class": "Pokemon-Breeder-Gen7-F" },
 				{ "type": "come-in-from-offscreen", "speaker": "Ikue", "direction": "left", "duration": 1000, "waitDuration": 0 },
 				{ "type": "text", "speaker": "Ikue", "text": "Hey! You, uh— trainer person! You look like you've got some strong Pokémon! I need your help, come on!" },
-				{ "type": "text", "speaker": "Ikue", "text": "A bunch of those weird Skull guys are making a ruckus on the berry farm! Pa's tring to drive them out, but they just won't take a hint!" },
+				{ "type": "text", "speaker": "Ikue", "text": "A bunch of those weird Skull guys are making a ruckus on the berry farm! Pa's trying to drive them out, but they just won't take a hint!" },
 				{ "type": "go-out-from-onscreen", "speaker": "Ikue", "direction": "right", "duration": 1000, "waitDuration": 0 },
 				{ "type": "animate", "selector": "#dialogue", "css": {
 					"opacity": 0
@@ -1849,10 +1850,12 @@
 			"name": "Route 1-5"
 		},
 		"Route 1-6": {
-			"name": "Route 1-6"
+			"name": "Route 1-6",
+			"description": "After your battle with Hau, you continue towards Hau'oli City."
 		},
 		"Route 1-7": {
-			"name": "Route 1-7"
+			"name": "Route 1-7",
+			"description": "You reach the trainers' school with Lillie, and get mistaken for somebody else."
 		},
 		"Route 2-1": {
 			"name": "Route 2-1",

@@ -701,6 +701,7 @@ class Round{
 				for (let match of matches){
 					for (let tile of match){
 						tiles.push(tile)
+						
 						//If the tile has Static, explode adjacent tiles as well.
 						let staticStatuses = tile.statusEffects.filter(s => {
 							return s.name === "Static" && s.sourceTrainer === activeTrainer
@@ -710,7 +711,8 @@ class Round{
 							let y1 = tile.y
 							let staticCount = staticStatuses.length
 							let nearby = contents.filter(tile2 => {
-								return distance(x1, y1, tile2.x, tile2.y) <= staticCount
+								let d = distance(x1, y1, tile2.x, tile2.y)
+								return d <= staticCount && d >= 1
 							})
 							nearby.forEach(tile2 => tiles.push(tile2))
 						}
@@ -1481,14 +1483,17 @@ class Round{
 				if (newLevel > p.level){
 					updatedPokemon.push(p)
 					let changes = p.changeLevel(newLevel)
-					for (let moveIndex of changes.unlocked){
-						let learn = p.data.learnset[moveIndex]
-						let move = pokemonMoveData[learn.name]
-						let obj = {
+					if (changes.unlocked.length){
+						let learned = {
 							pokemon: p,
-							move: move
+							moves: []
 						}
-						learnedMoves.push(obj)
+						for (let moveIndex of changes.unlocked){
+							let learn = p.data.learnset[moveIndex]
+							let move = pokemonMoveData[learn.name]
+							learned.moves.push(move)
+						}
+						learnedMoves.push(learned)
 					}
 				}
 
@@ -1498,21 +1503,11 @@ class Round{
 				}
 			}
 			
-			savePokemon(p)
+			// savePokemon(p)
 		}
 		let announcementBox = $("<div class='d-flex text-center flex-column align-items-stretch'></div>")
 		body.append(announcementBox)
-		for (let announcement of learnedMoves){
-			let name = announcement.pokemon.name
-			let move = announcement.move
-			let moveName = getLocaleString("name", lang, ["moves", move.name])
-			let text = `${name} learned ${moveName}!`
-			createAnnouncement("general", text)
-			console.log(move)
-			let anTag = $("<div></div>")
-			anTag.text(text)
-			announcementBox.append(anTag)
-		}
+
 		let promise = new Promise(resolve => {
 			modal.modal("show")
 			btn.click(() => {
@@ -1522,6 +1517,37 @@ class Round{
 				resolve()
 			})
 		})
+
+		for (let announcement of learnedMoves){
+			let pokemon = announcement.pokemon
+			let name = pokemon.name
+			let moves = announcement.moves
+			for (let move of moves){
+				let moveName = getLocaleString("name", lang, ["moves", move.name])
+				let text = `${name} learned ${moveName}!`
+				createAnnouncement("general", text)
+				let anTag = $("<div></div>")
+				anTag.text(text)
+				announcementBox.append(anTag)
+			}
+			
+			let notActive = moves.filter(move => {
+				return pokemon.activeMoves.indexOf(move) === -1
+			})
+			if (notActive.length){
+				let messageKey = notActive.length !== 1 ? "new-moves-message-plural" : "new-moves-message-single"
+				let message = getLocaleString(messageKey, lang)
+				message = applyReplacements(message, [pokemon.name])
+				promise = promise.then(() => {
+					let options = {
+						message: message,
+						showOnlyActiveMoves: true,
+						highlightedMoves: notActive
+					}
+					return viewPokemonInfo(pokemon, options)
+				})
+			}
+		}
 
 		//Check if any pokemon should evolve
 		let canEvolve = updatedPokemon.filter(p => p.data.evolutions.length)

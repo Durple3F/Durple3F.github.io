@@ -1,5 +1,12 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
+4/26 (24.5k lines):
+	- Rewrote the code used when having the CPU pick tiles, hopefully it's less prone to error now.
+	- Multiple instances of Static now stack
+	- You should be able to make a failed swap and then make moves now.
+	- When a pokemon learns new moves after a battle, if those moves aren't automatically equipped, the game now shows you that pokemon's profile screen so you can switch the moves on/off. It even puts the new ones at the top! :)
+	- Now you can't switch which route is shown if you're already showing that route.
+
 4/25 (24.4k lines):
 	- Added Sand Veil, Tangling Hair, Sand Force, Gluttony, Thick Fat, Sniper, Static, Lightning Rod, Pickup, Technician, Rattled, Intimidate, Flash Fire, Justified, Synchronize, Magic Guard, Oblivious
 
