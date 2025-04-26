@@ -26,6 +26,10 @@ const abilityData = {
 	"Defiant": {
 		id: "Defiant"
 	},
+	//You get Fire power from being hit with Fire
+	"Flash Fire": {
+		id: "Flash Fire"
+	},
 	//You heal for energy that you don't gain due to being full
 	"Gluttony": {
 		id: "Gluttony"
@@ -38,6 +42,18 @@ const abilityData = {
 	"Hyper Cutter": {
 		id: "Hyper Cutter"
 	},
+	//Deals damage through Indestructible
+	"Infiltrator": {
+		id: "Infiltrator"
+	},
+	//Lower opponent attack on swap in
+	"Intimidate": {
+		id: "Intimidate"
+	},
+	//Can't have its initiative lowered
+	"Inner Focus": {
+		id: "Inner Focus"
+	},
 	//Literally just Vital Spirit again
 	"Insomnia": {
 		id: "Insomnia"
@@ -45,6 +61,10 @@ const abilityData = {
 	//Gives a bonus to specifically moves tagged with "punching"
 	"Iron Fist": {
 		id: "Iron Fist"
+	},
+	//Raises Attack on hit with dark move
+	"Justified": {
+		id: "Justified"
 	},
 	//Cost reductions to your moves from opponents are 50% as effective
 	"Keen Eye": {
@@ -54,9 +74,17 @@ const abilityData = {
 	"Leaf Guard": {
 		id: "Leaf Guard"
 	},
-	//Can't be confused
-	"Own Tempo": {
-		id: "Own Tempo"
+	//Makes yellow tiles more common
+	"Lightning Rod": {
+		id: "Lightning Rod"
+	},
+	//Prevents indirect damage
+	"Magic Guard": {
+		id: "Magic Guard"
+	},
+	//Can't have energy drained by other pokemon
+	"Oblivious": {
+		id: "Oblivious"
 	},
 	//Spore moves don't trigger
 	"Overcoat": {
@@ -65,6 +93,18 @@ const abilityData = {
 	//Increase grass power at low hp
 	"Overgrow": {
 		id: "Overgrow"
+	},
+	//Can't be confused
+	"Own Tempo": {
+		id: "Own Tempo"
+	},
+	//Get some energy from enemy 4-matches
+	"Pickup": {
+		id: "Pickup"
+	},
+	//Raises speed on getting hit with Bug Ghost or Dark moves
+	"Rattled": {
+		id: "Rattled"
 	},
 	//Prevents recoil damage
 	"Rock Head": {
@@ -106,9 +146,17 @@ const abilityData = {
 	"Steadfast": {
 		id: "Steadfast"
 	},
+	//Clones some statuses for the opponent
+	"Synchronize": {
+		id: "Synchronize"
+	},
 	//On damage that makes contact attacker is slowed
 	"Tangling Hair": {
 		id: "Tangling Hair"
+	},
+	//Powers up weak moves
+	"Technician": {
+		id: "Technician"
 	},
 	//Reduces stats during damage calc for Fire and Ice moves
 	"Thick Fat": {

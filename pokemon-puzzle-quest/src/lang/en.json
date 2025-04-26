@@ -1505,6 +1505,11 @@
 			"shortDescription": "Raises this Pokémon's Attack 1 stage when its opponent lowers its stats",
 			"longDescription": "When this Pokémon receives a debuff from another source that lowers its stats, its Attack is increased by 1 stage."
 		},
+		"Flash Fire": {
+			"name": "Flash Fire",
+			"shortDescription": "Raises Fire move power when hit with a Fire move",
+			"longDescription": "When this Pokémon is dealt damage by a Fire-type move, the power of Fire-type moves it uses is raised by 50%."
+		},
 		"Gluttony": {
 			"name": "Gluttony",
 			"shortDescription": "Heals when it's too full to gain energy",
@@ -1520,15 +1525,35 @@
 			"shortDescription": "Other Pokémon can't lower this Pokémon's Attack stages",
 			"longDescription": "Other Pokémon can't give this Pokémon status effects which lower its Attack stat by any number of stages."
 		},
+		"Infiltrator": {
+			"name": "Infiltrator",
+			"shortDescription": "This Pokémon can deal damage through Invulnerable",
+			"longDescription": "Damage from this Pokémon is able to pass through the Invulnerable status effect."
+		},
+		"Inner Focus": {
+			"name": "Inner Focus",
+			"shortDescription": "Can't have its initiative lowered",
+			"longDescription": "If an effect would set this Pokémon's initiative to a lower value, it's prevented."
+		},
 		"Insomnia": {
 			"name": "Insomnia",
 			"shortDescription": "Can't be put to sleep",
 			"longDescription": "This Pokémon can't be put to sleep during battle."
 		},
+		"Intimidate": {
+			"name": "Intimidate",
+			"shortDescription": "Lowers the enemy's Attack a stage when it enters.",
+			"longDescription": "When this Pokémon is put into play, it lowers the opponent's Attack by a stage."
+		},
 		"Iron Fist": {
 			"name": "Iron Fist",
 			"shortDescription": "This Pokémon's punching moves get +20% power",
 			"longDescription": "The power of punching moves used by this Pokémon are increased by 20%."
+		},
+		"Justified": {
+			"name": "Justified",
+			"shortDescription": "Raises Attack a stage when hit with a Dark-type move",
+			"longDescription": "When this Pokémon is dealt damage by a Dark-type move, its Attack is increased by a stage."
 		},
 		"Keen Eye": {
 			"name": "Keen Eye",
@@ -1539,6 +1564,21 @@
 			"name": "Leaf Guard",
 			"shortDescription": "Prevents receiving status effects from opponent based on green energy",
 			"longDescription": "If this Pokémon receives a status effect from another trainer, it has a chance to prevent it equal to 50% of how full its green energy is."
+		},
+		"Lightning Rod": {
+			"name": "Lightning Rod",
+			"shortDescription": "Electric tiles appear more often",
+			"longDescription": "As long as this Pokémon is the active Pokémon, the weight of Electric tiles is increased by 0.5. (The normal weight is 1)"
+		},
+		"Magic Guard": {
+			"name": "Magic Guard",
+			"shortDescription": "Prevents indirect damage",
+			"longDescription": "If this Pokémon would take non-fixed damage from something other than an effect of a move, that damage is reduced to 0."
+		},
+		"Oblivious": {
+			"name": "Oblivious",
+			"shortDescription": "Can't have energy drained by other Pokémon",
+			"longDescription": "If an effect of another Pokémon's move would remove energy from this Pokémon, that energy drain is reduced to 0."
 		},
 		"Overcoat": {
 			"name": "Overcoat",
@@ -1554,6 +1594,16 @@
 			"name": "Own Tempo",
 			"shortDescription": "Can't be confused",
 			"longDescription": "This Pokémon can't be confused during battle."
+		},
+		"Pickup": {
+			"name": "Pickup",
+			"shortDescription": "Gets some energy from the opponent's 4-in-a-row matches",
+			"longDescription": "When the opponent makes a 4-in-a-row match, this Pokémon gets some energy as well. The energy added is equal to 1/4 of the energy added by that match and any matches made simultaneously with it, rounded."
+		},
+		"Rattled": {
+			"name": "Rattled",
+			"shortDescription": "Raise Speed a stage when hit with Bug, Ghost, or Dark moves",
+			"longDescription": "Whenever this Pokémon is dealt Bug-, Ghost-, or Dark-type damage, its Speed is increased by 1 stage. This also triggers whenever another Pokémon uses Intimidate against this Pokémon."
 		},
 		"Rock Head": {
 			"name": "Rock Head",
@@ -1605,10 +1655,20 @@
 			"shortDescription": "Raises Speed a stage when its initiative is lowered",
 			"longDescription": "When this Pokémon's initiative is lowered, its Speed is increased by a stage."
 		},
+		"Synchronize": {
+			"name": "Synchronize",
+			"shortDescription": "Copies received Paralyze and Poisoned statuses for the opponent",
+			"longDescription": "When this Pokémon receives the Paralyze or Poisoned status effects from an effect of a move, the opponent also gets the same status."
+		},
 		"Tangling Hair": {
 			"name": "Tangling Hair",
 			"shortDescription": "Lowers an attacker's Speed when they make contact with this Pokémon",
 			"longDescription": "Whenever another Pokémon deals damage to this Pokémon through a move that makes contact, the attacker has their Speed reduced by a stage."
+		},
+		"Technician": {
+			"name": "Technician",
+			"shortDescription": "Moves with power 60 or less have their power raised 50%",
+			"longDescription": "Moves that this Pokémon uses which have a power of 60 or less have their power raised by 50%."
 		},
 		"Thick Fat": {
 			"name": "Thick Fat",

@@ -209,7 +209,8 @@ const pokemonMoveEffects = {
 			let damageOptions = {
 				from: moveUseObj.pokemon,
 				fromTrainer: moveUseObj.trainer,
-				move: moveUseObj.move
+				move: moveUseObj.move,
+				directDamage: true
 			}
 
 			if (params.toPokemon !== undefined) {
@@ -383,6 +384,17 @@ const pokemonMoveEffects = {
 			let move = moveUseObj.move
 			
 			target.addStatusEffect(statusEffect, trainer, pokemon, move)
+
+			if (
+				(statusEffect === "paralyzed" || statusEffect === "poisoned") && 
+				(target.hasAbility("Synchronize") || true)
+			){
+				let otherTrainer = game.trainers.find(t => t !== target.trainer)
+				let otherPokemon = otherTrainer.activePokemon
+				let status2 = window.structuredClone(effect.statusEffect)
+				otherPokemon.addStatusEffect(status2, trainer, pokemon, move)
+			}
+
 			resolve(statusEffect)
 		}
 	},
@@ -502,8 +514,14 @@ const pokemonMoveEffects = {
 		}
 	},
 	"gain-energy": {
+		hasTarget: true,
+		targetType: "trainer",
+		targetDefault: "user",
 		execute: (resolve, effect, params, game, options) => {
+			let moveUseObj = options.moveUse
 			let target = options.target
+			let pokemon = target.activePokemon
+			let fromPokemon = moveUseObj.pokemon
 			let energyColors = params.colors ?? []
 			let count = params.count ?? 1
 			let amounts = params.amounts ?? null
@@ -519,7 +537,17 @@ const pokemonMoveEffects = {
 				}
 			}
 
-			result = game.giveEnergy(amounts, target, target.activePokemon)
+			//Pokemon with Oblivious can't have their energy drained
+			if (pokemon !== fromPokemon && pokemon.hasAbility("Oblivious")){
+				for (let color in amounts){
+					let amount = amounts[color]
+					if (amount < 0){
+						amounts[color] = 0
+					}
+				}
+			}
+
+			result = game.giveEnergy(amounts, target, pokemon)
 			resolve(result)
 		}
 	},
@@ -1198,8 +1226,15 @@ const pokemonMoveEffects = {
 			let oldInitiative = game.initiativeValues[index]
 			let initiative = Math.floor(params.initiative ?? 0)
 			let change = initiative - oldInitiative
-			game.initiativeValues[index] = initiative
-			console.log(initiative, index)
+			let prevented = false
+
+			if (change < 0 && pokemon.hasAbility("Inner Focus")){
+				prevented = true
+			}
+
+			if (!prevented){
+				game.initiativeValues[index] = initiative
+			}
 
 			//Pokemon with Steadfast get a stat boost on having their initiative lowered
 			if (change < 0 && pokemon.hasAbility("Steadfast")){

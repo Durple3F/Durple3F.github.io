@@ -82,11 +82,6 @@ Missing Evolutions:
 	Crabrawler
 
 Missing Abilities:
-	Pikachu
-	Zubat
-	Meowth-Alola
-	Growlithe
-	Abra
 	Slowpoke
 	Magnemite
 	Grimer-Alola

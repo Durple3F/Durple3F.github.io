@@ -466,6 +466,7 @@ class Round{
 		let otherTrainer = this.trainers[this.inactivePlayerIndex]
 		let otherPokemon = otherTrainer.activePokemon
 
+		let madeFourMatch = matches.some(match => match.length >= 4)
 		//On a 5-match:
 		if (matches.some(match => match.length >= 5)){
 			//Anger Point gives benefits when the opponent makes a 5-match
@@ -533,6 +534,8 @@ class Round{
 
 		let energiesToAdd = []
 		let energy = getEmptyEnergy()
+		//It's possible for a pokemon to give its opponent energy
+		let energyToOpponent = getEmptyEnergy()
 		let tiles = []
 		let matchTotals = getEmptyTileTypeTable()
 		for (let match of matches){
@@ -572,7 +575,13 @@ class Round{
 			energy.green += Math.floor(greatest / 3)
 		}
 
+		if (madeFourMatch && otherPokemon.hasAbility("Pickup")){
+			let toAdd = multiplyEnergies(energy, 0.25, "round")
+			energyToOpponent = addEnergies(energyToOpponent, toAdd)
+		}
+
 		this.giveEnergy(energy, activeTrainer, activePokemon)
+		this.giveEnergy(energyToOpponent, otherTrainer, otherPokemon)
 
 		//Deal with status effects that do something when those tiles are matched
 		for (let tile of tiles){
@@ -847,9 +856,6 @@ class Round{
 		for (let status of statusEffects){
 			if (status.type !== "status") continue
 			let statusName = status.name
-			if (statusName === "burn"){
-				activePokemon.hp -= Math.ceil(activePokemon.maxhp / 16)
-			}
 			if (statusName === "poisoned"){
 				activePokemon.hp -= Math.ceil(activePokemon.maxhp / 16)
 			}
@@ -1827,6 +1833,7 @@ class Round{
 		return options
 	}
 
+	//DAMAGE CALCULATION
 	dealDamage(options){
 		let result = {}
 		let attackerTrainer = options.fromTrainer
@@ -1847,9 +1854,11 @@ class Round{
 			defender = defenderTrainer.activePokemon
 		}
 
+		let move = options.move
 		let damage = options.damage
+		let category = "Physical"
+		let damageType = "Typeless"
 		if (!options.fixed){
-			let move = options.move
 			if (!move){
 				let trainerIndex = this.trainers.indexOf(attackerTrainer)
 				let possibleMoves = this.getAvailableMoves(trainerIndex)
@@ -1858,14 +1867,14 @@ class Round{
 				console.trace()
 			}
 
-			let power = options.power ?? move.power
+			let power = options.power ?? move?.power ?? 0
 			if (options.additionalPower !== undefined){
 				power += options.additionalPower
 			}
 			power = this.getEffectivePower(attackerTrainer, attacker, move, power)
 			
-			let category = options.category ?? move.category ?? "Physical"
-			let damageType = options.type ?? this.getEffectiveMoveType(attackerTrainer, attacker, move) ?? "Typeless"
+			category = options.category ?? move?.category ?? category
+			damageType = options.type ?? this.getEffectiveMoveType(attackerTrainer, attacker, move) ?? damageType
 	
 			let burned = attacker.hasStatus("burn")
 			if (burned && category === "Physical"){
@@ -1920,6 +1929,11 @@ class Round{
 			damage *= 0.8
 		}
 
+		//Pokemon with Magic Guard take no indirect damage
+		if (!options.directDamage && damage > 0 && defender.hasAbility("Magic Guard")){
+			damage = 0
+		}
+
 		//Damage can be set to a specific value
 		if (options.fixed && options.damage !== undefined){
 			damage = options.damage
@@ -1932,13 +1946,18 @@ class Round{
 		damage = Math.round(damage)
 
 		//If the receiving Pokemon has Invulnerable, set damage dealt to 0.
-		let statusEffects = defender.statusEffects
+		let prevented = false
 		let isInvulnerable = defender.hasStatus("invulnerable")
 		if (isInvulnerable && attacker !== defender){
+			if (!attacker.hasAbility("Infiltrator")){
+				prevented = true
+			}
+		}
+		if (prevented){
 			damage = 0
-			result.damageDealt = 0
 		}
 		
+		result.damageDealt = damage
 		if (damage){
 			//On the off chance something ever does negative damage
 			let targetHp = defender.hp - damage
@@ -1946,7 +1965,6 @@ class Round{
 				damage = defender.hp - defender.maxhp
 			}
 			defender.hp -= damage
-			result.damageDealt = damage
 
 			if (damage > 0){
 				defender.gameRoundData.damagedThisTurn = true
@@ -1964,7 +1982,7 @@ class Round{
 					statusEffect.gameData.damageReceived += damage
 				})
 
-				//Weak Armor
+				//Weak Armor lowers defense but raises speed
 				if (defender.hasAbility("Weak Armor")){
 					defender.addStatusEffect({
 						name: "weak-armor-weakened",
@@ -1981,7 +1999,7 @@ class Round{
 						amount: 2
 					}, defender.trainer, defender, undefined)
 				}
-				//Tangling Hair
+				//Tangling Hair lowers the attacker's speed
 				if (defender.hasAbility("Tangling Hair")){
 					if (attacker !== defender && move?.tags?.includes("makes-contact")){
 						attacker.addStatusEffect({
@@ -1993,7 +2011,7 @@ class Round{
 						}, defender.trainer, defender, undefined)
 					}
 				}
-				//Static
+				//Static paralyzes the attacker sometimes
 				if (defender.hasAbility("Static")){
 					if (
 						attacker !== defender &&
@@ -2002,6 +2020,46 @@ class Round{
 					){
 						attacker.addStatusEffect("paralyzed", attackerTrainer, attacker, undefined)
 					}
+				}
+				//Rattled raises speed on Bug Dark or Ghost moves
+				if (defender.hasAbility("Rattled")){
+					if (damageType === "Bug" || damageType === "Ghost" || damageType === "Dark"){
+						defender.addStatusEffect({
+							name: "rattled-sped-up",
+							type: "stat",
+							class: "buff",
+							stat: "speed",
+							amount: 1
+						}, defender.trainer, defender, undefined)
+					}
+				}
+				//Flash Fire powers up Fire moves on being hit with Fire damage
+				if (damageType === "Fire" && defender.hasAbility("Flash Fire")){
+					defender.addStatusEffect({
+						name: "flash-fire-fired-up",
+						type: "power-alteration",
+						stacks: false,
+						volatile: true,
+						lostOnSwap: true,
+						lostOnBatonPass: true,
+						appliesTo: {
+							types: ["Fire"]
+						},
+						modification: {
+							change: 1.5,
+							operation: "multiply"
+						}
+					}, defender.trainer, defender, undefined)
+				}
+				//Justified increases Attack on being hit with Dark damage
+				if (damageType === "Dark" && defender.hasAbility("Justified")){
+					defender.addStatusEffect({
+						name: "justified-attack-up",
+						type: "stat",
+						class: "buff",
+						stat: "attack",
+						amount: 1
+					}, defender.trainer, defender, undefined)
 				}
 			}
 		}
@@ -2252,7 +2310,7 @@ class Round{
 		return cost
 	}
 	getEffectivePower(trainer, pokemon, move, power){
-		power = (power ?? move.power) || 0
+		power = (power ?? move?.power) || 0
 		let powerEffects = pokemon.getStatusesOfType("power-alteration")
 		let effectiveType = this.getEffectiveMoveType(trainer, pokemon, move)
 		for (let statusEffect of powerEffects){
@@ -2273,11 +2331,14 @@ class Round{
 		if (pokemon.hasAbility("Overgrow") && effectiveType === "Grass" && pokemon.hp / pokemon.maxhp <= 1/3){
 			power *= 1.5
 		}
-		if (pokemon.hasAbility("Iron Fist") && move.tags.includes("punching")){
+		if (pokemon.hasAbility("Iron Fist") && move?.tags.includes("punching")){
 			power *= 1.2
 		}
-		if (pokemon.hasAbility("Sheer Force") && move.tags.includes("has-additional-effects")){
+		if (pokemon.hasAbility("Sheer Force") && move?.tags.includes("has-additional-effects")){
 			power *= 1.3
+		}
+		if (pokemon.hasAbility("Technician") && move?.power > 0 && move?.power <= 60){
+			power *= 1.5
 		}
 
 		return power
@@ -2299,6 +2360,7 @@ class Round{
 	}
 
 	doesThisApplyToMove(move, appliesTo, type) {
+		if (!move) return false
 		let good = []
 		if (appliesTo.name){
 			good.push(move.name === appliesTo.name)
@@ -2429,7 +2491,6 @@ class Round{
 
 		let targetTrainers = {
 			"choose-tiles": true,
-			"gain-energy": true,
 			"get-initiative": true,
 			"set-initiative": true,
 			"get-active-pokemon": true,
@@ -2448,7 +2509,6 @@ class Round{
 			"remove-status-effect": "opponent",
 			"apply-debuff": "opponent",
 			"select-energy-colors": "none",
-			"gain-energy": "user",
 			"get-initiative": "user",
 			"set-initiative": "user",
 			"get-active-pokemon": "user",
@@ -3639,6 +3699,8 @@ class Round{
 		tags.pokemonImage.attr("src", src)
 
 		let trainer = this.trainers[trainerIndex]
+		let otherTrainer = this.trainers.find(t => t !== trainer)
+		let otherPokemon = otherTrainer.activePokemon
 		let oldActive = trainer.activePokemon
 		trainer.activePokemon = pokemon
 
@@ -3666,6 +3728,31 @@ class Round{
 
 		//Remove all iniative from the new pokemon
 		this.initiativeValues[trainerIndex] = 0
+
+		//Intimidate may trigger.
+		if (pokemon.hasAbility("Intimidate") && otherPokemon){
+			//Oblivious prevents this
+			let prevented = !otherPokemon.hasAbility("Oblivious")
+			if (!prevented){
+				otherPokemon.addStatusEffect({
+					name: "intimidate-weakened",
+					type: "stat",
+					class: "debuff",
+					stat: "attack",
+					amount: -1
+				}, otherTrainer, otherPokemon, undefined)
+			}
+			//Rattled can trigger here too! Weird
+			if (!prevented && otherPokemon.hasAbility("Rattled")){
+				otherPokemon.addStatusEffect({
+					name: "rattled-sped-up",
+					type: "stat",
+					class: "buff",
+					stat: "speed",
+					amount: 1
+				}, otherTrainer, otherPokemon, undefined)
+			}
+		}
 
 		let sounds = pokemon.getAllSounds()
 		let cryUrl = sounds?.cry
@@ -3810,6 +3897,14 @@ class Round{
 			for (let type in weightModifications){
 				let modification = weightModifications[type]
 				tileWeights[type] = applyModification(tileWeights[type], modification)
+			}
+		}
+
+		for (let trainer of this.trainers){
+			let pokemon = trainer.activePokemon
+			if (!pokemon) continue
+			if (pokemon.hasAbility("Lightning Rod") || true){
+				tileWeights["yellow"] += 0.5
 			}
 		}
 

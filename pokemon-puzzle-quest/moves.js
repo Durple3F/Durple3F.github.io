@@ -334,8 +334,8 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			green: 8,
-			orange: 6
+			// green: 8,
+			// orange: 6
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Bug Bite.mp3"

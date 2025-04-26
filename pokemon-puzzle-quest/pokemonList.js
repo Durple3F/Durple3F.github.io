@@ -423,6 +423,8 @@ const pokemonData = {
 		},
 		types: ["Poison", "Flying"],
 		tags: [],
+		abilities: ["Inner Focus"],
+		hiddenAbilities: ["Infiltrator"],
 		stats: {
 			hp: 40,
 			attack: 45,
@@ -522,6 +524,8 @@ const pokemonData = {
 		},
 		types: ["Dark"],
 		tags: [],
+		abilities: ["Pickup", "Technician"],
+		hiddenAbilities: ["Rattled"],
 		stats: {
 			hp: 40,
 			attack: 35,
@@ -621,6 +625,8 @@ const pokemonData = {
 		},
 		types: ["Fire"],
 		tags: [],
+		abilities: ["Intimidate", "Flash Fire"],
+		hiddenAbilities: ["Justified"],
 		stats: {
 			hp: 55,
 			attack: 70,
@@ -667,6 +673,8 @@ const pokemonData = {
 		},
 		types: ["Psychic"],
 		tags: [],
+		abilities: ["Synchronize", "Inner Focus"],
+		hiddenAbilities: ["Magic Guard"],
 		stats: {
 			hp: 25,
 			attack: 20,
@@ -715,6 +723,8 @@ const pokemonData = {
 		},
 		types: ["Water", "Psychic"],
 		tags: [],
+		abilities: ["Oblivious", "Own Tempo"],
+		hiddenAbilities: ["Regenerator"],
 		stats: {
 			hp: 90,
 			attack: 65,
@@ -2139,7 +2149,7 @@ const pokemonData = {
 			{ name: "Disarming Voice", unlock: { type: "level", amount: 6 } },
 			{ name: "Aqua Jet", unlock: { type: "level", amount: 9 } },
 			{ name: "Baby-Doll Eyes", unlock: { type: "level", amount: 12 } },
-			{ name: "Air Cutter", unlock: { type: "level", amount: 1 } },
+			{ name: "Bug Bite", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {

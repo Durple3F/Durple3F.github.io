@@ -1,7 +1,7 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-4/25 (24.0k lines):
-	- Added Sand Veil, Tangling Hair, Sand Force, Gluttony, Thick Fat, Sniper, Static
+4/25 (24.4k lines):
+	- Added Sand Veil, Tangling Hair, Sand Force, Gluttony, Thick Fat, Sniper, Static, Lightning Rod, Pickup, Technician, Rattled, Intimidate, Flash Fire, Justified, Synchronize, Magic Guard, Oblivious
 
 4/24 (24.0k lines):
 	- Added Bagon, Rockruff, Oricorio, Diglett-Alola
