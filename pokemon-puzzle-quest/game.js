@@ -698,14 +698,15 @@ class Round{
 					for (let tile of match){
 						tiles.push(tile)
 						//If the tile has Static, explode adjacent tiles as well.
-						let hasStatic = tile.statusEffects.find(s => {
+						let staticStatuses = tile.statusEffects.filter(s => {
 							return s.name === "Static" && s.sourceTrainer === activeTrainer
 						})
-						if (hasStatic){
+						if (staticStatuses.length){
 							let x1 = tile.x
 							let y1 = tile.y
+							let staticCount = staticStatuses.length
 							let nearby = contents.filter(tile2 => {
-								return distance(x1, y1, tile2.x, tile2.y) === 1
+								return distance(x1, y1, tile2.x, tile2.y) <= staticCount
 							})
 							nearby.forEach(tile2 => tiles.push(tile2))
 						}
