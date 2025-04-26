@@ -708,7 +708,7 @@ const levelData = [
 				name: "Ashley",
 				class: "Backpacker-Gen7-F",
 				pokemon: [
-					{ id: "Cotttonee", level: 10, name: "Soozle" }
+					{ id: "Cottonee", level: 10, name: "Soozle" }
 				]
 			},
 		],

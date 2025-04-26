@@ -1557,7 +1557,7 @@
 		},
 		"Keen Eye": {
 			"name": "Keen Eye",
-			"shortDescription": "Other Pokémon raise this Pokémon's move costs half as much",
+			"shortDescription": "Resistant to cost-raising effects from other Pokémon",
 			"longDescription": "The effects of statuses imposed by other Pokémon which raise the costs of this Pokémon's moves are reduced by 50%."
 		},
 		"Leaf Guard": {
