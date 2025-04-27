@@ -1,6 +1,6 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-4/27 (25.3k lines):
+4/27 (25.5k lines):
 	- I can now set reccomended levels for each route, so that I can hopefully scale the player's pokemon down to something good-ish for the level...
 	- Pokemon changed this way are returned to their normal levels once the level finishes.
 	- However, because of this, now you must finish the route (win/lose/flee/whatever) before any of your pokemon have their data saved. If you refresh during fight 2 of 3, any changes to your pokemon from fight 1 are forgotten.

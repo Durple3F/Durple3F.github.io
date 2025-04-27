@@ -1991,7 +1991,7 @@ class Round{
 		let damageType = "Typeless"
 		
 		if (move){
-			power = this.getEffectivePower(attackerTrainer, attacker, move, power)
+			power = this.getEffectivePower(attackerTrainer, attacker, move)
 			category = move.category
 			damageType = this.getEffectiveMoveType(attackerTrainer, attacker, move)
 		}
@@ -2540,7 +2540,10 @@ class Round{
 		return cost
 	}
 	getEffectivePower(trainer, pokemon, move, power){
-		power = (power ?? move?.power) || 0
+		power = power ?? move?.power
+		if (!power){
+			power = 0
+		}
 		let powerEffects = pokemon.getStatusesOfType("power-alteration")
 		let effectiveType = this.getEffectiveMoveType(trainer, pokemon, move)
 		for (let statusEffect of powerEffects){
