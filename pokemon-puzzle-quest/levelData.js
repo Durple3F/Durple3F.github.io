@@ -64,6 +64,10 @@ const levelData = [
 		name: "Rival Battle 1",
 		forgiving: true,
 		icon: "1",
+		reccomendedLevels: {
+			"normal": 5,
+			"hard": 5
+		},
 		trainers: [
 			{
 				name: "Hau",
@@ -137,6 +141,10 @@ const levelData = [
 		name: "Route 1-2",
 		icon: "2",
 		music: "SM Wild Pokemon Battle",
+		reccomendedLevels: {
+			"normal": 5,
+			"hard": 5
+		},
 		trainers: [
 			{
 				isWild: true,
@@ -180,7 +188,6 @@ const levelData = [
 			},
 		],
 		effects: [
-			{ type: "fight", trainer: 0 },
 			{ type: "random-number", min: 1, max: 10 },
 			{ type: "load-value", value: 10 },
 			{ type: "jump-if-less-than", jumpTo: "Normal" },
@@ -204,6 +211,10 @@ const levelData = [
 		name: "Route 1-3",
 		icon: "3",
 		music: "SM Wild Pokemon Battle",
+		reccomendedLevels: {
+			"normal": 6,
+			"hard": 6
+		},
 		trainers: [
 			{
 				isWild: true,
@@ -269,6 +280,16 @@ const levelData = [
 		category: "Route 1",
 		name: "Rival Battle 2",
 		icon: "4",
+		reccomendedLevels: {
+			"normal": (pokemonList) => {
+				if (pokemonList.length >= 3) return 6
+				return 7
+			},
+			"hard": (pokemonList) => {
+				if (pokemonList.length >= 3) return 6
+				return 7
+			}
+		},
 		trainers: [
 			{
 				name: "Hau",
@@ -355,6 +376,16 @@ const levelData = [
 		name: "Route 1-5",
 		icon: "5",
 		music: "SM Wild Pokemon Battle",
+		reccomendedLevels: {
+			"normal": (pokemonList) => {
+				if (pokemonList.length >= 3) return 7
+				return 9
+			},
+			"hard": (pokemonList) => {
+				if (pokemonList.length >= 3) return 7
+				return 9
+			}
+		},
 		trainers: [
 			{
 				isWild: true,
@@ -448,6 +479,16 @@ const levelData = [
 		category: "Route 1",
 		name: "Route 1-6",
 		icon: "6",
+		reccomendedLevels: {
+			"normal": (pokemonList) => {
+				if (pokemonList.length >= 3) return 8
+				return 10
+			},
+			"hard": (pokemonList) => {
+				if (pokemonList.length >= 3) return 8
+				return 10
+			}
+		},
 		trainers: [
 			{
 				isWild: true,
@@ -478,6 +519,16 @@ const levelData = [
 		name: "Route 1-7",
 		icon: "7",
 		music: "SM Trainers' School",
+		reccomendedLevels: {
+			"normal": (pokemonList) => {
+				if (pokemonList.length >= 3) return 8
+				return 10
+			},
+			"hard": (pokemonList) => {
+				if (pokemonList.length >= 3) return 8
+				return 10
+			}
+		},
 		trainers: [
 			{
 				name: "Hiromi",
@@ -544,6 +595,16 @@ const levelData = [
 		name: "Route 2-1",
 		music: "SM Wild Pokemon Battle",
 		icon: "1",
+		reccomendedLevels: {
+			"normal": (pokemonList) => {
+				if (pokemonList.length >= 3) return 9
+				return 12
+			},
+			"hard": (pokemonList) => {
+				if (pokemonList.length >= 3) return 9
+				return 12
+			}
+		},
 		trainers: [
 			{
 				isWild: true,
@@ -574,6 +635,16 @@ const levelData = [
 		category: "Route 2",
 		name: "Route 2-2",
 		icon: "2",
+		reccomendedLevels: {
+			"normal": (pokemonList) => {
+				if (pokemonList.length >= 3) return 10
+				return 13
+			},
+			"hard": (pokemonList) => {
+				if (pokemonList.length >= 3) return 10
+				return 13
+			}
+		},
 		trainers: [
 			{
 				name: "Team Skull Grunt A",
@@ -649,6 +720,16 @@ const levelData = [
 		name: "Route 2-3",
 		music: "SM Wild Pokemon Battle",
 		icon: "3",
+		reccomendedLevels: {
+			"normal": (pokemonList) => {
+				if (pokemonList.length >= 3) return 10
+				return 13
+			},
+			"hard": (pokemonList) => {
+				if (pokemonList.length >= 3) return 10
+				return 13
+			}
+		},
 		trainers: [
 			{
 				isWild: true,
@@ -688,6 +769,16 @@ const levelData = [
 		name: "Route 2-4",
 		music: "SM Wild Pokemon Battle",
 		icon: "4",
+		reccomendedLevels: {
+			"normal": (pokemonList) => {
+				if (pokemonList.length >= 3) return 11
+				return 13
+			},
+			"hard": (pokemonList) => {
+				if (pokemonList.length >= 3) return 11
+				return 13
+			}
+		},
 		trainers: [
 			{
 				isWild: true,
@@ -728,6 +819,16 @@ const levelData = [
 		name: "Route 2-5",
 		music: "SM Wild Pokemon Battle",
 		icon: "5",
+		reccomendedLevels: {
+			"normal": (pokemonList) => {
+				if (pokemonList.length >= 3) return 12
+				return 15
+			},
+			"hard": (pokemonList) => {
+				if (pokemonList.length >= 3) return 12
+				return 15
+			}
+		},
 		trainers: [
 			{
 				isWild: true,
@@ -753,6 +854,16 @@ const levelData = [
 		category: "Route 2",
 		name: "Route 2-6",
 		icon: "6",
+		reccomendedLevels: {
+			"normal": (pokemonList) => {
+				if (pokemonList.length >= 3) return 12
+				return 15
+			},
+			"hard": (pokemonList) => {
+				if (pokemonList.length >= 3) return 12
+				return 15
+			}
+		},
 		trainers: [
 			{
 				name: "Ikue",
@@ -786,6 +897,16 @@ const levelData = [
 		category: "Route 2",
 		name: "Route 2-7",
 		icon: "7",
+		reccomendedLevels: {
+			"normal": (pokemonList) => {
+				if (pokemonList.length >= 3) return 14
+				return 16
+			},
+			"hard": (pokemonList) => {
+				if (pokemonList.length >= 3) return 14
+				return 16
+			}
+		},
 		trainers: [
 			{
 				isWild: true,
@@ -866,6 +987,16 @@ const levelData = [
 		name: "Route 3-1",
 		music: "SM Wild Pokemon Battle",
 		icon: "1",
+		reccomendedLevels: {
+			"normal": (pokemonList) => {
+				if (pokemonList.length >= 3) return 14
+				return 16
+			},
+			"hard": (pokemonList) => {
+				if (pokemonList.length >= 3) return 14
+				return 16
+			}
+		},
 		trainers: [
 			{
 				isWild: true,
@@ -909,6 +1040,16 @@ const levelData = [
 				isWild: true,
 				targetPokemon: 4,
 				canPickDuplicates: false,
+				reccomendedLevels: {
+					"normal": (pokemonList) => {
+						if (pokemonList.length >= 3) return 14
+						return 16
+					},
+					"hard": (pokemonList) => {
+						if (pokemonList.length >= 3) return 14
+						return 16
+					}
+				},
 				possiblePokemon: [
 					{ id: "Rufflet", levelMin: 10, levelMax: 12, weight: 4 },
 					{ id: "Vullaby", levelMin: 10, levelMax: 12, weight: 4 },
@@ -943,6 +1084,16 @@ const levelData = [
 		name: "Route 3-3",
 		music: "SM Wild Pokemon Battle",
 		icon: "3",
+		reccomendedLevels: {
+			"normal": (pokemonList) => {
+				if (pokemonList.length >= 3) return 15
+				return 17
+			},
+			"hard": (pokemonList) => {
+				if (pokemonList.length >= 3) return 15
+				return 17
+			}
+		},
 		trainers: [
 			{
 				isWild: true,

@@ -191,7 +191,7 @@ const dialogueEffects = {
 							let transform = "scaleX(-1)"
 							tag.css("transform", transform)
 							tag.css("left", x)
-							tag.css("z-index", "auto")
+							tag.css("z-index", 10)
 						},
 						complete: function(){
 							state = 1
@@ -207,7 +207,7 @@ const dialogueEffects = {
 							let transform = ""
 							tag.css("transform", transform)
 							tag.css("left", x)
-							tag.css("z-index", -1)
+							tag.css("z-index", 1)
 						},
 						complete: function(){
 							state = 0

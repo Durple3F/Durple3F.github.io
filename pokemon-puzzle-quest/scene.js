@@ -557,6 +557,14 @@ function startScene(name, options) {
 			let heldPokemon = null
 			let heldPokemonTag = null
 
+			const openPokemon = pokemon => {
+				let options = {
+					canRename: true,
+					pc: true
+				}
+				return viewPokemonInfo(pokemon, options)
+			}
+
 			const handleMouseDown = (event) => {
 				let box = $(event.currentTarget)
 				let id = box.attr("data-index")
@@ -570,12 +578,9 @@ function startScene(name, options) {
 						allBoxes.removeClass("selected")
 						if (!alreadySelected) {
 							box.addClass("selected")
-							let options = {
-								canRename: true
-							}
-							viewPokemonInfo(pokemon, options)
-								.then(() => savePokemon(pokemon))
-								.then(() => box.removeClass("selected"))
+							openPokemon(pokemon)
+							.then(() => savePokemon(pokemon))
+							.then(() => box.removeClass("selected"))
 						}
 					} else {
 						if (pokemon) {
@@ -596,11 +601,8 @@ function startScene(name, options) {
 				// console.log(p)
 				delay(100).then(() => {
 					if (!mouse.isDown) {
-						let options = {
-							canRename: true
-						}
-						viewPokemonInfo(pokemon, options)
-							.then(() => savePokemon(pokemon))
+						openPokemon(pokemon)
+						.then(() => savePokemon(pokemon))
 					} else {
 						heldPokemon = pokemon
 						beginHolding(heldPokemon)
@@ -1024,49 +1026,90 @@ function beginLevel(levelID) {
 		nextEffectIndex: 0
 	}
 
+	let levelChangesMap = new Map()
+	if (level.reccomendedLevels && config["lowerLevelsToRecommendedLevels"]){
+		let key = config["hardMode"] ? "hard" : "normal"
+		let reccomendation = level.reccomendedLevels
+		if (key in reccomendation){
+			let lvl = reccomendation[key]
+			if (typeof lvl === "function"){
+				lvl = lvl(playerActivePokemon)
+			}
+			for (let pokemon of playerActivePokemon){
+				if (pokemon.level <= lvl) continue
+				let change = {
+					pokemon: pokemon,
+					exp: pokemon.exp,
+					from: pokemon.level,
+					to: lvl
+				}
+				levelChangesMap.set(pokemon, change)
+				pokemon.changeLevel(lvl)
+			}
+		}
+	}
+
 	level.attempts++
 	let levelResult
 	let promise = advanceCurrentLevel()
-		.then(val => {
-			let promise = Promise.resolve()
-			let info = currentLevelProgress.info
-			//If you're marked as losing a "fight" effect, then you lose the whole level.
-			let effects = currentLevelProgress.effects
-			let lostFights = effects.filter((effect, i) => {
-				return info[i] === "lose" && effect.type === "fight"
-			})
-
-			let forgiving = currentLevelProgress.level.forgiving
-			if (lostFights.length && !forgiving) {
-				levelResult = "lose"
-			} else if (lostFights.length && forgiving) {
-				//TODO Maybe one day, add an extra challenge to go back and finish the level without losing once
-				levelResult = "win"
-			} else {
-				levelResult = "win"
-			}
-
-			let shouldHeal = playerActivePokemon.every(pokemon => pokemon.fainted)
-			if (shouldHeal) {
-				healAllPokemon(playerActivePokemon)
-			}
-
-			if (levelResult === "lose") {
-				console.log("You lose :(")
-			} else {
-				level.status = "won"
-				promise = promise.then(() => saveLevelStatus(level, "won"))
-			}
-
-			let routeName = level.category
-			changeScene("route", { name: routeName })
-			console.log(promise)
-			return promise
+	.then(val => {
+		let promise = Promise.resolve()
+		let info = currentLevelProgress.info
+		//If you're marked as losing a "fight" effect, then you lose the whole level.
+		let effects = currentLevelProgress.effects
+		let lostFights = effects.filter((effect, i) => {
+			return info[i] === "lose" && effect.type === "fight"
 		})
-		.then(() => {
+
+		//If the level is forgiving, then you don't lose for
+		//having lost a fight
+		let forgiving = currentLevelProgress.level.forgiving
+		if (lostFights.length && !forgiving) {
+			levelResult = "lose"
+		} else if (lostFights.length && forgiving) {
+			//TODO Maybe one day, add an extra challenge to go back and finish the level without losing once
+			levelResult = "win"
+		} else {
+			levelResult = "win"
+		}
+
+		//Losing does nothing to the database, but winning does.
+		if (levelResult === "lose") {
+			console.log("You lose :(")
+		} else {
+			level.status = "won"
+			promise = promise.then(() => saveLevelStatus(level, "won"))
+		}
+
+		//If we changed any of your pokemon's levels, reset them.
+		levelChangesMap.forEach((change, pokemon) => {
+			pokemon.changeLevel(change.from)
+			pokemon.exp = change.exp
+		})
+
+		//You get healed at the end of the level if all your pokemon are unusable
+		let shouldHeal = playerActivePokemon.every(pokemon => !isPokemonUsable(pokemon))
+		if (shouldHeal) {
+			healAllPokemon(playerActivePokemon)
+		}
+
+		//Save the player's pokemon...
+		for (let pokemon of playerActivePokemon){
+			promise = promise.then(() => {
+				return savePokemon(pokemon)
+			})
+		}
+
+		//Then save the player themself.
+		promise = promise.then(() => {
 			console.log(playerSaveInfo)
 			return savePlayerInfo()
 		})
+
+		let routeName = level.category
+		changeScene("route", { name: routeName })
+		return promise
+	})
 
 	return promise
 }
@@ -1569,7 +1612,7 @@ function viewPokemonInfo(pokemon, options = {}) {
 	}
 
 	//NATURES & OTHER INFO
-	if (!options.dex) {
+	if (options.pc) {
 		let info = $(`<div class='info advanced-info'>`)
 		sections.append(info)
 		info.hide()
@@ -1714,6 +1757,30 @@ function viewPokemonInfo(pokemon, options = {}) {
 				}
 			},
 		})
+	}
+
+	//DEBUG
+	if (options.pc){
+		let info = $(`<div class='info debug-info'>`)
+		sections.append(info)
+		info.hide()
+		let tab = $(`<li class='nav-item' data-target-class='debug-info'>
+			<a class="nav-link" href="#">Debug</a>
+		</li>`)
+
+		tabs.append(tab)
+		let debugSection = $("<div class='debug-section'>")
+		info.append(debugSection)
+
+		let levelChanger = $("<input type='number' class='form-control w-50 m-auto' placeholder='Level'>")
+		info.append(levelChanger)
+		const changeLevel = () => {
+			let targetLevel = Number(levelChanger.val())
+			if (isNaN(targetLevel)) targetLevel = 5
+			targetLevel = Math.max(targetLevel, 1)
+			pokemon.changeLevel(targetLevel)
+		}
+		levelChanger.change(changeLevel)
 	}
 
 	tabs.children().click(changeTab)

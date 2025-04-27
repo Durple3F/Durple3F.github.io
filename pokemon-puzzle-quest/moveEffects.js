@@ -389,7 +389,7 @@ const pokemonMoveEffects = {
 
 			if (
 				(statusEffect === "paralyzed" || statusEffect === "poisoned") && 
-				(target.hasAbility("Synchronize") || true)
+				target.hasAbility("Synchronize")
 			){
 				let otherTrainer = game.trainers.find(t => t !== target.trainer)
 				let otherPokemon = otherTrainer.activePokemon
@@ -1144,7 +1144,7 @@ const pokemonMoveEffects = {
 		execute: (resolve, effect, params, game, options) => {
 			let target = options.target
 			let move = params.move
-			target.lockMove(move.name)
+			target.lockMove(move.name, true)
 			resolve()
 		}
 	},

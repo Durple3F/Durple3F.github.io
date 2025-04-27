@@ -476,9 +476,23 @@ class Pokemon{
 		this.activeMoves.push(move)
 		return true
 	}
+	removeActiveMove(move){
+		if (this.activeMoves.includes(move)){
+			let activeIndex = this.activeMoves.indexOf(move)
+			this.activeMoves.splice(activeIndex, 1)
+		}
+	}
 
 	changeLevel(level){
 		let oldMax = this.getStat("hp")
+		let expForNextLevel = this.getEXPNeededForLevel(level + 1)
+		let expForLevel = this.getEXPNeededForLevel(level)
+		if (this.exp > expForNextLevel){
+			this.exp = expForLevel
+		}
+		if (this.exp < expForLevel){
+			this.exp = expForLevel
+		}
 		this.level = level
 		let newMax = this.getStat("hp")
 		this.hp += newMax - oldMax
@@ -572,15 +586,14 @@ class Pokemon{
 			this.movesUnlockedMap[index] = true
 		}
 	}
-	lockMove(name){
+	lockMove(name, removeActive=false){
 		let index = this.data.learnset.findIndex(m => m.name === name)
 		if (index !== -1){
 			this.movesUnlockedMap[index] = true
 		}
-		let move = pokemonMoveData[name]
-		if (this.activeMoves.includes(move)){
-			let activeIndex = this.activeMoves.indexOf(move)
-			this.activeMoves.splice(activeIndex, 1)
+		if (removeActive){
+			let move = pokemonMoveData[name]
+			this.removeActiveMove(move)
 		}
 	}
 	chooseActiveMoves(){

@@ -267,10 +267,6 @@ class Round{
 				trainer.tags.side.removeClass("active")
 			}
 
-			for (let pokemon of this.trainers[0].pokemon){
-				savePokemon(pokemon)
-			}
-
 			this.result = result
 			this.resolve(result)
 
@@ -296,7 +292,6 @@ class Round{
 			//And THEN finalize the round finishing.
 			.then(() => {
 				this.removeAllStatusEffects()
-				this.savePlayerPokemon()
 				resolve(this.result)
 				this.resolveRound(this.result)
 			})
@@ -704,7 +699,7 @@ class Round{
 
 		let energyGained = pokemon.gainEnergy(toAdd)
 		
-		if (pokemon.hasAbility("Gluttony") || true){
+		if (pokemon.hasAbility("Gluttony")){
 			let notGainedTotal = 0
 			for (let color of colors){
 				if (!(color in toAdd)) continue
@@ -1602,8 +1597,6 @@ class Round{
 					p.evs[statName] += evYield[statName]
 				}
 			}
-			
-			// savePokemon(p)
 		}
 		let announcementBox = $("<div class='d-flex text-center flex-column align-items-stretch'></div>")
 		body.append(announcementBox)
@@ -4787,15 +4780,6 @@ class Round{
 		console.log(resultMap)
 		return resultMap
 	}
-	savePlayerPokemon(){
-		let saves = []
-		for (let i = 0; i < this.trainers[0].pokemon.length; i++){
-			let pokemon = this.trainers[0].pokemon[i]
-			if (!pokemon) continue
-			saves.push(savePokemon(pokemon))
-		}
-		return Promise.all(saves)
-	}
 
 	removeAllStatusEffects(){
 		for (let trainer of this.trainers){
@@ -5805,6 +5789,7 @@ function doEvolutionAnimation(elem, pokemon, evolution){
 			complete: function(){
 				if (skipped) return
 				image1.hide()
+				box1Mask.hide()
 				box2Mask.hide()
 				image2.css("opacity", 1)
 			}

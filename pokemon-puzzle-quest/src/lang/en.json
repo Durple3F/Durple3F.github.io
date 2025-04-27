@@ -818,6 +818,9 @@
 				{ "type": "text", "speaker": "Narrator", "text": "You round a corner along the path, and see a trainer walking two Pokémon on leashes." },
 				{ "type": "text", "speaker": "Narrator", "text": "One leash is taut, dragging behind him, and the other is flapping constantly, as the Pokémon races around the trainer." },
 				{ "type": "get-speaker", "name": "Makana", "class": "Ace-Trainer-Gen7" },
+				{ "type": "style-speaker", "speaker": "Makana", "css": {
+					"z-index": 3
+				}},
 				{ "type": "display-image", "src": "src/img/pokemon-sprites/rockruff masters.png", "name": "Rockruff", "position": {
 					"type": "relative",
 					"relative": "Makana",
@@ -2088,8 +2091,9 @@
 	},
 	"settings": {
 		"toggle-skip-seen-dialogue": "Skip seen dialogue?",
-		"toggle-exp-share": "Exp gained in fights is shared between all active Pokémon?",
-		"toggle-hard-mode": "Hard mode (Rival chooses the more effective Pokémon)",
+		"toggle-exp-share": "EXP share? (Exp gained in fights is shared between all active Pokémon)",
+		"toggle-hard-mode": "Hard mode (Rival chooses the more effective Pokémon, etc.)",
+		"toggle-level-lowering": "Lower Pokémon levels to what's recommended when starting a level",
 		"toggle-pixelated-screen": "Antialiasing",
 
 		"rename-save": "Rename Save",

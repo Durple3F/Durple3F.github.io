@@ -6,6 +6,7 @@ const config = {
 	skipSeenDialogue: false,
 	expShare: true,
 	hardMode: false,
+	lowerLevelsToRecommendedLevels: true,
 	antialiasing: true,
 	cpuSpeed: 2,
 	textSpeed: 40,

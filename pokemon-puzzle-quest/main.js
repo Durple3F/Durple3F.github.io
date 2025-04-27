@@ -1,4 +1,4 @@
-const versionNumber = "v0.14.6"
+const versionNumber = "v0.14.8"
 let lang = "en"
 let playerName
 
@@ -895,6 +895,10 @@ function openSettings(){
 		{
 			text: "toggle-hard-mode",
 			key: "hardMode"
+		},
+		{
+			text: "toggle-level-lowering",
+			key: "lowerLevelsToRecommendedLevels"
 		},
 		{
 			text: "toggle-pixelated-screen",
