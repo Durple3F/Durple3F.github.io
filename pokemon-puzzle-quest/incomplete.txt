@@ -82,7 +82,7 @@ Missing Evolutions:
 	Crabrawler
 
 Missing Abilities:
-	Oricorio
+	- None! :)
 
 Missing Shiny Variations:
 	- None! :)

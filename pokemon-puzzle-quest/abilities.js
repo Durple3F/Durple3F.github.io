@@ -42,6 +42,10 @@ const abilityData = {
 	"Compound Eyes": {
 		id: "Compound Eyes"
 	},
+	//Copy "dancing" moves used by either you or the opponent
+	"Dancer": {
+		id: "Dancer"
+	},
 	//Get a stage of attack when you get a stat debuff
 	"Defiant": {
 		id: "Defiant"

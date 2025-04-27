@@ -1,14 +1,15 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-4/26 (25.2k lines):
+4/26 (25.3k lines):
 	- Rewrote the code used when having the CPU pick tiles, hopefully it's less prone to error now.
 	- Multiple instances of Static now stack
 	- You should be able to make a failed swap and then make moves now.
 	- When a pokemon learns new moves after a battle, if those moves aren't automatically equipped, the game now shows you that pokemon's profile screen so you can switch the moves on/off. It even puts the new ones at the top! :)
 	- Now you can't switch which route is shown if you're already showing that route.
 	- Added a type effectiveness indicator for type-based immunity
-	- Added Regenerator, Magnet Pull, Sturdy, Poison Touch, Power of Alchemy, Levitate, Forewarn, Swarm, Early Bird, Super Luck, Prankster, Moody, Hydration, Rain Dish, Guts, Aftermath, Unburden, Flare Boost, Natural Cure, Friend Guard, Skill Link, Long Reach, Liquid Voice, Sweet Veil, Flower Veil, Triage, Adaptability, Stakeout, Strong Jaw, Battery
+	- Added Regenerator, Magnet Pull, Sturdy, Poison Touch, Power of Alchemy, Levitate, Forewarn, Swarm, Early Bird, Super Luck, Prankster, Moody, Hydration, Rain Dish, Guts, Aftermath, Unburden, Flare Boost, Natural Cure, Friend Guard, Skill Link, Long Reach, Liquid Voice, Sweet Veil, Flower Veil, Triage, Adaptability, Stakeout, Strong Jaw, Battery, Dancer
 	- Power of Alchemy is the first effect that allows you to change what ability a pokemon has! And it was EASY TO ADD because I PLANNED!!!!!!!!!!
+	- Dancer is a very strange ability!! But it seems to work!! :))))
 	- Raised the durations of Confused & Asleep
 	- Added a new kind of tile
 

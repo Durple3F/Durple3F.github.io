@@ -1,4 +1,5 @@
 {
+	"ability-dancer-activate": "%c%'s %c% copies the last move used!",
 	
 	"initiative-tutorial": "Initiative<br>Each turn, both Pokémon gain Initiative based on their speed stats. When a player matches 4 or more tiles in a row, they get a free turn.",
 	"choose-pokemon": "Choose Pokémon",
@@ -1526,6 +1527,11 @@
 			"name": "Compound Eyes",
 			"shortDescription": "On a match that doesn't combo, raises Special Attack 1 stage 50% of the time",
 			"longDescription": "At the end of this Pokémon's turn, if it makes only one match of exactly three tiles, this ability has a 50% chance to raise its Special Attack by 1 stage."
+		},
+		"Dancer": {
+			"name": "Dancer",
+			"shortDescription": "After a dancing move is used by any Pokémon (including itself), uses that same move",
+			"longDescription": "Whenever a dancing move is used by any Pokémon, including itself, this Pokémon uses that move, regardless of whether it's this Pokémon's turn."
 		},
 		"Defiant": {
 			"name": "Defiant",

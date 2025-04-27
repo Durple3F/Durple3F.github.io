@@ -2703,7 +2703,7 @@ class Round{
 		}
 	}
 
-	newMoveUseObj(trainer, pokemon, move, trigger="effects"){
+	newMoveUseObj(trainer, pokemon, move, trigger="effects", oldMoveUse){
 		//This object gets passed around to every single effect of a move
 		//in sequence. It has information added to that info list, and
 		//that info is used by other effects as parameters.
@@ -2725,15 +2725,23 @@ class Round{
 			completed: false,
 			info: [],
 			effectIndex: 0,
+			completedTriggers: [],
 			//Decides whether we should perform a check at the end of the move's
 			//finishing to see whether a player should win, or pokemon should switch out.
 			checkBetweenEffects: true
 		}
 		let promise = new Promise(resolve => moveUseObj.resolve = resolve)
 		moveUseObj.promise = promise
+
+		if (oldMoveUse){
+			oldMoveUse.completedTriggers.forEach(trigger => {
+				moveUseObj.completedTriggers.push(trigger)
+			})
+		}
+
 		return moveUseObj
 	}
-	beginToUseMove(trainer, pokemon, move){
+	beginToUseMove(trainer, pokemon, move, completedTriggers=[]){
 		if (!move){
 			console.warn("Tried to use a nonexistent move...?")
 			console.trace()
@@ -2744,6 +2752,7 @@ class Round{
 		pokemon.moveUsage[moveIndex].recharge = move.rechargeTurns
 
 		let moveUseObj = this.newMoveUseObj(trainer, pokemon, move, "effects")
+		completedTriggers.forEach(trigger => moveUseObj.completedTriggers.push(trigger))
 		let promise = moveUseObj.promise
 		// console.log(moveUseObj)
 
@@ -3112,13 +3121,39 @@ class Round{
 		})
 		.then(() => {
 			if (moveUseObj && moveUseObj.checkBetweenEffects){
-				console.log("Checkin'")
 				return this.checkForWinner()
 			}
 			return Promise.resolve()
 		})
-		
-		
+
+		promise = promise.then(() => {
+			let trainer = moveUseObj.trainer
+			let pokemon = moveUseObj.pokemon
+			let move = moveUseObj.move
+			if (this.shouldMoveHaveTag("dancing", trainer, pokemon, move)){
+				let trainers = this.trainers.toSorted(t => {
+					return t === trainer ? -1 : 1
+				})
+				for (let trainer of trainers){
+					let pokemon = trainer.activePokemon
+					let dancer = pokemon.hasAbility("Dancer")
+					let canTrigger = !moveUseObj?.completedTriggers.includes("Dancer-"+pokemon.uuid)
+					if (dancer && canTrigger){
+						let triggers = moveUseObj?.completedTriggers ?? []
+						triggers.push("Dancer-"+pokemon.uuid)
+						promise = promise.then(() => delay(200))
+						.then(() => {
+							let name = pokemon.name
+							let abilityName = getLocaleString("name", lang, ["abilities", "Dancer"])
+							let message = getLocaleString("ability-dancer-activate", lang)
+							message = applyReplacements(message, [name, abilityName])
+							this.createAnnouncement("general", message)
+							return this.beginToUseMove(trainer, pokemon, move, triggers)
+						})
+					}
+				}
+			}
+		})
 
 		return promise
 	}
