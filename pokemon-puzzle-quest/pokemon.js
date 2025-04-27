@@ -163,7 +163,7 @@ class Pokemon{
 						name: "confused",
 						class: "debuff",
 						volatile: true,
-						turns: Math.floor(Math.random() * 4) + 2
+						turns: Math.floor(Math.random() * 12) + 6
 					}
 				} break
 				case "poisoned": {
@@ -200,7 +200,10 @@ class Pokemon{
 						name: "asleep",
 						class: "debuff",
 						volatile: false,
-						turns: Math.floor(Math.random() * 4) + 2
+						turns: Math.floor(Math.random() * 12) + 6
+					}
+					if (this.hasAbility("Early Bird")){
+						status.turns = Math.ceil(status.turns * 0.5)
 					}
 				} break
 				case "fear-frozen": {
@@ -277,52 +280,83 @@ class Pokemon{
 			prevented = true
 		}
 		//Poison and Steel type pokemon can't be poisoned
-		else if (status.name === "poisoned" && types.includes("Poison") ||
+		if (status.name === "poisoned" && types.includes("Poison") ||
 				status.name === "poisoned" && types.includes("Steel")){
 			prevented = true
 		}
 		//Electric pokemon can't be paralyzed
-		else if (status.name === "paralyzed" && types.includes("Electric")){
+		if (status.name === "paralyzed" && types.includes("Electric")){
 			prevented = true
 		}
 		//Pokemon with Vital Spirit can't become asleep
-		else if ((status.name === "asleep" || status.name === "drowsy") && 
-		(this.hasAbility("Vital Spirit") && this.hasAbility("Insomnia"))){
+		if (
+			(status.name === "asleep" || status.name === "drowsy") && 
+			this.hasAbility("Vital Spirit")
+		){
+			prevented = true
+		}
+		//Pokemon with Insomnia can't become asleep
+		if (
+			(status.name === "asleep" || status.name === "drowsy") && 
+			this.hasAbility("Insomnia")
+		){
+			prevented = true
+		}
+		//Sweet Veil prevents all of your Pokemon being put to sleep
+		if (
+			(status.name === "asleep" || status.name === "drowsy") &&
+			this.trainer?.activePokemon?.hasAbility("Sweet Veil")
+		){
 			prevented = true
 		}
 		//Pokemon with Vital Spirit can't become asleep
-		else if (status.name === "confused" && this.hasAbility("Own Tempo")){
+		if ((status.name === "asleep" || status.name === "drowsy") && 
+		(this.hasAbility("Vital Spirit") || this.hasAbility("Insomnia"))){
+			prevented = true
+		}
+		//Pokemon with Own Tempo can't become confused
+		if (status.name === "confused" && this.hasAbility("Own Tempo")){
 			prevented = true
 		}
 		//Pokemon with Hyper Cutter can't have their Attack lowered by stages
-		else if (this.hasAbility("Hyper Cutter") &&
+		if (
 			status.type === "stat" &&
 			status.sourcePokemon !== this &&
 			status.stat === "attack" &&
-			status.amount < 0
+			status.amount < 0 &&
+			this.hasAbility("Hyper Cutter")
 		){
 			prevented = true
 		}
 		//Pokemon with Big Pecks can't have their Defense lowered by stages
-		else if (this.hasAbility("Big Pecks") &&
+		if (
 			status.type === "stat" &&
 			status.sourcePokemon !== this &&
 			status.stat === "defense" &&
-			status.amount < 0
+			status.amount < 0 &&
+			this.hasAbility("Big Pecks")
 		){
 			prevented = true
 		}
 		//Pokemon with Shield Dust prevent receiving statuses from other trainers 20% of the time
-		else if (this.hasAbility("Shield Dust") &&
+		if (
 			status.sourceTrainer !== this.trainer &&
-			Math.random() < 0.2
+			Math.random() < 0.2 &&
+			this.hasAbility("Shield Dust")
 		){
 			prevented = true
 		}
 		//Pokemon with Leaf Guard prevent receiving statuses from other trainers based on green energy
-		else if (this.hasAbility("Leaf Guard") && status.sourceTrainer !== this.trainer){
+		if (this.hasAbility("Leaf Guard") && status.sourceTrainer !== this.trainer){
 			let fullness = this.energy.green / this.maxEnergy.green * 0.5
 			if (Math.random() < fullness){
+				prevented = true
+			}
+		}
+		//Grass Veil protects all your pokemon from receiving stat debuffs
+		if (status.type === "stat" && status.amount < 0){
+			let isGrassType = this.getEffectiveTypes().includes("Grass")
+			if (isGrassType && this.trainer?.activePokemon?.hasAbility("Flower Veil")){
 				prevented = true
 			}
 		}
@@ -390,6 +424,9 @@ class Pokemon{
 		return result
 	}
 	hasStatus(name){
+		if (name === "asleep" && this.hasAbility("Comatose")){
+			return true
+		}
 		return this.statusEffects.some(status => {
 			return status.name === name
 		})
@@ -600,7 +637,17 @@ class Pokemon{
 	}
 
 	getEffectiveAbility(){
-		return this.ability
+		let abilityStatuses = this.getStatusesOfType("ability-alteration")
+		let ability = this.ability
+		if (abilityStatuses.length){
+			for (let statusEffect of abilityStatuses){
+				let newAbility = statusEffect.ability
+				if (newAbility){
+					ability = newAbility
+				}
+			}
+		}
+		return ability
 	}
 	hasAbility(abilityId){
 		let ability = this.getEffectiveAbility()

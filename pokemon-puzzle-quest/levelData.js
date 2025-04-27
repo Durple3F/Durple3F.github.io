@@ -148,7 +148,7 @@ const levelData = [
 					{
 						id: "Caterpie",
 						levelMin: 2, levelMax: 3
-					}
+					},
 				]
 			},
 			{
@@ -180,6 +180,7 @@ const levelData = [
 			},
 		],
 		effects: [
+			{ type: "fight", trainer: 0 },
 			{ type: "random-number", min: 1, max: 10 },
 			{ type: "load-value", value: 10 },
 			{ type: "jump-if-less-than", jumpTo: "Normal" },

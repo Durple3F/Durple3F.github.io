@@ -1182,6 +1182,9 @@ body {
 .move[data-effectiveness="not-very-effective"]  > .effectiveness-container > .not-very-effective {
 	opacity: 1;
 }
+.move[data-effectiveness="immune-effective"]  > .effectiveness-container > .immune-effective {
+	opacity: 1;
+}
 .move  > .effectiveness-container > .super-effective {
 	background: linear-gradient(180deg,
 	rgba(248, 255, 46, 1) 0%,
@@ -1193,6 +1196,12 @@ body {
 	rgba(194, 39, 65, 1) 0%,
 	rgba(194, 39, 65, 1) 50%,
 	rgba(194, 39, 65, 1) 100%);
+}
+.move  > .effectiveness-container > .immune-effective {
+	background: linear-gradient(180deg,
+	rgb(28, 1, 71) 0%,
+	rgb(28, 1, 71) 50%,
+	rgb(28, 1, 71) 100%);
 }
 
 .pokemon-stats {

@@ -2,6 +2,18 @@ const abilityData = {
 	"No Ability": {
 		id: "No Ability"
 	},
+	//STAB bonus is increased to x2
+	"Adaptability": {
+		id: "Adaptability"
+	},
+	//Deals 1/4 HP damage to attacker on death if made contact
+	"Aftermath": {
+		id: "Aftermath"
+	},
+	//Raises Power while slower than the opponent
+	"Analytic": {
+		id: "Analytic"
+	},
 	//When the opponent makes a 5+ match, maxes out your attack
 	"Anger Point": {
 		id: "Anger Point"
@@ -14,9 +26,17 @@ const abilityData = {
 	"Blaze": {
 		id: "Blaze"
 	},
+	//Increases Special power of all your pokemon even while Battry is inactive
+	"Battery": {
+		id: "Battery"
+	},
 	//Adds green energy if you match things that aren't green
 	"Chlorophyll": {
 		id: "Chlorophyll"
+	},
+	//Always counts as being asleep
+	"Comatose": {
+		id: "Comatose"
 	},
 	//At the end of each turn, 20% chance to cure one non-volatile status
 	"Compound Eyes": {
@@ -26,17 +46,49 @@ const abilityData = {
 	"Defiant": {
 		id: "Defiant"
 	},
+	//Wake up quicker from sleep
+	"Early Bird": {
+		id: "Early Bird"
+	},
+	//Power boost while tiles are burned
+	"Flare Boost": {
+		id: "Flare Boost"
+	},
 	//You get Fire power from being hit with Fire
 	"Flash Fire": {
 		id: "Flash Fire"
+	},
+	//Your grass pokemon are immune to stat debuffs
+	"Flower Veil": {
+		id: "Flower Veil"
+	},
+	//Makes Psychic tiles more common
+	"Forewarn": {
+		id: "Forewarn"
+	},
+	//Protects your non-active pokemon
+	"Friend Guard": {
+		id: "Friend Guard"
 	},
 	//You heal for energy that you don't gain due to being full
 	"Gluttony": {
 		id: "Gluttony"
 	},
+	//Power raised 50% while has non-volatile status
+	"Guts": {
+		id: "Guts"
+	},
+	//50% more energy from 4-matches
+	"Honey Gather": {
+		id: "Honey Gather"
+	},
 	//Power to all moves is increased, but a random tax is added every turn
 	"Hustle": {
 		id: "Hustle"
+	},
+	//On a blue 4-match, cure a random non-volatile status
+	"Hydration": {
+		id: "Hydration"
 	},
 	//Prevents receiving statuses that lower Attack
 	"Hyper Cutter": {
@@ -74,13 +126,37 @@ const abilityData = {
 	"Leaf Guard": {
 		id: "Leaf Guard"
 	},
+	//Immune to Ground damage
+	"Levitate": {
+		id: "Levitate"
+	},
 	//Makes yellow tiles more common
 	"Lightning Rod": {
 		id: "Lightning Rod"
 	},
+	//Sound-based moves are Water type
+	"Liquid Voice": {
+		id: "Liquid Voice"
+	},
+	//Moves don't count as making contact
+	"Long Reach": {
+		id: "Long Reach"
+	},
 	//Prevents indirect damage
 	"Magic Guard": {
 		id: "Magic Guard"
+	},
+	//Prevents steel types retreating
+	"Magnet Pull": {
+		id: "Magnet Pull"
+	},
+	//Raises/lowers stats at random
+	"Moody": {
+		id: "Moody"
+	},
+	//Cures status conditions on switch out
+	"Natural Cure": {
+		id: "Natural Cure"
 	},
 	//Can't have energy drained by other pokemon
 	"Oblivious": {
@@ -102,9 +178,29 @@ const abilityData = {
 	"Pickup": {
 		id: "Pickup"
 	},
+	//Poisons the opponent sometimes when they make contact
+	"Poison Touch": {
+		id: "Poison Touch"
+	},
+	//When one of your pokemon faints, this replaces itself with their ability
+	"Power of Alchemy": {
+		id: "Power of Alchemy"
+	},
+	//Lowers the costs of Status moves
+	"Prankster": {
+		id: "Prankster"
+	},
+	//On a blue 4-match, heal 20% max HP
+	"Rain Dish": {
+		id: "Rain Dish"
+	},
 	//Raises speed on getting hit with Bug Ghost or Dark moves
 	"Rattled": {
 		id: "Rattled"
+	},
+	//Heal 20% hp on switching out
+	"Regenerator": {
+		id: "Regenerator"
 	},
 	//Prevents recoil damage
 	"Rock Head": {
@@ -122,6 +218,10 @@ const abilityData = {
 	"Sand Force": {
 		id: "Sand Force"
 	},
+	//Moves with additional effects cost 30% less
+	"Serene Grace": {
+		id: "Serene Grace"
+	},
 	//At the end of each turn, 20% chance to cure one non-volatile status
 	"Shed Skin": {
 		id: "Shed Skin"
@@ -134,9 +234,17 @@ const abilityData = {
 	"Shield Dust": {
 		id: "Shield Dust"
 	},
+	//Raises move power based on total moves used this turn
+	"Skill Link": {
+		id: "Skill Link"
+	},
 	//Grants a power boost after a 5-match
 	"Sniper": {
 		id: "Sniper"
+	},
+	//Double power on moves while the opponent switched in <= 2 turns ago
+	"Stakeout": {
+		id: "Stakeout"
 	},
 	//Paralyzes on contact sometimes
 	"Static": {
@@ -145,6 +253,26 @@ const abilityData = {
 	//Raises speed when initiative is lowered
 	"Steadfast": {
 		id: "Steadfast"
+	},
+	//Makes moves with "biting" power x1.5
+	"Strong Jaw": {
+		id: "Strong Jaw"
+	},
+	//Focus Sash + negate damage from "one-hit-ko" moves
+	"Sturdy": {
+		id: "Sturdy"
+	},
+	//Skip cooldowns 10% of the time
+	"Super Luck": {
+		id: "Super Luck"
+	},
+	//Increase bug power at low hp
+	"Swarm": {
+		id: "Swarm"
+	},
+	//Makes Pink tiles spawn & prevents sleep
+	"Sweet Veil": {
+		id: "Sweet Veil"
 	},
 	//Clones some statuses for the opponent
 	"Synchronize": {
@@ -170,6 +298,14 @@ const abilityData = {
 	"Torrent": {
 		id: "Torrent"
 	},
+	//Healing moves cost less
+	"Triage": {
+		id: "Triage"
+	},
+	//Speed boost on paying exactly as much as you had of a color
+	"Unburden": {
+		id: "Unburden"
+	},
 	//You can't be put to sleep
 	"Vital Spirit": {
 		id: "Vital Spirit"
@@ -178,6 +314,13 @@ const abilityData = {
 	"Weak Armor": {
 		id: "Weak Armor"
 	},
+}
+
+for (let abilityId in abilityData){
+	let ability = abilityData[abilityId]
+	if (ability.copiable === undefined){
+		ability.copiable = true
+	}
 }
 
 Object.values(pokemonData).map(pData => {

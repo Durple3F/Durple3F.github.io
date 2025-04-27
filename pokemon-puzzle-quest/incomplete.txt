@@ -82,35 +82,7 @@ Missing Evolutions:
 	Crabrawler
 
 Missing Abilities:
-	Slowpoke
-	Magnemite
-	Grimer-Alola
-	Gastly
-	Drowzee
-	Ledyba
-	Spinarak
-	Pichu
-	Murkrow
-	Misdreavus
-	Smeargle
-	Wingull
-	Makuhita
-	Drifloon
-	Bonsly
-	Happiny
-	Cottonee
-	Rowlet (1/2)
-	Litten (1/2)
-	Popplio (1/2)
-	Pikipek
-	Yungoos
-	Gumshoos
-	Grubbin
-	Charjabug
 	Oricorio
-	Cutiefly
-	Comfey
-	Komala
 
 Missing Shiny Variations:
 	- None! :)

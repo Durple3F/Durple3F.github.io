@@ -685,8 +685,10 @@ function loadResources(){
 		let shown = parseInt(completeTag.text() || 0)
 		animateTextCounter(shown, complete, completeTag)
 		$("#loading-bar > .count > .max").text(total)
+		let width = (complete / total * 100)
+		if (width > 100) width = 100
 		$("#loading-bar > .bar").stop(true).animate({
-			width: (complete / total * 100) + "%"
+			width: width + "%"
 		})
 	}
 	update()

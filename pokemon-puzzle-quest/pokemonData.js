@@ -369,6 +369,7 @@ function getTypeFromTileType(type){
 		case "blue": return "Water"
 		case "purple": return "Psychic"
 		case "black": return "Dark"
+		case "pink": return "Fairy"
 		default:
 			console.warn("What type is ", type)
 	}

@@ -803,6 +803,8 @@ const pokemonData = {
 		},
 		types: ["Electric", "Steel"],
 		tags: [],
+		abilities: ["Magnet Pull", "Sturdy"],
+		hiddenAbilities: ["Analytic"],
 		stats: {
 			hp: 25,
 			attack: 35,
@@ -874,6 +876,8 @@ const pokemonData = {
 		},
 		types: ["Poison", "Dark"],
 		tags: [],
+		abilities: ["Poison Touch", "Gluttony"],
+		hiddenAbilities: ["Power of Alchemy"],
 		stats: {
 			hp: 80,
 			attack: 80,
@@ -945,6 +949,8 @@ const pokemonData = {
 		},
 		types: ["Ghost", "Poison"],
 		tags: [],
+		abilities: ["Levitate"],
+		hiddenAbilities: [],
 		stats: {
 			hp: 30,
 			attack: 35,
@@ -991,6 +997,8 @@ const pokemonData = {
 		},
 		types: ["Psychic"],
 		tags: [],
+		abilities: ["Insomnia", "Forewarn"],
+		hiddenAbilities: ["Inner Focus"],
 		stats: {
 			hp: 60,
 			attack: 48,
@@ -1037,6 +1045,8 @@ const pokemonData = {
 		},
 		types: ["Bug", "Flying"],
 		tags: [],
+		abilities: ["Swarm", "Early Bird"],
+		hiddenAbilities: ["Rattled"],
 		stats: {
 			hp: 40,
 			attack: 20,
@@ -1100,6 +1110,8 @@ const pokemonData = {
 		},
 		types: ["Bug", "Poison"],
 		tags: [],
+		abilities: ["Swarm", "Insomnia"],
+		hiddenAbilities: ["Sniper"],
 		stats: {
 			hp: 40,
 			attack: 60,
@@ -1170,6 +1182,8 @@ const pokemonData = {
 		},
 		types: ["Electric"],
 		tags: [],
+		abilities: ["Static"],
+		hiddenAbilities: ["Lightning Rod"],
 		stats: {
 			hp: 20,
 			attack: 40,
@@ -1270,6 +1284,8 @@ const pokemonData = {
 		},
 		types: ["Dark", "Flying"],
 		tags: [],
+		abilities: ["Insomnia", "Super Luck"],
+		hiddenAbilities: ["Prankster"],
 		stats: {
 			hp: 60,
 			attack: 85,
@@ -1320,6 +1336,8 @@ const pokemonData = {
 		},
 		types: ["Ghost"],
 		tags: [],
+		abilities: ["Levitate"],
+		hiddenAbilities: [],
 		stats: {
 			hp: 60,
 			attack: 60,
@@ -1419,6 +1437,8 @@ const pokemonData = {
 		},
 		types: ["Normal"],
 		tags: [],
+		abilities: ["Own Tempo", "Technician"],
+		hiddenAbilities: ["Moody"],
 		stats: {
 			hp: 55,
 			attack: 20,
@@ -1472,6 +1492,8 @@ const pokemonData = {
 		},
 		types: ["Water", "Flying"],
 		tags: [],
+		abilities: ["Keen Eye", "Hydration"],
+		hiddenAbilities: ["Rain Dish"],
 		stats: {
 			hp: 40,
 			attack: 30,
@@ -1546,6 +1568,8 @@ const pokemonData = {
 		},
 		types: ["Fighting"],
 		tags: [],
+		abilities: ["Thick Fat", "Guts"],
+		hiddenAbilities: ["Sheer Force"],
 		stats: {
 			hp: 72,
 			attack: 60,
@@ -1641,6 +1665,8 @@ const pokemonData = {
 		},
 		types: ["Ghost", "Flying"],
 		tags: [],
+		abilities: ["Aftermath", "Unburden"],
+		hiddenAbilities: ["Flare Boost"],
 		stats: {
 			hp: 90,
 			attack: 50,
@@ -1688,6 +1714,8 @@ const pokemonData = {
 		},
 		types: ["Rock"],
 		tags: [],
+		abilities: ["Sturdy", "Rock Head"],
+		hiddenAbilities: ["Rattled"],
 		stats: {
 			hp: 50,
 			attack: 80,
@@ -1732,6 +1760,8 @@ const pokemonData = {
 		},
 		types: ["Normal"],
 		tags: [],
+		abilities: ["Natural Cure", "Serene Grace"],
+		hiddenAbilities: ["Friend Guard"],
 		stats: {
 			hp: 100,
 			attack: 5,
@@ -1787,6 +1817,8 @@ const pokemonData = {
 		},
 		types: ["Grass", "Fairy"],
 		tags: [],
+		abilities: ["Prankster", "Infiltrator"],
+		hiddenAbilities: ["Chlorophyll"],
 		stats: {
 			hp: 40,
 			attack: 27,
@@ -2170,6 +2202,8 @@ const pokemonData = {
 		},
 		tags: [],
 		types: ["Normal", "Flying"],
+		abilities: ["Keen Eye", "Skill Link"],
+		hiddenAbilities: ["Pickup"],
 		stats: {
 			hp: 35,
 			attack: 75,
@@ -2215,6 +2249,8 @@ const pokemonData = {
 		},
 		tags: [],
 		types: ["Normal"],
+		abilities: ["Stakeout", "Strong Jaw"],
+		hiddenAbilities: ["Adaptability"],
 		stats: {
 			hp: 48,
 			attack: 70,
@@ -2263,6 +2299,8 @@ const pokemonData = {
 		},
 		tags: [],
 		types: ["Normal"],
+		abilities: ["Stakeout", "Strong Jaw"],
+		hiddenAbilities: ["Adaptability"],
 		stats: {
 			hp: 88,
 			attack: 110,
@@ -2310,6 +2348,8 @@ const pokemonData = {
 		},
 		tags: [],
 		types: ["Bug"],
+		abilities: ["Swarm"],
+		hiddenAbilities: [],
 		stats: {
 			hp: 47,
 			attack: 62,
@@ -2366,6 +2406,8 @@ const pokemonData = {
 		},
 		tags: [],
 		types: ["Bug", "Electric"],
+		abilities: ["Battery"],
+		hiddenAbilities: [],
 		stats: {
 			hp: 57,
 			attack: 82,
@@ -2566,6 +2608,8 @@ const pokemonData = {
 		},
 		tags: [],
 		types: ["Bug", "Fairy"],
+		abilities: ["Honey Gather", "Shield Dust"],
+		hiddenAbilities: ["Sweet Veil"],
 		stats: {
 			hp: 40,
 			attack: 45,
@@ -2662,6 +2706,8 @@ const pokemonData = {
 		},
 		tags: [],
 		types: ["Fairy"],
+		abilities: ["Flower Veil", "Triage"],
+		hiddenAbilities: ["Natural Cure"],
 		stats: {
 			hp: 51,
 			attack: 52,
@@ -2705,6 +2751,8 @@ const pokemonData = {
 		},
 		tags: [],
 		types: ["Normal"],
+		abilities: ["Comatose"],
+		hiddenAbilities: [],
 		stats: {
 			hp: 65,
 			attack: 115,

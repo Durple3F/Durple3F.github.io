@@ -23,6 +23,7 @@ const tileTypeColors = {
 	"blue": "#00c0e7",
 	"purple": "#dd60dd",
 	"black": "#495856",
+	"pink": "#9c0132",
 	"rainbow": "#ffffff",
 }
 
@@ -65,6 +66,7 @@ let tileIconUrls = {
 	blue: "src/img/tiles/blue.png",
 	purple: "src/img/tiles/purple.png",
 	black: "src/img/tiles/black.png",
+	pink: "src/img/tiles/pink.png",
 	rainbow: "src/img/tiles/rainbow.png"
 }
 function getEnergyIcon(type){

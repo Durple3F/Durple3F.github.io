@@ -5,6 +5,7 @@ const pokemonMoveData = {
 		type: "Grass",
 		category: "Special",
 		strategy: "basic-damage",
+		tags: ["healing"],
 		pp: 25,
 		power: 20,
 		accuracy: 100,
@@ -258,7 +259,7 @@ const pokemonMoveData = {
 		type: "Dark",
 		category: "Physical",
 		strategy: "basic-damage",
-		tags: ["damage-dealing", "makes-contact"],
+		tags: ["damage-dealing", "makes-contact", "biting"],
 		pp: 25,
 		power: 60,
 		accuracy: 100,
@@ -334,8 +335,8 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			// green: 8,
-			// orange: 6
+			green: 8,
+			orange: 6
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Bug Bite.mp3"
@@ -1379,7 +1380,7 @@ const pokemonMoveData = {
 		type: "Normal",
 		category: "Physical",
 		strategy: "basic-damage",
-		tags: ["damage-dealing", "makes-contact"],
+		tags: ["damage-dealing", "makes-contact", "biting"],
 		pp: 15,
 		power: 80,
 		accuracy: 90,
@@ -1635,6 +1636,7 @@ const pokemonMoveData = {
 		type: "Grass",
 		category: "Special",
 		strategy: "basic-damage",
+		tags: ["healing"],
 		pp: 15,
 		power: 40,
 		accuracy: 100,
@@ -1965,7 +1967,7 @@ const pokemonMoveData = {
 		type: "Poison",
 		category: "Physical",
 		strategy: "basic-damage",
-		tags: ["damage-dealing", "makes-contact"],
+		tags: ["damage-dealing", "makes-contact", "biting"],
 		pp: 15,
 		power: 50,
 		accuracy: 100,
@@ -2095,7 +2097,7 @@ const pokemonMoveData = {
 		type: "Normal",
 		category: "Physical",
 		strategy: "special",
-		tags: ["damage-dealing"],
+		tags: ["damage-dealing", "healing"],
 		pp: 15,
 		power: 0,
 		accuracy: 90,

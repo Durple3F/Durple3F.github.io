@@ -2009,6 +2009,7 @@ function getMoveHTML(move, useLongDescription = false) {
 	let effectivenessContainer = $("<div class='effectiveness-container'>")
 	effectivenessContainer.append("<div class='effectiveness super-effective'>")
 	effectivenessContainer.append("<div class='effectiveness not-very-effective'>")
+	effectivenessContainer.append("<div class='effectiveness immune-effective'>")
 	tag.append(effectivenessContainer)
 
 	return tag

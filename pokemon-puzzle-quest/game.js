@@ -316,8 +316,34 @@ class Round{
 		let playerActivePokemon = playerTrainer.activePokemon
 		let playerSwaps = !isPokemonUsable(playerActivePokemon)
 
-		if (playerSwaps) playerActivePokemon.fainted = true
-		if (enemySwaps) enemyActivePokemon.fainted = true
+		let faintedTrainers = []
+		if (playerSwaps) {
+			playerActivePokemon.fainted = true
+			faintedTrainers.push(playerTrainer)
+		}
+		if (enemySwaps) {
+			enemyActivePokemon.fainted = true
+			faintedTrainers.push(enemyTrainer)
+		}
+
+		for (let trainer of faintedTrainers){
+			let activePokemon = trainer.activePokemon
+			let otherPokemonList = trainer.pokemon.filter(pokemon => pokemon !== activePokemon)
+			for (let pokemon of otherPokemonList){
+				if (pokemon.hasAbility("Power of Alchemy")){
+					pokemon.removeStatusesWithName("power-of-alchemy-replacement")
+					let ability = activePokemon.getEffectiveAbility()
+					if (ability.copiable){
+						pokemon.addStatusEffect({
+							name: "power-of-alchemy-replacement",
+							type: "ability-alteration",
+							volatile: true,
+							ability: ability
+						}, trainer, pokemon, undefined)
+					}
+				}
+			}
+		}
 
 		if (enemySwaps || playerSwaps){
 			this.updateEverything()
@@ -478,6 +504,7 @@ class Round{
 				otherPokemon.addStatusEffect({
 					type: "stat",
 					class: "buff",
+					volatile: true,
 					stat: "attack",
 					amount: 6
 				}, otherTrainer, otherPokemon, undefined)
@@ -511,6 +538,7 @@ class Round{
 				activePokemon.addStatusEffect({
 					type: "stat",
 					class: "buff",
+					volatile: true,
 					stat: "speed",
 					amount: 1
 				}, activeTrainer, activePokemon, undefined)
@@ -533,6 +561,31 @@ class Round{
 						operation: "multiply"
 					}
 				}, activeTrainer, activePokemon, undefined)
+			}
+		}
+		//On a Blue 4-match:
+		if (matches.some(match => {
+			return match.length === 4 && match.every(tile => tile.type === "blue")
+		})){
+			if (activePokemon.hasAbility("Hydration")){
+				let canRemove = activePokemon.statusEffects
+				.filter(statusEffect => !statusEffect.volatile)
+				if (canRemove.length){
+					let randomStatus = randomChoice(canRemove)
+					activePokemon.removeStatus(randomStatus)
+				}
+			}
+			if (activePokemon.hp < activePokemon.maxhp && activePokemon.hasAbility("Rain Dish")){
+				let gain = activePokemon.maxhp * 0.2
+				this.dealDamage({
+					from: activePokemon,
+					fromTrainer: activeTrainer,
+					move: undefined,
+					to: activePokemon,
+					toTrainer: activeTrainer,
+					damage: -gain,
+					fixed: true
+				})
 			}
 		}
 
@@ -579,8 +632,14 @@ class Round{
 			energy.green += Math.floor(greatest / 3)
 		}
 
+		//Honey Gather gives you bonus energy for 4-matches
+		if (madeFourMatch && activePokemon.hasAbility("Honey Gather")){
+			energy = multiplyEnergies(energy, 1.5, "round")
+		}
+
+		//Pikcup gives you energy when your opponent makes a 4-match
 		if (madeFourMatch && otherPokemon.hasAbility("Pickup")){
-			let toAdd = multiplyEnergies(energy, 0.25, "round")
+			let toAdd = multiplyEnergies(energy, 0.5, "round")
 			energyToOpponent = addEnergies(energyToOpponent, toAdd)
 		}
 
@@ -645,7 +704,7 @@ class Round{
 
 		let energyGained = pokemon.gainEnergy(toAdd)
 		
-		if (pokemon.hasAbility("Gluttony")){
+		if (pokemon.hasAbility("Gluttony") || true){
 			let notGainedTotal = 0
 			for (let color of colors){
 				if (!(color in toAdd)) continue
@@ -835,6 +894,7 @@ class Round{
 			for (let pokemon of trainer.pokemon){
 				let data = pokemon.gameRoundData
 				data.damagedThisTurn = false
+				data.movesUsedThisTurn = 0
 			}
 		}
 		
@@ -844,6 +904,9 @@ class Round{
 		//This pokemon has been active for one more turn
 		trainer.activePokemon.turnsActive++
 		trainer.activePokemon.turnsParticipated++
+
+		//This ability only triggers once per turn
+		trainer.activePokemon.gameRoundData.superLuckTriggered = false
 
 		//Reduce move cooldowns
 		for (let pokemon of trainer.pokemon){
@@ -1184,6 +1247,7 @@ class Round{
 		//End-of-turn abilities
 		for (let trainer of this.trainers){
 			let trainerIndex = this.trainers.indexOf(trainer)
+			let isOwnTurn = trainerIndex === activePlayerIndex
 			let activePokemon = trainer.activePokemon
 			//If a pokemon with run away is damaged in a turn,
 			//its speed increases during the next turn
@@ -1195,6 +1259,7 @@ class Round{
 					activePokemon.addStatusEffect({
 						name: "run-away-boosted",
 						type: "stat",
+						volatile: true,
 						class: "buff",
 						stat: "speed",
 						amount: 2
@@ -1202,7 +1267,7 @@ class Round{
 				}
 			}
 			//Pokemon with Shed Skin have a chance to cure a status at the end of their turn
-			if (trainerIndex === activePlayerIndex && activePokemon.hasAbility("Shed Skin")){
+			if (isOwnTurn && activePokemon.hasAbility("Shed Skin")){
 				let canRemove = activePokemon.statusEffects
 				.filter(statusEffect => !statusEffect.volatile)
 				if (canRemove.length && Math.random() < 0.2){
@@ -1211,15 +1276,50 @@ class Round{
 				}
 			}
 			//Pokemon with compound eyes raise their SpAtk on a short match sometimes
-			if (trainerIndex === activePlayerIndex && activePokemon.hasAbility("Compound Eyes")){
+			if (isOwnTurn && activePokemon.hasAbility("Compound Eyes")){
 				let matches = this.matchesInCombo
 				if (matches.length === 1 && matches[0].length === 3 && Math.random() < 0.5){
 					activePokemon.addStatusEffect({
 						name: "compound-eyes-boosted",
 						type: "stat",
+						volatile: true,
 						class: "buff",
 						stat: "specialAttack",
 						amount: 1
+					}, activePokemon.trainer, activePokemon, undefined)
+				}
+			}
+			//Pokemon with Moody raise a random stat and decrease another every turn
+			if (isOwnTurn && activePokemon.hasAbility("Moody")){
+				activePokemon.removeStatusesWithName("moody-changed")
+				let canIncrease = statNames.filter(statName => {
+					return activePokemon.getStatStage(statName) <= 6
+				})
+				let increased
+				if (canIncrease.length){
+					increased = randomChoice(canIncrease)
+					activePokemon.addStatusEffect({
+						name: "moody-changed",
+						type: "stat",
+						volatile: true,
+						class: "buff",
+						stat: increased,
+						amount: 2
+					}, activePokemon.trainer, activePokemon, undefined)
+				}
+				let canDecrease = statNames.filter(statName => {
+					return increased !== statName && activePokemon.getStatStage(statName) >= -6
+				})
+				let decreased
+				if (canDecrease.length){
+					decreased = randomChoice(canDecrease)
+					activePokemon.addStatusEffect({
+						name: "moody-changed",
+						type: "stat",
+						volatile: true,
+						class: "debuff",
+						stat: decreased,
+						amount: -1
 					}, activePokemon.trainer, activePokemon, undefined)
 				}
 			}
@@ -1890,80 +1990,84 @@ class Round{
 			defender = defenderTrainer.activePokemon
 		}
 
+		let wasUsable = isPokemonUsable(defender)
 		let move = options.move
 		let damage = options.damage
+		let power = 0
 		let category = "Physical"
 		let damageType = "Typeless"
-		if (!options.fixed){
-			if (!move){
-				let trainerIndex = this.trainers.indexOf(attackerTrainer)
-				let possibleMoves = this.getAvailableMoves(trainerIndex)
-				move = possibleMoves[0]
-				console.warn("Where did this damage come from??")
-				console.trace()
-			}
-
-			let power = options.power ?? move?.power ?? 0
-			if (options.additionalPower !== undefined){
-				power += options.additionalPower
-			}
+		
+		if (move){
 			power = this.getEffectivePower(attackerTrainer, attacker, move, power)
-			
-			category = options.category ?? move?.category ?? category
-			damageType = options.type ?? this.getEffectiveMoveType(attackerTrainer, attacker, move) ?? damageType
-	
-			let burned = attacker.hasStatus("burn")
-			if (burned && category === "Physical"){
-				power *= 0.5
-			}
-	
-			//Note: this doesn't mean the attack stat specifically.
-			//If the pokemon uses a special move, this represents the special attack stat.
-			let atk, def
-			if (category === "Physical"){
-				atk = attacker.getEffectiveStat("attack")
-				def = defender.getEffectiveStat("defense")
-			} else if (category === "Special") {
-				atk = attacker.getEffectiveStat("specialAttack")
-				def = defender.getEffectiveStat("specialDefense")
-			} else if (category === "Status") {
-				//This should never run
-				atk = attacker.getEffectiveStat("attack")
-				def = defender.getEffectiveStat("defense")
-			} else {
-				console.warn("UNKNOWN CATEGORY", category)
-			}
-
-			//Thick Fat reduces Fire & Ice atk
-			if (
-				(damageType === "Fire" || damageType === "Ice") &&
-				defender.hasAbility("Thick Fat")
-			){
-				atk *= 0.5
-			}
-	
-			if (damage === undefined){
-				damage = (attacker.level * 2 / 5 + 2) * power * atk / def / 50 + 2
-			}
-			//STAB
-			if (attacker.getEffectiveTypes().includes(damageType)){
-				damage *= 1.5
-			}
-			let typeMult = getSuperEffectiveMult(damageType, defender.getEffectiveTypes())
-			damage *= typeMult
-	
-			if ("damageMult" in options){
-				damage *= options.damageMult
-			}
-	
-			//Tinted Lens powers up not very effective moves
-			if (typeMult <= 0.5 && attacker.hasAbility("Tinted Lens")){
-				damage *= 2
-			}
-			
-			//I'm going to reduce how much damage things deal across the board, just a smidge.
-			damage *= 0.8
+			category = move.category
+			damageType = this.getEffectiveMoveType(attackerTrainer, attacker, move)
 		}
+
+		power = options.power ?? power
+		if (options.additionalPower !== undefined){
+			power += options.additionalPower
+		}
+		category = options.category ?? category
+		damageType = options.type ?? damageType
+
+		let burned = attacker.hasStatus("burn")
+		if (burned && category === "Physical"){
+			power *= 0.5
+		}
+
+		//Note: this doesn't mean the attack stat specifically.
+		//If the pokemon uses a special move, this represents the special attack stat.
+		let atk, def
+		if (category === "Physical"){
+			atk = attacker.getEffectiveStat("attack")
+			def = defender.getEffectiveStat("defense")
+		} else if (category === "Special") {
+			atk = attacker.getEffectiveStat("specialAttack")
+			def = defender.getEffectiveStat("specialDefense")
+		} else if (category === "Status") {
+			//This should never run
+			atk = attacker.getEffectiveStat("attack")
+			def = defender.getEffectiveStat("defense")
+		} else {
+			console.warn("UNKNOWN CATEGORY", category)
+		}
+
+		//Thick Fat reduces Fire & Ice atk
+		if (
+			(damageType === "Fire" || damageType === "Ice") &&
+			defender.hasAbility("Thick Fat")
+		){
+			atk *= 0.5
+		}
+
+		//Determine initial damage value if otherwise not given.
+		if (damage === undefined){
+			damage = (attacker.level * 2 / 5 + 2) * power * atk / def / 50 + 2
+		}
+
+		//STAB
+		let attackerTypes = attacker.getEffectiveTypes()
+		let getsStab = attackerTypes.includes(damageType)
+		if (getsStab && attacker.hasAbility("Adaptability")){
+			damage *= 2
+		}
+		else if (getsStab){
+			damage *= 1.5
+		}
+		let typeMult = getSuperEffectiveMult(damageType, defender.getEffectiveTypes())
+		damage *= typeMult
+
+		if ("damageMult" in options){
+			damage *= options.damageMult
+		}
+
+		//Tinted Lens powers up not very effective moves
+		if (typeMult <= 0.5 && attacker.hasAbility("Tinted Lens")){
+			damage *= 2
+		}
+		
+		//I'm going to reduce how much damage things deal across the board, just a smidge.
+		damage *= 0.8
 
 		//Pokemon with Magic Guard take no indirect damage
 		if (!options.directDamage && damage > 0 && defender.hasAbility("Magic Guard")){
@@ -1989,13 +2093,27 @@ class Round{
 				prevented = true
 			}
 		}
+		//Pokemon with levitate are immune to Ground damage
+		if (damageType === "Ground" && attacker.hasAbility("Levitate")){
+			prevented = true
+		}
+		//Friend Guard protects non-active pokemon
+		let defenderActive = defenderTrainer.activePokemon
+		if (defenderActive !== defender && defenderActive.hasAbility("Friend Guard")){
+			prevented = true
+		}
 		if (prevented){
 			damage = 0
+		}
+
+		//Sturdy makes you immune to 1-hit KOs while at full health
+		if (defender.hp >= defender.maxhp && defender.hasAbility("Sturdy")){
+			damage = defender.hp - 1
 		}
 		
 		result.damageDealt = damage
 		if (damage){
-			//On the off chance something ever does negative damage
+			//Negative damage heals
 			let targetHp = defender.hp - damage
 			if (targetHp > defender.maxhp){
 				damage = defender.hp - defender.maxhp
@@ -2018,11 +2136,15 @@ class Round{
 					statusEffect.gameData.damageReceived += damage
 				})
 
+				let stillUsable = isPokemonUsable(defender)
+				let madeContact = this.shouldMoveHaveTag("makes-contact", attackerTrainer, attacker, move)
+				console.log(madeContact)
 				//Weak Armor lowers defense but raises speed
 				if (defender.hasAbility("Weak Armor")){
 					defender.addStatusEffect({
 						name: "weak-armor-weakened",
 						type: "stat",
+						volatile: true,
 						class: "debuff",
 						stat: "defense",
 						amount: -1
@@ -2030,6 +2152,7 @@ class Round{
 					defender.addStatusEffect({
 						name: "weak-armor-boosted",
 						type: "stat",
+						volatile: true,
 						class: "buff",
 						stat: "speed",
 						amount: 2
@@ -2037,7 +2160,7 @@ class Round{
 				}
 				//Tangling Hair lowers the attacker's speed
 				if (defender.hasAbility("Tangling Hair")){
-					if (attacker !== defender && move?.tags?.includes("makes-contact")){
+					if (attacker !== defender && madeContact){
 						attacker.addStatusEffect({
 							name: "tangling-hair-weakened",
 							type: "stat",
@@ -2051,10 +2174,20 @@ class Round{
 				if (defender.hasAbility("Static")){
 					if (
 						attacker !== defender &&
-						move?.tags?.includes("makes-contact") &&
+						madeContact &&
 						Math.random() < 0.3
 					){
 						attacker.addStatusEffect("paralyzed", attackerTrainer, attacker, undefined)
+					}
+				}
+				//Static paralyzes the attacker sometimes
+				if (defender.hasAbility("Poison Touch")){
+					if (
+						attacker !== defender &&
+						madeContact &&
+						Math.random() < 0.3
+					){
+						attacker.addStatusEffect("poisoned", attackerTrainer, attacker, undefined)
 					}
 				}
 				//Rattled raises speed on Bug Dark or Ghost moves
@@ -2063,6 +2196,7 @@ class Round{
 						defender.addStatusEffect({
 							name: "rattled-sped-up",
 							type: "stat",
+							volatile: true,
 							class: "buff",
 							stat: "speed",
 							amount: 1
@@ -2092,10 +2226,26 @@ class Round{
 					defender.addStatusEffect({
 						name: "justified-attack-up",
 						type: "stat",
+						volatile: true,
 						class: "buff",
 						stat: "attack",
 						amount: 1
 					}, defender.trainer, defender, undefined)
+				}
+				//Aftermath deals damage to the attacker
+				if (madeContact && wasUsable && !stillUsable && defender.hasAbility("Aftermath")){
+					if (defender !== attacker){
+						let revengeDamage = Math.ceil(attacker.maxhp * 0.25)
+						this.dealDamage({
+							from: defender,
+							fromTrainer: defenderTrainer,
+							move: undefined,
+							to: attacker,
+							toTrainer: attackerTrainer,
+							damage: revengeDamage,
+							fixed: true
+						})
+					}
 				}
 			}
 		}
@@ -2259,8 +2409,34 @@ class Round{
 		let cost = this.getEffectiveCost(trainer, pokemon, move)
 		let energyCost = cost.energyCost
 		for (let color of colors){
-			if (energyCost[color] === undefined) continue
-			pokemon.energy[color] -= energyCost[color]
+			let amt = energyCost[color]
+			if (amt === undefined) continue
+			pokemon.energy[color] -= amt
+		}
+
+		//A pokemon with unburden gets a speed boost on paying exactly
+		//as much energy as they had in a color
+		if (pokemon.hasAbility("Unburden")){
+			let triggers = false
+			for (let color of colors){
+				let amt = energyCost[color]
+				if (amt === undefined) continue
+				
+				if (amt > 0 && pokemon.energy[color] === 0){
+					triggers = true
+					break
+				}
+			}
+			if (triggers){
+				pokemon.addStatusEffect({
+					name: "unburden-boosted",
+					type: "stat",
+					volatile: true,
+					class: "buff",
+					stat: "speed",
+					amount: 1
+				}, trainer, pokemon, undefined)
+			}
 		}
 	}
 
@@ -2278,6 +2454,7 @@ class Round{
 		}
 		let energyCost = cost.energyCost
 		
+		//Keen Eye reduces the effects of opponents' cost increases
 		let hasKeenEyes = pokemon.hasAbility("Keen Eye")
 		let costEffects = pokemon.getStatusesOfType("cost-alteration")
 		for (let statusEffect of costEffects){
@@ -2336,11 +2513,35 @@ class Round{
 				}
 			}
 		}
-		//No part of the energy cost may be below zero.
-		for (let color in energyCost){
-			if (energyCost[color] < 0){
-				energyCost[color] = 0
+
+		//Prankster reduces the costs of Status moves
+		if (move.category === "Status" && pokemon.hasAbility("Prankster")){
+			for (let color in energyCost){
+				energyCost[color] = energyCost[color] * 0.7
 			}
+		}
+		//Serene Grace reduces the costs of moves with additional effects
+		if (move.tags.includes("has-additional-effects") && pokemon.hasAbility("Serene Grace")){
+			for (let color in energyCost){
+				energyCost[color] = energyCost[color] * 0.7
+			}
+		}
+		//Triage reduces the costs of healing moves
+		if (move.tags.includes("healing") && pokemon.hasAbility("Triage")){
+			for (let color in energyCost){
+				energyCost[color] = energyCost[color] * 0.7
+			}
+		}
+
+		//No part of the energy cost may be below zero.
+		//And they must all be whole numbers.
+		for (let color in energyCost){
+			let amt = energyCost[color]
+			if (amt < 0){
+				amt = 0
+			}
+			amt = Math.ceil(amt)
+			energyCost[color] = amt
 		}
 
 		return cost
@@ -2357,29 +2558,92 @@ class Round{
 			}
 		}
 
+		let otherTrainer = this.trainers.find(t => t !== trainer)
+		let otherPokemon = otherTrainer.activePokemon
+		
+		//Skill Link increases power based on moves used this turn
+		if (pokemon.hasAbility("Skill Link")){
+			let movesUsed = pokemon.gameRoundData.movesUsedThisTurn || 0
+			power += movesUsed * 5
+		}
+
 		//Abilities that modify power
-		if (pokemon.hasAbility("Torrent") && effectiveType === "Water" && pokemon.hp / pokemon.maxhp <= 1/3){
-			power *= 1.5
-		}
-		if (pokemon.hasAbility("Blaze") && effectiveType === "Fire" && pokemon.hp / pokemon.maxhp <= 1/3){
-			power *= 1.5
-		}
-		if (pokemon.hasAbility("Overgrow") && effectiveType === "Grass" && pokemon.hp / pokemon.maxhp <= 1/3){
-			power *= 1.5
-		}
-		if (pokemon.hasAbility("Iron Fist") && move?.tags.includes("punching")){
-			power *= 1.2
-		}
-		if (pokemon.hasAbility("Sheer Force") && move?.tags.includes("has-additional-effects")){
+		if (
+			pokemon.getEffectiveStat("speed") < otherPokemon.getEffectiveStat("speed") &&
+			pokemon.hasAbility("Analytic")
+		){
 			power *= 1.3
 		}
-		if (pokemon.hasAbility("Technician") && move?.power > 0 && move?.power <= 60){
+		//Punching moves are good for Iron Fist
+		if (
+			this.shouldMoveHaveTag("punching", trainer, pokemon, move) &&
+			pokemon.hasAbility("Iron Fist")
+		){
+			power *= 1.2
+		}
+		//Biting moves are good for Strong Jaw
+		if (
+			this.shouldMoveHaveTag("biting", trainer, pokemon, move) &&
+			pokemon.hasAbility("Strong Jaw")
+		){
 			power *= 1.5
+		}
+		if (move?.tags.includes("has-additional-effects") && pokemon.hasAbility("Sheer Force")){
+			power *= 1.3
+		}
+		if (move?.power <= 60 && pokemon.hasAbility("Technician")){
+			power *= 1.5
+		}
+		//Guts applies while the pokemon has a non-volatile status
+		if (
+			pokemon.statusEffects.some(statusEffect => !statusEffect.volatile).length &&
+			pokemon.hasAbility("Guts")
+		) {
+			power *= 1.5
+		}
+		//Flare Boost is active while at least one tile has Burned
+		if (pokemon.hasAbility("Flare Boost")){
+			let contents = this.board.tilesOnScreen()
+			let burned = contents.filter(tile => {
+				return tile.hasStatus("Burn")
+			}).length > 0
+			if (burned){
+				power *= 1.5
+			}
+		}
+		//Stakeout is good against pokemon who just switched in
+		if (otherPokemon.turnsActive < 2 && pokemon.hasAbility("Stakeout")){
+			power *= 2
+		}
+		//Charge is active even while the pokemon is inactive
+		if (
+			move?.category === "Special" &&
+			trainer.pokemon.some(pokemon => {
+				return isPokemonUsable(pokemon) && pokemon.hasAbility("Battery")
+			})
+		){
+			power *= 1.3
+		}
+		//There's a bunch that are only active at low HP
+		if (pokemon.hp / pokemon.maxhp <= 1/3){
+			if (effectiveType === "Fire" && pokemon.hasAbility("Blaze")){
+				power *= 1.5
+			}
+			if (effectiveType === "Water" && pokemon.hasAbility("Torrent")){
+				power *= 1.5
+			}
+			if (effectiveType === "Grass" && pokemon.hasAbility("Overgrow")){
+				power *= 1.5
+			}
+			if (effectiveType === "Bug" && pokemon.hasAbility("Swarm")){
+				power *= 1.5
+			}
 		}
 
 		return power
 	}
 	getEffectiveMoveType(trainer, pokemon, move){
+		if (!move) return "Typeless"
 		return move.type
 	}
 	getEffectiveMoveDisability(trainer, pokemon, move){
@@ -2393,6 +2657,24 @@ class Round{
 			}
 		}
 		return disabled
+	}
+	shouldMoveHaveTag(tag, trainer, pokemon, move){
+		if (!move) return false
+		let hasTag = move.tags.includes(tag)
+
+		//Long Reach stops moves from making contact
+		if (tag === "makes-contact" && pokemon.hasAbility("Long Reach")){
+			hasTag = false
+		}
+		//Liquid Voice makes all sound-based moves water type
+		if (tag === "sound-based" && pokemon.hasAbility("Liquid Voice")){
+			let moveType = this.getEffectiveMoveType(trainer, pokemon, move)
+			if (moveType === "Water"){
+				hasTag = true
+			}
+		}
+		
+		return hasTag
 	}
 
 	doesThisApplyToMove(move, appliesTo, type) {
@@ -2452,6 +2734,11 @@ class Round{
 		return moveUseObj
 	}
 	beginToUseMove(trainer, pokemon, move){
+		if (!move){
+			console.warn("Tried to use a nonexistent move...?")
+			console.trace()
+			return Promise.resolve()
+		}
 		//Put the move on recharge
 		let moveIndex = pokemon.moves.indexOf(move)
 		pokemon.moveUsage[moveIndex].recharge = move.rechargeTurns
@@ -2495,6 +2782,32 @@ class Round{
 			this.moveQueue.push(moveUseObj)
 			this.moveUseHistory.push(moveUseObj)
 			this.updateEverything()
+
+			pokemon.gameRoundData.movesUsedThisTurn++
+
+			//If the user has Super Luck, maybe reset the cooldown
+			//and make it free for the rest of the tnext activation
+			if (
+				!pokemon.gameRoundData.superLuckTriggered &&
+				Math.random() < 0.1 &&
+				pokemon.hasAbility("Super Luck")
+			){
+				pokemon.gameRoundData.superLuckTriggered = true
+				pokemon.moveUsage[moveIndex].recharge = 0
+				let statusEffect = {
+					name: "super-luck-free",
+					type: "cost-alteration",
+					stacks: true,
+					volatile: true,
+					appliesTo: {
+						name: move.name
+					},
+					turns: 1,
+					numberOfApplications: 1,
+					energyCost: multiplyEnergies(move.energy, -1)
+				}
+				pokemon.addStatusEffect(statusEffect, trainer, pokemon, undefined)
+			}
 
 			//It's important to have this check, because otherwise,
 			//if you use a move while another one is being carried out,
@@ -3751,15 +4064,41 @@ class Round{
 		//Transfer half of the old pokemon's energy into the new pokemon.
 		//Remove any turnsActive from the old pokemon.
 		//Remove volatile statuses too.
-		if (oldActive !== pokemon){
-			oldActive.turnsActive = 0
+		if (oldActive && oldActive !== pokemon){
 			let energy = getEmptyEnergy()
 			for (let color of colors){
 				energy[color] = Math.floor(oldActive.energy[color] * 0.5)
 				oldActive.energy[color] = 0
 			}
 			this.giveEnergy(energy, trainer, pokemon)
+
+			//Regenerator restores some HP on leaving.
+			if (oldActive.hasAbility("Regenerator")){
+				let turns = oldActive.turnsActive
+				if (turns > 5) {
+					turns = 5
+				}
+				let gain = oldActive.maxhp * 0.05 * turns
+				this.dealDamage({
+					from: oldActive,
+					fromTrainer: trainer,
+					move: undefined,
+					to: oldActive,
+					toTrainer: trainer,
+					damage: -gain,
+					fixed: true
+				})
+			}
+			//Natural Cure cures all "status" status effects
+			if (oldActive.hasAbility("Natural Cure")){
+				let statuses = oldActive.statusEffects.filter(statusEffect => {
+					return statusEffect.type === "status"
+				})
+				statuses.forEach(statusEffect => oldActive.removeStatus(statusEffect))
+			}
+
 			oldActive.removeVolatileStatuses()
+			oldActive.turnsActive = 0
 		}
 
 		//Remove all iniative from the new pokemon
@@ -3773,6 +4112,7 @@ class Round{
 				otherPokemon.addStatusEffect({
 					name: "intimidate-weakened",
 					type: "stat",
+					volatile: true,
 					class: "debuff",
 					stat: "attack",
 					amount: -1
@@ -3783,6 +4123,7 @@ class Round{
 				otherPokemon.addStatusEffect({
 					name: "rattled-sped-up",
 					type: "stat",
+					volatile: true,
 					class: "buff",
 					stat: "speed",
 					amount: 1
@@ -3882,17 +4223,14 @@ class Round{
 		if (this.currentlySwappingPokemon) return Promise.resolve()
 		if (this.trainers[0].activePokemon === pokemon) return Promise.resolve()
 
-		//If the trainer's active pokemon is frozen in fear, they can't swap.
 		let trainer = this.trainers[trainerIndex]
-		let activePokemon = trainer.activePokemon
-		if (activePokemon && activePokemon.hasStatus("fear-frozen")){
-			let text = getLocaleString("error-cant-switch-fear-frozen", lang)
-			this.createAnnouncement("general", text, 1500)
-			return Promise.resolve()
-		}
-		else if (activePokemon && activePokemon.getStatusesOfType("cant-switch").length){
-			let text = getLocaleString("error-cant-switch-status", lang)
-			this.createAnnouncement("general", text, 1500)
+		let canSwapCheck = this.canSwitchPokemon(trainer, pokemon)
+		let canSwap = canSwapCheck.result
+		if (!canSwap){
+			if (canSwapCheck.reason){
+				let text = canSwapCheck.reason
+				this.createAnnouncement("general", text, 1500)
+			}
 			return Promise.resolve()
 		}
 		
@@ -3903,6 +4241,36 @@ class Round{
 			return this.turnEnd(turn)
 		})
 		return promise
+	}
+	canSwitchPokemon(trainer, pokemon){
+		let result = {
+			result: true
+		}
+		let otherTrainer = this.trainers.find(t => t !== trainer)
+		let otherPokemon = otherTrainer.activePokemon
+		let activePokemon = trainer.activePokemon
+		if (activePokemon){
+			if (activePokemon.hasStatus("fear-frozen")){
+				let text = getLocaleString("error-cant-switch-fear-frozen", lang)
+				result.result = false
+				result.reason = text
+			}
+			else if (activePokemon.getStatusesOfType("cant-switch").length){
+				let text = getLocaleString("error-cant-switch-status", lang)
+				result.result = false
+				result.reason = text
+			}
+			else if (
+				otherPokemon.hasAbility("Magnet Pull") &&
+				activePokemon.getEffectiveTypes().includes("Steel")
+			){
+				let text = getLocaleString("error-cant-switch-magnet-pull", lang)
+				result.result = false
+				result.reason = text
+			}
+		}
+
+		return result
 	}
 
 	addStatusEffect(statusEffect){
@@ -3939,8 +4307,14 @@ class Round{
 		for (let trainer of this.trainers){
 			let pokemon = trainer.activePokemon
 			if (!pokemon) continue
-			if (pokemon.hasAbility("Lightning Rod") || true){
+			if (pokemon.hasAbility("Lightning Rod")){
 				tileWeights["yellow"] += 0.5
+			}
+			if (pokemon.hasAbility("Forewarn")){
+				tileWeights["purple"] += 0.5
+			}
+			if (pokemon.hasAbility("Sweet Veil")){
+				tileWeights["pink"] += 0.5
 			}
 		}
 
@@ -4173,6 +4547,8 @@ class Round{
 
 				if (typeMult > 1){
 					moveTag.attr("data-effectiveness", "super-effective")
+				} else if (typeMult <= 0){
+					moveTag.attr("data-effectiveness", "immune-effective")
 				} else if (typeMult <= 0.5){
 					moveTag.attr("data-effectiveness", "not-very-effective")
 				} else {

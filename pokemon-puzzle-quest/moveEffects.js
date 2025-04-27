@@ -1243,6 +1243,7 @@ const pokemonMoveEffects = {
 				pokemon.addStatusEffect({
 					name: "steadfast-sped-up",
 					type: "stat",
+					volatile: true,
 					class: "debuff",
 					stat: "speed",
 					amount: 1
