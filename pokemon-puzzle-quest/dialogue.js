@@ -52,7 +52,8 @@ function beginDialogue(dialogueData) {
 	let speakersTag = $("#dialogue").children(".speakers")
 	speakersTag.empty()
 	let textBox = $("#dialogue").children(".text-box")
-	let nameplate = $("#dialogue").children(".nameplate")
+	let nameplate = textBox.children(".nameplate")
+	nameplate.removeAttr("style")
 
 	let promises = []
 	let promise = advanceCurrentDialogue()
@@ -75,18 +76,22 @@ function beginDialogue(dialogueData) {
 	}))
 
 	totalPromise
-		.then(() => {
-			$("#dialogue-container").fadeOut()
-			if (boardIsVisible) {
-				delay(400).then(() => {
-					$("#board").removeClass("showing-dialogue")
-				})
-			}
-			for (let interval in dialogueProgress.intervals) {
-				clearInterval(dialogueProgress.intervals[interval])
-			}
-			return delay(400)
-		})
+	.then(() => {
+		$("#dialogue-container").fadeOut()
+		if (boardIsVisible) {
+			delay(400).then(() => {
+				$("#board").removeClass("showing-dialogue")
+			})
+		}
+		for (let interval in dialogueProgress.intervals) {
+			clearInterval(dialogueProgress.intervals[interval])
+		}
+		return delay(400)
+	})
+	// .then(() => {
+	// 	$(".nameplate").css("opacity", "unset")
+	// 	$(".nameplate").css("filter", "unset")
+	// })
 
 	return totalPromise
 }

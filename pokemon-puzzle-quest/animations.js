@@ -127,3 +127,40 @@ function getTypeIcon(type){
 		return undefined
 	}
 }
+
+const zMeterColors = {
+  "Normal": ["#F5F5F5", "#AAA9AD", "#77777A"],
+  "Fire": ["#FFA756", "#EE8130", "#B95810"],
+  "Water": ["#58ABF6", "#6390F0", "#3B5BA9"],
+  "Electric": ["#FBE273", "#F7D02C", "#C0A100"],
+  "Grass": ["#7CDB8A", "#7AC74C", "#4C9230"],
+  "Ice": ["#A8F0F4", "#96D9D6", "#5AA4A2"],
+  "Fighting": ["#FF7667", "#C22E28", "#861D1A"],
+  "Poison": ["#C58BE2", "#A33EA1", "#6B2070"],
+  "Ground": ["#E3C38E", "#E2BF65", "#AA8E3F"],
+  "Flying": ["#A0C8F0", "#A98FF3", "#7258AA"],
+  "Psychic": ["#FF93B5", "#F95587", "#B9325A"],
+  "Bug": ["#C6D16E", "#A6B91A", "#717B11"],
+  "Rock": ["#D3C08A", "#B6A136", "#7E6916"],
+  "Ghost": ["#A181E8", "#735797", "#493360"],
+  "Dragon": ["#A48BF4", "#6F35FC", "#4722B6"],
+  "Dark": ["#8D8D94", "#705746", "#4C3A2F"],
+  "Steel": ["#C1C7D6", "#B7B7CE", "#7B7B8A"],
+  "Fairy": ["#FFB7E6", "#D685AD", "#944D72"]
+}
+function applyColorsToZCrystal(elem, types){
+	if (types[0]){
+		elem.attr("data-type1", types[0])
+		elem.attr("data-type2", types[0])
+	} else {
+		elem.attr("data-type1", "")
+		elem.attr("data-type2", "")
+	}
+	if (types[1]){
+		elem.attr("data-type2", types[1])
+	} else if (types[0]){
+		elem.attr("data-type2", types[0])
+	} else {
+		elem.attr("data-type2", "")
+	}
+}

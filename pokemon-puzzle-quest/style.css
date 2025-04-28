@@ -123,9 +123,10 @@ body {
 }
 
 #fps {
-	position: absolute;
+	/* position: absolute;
 	z-index: 100;
-	bottom: 0; left: 0;
+	bottom: 0; left: 0; */
+	text-align: center;
 }
 
 .modal.wide > .modal-dialog {
@@ -536,10 +537,6 @@ body {
 	opacity: 1;
 }
 
-.board-side-top {
-	text-align: center;
-}
-
 .board-center {
 	display: flex;
 	flex-direction: column;
@@ -655,8 +652,265 @@ body {
 	font-size: 0.8em;
 }
 
+.board-side-top {
+	text-align: center;
+	position: relative;
+}
+
 .board-side-top .health-bar {
 	z-index: 2;
+}
+
+.board-side-top .z-meter {
+	--z-meter-highlight: #F5F5F5;
+	--z-meter-color: #4A4A4A;
+	--z-meter-background: #77777A;
+	--icon: url("src/img/z-icons/normal.png");
+	--icon-position: center;
+	--icon-size: auto 70%;
+	--fullness: 0%;
+	z-index: 100;
+	position: absolute;
+	width: 4em;
+	height: 1.8em;
+	transition: 0.3s width, 0.3s height;
+}
+.board-side-top .z-meter:hover {
+	width: 5em;
+	height: 2.25em;
+}
+.board-side-top .z-meter[data-full="Full"] {
+	--color: var(--z-meter-highlight);
+	filter: drop-shadow(0 0 0.5em var(--color))
+	drop-shadow(0 0 0.3em var(--color));
+}
+.player .board-side-top .z-meter[data-full="Full"] {
+	cursor: pointer;
+}
+.board-side-top .z-meter[data-type1="Normal"] {
+	--z-meter-highlight: #F5F5F5;
+	--z-meter-color: #4A4A4A;
+	--z-meter-background: #77777A;
+}
+.board-side-top .z-meter[data-type1="Fire"] {
+	--z-meter-highlight: #FFA756;
+	--z-meter-color: #552800;
+	--z-meter-background: #B95810;
+}
+.board-side-top .z-meter[data-type1="Water"] {
+	--z-meter-highlight: #58ABF6;
+	--z-meter-color: #103366;
+	--z-meter-background: #3B5BA9;
+}
+.board-side-top .z-meter[data-type1="Electric"] {
+	--z-meter-highlight: #FBE273;
+	--z-meter-color: #665400;
+	--z-meter-background: #C0A100;
+}
+.board-side-top .z-meter[data-type1="Grass"] {
+	--z-meter-highlight: #7CDB8A;
+	--z-meter-color: #1F4D1F;
+	--z-meter-background: #4C9230;
+}
+.board-side-top .z-meter[data-type1="Ice"] {
+	--z-meter-highlight: #A8F0F4;
+	--z-meter-color: #1E4A4E;
+	--z-meter-background: #5AA4A2;
+}
+.board-side-top .z-meter[data-type1="Fighting"] {
+	--z-meter-highlight: #FF7667;
+	--z-meter-color: #5A0F0C;
+	--z-meter-background: #861D1A;
+}
+.board-side-top .z-meter[data-type1="Poison"] {
+	--z-meter-highlight: #C58BE2;
+	--z-meter-color: #451245;
+	--z-meter-background: #6B2070;
+}
+.board-side-top .z-meter[data-type1="Ground"] {
+	--z-meter-highlight: #E3C38E;
+	--z-meter-color: #5A4726;
+	--z-meter-background: #AA8E3F;
+}
+.board-side-top .z-meter[data-type1="Flying"] {
+	--z-meter-highlight: #A0C8F0;
+	--z-meter-color: #2F3266;
+	--z-meter-background: #7258AA;
+}
+.board-side-top .z-meter[data-type1="Psychic"] {
+	--z-meter-highlight: #FF93B5;
+	--z-meter-color: #661933;
+	--z-meter-background: #B9325A;
+}
+.board-side-top .z-meter[data-type1="Bug"] {
+	--z-meter-highlight: #C6D16E;
+	--z-meter-color: #495D1A;
+	--z-meter-background: #717B11;
+}
+.board-side-top .z-meter[data-type1="Rock"] {
+	--z-meter-highlight: #D3C08A;
+	--z-meter-color: #4C3E17;
+	--z-meter-background: #7E6916;
+}
+.board-side-top .z-meter[data-type1="Ghost"] {
+	--z-meter-highlight: #A181E8;
+	--z-meter-color: #2F1D47;
+	--z-meter-background: #493360;
+}
+.board-side-top .z-meter[data-type1="Dragon"] {
+	--z-meter-highlight: #A48BF4;
+	--z-meter-color: #3C1880;
+	--z-meter-background: #4722B6;
+}
+.board-side-top .z-meter[data-type1="Dark"] {
+	--z-meter-highlight: #8D8D94;
+	--z-meter-color: #261D1A;
+	--z-meter-background: #4C3A2F;
+}
+.board-side-top .z-meter[data-type1="Steel"] {
+	--z-meter-highlight: #C1C7D6;
+	--z-meter-color: #4B4B56;
+	--z-meter-background: #7B7B8A;
+}
+.board-side-top .z-meter[data-type1="Fairy"] {
+	--z-meter-highlight: #FFB7E6;
+	--z-meter-color: #5C2642;
+	--z-meter-background: #944D72;
+}
+
+.board-side-top .z-meter[data-type2="Normal"] {
+	--icon: url("src/img/z-icons/normal.png");
+}
+.board-side-top .z-meter[data-type2="Fire"] {
+	--icon: url("src/img/z-icons/fire.png");
+}
+.board-side-top .z-meter[data-type2="Water"] {
+	--icon: url("src/img/z-icons/water.png");
+}
+.board-side-top .z-meter[data-type2="Electric"] {
+	--icon: url("src/img/z-icons/electric.png");
+}
+.board-side-top .z-meter[data-type2="Grass"] {
+	--icon: url("src/img/z-icons/grass.png");
+}
+.board-side-top .z-meter[data-type2="Ice"] {
+	--icon: url("src/img/z-icons/ice.png");
+}
+.board-side-top .z-meter[data-type2="Fighting"] {
+	--icon: url("src/img/z-icons/fighting.png");
+}
+.board-side-top .z-meter[data-type2="Poison"] {
+	--icon: url("src/img/z-icons/poison.png");
+}
+.board-side-top .z-meter[data-type2="Ground"] {
+	--icon: url("src/img/z-icons/ground.png");
+	--icon-position: center 40%;
+	--icon-size: auto 50%;
+}
+.board-side-top .z-meter[data-type2="Flying"] {
+	--icon: url("src/img/z-icons/flying.png");
+	--icon-position: center 55%;
+	--icon-size: auto 50%;
+}
+.board-side-top .z-meter[data-type2="Psychic"] {
+	--icon: url("src/img/z-icons/psychic.png");
+}
+.board-side-top .z-meter[data-type2="Bug"] {
+	--icon: url("src/img/z-icons/bug.png");
+}
+.board-side-top .z-meter[data-type2="Rock"] {
+	--icon: url("src/img/z-icons/rock.png");
+	--icon-position: center 45%;
+	--icon-size: auto 50%;
+}
+.board-side-top .z-meter[data-type2="Ghost"] {
+	--icon: url("src/img/z-icons/ghost.png");
+}
+.board-side-top .z-meter[data-type2="Dragon"] {
+	--icon: url("src/img/z-icons/dragon.png");
+	--icon-size: auto 50%;
+}
+.board-side-top .z-meter[data-type2="Dark"] {
+	--icon: url("src/img/z-icons/dark.png");
+}
+.board-side-top .z-meter[data-type2="Steel"] {
+	--icon: url("src/img/z-icons/steel.png");
+}
+.board-side-top .z-meter[data-type2="Fairy"] {
+	--icon: url("src/img/z-icons/fairy.png");
+}
+.player .board-side-top .z-meter {
+	bottom: 0.3em; left: 0.3em;
+}
+.enemy .board-side-top .z-meter {
+	bottom: 0.3em; right: 0.3em;
+}
+.board-side-top .z-meter-bar {
+	height: 100%; width: 100%;
+	background-color: var(--z-meter-background);
+	/* clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); */
+	clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+	transition: background-color 0.3s;
+}
+.board-side-top .z-meter-bar .wrapper {
+	position: absolute;
+	bottom: 0;
+	width: 100%; height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	flex-wrap: nowrap;
+}
+.board-side-top .z-meter-bar .wrapper * {
+	flex-shrink: 0;
+}
+.board-side-top .z-meter-bar .bar-flourish {
+	width: 100%;
+	height: 100%;
+	background-color: var(--z-meter-highlight);
+	mask-image: linear-gradient(transparent, black 100%);
+	mask-size: 100% 50%;
+	mask-repeat: no-repeat;
+	mask-position: bottom;
+
+	animation-name: z-breathe;
+	animation-duration: 2.5s;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+	transition: background-color 0.3s;
+}
+.enemy .board-side-top .z-meter-bar .bar-flourish {
+	animation-delay: -3s;
+}
+@keyframes z-breathe {
+	0% {
+		mask-size: 100% 5%;
+	}
+	80% {
+		mask-size: 100% 10%;
+	}
+	100% {
+		mask-size: 100% 15%;
+	}
+}
+.board-side-top .z-meter-bar .bar {
+	width: 100%;
+	height: var(--fullness);
+	background-color: var(--z-meter-highlight);
+	transition: height 0.3s, background-color 0.3s;
+}
+.board-side-top .z-meter-bar .icon {
+	position: absolute;
+	top: 0; left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: var(--z-meter-color);
+	mask-image: var(--icon);
+	mask-size: contain;
+	mask-repeat: no-repeat;
+	mask-position: var(--icon-position);
+	mask-size: var(--icon-size);
+	filter: brightness(0.5);
 }
 
 .avatar-pokemon-section {

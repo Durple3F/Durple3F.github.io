@@ -1588,8 +1588,8 @@
 		},
 		"Hustle": {
 			"name": "Hustle",
-			"shortDescription": "Raises Attack by 50%, but adds a random extra cost to moves each turn",
-			"longDescription": "This Pokémon's Attack stat is increased by 50%. However, at the beginning of this Pokémon's turn, each of its moves have a random additional cost added."
+			"shortDescription": "Raises Attack by 50%, but adds a random extra cost to Physical moves each turn",
+			"longDescription": "This Pokémon's Attack stat is increased by 50%. However, at the beginning of this Pokémon's turn, each of its Physical moves have a random additional cost added."
 		},
 		"Hydration": {
 			"name": "Hydration",

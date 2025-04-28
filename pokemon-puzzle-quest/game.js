@@ -1181,9 +1181,10 @@ class Round{
 			let activePokemon = trainer.activePokemon
 			let activeMoves = activePokemon.activeMoves
 
-			//Hustle
+			//Hustle increases some moves' costs.
 			if (this.activePlayerIndex === trainerIndex && activePokemon.hasAbility("Hustle")){
 				for (let move of activeMoves){
+					if (move.category !== "Physical") continue
 					let statusEffect = {
 						name: "hustle-cost-increase",
 						type: "cost-alteration",
@@ -3826,6 +3827,10 @@ class Round{
 			this.updatePokemonMoves(i)
 			this.updatePokeballs(i)
 			this.updateStatusEffects(i)
+
+			let pokemon = this.trainers[i].activePokemon
+			let types = pokemon?.getEffectiveTypes() || []
+			applyColorsToZCrystal(this.trainers[i].tags.zMeter, types)
 		}
 		
 		this.updateConfirmButton()
@@ -3870,6 +3875,10 @@ class Round{
 		tags.trainerImageSection.attr("style", "")
 		tags.trainerImage = tags.trainerImageSection.children(".trainer-image")
 		tags.trainerImage.attr("src", "")
+
+		tags.zMeter = tags.sideTop.find(".z-meter")
+		tags.zMeter.attr("data-type1", "").attr("data-type2", "").attr("data-full", "")
+
 		tags.pokeballDisplay = tags.sideMiddle.children(".pokeball-display")
 		tags.pokeballContainers = tags.pokeballDisplay.children().children(".pokeball-container")
 		tags.pokemonStatusSection = tags.pokemonSection.children(".pokemon-status-effect-section")

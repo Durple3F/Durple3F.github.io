@@ -1,11 +1,19 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
+4/28 (25.8k lines):
+	- I'm thinking of making Z-Moves. I'm intending to make the game mechanic work as a meter instead of a 1-per-game thing. Have it start full, then it recharges over time maybe.
+	- Lots of work on how the Z-Move meter looks.
+
 4/27 (25.5k lines):
 	- I can now set reccomended levels for each route, so that I can hopefully scale the player's pokemon down to something good-ish for the level...
 	- Pokemon changed this way are returned to their normal levels once the level finishes.
 	- However, because of this, now you must finish the route (win/lose/flee/whatever) before any of your pokemon have their data saved. If you refresh during fight 2 of 3, any changes to your pokemon from fight 1 are forgotten.
 	- Fixed some dialogue errors. Makana's Rockruff is no longer semitransparent.
 	- Oops, some debug stuff was still on
+	- Infestation would crash the game if it couldn't steal any energy
+	- Copycat copied its move wrong. Fixed crash.
+	- Speaker nameplates should be visible now by default.
+	- Hustle now only taxes Physical moves
 
 4/26 (25.3k lines):
 	- Rewrote the code used when having the CPU pick tiles, hopefully it's less prone to error now.
