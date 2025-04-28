@@ -9,3 +9,4 @@ TODO
 - Add a section in the pokedex where you can see how many you've caught/seen/etc
 - Pokedex entries
 - For some reason the loading bar at the beginning gets big long why does it do that why do they always do this to me
+- Opponents don't care about cooldowns

@@ -681,6 +681,8 @@ class Round{
 		for (let type in toAdd){
 			let amt = toAdd[type]
 			if (amt){
+				//TODO figure out why this broke
+				if (!trainer.tags.energyBars[type]) continue
 				let bar = trainer.tags.energyBars[type][0]
 				let cssColor = getCSSEnergyColor(type)
 				let plus = amt >= 0 ? "+" : ""
@@ -2100,7 +2102,11 @@ class Round{
 		}
 
 		//Sturdy makes you immune to 1-hit KOs while at full health
-		if (defender.hp >= defender.maxhp && defender.hasAbility("Sturdy")){
+		if (
+			defender.hp >= defender.maxhp &&
+			damage >= defender.hp &&
+			defender.hasAbility("Sturdy")
+		){
 			damage = defender.hp - 1
 		}
 		

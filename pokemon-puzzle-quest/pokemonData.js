@@ -28,6 +28,7 @@ for (let type of types){
 }
 typeEffectiveness["Normal"]["Rock"] = 0.5
 typeEffectiveness["Normal"]["Ghost"] = 0
+typeEffectiveness["Normal"]["Steel"] = 0.5
 
 typeEffectiveness["Fighting"]["Normal"] = 2
 typeEffectiveness["Fighting"]["Flying"] = 0.5
