@@ -951,16 +951,18 @@ class Round{
 				} else if (isEnemy && statusName === "Infested"){
 					//Infested tiles eat some of your energy and give them to the opponent
 					let yourEnergy = activePokemon.energy
-					let usableTypes = Object.keys(yourEnergy).filter(key => yourEnergy[key])
-					let type = randomChoice(usableTypes)
-					let energyToTake = getEmptyEnergy()
-					energyToTake[type] = -1
-					let changes = this.giveEnergy(energyToTake, trainer, activePokemon)
-					let energyToGive = getEmptyEnergy()
-					for (let type in changes){
-						energyToGive[type] = changes[type] * -1
+					let usableTypes = Object.keys(yourEnergy).filter(key => yourEnergy[key] > 0)
+					if (usableTypes.length){
+						let type = randomChoice(usableTypes)
+						let energyToTake = getEmptyEnergy()
+						energyToTake[type] = -1
+						let changes = this.giveEnergy(energyToTake, trainer, activePokemon)
+						let energyToGive = getEmptyEnergy()
+						for (let type in changes){
+							energyToGive[type] = changes[type] * -1
+						}
+						this.giveEnergy(energyToGive, otherTrainer, otherPokemon)
 					}
-					this.giveEnergy(energyToGive, otherTrainer, otherPokemon)
 				} else if (isEnemy && statusName === "Cursed"){
 					cursed = status
 				}
