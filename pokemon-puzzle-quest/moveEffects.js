@@ -1108,17 +1108,19 @@ const pokemonMoveEffects = {
 			let moveIndex = game.moveQueue.indexOf(moveUseObj)
 			let trainer = moveUseObj.trainer
 			let pokemon = moveUseObj.pokemon
-			let newMoveUseObj = game.newMoveUseObj(
-				trainer, pokemon, move, "effects"
-			)
-			if (moveIndex !== -1){
-				game.moveQueue.splice(moveIndex + 1, 0, newMoveUseObj)
-			} else {
-				game.moveQueue.push(newMoveUseObj)
-			}
-			let newIndex = game.moveQueue.indexOf(newMoveUseObj)
+			// let newMoveUseObj = game.newMoveUseObj(
+			// 	trainer, pokemon, move, "effects"
+			// )
+			// if (moveIndex !== -1){
+			// 	game.moveQueue.splice(moveIndex + 1, 0, newMoveUseObj)
+			// } else {
+			// 	game.moveQueue.push(newMoveUseObj)
+			// }
+			game.beginToUseMove(trainer, pokemon, move)
+			resolve()
+			// let newIndex = game.moveQueue.indexOf(newMoveUseObj)
 
-			resolve(newIndex)
+			// resolve(newIndex)
 		}
 	},
 	"learn-move": {
