@@ -511,6 +511,7 @@ function newPlayerSaveData(){
 	data["pokemon-caught-stats"] = {}
 	data["unlocked-pokedex"] = false
 	data["seen-dialogue"] = []
+	data["z-moves-unlocked"] = []
 	return data
 }
 function normalizeSave(saveInfo){

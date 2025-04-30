@@ -87,5 +87,9 @@ Missing Abilities:
 Missing Shiny Variations:
 	- None! :)
 
+Incomplete Z-Moves:
+	- Breakneck Blitz doesn't look very good
 
+Incomplete Z-ified moves:
+	- Everything except Growl, Defense Curl, and Copycat
 

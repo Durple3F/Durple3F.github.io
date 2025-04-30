@@ -74,7 +74,8 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Popplio",
-						level: 5
+						level: 5,
+						ability: "Torrent"
 					}
 				]
 			},
@@ -83,7 +84,8 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Rowlet",
-						level: 5
+						level: 5,
+						ability: "Overgrow"
 					}
 				]
 			},
@@ -92,7 +94,8 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Litten",
-						level: 5
+						level: 5,
+						ability: "Blaze"
 					}
 				]
 			}
@@ -182,7 +185,8 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Rattata-Alola",
-						level: 3
+						level: 3,
+						ability: "Gluttony"
 					}
 				]
 			},
@@ -252,7 +256,8 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Caterpie",
-						level: 3
+						level: 3,
+						ability: "Shield Dust"
 					}
 				]
 			},
@@ -297,11 +302,13 @@ const levelData = [
 					{
 						id: "Popplio",
 						level: 7,
+						ability: "Torrent",
 						activeMoves: ["Pound", "Water Gun", "Growl"]
 					},
 					{
 						id: "Pichu",
 						level: 6,
+						ability: "Static",
 						activeMoves: ["Thunder Shock", "Tail Whip", "Charm"]
 					},
 				]
@@ -312,11 +319,13 @@ const levelData = [
 					{
 						id: "Rowlet",
 						level: 7,
+						ability: "Overgrow",
 						activeMoves: ["Tackle", "Growl", "Leafage"]
 					},
 					{
 						id: "Pichu",
 						level: 6,
+						ability: "Static",
 						activeMoves: ["Thunder Shock", "Tail Whip", "Charm"]
 					},
 				]
@@ -327,11 +336,13 @@ const levelData = [
 					{
 						id: "Litten",
 						level: 7,
+						ability: "Blaze",
 						activeMoves: ["Scratch", "Growl", "Ember"]
 					},
 					{
 						id: "Pichu",
 						level: 6,
+						ability: "Static",
 						activeMoves: ["Thunder Shock", "Tail Whip", "Charm"]
 					},
 				]
@@ -431,7 +442,8 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Grubbin",
-						level: 6
+						level: 6,
+						ability: "Swarm"
 					}
 				]
 			},
@@ -442,7 +454,8 @@ const levelData = [
 					{
 						id: "Wingull",
 						name: "Gully",
-						level: 6
+						level: 6,
+						ability: "Hydration"
 					}
 				]
 			},
@@ -534,36 +547,36 @@ const levelData = [
 				name: "Hiromi",
 				class: "Young-Athlete-F",
 				pokemon: [
-					{ id: "Pikipek", name: "Chirpo", level: 8 }
+					{ id: "Pikipek", name: "Chirpo", level: 8, ability: "Skill Link" }
 				]
 			},
 			{
 				name: "Mia",
 				class: "Preschooler-F-Gen7",
 				pokemon: [
-					{ id: "Bonsly", name: "Mister Wobbles", level: 7 }
+					{ id: "Bonsly", name: "Mister Wobbles", level: 7, ability: "Sturdy" }
 				]
 			},
 			{
 				name: "Joey",
 				class: "Youngster-Gen7",
 				pokemon: [
-					{ id: "Metapod", name: "Podzilla", level: 7 }
+					{ id: "Metapod", name: "Podzilla", level: 7, ability: "Shed Skin" }
 				]
 			},
 			{
 				name: "Joseph",
 				class: "Rising-Star",
 				pokemon: [
-					{ id: "Grimer-Alola", pokeball: "greatball", level: 8 }
+					{ id: "Grimer-Alola", pokeball: "greatball", level: 8, ability: "Poison Touch" }
 				]
 			},
 			{
 				name: "Emily",
 				class: "Teacher-Gen7",
 				pokemon: [
-					{ id: "Magnemite", name: "Tesla", level: 8 },
-					{ id: "Meowth-Alola", name: "Cleo", level: 9 }
+					{ id: "Magnemite", name: "Tesla", level: 8, ability: "Analytic" },
+					{ id: "Meowth-Alola", name: "Cleo", level: 9, ability: "Technician" }
 				]
 			},
 		],
@@ -892,6 +905,7 @@ const levelData = [
 		]
 	},
 	//2-7: Trial 1
+	//UNLOCK NORMAL Z
 	{
 		id: "Route 2-7",
 		category: "Route 2",
@@ -977,6 +991,7 @@ const levelData = [
 			
 			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
 			{ type: "dialogue", source: "route-2-7-dialogue-won-1" },
+			{ type: "unlock-z-move-type", unlockedType: "Normal" },
 		]
 	},
 
@@ -1035,6 +1050,16 @@ const levelData = [
 		name: "Route 3-2",
 		music: "SM Wild Pokemon Battle",
 		icon: "2",
+		reccomendedLevels: {
+			"normal": (pokemonList) => {
+				if (pokemonList.length >= 3) return 14
+				return 16
+			},
+			"hard": (pokemonList) => {
+				if (pokemonList.length >= 3) return 14
+				return 16
+			}
+		},
 		trainers: [
 			{
 				isWild: true,
@@ -1107,14 +1132,6 @@ const levelData = [
 					{ id: "Caterpie", levelMin: 10, levelMax: 13, weight: 1 },
 					{ id: "Metapod", levelMin: 10, levelMax: 13, weight: 1 },
 					{ id: "Butterfree", levelMin: 10, levelMax: 13, weight: 0.5 },
-				]
-			},
-			{
-				name: "Makana",
-				class: "Ace-Trainer-Gen7",
-				pokemon: [
-					{ id: "Rockruff", level: 13 },
-					{ id: "Slowpoke", level: 14 },
 				]
 			},
 		],

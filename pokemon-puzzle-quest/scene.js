@@ -1235,6 +1235,14 @@ function advanceCurrentLevel() {
 			console.log(key, value, playerSaveInfo)
 			resolvePromise()
 		} break
+		case "unlock-z-move-type": {
+			let type = effect.unlockedType
+			let unlocked = playerSaveInfo["z-moves-unlocked"]
+			if (!unlocked.includes(type)){
+				unlocked.push(type)
+			}
+			resolvePromise()
+		} break
 		case "load-value": {
 			currentLevelProgress.info[effectIndex] = effect.value
 			resolvePromise()

@@ -511,7 +511,17 @@ const pokemonMoveData = {
 			{ type: "jump", jumpTo: Infinity },
 			{ type: "wait", duration: 1000, label: "use-move" },
 			{ type: "get-last-move", target: "opponent" },
-			{ type: "use-move", move: -1 }
+			{ type: "use-move", move: -1 },
+			{ type: "is-z-move" },
+			{ type: "jump-if-truthy", jumpTo: "z-move" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "trigger", key: "zEffects", label: "z-move" },
+		],
+		zEffects: [
+			{
+				type: "apply-debuff", target: "user",
+				debuff: { type: "stat", stat: "speed", class: "buff", amount: 1 }
+			},
 		],
 		highlightOnHover: {
 			type: "last-enemy-move"
@@ -608,7 +618,7 @@ const pokemonMoveData = {
 		accuracy: null,
 		rechargeTurns: 1,
 		energy: {
-			orange: 10
+			// orange: 10
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Defense Curl.mp3"
@@ -638,6 +648,16 @@ const pokemonMoveData = {
 					operation: "multiply"
 				}
 			} },
+			{ type: "is-z-move" },
+			{ type: "jump-if-truthy", jumpTo: "z-move" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "trigger", key: "zEffects", label: "z-move" },
+		],
+		zEffects: [
+			{
+				type: "apply-debuff", target: "user",
+				debuff: { type: "stat", stat: "speed", class: "buff", amount: 1 }
+			},
 		],
 	},
 	//Makes the opponent unable to use their last move
@@ -1173,7 +1193,17 @@ const pokemonMoveData = {
 					class: "debuff",
 					amount: -1
 				}
-			}
+			},
+			{ type: "is-z-move" },
+			{ type: "jump-if-truthy", jumpTo: "z-move" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "trigger", key: "zEffects", label: "z-move" },
+		],
+		zEffects: [
+			{
+				type: "apply-debuff", target: "user",
+				debuff: { type: "stat", stat: "defense", class: "buff", amount: 1 }
+			},
 		],
 	},
 	//Converts tiles in a diagonal pattern

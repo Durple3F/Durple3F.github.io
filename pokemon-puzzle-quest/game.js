@@ -42,6 +42,7 @@ class Round {
 		})
 		this.maxInitiative = 100
 		this.struggleTest = false
+		this.zMoveTest = false
 
 		this.result = null
 		this.hasBegun = false
@@ -2809,7 +2810,11 @@ class Round {
 		moveUseObj.parentMove = parentMove
 		completedTriggers.forEach(trigger => moveUseObj.completedTriggers.push(trigger))
 		let promise = moveUseObj.promise
-		// console.log(moveUseObj)
+		
+		let types = pokemon.getEffectiveTypes()
+		let moveType = this.getEffectiveMoveType(trainer, pokemon, move)
+		let isZMove = trainer.zMoveReady && types.includes(moveType)
+		moveUseObj.isZMove = isZMove
 
 		let changed = false
 		let statusEffects = pokemon.statusEffects
@@ -2838,7 +2843,7 @@ class Round {
 		})
 
 		//If the player is using their z-move, once the move is done, un-ready it
-		if (trainer.zMoveReady){
+		if (moveUseObj.isZMove){
 			promise = promise.then(() => {
 				let trainerIndex = this.trainers.indexOf(trainer)
 				this.unreadyZMove(trainerIndex)
@@ -3249,7 +3254,7 @@ class Round {
 	readyZMove(trainerIndex) {
 		let trainer = this.trainers[trainerIndex]
 		if (trainer.zMoveReady) return
-		if (trainer.zMeterFullness >= 1) {
+		if (trainer.zMeterFullness >= 1 || this.zMoveTest) {
 			trainer.zMoveReady = true
 			trainer.canGainZEnergy = false
 			trainer.zMeterFullness = 0
@@ -3904,12 +3909,21 @@ class Round {
 		let trainer = this.trainers[trainerIndex]
 		let pokemon = trainer.activePokemon
 		let types = pokemon?.getEffectiveTypes() || []
+		types = types.filter(type => {
+			return trainer.zMoveUsableTypes.includes(type)
+		})
 		let zMeter = trainer.tags.zMeter
 		let fullness = trainer.zMeterFullness * 100
 		applyColorsToZCrystal(zMeter, types)
 		zMeter.css("--fullness", fullness + "%")
 		if (fullness >= 100) {
 			zMeter.attr("data-full", "Full")
+		}
+
+		if (trainer.canUseZMoves && types.length){
+			zMeter.addClass("show")
+		} else {
+			zMeter.removeClass("show")
 		}
 	}
 
@@ -3973,7 +3987,7 @@ class Round {
 		tags.zMeter = tags.sideTop.find(".z-meter")
 		tags.zMeter.attr("data-type1", "").attr("data-type2", "")
 			.attr("data-full", "").removeAttr("style")
-			.css({ opacity: "0" })
+			.css({ opacity: "0" }).removeClass("show")
 
 		tags.pokeballDisplay = tags.sideMiddle.children(".pokeball-display")
 		tags.pokeballContainers = tags.pokeballDisplay.children().children(".pokeball-container")
@@ -4565,9 +4579,10 @@ class Round {
 		for (let move of movesToConsider) {
 			let parentMove = move
 			let type = this.getEffectiveMoveType(trainer, pokemon, move)
+			let category = getMoveCategory(move, parentMove)
 			if (
 				trainer.zMoveReady &&
-				move.tags.includes("damage-dealing") &&
+				category !== "Status" &&
 				pokemonTypes.includes(type)
 			) {
 				let newMove = getZMove(trainer, pokemon, move, type)
@@ -4587,6 +4602,14 @@ class Round {
 			tag.attr("data-move-type", type)
 			let parentMoveIndex = pokemon.moves.indexOf(parentMove)
 			tag.attr("data-parent-move", parentMoveIndex)
+
+			//If this is a z-move, make sure that's remembered in the tag
+			let isZMove = trainer.zMoveReady && pokemonTypes.includes(type)
+			if (isZMove) {
+				tag.attr("data-is-z-move", true)
+			} else {
+				tag.removeAttr("data-is-z-move")
+			}
 
 			if (parentMove.name === "Struggle") {
 				tag.attr("data-struggle", true)
@@ -4627,6 +4650,12 @@ class Round {
 				html.append(statLine)
 				let description = getLocaleString("description", lang, ["moves", move.name])
 				html.append(`<span>${description}</span>`)
+
+				if (!isZMove){
+					let zStuff = html.find(".z-move-description")
+					zStuff.hide()
+				}
+
 				return html
 			}
 
@@ -4943,6 +4972,8 @@ class Trainer {
 			console.trace()
 		}
 
+		this.canUseZMoves = !!this.data.canUseZMoves
+		this.zMoveUsableTypes = this.data.zMoveUsableTypes ?? []
 		this.zMoveReady = false
 		this.canGainZEnergy = true
 		this.zMeterFullness = 0
@@ -5687,7 +5718,11 @@ class TileStatus {
 function beginRound(trainerData) {
 	let resolvePromise
 	let promise = new Promise(resolve => resolvePromise = resolve)
-	let player = new Trainer("Player", playerActivePokemon)
+	let playerOptions = {
+		canUseZMoves: true,
+		zMoveUsableTypes: playerSaveInfo["z-moves-unlocked"]
+	}
+	let player = new Trainer("Player", playerActivePokemon, playerOptions)
 
 	let pokemonData = trainerData.pokemon.map(v => v)
 	//If this trainer has a group of pokemon it *might* pull from,
@@ -5737,6 +5772,9 @@ function beginRound(trainerData) {
 		}
 		if (data.pokeball) {
 			options.pokeballType = data.pokeball
+		}
+		if (data.ability) {
+			options.ability = data.ability
 		}
 		let pokemon = new Pokemon(options.name, options.id, options)
 		logPokemonAs("seen", pokemon)

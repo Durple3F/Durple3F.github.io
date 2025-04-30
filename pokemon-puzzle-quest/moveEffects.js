@@ -1206,6 +1206,13 @@ const pokemonMoveEffects = {
 			resolve(usage.recharge)
 		}
 	},
+	"is-z-move": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let moveUseObj = options.moveUse
+			resolve(moveUseObj.isZMove)
+		}
+	},
 	"get-cascade": {
 		update: false,
 		execute: (resolve, effect, params, game, options) => {
@@ -1468,6 +1475,18 @@ const pokemonMoveEffects = {
 			let effectIndex = options.effectIndex
 			let test = params.test ?? moveUseObj.info[effectIndex - 1]
 			if (test) {
+				moveUseObj.nextEffectIndex = options.index
+			}
+			resolve()
+		}
+	},
+	"jump-if-falsy": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let moveUseObj = options.moveUse
+			let effectIndex = options.effectIndex
+			let test = params.test ?? moveUseObj.info[effectIndex - 1]
+			if (!test) {
 				moveUseObj.nextEffectIndex = options.index
 			}
 			resolve()

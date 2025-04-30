@@ -184,6 +184,42 @@ body {
 .popover .tiny-tutorial {
 	font-size: 0.7em;
 }
+.popover .z-move-description {
+	/* display: inline-block; */
+	background-image: radial-gradient(
+		circle,
+		rgba(255, 0, 0, 1) 0%,
+		rgba(255, 154, 0, 1) 10%,
+		rgba(208, 222, 33, 1) 20%,
+		rgba(79, 220, 74, 1) 30%,
+		rgba(63, 218, 216, 1) 40%,
+		rgba(47, 201, 226, 1) 50%,
+		rgba(28, 127, 238, 1) 60%,
+		rgba(95, 21, 242, 1) 70%,
+		rgba(186, 12, 248, 1) 80%,
+		rgba(251, 7, 217, 1) 90%,
+		rgba(255, 0, 0, 1) 100%
+	);
+	background-size: 80%;
+	background-position-x: 0%;
+	background-position-y: 50%;
+	/* background-repeat: no-repeat; */
+	color: transparent;
+	background-clip: text;
+
+	animation-name: z-move-description-breathe;
+	animation-duration: 5s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+}
+@keyframes z-move-description-breathe{
+	from {
+		background-position-x: 0%;
+	}
+	to {
+		background-position-x: 400%;
+	}
+}
 
 .level-popover > .name {
 	font-size: 110%;
@@ -674,6 +710,10 @@ body {
 	width: 4em;
 	height: 1.8em;
 	transition: 0.3s width, 0.3s height;
+	display: none;
+}
+.board-side-top .z-meter.show {
+	display: block;
 }
 .board-side-top .z-meter:hover {
 	width: 5em;
@@ -843,6 +883,9 @@ body {
 .board-side-top .z-meter[data-inUse="true"] {
 	--z-meter-background: var(--z-meter-highlight);
 	--z-meter-shadow-color: white;
+}
+.board-side-top .z-meter-bar[data-inUse="true"] .bar {
+	--fullness: 100%;
 }
 .board-side-top .z-meter[data-inUse="true"] .icon {
 	background-color: var(--z-meter-color);

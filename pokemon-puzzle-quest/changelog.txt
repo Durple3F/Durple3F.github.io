@@ -1,5 +1,13 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
+4/30 (26.2k lines):
+	- Using a z-move now correctly removes energy from your meter
+	- I can now program special effects into moves for when they're used as a z-move
+	- I can now put fun rainbow text into move descriptions that only appears while using a z-move
+	- You unlock z-moves from beating level 2-7. Right now Normal ones are all that exist. Oh well.
+	- I can now have trainers within a level have pokemon with specific abilities.
+	- Custom abilities for all trainers from 1-1 to 1-7
+
 4/29 (25.9k lines):
 	- You can now click the little z-meter to turn all your damage-dealing moves into a damaging z-move. It's just the normal one right now. Plus it doesn't work.
 	- The game now correctly determines the power & category of a z-move based on the move that is actually in your pokemon's active moves.

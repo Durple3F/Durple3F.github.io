@@ -1078,7 +1078,7 @@
 		},
 		"Copycat": {
 			"name": "Copycat",
-			"description": "Uses the effects of the move the opponent most recently used. If they haven't used a move, this move does nothing.",
+			"description": "Uses the effects of the move the opponent most recently used. If they haven't used a move, this move does nothing. <span class='z-move-description'>Then the user's speed increases by a stage.</span>",
 			"shortDescription": "Copies enemy's last move"
 		},
 		"Covet": {
@@ -1093,7 +1093,7 @@
 		},
 		"Defense Curl": {
 			"name": "Defense Curl",
-			"description": "Raises the user's defense stat by 1 stage.",
+			"description": "Raises the user's defense stat by 1 stage. <span class='z-move-description'>Then the user's speed increases by a stage.</span>",
 			"shortDescription": "Raises defense and buffs other moves"
 		},
 		"Disable": {
@@ -1168,7 +1168,7 @@
 		},
 		"Growl": {
 			"name": "Growl",
-			"description": "Lowers the opponent's attack stat by 1 stage.",
+			"description": "Lowers the opponent's attack stat by 1 stage. <span class='z-move-description'>Then raises the user's defense by 1 stage.</span>",
 			"shortDescription": "Lowers enemy attack"
 		},
 		"Growth": {
@@ -1476,7 +1476,7 @@
 		
 		"Breakneck Blitz": {
 			"name": "Breakneck Blitz",
-			"description": "Randomly chooses 5 tiles, then removes them. Then do it again, seven more times. Then, deals damage with power based on the move it's replacing.",
+			"description": "<span class='z-move-description'>Randomly chooses 5 tiles, then removes them. Then does that again, seven more times. Deals damage with power based on the move it's replacing.</span>",
 			"shortDescription": "Deals huge damage and clears tiles randomly"
 		}
 	},

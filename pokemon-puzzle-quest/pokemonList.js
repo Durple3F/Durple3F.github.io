@@ -2181,7 +2181,6 @@ const pokemonData = {
 			{ name: "Disarming Voice", unlock: { type: "level", amount: 6 } },
 			{ name: "Aqua Jet", unlock: { type: "level", amount: 9 } },
 			{ name: "Baby-Doll Eyes", unlock: { type: "level", amount: 12 } },
-			{ name: "Bug Bite", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {
