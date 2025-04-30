@@ -1137,7 +1137,7 @@ const levelData = [
 			{
 				isWild: true,
 				pokemon: [
-					{ id: "Cottonee", levelMin: 100, levelMax: 1000, activeMoves: ["Fairy Wind"] },
+					{ id: "Cottonee", levelMin: 100, levelMax: 1000, activeMoves: ["Growl"] },
 				]
 			},
 			{

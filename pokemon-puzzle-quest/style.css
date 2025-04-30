@@ -679,10 +679,11 @@ body {
 	width: 5em;
 	height: 2.25em;
 }
-.board-side-top .z-meter[data-full="Full"] {
-	--color: var(--z-meter-highlight);
-	filter: drop-shadow(0 0 0.5em var(--color))
-	drop-shadow(0 0 0.3em var(--color));
+.board-side-top .z-meter[data-full="Full"],
+.board-side-top .z-meter[data-inUse="true"] {
+	--z-meter-shadow-color: var(--z-meter-highlight);
+	filter: drop-shadow(0 0 0.5em var(--z-meter-shadow-color))
+	drop-shadow(0 0 0.3em var(--z-meter-shadow-color));
 }
 .player .board-side-top .z-meter[data-full="Full"] {
 	cursor: pointer;
@@ -839,6 +840,15 @@ body {
 .board-side-top .z-meter[data-type2="Fairy"] {
 	--icon: url("src/img/z-icons/fairy.png");
 }
+.board-side-top .z-meter[data-inUse="true"] {
+	--z-meter-background: var(--z-meter-highlight);
+	--z-meter-shadow-color: white;
+}
+.board-side-top .z-meter[data-inUse="true"] .icon {
+	background-color: var(--z-meter-color);
+	transform: scale(1.2);
+	filter: saturate(2);
+}
 .player .board-side-top .z-meter {
 	bottom: 0.3em; left: 0.3em;
 }
@@ -911,6 +921,11 @@ body {
 	mask-position: var(--icon-position);
 	mask-size: var(--icon-size);
 	filter: brightness(0.5);
+	transition: filter 0.3s, transform 0.3s;
+}
+
+.z-meter-popover .popover-body {
+	padding: 0.2em 0.5em;
 }
 
 .avatar-pokemon-section {

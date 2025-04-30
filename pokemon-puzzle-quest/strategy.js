@@ -76,7 +76,7 @@ const moveUseStrategy = {
 			let moveType = game.getEffectiveMoveType(trainer, pokemon, move)
 			let typeMult = getSuperEffectiveMult(moveType, defTypes)
 			let stabBonus = atkTypes.includes(moveType) ? 1.5 : 1
-			let power = options.power ?? move.power
+			let power = options.power ?? getMovePower(move)
 
 			let result = power * typeMult * stabBonus
 			if (isNaN(result)) {
@@ -340,7 +340,7 @@ const moveUseStrategy = {
 			}
 			//unfortunate terminology.
 			let heaviness = otherPokemon?.data?.weight?.kilograms
-			let power = options.action.power
+			let power = getMovePower(options.action)
 			if (heaviness < 10) power += 20
 			else if (heaviness < 25) power += 40
 			else if (heaviness < 50) power += 60
@@ -374,7 +374,7 @@ const moveUseStrategy = {
 			for (let key in options){
 				newOptions[key] = options[key]
 			}
-			let power = options.action.power + 120	
+			let power = getMovePower(options.action) + 120	
 			newOptions.power = power
 			let strategy = moveUseStrategy["basic-damage"]
 			let weight = strategy.chooseWeight(newOptions)

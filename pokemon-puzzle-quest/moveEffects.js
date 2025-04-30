@@ -212,6 +212,7 @@ const pokemonMoveEffects = {
 				from: moveUseObj.pokemon,
 				fromTrainer: moveUseObj.trainer,
 				move: moveUseObj.move,
+				parentMove: moveUseObj.parentMove,
 				directDamage: true
 			}
 
@@ -221,6 +222,8 @@ const pokemonMoveEffects = {
 				damageOptions.to = toPokemon
 				damageOptions.toTrainer = toTrainer
 			}
+
+			console.log(moveUseObj.parentMove)
 
 			if ("amount" in effect){
 				damageOptions.damage = params.amount

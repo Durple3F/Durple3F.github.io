@@ -1472,6 +1472,12 @@
 			"name": "Yawn",
 			"description": "Applies Drowsy. When a Drowsy Pokémon ends their turn, they may become Asleep, and lose Drowsy. An Asleep Pokémon gets half as much energy (rounded up) from matches.",
 			"shortDescription": "Applies Drowsy"
+		},
+		
+		"Breakneck Blitz": {
+			"name": "Breakneck Blitz",
+			"description": "Randomly chooses 5 tiles, then removes them. Then do it again, seven more times. Then, deals damage with power based on the move it's replacing.",
+			"shortDescription": "Deals huge damage and clears tiles randomly"
 		}
 	},
 	"abilities": {

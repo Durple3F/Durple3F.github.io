@@ -1550,7 +1550,9 @@ function viewPokemonInfo(pokemon, options = {}) {
 			continue
 		}
 
-		let moveTag = getMoveHTML(move, true)
+		let moveTag = getMoveHTML(move, {
+			useLongDescription: true
+		})
 		if (options.highlightedMoves?.includes(move)){
 			added = true
 			moveSection.prepend(moveTag)
@@ -2023,7 +2025,8 @@ function getMasteryHTML(pokemon, options = {}) {
 	return stats
 }
 
-function getMoveHTML(move, useLongDescription = false) {
+function getMoveHTML(move, options={}) {
+	let useLongDescription = options.useLongDescription ?? false
 	let tag = $("<div class='move'></div>")
 
 	let moveTop = $("<div class='move-top'></div>")
@@ -2036,7 +2039,8 @@ function getMoveHTML(move, useLongDescription = false) {
 	moveType.append(moveRecharge)
 	moveRecharge.hide()
 	let typeIcon = getTypeIcon(move.type)
-	moveType.append(`<img src='${getTypeIcon(move.category)}'>`)
+	let moveCategory = getMoveCategory(move, options.parentMove)
+	moveType.append(`<img src='${getTypeIcon(moveCategory)}'>`)
 	if (typeIcon) {
 		moveType.append(`<img src='${typeIcon}'>`)
 	}

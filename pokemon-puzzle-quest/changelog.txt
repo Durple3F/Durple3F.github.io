@@ -1,5 +1,9 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
+4/29 (25.9k lines):
+	- You can now click the little z-meter to turn all your damage-dealing moves into a damaging z-move. It's just the normal one right now. Plus it doesn't work.
+	- The game now correctly determines the power & category of a z-move based on the move that is actually in your pokemon's active moves.
+
 4/28 (25.8k lines):
 	- I'm thinking of making Z-Moves. I'm intending to make the game mechanic work as a meter instead of a 1-per-game thing. Have it start full, then it recharges over time maybe.
 	- Lots of work on how the Z-Move meter looks.

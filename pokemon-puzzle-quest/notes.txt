@@ -10,3 +10,4 @@ TODO
 - Pokedex entries
 - For some reason the loading bar at the beginning gets big long why does it do that why do they always do this to me
 - Opponents don't care about cooldowns
+- Add a tracker for level completions
