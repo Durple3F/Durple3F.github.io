@@ -212,6 +212,38 @@ const moveUseStrategy = {
 			return weight
 		}
 	},
+	"Electro Ball": {
+		chooseWeight: options => {
+			let game = options.game
+			let trainer = options.trainer
+			let pokemon = options.pokemon
+			let otherTrainer = game.trainers.find(t => t !== trainer)
+			let otherPokemon = otherTrainer.activePokemon
+			let newOptions = {}
+			for (let key in options){
+				newOptions[key] = options[key]
+			}
+			let extraPower = 0
+			let yourSpeed = pokemon.getStat("speed")
+			let theirSpeed = otherPokemon.getStat("speed")
+			if (theirSpeed < yourSpeed * 0.25){
+				extraPower = 150
+			} else if (theirSpeed < yourSpeed * 1/3){
+				extraPower = 120
+			} else if (theirSpeed < yourSpeed * 0.5){
+				extraPower = 80
+			} else if (theirSpeed < yourSpeed){
+				extraPower = 60
+			} else {
+				extraPower = 40
+			}
+			let power = getMovePower(options.action) + extraPower
+			newOptions.power = power
+			let strategy = moveUseStrategy["basic-damage"]
+			let weight = strategy.chooseWeight(newOptions)
+			return weight
+		}
+	},
 	"Fury Swipes": {
 		chooseWeight: options => {
 			let game = options.game

@@ -223,7 +223,7 @@ const dialogueEffects = {
 	"style-background": {
 		hasTarget: false,
 		execute: (resolve, effect, progress, options) => {
-			let tag = $("#background")
+			let tag = $("#background-canvas")
 			let css = effect.css
 			tag.css(css)
 			resolve()
@@ -232,7 +232,7 @@ const dialogueEffects = {
 	"animate-background": {
 		hasTarget: false,
 		execute: (resolve, effect, progress, options) => {
-			let tag = $("#background")
+			let tag = $("#background-canvas")
 			let css = effect.css
 			let duration = effect.duration ?? 500
 			let waitDuration = effect.waitDuration ?? duration

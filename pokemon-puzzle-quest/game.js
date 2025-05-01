@@ -1864,9 +1864,18 @@ class Round {
 		}
 	}
 	computerMakeSwap() {
-		let trainer = this.trainers[this.activePlayerIndex]
+		let trainerIndex = this.activePlayerIndex
+		let trainer = this.trainers[trainerIndex]
 		let allSwaps = this.determineAvailableSwaps(trainer)
 		let pokemon = trainer.activePokemon
+		let availableMoves = this.getAvailableMoves(trainerIndex)
+		let payableMoves = availableMoves.filter(move => {
+			let payability = this.canPayCost(move, trainerIndex)
+			return Object.keys(payability).every(key => payability[key] === true)
+		})
+		let unpayableMoves = availableMoves.filter(move => {
+			return !payableMoves.includes(move)
+		})
 
 		//Remove all swaps that intend to swap a tile with Locked
 		allSwaps = allSwaps.filter(swap => {
@@ -1889,11 +1898,19 @@ class Round {
 			let data = {}
 			data.move = move
 			data.payability = this.canPayForMove(trainer, pokemon, move)
-			//For now, the pokemon just prefers moves that are unlocked later.
-			data.score = pokemon.moves.indexOf(move)
+			let strategy = getStrategyData(move)
+			let options = this.getActionWeightOptions(
+				trainer, pokemon, move,
+				payableMoves, unpayableMoves
+			)
+			let weight = strategy.chooseWeight(options)
+			//This score denotes how much the pokemon should "want" to take this move.
+			data.score = weight
 			return data
 		})
 
+		//Array of objects containing info about each possible swap that can be made.
+		//The important bit is the "score" which is 
 		let swapScores = allSwaps.map(swap => {
 			let data = {}
 			data.swap = swap
@@ -1916,6 +1933,7 @@ class Round {
 			let paysFor = []
 			moveScores.forEach(moveScore => {
 				let move = moveScore.move
+				let moveIndex = moves.indexOf(move)
 				let canPay = moveScore.payability.result
 				let energyNeeded = canPay ? move.energy : moveScore.payability.needed
 				let energyProvided = total
@@ -1940,6 +1958,7 @@ class Round {
 				data.canPay = canPay
 				data.percentage = totalEnergyProvided / totalEnergyNeeded
 				data.score = data.percentage * bonus + 0.2
+				data.score *= moveScores[moveIndex].score
 				paysFor.push(data)
 			})
 			data.paysFor = paysFor
@@ -1952,15 +1971,11 @@ class Round {
 			return data
 		})
 
-		// console.log(moveScores)
-		// console.log(swapScores)
-		// console.log(swapScores.map(swap => swap.swap),swapScores.map(swap => swap.score) )
 		let bestSwap = weightedRandom(
 			swapScores.map(swap => swap.swap),
 			swapScores.map(swap => swap.score)
 		).item
-		//TODO score swaps somehow. Right now it just picks a random one.
-		// let bestSwap = randomChoice(allSwaps)
+		
 		let animation = this.animateSwitchLocations(bestSwap[0], bestSwap[1])
 		return animation.promise
 	}
@@ -2031,7 +2046,6 @@ class Round {
 			}
 			power = this.getEffectivePower(attackerTrainer, attacker, move, powerOptions)
 			category = getMoveCategory(move, options.parentMove)
-			console.log(power, category, options.parentMove)
 			damageType = this.getEffectiveMoveType(attackerTrainer, attacker, move)
 		}
 
@@ -5775,6 +5789,12 @@ function beginRound(trainerData) {
 		}
 		if (data.ability) {
 			options.ability = data.ability
+		}
+		if (data.evs){
+			options.evs = data.evs
+		}
+		if (data.ivs){
+			options.ivs = data.ivs
 		}
 		let pokemon = new Pokemon(options.name, options.id, options)
 		logPokemonAs("seen", pokemon)

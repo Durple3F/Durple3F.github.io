@@ -102,11 +102,25 @@ const NPCTrainerData = {
 			trainer: "src/img/trainers/acetrainer-gen7.png"
 		}
 	},
-	"Youngster-Gen7": {
-		name: "Youngster",
+	"Aroma-Lady": {
+		name: "Aroma Lady",
 		type: "trainer",
 		imageSources: {
-			trainer: "src/img/trainers/youngster-gen7.png"
+			trainer: "src/img/trainers/aromalady.png"
+		}
+	},
+	"Backpacker-Gen7-F": {
+		name: "Backpacker",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/backpackerf.png"
+		}
+	},
+	"Beauty-Gen7": {
+		name: "Beauty",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/beauty-gen7.png"
 		}
 	},
 	"Lass-Gen7": {
@@ -116,11 +130,18 @@ const NPCTrainerData = {
 			trainer: "src/img/trainers/lass-gen7.png"
 		}
 	},
-	"Young-Athlete-F": {
-		name: "Youth Athlete",
+	"Pokemon-Breeder-Gen7": {
+		name: "Pokémon Breeder",
 		type: "trainer",
 		imageSources: {
-			trainer: "src/img/trainers/youngathletef.png"
+			trainer: "src/img/trainers/pokemonbreeder-gen7.png"
+		}
+	},
+	"Pokemon-Breeder-Gen7-F": {
+		name: "Pokémon Breeder",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/pokemonbreederf-gen7.png"
 		}
 	},
 	"Preschooler-F-Gen7": {
@@ -151,34 +172,6 @@ const NPCTrainerData = {
 			trainer: "src/img/trainers/teacher-gen7.png"
 		}
 	},
-	"Beauty-Gen7": {
-		name: "Beauty",
-		type: "trainer",
-		imageSources: {
-			trainer: "src/img/trainers/beauty-gen7.png"
-		}
-	},
-	"Backpacker-Gen7-F": {
-		name: "Backpacker",
-		type: "trainer",
-		imageSources: {
-			trainer: "src/img/trainers/backpackerf.png"
-		}
-	},
-	"Pokemon-Breeder-Gen7": {
-		name: "Pokémon Breeder",
-		type: "trainer",
-		imageSources: {
-			trainer: "src/img/trainers/pokemonbreeder-gen7.png"
-		}
-	},
-	"Pokemon-Breeder-Gen7-F": {
-		name: "Pokémon Breeder",
-		type: "trainer",
-		imageSources: {
-			trainer: "src/img/trainers/pokemonbreederf-gen7.png"
-		}
-	},
 	"Team-Skull-Grunt": {
 		name: "Team Skull Grunt",
 		type: "trainer",
@@ -187,6 +180,20 @@ const NPCTrainerData = {
 		},
 		textStyle: {
 			textBoxFont: "\"Caveat Brush\"",
+		}
+	},
+	"Young-Athlete-F": {
+		name: "Youth Athlete",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/youngathletef.png"
+		}
+	},
+	"Youngster-Gen7": {
+		name: "Youngster",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/youngster-gen7.png"
 		}
 	},
 }

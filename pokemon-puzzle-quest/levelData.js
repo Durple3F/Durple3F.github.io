@@ -967,7 +967,7 @@ const levelData = [
 			{ type: "load-value", value: true },
 			{ type: "jump-if-equal", jumpTo: "fight-ilima" },
 			{ type: "jump", jumpTo: "fight-rats" },
-			
+
 			{ type: "load-setting", key: "hardMode", label: "fight-ilima" },
 			{ type: "fight", trainer: 3, label: "Ilima" },
 			{ type: "dialogue", source: "route-2-7-dialogue-won-2" },
@@ -988,7 +988,7 @@ const levelData = [
 
 			{ type: "fight", trainer: 2, label: "hardMode" },
 			{ type: "jump", jumpTo: "win-check" },
-			
+
 			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
 			{ type: "dialogue", source: "route-2-7-dialogue-won-1" },
 			{ type: "unlock-z-move-type", unlockedType: "Normal" },
@@ -1102,13 +1102,16 @@ const levelData = [
 			{ type: "fight", trainer: 1 },
 		]
 	},
-	//3-3:
+	//3-3: Oricorio (Pom-Pom), Cottonee, Petilil, Cutiefly + others | Thistle
 	{
 		id: "Route 3-3",
 		category: "Route 3",
 		name: "Route 3-3",
 		music: "SM Wild Pokemon Battle",
 		icon: "3",
+		images: {
+			"route-bg-melemele-meadow": "src/img/bg/melemele meadow.jpg"
+		},
 		reccomendedLevels: {
 			"normal": (pokemonList) => {
 				if (pokemonList.length >= 3) return 15
@@ -1134,49 +1137,147 @@ const levelData = [
 					{ id: "Butterfree", levelMin: 10, levelMax: 13, weight: 0.5 },
 				]
 			},
+			{
+				name: "Thistle",
+				class: "Aroma-Lady",
+				canUseZMoves: true,
+				zMoveUsableTypes: ["Grass"],
+				pokemon: [
+					{ id: "Cottonee", level: 13 },
+					{ id: "Cutiefly", level: 14 },
+				]
+			},
 		],
 		effects: [
+			{ type: "change-background-image", name: "route-bg-melemele-meadow" },
 			{ type: "fight", trainer: 0 },
-			// { type: "jump-if-lost", jumpTo: Infinity },
-			// { type: "dialogue", source: "route-3-2-dialogue" },
-			// { type: "change-music", music: "SM Trainer Battle" },
-			// { type: "fight", trainer: 1 },
+			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "dialogue", source: "route-3-3-dialogue" },
+			{ type: "change-music", music: "SM Trainer Battle" },
+			{ type: "fight", trainer: 1 },
 		]
 	},
-	//3-3:
+	//3-4: Rival Battle 3
 	{
 		id: "Route 3-4",
 		category: "Route 3",
-		name: "Route 3-4",
-		music: "SM Wild Pokemon Battle",
+		name: "Rival Battle 3",
 		icon: "4",
+		images: {
+			"route-bg-forest-path": "src/img/bg/forest path.jpg"
+		},
+		reccomendedLevels: {
+			"normal": (pokemonList) => {
+				if (pokemonList.length >= 4) return 14
+				return 16
+			},
+			"hard": (pokemonList) => {
+				if (pokemonList.length >= 4) return 14
+				return 16
+			}
+		},
 		trainers: [
 			{
-				isWild: true,
+				name: "Hau",
 				pokemon: [
-					{ id: "Cottonee", levelMin: 100, levelMax: 1000, activeMoves: ["Growl"] },
+					{
+						id: "Popplio",
+						level: 14,
+						ability: "Torrent",
+						activeMoves: ["Water Gun", "Growl", "Disarming Voice", "Baby-Doll Eyes"],
+						ivs: { hp: 25, attack: 15, defense: 15, specialAttack: 25, specialDefense: 10, speed: 31 },
+						evs: { hp: 5, attack: 5, defense: 5, specialAttack: 20, specialDefense: 5, speed: 10 },
+					},
+					{
+						id: "Pikachu",
+						level: 14,
+						ability: "Static",
+						activeMoves: ["Growl", "Play Nice", "Quick Ball", "Electro Ball"],
+						ivs: { hp: 15, attack: 15, defense: 15, specialAttack: 25, specialDefense: 10, speed: 31 },
+						evs: { hp: 5, attack: 5, defense: 5, specialAttack: 5, specialDefense: 5, speed: 20 },
+					},
 				]
 			},
 			{
-				name: "Makana",
-				class: "Ace-Trainer-Gen7",
+				name: "Hau",
 				pokemon: [
-					{ id: "Rockruff", level: 13 },
-					{ id: "Slowpoke", level: 14 },
+					{
+						id: "Rowlet",
+						level: 14,
+						ability: "Overgrow",
+						activeMoves: ["Leafage", "Growl", "Peck", "Astonish"],
+						ivs: { hp: 25, attack: 15, defense: 15, specialAttack: 25, specialDefense: 10, speed: 31 },
+						evs: { hp: 5, attack: 5, defense: 5, specialAttack: 20, specialDefense: 5, speed: 10 },
+					},
+					{
+						id: "Pikachu",
+						level: 14,
+						ability: "Static",
+						activeMoves: ["Growl", "Play Nice", "Quick Ball", "Electro Ball"],
+						ivs: { hp: 15, attack: 15, defense: 15, specialAttack: 25, specialDefense: 10, speed: 31 },
+						evs: { hp: 5, attack: 5, defense: 5, specialAttack: 5, specialDefense: 5, speed: 20 },
+					},
 				]
 			},
+			{
+				name: "Hau",
+				pokemon: [
+					{
+						id: "Litten",
+						level: 14,
+						ability: "Blaze",
+						activeMoves: ["Ember", "Growl", "Lick", "Leer"],
+						ivs: { hp: 25, attack: 15, defense: 15, specialAttack: 25, specialDefense: 10, speed: 31 },
+						evs: { hp: 5, attack: 5, defense: 5, specialAttack: 20, specialDefense: 5, speed: 10 },
+					},
+					{
+						id: "Pikachu",
+						level: 14,
+						ability: "Static",
+						activeMoves: ["Growl", "Play Nice", "Quick Ball", "Electro Ball"],
+						ivs: { hp: 15, attack: 15, defense: 15, specialAttack: 25, specialDefense: 10, speed: 31 },
+						evs: { hp: 5, attack: 5, defense: 5, specialAttack: 5, specialDefense: 5, speed: 20 },
+					},
+				]
+			}
 		],
 		effects: [
-			{ type: "fight", trainer: 0 },
-			// { type: "jump-if-lost", jumpTo: Infinity },
-			// { type: "dialogue", source: "route-3-2-dialogue" },
-			// { type: "change-music", music: "SM Trainer Battle" },
-			// { type: "fight", trainer: 1 },
+			{ type: "change-background-image", name: "route-bg-forest-path" },
+
+			{ type: "dialogue", source: "route-3-4-dialogue" },
+			{ type: "change-music", music: "SM Trainer Battle" },
+			{ type: "load-setting", key: "hardMode" },
+			{ type: "load-value", value: true },
+			{ type: "jump-if-equal", jumpTo: "hardMode" },
+			{ type: "jump", jumpTo: "easyMode" },
+
+			{ type: "load-player-info", key: "chosen-starter", label: "easyMode" },
+			{ type: "load-value", value: "Rowlet" },
+			{ type: "jump-if-equal", jumpTo: "Popplio" },
+			{ type: "load-player-info", key: "chosen-starter" },
+			{ type: "load-value", value: "Litten" },
+			{ type: "jump-if-equal", jumpTo: "Rowlet" },
+			{ type: "jump", jumpTo: "Litten" },
+
+			{ type: "load-player-info", key: "chosen-starter", label: "hardMode" },
+			{ type: "load-value", value: "Rowlet" },
+			{ type: "jump-if-equal", jumpTo: "Litten" },
+			{ type: "load-player-info", key: "chosen-starter" },
+			{ type: "load-value", value: "Litten" },
+			{ type: "jump-if-equal", jumpTo: "Popplio" },
+			{ type: "jump", jumpTo: "Rowlet" },
+
+			{ type: "fight", trainer: 1, label: "Rowlet" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "fight", trainer: 2, label: "Litten" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "fight", trainer: 0, label: "Popplio" },
+			{ type: "jump", jumpTo: Infinity },
 		]
 	},
 ]
 
-for (let categoryId in levelCategoryData){
+for (let categoryId in levelCategoryData) {
 	let category = levelCategoryData[categoryId]
 	category.id = categoryId
 	category.unlocked = category.startsUnlocked ?? false
@@ -1185,19 +1286,19 @@ for (let level of levelData) {
 	level.status = "not won"
 	level.attempts = 0
 	level.obtainablePokemon = level.obtainablePokemon ?? []
-	if (level.trainers){
-		for (let trainerData of level.trainers){
+	if (level.trainers) {
+		for (let trainerData of level.trainers) {
 			trainerData.isWild = trainerData.isWild ?? false
 			trainerData.pokemon = trainerData.pokemon ?? []
 
-			if (trainerData.isWild){
+			if (trainerData.isWild) {
 				let pokemonList = trainerData.pokemon
-				if (trainerData.possiblePokemon){
+				if (trainerData.possiblePokemon) {
 					pokemonList = pokemonList.concat(trainerData.possiblePokemon)
 				}
-				for (let pokemonData of pokemonList){
+				for (let pokemonData of pokemonList) {
 					let id = pokemonData.id
-					if (!level.obtainablePokemon.includes(id)){
+					if (!level.obtainablePokemon.includes(id)) {
 						level.obtainablePokemon.push(id)
 					}
 				}
@@ -1206,7 +1307,7 @@ for (let level of levelData) {
 	}
 }
 
-function getLevelDataById(id){
+function getLevelDataById(id) {
 	return levelData.find(l => l.id === id)
 }
 
@@ -1253,24 +1354,24 @@ function loadTrainerClassSprites(data) {
 	return names
 }
 
-function determineUnlockedLevels(){
-	for (let categoryId in levelCategoryData){
+function determineUnlockedLevels() {
+	for (let categoryId in levelCategoryData) {
 		let category = levelCategoryData[categoryId]
 		let unlocked = category.unlocked
-		if (category.prerequisites){
+		if (category.prerequisites) {
 			let prereq = category.prerequisites
 			let allBeaten = true
-			if (prereq.levelsBeaten){
-				for (let levelId of prereq.levelsBeaten){
+			if (prereq.levelsBeaten) {
+				for (let levelId of prereq.levelsBeaten) {
 					let level = getLevelDataById(levelId)
-					if (level.status !== "won"){
+					if (level.status !== "won") {
 						allBeaten = false
 						break
 					}
 				}
 			}
 			let shouldUnlock = allBeaten
-			if (shouldUnlock){
+			if (shouldUnlock) {
 				unlocked = true
 			}
 		}
@@ -1341,7 +1442,7 @@ function renderPokeballSpinSmallCanvas(canvas, direction) {
 			},
 			complete: function () {
 				animate(1)
-				if (!resolved){
+				if (!resolved) {
 					resolve()
 					resolved = true
 				}

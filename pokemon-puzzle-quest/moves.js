@@ -840,6 +840,54 @@ const pokemonMoveData = {
 			} }
 		],
 	},
+	"Electro Ball": {
+		name: "Electro Ball",
+		type: "Electric",
+		category: "Special",
+		strategy: "special",
+		pp: 10,
+		power: 0,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			yellow: 8,
+			orange: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Electro Ball.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-stat", whcih: "speed", target: "opponent" },
+			{ type: "get-stat", whcih: "speed", target: "user" },
+			{ type: "divide-numbers" },
+			{ type: "load-value", value: 0.25 },
+			{ type: "jump-if-less-than", test: -2, jumpTo: "damage-1" },
+			{ type: "load-value", value: 1/3 },
+			{ type: "jump-if-less-than", test: -4,  jumpTo: "damage-2" },
+			{ type: "load-value", value: 0.5 },
+			{ type: "jump-if-less-than", test: -6,  jumpTo: "damage-3" },
+			{ type: "load-value", value: 1 },
+			{ type: "jump-if-less-than", test: -8, jumpTo: "damage-4" },
+			{ type: "jump", jumpTo: "damage-5" },
+
+			{ type: "load-value", value: 150, label: "damage-1" },
+			{ type: "damage", additivePower: -1 },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "load-value", value: 120, label: "damage-2" },
+			{ type: "damage", additivePower: -1 },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "load-value", value: 80, label: "damage-3" },
+			{ type: "damage", additivePower: -1 },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "load-value", value: 60, label: "damage-4" },
+			{ type: "damage", additivePower: -1 },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "load-value", value: 40, label: "damage-5" },
+			{ type: "damage", additivePower: -1 },
+			{ type: "jump", jumpTo: Infinity },
+		]
+	},
 	//Places status effects on tiles
 	"Ember": {
 		name: "Ember",

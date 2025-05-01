@@ -1,12 +1,20 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-4/30 (26.2k lines):
+5/1 (26.6k lines):
+	- Changed the way opponents decide which swap to make each turn. Previously, they only cared about which swaps would make the energy necessary to use moves. Now, they weight their decisions to make more swaps which makes the moves they *want* to use, which should hopefully make them focus on their actual strategy more.
+	- Added Electro Ball + AI
+	- Adding 3-4
+
+4/30 (26.3k lines):
 	- Using a z-move now correctly removes energy from your meter
 	- I can now program special effects into moves for when they're used as a z-move
 	- I can now put fun rainbow text into move descriptions that only appears while using a z-move
 	- You unlock z-moves from beating level 2-7. Right now Normal ones are all that exist. Oh well.
 	- I can now have trainers within a level have pokemon with specific abilities.
 	- Custom abilities for all trainers from 1-1 to 1-7
+	- Added the Aroma Lady class
+	- Working on making levels able to have fun backgrounds.
+	- Added dialogue to 3-3
 
 4/29 (25.9k lines):
 	- You can now click the little z-meter to turn all your damage-dealing moves into a damaging z-move. It's just the normal one right now. Plus it doesn't work.

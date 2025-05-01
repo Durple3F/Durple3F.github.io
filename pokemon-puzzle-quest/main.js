@@ -7,7 +7,7 @@ let frameRate = 60
 
 const canvas = $("#screen")[0]
 const ctx = canvas.getContext("2d")
-const bgCanvas = $("#background")[0]
+const bgCanvas = $("#background-canvas")[0]
 const background = new Background(bgCanvas)
 
 const mouse = {
@@ -207,6 +207,50 @@ function unloadSprite(name){
 	delete sprites.complete[name]
 }
 
+function changeBackgroundImage(name, url){
+	let resolvePromise
+	let promise = new Promise(resolve => resolvePromise = resolve)
+	let background = $("#background")
+	if (name === "none"){
+		let currentBg = background.css("background-image")
+		let p = Promise.resolve()
+		if (currentBg !== "none"){
+			background.fadeOut(400)
+			p = p.then(() => delay(400))
+		}
+		p.then(() => {
+			background.css("background-image", "none")
+			background.show()
+			resolvePromise()
+		})
+		return promise
+	}
+
+	let p1 = loadSprite(name, url)
+	let p2 = Promise.resolve()
+	let currentBg = background.css("background-image")
+	if (currentBg !== "none"){
+		background.fadeOut(400)
+		p2 = delay(400)
+	} else {
+		background.hide()
+	}
+	Promise.all([p1, p2]).then(() => {
+		let image = sprites.images[name]
+		let canvas = document.createElement("canvas")
+		canvas.height = image.height
+		canvas.width = image.width
+		let ctx = canvas.getContext("2d")
+		ctx.drawImage(image, 0, 0)
+		let dataURL = canvas.toDataURL()
+		
+		background.css("background-image", `url("${dataURL}")`)
+		background.fadeIn()
+		resolvePromise()
+	})
+	return promise
+}
+
 const sounds = {}
 const playingSounds = []
 function loadSound(name, type, url){
@@ -270,7 +314,7 @@ function playSound(name, fadeMusic=true){
 		return promise
 	}
 	let snd = soundData.audio
-	if (!snd.paused){
+	if (snd && !snd.paused){
 		snd = snd.cloneNode()
 		snd.currentTime = 0
 	}

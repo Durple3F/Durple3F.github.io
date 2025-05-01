@@ -851,6 +851,26 @@
 				{ "type": "text", "speaker": "Makana", "text": "It's $@start-italics|@$supposed$@end-italics|@$ to be good for bonding, but it's more like being dragged around by one and $@start-italics|@$trying$@end-italics|@$ to drag the other." },
 				{ "type": "text", "speaker": "Makana", "text": "Care for a battle? Rockruff really needs to vent some energy, and my arms are starting to hurt." }
 			]
+		},
+		"route-3-3-dialogue": {
+			"events": [],
+			"effects": [
+				{ "type": "get-speaker", "name": "Thistle", "class": "Aroma-Lady" },
+				{ "type": "text", "speaker": "Thistle", "text": "Ah, I heard the commotion. Looks like you've been busy." },
+				{ "type": "text", "speaker": "Thistle", "text": "It's nice to see someone else taking in the natural beauty of the meadow, here." },
+				{ "type": "text", "speaker": "Thistle", "text": "Melemele Meadow doesn't get a lot of visitors. These Pokémon seem to have gotten plenty of... enrichment, though." },
+				{ "type": "text", "speaker": "Thistle", "text": "Before you go, would you like to have a friendly battle? I always love seeing the pollen get kicked up when Pokémon battle!" }
+			]
+		},
+		"route-3-4-dialogue": {
+			"effects": [
+				{ "type": "get-speaker", "name": "Hau", "class": "Hau" },
+				{ "type": "load-player-name" },
+				{ "type": "text", "speaker": "Hau", "text": "Hey there, %c%! Almost ready for the next trial?", "values": [-1] },
+				{ "type": "text", "speaker": "Hau", "text": "I actually just finished mine— the Kahuna has some strong Pokémon!" },
+				{ "type": "text", "speaker": "Hau", "text": "Oh, by the way, I should mention: He'll use a different team depending on how many Pokémon you bring! So it's a fair challenge, y'know?" },
+				{ "type": "text", "speaker": "Hau", "text": "Anyway, I'm still raring to go for another battle! And hey, if you can beat me, you can definitely take on the Kahuna!" }
+			]
 		}
 	},
 	"pokemon": {
@@ -1120,6 +1140,11 @@
 			"name": "Echoed Voice",
 			"description": "Deals damage. This move's yellow energy cost is reduced by 6 during your next turn.",
 			"shortDescription": "Damages and becomes cheaper"
+		},
+		"Electro Ball": {
+			"name": "Electro Ball",
+			"description": "Deals damage with power ranging from 40-150 based on the ratio between your speed and the opponent's speed.",
+			"shortDescription": "Deals more damage to slow targets"
 		},
 		"Ember": {
 			"name": "Ember",
@@ -2081,7 +2106,11 @@
 		},
 		"Route 3-3": {
 			"name": "Route 3-3",
-			"description": ""
+			"description": "Off the beaten path, you find a meadow filled with yellow flowers."
+		},
+		"Route 3-4": {
+			"name": "Route 3-4",
+			"description": "As you approach Hau'oli city, you meet back up with Hau."
 		}
 	},
 	"route-categories": {

@@ -172,6 +172,7 @@ function startScene(name, options) {
 			fillWithPokemon()
 		} break
 		case "route": {
+			changeBackgroundImage("none")
 			fadeInGame()
 			let routeName = options.name
 
@@ -248,6 +249,14 @@ function startScene(name, options) {
 				})
 			}
 
+			const preloadLevelImages = level => {
+				if (level.images){
+					for (let imgName in level.images){
+						let url = level.images[imgName]
+						loadSprite(imgName, url)
+					}
+				}
+			}
 			const displayLevels = levelList => {
 				routeTag.children().popover("dispose")
 				routeTag.empty()
@@ -289,6 +298,8 @@ function startScene(name, options) {
 				levelButtons.forEach(btn => {
 					$(btn).click(chooseLevel)
 				})
+
+				levelList.forEach(level => preloadLevelImages(level))
 			}
 			const getPopover = level => {
 				let content = $(`<div class='level-popover text-center d-flex flex-column align-items-center justify-content-center'></div>`)
@@ -1025,6 +1036,10 @@ function beginLevel(levelID) {
 		effectIndex: -1,
 		nextEffectIndex: 0
 	}
+	let levelPromise = new Promise(resolve => {
+		currentLevelProgress.resolve = resolve
+	})
+	currentLevelProgress.promise = levelPromise
 
 	let levelChangesMap = new Map()
 	if (level.reccomendedLevels && config["lowerLevelsToRecommendedLevels"]){
@@ -1053,6 +1068,7 @@ function beginLevel(levelID) {
 	let levelResult
 	let promise = advanceCurrentLevel()
 	.then(val => {
+		currentLevelProgress.resolve()
 		let promise = Promise.resolve()
 		let info = currentLevelProgress.info
 		//If you're marked as losing a "fight" effect, then you lose the whole level.
@@ -1242,6 +1258,15 @@ function advanceCurrentLevel() {
 				unlocked.push(type)
 			}
 			resolvePromise()
+		} break
+		case "change-background-image": {
+			let imgName = effect.name
+			let images = level.images
+			if (imgName in images){
+				let url = images[imgName]
+				changeBackgroundImage(imgName, url)
+				.then(() => resolvePromise())
+			}
 		} break
 		case "load-value": {
 			currentLevelProgress.info[effectIndex] = effect.value

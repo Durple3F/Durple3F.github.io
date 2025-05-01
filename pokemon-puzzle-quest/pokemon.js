@@ -34,13 +34,13 @@ class Pokemon{
 		this.ivs = {}
 		this.evs = {}
 		for (let stat in this.data.stats){
-			if (options && options.ivs){
+			if (options?.ivs){
 				this.ivs[stat] = options.ivs[stat] ?? Math.floor(Math.random() * 32)
 			} else {
 				this.ivs[stat] = Math.floor(Math.random() * 32)
 			}
 
-			if (options && options.evs){
+			if (options?.evs){
 				this.evs[stat] = options.evs[stat] ?? 0
 			} else {
 				this.evs[stat] = 0

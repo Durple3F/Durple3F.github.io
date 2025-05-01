@@ -339,12 +339,10 @@ const pokemonMoveEffects = {
 	"get-stat": {
 		update: false,
 		execute: (resolve, effect, params, game, options) => {
-			let moveUseObj = options.moveUse
-			let effectIndex = options.effectIndex
 			let target = options.target
 			let statName = effect.which ?? "attack"
-			moveUseObj.info[effectIndex] = target.getStat(statName)
-			resolve()
+			let result = target.getStat(statName)
+			resolve(result)
 		}
 	},
 	"get-types": {
@@ -1392,6 +1390,24 @@ const pokemonMoveEffects = {
 			resolve(val)
 		}
 	},
+	"divide-numbers": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let moveUseObj = options.moveUse
+			let effectIndex = options.effectIndex
+			let val1 = moveUseObj.info[effectIndex - 2]
+			let val2 = moveUseObj.info[effectIndex - 1]
+			let val = val1 / val2
+			if (effect.round === "up"){
+				val = Math.ceil(val)
+			} else if (effect.round === "down"){
+				val = Math.floor(val)
+			} else if (effect.round === "round" || effect.round === true){
+				val = Math.round(val)
+			}
+			resolve(val)
+		}
+	},
 	"add-numbers": {
 		update: false,
 		execute: (resolve, effect, params, game, options) => {
@@ -1430,6 +1446,7 @@ const pokemonMoveEffects = {
 			let effectIndex = options.effectIndex
 			let test = params.test ?? moveUseObj.info[effectIndex - 2]
 			let against = params.against ?? moveUseObj.info[effectIndex - 1]
+			console.log(test, against)
 			if (test < against) {
 				moveUseObj.nextEffectIndex = options.index
 			}
