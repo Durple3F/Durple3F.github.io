@@ -1529,6 +1529,11 @@
 			"name": "Breakneck Blitz",
 			"description": "<span class='z-move-description'>Randomly chooses 5 tiles, then removes them. Then does that again, seven more times. Deals damage with power based on the move it's replacing.</span>",
 			"shortDescription": "Deals huge damage and clears tiles randomly"
+		},
+		"All-Out Pummeling": {
+			"name": "All-Out Pummeling",
+			"description": "<span class='z-move-description'>Punches a circular hole into a random spot on the board. Then does that again, five more times. Deals damage with power based on the move it's replacing.</span>",
+			"shortDescription": "Deals huge damage and removes chunks of tiles"
 		}
 	},
 	"abilities": {

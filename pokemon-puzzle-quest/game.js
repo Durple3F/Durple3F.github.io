@@ -42,7 +42,10 @@ class Round {
 		})
 		this.maxInitiative = 100
 		this.struggleTest = false
-		this.zMoveTest = false
+		this.zMoveTest = true
+		if (this.zMoveTest){
+			this.trainers.forEach(trainer => trainer.zMeterFullness = 1)
+		}
 
 		this.result = null
 		this.hasBegun = false
@@ -2803,7 +2806,8 @@ class Round {
 			completedTriggers: [],
 			//Decides whether we should perform a check at the end of the move's
 			//finishing to see whether a player should win, or pokemon should switch out.
-			checkBetweenEffects: true
+			checkBetweenEffects: true,
+			additionalPromises: []
 		}
 		let promise = new Promise(resolve => moveUseObj.resolve = resolve)
 		moveUseObj.promise = promise
@@ -2877,7 +2881,14 @@ class Round {
 			pokemon.removeStatusesWithName("paralyzed")
 			moveUseObj.resolve()
 		} else {
-			promise = promise.then(() => this.finishCurrentMove())
+			promise = promise.then(() => {
+				if (moveUseObj.additionalPromises.length){
+					return Promise.all(moveUseObj.additionalPromises).then(() => {
+						this.finishCurrentMove()
+					})
+				}
+				return this.finishCurrentMove()
+			})
 			this.moveQueue.push(moveUseObj)
 			this.moveUseHistory.push(moveUseObj)
 			this.updateEverything()
@@ -3940,6 +3951,8 @@ class Round {
 		zMeter.css("--fullness", fullness + "%")
 		if (fullness >= 100) {
 			zMeter.attr("data-full", "Full")
+		} else {
+			zMeter.attr("data-full", "")
 		}
 
 		if (trainer.canUseZMoves && types.length){
@@ -6066,5 +6079,7 @@ function getMoveCategory(move, parentMove) {
 function getZMove(trainer, pokemon, move, type){
 	if (type === "Normal"){
 		return pokemonMoveData["Breakneck Blitz"]
+	} else if (type === "Fighting"){
+		return pokemonMoveData["All-Out Pummeling"]
 	}
 }

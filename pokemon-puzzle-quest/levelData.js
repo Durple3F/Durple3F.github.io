@@ -1281,7 +1281,7 @@ const levelData = [
 		music: "SM Trainer Battle",
 		icon: "5",
 		images: {
-			// "route-bg-melemele-meadow": "src/img/bg/melemele meadow.jpg"
+			"route-bg-iki-town": "src/img/bg/iki town.jpg"
 		},
 		reccomendedLevels: {
 			"normal": 15,
@@ -1321,9 +1321,11 @@ const levelData = [
 			},
 		],
 		effects: [
-			// { type: "change-background-image", name: "route-bg-melemele-meadow" },
-			// { type: "dialogue", source: "route-3-5-dialogue" },
+			{ type: "change-background-image", name: "route-bg-iki-town" },
+			{ type: "dialogue", source: "route-3-5-dialogue" },
 			{ type: "fight", trainer: 0 },
+			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "unlock-z-move-type", unlockedType: "Fighting" },
 		]
 	},
 ]

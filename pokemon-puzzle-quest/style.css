@@ -885,12 +885,12 @@ body {
 	--z-meter-background: var(--z-meter-highlight);
 	--z-meter-shadow-color: white;
 }
-.board-side-top .z-meter-bar[data-inUse="true"] .bar {
+.board-side-top .z-meter[data-inUse="true"] .bar {
 	--fullness: 100%;
 }
 .board-side-top .z-meter[data-inUse="true"] .icon {
 	background-color: var(--z-meter-color);
-	transform: scale(1.2);
+	transform: scale(1.15);
 	filter: saturate(2);
 }
 .player .board-side-top .z-meter {
@@ -1221,7 +1221,7 @@ body {
 }
 .move.usable[data-move-type="Fighting"] {
 	background-color: var(--type-fighting);
-	color: var(--move-text-lighter);
+	color: var(--move-text-dark);
 }
 .move.usable[data-move-type="Fighting"]:active {
 	box-shadow: 0 0 var(--move-shadow-size) var(--type-fighting);

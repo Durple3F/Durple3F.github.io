@@ -5,7 +5,13 @@ const pokemonMoveEffects = {
 			let name = effect.name
 			let moveUseObj = options.moveUse
 			let wait = effect.wait ?? false
+			let finalWait = effect.waitBeforeFinishMove ?? false
 			let p = playSound(`${moveUseObj.move.name}-${name}`)
+
+			if (finalWait){
+				moveUseObj.additionalPromises.push(p)
+			}
+
 			if (wait){
 				p.then(() => resolve())
 			} else {
@@ -195,6 +201,12 @@ const pokemonMoveEffects = {
 				})
 				resolve()
 			})
+		}
+	},
+	"time-step": {
+		execute: (resolve, effect, params, game, options) => {
+			game.timeStep()
+			.then(() => resolve())
 		}
 	},
 	"end-turn": {
@@ -890,6 +902,15 @@ const pokemonMoveEffects = {
 			resolve()
 		}
 	},
+	"combine-selections": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let selection1 = params.selection1 ?? []
+			let selection2 = params.selection2 ?? []
+			let result = selection1.concat(selection2)
+			resolve(result)
+		}
+	},
 	"apply-status-to-tiles": {
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
@@ -967,6 +988,20 @@ const pokemonMoveEffects = {
 			let tile = params.tile
 			let result = tile.y
 			resolve(result)
+		}
+	},
+	"get-board-width": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let board = game.board
+			resolve(board.width)
+		}
+	},
+	"get-board-height": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let board = game.board
+			resolve(board.height)
 		}
 	},
 	"get-board-height": {
@@ -1428,6 +1463,17 @@ const pokemonMoveEffects = {
 			resolve()
 		}
 	},
+	"add-numbers": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let moveUseObj = options.moveUse
+			let effectIndex = options.effectIndex
+			let val1 = moveUseObj.info[effectIndex - 2]
+			let val2 = moveUseObj.info[effectIndex - 1]
+			let val = val1 + val2
+			resolve(val)
+		}
+	},
 	"multiply-numbers": {
 		update: false,
 		execute: (resolve, effect, params, game, options) => {
@@ -1462,18 +1508,6 @@ const pokemonMoveEffects = {
 				val = Math.round(val)
 			}
 			resolve(val)
-		}
-	},
-	"add-numbers": {
-		update: false,
-		execute: (resolve, effect, params, game, options) => {
-			let moveUseObj = options.moveUse
-			let effectIndex = options.effectIndex
-			let val1 = moveUseObj.info[effectIndex - 2]
-			let val2 = moveUseObj.info[effectIndex - 1]
-			let val = val1 + val2
-			moveUseObj.info[effectIndex] = val
-			resolve()
 		}
 	},
 	"random-number": {
