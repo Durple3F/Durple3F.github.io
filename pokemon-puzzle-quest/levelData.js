@@ -1140,8 +1140,6 @@ const levelData = [
 			{
 				name: "Thistle",
 				class: "Aroma-Lady",
-				canUseZMoves: true,
-				zMoveUsableTypes: ["Grass"],
 				pokemon: [
 					{ id: "Cottonee", level: 13 },
 					{ id: "Cutiefly", level: 14 },
@@ -1273,6 +1271,59 @@ const levelData = [
 			{ type: "jump", jumpTo: Infinity },
 			{ type: "fight", trainer: 0, label: "Popplio" },
 			{ type: "jump", jumpTo: Infinity },
+		]
+	},
+	//3-5:
+	{
+		id: "Route 3-5",
+		category: "Route 3",
+		name: "Route 3-5",
+		music: "SM Trainer Battle",
+		icon: "5",
+		images: {
+			// "route-bg-melemele-meadow": "src/img/bg/melemele meadow.jpg"
+		},
+		reccomendedLevels: {
+			"normal": 15,
+			"hard": 15
+		},
+		trainers: [
+			{
+				name: "Hala",
+				canUseZMoves: true,
+				zMoveUsableTypes: ["Fighting"],
+				pokemon: [
+					// {
+					// 	id: "Mankey",
+					// 	level: 15,
+					// 	ability: "Anger Point",
+					// 	activeMoves: ["Karate Chop", "Focus Energy", "Pursuit"],
+					// 	ivs: { hp: 15, attack: 25, defense: 15, specialAttack: 5, specialDefense: 15, speed: 15 },
+					// 	evs: { hp: 15, attack: 30, defense: 5, specialAttack: 0, specialDefense: 5, speed: 10 },
+					// },
+					// {
+					// 	id: "Makuhita",
+					// 	level: 15,
+					// 	ability: "Thick Fat",
+					// 	activeMoves: ["Fake Out", "Sand Attack", "Arm Thrust"],
+					// 	ivs: { hp: 30, attack: 25, defense: 15, specialAttack: 5, specialDefense: 5, speed: 5 },
+					// 	evs: { hp: 30, attack: 15, defense: 5, specialAttack: 0, specialDefense: 5, speed: 0 },
+					// },
+					{
+						id: "Crabrawler",
+						level: 15,
+						ability: "Iron Fist",
+						activeMoves: ["Power-Up Punch", "Pursuit", "Leer"],
+						ivs: { hp: 15, attack: 25, defense: 15, specialAttack: 5, specialDefense: 15, speed: 15 },
+						evs: { hp: 15, attack: 30, defense: 5, specialAttack: 0, specialDefense: 5, speed: 10 },
+					},
+				]
+			},
+		],
+		effects: [
+			// { type: "change-background-image", name: "route-bg-melemele-meadow" },
+			// { type: "dialogue", source: "route-3-5-dialogue" },
+			{ type: "fight", trainer: 0 },
 		]
 	},
 ]

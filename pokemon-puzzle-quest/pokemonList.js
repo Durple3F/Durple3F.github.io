@@ -604,6 +604,7 @@ const pokemonData = {
 			{ name: "Focus Energy", unlock: { type: "level", amount: 1 } },
 			{ name: "Fury Swipes", unlock: { type: "level", amount: 5 } },
 			{ name: "Low Kick", unlock: { type: "level", amount: 8 } },
+			{ name: "Karate Chop", unlock: { type: "level", amount: 10 } },
 			{ name: "Seismic Toss", unlock: { type: "level", amount: 12 } },
 		]
 	},
@@ -1595,6 +1596,7 @@ const pokemonData = {
 			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
 			{ name: "Focus Energy", unlock: { type: "level", amount: 1 } },
 			{ name: "Sand Attack", unlock: { type: "level", amount: 4 } },
+			{ name: "Arm Thrust", unlock: { type: "level", amount: 7 } },
 		]
 	},
 	"Bagon": {
@@ -2181,6 +2183,7 @@ const pokemonData = {
 			{ name: "Disarming Voice", unlock: { type: "level", amount: 6 } },
 			{ name: "Aqua Jet", unlock: { type: "level", amount: 9 } },
 			{ name: "Baby-Doll Eyes", unlock: { type: "level", amount: 12 } },
+			{ name: "Power-Up Punch", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {

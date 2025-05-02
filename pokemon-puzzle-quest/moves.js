@@ -62,6 +62,41 @@ const pokemonMoveData = {
 			{ type: "remove-tiles", selection: -1 }
 		]
 	},
+	//Converts your non-orange energy into orange
+	"Arm Thrust": {
+		name: "Arm Thrust",
+		type: "Fighting",
+		category: "Physical",
+		strategy: "basic-damage",
+		pp: 20,
+		power: 15,
+		accuracy: 100,
+		rechargeTurns: 0,
+		energy: {
+			orange: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Arm Thrust 1hit.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "load-value", value: 1 },
+			{
+				type: "select-energy-colors", search: "most-full",
+				target: "user", count: -1, notTypes: ["orange"]
+			},
+			{ type: "load-value", value: -2 },
+			{ type: "gain-energy", count: -1, colors: -2, target: "user" },
+			{ type: "load-value", value: -0.5 },
+			{ type: "multiply-energy", amounts: -2, scale: -1, round: "up" },
+			{ type: "convert-energy", amounts: -1, ratios: { orange: 1 } },
+			{ type: "gain-energy", amounts: -1, target: "user" }
+		]
+	},
 	//Deals more damage if opponent took damage this turn
 	"Assurance": {
 		name: "Assurance",
@@ -1514,6 +1549,7 @@ const pokemonMoveData = {
 			{ type: "apply-status-effect", statusEffect: "asleep", target: "opponent", label: "sleep" },
 		],
 	},
+	//Places a status on tiles that steals energy from the opponent each turn
 	"Infestation": {
 		name: "Infestation",
 		type: "Bug",
@@ -1549,6 +1585,45 @@ const pokemonMoveData = {
 			},
 		]
 	},
+	//Removes a plus-shaped chunk of the board
+	"Karate Chop": {
+		name: "Karate Chop",
+		type: "Fighting",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 25,
+		power: 50,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			orange: 9,
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Karate Chop.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "load-value", value: 1 },
+			{ type: "choose-tiles", count: -1, target: "user", text: "choose" },
+			{ type: "load-value", value: 0 },
+			{ type: "get-element-from-list", list: -2, index: -1 },
+			{ type: "get-tile-x", tile: -1 },
+			{ type: "get-tile-y", tile: -2 },
+			{ type: "load-value", value: 1 },
+			{ 
+				type: "select-tiles-with-expression",
+				conditionExpression: "abs(x - %c%) + abs(y - %c%) <= %c%",
+				conditionArguments: [-3, -2, -1]
+			},
+			{ type: "remove-tiles", selection: -1 }
+		]
+	},
+	//Converts random tiles to Grass tiles
 	"Leafage": {
 		name: "Leafage",
 		type: "Grass",
@@ -2169,6 +2244,62 @@ const pokemonMoveData = {
 			{ type: "damage" },
 			{ type: "end-turn" }
 		],
+	},
+	//Dumps all your energy to raise your next move's power
+	"Power-Up Punch": {
+		name: "Power-Up Punch",
+		type: "Fighting",
+		category: "Physical",
+		strategy: "basic-damage",
+		pp: 20,
+		power: 40,
+		accuracy: 100,
+		rechargeTurns: 3,
+		energy: {
+			orange: 8
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Power-Up Punch.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{type: "apply-debuff", target: "opponent", debuff: {
+				type: "stat",
+				stat: "attack",
+				class: "buff",
+				amount: 1
+			} },
+			{ type: "get-total-energy", target: "user" },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "power-up-punch-powered-up",
+				type: "power-alteration",
+				stacks: true,
+				lostOnSwap: true,
+				lostOnBatonPass: true,
+				numberOfApplications: 1,
+				appliesTo: {
+					logic: "not"
+				},
+				modification: {
+					change: "%c%",
+					operation: "add"
+				}
+			}, replacementsForResultObj: [
+				{
+					path: ["modification"],
+					key: "change",
+					value: -1
+				}
+			] },
+			{ type: "get-energy", target: "user" },
+			{ type: "load-value", value: -1 },
+			{ type: "multiply-energy", amounts: -2, scale: -1 },
+			{ type: "gain-energy", amounts: -1, target: "user" }
+		]
 	},
 	"Present": {
 		name: "Present",
@@ -3147,6 +3278,29 @@ const pokemonMoveData = {
 			{ type: "load-value", value: 5 },
 			{ type: "select-random-tiles", count: -1 },
 			{ type: "remove-tiles", selection: -1, delay: 50 },
+			{ type: "damage", delay: 0 },
+		],
+	},
+	"All-Out Pummeling": {
+		name: "All-Out Pummeling",
+		type: "Fighting",
+		category: "Physical",
+		inheritCategory: true,
+		strategy: "basic-damage",
+		tags: ["z-move", "damage-dealing"],
+		pp: null,
+		power: 100,
+		powerBasedOnParent: {},
+		accuracy: null,
+		rechargeTurns: 1,
+		energy: {},
+		sounds: {
+			"part1": "src/audio/attacks/All-Out Pummeling part 1.mp3",
+			"part2": "src/audio/attacks/All-Out Pummeling part 2.mp3",
+			"part3": "src/audio/attacks/All-Out Pummeling part 3.mp3",
+		},
+		effects: [
+			{ type: "play-sound", name: "part1", wait: true },
 			{ type: "damage", delay: 0 },
 		],
 	},

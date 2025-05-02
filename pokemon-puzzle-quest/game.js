@@ -1756,7 +1756,14 @@ class Round {
 		let promise = Promise.resolve()
 			.then(() => delay(250))
 		let trainerIndex = this.activePlayerIndex
+
+		let movesMade = 0
 		const makeMove = () => {
+			if (movesMade > 20){
+				//We decided that was enough turns to take.
+				resolvePromise()
+				return
+			}
 			let trainer = this.trainers[trainerIndex]
 			let pokemon = trainer.activePokemon
 			let availableMoves = this.getAvailableMoves(trainerIndex)
@@ -1793,6 +1800,7 @@ class Round {
 					let randomMove = randomAction
 					this.payForMove(trainer, pokemon, randomMove)
 					promise = promise.then(() => {
+						movesMade++
 						return this.beginToUseMove(trainer, pokemon, randomMove)
 					})
 					promise = promise.then(() => delay(250))
@@ -3785,7 +3793,7 @@ class Round {
 
 			if (animate) {
 				animateTextCounter(oldCount, energy[c], count)
-				bar.animate({
+				bar.stop(true).animate({
 					height: percent
 				}, duration)
 			} else {

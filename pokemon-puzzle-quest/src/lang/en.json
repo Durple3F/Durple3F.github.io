@@ -869,7 +869,17 @@
 				{ "type": "text", "speaker": "Hau", "text": "Hey there, %c%! Almost ready for the next trial?", "values": [-1] },
 				{ "type": "text", "speaker": "Hau", "text": "I actually just finished mine— the Kahuna has some strong Pokémon!" },
 				{ "type": "text", "speaker": "Hau", "text": "Oh, by the way, I should mention: He'll use a different team depending on how many Pokémon you bring! So it's a fair challenge, y'know?" },
-				{ "type": "text", "speaker": "Hau", "text": "Anyway, I'm still raring to go for another battle! And hey, if you can beat me, you can definitely take on the Kahuna!" }
+				{ "type": "text", "speaker": "Hau", "text": "Anyway, I'm still raring to go for another battle! And hey, if you can beat me, you can definitely take on the kahuna!" }
+			]
+		},
+		"route-3-5-dialogue": {
+			"effects": [
+				{ "type": "get-speaker", "name": "Hala", "class": "Hala" },
+				{ "type": "load-player-name" },
+				{ "type": "text", "speaker": "Hala", "text": "$@start-bold|@$$@font-size:1.2|@$Ho!$@font-size:1|@$$@end-bold|@$ I have been waiting for you, %c%!", "values": [-1] },
+				{ "type": "text", "speaker": "Hala", "text": "Allow me to properly greet the young adventurer embarking on the island challenge." },
+				{ "type": "text", "speaker": "Hala", "text": "I am Hala, kahuna of Melemele Island. To pass this grand trial, you must withstand the blows of my Pokémon!" },
+				{ "type": "text", "speaker": "Hala", "text": "If you defeat me, I will teach you and your Pokémon how to use $@red|Fighting-type@$ Z-moves!" }
 			]
 		}
 	},
@@ -1033,6 +1043,11 @@
 			"description": "Deals damage. The user chooses a tile. Then, that tile and a V-shaped selection around it are removed.",
 			"shortDescription": "Removes a V of tiles.",
 			"choose": "Choose a tile to cut a V-shape around."
+		},
+		"Arm Thrust": {
+			"name": "Arm Thrust",
+			"description": "Deals damage. Then, removes 2 energy from the user's most full, non-orange energy color, and adds half as much orange energy as was removed, rounded up.",
+			"shortDescription": "Multi-use light attack"
 		},
 		"Assurance": {
 			"name": "Assurance",
@@ -1246,6 +1261,12 @@
 			"description": "Deals damage. Converts a random tile into a Grass tile and gives it the Infested status. At the start of the opponent's turn, for each Infested tile, that tile drains 1 energy of a random color, and gives it to the user.",
 			"shortDescription": "Damages and infests a tile"
 		},
+		"Karate Chop": {
+			"name": "Karate Chop",
+			"description": "Deals damage. Then, the user chooses a tile. A plus-shaped area around that tile is removed.",
+			"shortDescription": "Deals some damage and removes tiles",
+			"choose": "Choose a tile."
+		},
 		"Leafage": {
 			"name": "Leafage",
 			"description": "Deals damage. 3 random tiles are transformed into Grass tiles.",
@@ -1350,6 +1371,11 @@
 			"name": "Pound",
 			"description": "Damage-dealing move with no special effects. Ends the turn.",
 			"shortDescription": "Deals light damage"
+		},
+		"Power-Up Punch": {
+			"name": "Power-Up Punch",
+			"description": "Deals damage. Then, raises the user's Attack by a stage and removes all energy from the user. The next move that the user uses gains additional power equal to the amount of energy removed.",
+			"shortDescription": "Sacrifices energy for the next attack"
 		},
 		"Present": {
 			"name": "Present",
@@ -2110,7 +2136,11 @@
 		},
 		"Route 3-4": {
 			"name": "Route 3-4",
-			"description": "As you approach Hau'oli city, you meet back up with Hau."
+			"description": "Heading back to Iki Town, you meet back up with Hau."
+		},
+		"Route 3-5": {
+			"name": "Route 3-5",
+			"description": "Once you arrive at Iki Town, the kahuna Hala is waiting, challenging trainers."
 		}
 	},
 	"route-categories": {
@@ -2128,7 +2158,7 @@
 		"toggle-skip-seen-dialogue": "Skip seen dialogue?",
 		"toggle-exp-share": "EXP share? (Exp gained in fights is shared between all active Pokémon)",
 		"toggle-hard-mode": "Hard mode (Rival chooses the more effective Pokémon, etc.)",
-		"toggle-level-lowering": "Lower Pokémon levels to what's recommended when starting a level",
+		"toggle-level-lowering": "Lower Pokémon levels to what's recommended when starting a level. Note: Pokémon won't earn EXP while their levels are lowered.",
 		"toggle-pixelated-screen": "Antialiasing",
 
 		"rename-save": "Rename Save",

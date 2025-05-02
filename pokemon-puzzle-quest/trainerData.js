@@ -87,6 +87,14 @@ const NPCTrainerData = {
 			namePlateBackground2Color: "#003e76",
 		}
 	},
+	"Hala": {
+		name: "Hala",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/hala.png"
+		},
+		textStyle: {}
+	},
 	"Ilima": {
 		name: "Ilima",
 		type: "trainer",

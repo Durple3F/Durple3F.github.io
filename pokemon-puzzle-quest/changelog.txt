@@ -2,8 +2,9 @@
 
 5/1 (26.6k lines):
 	- Changed the way opponents decide which swap to make each turn. Previously, they only cared about which swaps would make the energy necessary to use moves. Now, they weight their decisions to make more swaps which makes the moves they *want* to use, which should hopefully make them focus on their actual strategy more.
-	- Added Electro Ball + AI
+	- Added Electro Ball + AI, Karate Chop, Arm Thrust
 	- Adding 3-4
+	- All-Out Pummeling is in a very basic state.
 
 4/30 (26.3k lines):
 	- Using a z-move now correctly removes energy from your meter

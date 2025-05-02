@@ -481,39 +481,50 @@ const pokemonMoveEffects = {
 			resolve(result)
 		}
 	},
+	"get-energy": {
+		hasTarget: true,
+		targetType: "pokemon",
+		targetDefault: "user",
+		execute: (resolve, effect, params, game, options) => {
+			let target = options.target
+			let result = getEmptyEnergy()
+			for (let color in result){
+				result[color] = target.energy[color]
+			}
+			resolve(result)
+		}
+	},
 	"select-energy-colors": {
 		update: false,
 		execute: (resolve, effect, params, game, options) => {
-			let moveUseObj = options.moveUse
-			let effectIndex = options.effectIndex
 			let target = options.target
 			let search = effect.search ?? "random"
 			let count = params.count ?? 1
+			let notTypes = effect.notTypes ?? []
 			let result = []
+			let canPick = colors.map(c => c)
+			.filter(color => !notTypes.includes(color))
 
-			if (count >= colors.length) {
-				colors.forEach(c => result.push(c))
+			if (count >= canPick.length) {
+				canPick.forEach(c => result.push(c))
 			} else if (search === "random") {
-				let colorOptions = colors.map(c => c)
 				for (let i = 0; i < count; i++) {
-					let index = Math.floor(Math.random() * colorOptions.length)
-					result.push(colorOptions[index])
-					colorOptions.splice(index, 1)
+					let index = Math.floor(Math.random() * canPick.length)
+					result.push(canPick[index])
+					canPick.splice(index, 1)
 				}
 			} else if (search === "most-full") {
 				let energy = target.energy
-				let colorOptions = Object.keys(energy)
-				shuffleArray(colorOptions)
-				colorOptions.sort((a, b) => {
+				shuffleArray(canPick)
+				canPick.sort((a, b) => {
 					return energy[a] < energy[b] ? 1 : energy[a] > energy[b] ? -1 : 0
 				})
-				colorOptions.slice(0, count).forEach(c => result.push(c))
+				canPick.slice(0, count).forEach(c => result.push(c))
 			} else {
 				console.warn("You never handled", search)
 			}
 
-			moveUseObj.info[effectIndex] = result
-			resolve()
+			resolve(result)
 		}
 	},
 	"gain-energy": {
@@ -548,6 +559,20 @@ const pokemonMoveEffects = {
 						amounts[color] = 0
 					}
 				}
+			}
+
+			//Energy can't have a decimal component
+			for (let color in amounts){
+				let amt = amounts[color]
+				if (amt % 1){
+					let off = amt % 1
+					if (Math.random() < off){
+						amt = Math.ceil(amt)
+					} else {
+						amt = Math.floor(amt)
+					}
+				}
+				amounts[color] = amt
 			}
 
 			result = game.giveEnergy(amounts, target, pokemon)
@@ -590,14 +615,45 @@ const pokemonMoveEffects = {
 	"multiply-energy": {
 		update: false,
 		execute: (resolve, effect, params, game, options) => {
-			let moveUseObj = options.moveUse
-			let effectIndex = options.effectIndex
 			let amounts = params.amounts ?? {}
 			let scale = params.scale ?? 1
 			let round = effect.round
 			let result = multiplyEnergies(amounts, scale, round)
-			moveUseObj.info[effectIndex] = result
-			resolve()
+			resolve(result)
+		}
+	},
+	"convert-energy": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let amounts = params.amounts ?? {}
+			let ratios = effect.ratios ?? {}
+			let result = getEmptyEnergy()
+			
+			let totalEnergy = 0
+			for (let color in amounts){
+				totalEnergy += amounts[color]
+			}
+			for (let color in ratios){
+				result[color] = totalEnergy * ratios[color]
+			}
+
+			resolve(result)
+		}
+	},
+	"get-total-energy": {
+		update: false,
+		hasTarget: true,
+		targetType: "pokemon",
+		targetDefault: "user",
+		execute: (resolve, effect, params, game, options) => {
+			let target = options.target
+			
+			let totalEnergy = 0
+			for (let color in target.energy){
+				totalEnergy += target.energy[color]
+			}
+
+			resolve(totalEnergy)
 		}
 	},
 	"change-tile-weight": {
@@ -1446,7 +1502,6 @@ const pokemonMoveEffects = {
 			let effectIndex = options.effectIndex
 			let test = params.test ?? moveUseObj.info[effectIndex - 2]
 			let against = params.against ?? moveUseObj.info[effectIndex - 1]
-			console.log(test, against)
 			if (test < against) {
 				moveUseObj.nextEffectIndex = options.index
 			}
