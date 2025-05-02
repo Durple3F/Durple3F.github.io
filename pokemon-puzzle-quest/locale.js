@@ -31,8 +31,16 @@ function checkLocale(locale, langName){
 			let id = pData.id
 			let locData = locale["pokemon"][id]
 			if (!locData){
-				console.warn("Locale data is missing pokemon data for ",id,langName)
+				console.warn("Locale data is missing pokemon data for",id,langName)
 			}
+
+			let learnset = pData.learnset ?? []
+			learnset.forEach(learnData => {
+				let moveId = learnData.name
+				if (!(moveId in pokemonMoveData)){
+					console.warn(id,"can learn",moveId,"which doesn't exist in move data")
+				}
+			})
 		})
 	} else {
 		console.warn("Locale data is missing pokemon data", langName)

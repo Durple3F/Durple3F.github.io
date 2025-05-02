@@ -873,13 +873,30 @@
 			]
 		},
 		"route-3-5-dialogue": {
+			"callbacks": {
+				"fade-out-background": { "type": "animate-background", "css": {
+					"opacity": 0
+				}, "duration": 1000, "waitDuration": 1100, "then": "reset-background-animation" },
+				"reset-background-animation": { "type": "play-background-animation", "name": "none", "then": "fade-in-background" },
+				"fade-in-background": { "type": "style-background", "css": {
+					"opacity": 1
+				} }
+			},
 			"effects": [
+				{ "type": "load-background-animation", "name": "hala-radial", "priority": 3 },
 				{ "type": "get-speaker", "name": "Hala", "class": "Hala" },
 				{ "type": "load-player-name" },
 				{ "type": "text", "speaker": "Hala", "text": "$@start-bold|@$$@font-size:1.2|@$Ho!$@font-size:1|@$$@end-bold|@$ I have been waiting for you, %c%!", "values": [-1] },
 				{ "type": "text", "speaker": "Hala", "text": "Allow me to properly greet the young adventurer embarking on the island challenge." },
+				{ "type": "style-background", "css": {
+					"opacity": 0
+				} },
+				{ "type": "play-background-animation", "name": "hala-radial" },
+				{ "type": "animate-background", "css": {
+					"opacity": 1
+				}, "duration": 1000, "waitDuration": 0 },
 				{ "type": "text", "speaker": "Hala", "text": "I am Hala, kahuna of Melemele Island. To pass this grand trial, you must withstand the blows of my Pokémon!" },
-				{ "type": "text", "speaker": "Hala", "text": "If you defeat me, I will teach you and your Pokémon how to use $@red|Fighting-type@$ Z-moves!" }
+				{ "type": "text", "speaker": "Hala", "text": "If you defeat me, I will teach you and your Pokémon how to use $@red|Fighting-type@$ Z-moves!", "then": "fade-out-background" }
 			]
 		}
 	},
@@ -1025,6 +1042,9 @@
 		"Rockruff": {
 			"name": "Rockruff"
 		},
+		"Stufful": {
+			"name": "Stufful"
+		},
 		"Comfey": {
 			"name": "Comfey"
 		},
@@ -1080,6 +1100,11 @@
 			"description": "Deals damage. Then, the user chooses up to a 2x2 area of tiles. A 2x2 area around those tiles are each removed.",
 			"shortDescription": "Deals some damage and removes tiles",
 			"choose": "Choose up to 4 tiles in a 2x2 square."
+		},
+		"Brutal Swing": {
+			"name": "Brutal Swing",
+			"description": "Deals damage. Converts half of all Grass and Psychic tiles, rounded up, into Dark tiles. Dark tiles are worth 1 purple energy AND 1 red energy each.",
+			"shortDescription": "Turns tiles into Dark tiles"
 		},
 		"Bubble Beam": {
 			"name": "Bubble Beam",
@@ -1593,6 +1618,11 @@
 			"shortDescription": "On a match that doesn't combo, raises Special Attack 1 stage 50% of the time",
 			"longDescription": "At the end of this Pokémon's turn, if it makes only one match of exactly three tiles, this ability has a 50% chance to raise its Special Attack by 1 stage."
 		},
+		"Cute Charm": {
+			"name": "Cute Charm",
+			"shortDescription": "On making contact with the opponent, lowers their Special Attack by a stage.",
+			"longDescription": "When this Pokémon deals damage to the opponent, if that move made contact, the opponent's Special Defense is lowered by a stage."
+		},
 		"Dancer": {
 			"name": "Dancer",
 			"shortDescription": "After a dancing move is used by any Pokémon (including itself), uses that same move",
@@ -1622,6 +1652,11 @@
 			"name": "Flower Veil",
 			"shortDescription": "Prevents any stat debuffs being put on this trainer's Grass Pokémon",
 			"longDescription": "As long as this Pokémon is the active Pokémon, Grass Pokémon owned by this Pokémon's trainer can't have their stats lowered by stages."
+		},
+		"Fluffy": {
+			"name": "Fluffy",
+			"shortDescription": "Takes half damage from moves that make contact, but double from Fire moves",
+			"longDescription": "Damage that this Pokémon takes from moves that make contact is halved. However, damage that this Pokémon takes from Fire-type moves is doubled."
 		},
 		"Forewarn": {
 			"name": "Forewarn",
@@ -1697,6 +1732,11 @@
 			"name": "Keen Eye",
 			"shortDescription": "Resistant to cost-raising effects from other Pokémon",
 			"longDescription": "The effects of statuses imposed by other Pokémon which raise the costs of this Pokémon's moves are reduced by 50%."
+		},
+		"Klutz": {
+			"name": "Klutz",
+			"shortDescription": "Adds the wrong energy type 20% of the time, but doubles the energy gained",
+			"longDescription": "As this Pokémon gains energy from a match, 20% of the time, that energy will be doubled, and converted into random colors."
 		},
 		"Leaf Guard": {
 			"name": "Leaf Guard",

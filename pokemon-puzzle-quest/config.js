@@ -8,6 +8,7 @@ const config = {
 	hardMode: false,
 	lowerLevelsToRecommendedLevels: true,
 	antialiasing: true,
+	screenShake: true,
 	cpuSpeed: 2,
 	textSpeed: 40,
 

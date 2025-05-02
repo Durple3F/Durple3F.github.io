@@ -164,3 +164,39 @@ function applyColorsToZCrystal(elem, types){
 		elem.attr("data-type2", "")
 	}
 }
+
+function shakeBoard(shakeAmount=10){
+	if (!config["screenShake"]){
+		return
+	}
+	let board = $("#board")
+	let targetLocations = [
+		[0, 0]
+	]
+	let segCount = 5
+	for (let i = 0; i < segCount; i++){
+		let x = Math.random() * shakeAmount
+		let y = Math.random() * shakeAmount
+		targetLocations.push([x, y])
+	}
+	targetLocations.push([0, 0])
+	$({val: 0}).animate({val: 1}, {
+		duration: 300,
+		step: function(){
+			let p = this.val
+			let segmentIndex = Math.floor(p * targetLocations.length)
+			let targetLocation = targetLocations[segmentIndex]
+			let css = {
+				left: targetLocation[0],
+				top: targetLocation[1]
+			}
+			board.css(css)	
+		},
+		complete: function(){
+			board.css({
+				left: 0,
+				top: 0
+			})
+		}
+	})
+}

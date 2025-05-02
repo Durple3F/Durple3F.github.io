@@ -235,8 +235,6 @@ const pokemonMoveEffects = {
 				damageOptions.toTrainer = toTrainer
 			}
 
-			console.log(moveUseObj.parentMove)
-
 			if ("amount" in effect){
 				damageOptions.damage = params.amount
 			}
@@ -322,6 +320,11 @@ const pokemonMoveEffects = {
 				damage: damage,
 				fixed: fixed
 			}
+
+			if ("damageMult" in effect){
+				damageOptions.damageMult = effect.damageMult
+			}
+
 			let result = game.dealDamage(damageOptions)
 			resolve(result.damageDealt)
 		}
@@ -966,12 +969,13 @@ const pokemonMoveEffects = {
 	"remove-tiles": {
 		execute: (resolve, effect, params, game, options) => {
 			let selection = params.selection ?? []
+			let doTimeStep = false
 			selection.forEach(tile => game.board.explodeTile(tile))
 			if (selection.length) {
 				game.increaseCascade()
 			}
 			game.applyGravity()
-				.then(() => resolve())
+			.then(() => resolve())
 		}
 	},
 	"get-tile-x": {
@@ -1448,6 +1452,16 @@ const pokemonMoveEffects = {
 			let trainer = options.moveUse.trainer
 			let result = trainers[0] === trainer ? effect.left : effect.right
 			resolve(result)
+		}
+	},
+	"log-value": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let moveUseObj = options.moveUse
+			let effectIndex = options.effectIndex
+			let val = moveUseObj.info[effectIndex - 1]
+			console.log(val, moveUseObj)
+			resolve(val)
 		}
 	},
 	"load-value": {

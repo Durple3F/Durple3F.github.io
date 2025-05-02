@@ -46,6 +46,31 @@ const backgroundAnimations = {
 			sizeReference: "height",
 			reverse: true
 		},
+		frameCount: 150,
+		clearColorCacheEveryFrame: true
+	},
+	"hala-radial": {
+		name: "hala-radial",
+		type: "gradient",
+		gradients: [
+			{
+				stops: [
+					{stop: 0, color: new Color("#5e1c00")},
+					{stop: 0.25, color: new Color("#b44400")},
+					{stop: 0.5, color: new Color("#f28018")},
+					{stop: 0.75, color: new Color("#b44400")},
+					{stop: 1, color: new Color("#5e1c00")},
+				],
+				colorBandCount: 500,
+				center: {
+					x: 0.66,
+					y: 0.35
+				},
+				size: 1,
+				sizeReference: "height",
+				reverse: true
+			},
+		],
 		frameCount: 100,
 		clearColorCacheEveryFrame: true
 	}
@@ -77,72 +102,79 @@ const animationPixelRenderFunctions = {
 		execute: (px, py, frame, background, animation) => {
 			let w = background.width
 			let h = background.height
-			let gradient = animation.gradient
-			let colorCache = animation.colorCache
-			let gradientColorStops = gradient.stops
-			let lightnessStops = gradient.lightnessFilterStops
-			let colorBands = gradient.colorBandCount
-			let gradientCenter = gradient.center
-			let gradientSize = gradient.size
-			if (gradient.sizeReference === "height"){
-				gradientSize *= h
-			}
-			let animCompleteness = frame / animation.frameCount
-			let reverse = !!gradient.reverse
-			let gx = gradientCenter.x * w
-			let gy = gradientCenter.y * h
-			let dist = distance(px, py, gx, gy) / gradientSize
-			let p = dist % 1
-			if (reverse){
-				p = (p + 1 - animCompleteness) % 1
-			} else {
-				p = (p + animCompleteness) % 1
-			}
-			let band = Math.floor(p * colorBands)
-
-			let color
-			if (colorCache[band]){
-				color = colorCache[band]
-			} else {
-				let stops = getGradientStops(p, gradientColorStops)
-				let stop1 = stops[0]
-				let stop2 = stops[1]
-
-				let colorP = (p - stop1.stop) / (stop2.stop - stop1.stop)
-				let c1 = stop1.color
-				let c2 = stop2.color
-				let hsl1 = c1.hsl
-				let hsl2 = c2.hsl
-				let h1 = hsl1.h
-				let h2 = hsl2.h
-				if (stop2.reverseHue){
-					h2 -= 360
+			let gradientList = animation.gradients ?? [animation.gradient]
+			let totalColor
+			for (let gradient of gradientList){
+				// console.log(gradient.stops)
+				let colorCache = gradient.colorCache ?? animation.colorCache
+				let gradientColorStops = gradient.stops
+				let lightnessStops = gradient.lightnessFilterStops
+				let colorBands = gradient.colorBandCount
+				let gradientCenter = gradient.center
+				let gradientSize = gradient.size
+				if (gradient.sizeReference === "height"){
+					gradientSize *= h
 				}
-				let newH = lerp(h1, h2, colorP)
-				let s1 = hsl1.s
-				let s2 = hsl2.s
-				let newS = lerp(s1, s2, colorP)
-				let l1 = hsl1.l
-				let l2 = hsl2.l
-				let newL = lerp(l1, l2, colorP)
+				let animCompleteness = frame / animation.frameCount
+				let reverse = !!gradient.reverse
+				let gx = gradientCenter.x * w
+				let gy = gradientCenter.y * h
+				let dist = distance(px, py, gx, gy) / gradientSize
+				let p = dist % 1
+				if (reverse){
+					p = (p + 1 - animCompleteness) % 1
+				} else {
+					p = (p + animCompleteness) % 1
+				}
+				let band = Math.floor(p * colorBands)
 
-				//Handle lightness overlay
-				if (lightnessStops){
-					let stops = getGradientStops(animCompleteness, lightnessStops)
+				let color
+				if (colorCache[band]){
+					color = colorCache[band]
+				} else {
+					let stops = getGradientStops(p, gradientColorStops)
 					let stop1 = stops[0]
 					let stop2 = stops[1]
-					let stopP = (animCompleteness - stop1.stop) / (stop2.stop - stop1.stop)
-					let l = lerp(stop1.lightness, stop2.lightness, stopP)
-					newL *= l
-				}
 
-				let c = new Color("hsl", [newH, newS, newL])
-				let srgb = c.srgb
-				color = [srgb.r * 255, srgb.g * 255, srgb.b * 255, (srgb.a || 1)*255]
-				colorCache[band] = color
+					let colorP = (p - stop1.stop) / (stop2.stop - stop1.stop)
+					let c1 = stop1.color
+					let c2 = stop2.color
+					let hsl1 = c1.hsl
+					let hsl2 = c2.hsl
+					let h1 = hsl1.h
+					let h2 = hsl2.h
+					if (stop2.reverseHue){
+						h2 -= 360
+					}
+					let newH = lerp(h1, h2, colorP)
+					let s1 = hsl1.s
+					let s2 = hsl2.s
+					let newS = lerp(s1, s2, colorP)
+					let l1 = hsl1.l
+					let l2 = hsl2.l
+					let newL = lerp(l1, l2, colorP)
+
+					//Handle lightness overlay
+					if (lightnessStops){
+						let stops = getGradientStops(animCompleteness, lightnessStops)
+						let stop1 = stops[0]
+						let stop2 = stops[1]
+						let stopP = (animCompleteness - stop1.stop) / (stop2.stop - stop1.stop)
+						let l = lerp(stop1.lightness, stop2.lightness, stopP)
+						newL *= l
+					}
+
+					let c = new Color("hsl", [newH, newS, newL])
+					let srgb = c.srgb
+					color = [srgb.r * 255, srgb.g * 255, srgb.b * 255, (srgb.a || 1)*255]
+					colorCache[band] = color
+				}
+				if (!totalColor){
+					totalColor = color
+				}
 			}
 
-			return color
+			return totalColor
 		}
 	}
 }
@@ -151,8 +183,9 @@ class Background{
 	constructor(canvas){
 		this.canvas = canvas
 		this.ctx = canvas.getContext("2d")
-		this.width = $(window).width()
-		this.height = $(window).height()
+		this.scale = 0.1
+		this.width = $(window).width() * this.scale
+		this.height = $(window).height() * this.scale
 
 		this.animation = null
 		this.loadingAnimation = null
@@ -171,18 +204,19 @@ class Background{
 			this.clearAnimation(animation)
 		}
 		
-		this.frameRate = (frameRate * 0.5)|0
+		this.frameRate = frameRate
 		this.startTicks()
 		this.loadAnimation("ilima-radial")
+		this.loadAnimation("hala-radial")
 		this.playAnimation("none")
-		// this.playAnimation("ilima-radial")
 	}
 
 	tick(){
 		this.t += 1n
 		let animation = this.loadingAnimation
 		if (animation){
-			if (!animation.complete && this.t % animation.drawEvery === 0n){
+			let drawEvery = animation.drawEvery ?? 1
+			if (!animation.complete && this.t % drawEvery === 0n){
 				let totalPixels = this.width * this.height
 				let timeData = animation.frameData.times
 				let lastTime = timeData[timeData.length - 1]
@@ -224,7 +258,7 @@ class Background{
 
 	startTicks(){
 		clearInterval(this.interval)
-		this.interval = setInterval(this.tick.bind(this), this.frameRate)
+		this.interval = setInterval(this.tick.bind(this), (1000 / this.frameRate)|0)
 	}
 	stopTicks(){
 		clearInterval(this.interval)
@@ -257,7 +291,7 @@ class Background{
 		this.prepareFrame(animation, frame)
 	}
 	preparePixels(animation, pixelCount){
-		// if (animation === this.animation) return
+		// if (animation === this.animation) return)
 		let now = Date.now()
 		let w = this.width
 		let h = this.height
@@ -295,21 +329,29 @@ class Background{
 		}
 	}
 	incrementFrames(animation){
-		if (animation.complete) {
-			animation.resolve()
-			return
-		}
 		animation.framesDrawn++
 		if (animation.framesDrawn >= animation.frameCount){
 			animation.complete = true
 		} else {
 			animation.incompleteFrame = this.newImageData()
 		}
+		if (animation.complete) {
+			animation.resolve()
+			return
+		}
 		let clearColorCacheEveryFrame = animation.clearColorCacheEveryFrame ?? false
 		if (clearColorCacheEveryFrame){
 			let colorCache = animation.colorCache
 			for (let key in colorCache){
 				delete colorCache[key]
+			}
+			if (animation.gradientList){
+				for (let gradient of animation.gradientList){
+					let colorCache = gradient.colorCache
+					for (let key in colorCache){
+						delete colorCache[key]
+					}
+				}
 			}
 		}
 	}
@@ -376,11 +418,13 @@ class Background{
 			animation.finishedLoading = Date.now()
 			console.log("Finished loading", animation.name, "in", animation.finishedLoading - animation.startedLoading, "ms")
 			this.loadedAnimations[animation.name] = animation
-			this.loadingAnimation = null
-			if (this.loadingAnimationQueue.length){
-				let next = this.loadingAnimationQueue[0]
-				this.loadAnimation(next)
-				this.loadingAnimationQueue.splice(0, 1)
+			if (this.loadingAnimation === animation){
+				this.loadingAnimation = null
+				if (this.loadingAnimationQueue.length){
+					let next = this.loadingAnimationQueue[0]
+					this.loadAnimation(next)
+					this.loadingAnimationQueue.splice(0, 1)
+				}
 			}
 		})
 		return animation
@@ -390,8 +434,8 @@ class Background{
 	}
 
 	resize(){
-		this.width = Math.floor($(window).width() / 4)
-		this.height = Math.floor($(window).height() / 4)
+		this.width = Math.floor($(window).width() * this.scale)
+		this.height = Math.floor($(window).height() * this.scale)
 		let canvas = this.canvas
 		canvas.width = this.width
 		canvas.height = this.height

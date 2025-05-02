@@ -42,7 +42,7 @@ class Round {
 		})
 		this.maxInitiative = 100
 		this.struggleTest = false
-		this.zMoveTest = true
+		this.zMoveTest = false
 		if (this.zMoveTest){
 			this.trainers.forEach(trainer => trainer.zMeterFullness = 1)
 		}
@@ -58,6 +58,7 @@ class Round {
 		this.currentlyCarryingOutSwap = false
 		this.currentlyEndingTurn = false
 		this.currentlySwappingPokemon = false
+		this.canTilesMatchRightNow = true
 		this.currentCascade = 0
 		this.matchesInCombo = []
 		this.statusEffects = []
@@ -656,6 +657,20 @@ class Round {
 			energy = multiplyEnergies(energy, 1.5, "round")
 		}
 
+		//20% of the time, Klutz pokemon add the wrong colors of energy, but it's doubled
+		if (Math.random() < 0.2 && activePokemon.hasAbility("Klutz")){
+			let change = getEmptyEnergy()
+			for (let color in energy){
+				if (energy[color] <= 0) continue
+				let otherColors = colors.filter(c => c !== color)
+				let randomColor = randomChoice(otherColors)
+				let amt = energy[color]
+				change[color] -= amt
+				change[randomColor] += amt * 2
+			}
+			energy = addEnergies(energy, change)
+		}
+
 		//Pikcup gives you energy when your opponent makes a 4-match
 		if (madeFourMatch && otherPokemon.hasAbility("Pickup")) {
 			let toAdd = multiplyEnergies(energy, 0.5, "round")
@@ -778,6 +793,10 @@ class Round {
 		let contents = this.board.contents
 		let activeTrainer = this.trainers[this.activePlayerIndex]
 		let activePokemon = activeTrainer.activePokemon
+
+		if (this.canTilesMatchRightNow === false){
+			return Promise.resolve()
+		}
 
 		let promise = new Promise(resolve => {
 			if (matches.length > 0) {
@@ -1769,7 +1788,35 @@ class Round {
 			}
 			let trainer = this.trainers[trainerIndex]
 			let pokemon = trainer.activePokemon
+			let pokemonTypes = pokemon.getEffectiveTypes()
+
+			//For now, always use a z-move if the option is available.
+			//TODO
+			if (trainer.zMeterFullness >= 1){
+				this.readyZMove(trainerIndex)
+			}
+
 			let availableMoves = this.getAvailableMoves(trainerIndex)
+			
+			if (trainer.zMoveReady){
+				availableMoves = availableMoves.map(move => {
+					let category = getMoveCategory(move)
+					let type = this.getEffectiveMoveType(trainer, pokemon, move)
+					let newMove = move
+					if (
+						trainer.zMoveReady &&
+						category !== "Status" &&
+						pokemonTypes.includes(type)
+					) {
+						newMove = getZMove(trainer, pokemon, move, type)
+						if (newMove){
+							move = newMove
+						}
+					}
+					return move
+				})
+			}
+
 			availableMoves = availableMoves.filter(move => {
 				return !this.getEffectiveMoveDisability(trainer, pokemon, move)
 			})
@@ -2182,6 +2229,8 @@ class Round {
 			defender.hp -= damage
 
 			if (damage > 0) {
+				let shakeAmount = damage / defender.maxhp * 10
+				shakeBoard(shakeAmount)
 				defender.gameRoundData.damagedThisTurn = true
 
 				//If the defender has any status effects that remember how much
@@ -2199,7 +2248,7 @@ class Round {
 
 				let stillUsable = isPokemonUsable(defender)
 				let madeContact = this.shouldMoveHaveTag("makes-contact", attackerTrainer, attacker, move)
-				console.log(madeContact)
+				
 				//Weak Armor lowers defense but raises speed
 				if (defender.hasAbility("Weak Armor")) {
 					defender.addStatusEffect({
@@ -2241,7 +2290,7 @@ class Round {
 						attacker.addStatusEffect("paralyzed", attackerTrainer, attacker, undefined)
 					}
 				}
-				//Static paralyzes the attacker sometimes
+				//Poison Touch poisons the attacker sometimes
 				if (defender.hasAbility("Poison Touch")) {
 					if (
 						attacker !== defender &&
@@ -2249,6 +2298,21 @@ class Round {
 						Math.random() < 0.3
 					) {
 						attacker.addStatusEffect("poisoned", attackerTrainer, attacker, undefined)
+					}
+				}
+				//Cute Charm lowers the defender's Special Attack
+				if (attacker.hasAbility("Cute Charm")) {
+					if (
+						attacker !== defender &&
+						madeContact
+					) {
+						defender.addStatusEffect({
+							name: "cute-charm-weakened",
+							type: "stat",
+							class: "debuff",
+							stat: "specialAttack",
+							amount: -1
+						}, attacker.trainer, attacker, undefined)
 					}
 				}
 				//Rattled raises speed on Bug Dark or Ghost moves
@@ -2625,6 +2689,7 @@ class Round {
 
 		let powerEffects = pokemon.getStatusesOfType("power-alteration")
 		let effectiveType = this.getEffectiveMoveType(trainer, pokemon, move)
+		let makesContact = this.shouldMoveHaveTag("makes-contact", trainer, pokemon, move)
 		for (let statusEffect of powerEffects) {
 			let applies = this.doesThisApplyToMove(move, statusEffect.appliesTo, effectiveType)
 			if (applies) {
@@ -2701,6 +2766,13 @@ class Round {
 			})
 		) {
 			power *= 1.3
+		}
+		//Fluffy halves damage from moves that make contact
+		if (makesContact && otherPokemon.hasAbility("Fluffy")){
+			power *= 0.5
+		}
+		if (effectiveType === "Fire" && otherPokemon.hasAbility("Fluffy")){
+			power *= 2
 		}
 		//There's a bunch that are only active at low HP
 		if (pokemon.hp / pokemon.maxhp <= 1 / 3) {
@@ -6077,9 +6149,10 @@ function getMoveCategory(move, parentMove) {
 	return category
 }
 function getZMove(trainer, pokemon, move, type){
-	if (type === "Normal"){
+	let unlocked = trainer.zMoveUsableTypes
+	if (type === "Normal" && unlocked.includes("Normal")){
 		return pokemonMoveData["Breakneck Blitz"]
-	} else if (type === "Fighting"){
+	} else if (type === "Fighting" && unlocked.includes("Fighting")){
 		return pokemonMoveData["All-Out Pummeling"]
 	}
 }

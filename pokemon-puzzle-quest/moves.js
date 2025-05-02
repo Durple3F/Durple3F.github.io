@@ -324,6 +324,49 @@ const pokemonMoveData = {
 			{ type: "remove-tiles", selection: -1 }
 		]
 	},
+	//Replaces some Grass and Water tiles with Dark tiles
+	"Brutal Swing": {
+		name: "Brutal Swing",
+		type: "Dark",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 20,
+		power: 60,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			purple: 8
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Brutal Swing.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "recoil-damage", damageMult: 0.25 },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "count-tiles", options: { type: "green" } },
+			{ type: "load-value", value: 0.5 },
+			{ type: "multiply-numbers", round: "up" },
+			{
+				type: "select-random-tiles", count: -1,
+				conditions: { types: ["green"] }
+			},
+			{ type: "log-value" },
+			{ type: "change-tile-type", selection: "group", which: -1, targetType: "black" },
+			{ type: "count-tiles", options: { type: "purple" } },
+			{ type: "load-value", value: 0.5 },
+			{ type: "multiply-numbers", round: "up" },
+			{
+				type: "select-random-tiles", count: -1,
+				conditions: { types: ["purple"] }
+			},
+			{ type: "change-tile-type", selection: "group", which: -1, targetType: "black" },
+		]
+	},
 	//Makes tiles give extra blue energy
 	"Bubble Beam": {
 		name: "Bubble Beam",
@@ -875,6 +918,7 @@ const pokemonMoveData = {
 			} }
 		],
 	},
+	//Deals more damage to slower targets
 	"Electro Ball": {
 		name: "Electro Ball",
 		type: "Electric",
@@ -3304,6 +3348,7 @@ const pokemonMoveData = {
 			{ type: "play-sound", name: "part3", waitBeforeFinishMove: true },
 			{ type: "wait", duration: 5000 },
 			
+			{ type: "damage", delay: 0, damageMult: 1/15 },
 			{ type: "load-value", value: 1 },
 			{ type: "select-random-tiles", count: -1 },
 			{ type: "load-value", value: 0 },
@@ -3319,6 +3364,7 @@ const pokemonMoveData = {
 			{ type: "remove-tiles", selection: -1, delay: 50 },
 			{ type: "time-step" },
 			
+			{ type: "damage", delay: 0, damageMult: 2/15 },
 			{ type: "load-value", value: 1 },
 			{ type: "select-random-tiles", count: -1 },
 			{ type: "load-value", value: 0 },
@@ -3334,6 +3380,7 @@ const pokemonMoveData = {
 			{ type: "remove-tiles", selection: -1, delay: 50 },
 			{ type: "time-step" },
 			
+			{ type: "damage", delay: 0, damageMult: 3/15 },
 			{ type: "load-value", value: 1 },
 			{ type: "select-random-tiles", count: -1 },
 			{ type: "load-value", value: 0 },
@@ -3349,6 +3396,7 @@ const pokemonMoveData = {
 			{ type: "remove-tiles", selection: -1, delay: 50 },
 			{ type: "time-step" },
 			
+			{ type: "damage", delay: 0, damageMult: 4/15 },
 			{ type: "load-value", value: 1 },
 			{ type: "select-random-tiles", count: -1 },
 			{ type: "load-value", value: 0 },
@@ -3364,6 +3412,7 @@ const pokemonMoveData = {
 			{ type: "remove-tiles", selection: -1, delay: 50 },
 			{ type: "time-step" },
 			
+			{ type: "damage", delay: 0, damageMult: 5/15 },
 			{ type: "load-value", value: 1 },
 			{ type: "select-random-tiles", count: -1 },
 			{ type: "load-value", value: 0 },
@@ -3377,9 +3426,7 @@ const pokemonMoveData = {
 				conditionArguments: [-3, -2, -1]
 			},
 			{ type: "remove-tiles", selection: -1, delay: 50 },
-			{ type: "time-step" },
-
-			{ type: "damage", delay: 0 },
+			{ type: "time-step" }
 		],
 	},
 	// Prev version

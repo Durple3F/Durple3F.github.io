@@ -2183,7 +2183,7 @@ const pokemonData = {
 			{ name: "Disarming Voice", unlock: { type: "level", amount: 6 } },
 			{ name: "Aqua Jet", unlock: { type: "level", amount: 9 } },
 			{ name: "Baby-Doll Eyes", unlock: { type: "level", amount: 12 } },
-			{ name: "Power-Up Punch", unlock: { type: "level", amount: 1 } },
+			{ name: "Brutal Swing", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {
@@ -2688,6 +2688,56 @@ const pokemonData = {
 			{ name: "Sand Attack", unlock: { type: "level", amount: 4 } },
 			{ name: "Double Team", unlock: { type: "level", amount: 8 } },
 			{ name: "Rock Throw", unlock: { type: "level", amount: 12 } },
+		]
+	},
+	"Stufful": {
+		name: "Stufful",
+		number: "759",
+		weight: {
+			pounds: 15.0,
+			kilograms: 6.8
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0759Stufful.png",
+			"largeShiny": "src/img/shiny-pokemon/759-Stufful.png",
+			"home": "src/img/tiny-pokemon/Stufful.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/stufful.mp3"
+		},
+		types: ["Normal", "Fighting"],
+		tags: [],
+		abilities: ["Fluffy", "Klutz"],
+		hiddenAbilities: ["Cute Charm"],
+		stats: {
+			hp: 70,
+			attack: 75,
+			defense: 50,
+			specialAttack: 45,
+			specialDefense: 50,
+			speed: 50
+		},
+		expYield: 68,
+		evYield: {
+			hp: 0,
+			attack: 1,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 5,
+			purple: 1
+		},
+		learnset: [
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Leer", unlock: { type: "level", amount: 1 } },
+			{ name: "Baby-Doll Eyes", unlock: { type: "level", amount: 4 } },
+			{ name: "Bide", unlock: { type: "level", amount: 6 } }, //Learned only in gen 7
+			{ name: "Payback", unlock: { type: "level", amount: 8 } },
+			{ name: "Brutal Swing", unlock: { type: "level", amount: 12 } },
 		]
 	},
 	"Comfey": {

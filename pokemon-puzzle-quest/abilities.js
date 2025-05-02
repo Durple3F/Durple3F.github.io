@@ -42,6 +42,10 @@ const abilityData = {
 	"Compound Eyes": {
 		id: "Compound Eyes"
 	},
+	//Lowers the defender's Special Attack on contact
+	"Cute Charm": {
+		id: "Cute Charm"
+	},
 	//Copy "dancing" moves used by either you or the opponent
 	"Dancer": {
 		id: "Dancer"
@@ -65,6 +69,10 @@ const abilityData = {
 	//Your grass pokemon are immune to stat debuffs
 	"Flower Veil": {
 		id: "Flower Veil"
+	},
+	//Take half damage from contact but double from fire
+	"Fluffy": {
+		id: "Fluffy"
 	},
 	//Makes Psychic tiles more common
 	"Forewarn": {
@@ -125,6 +133,10 @@ const abilityData = {
 	//Cost reductions to your moves from opponents are 50% as effective
 	"Keen Eye": {
 		id: "Keen Eye"
+	},
+	//20% of the time, energy gain is converted to the wrong color, but it's doubled
+	"Klutz": {
+		id: "Klutz"
 	},
 	//Blocks status effects from the opponent based on green energy
 	"Leaf Guard": {
