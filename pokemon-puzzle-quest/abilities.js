@@ -218,6 +218,10 @@ const abilityData = {
 	"Rattled": {
 		id: "Rattled"
 	},
+	//Literally just Power of Alchemy again :/
+	"Receiver": {
+		id: "Receiver"
+	},
 	//Heal 20% hp on switching out
 	"Regenerator": {
 		id: "Regenerator"

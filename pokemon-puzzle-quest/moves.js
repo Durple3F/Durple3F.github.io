@@ -228,6 +228,58 @@ const pokemonMoveData = {
 			} },
 		],
 	},
+	//Deals damage based on all your remaining viable pokemon's stats
+	"Beat Up": {
+		name: "Beat Up",
+		type: "Fighting",
+		category: "Physical",
+		strategy: "special",
+		pp: 10,
+		power: 0,
+		accuracy: 100,
+		rechargeTurns: 2,
+		energy: {
+			// purple: 4,
+			// orange: 10
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Beat Up 1hit.mp3"
+		},
+		effects: [
+			{ type: "get-viable-pokemon", target: "user" },
+			{ type: "get-stats-from-pokemon-list", list: -1, which: "attack", base: true },
+			{ type: "save-variable", name: "attacks", save: -1 },
+			{ type: "get-list-length", list: -1 },
+			{ type: "save-variable", name: "length", save: -1 },
+			{ type: "load-value", value: 0 },
+			{ type: "save-variable", name: "counter", save: -1 },
+			
+			{ type: "load-variable", name: "counter" },
+			{ type: "load-variable", name: "length" },
+			{ type: "jump-if-less-than", jumpTo: "startLoop" },
+			{ type: "jump", jumpTo: "endLoop" },
+
+			{ type: "load-variable", name: "attacks", label: "startLoop" },
+			{ type: "load-variable", name: "counter" },
+			{ type: "get-element-from-list", list: -2, index: -1 },
+			{ type: "load-value", value: 10 },
+			{ type: "divide-numbers" },
+			{ type: "load-value", value: 5 },
+			{ type: "add-numbers" },
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage", additivePower: -2 },
+			{ type: "log-value" },
+			{ type: "load-variable", name: "counter" },
+			{ type: "load-value", value: 1 },
+			{ type: "add-numbers" },
+			{ type: "save-variable", name: "counter", save: -1 },
+			{ type: "load-variable", name: "length" },
+			{ type: "jump-if-less-than", jumpTo: "startLoop" },
+			{ type: "jump", jumpTo: "endLoop" },
+
+			{ type: "do-nothing", label: "endLoop" }
+		],
+	},
 	//Deals damage on a delay
 	"Bide": {
 		name: "Bide",

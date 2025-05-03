@@ -121,6 +121,28 @@ const moveUseStrategy = {
 			return weight
 		}
 	},
+	"Beat Up": {
+		chooseWeight: options => {
+			let trainer = options.trainer
+			let pokemonList = trainer.pokemon
+			let usablePokemon = getUsablePokemon(pokemonList)
+			let totalWeight = 0
+			let basePower = getMovePower(options.action)
+			for (let pokemon of usablePokemon){
+				let atk = pokemon.getBaseStat("attack")
+				let power = basePower + (atk / 10) + 5
+				let newOptions = {}
+				for (let key in options){
+					newOptions[key] = options[key]
+				}
+				newOptions.power = power
+				let strategy = moveUseStrategy["basic-damage"]
+				let weight = strategy.chooseWeight(newOptions)
+				totalWeight += weight
+			}
+			return totalWeight
+		}
+	},
 	"Bide": {
 		chooseWeight: options => {
 			let game = options.game

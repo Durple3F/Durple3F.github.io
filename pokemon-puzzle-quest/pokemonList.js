@@ -2834,6 +2834,56 @@ const pokemonData = {
 			{ name: "Wrap", unlock: { type: "level", amount: 1 } },
 		]
 	},
+	"Passimian": {
+		name: "Passimian",
+		number: "766",
+		weight: {
+			pounds: 182.5,
+			kilograms: 82.8
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0766Passimian.png",
+			"largeShiny": "src/img/shiny-pokemon/766-Passimian.png",
+			"home": "src/img/tiny-pokemon/Passimian.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/passimian.mp3"
+		},
+		tags: [],
+		types: ["Fighting"],
+		abilities: ["Receiver"],
+		hiddenAbilities: ["Defiant"],
+		stats: {
+			hp: 100,
+			attack: 120,
+			defense: 90,
+			specialAttack: 40,
+			specialDefense: 60,
+			speed: 80
+		},
+		expYield: 172,
+		evYield: {
+			hp: 0,
+			attack: 2,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 5,
+			red: 2,
+			purple: 2
+		},
+		learnset: [
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Leer", unlock: { type: "level", amount: 1 } },
+			{ name: "Rock Smash", unlock: { type: "level", amount: 5 } },
+			{ name: "Focus Energy", unlock: { type: "level", amount: 10 } },
+			{ name: "Beat Up", unlock: { type: "level", amount: 15 } },
+		]
+	},
 	"Komala": {
 		name: "Komala",
 		number: "775",

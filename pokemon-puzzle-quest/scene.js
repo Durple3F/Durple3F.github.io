@@ -1262,10 +1262,15 @@ function advanceCurrentLevel() {
 		case "change-background-image": {
 			let imgName = effect.name
 			let images = level.images
+			let wait = effect.wait ?? true
 			if (imgName in images){
 				let url = images[imgName]
-				changeBackgroundImage(imgName, url)
-				.then(() => resolvePromise())
+				let p = changeBackgroundImage(imgName, url)
+				if (wait){
+					p.then(() => resolvePromise())
+				} else {
+					resolvePromise()
+				}
 			}
 		} break
 		case "load-value": {

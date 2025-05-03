@@ -767,7 +767,10 @@
 				{ "type": "text", "speaker": "Ilima", "text": "Ah, you've returned victorious! I could practically $@start-italics|@$feel$@end-italics|@$ the energy of your climactic battle coming from the cave." },
 				{ "type": "text", "speaker": "Ilima", "text": "Now, with your triumph over this trial, I am $@font-size:0.6|@$mildly enthused$@font-size:1|@$ to present the three of you with these emblems as proof of your mastery." },
 				{ "type": "text", "speaker": "Lillie", "text": "But I didn't do anything..." },
-				{ "type": "text", "speaker": "Ilima", "text": "Nonsense! Young lady, you endured the $@start-italics|@$bone-chilling$@end-italics|@$ atmosphere of the Verdant Cavern! And, quite honestly, I ordered these in bulk." }
+				{ "type": "text", "speaker": "Ilima", "text": "Nonsense! Young lady, you endured the $@start-italics|@$bone-chilling$@end-italics|@$ atmosphere of the Verdant Cavern! And, quite honestly, I ordered these in bulk." },
+				{ "type": "text", "speaker": "Ilima", "text": "I have two more boons to give you, as well: A $@red|Normalium Z-Crystal@$ and a $@red|Z-Power Ring@$." },
+				{ "type": "text", "speaker": "Ilima", "text": "With these, you will be able to use $@red|Normal-type Z-moves@$." },
+				{ "type": "text", "speaker": "Ilima", "text": "In battle, whenever it's charged and you have a Normal-type Pokémon active, the crystal will glow, and your Normal-type moves will be powered up!" }
 			]
 		},
 		"route-2-7-dialogue-won-2": {
@@ -784,7 +787,10 @@
 				{ "type": "text", "speaker": "Ilima", "text": "I really must start imposing time limits on trial attempts. Maybe install signage?" },
 				{ "type": "text", "speaker": "Ilima", "text": "Well, it's no matter now. Here, both of you, take these emblems as proof of your passage." },
 				{ "type": "text", "speaker": "Lillie", "text": "But I didn't do anything..." },
-				{ "type": "text", "speaker": "Ilima", "text": "Young lady, I am close to certain that you could defeat 3 rats. Please just take the emblem." }
+				{ "type": "text", "speaker": "Ilima", "text": "Young lady, I am close to certain that you could defeat 3 rats. Please just take the emblem." },
+				{ "type": "text", "speaker": "Ilima", "text": "I have two more boons to give you, as well: A $@red|Normalium Z-Crystal@$ and a $@red|Z-Power Ring@$." },
+				{ "type": "text", "speaker": "Ilima", "text": "With these, you will be able to use $@red|Normal-type Z-moves@$." },
+				{ "type": "text", "speaker": "Ilima", "text": "In battle, whenever it's charged and you have a Normal-type Pokémon active, the crystal will glow, and your Normal-type moves will be powered up!" }
 			]
 		},
 		"route-3-1-dialogue": {
@@ -894,9 +900,22 @@
 				{ "type": "play-background-animation", "name": "hala-radial" },
 				{ "type": "animate-background", "css": {
 					"opacity": 1
-				}, "duration": 1000, "waitDuration": 0 },
+				}, "duration": 3000, "waitDuration": 0 },
 				{ "type": "text", "speaker": "Hala", "text": "I am Hala, kahuna of Melemele Island. To pass this grand trial, you must withstand the blows of my Pokémon!" },
 				{ "type": "text", "speaker": "Hala", "text": "If you defeat me, I will teach you and your Pokémon how to use $@red|Fighting-type@$ Z-moves!", "then": "fade-out-background" }
+			]
+		},
+		"route-3-5-dialogue-won": {
+			"callbacks": {},
+			"effects": [
+				{ "type": "get-speaker", "name": "Hala", "class": "Hala" },
+				{ "type": "load-player-name" },
+				{ "type": "text", "speaker": "Hala", "text": "Ha! Well done! My old bones know how to take a good loss." },
+				{ "type": "text", "speaker": "Hala", "text": "The island has seen your resolve, and so have I. As kahuna, I hereby officially declare you a worthy trainer." },
+				{ "type": "text", "speaker": "Hala", "text": "You've exceeded my expectations! From now on, your Pokémon will be able to use $@red|Fighting-type@$ Z-moves!" },
+				{ "type": "text", "speaker": "Hala", "text": "If you want to continue your journey through the island challenge, your next destination would be Akala island." },
+				{ "type": "load-player-name" },
+				{ "type": "text", "speaker": "Hala", "text": "I wish you luck with the rest of your journey, %c%.", "values": [-1] }
 			]
 		}
 	},
@@ -1051,6 +1070,9 @@
 		"Comfey": {
 			"name": "Comfey"
 		},
+		"Passimian": {
+			"name": "Passimian"
+		},
 		"Komala": {
 			"name": "Komala"
 		}
@@ -1092,6 +1114,11 @@
 			"name": "Baby-Doll Eyes",
 			"description": "Lowers the opponent's attack stat by 1 stage. Then, the opponent becomes unable to switch Pokémon for a turn.",
 			"shortDescription": "Lowers enemy attack and prevents switching"
+		},
+		"Beat Up": {
+			"name": "Beat Up",
+			"description": "For each usable Pokémon remaining in the user's party, deals damage based on that Pokémon's base Attack stat.",
+			"shortDescription": "Deals damage for each of your Pokémon"
 		},
 		"Bide": {
 			"name": "Bide",
@@ -1850,6 +1877,11 @@
 			"name": "Rattled",
 			"shortDescription": "Raise Speed a stage when hit with Bug, Ghost, or Dark moves",
 			"longDescription": "Whenever this Pokémon is dealt Bug-, Ghost-, or Dark-type damage, its Speed is increased by 1 stage. This also triggers whenever another Pokémon uses Intimidate against this Pokémon."
+		},
+		"Receiver": {
+			"name": "Receiver",
+			"shortDescription": "Copies the ability of the most recently fainted Pokémon.",
+			"longDescription": "Whenever another Pokémon owned by this Pokémon's trainer faints, this Pokémon gains that fainted Pokémon's ability."
 		},
 		"Regenerator": {
 			"name": "Regenerator",

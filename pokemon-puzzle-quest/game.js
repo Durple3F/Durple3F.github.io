@@ -362,6 +362,18 @@ class Round {
 						}, trainer, pokemon, undefined)
 					}
 				}
+				if (pokemon.hasAbility("Receiver")) {
+					pokemon.removeStatusesWithName("receiver-replacement")
+					let ability = activePokemon.getEffectiveAbility()
+					if (ability.copiable) {
+						pokemon.addStatusEffect({
+							name: "receiver-replacement",
+							type: "ability-alteration",
+							volatile: true,
+							ability: ability
+						}, trainer, pokemon, undefined)
+					}
+				}
 			}
 		}
 
@@ -2894,6 +2906,7 @@ class Round {
 			originalTrigger: trigger,
 			completed: false,
 			info: [],
+			variables: {},
 			effectIndex: 0,
 			completedTriggers: [],
 			//Decides whether we should perform a check at the end of the move's
@@ -5053,8 +5066,9 @@ class Round {
 				let base = p.data.expYield
 				let themLevel = p.level
 
-				let exp = (base * themLevel * 0.2) *
-					Math.pow((2 * themLevel + 10) / (themLevel + youLevel + 10), 2.5)
+				let exp = (base * themLevel * 0.2) * Math.pow((2 * themLevel + 10) / (themLevel + youLevel + 10), 2.5)
+				//I'm reducing the EXP you gain, it's just too much otherwise
+				exp *= 0.6
 				totalEXP += exp
 
 				let evYield = p.data.evYield
@@ -5861,7 +5875,15 @@ function beginRound(trainerData) {
 	let pokemonData = trainerData.pokemon.map(v => v)
 	//If this trainer has a group of pokemon it *might* pull from,
 	//randomly choose new pokemon to add from that list.
-	while (trainerData.targetPokemon > pokemonData.length) {
+	let targetPokemon = trainerData.targetPokemon
+	if (typeof targetPokemon === "object"){
+		let key = config["hardMode"] ? "hard" : "normal"
+		targetPokemon = targetPokemon[key]
+	}
+	if (typeof targetPokemon === "function"){
+		targetPokemon = targetPokemon(playerActivePokemon)
+	}
+	while (targetPokemon > pokemonData.length && trainerData.possiblePokemon) {
 		let possiblePokemon = trainerData.possiblePokemon
 		let allowDuplicates = trainerData.canPickDuplicates ?? false
 		if (!allowDuplicates) {
@@ -5873,6 +5895,9 @@ function beginRound(trainerData) {
 		let rand = weightedRandom(possiblePokemon, weights)
 		let toAdd = rand.item
 		pokemonData.push(toAdd)
+	}
+	while (targetPokemon < pokemonData.length && pokemonData.length) {
+		pokemonData.splice(pokemonData.length - 1, 1)
 	}
 	let enemyPokemon = pokemonData.map(data => {
 		let options = {}

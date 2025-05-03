@@ -912,6 +912,10 @@ const levelData = [
 		category: "Route 2",
 		name: "Route 2-7",
 		icon: "7",
+		images: {
+			"route-bg-verdant-cavern-entrance": "src/img/bg/cave entrance.jpg",
+			"route-bg-verdant-cavern": "src/img/bg/verdant cavern.jpg",
+		},
 		reccomendedLevels: {
 			"normal": (pokemonList) => {
 				if (pokemonList.length >= 3) return 14
@@ -963,10 +967,12 @@ const levelData = [
 			},
 		],
 		effects: [
+			{ type: "change-background-image", name: "route-bg-verdant-cavern-entrance" },
 			{ type: "dialogue", source: "route-2-7-dialogue" },
 			{ type: "get-val-from-obj", key: "fight-ilima", obj: -1 },
 			{ type: "load-value", value: true },
 			{ type: "jump-if-equal", jumpTo: "fight-ilima" },
+			{ type: "change-background-image", name: "route-bg-verdant-cavern" },
 			{ type: "jump", jumpTo: "fight-rats" },
 
 			{ type: "load-setting", key: "hardMode", label: "fight-ilima" },
@@ -1274,7 +1280,8 @@ const levelData = [
 			{ type: "jump", jumpTo: Infinity },
 		]
 	},
-	//3-5:
+	//3-5: Fight with Hala
+	//UNLOCK FIGHTING Z
 	{
 		id: "Route 3-5",
 		category: "Route 3",
@@ -1291,57 +1298,80 @@ const levelData = [
 		trainers: [
 			{
 				name: "Hala",
+				targetPokemon: {
+					"normal": (pokemonList) => {
+						return Math.max(3, pokemonList.length)
+					},
+					"hard": (pokemonList) => {
+						return Math.max(4, pokemonList.length)
+					}
+				},
 				canUseZMoves: true,
 				zMoveUsableTypes: ["Fighting"],
 				pokemon: [
-					// {
-					// 	id: "Mankey",
-					// 	level: 15,
-					// 	ability: "Anger Point",
-					// 	activeMoves: ["Karate Chop", "Focus Energy", "Pursuit"],
-					// 	ivs: { hp: 15, attack: 25, defense: 15, specialAttack: 5, specialDefense: 15, speed: 15 },
-					// 	evs: { hp: 15, attack: 30, defense: 5, specialAttack: 0, specialDefense: 5, speed: 10 },
-					// },
-					// {
-					// 	id: "Makuhita",
-					// 	level: 15,
-					// 	ability: "Thick Fat",
-					// 	activeMoves: ["Fake Out", "Sand Attack", "Arm Thrust"],
-					// 	ivs: { hp: 30, attack: 25, defense: 15, specialAttack: 5, specialDefense: 5, speed: 5 },
-					// 	evs: { hp: 30, attack: 15, defense: 5, specialAttack: 0, specialDefense: 5, speed: 0 },
-					// },
-					// {
-					// 	id: "Crabrawler",
-					// 	level: 15,
-					// 	ability: "Iron Fist",
-					// 	activeMoves: ["Power-Up Punch", "Pursuit", "Leer"],
-					// 	ivs: { hp: 15, attack: 25, defense: 15, specialAttack: 5, specialDefense: 15, speed: 15 },
-					// 	evs: { hp: 15, attack: 30, defense: 5, specialAttack: 0, specialDefense: 5, speed: 10 },
-					// },
-					// {
-					// 	id: "Stufful",
-					// 	level: 15,
-					// 	ability: "Fluffy",
-					// 	activeMoves: ["Brutal Swing", "Payback", "Leer", "Tackle"],
-					// 	ivs: { hp: 25, attack: 25, defense: 15, specialAttack: 5, specialDefense: 5, speed: 15 },
-					// 	evs: { hp: 20, attack: 30, defense: 5, specialAttack: 0, specialDefense: 5, speed: 5 },
-					// },
 					{
-						id: "Pancham",
+						id: "Mankey",
+						name: "Howler",
+						level: 15,
+						ability: "Anger Point",
+						activeMoves: ["Karate Chop", "Focus Energy", "Pursuit"],
+						ivs: { hp: 15, attack: 25, defense: 15, specialAttack: 5, specialDefense: 15, speed: 15 },
+						evs: { hp: 15, attack: 30, defense: 5, specialAttack: 0, specialDefense: 5, speed: 10 },
+					},
+					{
+						id: "Makuhita",
+						name: "Tuffle",
+						level: 15,
+						ability: "Thick Fat",
+						activeMoves: ["Fake Out", "Sand Attack", "Arm Thrust"],
+						ivs: { hp: 30, attack: 25, defense: 15, specialAttack: 5, specialDefense: 5, speed: 5 },
+						evs: { hp: 30, attack: 15, defense: 5, specialAttack: 0, specialDefense: 5, speed: 0 },
+					},
+					{
+						id: "Crabrawler",
+						name: "Knuckles",
+						level: 15,
+						ability: "Iron Fist",
+						activeMoves: ["Power-Up Punch", "Pursuit", "Leer"],
+						ivs: { hp: 15, attack: 25, defense: 15, specialAttack: 5, specialDefense: 15, speed: 15 },
+						evs: { hp: 15, attack: 30, defense: 5, specialAttack: 0, specialDefense: 5, speed: 10 },
+					},
+					{
+						id: "Stufful",
+						name: "Mr. Gumpy",
 						level: 15,
 						ability: "Fluffy",
-						activeMoves: ["Taunt"],
+						activeMoves: ["Brutal Swing", "Payback", "Leer", "Tackle"],
 						ivs: { hp: 25, attack: 25, defense: 15, specialAttack: 5, specialDefense: 5, speed: 15 },
 						evs: { hp: 20, attack: 30, defense: 5, specialAttack: 0, specialDefense: 5, speed: 5 },
+					},
+					{
+						id: "Pancham",
+						name: "Jabjab",
+						level: 15,
+						ability: "Scrappy",
+						activeMoves: ["Circle Throw", "Taunt", "Leer", "Arm Thrust"],
+						ivs: { hp: 25, attack: 25, defense: 15, specialAttack: 5, specialDefense: 5, speed: 15 },
+						evs: { hp: 20, attack: 30, defense: 5, specialAttack: 0, specialDefense: 5, speed: 5 },
+					},
+					{
+						id: "Passimian",
+						name: "Coach",
+						level: 15,
+						ability: "Receiver",
+						activeMoves: ["Beat Up", "Low Kick", "Focus Energy", "Leer"],
+						ivs: { hp: 25, attack: 25, defense: 15, specialAttack: 5, specialDefense: 5, speed: 25 },
+						evs: { hp: 20, attack: 60, defense: 5, specialAttack: 0, specialDefense: 5, speed: 15 },
 					},
 				]
 			},
 		],
 		effects: [
-			// { type: "change-background-image", name: "route-bg-iki-town" },
+			{ type: "change-background-image", name: "route-bg-iki-town" },
 			// { type: "dialogue", source: "route-3-5-dialogue" },
-			{ type: "fight", trainer: 0 },
-			{ type: "jump-if-lost", jumpTo: Infinity },
+			// { type: "fight", trainer: 0 },
+			// { type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "dialogue", source: "route-3-5-dialogue-won" },
 			{ type: "unlock-z-move-type", unlockedType: "Fighting" },
 		]
 	},

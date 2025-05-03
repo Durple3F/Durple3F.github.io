@@ -19,6 +19,12 @@ const pokemonMoveEffects = {
 			}
 		}
 	},
+	"do-nothing": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			resolve()
+		}
+	},
 	"wait": {
 		update: false,
 		execute: (resolve, effect, params, game, options) => {
@@ -357,6 +363,25 @@ const pokemonMoveEffects = {
 			let target = options.target
 			let statName = effect.which ?? "attack"
 			let result = target.getStat(statName)
+			resolve(result)
+		}
+	},
+	"get-stats-from-pokemon-list": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let list = params.list ?? []
+			let statName = effect.which ?? "attack"
+			let base = effect.base ?? false
+			let result = []
+			for (let pokemon of list){
+				let val
+				if (base){
+					val = pokemon.getBaseStat(statName)
+				} else {
+					val = pokemon.getStat(statName)
+				}
+				result.push(val)
+			}
 			resolve(result)
 		}
 	},
@@ -1499,6 +1524,27 @@ const pokemonMoveEffects = {
 			}
 			moveUseObj.info[effectIndex] = val
 			resolve()
+		}
+	},
+	"save-variable": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let moveUseObj = options.moveUse
+			let variables = moveUseObj.variables
+			let name = effect.name
+			let val = params.save
+			variables[name] = val
+			resolve(val)
+		}
+	},
+	"load-variable": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let moveUseObj = options.moveUse
+			let variables = moveUseObj.variables
+			let name = effect.name
+			let val = variables[name]
+			resolve(val)
 		}
 	},
 	"add-numbers": {

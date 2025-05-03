@@ -502,6 +502,10 @@ class Pokemon{
 		return changes
 	}
 
+	getBaseStat(stat){
+		let base = this.data.stats[stat]
+		return base
+	}
 	getStat(stat){
 		let base = this.data.stats[stat]
 		let iv = this.ivs[stat]

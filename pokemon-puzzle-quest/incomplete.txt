@@ -44,6 +44,7 @@ Incomplete move lists:
 	Rockruff (lv 8)
 	Stufful (lv 12)
 	Comfey (lv 0)
+	Passimian (lv 15)
 	Komala (lv 0)
 
 Missing Evolutions:

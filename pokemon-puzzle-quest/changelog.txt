@@ -1,8 +1,14 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-5/3 (27.9k lines):
+5/3 (27.7k lines):
+	- Added Passimian
+	- Added Beat Up, which required programming a loop into my move effect format. WHICH I PLANNED FOR!!!! IT WORKS!!! hahahaha
+	- Beat Up has special AI btw
+	- Added Receiver
+	- Enemy trainers can now have more/less pokemon depending on your party's size
+	- Added background(s!) to 2-7
 
-5/2 (27.9k lines):
+5/2 (27.3k lines):
 	- Fleshing out All-Out Pummeling more.
 	- NPCs can now use Z-Moves
 	- Adding 3-5 dialogue + background
