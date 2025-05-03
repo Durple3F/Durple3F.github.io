@@ -166,6 +166,10 @@ const abilityData = {
 	"Magnet Pull": {
 		id: "Magnet Pull"
 	},
+	//If your move's power is lowered to less than it is by default, re-raises it back to the default.
+	"Mold Breaker": {
+		id: "Mold Breaker"
+	},
 	//Raises/lowers stats at random
 	"Moody": {
 		id: "Moody"
@@ -233,6 +237,10 @@ const abilityData = {
 	//On an orange 4-match, increase next Rock/Ground/Steel move's power
 	"Sand Force": {
 		id: "Sand Force"
+	},
+	//You can deal damage to ghost-type pokemon
+	"Scrappy": {
+		id: "Scrappy"
 	},
 	//Moves with additional effects cost 30% less
 	"Serene Grace": {

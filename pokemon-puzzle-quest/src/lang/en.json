@@ -1006,6 +1006,9 @@
 		"Vullaby": {
 			"name": "Vullaby"
 		},
+		"Pancham": {
+			"name": "Pancham"
+		},
 		"Rowlet": {
 			"name": "Rowlet"
 		},
@@ -1125,6 +1128,11 @@
 			"name": "Charm",
 			"description": "Lowers the opponent's attack stat by 1 stage.",
 			"shortDescription": "Lowers enemy attack"
+		},
+		"Circle Throw": {
+			"name": "Circle Throw",
+			"description": "Deals damage. The opponent must swap to the next Pokémon in line if possible. Otherwise, the active Pokémon remains active.",
+			"shortDescription": "Forces opponent to switch to next Pokémon"
 		},
 		"Confuse Ray": {
 			"name": "Confuse Ray",
@@ -1508,6 +1516,11 @@
 			"description": "Lowers the opponent's defense stat by 1 stage.",
 			"shortDescription": "Lowers enemy defense"
 		},
+		"Taunt": {
+			"name": "Taunt",
+			"description": "Disables all Status moves that the opponent has for 8 turns.",
+			"shortDescription": "Disables opponent's Status moves"
+		},
 		"Teleport": {
 			"name": "Teleport",
 			"description": "The user swaps to a different Pokémon if possible.",
@@ -1773,6 +1786,11 @@
 			"shortDescription": "Prevents Steel-type opponents retreating",
 			"longDescription": "The opposing Pokémon can't retreat as long as it's Steel-type and this Pokémon is active."
 		},
+		"Mold Breaker": {
+			"name": "Mold Breaker",
+			"shortDescription": "This Pokémon's move power can't be lower than the default value.",
+			"longDescription": "As this Pokémon's effective move power is determined, if it is lower than the move's default power, the effective power becomes the default power."
+		},
 		"Moody": {
 			"name": "Moody",
 			"shortDescription": "Raises/lowers stats randomly each turn",
@@ -1857,6 +1875,11 @@
 			"name": "Sand Force",
 			"shortDescription": "On a Fighting-type 4-in-a-row, increase the power of the next Rock/Ground/Steel move used by 50%",
 			"longDescription": "When this Pokémon's owner makes a match of 4 Fighting tiles in a row, the power of the next Rock-, Ground-, or Steel-type move this Pokémon uses is increased by 50%."
+		},
+		"Scrappy": {
+			"name": "Scrappy",
+			"shortDescription": "Able to hit Ghost-types",
+			"longDescription": "As long as the defending Pokémon is Ghost type, all moves which would have a type effectiveness of 0 have a type effectiveness of 1 instead."
 		},
 		"Serene Grace": {
 			"name": "Serene Grace",

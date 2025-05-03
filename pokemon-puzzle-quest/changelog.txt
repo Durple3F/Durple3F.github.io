@@ -1,15 +1,17 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-5/2 (27.2k lines):
+5/3 (27.9k lines):
+
+5/2 (27.9k lines):
 	- Fleshing out All-Out Pummeling more.
 	- NPCs can now use Z-Moves
 	- Adding 3-5 dialogue + background
 	- Added a new background animation
 	- Added some screenshake when damage is dealt
 	- That screenshake now scales based on the damage dealt
-	- Added Stufful
-	- Added Brutal Swing
-	- Added Fluffy, Klutz, Cute Charm
+	- Added Stufful, Pancham
+	- Added Brutal Swing, Taunt + AI, Circle Throw
+	- Added Fluffy, Klutz, Cute Charm, Mold Breaker, Scrappy
 
 5/1 (26.8k lines):
 	- Changed the way opponents decide which swap to make each turn. Previously, they only cared about which swaps would make the energy necessary to use moves. Now, they weight their decisions to make more swaps which makes the moves they *want* to use, which should hopefully make them focus on their actual strategy more.

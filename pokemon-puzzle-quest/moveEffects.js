@@ -1078,6 +1078,30 @@ const pokemonMoveEffects = {
 			resolve()
 		}
 	},
+	"get-next-viable-pokemon": {
+		update: false,
+		hasTarget: true,
+		targetType: "trainer",
+		targetDefault: "user",
+		execute: (resolve, effect, params, game, options) => {
+			let moveUseObj = options.moveUse
+			let effectIndex = options.effectIndex
+			let target = options.target
+			let activePokemon = target.activePokemon
+			let viable = getUsablePokemon(target.pokemon)
+			let result
+			if (viable.length > 1){
+				result = viable.find(p => {
+					return p !== activePokemon && target.pokemon.indexOf(p) > target.pokemon.indexOf(activePokemon)
+				})
+				if (!result){
+					result = viable[0]
+				}
+			}
+
+			resolve(result)
+		}
+	},
 	"is-active-pokemon-viable": {
 		update: false,
 		hasTarget: true,

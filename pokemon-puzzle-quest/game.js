@@ -2151,6 +2151,7 @@ class Round {
 
 		//STAB
 		let attackerTypes = attacker.getEffectiveTypes()
+		let defenderTypes = defender.getEffectiveTypes()
 		let getsStab = attackerTypes.includes(damageType)
 		if (getsStab && attacker.hasAbility("Adaptability")) {
 			damage *= 2
@@ -2158,7 +2159,16 @@ class Round {
 		else if (getsStab) {
 			damage *= 1.5
 		}
-		let typeMult = getSuperEffectiveMult(damageType, defender.getEffectiveTypes())
+		let typeMult = getSuperEffectiveMult(damageType, defenderTypes)
+
+		//Scrappy allows your damage to hit Ghosts
+		if (
+			typeMult === 0 && defenderTypes.includes("Ghost") &&
+			attacker.hasAbility("Scrappy")
+		){
+			typeMult = 1
+		}
+
 		damage *= typeMult
 
 		if ("damageMult" in options) {
@@ -2680,6 +2690,7 @@ class Round {
 	getEffectivePower(trainer, pokemon, move, options = {}) {
 		let parentMove = options.parentMove ?? move
 		let power = options.power ?? getMovePower(move, parentMove)
+		let originalPower = power
 		if (!power) {
 			power = 0
 		}
@@ -2790,6 +2801,11 @@ class Round {
 			}
 		}
 
+		//Mold Breaker resets your move's power if it ends up lowered past its original value.
+		if (power < originalPower && pokemon.hasAbility("Mold Breaker")){
+			power = originalPower
+		}
+
 		return power
 	}
 	getEffectiveMoveType(trainer, pokemon, move) {
@@ -2835,6 +2851,10 @@ class Round {
 		}
 		if (appliesTo.names) {
 			good.push(appliesTo.names.includes(move.name))
+		}
+		if (appliesTo.category) {
+			let category = getMoveCategory(move)
+			good.push(category === appliesTo.category)
 		}
 		if (type && appliesTo.types) {
 			good.push(appliesTo.types.includes(type))
@@ -4841,6 +4861,13 @@ class Round {
 				let otherPokemon = otherTrainer.activePokemon
 				let defendingTypes = otherPokemon.getEffectiveTypes()
 				let typeMult = getSuperEffectiveMult(type, defendingTypes)
+
+				if (
+					typeMult === 0 && defendingTypes.includes("Ghost") &&
+					thisPokemon.hasAbility("Scrappy")
+				){
+					typeMult = 1
+				}
 
 				if (typeMult > 1) {
 					moveTag.attr("data-effectiveness", "super-effective")

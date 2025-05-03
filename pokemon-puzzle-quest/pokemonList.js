@@ -1867,7 +1867,7 @@ const pokemonData = {
 			"cry": "src/audio/cries/petilil.mp3"
 		},
 		types: ["Grass"],
-		tags: ["Starter"],
+		tags: [],
 		abilities: ["Chlorophyll", "Own Tempo"],
 		hiddenAbilities: ["Leaf Guard"],
 		stats: {
@@ -1918,7 +1918,7 @@ const pokemonData = {
 			"cry": "src/audio/cries/rufflet.mp3"
 		},
 		types: ["Normal", "Flying"],
-		tags: ["Starter"],
+		tags: [],
 		abilities: ["Keen Eye", "Sheer Force"],
 		hiddenAbilities: ["Hustle"],
 		stats: {
@@ -1967,7 +1967,7 @@ const pokemonData = {
 			"cry": "src/audio/cries/vullaby.mp3"
 		},
 		types: ["Dark", "Flying"],
-		tags: ["Starter"],
+		tags: [],
 		abilities: ["Big Pecks", "Overcoat"],
 		hiddenAbilities: ["Weak Armor"],
 		stats: {
@@ -1996,6 +1996,55 @@ const pokemonData = {
 			{ name: "Leer", unlock: { type: "level", amount: 1 } },
 			{ name: "Flatter", unlock: { type: "level", amount: 6 } },
 			{ name: "Pluck", unlock: { type: "level", amount: 12 } },
+		]
+	},
+	"Pancham": {
+		name: "Pancham",
+		number: "674",
+		weight: {
+			pounds: 17.6,
+			kilograms: 8.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0674Pancham.png",
+			"largeShiny": "src/img/shiny-pokemon/674-Pancham.png",
+			"home": "src/img/tiny-pokemon/Pancham.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/pancham.mp3"
+		},
+		types: ["Fighting"],
+		tags: [],
+		abilities: ["Iron Fist", "Mold Breaker"],
+		hiddenAbilities: ["Scrappy"],
+		stats: {
+			hp: 67,
+			attack: 82,
+			defense: 62,
+			specialAttack: 46,
+			specialDefense: 48,
+			speed: 43
+		},
+		expYield: 70,
+		evYield: {
+			hp: 0,
+			attack: 1,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 4,
+			purple: 2
+		},
+		learnset: [
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Leer", unlock: { type: "level", amount: 1 } },
+			{ name: "Arm Thrust", unlock: { type: "level", amount: 4 } },
+			{ name: "Taunt", unlock: { type: "level", amount: 8 } },
+			{ name: "Circle Throw", unlock: { type: "level", amount: 12 } },
 		]
 	},
 	"Rowlet": {
@@ -2183,7 +2232,7 @@ const pokemonData = {
 			{ name: "Disarming Voice", unlock: { type: "level", amount: 6 } },
 			{ name: "Aqua Jet", unlock: { type: "level", amount: 9 } },
 			{ name: "Baby-Doll Eyes", unlock: { type: "level", amount: 12 } },
-			{ name: "Brutal Swing", unlock: { type: "level", amount: 1 } },
+			{ name: "Circle Throw", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {

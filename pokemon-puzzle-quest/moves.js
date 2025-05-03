@@ -506,6 +506,35 @@ const pokemonMoveData = {
 			}
 		],
 	},
+	//Forces the opponent to switch to their next pokemon
+	"Circle Throw": {
+		name: "Circle Throw",
+		type: "Fighting",
+		category: "Physical",
+		strategy: "basic-damage",
+		pp: 10,
+		power: 60,
+		accuracy: 90,
+		rechargeTurns: 0,
+		energy: {
+			orange: 10,
+			red: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Circle Throw.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "get-next-viable-pokemon", target: "opponent" },
+			{ type: "jump-if-truthy", jumpTo: "swap" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "swap-pokemon", target: "opponent", pokemon: -3, label: "swap" },
+		]
+	},
 	//Confuses opponent and shuffles part of the board
 	"Confuse Ray": {
 		name: "Confuse Ray",
@@ -2952,6 +2981,41 @@ const pokemonMoveData = {
 					amount: -1
 				}
 			}
+		],
+	},
+	//Disables Status moves
+	"Taunt": {
+		name: "Taunt",
+		type: "Dark",
+		category: "Status",
+		strategy: "special",
+		tags: [],
+		pp: 20,
+		power: null,
+		accuracy: 100,
+		rechargeTurns: 5,
+		energy: {
+			red: 4,
+			blue: 4,
+			purple: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Taunt.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "apply-status-effect", target: "opponent", statusEffect: {
+				name: "taunt-taunted",
+				type: "disability",
+				stacks: false,
+				volatile: true,
+				lostOnSwap: true,
+				lostOnBatonPass: true,
+				turns: 8,
+				appliesTo: {
+					category: "Status"
+				},
+			} },
 		],
 	},
 	"Teleport": {

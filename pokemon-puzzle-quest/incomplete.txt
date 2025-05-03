@@ -29,6 +29,7 @@ Incomplete move lists:
 	Petilil (lv 12)
 	Rufflet (lv 12)
 	Vullaby (lv 12)
+	Pancham (lv 12)
 	Rowlet (lv 12)
 	Litten (lv 15)
 	Popplio (lv 12)
@@ -41,6 +42,7 @@ Incomplete move lists:
 	Oricorio (lv 13)
 	Cutiefly (lv 6)
 	Rockruff (lv 8)
+	Stufful (lv 12)
 	Comfey (lv 0)
 	Komala (lv 0)
 
@@ -72,6 +74,7 @@ Missing Evolutions:
 	Petilil
 	Rufflet
 	Vullaby
+	Stufful
 	Rowlet
 	Litten
 	Popplio
@@ -79,6 +82,7 @@ Missing Evolutions:
 	Charjabug
 	Cutiefly
 	Rockruff
+	Stufful
 	Crabrawler
 
 Missing Abilities:
@@ -89,6 +93,7 @@ Missing Shiny Variations:
 
 Incomplete Z-Moves:
 	- Breakneck Blitz doesn't look very good
+	- All-Out Pummeling
 
 Incomplete Z-ified moves:
 	- Everything except Growl, Defense Curl, and Copycat

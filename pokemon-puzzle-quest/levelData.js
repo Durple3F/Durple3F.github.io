@@ -858,6 +858,7 @@ const levelData = [
 		],
 		effects: [
 			{ type: "fight", trainer: 0 },
+			{ type: "jump-if-lost", jumpTo: Infinity },
 			{ type: "dialogue", source: "route-2-5-dialogue" },
 		]
 	},
@@ -1317,14 +1318,6 @@ const levelData = [
 					// 	ivs: { hp: 15, attack: 25, defense: 15, specialAttack: 5, specialDefense: 15, speed: 15 },
 					// 	evs: { hp: 15, attack: 30, defense: 5, specialAttack: 0, specialDefense: 5, speed: 10 },
 					// },
-					{
-						id: "Stufful",
-						level: 15,
-						ability: "Fluffy",
-						activeMoves: ["Brutal Swing", "Payback", "Leer", "Tackle"],
-						ivs: { hp: 25, attack: 25, defense: 15, specialAttack: 5, specialDefense: 5, speed: 15 },
-						evs: { hp: 20, attack: 30, defense: 5, specialAttack: 0, specialDefense: 5, speed: 5 },
-					},
 					// {
 					// 	id: "Stufful",
 					// 	level: 15,
@@ -1333,6 +1326,14 @@ const levelData = [
 					// 	ivs: { hp: 25, attack: 25, defense: 15, specialAttack: 5, specialDefense: 5, speed: 15 },
 					// 	evs: { hp: 20, attack: 30, defense: 5, specialAttack: 0, specialDefense: 5, speed: 5 },
 					// },
+					{
+						id: "Pancham",
+						level: 15,
+						ability: "Fluffy",
+						activeMoves: ["Taunt"],
+						ivs: { hp: 25, attack: 25, defense: 15, specialAttack: 5, specialDefense: 5, speed: 15 },
+						evs: { hp: 20, attack: 30, defense: 5, specialAttack: 0, specialDefense: 5, speed: 5 },
+					},
 				]
 			},
 		],

@@ -416,7 +416,7 @@ class Background{
 		this.loadingAnimation = animation
 		animation.promise.then(() => {
 			animation.finishedLoading = Date.now()
-			console.log("Finished loading", animation.name, "in", animation.finishedLoading - animation.startedLoading, "ms")
+			// console.log("Finished loading", animation.name, "in", animation.finishedLoading - animation.startedLoading, "ms")
 			this.loadedAnimations[animation.name] = animation
 			if (this.loadingAnimation === animation){
 				this.loadingAnimation = null

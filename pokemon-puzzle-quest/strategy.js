@@ -452,6 +452,37 @@ const moveUseStrategy = {
 			return weight
 		}
 	},
+	"Taunt": {
+		chooseWeight: options => {
+			let game = options.game
+			let trainer = options.trainer
+			let pokemon = options.pokemon
+			let otherTrainer = game.trainers.find(t => t !== trainer)
+			let otherTrainerIndex = game.trainers.indexOf(otherTrainer)
+			let otherPokemon = otherTrainer.activePokemon
+			let availableMoves = game.getAvailableMoves(otherTrainerIndex)
+			let theirWeights = availableMoves.map(move => {
+				let category = getMoveCategory(move)
+				if (category === "Status"){
+					let newOptions = game.getActionWeightOptions(
+						otherTrainer, otherPokemon, move,
+						[], []
+					)
+					let theirWeight = 20
+					if (options.allowRecursion){
+						theirWeight = getActionWeightSimple(move, newOptions, false) * 10
+					}
+					return theirWeight
+				} else {
+					return 0
+				}
+			})
+			
+			let weight = theirWeights.reduce((acc, val) => acc + val, 0)
+			
+			return weight
+		}
+	},
 }
 
 function getActionWeightSimple(action, options, allowRecursion=false){
