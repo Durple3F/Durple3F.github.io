@@ -1,5 +1,9 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
+5/4 (28.2k lines):
+	- Added Crunch, Scary Face, Swords Dance, Aerial Ace, Take Down
+	- Rewrote how computers choose tiles, again.
+
 5/3 (28.2k lines):
 	- Added Passimian, Roggenrola
 	- Added Beat Up, which required programming a loop into my move effect format. WHICH I PLANNED FOR!!!! IT WORKS!!! hahahaha

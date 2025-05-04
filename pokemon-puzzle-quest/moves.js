@@ -26,6 +26,36 @@ const pokemonMoveData = {
 			{ type: "heal", target: "user", amount: -2, min: -1 },
 		],
 	},
+	//Removes 3 tiles that share a color
+	"Aerial Ace": {
+		name: "Aerial Ace",
+		type: "Flying",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 20,
+		power: 60,
+		accuracy: null,
+		rechargeTurns: 1,
+		energy: {
+			blue: 6,
+			yellow: 2
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Aerial Ace.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "load-value", value: 3 },
+			{ type: "load-value", value: true },
+			{ type: "choose-tiles", count: -2, sameType: -1, target: "user", text: "choose" },
+			{ type: "remove-tiles", selection: -1 }
+		]
+	},
 	//Removes a V-shaped selection of tiles
 	"Air Cutter": {
 		name: "Air Cutter",
@@ -719,6 +749,53 @@ const pokemonMoveData = {
 			{ type: "gain-energy", amounts: -1, target: "user" }
 		]
 	},
+	//Removes a bigger chunk of the board
+	"Crunch": {
+		name: "Crunch",
+		type: "Dark",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 15,
+		power: 80,
+		accuracy: 100,
+		rechargeTurns: 2,
+		energy: {
+			purple: 14,
+			green: 6,
+			yellow: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Crunch.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "random-number", min: 1, max: 10 },
+			{ type: "load-value", value: 6 },
+			{ type: "jump-if-less-than", jumpTo: "remove-tiles" },
+			{
+				type: "apply-debuff", target: "opponent", debuff: {
+					type: "stat",
+					stat: "defense",
+					class: "debuff",
+					amount: -1
+				}
+			},
+
+			{ type: "load-value", value: 1, label: "remove-tiles" },
+			{ type: "load-value", value: 3 },
+			{ type: "load-value", value: 3 },
+			{ type: "choose-tiles", count: -3, maxWidth: -2, maxHeight: -1, target: "user" },
+			{ type: "load-value", value: 3 },
+			{ type: "load-value", value: 3 },
+			{ type: "expand-tile-selection", selection: -3, width: -2, height: -1 },
+			{ type: "remove-tiles", selection: -1 }
+		]
+	},
 	//Does different stuff depending on its user's types
 	"Curse": {
 		name: "Curse",
@@ -878,7 +955,6 @@ const pokemonMoveData = {
 		pp: 15,
 		power: 40,
 		accuracy: null,
-		bypassAccuracyChecks: true,
 		rechargeTurns: 1,
 		energy: {
 			purple: 8,
@@ -2725,6 +2801,35 @@ const pokemonMoveData = {
 			},
 		],
 	},
+	//Lowers enemy speed 2
+	"Scary Face": {
+		name: "Scary Face",
+		type: "Normal",
+		category: "Status",
+		strategy: "debuff-opponent",
+		pp: 10,
+		power: null,
+		accuracy: 100,
+		rechargeTurns: 5,
+		energy: {
+			blue: 2,
+			purple: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Scary Face.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{
+				type: "apply-debuff", target: "opponent", debuff: {
+					type: "stat",
+					stat: "speed",
+					class: "debuff",
+					amount: -2
+				}
+			}
+		],
+	},
 	"Scratch": {
 		name: "Scratch",
 		type: "Normal",
@@ -3065,7 +3170,6 @@ const pokemonMoveData = {
 		pp: 20,
 		power: 60,
 		accuracy: null,
-		bypassAccuracyChecks: true,
 		rechargeTurns: 0,
 		energy: {
 			yellow: 8
@@ -3076,6 +3180,35 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" }
+		],
+	},
+	//Raises your attack 2
+	"Swords Dance": {
+		name: "Swords Dance",
+		type: "Normal",
+		category: "Status",
+		strategy: "buff-user",
+		pp: 20,
+		power: null,
+		accuracy: 100,
+		rechargeTurns: 3,
+		energy: {
+			red: 8,
+			yellow: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Swords Dance.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{
+				type: "apply-debuff", target: "user", debuff: {
+					type: "stat",
+					stat: "attack",
+					class: "debuff",
+					amount: 2
+				}
+			}
 		],
 	},
 	"Tackle": {
@@ -3125,6 +3258,31 @@ const pokemonMoveData = {
 					amount: -1
 				}
 			}
+		],
+	},
+	//Deals big damage but has recoil
+	"Take Down": {
+		name: "Take Down",
+		type: "Normal",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 20,
+		power: 90,
+		rechargeTurns: 1,
+		energy: {
+			red: 4,
+			blue: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Take Down.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "load-value", value: 0.25 },
+			{ type: "multiply-numbers", round: "up" },
+			{ type: "recoil-damage", amount: -1, fixed: true }
 		],
 	},
 	//Disables Status moves

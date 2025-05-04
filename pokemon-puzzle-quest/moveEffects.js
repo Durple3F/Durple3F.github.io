@@ -99,6 +99,7 @@ const pokemonMoveEffects = {
 			let maxWidth = params.maxWidth ?? null
 			let minHeight = params.minHeight ?? null
 			let maxHeight = params.maxHeight ?? null
+			let sameType = params.sameType ?? null
 			game.currentlySelecting = {
 				player: target,
 				type: "tiles",
@@ -108,6 +109,7 @@ const pokemonMoveEffects = {
 				maxWidth: maxWidth,
 				minHeight: minHeight,
 				maxHeight: maxHeight,
+				sameType: sameType
 			}
 			let textName = effect.text
 			if (textName){

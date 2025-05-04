@@ -1401,7 +1401,7 @@ const levelData = [
 				targetPokemon: 4,
 				canPickDuplicates: true,
 				possiblePokemon: [
-					{ id: "Roggenrola", levelMin: 14, levelMax: 16, weight: 4, activeMoves: ["Smack Down"] },
+					{ id: "Roggenrola", levelMin: 25, levelMax: 25, weight: 4, activeMoves: ["Aerial Ace"] },
 				]
 			},
 			{

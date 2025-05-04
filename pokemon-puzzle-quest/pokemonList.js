@@ -220,6 +220,10 @@ const pokemonData = {
 			{ name: "Quick Attack", unlock: { type: "level", amount: 4 } },
 			{ name: "Focus Energy", unlock: { type: "level", amount: 7 } },
 			{ name: "Bite", unlock: { type: "level", amount: 10 } },
+			{ name: "Pursuit", unlock: { type: "level", amount: 13 } },
+			{ name: "Hyper Fang", unlock: { type: "level", amount: 16 } },
+			{ name: "Assurance", unlock: { type: "level", amount: 19 } },
+			{ name: "Crunch", unlock: { type: "level", amount: 22 } },
 		]
 	},
 	"Raticate-Alola": {
@@ -266,7 +270,17 @@ const pokemonData = {
 			yellow: 2
 		},
 		learnset: [
+			{ name: "Scary Face", unlock: { type: "level", amount: 1 } },
+			{ name: "Swords Dance", unlock: { type: "level", amount: 1 } },
 			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Tail Whip", unlock: { type: "level", amount: 1 } },
+			{ name: "Quick Attack", unlock: { type: "level", amount: 1 } },
+			{ name: "Focus Energy", unlock: { type: "level", amount: 1 } },
+			{ name: "Bite", unlock: { type: "level", amount: 10 } },
+			{ name: "Pursuit", unlock: { type: "level", amount: 13 } },
+			{ name: "Hyper Fang", unlock: { type: "level", amount: 16 } },
+			{ name: "Assurance", unlock: { type: "level", amount: 19 } },
+			{ name: "Crunch", unlock: { type: "level", amount: 24 } },
 		]
 	},
 	"Spearow": {
@@ -316,6 +330,9 @@ const pokemonData = {
 			{ name: "Leer", unlock: { type: "level", amount: 4 } },
 			{ name: "Assurance", unlock: { type: "level", amount: 8 } },
 			{ name: "Fury Attack", unlock: { type: "level", amount: 11 } },
+			{ name: "Aerial Ace", unlock: { type: "level", amount: 15 } },
+			{ name: "Wing Attack", unlock: { type: "level", amount: 18 } },
+			{ name: "Take Down", unlock: { type: "level", amount: 22 } },
 		]
 	},
 	"Pikachu": {
@@ -2284,7 +2301,7 @@ const pokemonData = {
 			{ name: "Disarming Voice", unlock: { type: "level", amount: 6 } },
 			{ name: "Aqua Jet", unlock: { type: "level", amount: 9 } },
 			{ name: "Baby-Doll Eyes", unlock: { type: "level", amount: 12 } },
-			{ name: "Whirlwind", unlock: { type: "level", amount: 1 } },
+			{ name: "Crunch", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {

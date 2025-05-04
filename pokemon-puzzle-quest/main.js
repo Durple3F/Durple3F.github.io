@@ -1,4 +1,4 @@
-const versionNumber = "v0.15.10"
+const versionNumber = "v0.15.11"
 let lang = "en"
 let playerName
 
@@ -314,6 +314,11 @@ function playSound(name, fadeMusic=true){
 		return promise
 	}
 	let snd = soundData.audio
+	if (!snd){
+		console.warn("Couldn't play sound",name)
+		resolvePromise()
+		return promise
+	}
 	if (snd && !snd.paused){
 		snd = snd.cloneNode()
 		snd.currentTime = 0

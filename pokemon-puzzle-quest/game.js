@@ -1918,28 +1918,42 @@ class Round {
 		return good
 	}
 	computerMakeSelection() {
-		let selectType = this.currentlySelecting.type
+		let selecting = this.currentlySelecting
+		let selectType = selecting.type
 		let promise = Promise.resolve()
 		if (selectType === "tiles") {
 			let selected = this.selectedTiles
-			let count = this.currentlySelecting.min
 			let waitTime = 200
+			let failures = 0
 			promise = promise.then(() => delay(waitTime))
 			const selectTile = () => {
 				promise = promise.then(() => {
 					//TODO make the computer's choices smart again!
 					//for now they just random
-					let pickable = this.board.tilesOnScreen()
-					let randomTile = randomChoice(pickable)
-					this.selectTile(randomTile, this.activePlayerIndex)
+					let pickable = this.getSelectableTiles()
+					if (pickable.length){
+						let randomTile = randomChoice(pickable)
+						this.selectTile(randomTile, this.activePlayerIndex)
 
-					delay(waitTime).then(() => {
-						if (selected.length < count) {
+						delay(waitTime).then(() => {
+							let valid = this.selectionIsValid()
+							if (valid) {
+								this.submitSelection()
+							} else {
+								selectTile()
+							}
+						})
+					} else {
+						failures++
+						if (failures < 10){
+							let randomTile = randomChoice(selected)
+							this.deselectTile(randomTile)
 							selectTile()
 						} else {
-							this.submitSelection()
+							failures = 0
+							this.deselectAllTiles()
 						}
-					})
+					}
 				})
 			}
 			selectTile()
@@ -3534,8 +3548,102 @@ class Round {
 		if (selecting.maxHeight) {
 			if (height > selecting.maxHeight) return false
 		}
+		if (selecting.sameType) {
+			let types = selected.map(t => t.type)
+			let different = types.some(type => type !== types[0])
+			if (different) return false
+		}
 
 		return true
+	}
+	getSelectableTiles() {
+		let selected = this.selectedTiles
+		let selecting = this.currentlySelecting
+		let board = this.board
+		let selectable = board.tilesOnScreen()
+		let bounds = board.getBoundsOfSelection(selected)
+
+		//Remove tiles already selected
+		selectable = selectable.filter(tile => !selected.includes(tile))
+
+		if (selecting.max && selected.length >= selecting.max){
+			selectable = []
+		}
+
+		if (selecting.minWidth){
+			let minX = bounds[0] ?? 0
+			let maxX = bounds[1] ?? board.width - 1
+			selectable = selectable.filter(tile => {
+				let x = tile.x
+				let inSelection = x >= minX && x <= maxX
+				if (inSelection) return true
+				if (x < minX){
+					let newWidth = maxX - x
+					return newWidth > selecting.minWidth
+				}
+				if (x > maxX){
+					let newWidth = x - minX
+					return newWidth > selecting.minWidth
+				}
+			})
+		}
+		if (selecting.maxWidth){
+			let minX = bounds[0] ?? 0
+			let maxX = bounds[1] ?? board.width - 1
+			selectable = selectable.filter(tile => {
+				let x = tile.x
+				let inSelection = x >= minX && x <= maxX
+				if (inSelection) return true
+				if (x < minX){
+					let newWidth = maxX - x
+					return newWidth < selecting.maxWidth
+				}
+				if (x > maxX){
+					let newWidth = x - minX
+					return newWidth < selecting.maxWidth
+				}
+			})
+		}
+		if (selecting.minHeight){
+			let minY = bounds[2] ?? 0
+			let maxY = bounds[3] ?? board.height - 1
+			selectable = selectable.filter(tile => {
+				let y = tile.y
+				let inSelection = y >= minY && y <= maxY
+				if (inSelection) return true
+				if (y < minY){
+					let newHeight = maxY - y
+					return newHeight < selecting.minHeight
+				}
+				if (y > maxY){
+					let newHeight = y - minY
+					return newHeight < selecting.minHeight
+				}
+			})
+		}
+		if (selecting.maxHeight){
+			let minY = bounds[2] ?? 0
+			let maxY = bounds[3] ?? board.height - 1
+			selectable = selectable.filter(tile => {
+				let y = tile.y
+				let inSelection = y >= minY && y <= maxY
+				if (inSelection) return true
+				if (y < minY){
+					let newHeight = maxY - y
+					return newHeight < selecting.maxHeight
+				}
+				if (y > maxY){
+					let newHeight = y - minY
+					return newHeight < selecting.maxHeight
+				}
+			})
+		}
+		if (selecting.sameType && selected.length){
+			let first = selected[0].type
+			selectable = selectable.filter(tile => tile.type === first)
+		}
+
+		return selectable
 	}
 	resetCurrentlySelecting() {
 		this.currentlySelecting = {

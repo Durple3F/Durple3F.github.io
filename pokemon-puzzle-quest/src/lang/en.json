@@ -1086,6 +1086,12 @@
 			"description": "Deals damage. Then, heals the user for 50% of the damage dealt.",
 			"shortDescription": "Steals a little HP"
 		},
+		"Aerial Ace": {
+			"name": "Aerial Ace",
+			"description": "Deals damage. Then, the user chooses 3 tiles of the same color. Those tiles are removed.",
+			"shortDescription": "Deals some damage and removes tiles",
+			"choose": "Choose 3 tiles of the same color."
+		},
 		"Air Cutter": {
 			"name": "Air Cutter",
 			"description": "Deals damage. The user chooses a tile. Then, that tile and a V-shaped selection around it are removed.",
@@ -1183,6 +1189,11 @@
 			"name": "Covet",
 			"description": "Deals damage. Then, drains 6 energy from the opponent's two most full energy types and gives it to the user.",
 			"shortDescription": "Deals damage and drains energy"
+		},
+		"Crunch": {
+			"name": "Crunch",
+			"description": "Deals damage, and 50% of the time, lowers the opponent's Defense by a stage. Then, the user chooses a tile. A 3x3 area centered on that tile is removed.",
+			"shortDescription": "Deals damage and removes tiles"
 		},
 		"Curse": {
 			"name": "Curse",
@@ -1496,6 +1507,11 @@
 			"description": "Deals damage and applies Confused 50% of the time. The user chooses two tiles. Each tile between them, including the chosen tiles, is shuffled.",
 			"shortDescription": "Deals damage and shuffles tiles"
 		},
+		"Scary Face": {
+			"name": "Scary Face",
+			"description": "Lowers the opponent's Speed stat by 2 stages.",
+			"shortDescription": "Lowers enemy Speed"
+		},
 		"Sketch": {
 			"name": "Sketch",
 			"description": "This Pokémon learns how to use the move the opponent most recently used. If they haven't used a move, this move does nothing.",
@@ -1551,6 +1567,11 @@
 			"description": "Deals damage. This move can be used more than once during a turn.",
 			"shortDescription": "Multi-use attack"
 		},
+		"Swords Dance": {
+			"name": "Swords Dance",
+			"description": "Raises the user's Attack stat by 2 stages.",
+			"shortDescription": "Raises user's Attack"
+		},
 		"Tackle": {
 			"name": "Tackle",
 			"description": "Damage-dealing move with no special effects. Ends the turn.",
@@ -1560,6 +1581,11 @@
 			"name": "Tail Whip",
 			"description": "Lowers the opponent's defense stat by 1 stage.",
 			"shortDescription": "Lowers enemy defense"
+		},
+		"Take Down": {
+			"name": "Take Down",
+			"description": "Deals damage to the opponent, but also deals recoil damage to the user equal to 1/4 of the damage dealt, rounded up.",
+			"shortDescription": "Deals considerable damage"
 		},
 		"Taunt": {
 			"name": "Taunt",

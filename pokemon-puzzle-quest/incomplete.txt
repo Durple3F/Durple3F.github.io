@@ -1,8 +1,8 @@
 Incomplete move lists:
 	Butterfree (lv 20)
-	Rattata-Alola (lv 10)
-	Raticate-Alola (lv 1)
-	Spearow (lv 11)
+	Rattata-Alola (lv 22)
+	Raticate-Alola (lv 24)
+	Spearow (lv 22)
 	Pikachu (lv 8)
 	Zubat (lv 15)
 	Diglett-Alola (lv 12)
