@@ -978,7 +978,6 @@ class Round {
 		}
 
 		//Handle start-of-turn effects
-		//Such as burned-ness
 		let activePokemon = trainer.activePokemon
 		let otherPokemon = otherTrainer.activePokemon
 		let statusEffects = activePokemon.statusEffects
@@ -987,6 +986,19 @@ class Round {
 			let statusName = status.name
 			if (statusName === "poisoned") {
 				activePokemon.hp -= Math.ceil(activePokemon.maxhp / 16)
+			}
+			if (statusName === "splinters") {
+				let sourceTrainer = status.sourceTrainer || otherTrainer
+				let sourcePokemon = status.sourcePokemon || otherPokemon
+				let sourceMove = status.sourceMove
+				this.dealDamage({
+					fromTrainer: sourceTrainer,
+					from: sourcePokemon,
+					toTrainer: trainer,
+					to: activePokemon,
+					move: sourceMove,
+					power: 25
+				})
 			}
 		}
 		let contents = this.board.tilesOnScreen()
@@ -2985,6 +2997,7 @@ class Round {
 		if (hasParalyzed) {
 			pokemon.removeStatusesWithName("paralyzed")
 			moveUseObj.resolve()
+			this.updateEverything()
 		} else {
 			promise = promise.then(() => {
 				if (moveUseObj.additionalPromises.length){
@@ -3609,7 +3622,7 @@ class Round {
 		})
 		return animation.promise
 	}
-	animateMoveTiles(locationMap, duration) {
+	animateMoveTiles(locationMap, duration, doTimeStep=true) {
 		let promises = []
 		let newLocationMap = locationMap
 		newLocationMap.forEach((spot, tile) => {
@@ -3617,7 +3630,13 @@ class Round {
 			promises.push(p)
 		})
 		let promise = Promise.all(promises)
-			.then(() => this.timeStep())
+		.then(() => {
+			if (doTimeStep){
+				return this.timeStep()
+			} else {
+				return Promise.resolve()
+			}
+		})
 
 		return promise
 	}
@@ -4582,14 +4601,10 @@ class Round {
 	}
 	determineTileWeights() {
 		let tileWeights = {}
-		for (let type of this.board.tileTypes) {
-			if (colors.includes(type)) {
-				tileWeights[type] = 1
-			} else {
-				tileWeights[type] = 0
-			}
+		let baseTileWeights = this.board.baseTileWeights
+		for (let type in baseTileWeights) {
+			tileWeights[type] = baseTileWeights[type]
 		}
-		tileWeights.rainbow = 0.3
 
 		let tileWeightStatuses = this.statusEffects.filter(statusEffect => {
 			return statusEffect.type === "tile-weight-alteration"
@@ -5148,17 +5163,24 @@ class Board {
 		this.width = width
 		this.height = height
 		this.contents = []
+		//This is a list of tiles in the process of disappearing,
+		//but that are still shown to the player.
+		this.fakeContents = []
 		this.locationMap = new Map()
 		this.tileTypes = tileTypes
 		this.tileWeights = {}
+		this.baseTileWeights = {}
 		for (let type of this.tileTypes) {
 			if (colors.includes(type)) {
-				this.tileWeights[type] = 1
+				this.baseTileWeights[type] = 1
 			} else {
-				this.tileWeights[type] = 0
+				this.baseTileWeights[type] = 0
 			}
 		}
-		this.tileWeights.rainbow = 0.3
+		this.baseTileWeights.rainbow = 0.3
+		for (let type in this.baseTileWeights){
+			this.tileWeights[type] = this.baseTileWeights[type]
+		}
 
 		this.spriteTileW = 0
 		this.spriteTileH = 0
@@ -5206,6 +5228,25 @@ class Board {
 			return true
 		}
 		return false
+	}
+	removeFade(tile, duration=250){
+		let removed = this.remove(tile)
+		if (removed){
+			this.fakeContents.push(tile)
+			$({val: 1}).animate({val: 0}, {
+				duration: duration,
+				step: p => {
+					tile.spriteOpacity = p
+				},
+				complete: () => {
+					tile.spriteOpacity = 0
+					let index = this.fakeContents.indexOf(tile)
+					if (index !== -1){
+						this.fakeContents.splice(index, 1)
+					}
+				}
+			})
+		}
 	}
 	changeLocation(tile, x, y) {
 		let mapKey = x + "," + y
@@ -5766,6 +5807,7 @@ class Tile {
 		this.spriteHeight = 0
 		this.spriteHighlight = 0
 		this.spriteHighlightTarget = 0
+		this.spriteOpacity = 1
 	}
 
 	tick() {

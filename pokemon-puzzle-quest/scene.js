@@ -310,6 +310,13 @@ function startScene(name, options) {
 				content.append(btn)
 				btn.click(() => confirmChoice(level))
 
+				if (config["showLevelCompletionData"]){
+					let statTag = $(`<div class='desc w-100 d-flex justify-content-around'></div>`)
+					content.append(statTag)
+					statTag.append(`<span>Attempts: ${level.attempts}</span>`)
+					statTag.append(`<span>Completions: ${level.completions}</span>`)
+				}
+
 				let desc = getLocaleString("description", lang, ["levels", level.id], null)
 				if (level.description) {
 					desc = getLocaleString(level.description, lang)
@@ -1094,6 +1101,7 @@ function beginLevel(levelID) {
 			console.log("You lose :(")
 		} else {
 			level.status = "won"
+			level.completions++
 			promise = promise.then(() => saveLevelStatus(level, "won"))
 		}
 

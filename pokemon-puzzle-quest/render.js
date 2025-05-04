@@ -68,6 +68,7 @@ function renderTile(tile, board, round, w, h, xOffset, yOffset, options){
 			ctx.save()
 			// ctx.filter = "blur(" + blurAmount + "px)"
 			// ctx.fillStyle = tileTypeColors[tile.type]
+			ctx.globalAlpha = tile.spriteOpacity
 			ctx.shadowColor = getHighlightColor(tile.type, now)
 			ctx.shadowBlur = blurAmount * 2
 			ctx.beginPath()
@@ -80,7 +81,10 @@ function renderTile(tile, board, round, w, h, xOffset, yOffset, options){
 	// ctx.filter = "none"
 
 	let sprite = sprites.images[tile.type]
+	ctx.save()
+	ctx.globalAlpha = tile.spriteOpacity
 	ctx.drawImage(sprite, x, y, spriteW, spriteH)
+	ctx.restore()
 }
 
 function renderStatusEffects(tile, board, round, w, h, xOffset, yOffset){
@@ -159,12 +163,19 @@ function render(){
 	if (gameBoard){
 		let board = gameRound.board
 		let tiles = board.contents
+		let fakeTiles = board.fakeContents
 
 		ctx.clearRect(0, 0, w, h)
 		for (let tile of tiles){
 			renderTile(tile, board, gameRound, smallerW, smallerH, xOffset, yOffset, options)
 		}
+		for (let tile of fakeTiles){
+			renderTile(tile, board, gameRound, smallerW, smallerH, xOffset, yOffset, options)
+		}
 		for (let tile of tiles){
+			renderStatusEffects(tile, board, gameRound, smallerW, smallerH, xOffset, yOffset)
+		}
+		for (let tile of fakeTiles){
 			renderStatusEffects(tile, board, gameRound, smallerW, smallerH, xOffset, yOffset)
 		}
 	}

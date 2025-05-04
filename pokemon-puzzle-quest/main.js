@@ -1,4 +1,4 @@
-const versionNumber = "v0.15.8"
+const versionNumber = "v0.15.9"
 let lang = "en"
 let playerName
 
@@ -945,12 +945,20 @@ function openSettings(){
 			key: "lowerLevelsToRecommendedLevels"
 		},
 		{
+			text: "toggle-show-level-completion-data",
+			key: "showLevelCompletionData"
+		},
+		{
 			text: "toggle-pixelated-screen",
 			key: "antialiasing",
 			onclick: val => {
 				let setting = val ? "smooth" : "pixelated"
 				$("#screen").css("image-rendering", setting)
 			}
+		},
+		{
+			text: "toggle-screen-shake",
+			key: "screenShake"
 		}
 	]
 	for (let toggle of toggleInfo){
@@ -1142,6 +1150,7 @@ function continueGame(){
 			if (!level) return
 			level.status = obj.status
 			level.attempts = obj.attempts ?? 0
+			level.completions = obj.completions ?? 0
 		})
 	})
 	.then(() => normalizeSave(playerSaveInfo))

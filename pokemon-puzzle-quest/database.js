@@ -758,6 +758,7 @@ function saveLevelStatus(level, status){
 		obj.id = level.id
 		obj.status = status
 		obj.attempts = level.attempts
+		obj.completions = level.completions
 
 		return saveLevelObj(obj)
 		.then(() => resolve())

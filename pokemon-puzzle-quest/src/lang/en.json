@@ -1013,6 +1013,9 @@
 		"Happiny": {
 			"name": "Happiny"
 		},
+		"Roggenrola": {
+			"name": "Roggenrola"
+		},
 		"Cottonee": {
 			"name": "Cottonee"
 		},
@@ -1497,6 +1500,16 @@
 			"name": "Sleep Powder",
 			"description": "Applies the Sleep Powder status to 5 random tiles. At the start of each turn, if there are 20 or more tiles with Sleep Powder, all but one Sleep Powder is removed and the opponent falls asleep. At the start of each turn, for each tile adjacent to a tile with Sleep Powder, that tile has a 10% chance to gain Sleep Powder.",
 			"shortDescription": "Infects tiles with sleep"
+		},
+		"Smack Down": {
+			"name": "Smack Down",
+			"description": "Deals damage. Then, shifts the entire board downwards by 2 tiles.",
+			"shortDescription": "Lowers entire board"
+		},
+		"Stealth Rock": {
+			"name": "Stealth Rock",
+			"description": "Applies Splinters to the opponent for 4 turns. At the beginning of their turn, they take damage as though they were hit by a 25 power move.",
+			"shortDescription": "Applies Splinters"
 		},
 		"String Shot": {
 			"name": "String Shot",
@@ -2241,6 +2254,10 @@
 		"Route 3-5": {
 			"name": "Route 3-5",
 			"description": "Once you arrive at Iki Town, the kahuna Hala is waiting, challenging trainers."
+		},
+		"Route 3-6": {
+			"name": "Route 3-6",
+			"description": "Before heading to Akala, you step into a cave along Ten Carat Hill."
 		}
 	},
 	"route-categories": {
@@ -2259,7 +2276,9 @@
 		"toggle-exp-share": "EXP share? (Exp gained in fights is shared between all active Pokémon)",
 		"toggle-hard-mode": "Hard mode (Rival chooses the more effective Pokémon, etc.)",
 		"toggle-level-lowering": "Lower Pokémon levels to what's recommended when starting a level. Note: Pokémon won't earn EXP while their levels are lowered.",
+		"toggle-show-level-completion-data": "Display level attempts/completions",
 		"toggle-pixelated-screen": "Antialiasing",
+		"toggle-screen-shake": "Screen shake",
 
 		"rename-save": "Rename Save",
 		"delete-save": "DELETE SAVE",

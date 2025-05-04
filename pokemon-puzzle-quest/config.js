@@ -7,6 +7,7 @@ const config = {
 	expShare: true,
 	hardMode: false,
 	lowerLevelsToRecommendedLevels: true,
+	showLevelCompletionData: false,
 	antialiasing: true,
 	screenShake: true,
 	cpuSpeed: 2,

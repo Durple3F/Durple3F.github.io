@@ -1801,6 +1801,56 @@ const pokemonData = {
 			},
 		]
 	},
+	"Roggenrola": {
+		name: "Roggenrola",
+		number: "524",
+		weight: {
+			pounds: 39.7,
+			kilograms: 18.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0524Roggenrola.png",
+			"largeShiny": "src/img/shiny-pokemon/524-Roggenrola.png",
+			"home": "src/img/tiny-pokemon/Roggenrola.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/roggenrola.mp3"
+		},
+		types: ["Rock"],
+		tags: [],
+		abilities: ["Sturdy", "Weak Armor"],
+		hiddenAbilities: ["Sand Force"],
+		stats: {
+			hp: 55,
+			attack: 75,
+			defense: 85,
+			specialAttack: 25,
+			specialDefense: 25,
+			speed: 15
+		},
+		expYield: 56,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 1,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 3,
+			green: 2
+		},
+		learnset: [
+			{ name: "Sand Attack", unlock: { type: "level", amount: 1 } },
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Harden", unlock: { type: "level", amount: 4 } },
+			{ name: "Stealth Rock", unlock: { type: "level", amount: 8 } },
+			{ name: "Mud-Slap", unlock: { type: "level", amount: 12 } },
+			{ name: "Smack Down", unlock: { type: "level", amount: 16 } },
+		]
+	},
 	"Cottonee": {
 		name: "Cottonee",
 		number: "546",
@@ -2232,7 +2282,7 @@ const pokemonData = {
 			{ name: "Disarming Voice", unlock: { type: "level", amount: 6 } },
 			{ name: "Aqua Jet", unlock: { type: "level", amount: 9 } },
 			{ name: "Baby-Doll Eyes", unlock: { type: "level", amount: 12 } },
-			{ name: "Circle Throw", unlock: { type: "level", amount: 1 } },
+			// { name: "Stealth Rock", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {

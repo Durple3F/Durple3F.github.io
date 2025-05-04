@@ -223,6 +223,13 @@ const pokemonStatusData = {
 		class: "debuff",
 		name: "fear-frozen"
 	},
+	"splinters": {
+		image: "src/img/icons/spikes-init.png",
+		color: "rgb(98, 62, 15)",
+		stacks: false,
+		class: "debuff",
+		name: "splinters"
+	},
 }
 for (let statusName in pokemonStatusData){
 	let statusType = pokemonStatusData[statusName]

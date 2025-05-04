@@ -239,8 +239,8 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 2,
 		energy: {
-			// purple: 4,
-			// orange: 10
+			purple: 4,
+			orange: 10
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Beat Up 1hit.mp3"
@@ -1775,6 +1775,7 @@ const pokemonMoveData = {
 			{ type: "change-tile-type", selection: "group", which: -1, targetType: "green" },
 		]
 	},
+	//Lowers enemy defense 1
 	"Leer": {
 		name: "Leer",
 		type: "Normal",
@@ -1802,6 +1803,7 @@ const pokemonMoveData = {
 			}
 		],
 	},
+	//Makes Dark tiles more likely and Grass tiles less likely
 	"Lick": {
 		name: "Lick",
 		type: "Ghost",
@@ -1832,6 +1834,7 @@ const pokemonMoveData = {
 			{ type: "change-tile-weight", tileType: "black", add: -1 },
 		]
 	},
+	//Deals damage based on opponent's weight
 	"Low Kick": {
 		name: "Low Kick",
 		type: "Fighting",
@@ -2759,32 +2762,6 @@ const pokemonMoveData = {
 			{ type: "damage", label: "tiny-damage" }
 		],
 	},
-	"Sleep Powder": {
-		name: "Sleep Powder",
-		type: "Grass",
-		category: "Status",
-		strategy: "debuff-opponent",
-		pp: 15,
-		power: null,
-		accuracy: 75,
-		rechargeTurns: 5,
-		energy: {
-			orange: 4,
-			green: 4,
-			blue: 4
-		},
-		sounds: {
-			"attack": "src/audio/attacks/Sleep Powder part 1.mp3"
-		},
-		effects: [
-			{ type: "play-sound", name: "attack" },
-			{ type: "load-value", value: 5 },
-			{ type: "select-random-tiles", count: -1 },
-			{ type: "apply-status-to-tiles", selection: "group", which: -1,
-				status: { name: "Sleep Powder", type: "debuff", duration: 5 }
-			}
-		],
-	},
 	"Sketch": {
 		name: "Sketch",
 		type: "Normal",
@@ -2818,6 +2795,85 @@ const pokemonMoveData = {
 		highlightOnHover: {
 			type: "last-enemy-move"
 		}
+	},
+	"Sleep Powder": {
+		name: "Sleep Powder",
+		type: "Grass",
+		category: "Status",
+		strategy: "debuff-opponent",
+		pp: 15,
+		power: null,
+		accuracy: 75,
+		rechargeTurns: 5,
+		energy: {
+			orange: 4,
+			green: 4,
+			blue: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Sleep Powder part 1.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "load-value", value: 5 },
+			{ type: "select-random-tiles", count: -1 },
+			{ type: "apply-status-to-tiles", selection: "group", which: -1,
+				status: { name: "Sleep Powder", type: "debuff", duration: 5 }
+			}
+		],
+	},
+	"Smack Down": {
+		name: "Smack Down",
+		type: "Rock",
+		category: "Physical",
+		strategy: "basic-damage",
+		pp: 15,
+		power: 50,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			orange: 6,
+			yellow: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Smack Down.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "load-value", value: 2 },
+			{ type: "load-value", value: 0 },
+			{ type: "select-all-tiles" },
+			{ type: "shift-tiles", selection: -1, xOffset: -2, yOffset: -3 },
+		]
+	},
+	"Stealth Rock": {
+		name: "Stealth Rock",
+		type: "Rock",
+		category: "Physical",
+		strategy: "basic-damage",
+		pp: 20,
+		power: 40,
+		accuracy: 100,
+		rechargeTurns: 2,
+		energy: {
+			orange: 8,
+			yellow: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Stealth Rock.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "apply-status-effect", statusEffect: "splinters", target: "opponent" }
+		]
 	},
 	"String Shot": {
 		name: "String Shot",

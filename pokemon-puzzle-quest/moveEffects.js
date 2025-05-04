@@ -200,13 +200,12 @@ const pokemonMoveEffects = {
 				locationMap.set(tile, coord)
 			})
 
-			game.animateMoveTiles(locationMap, 250)
-			.then(() => {
-				tilesMovedOffscreen.forEach(tile => {
-					board.remove(tile)
-				})
-				resolve()
+			tilesMovedOffscreen.forEach(tile => {
+				board.removeFade(tile, 250)
 			})
+			game.animateMoveTiles(locationMap, 250)
+			.then(() => game.timeStep())
+			.then(() => resolve())
 		}
 	},
 	"time-step": {
@@ -705,14 +704,14 @@ const pokemonMoveEffects = {
 			let factor = params.factor
 			let add = params.add
 
-			let old = game.board.tileWeights[type]
+			let old = game.board.baseTileWeights[type]
 			if (add !== undefined) {
-				game.board.tileWeights[type] += add
+				game.board.baseTileWeights[type] += add
 			}
 			if (factor !== undefined) {
-				game.board.tileWeights[type] *= factor
+				game.board.baseTileWeights[type] *= factor
 			}
-			let change = game.board.tileWeights[type] - old
+			let change = game.board.baseTileWeights[type] - old
 
 			moveUseObj.info[effectIndex] = change
 			resolve()

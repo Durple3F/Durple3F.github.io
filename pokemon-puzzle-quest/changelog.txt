@@ -1,12 +1,15 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-5/3 (27.7k lines):
-	- Added Passimian
+5/3 (28.0k lines):
+	- Added Passimian, Roggenrola
 	- Added Beat Up, which required programming a loop into my move effect format. WHICH I PLANNED FOR!!!! IT WORKS!!! hahahaha
 	- Beat Up has special AI btw
+	- Added Stealth Rock, Smack Down
 	- Added Receiver
 	- Enemy trainers can now have more/less pokemon depending on your party's size
 	- Added background(s!) to 2-7
+	- Now when tiles are pushed off the board, they have a fade out instead of just popping out of existence.
+	- Now levels keep track of how many times you've attempted/completed them.
 
 5/2 (27.3k lines):
 	- Fleshing out All-Out Pummeling more.

@@ -1368,11 +1368,58 @@ const levelData = [
 		],
 		effects: [
 			{ type: "change-background-image", name: "route-bg-iki-town" },
-			// { type: "dialogue", source: "route-3-5-dialogue" },
-			// { type: "fight", trainer: 0 },
-			// { type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "dialogue", source: "route-3-5-dialogue" },
+			{ type: "fight", trainer: 0 },
+			{ type: "jump-if-lost", jumpTo: Infinity },
 			{ type: "dialogue", source: "route-3-5-dialogue-won" },
 			{ type: "unlock-z-move-type", unlockedType: "Fighting" },
+		]
+	},
+	//3-6: 
+	{
+		id: "Route 3-6",
+		category: "Route 3",
+		name: "Route 3-6",
+		music: "SM Wild Pokemon Battle",
+		icon: "6",
+		images: {
+			"route-bg-melemele-meadow": "src/img/bg/melemele meadow.jpg"
+		},
+		reccomendedLevels: {
+			"normal": (pokemonList) => {
+				if (pokemonList.length >= 3) return 16
+				return 18
+			},
+			"hard": (pokemonList) => {
+				if (pokemonList.length >= 3) return 16
+				return 18
+			}
+		},
+		trainers: [
+			{
+				isWild: true,
+				targetPokemon: 4,
+				canPickDuplicates: true,
+				possiblePokemon: [
+					{ id: "Roggenrola", levelMin: 14, levelMax: 16, weight: 4, activeMoves: ["Smack Down"] },
+				]
+			},
+			{
+				name: "Thistle",
+				class: "Aroma-Lady",
+				pokemon: [
+					{ id: "Cottonee", level: 13 },
+					{ id: "Cutiefly", level: 14 },
+				]
+			},
+		],
+		effects: [
+			// { type: "change-background-image", name: "route-bg-melemele-meadow" },
+			{ type: "fight", trainer: 0 },
+			// { type: "jump-if-lost", jumpTo: Infinity },
+			// { type: "dialogue", source: "route-3-3-dialogue" },
+			// { type: "change-music", music: "SM Trainer Battle" },
+			// { type: "fight", trainer: 1 },
 		]
 	},
 ]
@@ -1385,6 +1432,7 @@ for (let categoryId in levelCategoryData) {
 for (let level of levelData) {
 	level.status = "not won"
 	level.attempts = 0
+	level.completions = 0
 	level.obtainablePokemon = level.obtainablePokemon ?? []
 	if (level.trainers) {
 		for (let trainerData of level.trainers) {

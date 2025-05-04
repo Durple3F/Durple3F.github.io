@@ -213,6 +213,14 @@ class Pokemon{
 						volatile: true
 					}
 				} break
+				case "splinters": {
+					status = {
+						name: "splinters",
+						class: "debuff",
+						volatile: true,
+						turns: 4
+					}
+				} break
 				default:
 					console.warn("You never handled", status)
 					status = {

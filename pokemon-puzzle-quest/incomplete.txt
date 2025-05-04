@@ -25,6 +25,7 @@ Incomplete move lists:
 	Makuhita (lv 4)
 	Bagon (lv 10)
 	Happiny (lv 4)
+	Roggenrola (lv 16)
 	Cottonee (lv 6)
 	Petilil (lv 12)
 	Rufflet (lv 12)
@@ -71,6 +72,7 @@ Missing Evolutions:
 	Makuhita
 	Bagon
 	Happiny
+	Roggenrola
 	Cottonee
 	Petilil
 	Rufflet
