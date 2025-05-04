@@ -165,6 +165,8 @@ const pokemonData = {
 			{ name: "Poison Powder", unlock: { type: "level", amount: 12 } },
 			{ name: "Stun Spore", unlock: { type: "level", amount: 12 } },
 			{ name: "Sleep Powder", unlock: { type: "level", amount: 12 } },
+			{ name: "Psybeam", unlock: { type: "level", amount: 16 } },
+			{ name: "Whirlwind", unlock: { type: "level", amount: 20 } },
 		]
 	},
 	"Rattata-Alola": {
@@ -2282,7 +2284,7 @@ const pokemonData = {
 			{ name: "Disarming Voice", unlock: { type: "level", amount: 6 } },
 			{ name: "Aqua Jet", unlock: { type: "level", amount: 9 } },
 			{ name: "Baby-Doll Eyes", unlock: { type: "level", amount: 12 } },
-			// { name: "Stealth Rock", unlock: { type: "level", amount: 1 } },
+			{ name: "Whirlwind", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {

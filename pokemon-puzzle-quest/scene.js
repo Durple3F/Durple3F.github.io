@@ -311,10 +311,10 @@ function startScene(name, options) {
 				btn.click(() => confirmChoice(level))
 
 				if (config["showLevelCompletionData"]){
-					let statTag = $(`<div class='desc w-100 d-flex justify-content-around'></div>`)
+					let statTag = $(`<div class='desc w-100 d-flex justify-content-around flex-wrap'></div>`)
 					content.append(statTag)
-					statTag.append(`<span>Attempts: ${level.attempts}</span>`)
-					statTag.append(`<span>Completions: ${level.completions}</span>`)
+					statTag.append(`<span class='m-1'>Attempts: ${level.attempts}</span>`)
+					statTag.append(`<span class='m-1'>Completions: ${level.completions}</span>`)
 				}
 
 				let desc = getLocaleString("description", lang, ["levels", level.id], null)

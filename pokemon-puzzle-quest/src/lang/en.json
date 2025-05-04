@@ -1491,6 +1491,11 @@
 			"description": "Deals damage. If you and your opponent have a different number of Pokémon remaining, this move's power increases by 40.",
 			"shortDescription": "Deals damage"
 		},
+		"Psybeam": {
+			"name": "Psybeam",
+			"description": "Deals damage and applies Confused 50% of the time. The user chooses two tiles. Each tile between them, including the chosen tiles, is shuffled.",
+			"shortDescription": "Deals damage and shuffles tiles"
+		},
 		"Sketch": {
 			"name": "Sketch",
 			"description": "This Pokémon learns how to use the move the opponent most recently used. If they haven't used a move, this move does nothing.",
@@ -1586,6 +1591,11 @@
 			"name": "Water Gun",
 			"description": "Deals damage. This move's power increases by 2 for every Water tile on the board.",
 			"shortDescription": "Damage based on Water tiles"
+		},
+		"Whirlwind": {
+			"name": "Whirlwind",
+			"description": "The opponent swaps to a random other Pokémon if possible. Then ends the turn.",
+			"shortDescription": "Forces opponent to switch"
 		},
 		"Wing Attack": {
 			"name": "Wing Attack",

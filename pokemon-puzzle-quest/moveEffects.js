@@ -775,6 +775,40 @@ const pokemonMoveEffects = {
 			resolve(chosenTiles)
 		}
 	},
+	"select-tiles-between": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let selection = params.selection ?? []
+			let chosenTiles = []
+			let chooseable = game.board.tilesOnScreen()
+			let tileA = selection[0]
+			let tileB = selection[1]
+			if (!tileA || !tileB){
+				resolve(chosenTiles)
+				return
+			}
+			let A = [tileA.x, tileA.y]
+			let B = [tileB.x, tileB.y]
+			let AB = subtractVectors(B, A)
+			let ABDot = dotProduct(AB, AB)
+
+			chooseable.forEach(tile => {
+				let P = [tile.x, tile.y]
+				let AP = subtractVectors(P, A)
+				let t = (dotProduct(AP, AB) / ABDot)
+				t = Math.max(0, Math.min(1, t))
+				let closest = addVectors(A, scaleVector(t, AB))
+				let cx = closest[0]
+				let cy = closest[1]
+				let dist = distance(cx, cy, tile.x, tile.y)
+				if (dist < 0.7){
+					chosenTiles.push(tile)
+				}
+			})
+			
+			resolve(chosenTiles)
+		}
+	},
 	"select-tiles-around-given-tile": {
 		update: false,
 		execute: (resolve, effect, params, game, options) => {
@@ -1457,9 +1491,7 @@ const pokemonMoveEffects = {
 		update: false,
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
-			let effectIndex = options.effectIndex
 			let list = params.list
-			let index = params.index ?? 0
 			let element
 
 			if (!list) {

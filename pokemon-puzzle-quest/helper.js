@@ -89,6 +89,18 @@ function distance(x1, y1, x2, y2) {
 	let dy = y2 - y1
 	return Math.sqrt(dx * dx + dy * dy)
 }
+function addVectors(u, v) {
+	return [u[0] + v[0], u[1] + v[1]]
+}
+function subtractVectors(u, v) {
+	return [u[0] - v[0], u[1] - v[1]]
+}
+function scaleVector(scale, v) {
+	return v.map(x => scale * x)
+}
+function dotProduct(u, v) {
+	return (u[0] * v[0]) + (u[1] * v[1])
+}
 function noDuplicates(arr) {
 	return arr.filter((v, i, s) => s.indexOf(v) === i)
 }

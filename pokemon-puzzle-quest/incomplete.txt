@@ -1,5 +1,5 @@
 Incomplete move lists:
-	Butterfree (lv 12)
+	Butterfree (lv 20)
 	Rattata-Alola (lv 10)
 	Raticate-Alola (lv 1)
 	Spearow (lv 11)

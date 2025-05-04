@@ -2429,6 +2429,7 @@ const pokemonMoveData = {
 			{ type: "gain-energy", amounts: -1, target: "user" }
 		]
 	},
+	//Random effects
 	"Present": {
 		name: "Present",
 		type: "Normal",
@@ -2486,6 +2487,40 @@ const pokemonMoveData = {
 			{ type: "gain-energy", amounts: -1, target: "opponent" },
 			{ type: "jump", jumpTo: Infinity },
 		],
+	},
+	//Choose two tiles, shuffle them and all tiles between them
+	"Psybeam": {
+		name: "Psybeam",
+		type: "Psychic",
+		category: "Special",
+		strategy: "basic-damage",
+		tags: ["damage-dealing"],
+		pp: 20,
+		power: 65,
+		accuracy: 100,
+		rechargeTurns: 3,
+		energy: {
+			purple: 12
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Psybeam.mp3",
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "random-number", min: 1, max: 10 },
+			{ type: "load-value", value: 6 },
+			{ type: "jump-if-less-than", jumpTo: "shuffle" },
+			{ type: "apply-status-effect", statusEffect: "confused", target: "opponent" },
+
+			{ type: "load-value", value: 2, label: "shuffle" },
+			{ type: "choose-tiles", count: -1, target: "user" },
+			{ type: "select-tiles-between", selection: -1 },
+			{ type: "shuffle-tiles", selection: -1 }
+		]
 	},
 	"Pursuit": {
 		name: "Pursuit",
@@ -2582,6 +2617,7 @@ const pokemonMoveData = {
 			{ type: "load-value", value: 0 },
 			{ type: "get-element-from-list", list: -2, index: -1 },
 			{ type: "swap-pokemon", target: "opponent", pokemon: -1 },
+			{ type: "end-turn" }
 		],
 	},
 	"Rock Smash": {
@@ -3276,6 +3312,38 @@ const pokemonMoveData = {
 			{ type: "load-value", value: 2 },
 			{ type: "multiply-numbers" },
 			{ type: "damage", additivePower: -1 }
+		],
+	},
+	//Forces the opponent to switch to a random pokemon
+	"Whirlwind": {
+		name: "Whirlwind",
+		type: "Normal",
+		category: "Status",
+		strategy: "special",
+		tags: [],
+		pp: 20,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 5,
+		energy: {
+			yellow: 4,
+			green: 5,
+			blue: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Whirlwind.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-viable-pokemon", target: "opponent" },
+			{ type: "get-active-pokemon", target: "opponent" },
+			{ type: "remove-element-from-list", list: -2, element: -1 },
+			{ type: "get-list-length", list: -1 },
+			{ type: "load-value", value: 1 },
+			{ type: "jump-if-less-than", jumpTo: Infinity },
+			{ type: "random-choice-from-list", list: -4 },
+			{ type: "swap-pokemon", target: "opponent", pokemon: -1 },
+			{ type: "end-turn" }
 		],
 	},
 	//Removes a group of tiles along a diagonal
