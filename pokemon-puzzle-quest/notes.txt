@@ -10,4 +10,7 @@ TODO
 - Pokedex entries
 - For some reason the loading bar at the beginning gets big long why does it do that why do they always do this to me
 - Opponents don't care about cooldowns
-- Add a tracker for level completions
+- Add a way to quickly organize/remove boxes
+- Add a button that lets you swap which side the selection window is on
+- Music plays twice sometimes
+- Z-crystal tooltip broken

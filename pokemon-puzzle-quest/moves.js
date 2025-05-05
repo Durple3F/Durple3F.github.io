@@ -3188,6 +3188,7 @@ const pokemonMoveData = {
 		type: "Normal",
 		category: "Status",
 		strategy: "buff-user",
+		tags: ["dancing"],
 		pp: 20,
 		power: null,
 		accuracy: 100,
