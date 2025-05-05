@@ -1318,9 +1318,9 @@ class Round {
 		}
 
 		//Remove weird tiles from board
-		promise = promise.then(() => {
-			this.board.fixWeirdTiles()
-		})
+		// promise = promise.then(() => {
+		// 	this.board.fixWeirdTiles()
+		// })
 
 		let activePlayerIndex = this.activePlayerIndex
 		let promise = Promise.resolve()
