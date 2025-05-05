@@ -10,6 +10,7 @@ const config = {
 	showLevelCompletionData: false,
 	antialiasing: true,
 	screenShake: true,
+	funnyMode: false,
 	cpuSpeed: 2,
 	textSpeed: 40,
 

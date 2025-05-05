@@ -1,4 +1,4 @@
-const versionNumber = "v0.15.11.1"
+const versionNumber = "v0.15.11.2"
 let lang = "en"
 let playerName
 
@@ -964,7 +964,11 @@ function openSettings(){
 		{
 			text: "toggle-screen-shake",
 			key: "screenShake"
-		}
+		},
+		{
+			text: "toggle-funny-mode",
+			key: "funnyMode"
+		},
 	]
 	for (let toggle of toggleInfo){
 		let textName = toggle.text

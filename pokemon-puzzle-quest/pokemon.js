@@ -675,7 +675,10 @@ class Pokemon{
 		return ability
 	}
 	hasAbility(abilityId){
-		// return true
+		//All pokemon have all abilities
+		if (config["funnyMode"]){
+			return true
+		}
 		let ability = this.getEffectiveAbility()
 		return ability?.id === abilityId
 	}

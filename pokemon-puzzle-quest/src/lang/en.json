@@ -2315,6 +2315,7 @@
 		"toggle-show-level-completion-data": "Display level attempts/completions",
 		"toggle-pixelated-screen": "Antialiasing",
 		"toggle-screen-shake": "Screen shake",
+		"toggle-funny-mode": "Funny mode (please leave this off for now)",
 
 		"rename-save": "Rename Save",
 		"delete-save": "DELETE SAVE",
