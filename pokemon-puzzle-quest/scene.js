@@ -176,7 +176,7 @@ function startScene(name, options) {
 			fadeInGame()
 			let routeName = options.name
 
-			if (routeName === "Route 1") {
+			if (routeName === "Route 1" || true) {
 				changeMusic("Route 201 (Day)")
 			}
 

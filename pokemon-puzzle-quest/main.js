@@ -251,6 +251,7 @@ function changeBackgroundImage(name, url){
 	return promise
 }
 
+let currentMusic
 const sounds = {}
 const playingSounds = []
 function loadSound(name, type, url){
@@ -431,10 +432,12 @@ function changeMusic(name){
 		if (sound.name === name){
 			found = true
 		} else {
+			//If we find other songs playing, kill them.
 			stopSound(sound.name)
 		}
 	})
 
+	//If that song is already playing, don't do anything.
 	if (found){
 		return
 	}
