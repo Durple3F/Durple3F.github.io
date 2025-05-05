@@ -14,3 +14,4 @@ TODO
 - Add a button that lets you swap which side the selection window is on
 - Music plays twice sometimes
 - Z-crystal tooltip broken
+- Make Battery stack

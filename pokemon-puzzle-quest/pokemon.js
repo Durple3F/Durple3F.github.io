@@ -675,7 +675,7 @@ class Pokemon{
 		return ability
 	}
 	hasAbility(abilityId){
-		return true
+		// return true
 		let ability = this.getEffectiveAbility()
 		return ability?.id === abilityId
 	}
