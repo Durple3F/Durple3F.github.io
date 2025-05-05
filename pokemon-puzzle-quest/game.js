@@ -1317,6 +1317,11 @@ class Round {
 			return
 		}
 
+		//Remove weird tiles from board
+		promise = promise.then(() => {
+			this.board.fixWeirdTiles()
+		})
+
 		let activePlayerIndex = this.activePlayerIndex
 		let promise = Promise.resolve()
 		//End-of-turn abilities
@@ -5307,6 +5312,7 @@ class Board {
 			let tile = this.contents[i]
 			sum += tile.width * tile.height
 		}
+		console.log(sum)
 		return sum === this.width * this.height
 	}
 
@@ -5387,6 +5393,20 @@ class Board {
 			return true
 		}
 		return false
+	}
+	fixWeirdTiles(){
+		let changed = false
+		for (let tile of this.contents){
+			let x = tile.x
+			if (x > this.width - 1 || x < 0){
+				this.remove(tile)
+				changed = true
+			}
+		}
+		if (changed){
+			console.warn("Something weird just happened!")
+			this.fill()
+		}
 	}
 
 	fill() {

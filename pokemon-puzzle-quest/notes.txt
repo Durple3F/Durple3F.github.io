@@ -16,3 +16,5 @@ TODO
 - Z-crystal tooltip broken
 - Make Battery stack
 - Make All pokemon All abilities mode have some funny way to show
+- Play Nice crashed the game (again) (again) (again)
+- Route 2-7 music sometimes doesnt play
