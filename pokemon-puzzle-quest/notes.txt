@@ -1,5 +1,9 @@
 SOMETIMES status effects don't have moves attaches to them BE AWARE
 
+HOPEFULLY fixed
+- Music plays twice sometimes
+- Opponents don't care about cooldowns
+
 TODO
 - Hau should ask at the beginning whether to pick the better or worse starter
 - Hau and Team Skull should get special battle themes
@@ -9,12 +13,9 @@ TODO
 - Add a section in the pokedex where you can see how many you've caught/seen/etc
 - Pokedex entries
 - For some reason the loading bar at the beginning gets big long why does it do that why do they always do this to me
-- Opponents don't care about cooldowns
+- Add a screen that shows your new moves when a pokemon evolves
 - Add a way to quickly organize/remove boxes
 - Add a button that lets you swap which side the selection window is on
-- Music plays twice sometimes
 - Z-crystal tooltip broken
-- Make Battery stack
 - Make All pokemon All abilities mode have some funny way to show
-- Play Nice crashed the game (again) (again) (again)
-- Route 2-7 music sometimes doesnt play
+- Make pokemon remember how many fights theyve participated in

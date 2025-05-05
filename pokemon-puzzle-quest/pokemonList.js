@@ -2158,48 +2158,11 @@ const pokemonData = {
 			yellow: 3
 		},
 		learnset: [
-			{
-				name: "Tackle",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "Growl",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "Leafage",
-				unlock: {
-					type: "level",
-					amount: 3
-				}
-			},
-			{
-				name: "Astonish",
-				unlock: {
-					type: "level",
-					amount: 6
-				}
-			},
-			{
-				name: "Peck",
-				unlock: {
-					type: "level",
-					amount: 9
-				}
-			},
-			{
-				name: "Shadow Sneak",
-				unlock: {
-					type: "level",
-					amount: 12
-				}
-			},
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Growl", unlock: { type: "level", amount: 1 } },
+			{ name: "Leafage", unlock: { type: "level", amount: 3 } },
+			{ name: "Astonish", unlock: { type: "level", amount: 6 } },
+			{ name: "Peck", unlock: { type: "level", amount: 9 } },
 		]
 	},
 	"Litten": {

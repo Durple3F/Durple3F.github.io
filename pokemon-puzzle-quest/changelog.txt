@@ -1,5 +1,10 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
+5/5 (28.4k lines):
+	- Moves that fail due to a programming error now just stop, rather than softlock the game
+	- Battery stacks now
+	- Pokemon now remember how many fights they've won
+
 5/4 (28.4k lines):
 	- Added Crunch, Scary Face, Swords Dance, Aerial Ace, Take Down
 	- Rewrote how computers choose tiles, again.

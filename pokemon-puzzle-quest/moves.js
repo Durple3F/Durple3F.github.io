@@ -1166,7 +1166,7 @@ const pokemonMoveData = {
 		pp: 30,
 		power: 40,
 		accuracy: 100,
-		rechargeTurns: 1,
+		rechargeTurns: 2,
 		energy: {
 			green: 4,
 			blue: 3

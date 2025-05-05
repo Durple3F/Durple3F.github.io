@@ -118,6 +118,7 @@ class Pokemon{
 		}
 
 		this.gameRoundData = {}
+		this.friendship = options?.friendship ?? 0
 		this.statusEffects = []
 
 		//You can only have 4 moves active at once

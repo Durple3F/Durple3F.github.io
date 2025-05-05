@@ -976,6 +976,7 @@ const levelData = [
 			{ type: "jump", jumpTo: "fight-rats" },
 
 			{ type: "load-setting", key: "hardMode", label: "fight-ilima" },
+			{ type: "change-music", music: "SM Trainer Battle" },
 			{ type: "fight", trainer: 3, label: "Ilima" },
 			{ type: "dialogue", source: "route-2-7-dialogue-won-2" },
 			{ type: "jump", jumpTo: Infinity },
@@ -985,7 +986,8 @@ const levelData = [
 			{ type: "jump-if-equal", jumpTo: "hardMode" },
 			{ type: "jump", jumpTo: "easyMode" },
 
-			{ type: "random-number", min: 1, max: 10, label: "easyMode" },
+			{ type: "change-music", music: "SM Wild Pokemon Battle", label: "easyMode" },
+			{ type: "random-number", min: 1, max: 10 },
 			{ type: "load-value", value: 6 },
 			{ type: "jump-if-less-than", jumpTo: "Moon" },
 			{ type: "fight", trainer: 0, label: "Sun" },
@@ -993,7 +995,8 @@ const levelData = [
 			{ type: "fight", trainer: 1, label: "Moon" },
 			{ type: "jump", jumpTo: "win-check" },
 
-			{ type: "fight", trainer: 2, label: "hardMode" },
+			{ type: "change-music", music: "SM Wild Pokemon Battle", label: "hardMode" },
+			{ type: "fight", trainer: 2 },
 			{ type: "jump", jumpTo: "win-check" },
 
 			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
@@ -1384,52 +1387,52 @@ const levelData = [
 		]
 	},
 	//3-6: 
-	// {
-	// 	id: "Route 3-6",
-	// 	category: "Route 3",
-	// 	name: "Route 3-6",
-	// 	music: "SM Wild Pokemon Battle",
-	// 	icon: "6",
-	// 	images: {
-	// 		"route-bg-melemele-meadow": "src/img/bg/melemele meadow.jpg"
-	// 	},
-	// 	reccomendedLevels: {
-	// 		"normal": (pokemonList) => {
-	// 			if (pokemonList.length >= 3) return 16
-	// 			return 18
-	// 		},
-	// 		"hard": (pokemonList) => {
-	// 			if (pokemonList.length >= 3) return 16
-	// 			return 18
-	// 		}
-	// 	},
-	// 	trainers: [
-	// 		{
-	// 			isWild: true,
-	// 			targetPokemon: 4,
-	// 			canPickDuplicates: true,
-	// 			possiblePokemon: [
-	// 				{ id: "Roggenrola", levelMin: 25, levelMax: 25, weight: 4, activeMoves: ["Aerial Ace"] },
-	// 			]
-	// 		},
-	// 		{
-	// 			name: "Thistle",
-	// 			class: "Aroma-Lady",
-	// 			pokemon: [
-	// 				{ id: "Cottonee", level: 13 },
-	// 				{ id: "Cutiefly", level: 14 },
-	// 			]
-	// 		},
-	// 	],
-	// 	effects: [
-	// 		// { type: "change-background-image", name: "route-bg-melemele-meadow" },
-	// 		{ type: "fight", trainer: 0 },
-	// 		// { type: "jump-if-lost", jumpTo: Infinity },
-	// 		// { type: "dialogue", source: "route-3-3-dialogue" },
-	// 		// { type: "change-music", music: "SM Trainer Battle" },
-	// 		// { type: "fight", trainer: 1 },
-	// 	]
-	// },
+	{
+		id: "Route 3-6",
+		category: "Route 3",
+		name: "Route 3-6",
+		music: "SM Wild Pokemon Battle",
+		icon: "6",
+		images: {
+			"route-bg-melemele-meadow": "src/img/bg/melemele meadow.jpg"
+		},
+		reccomendedLevels: {
+			"normal": (pokemonList) => {
+				if (pokemonList.length >= 3) return 16
+				return 18
+			},
+			"hard": (pokemonList) => {
+				if (pokemonList.length >= 3) return 16
+				return 18
+			}
+		},
+		trainers: [
+			{
+				isWild: true,
+				targetPokemon: 4,
+				canPickDuplicates: true,
+				possiblePokemon: [
+					{ id: "Roggenrola", levelMin: 25, levelMax: 25, weight: 4, activeMoves: ["Play Nice"] },
+				]
+			},
+			{
+				name: "Thistle",
+				class: "Aroma-Lady",
+				pokemon: [
+					{ id: "Cottonee", level: 13 },
+					{ id: "Cutiefly", level: 14 },
+				]
+			},
+		],
+		effects: [
+			// { type: "change-background-image", name: "route-bg-melemele-meadow" },
+			{ type: "fight", trainer: 0 },
+			// { type: "jump-if-lost", jumpTo: Infinity },
+			// { type: "dialogue", source: "route-3-3-dialogue" },
+			// { type: "change-music", music: "SM Trainer Battle" },
+			// { type: "fight", trainer: 1 },
+		]
+	},
 ]
 
 for (let categoryId in levelCategoryData) {

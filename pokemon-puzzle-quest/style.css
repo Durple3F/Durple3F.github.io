@@ -689,6 +689,13 @@ body {
 	font-size: 0.8em;
 }
 
+.board-side-top::after {
+	display: block;
+	position: absolute;
+	width: 10em;
+	height: 10em;
+	background-color: red;
+}
 .board-side-top {
 	text-align: center;
 	position: relative;

@@ -238,6 +238,11 @@ class Round {
 			}
 		}
 
+		//All your pokemon get a point of friendship
+		for (let pokemon of this.trainers[0].pokemon){
+			pokemon.friendship++
+		}
+
 		//Determine who goes first
 		let firstPlayer = this.getNextPlayer()
 		this.changeTurns(firstPlayer)
@@ -1317,13 +1322,13 @@ class Round {
 			return
 		}
 
-		//Remove weird tiles from board
-		// promise = promise.then(() => {
-		// 	this.board.fixWeirdTiles()
-		// })
-
 		let activePlayerIndex = this.activePlayerIndex
 		let promise = Promise.resolve()
+
+		//Remove weird tiles from board
+		promise = promise.then(() => {
+			this.board.fixWeirdTiles()
+		})
 		//End-of-turn abilities
 		for (let trainer of this.trainers) {
 			let trainerIndex = this.trainers.indexOf(trainer)
@@ -1809,8 +1814,9 @@ class Round {
 		let trainerIndex = this.activePlayerIndex
 
 		let movesMade = 0
+		let maxMoves = 20
 		const makeMove = () => {
-			if (movesMade > 20){
+			if (movesMade >= maxMoves){
 				//We decided that was enough turns to take.
 				resolvePromise()
 				return
@@ -2813,13 +2819,11 @@ class Round {
 			power *= 2
 		}
 		//Charge is active even while the pokemon is inactive
-		if (
-			category === "Special" &&
-			trainer.pokemon.some(pokemon => {
+		if (category === "Special") {
+			let pokemonWithBattery = trainer.pokemon.filter(pokemon => {
 				return isPokemonUsable(pokemon) && pokemon.hasAbility("Battery")
-			})
-		) {
-			power *= 1.3
+			}).length
+			power *= Math.pow(1.3, pokemonWithBattery)
 		}
 		//Fluffy halves damage from moves that make contact
 		if (makesContact && otherPokemon.hasAbility("Fluffy")){
@@ -3204,6 +3208,7 @@ class Round {
 			}
 		}
 
+		let executionFailed = false
 		options.target = target
 		options.index = index
 		try {
@@ -3211,8 +3216,10 @@ class Round {
 		} catch (error) {
 			console.error(error)
 			alert("Something broke during this move's execution. Please send me a screenshot of the console. (F12)")
+			executionFailed = true
+			resolvePromise()
 		}
-		promise.then(val => new Promise(res => {
+		promise = promise.then(val => new Promise(res => {
 			let lastObj = val
 			//If the value is intended to have replacements applied, those happen now.
 			if (effect.replacementsForResultObj) {
@@ -3276,6 +3283,11 @@ class Round {
 		}))
 
 		promise = promise.then(() => {
+			if (executionFailed){
+				moveUseObj.resolve()
+				return Promise.resolve()
+			}
+
 			moveUseObj.effectIndex = moveUseObj.nextEffectIndex
 			let p = Promise.resolve()
 			if (delayDuration) {
@@ -5405,7 +5417,13 @@ class Board {
 		}
 		if (changed){
 			console.warn("Something weird just happened!")
-			this.fill()
+			let emptyCoords = this.getEmptyCoords()
+			for (let coord of emptyCoords){
+				let x = coord[0]
+				let y = coord[1]
+				let tile = this.getNextTile(x, y)
+				this.add(tile)
+			}
 		}
 	}
 
