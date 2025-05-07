@@ -377,6 +377,19 @@ function applyModification(val, modification){
 	console.warn("You never handled", operation)
 	return val
 }
+function comparisonCheck(val, operation, compare){
+	switch (operation){
+		case "less-than": return val < compare
+		case "greater-than": return val > compare
+		case "equal-to": return val === compare
+		case "less-than-or-equal-to": return val <= compare
+		case "greater-than-or-equal-to": return val >= compare
+		case "not-equal-to": return val !== compare
+		default:
+			console.warn("You never handled", operation)
+			return false
+	}
+}
 
 function download(url, type="json"){
 	return new Promise(resolve => {

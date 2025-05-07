@@ -827,7 +827,7 @@
 				{ "type": "style-speaker", "speaker": "Makana", "css": {
 					"z-index": 3
 				}},
-				{ "type": "display-image", "src": "src/img/pokemon-sprites/rockruff masters.png", "name": "Rockruff", "position": {
+				{ "type": "display-image", "src": "src/img/pokemon/0744Rockruff.png", "name": "Rockruff", "position": {
 					"type": "relative",
 					"relative": "Makana",
 					"widthFactor": 0.5,
@@ -837,7 +837,7 @@
 					"left": "-=3%",
 					"top": "+=40%"
 				}},
-				{ "type": "display-image", "src": "src/img/pokemon-sprites/slowpoke masters.png", "name": "Slowpoke", "position": {
+				{ "type": "display-image", "src": "src/img/pokemon/0079Slowpoke.png", "name": "Slowpoke", "position": {
 					"type": "relative",
 					"relative": "Makana",
 					"widthFactor": 0.5,
@@ -1155,6 +1155,11 @@
 			"description": "Deals damage. Then, drains 2 energy from the opponent's three most full energy types and gives it to the user.",
 			"shortDescription": "Deals some damage and drains energy"
 		},
+		"Bulldoze": {
+			"name": "Bulldoze",
+			"description": "Deals damage and lowers the opponent's Speed by 1 stage. Then, removes the bottom row of tiles.",
+			"shortDescription": "Lowers enemy Speed and removes the bottom row"
+		},
 		"Charge": {
 			"name": "Charge",
 			"description": "Raises the user's special defense stat by 1 stage. The power of the next Electric-type move the user uses is doubled.",
@@ -1189,6 +1194,12 @@
 			"name": "Covet",
 			"description": "Deals damage. Then, drains 6 energy from the opponent's two most full energy types and gives it to the user.",
 			"shortDescription": "Deals damage and drains energy"
+		},
+		"Cross Chop": {
+			"name": "Cross Chop",
+			"description": "Deals damage. Then, the user chooses a tile. A 5x5 X-shaped area around that tile is removed.",
+			"shortDescription": "Deals some damage and removes tiles",
+			"choose": "Choose a tile."
 		},
 		"Crunch": {
 			"name": "Crunch",
@@ -1237,7 +1248,7 @@
 		},
 		"Ember": {
 			"name": "Ember",
-			"description": "Deals damage. There's a 50% chance for this move to inflict Burn on 3 random tiles for 5 turns. At the start of each turn, the opponent takes damage for each Burned tile on the board.",
+			"description": "Deals damage. There's a 50% chance for this move to inflict Burn on 3 random tiles for 5 turns. At the end of their turn, the opponent takes damage equal to 1/32 of their max HP for each Burn status on the board.",
 			"shortDescription": "Damages and might burn tiles"
 		},
 		"Fairy Wind": {
@@ -1259,6 +1270,11 @@
 			"name": "Feint",
 			"description": "Removes the Invulnerable status from the opponent. Then, deals damage.",
 			"shortDescription": "Deals damage through invulnerability"
+		},
+		"Flame Wheel": {
+			"name": "Flame Wheel",
+			"description": "Deals damage. There's a 50% chance for this move to inflict Burn 8 times on a random tile until the start of your next turn. At the end of their turn, the opponent takes damage equal to 1/32 of their max HP for each Burn status on the board.",
+			"shortDescription": "Damages and might burn tiles"
 		},
 		"Flatter": {
 			"name": "Flatter",
@@ -1304,6 +1320,11 @@
 			"name": "Haze",
 			"description": "Removes all status effects from the opponent.",
 			"shortDescription": "Removes enemy statuses"
+		},
+		"Headbutt": {
+			"name": "Headbutt",
+			"description": "Deals damage. Then, removes half of the target's initiative.",
+			"shortDescription": "Deals damage and slows opponent"
 		},
 		"Helping Hand": {
 			"name": "Helping Hand",
@@ -1423,13 +1444,13 @@
 		},
 		"Poison Fang": {
 			"name": "Poison Fang",
-			"description": "Deals damage and has a 50% chance to poison the target. If the target was already poisoned, instead it deals damage with 20 additional power.",
+			"description": "Deals damage and has a 50% chance to poison the target. If the target was already Poisoned, instead it deals damage with 20 additional power.",
 			"shortDescription": "Deals some damage and might poison"
 		},
 		"Poison Gas": {
 			"name": "Poison Gas",
-			"description": "Has a 90% chance to apply poisoned to the opponent.",
-			"shortDescription": "Applies poisoned"
+			"description": "Has a 90% chance to apply Poisoned to the opponent.",
+			"shortDescription": "Applies Poisoned"
 		},
 		"Poison Powder": {
 			"name": "Poison Powder",
@@ -1438,7 +1459,7 @@
 		},
 		"Poison Sting": {
 			"name": "Poison Sting",
-			"description": "Deals damage. Then, has a 30% chance to apply poisoned to the opponent.",
+			"description": "Deals damage. Then, has a 30% chance to apply Poisoned to the opponent.",
 			"shortDescription": "Deals small damage and might poison"
 		},
 		"Pound": {
@@ -1465,6 +1486,11 @@
 			"name": "Quick Attack",
 			"description": "Deals damage. This move can be used more than once during a turn.",
 			"shortDescription": "Deals light damage"
+		},
+		"Quick Guard": {
+			"name": "Quick Guard",
+			"description": "Until the start of the user's next turn, moves that the opponent uses with a cooldown time of 1 or less have their power reduced by 75%.",
+			"shortDescription": "Temporarily makes quick attacks against you weaker"
 		},
 		"Roar": {
 			"name": "Roar",
@@ -1527,6 +1553,11 @@
 			"description": "Deals damage. Then, shifts the entire board downwards by 2 tiles.",
 			"shortDescription": "Lowers entire board"
 		},
+		"Spark": {
+			"name": "Spark",
+			"description": "Deals damage and has a 50% chance to paralyze the target. If the target was already Paralyzed, instead it deals damage with 20 additional power.",
+			"shortDescription": "Deals damage and might paralyze"
+		},
 		"Stealth Rock": {
 			"name": "Stealth Rock",
 			"description": "Applies Splinters to the opponent for 4 turns. At the beginning of their turn, they take damage as though they were hit by a 25 power move.",
@@ -1547,6 +1578,11 @@
 			"description": "Applies the Stun Spore status to 5 random tiles. At the start of each turn, if there are 20 or more tiles with Stun Spore, all but one Stun Spore is removed and the opponent is paralyzed. At the start of each turn, for each tile adjacent to a tile with Stun Spore, that tile has a 10% chance to gain Stun Spore.",
 			"shortDescription": "Infects tiles with paralyzed"
 		},
+		"Sucker Punch": {
+			"name": "Sucker Punch",
+			"description": "Until the start of the user's next turn, whenever the opponent uses a Physical or Special move, this move's user deals damage to them.",
+			"shortDescription": "Gets ready to deal reactive damage"
+		},
 		"Super Fang": {
 			"name": "Super Fang",
 			"description": "Deals damage equal to half the target's remaining HP.",
@@ -1556,6 +1592,11 @@
 			"name": "Supersonic",
 			"description": "Applies Confused. After a Confused Pokémon uses a move, there's a 50% chance for their turn to end.",
 			"shortDescription": "Applies Confused"
+		},
+		"Swagger": {
+			"name": "Swagger",
+			"description": "Applies Confused to the opponent. However, the opponent's Attack is raised a stage. After a Confused Pokémon uses a move, there's a 50% chance for their turn to end.",
+			"shortDescription": "Confuses the opponent but buffs them"
 		},
 		"Sweet Kiss": {
 			"name": "Sweet Kiss",
@@ -1617,6 +1658,11 @@
 			"name": "Water Gun",
 			"description": "Deals damage. This move's power increases by 2 for every Water tile on the board.",
 			"shortDescription": "Damage based on Water tiles"
+		},
+		"Water Pulse": {
+			"name": "Water Pulse",
+			"description": "Deals damage. Then, applies Confused to the opponent X% of the time, where X is 5 times the number of Water tiles on the board.",
+			"shortDescription": "Deals damage and confuses based on Water tiles"
 		},
 		"Whirlwind": {
 			"name": "Whirlwind",
@@ -2204,7 +2250,7 @@
 		},
 		"poisoned": {
 			"name": "Poisoned",
-			"description": "At the beginning of this Pokémon's turn, it will take 1/16 of its max HP in damage."
+			"description": "At the beginning of this Pokémon's turn, it will take 1/32 of its max HP in damage."
 		},
 		"drowsy": {
 			"name": "Drowsy",

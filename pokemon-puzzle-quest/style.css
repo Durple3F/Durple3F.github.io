@@ -48,6 +48,7 @@
 }
 
 body {
+	font-size: 2.3vh;
 	background-color: #050506;
 	color: white;
 	margin: 0;
@@ -403,7 +404,7 @@ body {
 	pointer-events: none;
 }
 #loading-bar > .start {
-	font-size: 1.4em;
+	font-size: 2em;
 	font-weight: bold;
 }
 #save-files {
@@ -690,11 +691,16 @@ body {
 }
 
 .board-side-top::after {
+	content: "";
 	display: block;
 	position: absolute;
-	width: 10em;
-	height: 10em;
-	background-color: red;
+	top: 0; left: 0;
+	width: 100%;
+	height: calc(100%);
+	background-color: #00000044;
+	border-bottom-left-radius: 1em;
+	border-bottom-right-radius: 1em;
+	z-index: -100;
 }
 .board-side-top {
 	text-align: center;
@@ -1116,6 +1122,7 @@ body {
 	max-width: 2em;
 	border-radius: 0.2em;
 	overflow: hidden;
+	box-shadow: 0 0 0.2em 0 rgba(255, 255, 255, 0.5);
 }
 .energy-resources > .energy > .background {
 	height: 100%;
@@ -1691,6 +1698,7 @@ body {
 	position: absolute;
 	top: 0; left: 0;
 	transform: translate(-50%, -25%);
+	pointer-events: none;
 }
 
 #pokedex {
@@ -2129,9 +2137,6 @@ body {
 }
 
 @media (min-width: 1500px) {
-	body {
-		font-size: 125%;
-	}
 	.popover {
 		font-size: 1em;
 		max-width: 25em;
@@ -2140,24 +2145,11 @@ body {
 	}
 }
 @media (min-width: 2000px) {
-	body {
-		font-size: 150%;
-	}
 	.popover {
 		font-size: 1em;
 		max-width: 25em;
 		padding: 0.5em;
 		border-radius: 0.7em;
-	}
-}
-@media (min-width: 2500px) {
-	body {
-		font-size: 200%;
-	}
-}
-@media (min-width: 3000px) {
-	body {
-		font-size: 250%;
 	}
 }
 

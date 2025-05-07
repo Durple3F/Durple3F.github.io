@@ -1,9 +1,23 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-5/5 (28.4k lines):
+5/7 (29.0k lines):
+	- Added Sucker Punch, Swagger, Cross Chop, Flame Wheel, Agility, Water Pulse, Headbutt
+	- Moves can now do things in reaction to the other pokemon using a move. Sucker Punch does that.
+
+5/6 (28.5k lines):
+	- Added Spark, Quick Guard, Bulldoze
+	- Added a sound effect when shiny pokemon enter
+	- Improved how the PC detects when you're clicking/dragging pokemon
+	- Way too much effort was put into making Bulldoze look nice.
+
+5/5 (28.5k lines):
 	- Moves that fail due to a programming error now just stop, rather than softlock the game
 	- Battery stacks now
 	- Pokemon now remember how many fights they've won
+	- Increased the amount of time before you're considered to be dragging pokemon in the pc
+	- I HOPE I've fixed that thing where sometimes clicking the play level button doesn't play it?
+	- Rewrote how the page scales to different screen sizes, for freaks with ultrawide monitors.
+	- Put a band-aid on pokemon sometimes playing their cries twice. I don't know why that happens sometimes.
 
 5/4 (28.4k lines):
 	- Added Crunch, Scary Face, Swords Dance, Aerial Ace, Take Down

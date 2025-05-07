@@ -56,6 +56,35 @@ const pokemonMoveData = {
 			{ type: "remove-tiles", selection: -1 }
 		]
 	},
+	//Raises your speed 2 stages
+	"Agility": {
+		name: "Agility",
+		type: "Psychic",
+		category: "Status",
+		strategy: "buff-user",
+		pp: 30,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 7,
+		energy: {
+			purple: 5,
+			yellow: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Agility part 1.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{
+				type: "apply-debuff", target: "user", debuff: {
+					type: "stat",
+					class: "buff",
+					stat: "speed",
+					amount: 2
+				}
+			}
+		],
+	},
 	//Removes a V-shaped selection of tiles
 	"Air Cutter": {
 		name: "Air Cutter",
@@ -166,8 +195,8 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			purple: 9,
-			yellow: 5
+			purple: 6,
+			yellow: 4
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Astonish.mp3"
@@ -516,6 +545,65 @@ const pokemonMoveData = {
 			{ type: "gain-energy", amounts: -1, target: "user" }
 		]
 	},
+	//Removes the bottom layer of tiles
+	"Bulldoze": {
+		name: "Bulldoze",
+		type: "Ground",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing"],
+		pp: 20,
+		power: 60,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			orange: 6,
+			grass: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Bulldoze.mp3",
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{
+				type: "apply-debuff", target: "opponent", debuff: {
+					type: "stat",
+					stat: "speed",
+					class: "buff",
+					amount: -1
+				}
+			},
+			{ type: "get-board-width" },
+			{ type: "save-variable", name: "width", save: -1 },
+
+			{ type: "get-board-height" },
+			{ type: "load-value", value: -1 },
+			{ type: "add-numbers" },
+			{ type: "save-variable", name: "y", save: -1 },
+			
+			{ type: "get-board-width" },
+			{ type: "load-value", value: 0 },
+			{ type: "get-side-number", left: -1, right: -2, useParams: true },
+			{ type: "save-variable", name: "x", save: -1 },
+
+			{ type: "load-variable", name: "x", label: "startLoop" },
+			{ type: "load-variable", name: "y" },
+			{ type: "select-tiles-at", y: -1, x: -2 },
+			{ type: "remove-tiles", selection: -1, skipTimeSteps: true, cascade: false, animationSpeed: 1.5 },
+			
+			{ type: "load-variable", name: "x" },
+			{ type: "get-side-number", left: 1, right: -1 },
+			{ type: "add-numbers" },
+			{ type: "save-variable", name: "x", save: -1 },
+			{ type: "load-variable", name: "width" },
+			{ type: "jump-if-less-than", jumpTo: "startLoop" },
+			{ type: "jump", jumpTo: Infinity },
+		],
+	},
 	//Increases the power of the user's next electric move
 	"Charge": {
 		name: "Charge",
@@ -748,6 +836,32 @@ const pokemonMoveData = {
 			{ type: "multiply-energy", amounts: -2, scale: -1 },
 			{ type: "gain-energy", amounts: -1, target: "user" }
 		]
+	},
+	//Removes an X-shaped section of tiles.
+	"Cross Chop": {
+		name: "Cross Chop",
+		type: "Fighting",
+		category: "Physical",
+		strategy: "basic-damage",
+		pp: 5,
+		power: 100,
+		accuracy: 80,
+		rechargeTurns: 2,
+		energy: {
+			orange: 12,
+			red: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Cross Chop.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "load-value", value: 1 },
+			{ type: "choose-tiles", count: -1, target: "user", text: "choose" },
+			{ type: "select-tiles-diagonal-to", selection: -1, maxDistance: 2, includeOriginal: true },
+			{ type: "remove-tiles", selection: -1 },
+		],
 	},
 	//Removes a bigger chunk of the board
 	"Crunch": {
@@ -1296,6 +1410,67 @@ const pokemonMoveData = {
 			{ type: "damage" }
 		]
 	},
+	//Burns the same tile 8 times sometimes
+	"Flame Wheel": {
+		name: "Flame Wheel",
+		type: "Fire",
+		category: "Physical",
+		strategy: "basic-damage",
+		pp: 25,
+		power: 60,
+		accuracy: 100,
+		rechargeTurns: 3,
+		energy: {
+			red: 12
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Flame Wheel.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "random-number", min: 1, max: 10 },
+			{ type: "load-value", value: 6 },
+			{ type: "jump-if-less-than", jumpTo: Infinity },
+			{ type: "load-value", value: 1 },
+			{ type: "select-random-tiles", count: -1 },
+			{
+				type: "apply-status-to-tiles", selection: "group", which: -1,
+				status: { name: "Burn", type: "debuff", duration: 1 }
+			},
+			{
+				type: "apply-status-to-tiles", selection: "group", which: -2,
+				status: { name: "Burn", type: "debuff", duration: 1 }
+			},
+			{
+				type: "apply-status-to-tiles", selection: "group", which: -3,
+				status: { name: "Burn", type: "debuff", duration: 1 }
+			},
+			{
+				type: "apply-status-to-tiles", selection: "group", which: -4,
+				status: { name: "Burn", type: "debuff", duration: 1 }
+			},
+			{
+				type: "apply-status-to-tiles", selection: "group", which: -5,
+				status: { name: "Burn", type: "debuff", duration: 1 }
+			},
+			{
+				type: "apply-status-to-tiles", selection: "group", which: -6,
+				status: { name: "Burn", type: "debuff", duration: 1 }
+			},
+			{
+				type: "apply-status-to-tiles", selection: "group", which: -7,
+				status: { name: "Burn", type: "debuff", duration: 1 }
+			},
+			{
+				type: "apply-status-to-tiles", selection: "group", which: -8,
+				status: { name: "Burn", type: "debuff", duration: 1 }
+			},
+		]
+	},
 	//Confuses the opponent but also buffs them
 	"Flatter": {
 		name: "Flatter",
@@ -1585,6 +1760,36 @@ const pokemonMoveData = {
 			{ type: "play-sound", name: "attack" },
 			{ type: "remove-all-status-effects", target: "opponent" },
 		],
+	},
+	//Damages and reduces opponent's initiative
+	"Headbutt": {
+		name: "Headbutt",
+		type: "Normal",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 15,
+		power: 70,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			purple: 7,
+			yellow: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Headbutt.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "get-initiative", target: "opponent" },
+			{ type: "load-value", value: 0.5 },
+			{ type: "multiply-numbers" },
+			{ type: "set-initiative", target: "opponent", initiative: -1 },
+		]
 	},
 	//Reduces move cooldown
 	"Helping Hand": {
@@ -1967,6 +2172,7 @@ const pokemonMoveData = {
 			{ type: "jump", jumpTo: Infinity },
 		],
 	},
+	//Prevents the opponent from switching out
 	"Mean Look": {
 		name: "Mean Look",
 		type: "Normal",
@@ -1988,6 +2194,7 @@ const pokemonMoveData = {
 			{ type: "apply-status-effect", statusEffect: "fear-frozen", target: "opponent" }
 		],
 	},
+	//Steals HP
 	"Mega Drain": {
 		name: "Mega Drain",
 		type: "Grass",
@@ -2598,6 +2805,7 @@ const pokemonMoveData = {
 			{ type: "shuffle-tiles", selection: -1 }
 		]
 	},
+	//Deals extra damage to pokemon that just switched in
 	"Pursuit": {
 		name: "Pursuit",
 		type: "Dark",
@@ -2641,6 +2849,7 @@ const pokemonMoveData = {
 			} },
 		]
 	},
+	//Can be used multiple times in a turn
 	"Quick Attack": {
 		name: "Quick Attack",
 		type: "Normal",
@@ -2661,6 +2870,46 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" }
+		],
+	},
+	//Reduces enemy power by 75% on moves with recharge < 2
+	"Quick Guard": {
+		name: "Quick Guard",
+		type: "Fighting",
+		category: "Status",
+		strategy: "buff-user",
+		tags: [],
+		pp: 15,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 5,
+		energy: {
+			orange: 3,
+			yellow: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Quick Guard.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "quick-guard-protected",
+				type: "power-alteration-opponent",
+				stacks: true,
+				volatile: true,
+				lostOnSwap: true,
+				turns: 1,
+				appliesTo: {
+					rechargeTurns: {
+						operation: "less-than",
+						value: 2
+					}
+				},
+				modification: {
+					change: 0.25,
+					operation: "multiply"
+				}
+			} },
 		],
 	},
 	"Roar": {
@@ -2991,6 +3240,38 @@ const pokemonMoveData = {
 			{ type: "shift-tiles", selection: -1, xOffset: -2, yOffset: -3 },
 		]
 	},
+	"Spark": {
+		name: "Spark",
+		type: "Electric",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 20,
+		power: 65,
+		accuracy: 100,
+		rechargeTurns: 3,
+		energy: {
+			yellow: 7,
+			red: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Spark.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-status-stacks", statusName: "paralyzed" },
+			{ type: "load-value", value: 1 },
+			{ type: "jump-if-less-than", jumpTo: "small-damage" },
+			{ type: "load-value", value: 20 },
+			{ type: "damage", additivePower: -1 },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "damage", label: "small-damage" },
+			{ type: "random-number", min: 1, max: 10 },
+			{ type: "load-value", value: 6 },
+			{ type: "jump-if-less-than", jumpTo: Infinity },
+			{ type: "apply-status-effect", statusEffect: "paralyzed", target: "opponent" },
+		],
+	},
 	"Stealth Rock": {
 		name: "Stealth Rock",
 		type: "Rock",
@@ -3094,6 +3375,54 @@ const pokemonMoveData = {
 			}
 		],
 	},
+	//Deals damage to the opponent as they activate a move
+	"Sucker Punch": {
+		name: "Sucker Punch",
+		type: "Dark",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 5,
+		power: 70,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			orange: 2,
+			purple: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Sucker Punch.mp3"
+		},
+		effects: [
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "sucker-punch-using-sucker-punch",
+				type: "disability",
+				stacks: false,
+				volatile: true,
+				lostOnSwap: true,
+				lostOnBatonPass: true,
+				turns: 1,
+				appliesTo: {
+					name: "Sucker Punch"
+				},
+			} },
+		],
+		onOpponentUseMove: [
+			{ type: "get-status-stacks", statusName: "sucker-punch-using-sucker-punch" },
+			{ type: "jump-if-truthy", jumpTo: "sucker-punch-check" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "get-move-category", oldMove: true, label: "sucker-punch-check" },
+			{ type: "save-variable", name: "category", save: -1 },
+			{ type: "load-value", value: "Physical" },
+			{ type: "jump-if-equal", jumpTo: "deal-damage" },
+			{ type: "load-variable", name: "category" },
+			{ type: "load-value", value: "Special" },
+			{ type: "jump-if-equal", jumpTo: "deal-damage" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "play-sound", name: "attack", label: "deal-damage" },
+			{ type: "damage" },
+		]
+	},
 	"Super Fang": {
 		name: "Super Fang",
 		type: "Normal",
@@ -3139,6 +3468,36 @@ const pokemonMoveData = {
 			{ type: "play-sound", name: "attack" },
 			{ type: "apply-status-effect", statusEffect: "confused", target: "opponent" }
 		],
+	},
+	//Confuses the opponent but also buffs them
+	"Swagger": {
+		name: "Swagger",
+		type: "Normal",
+		category: "Status",
+		strategy: "debuff-opponent",
+		pp: 15,
+		power: null,
+		accuracy: 85,
+		rechargeTurns: 5,
+		energy: {
+			red: 3,
+			yellow: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Swagger.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "apply-status-effect", statusEffect: "confused", target: "opponent" },
+			{
+				type: "apply-debuff", target: "opponent", debuff: {
+					type: "stat",
+					stat: "attack",
+					class: "buff",
+					amount: 1
+				}
+			}
+		]
 	},
 	"Sweet Kiss": {
 		name: "Sweet Kiss",
@@ -3450,6 +3809,7 @@ const pokemonMoveData = {
 			}
 		]
 	},
+	//Deals damage with more power the more Water tiles exist
 	"Water Gun": {
 		name: "Water Gun",
 		type: "Water",
@@ -3471,6 +3831,34 @@ const pokemonMoveData = {
 			{ type: "load-value", value: 2 },
 			{ type: "multiply-numbers" },
 			{ type: "damage", additivePower: -1 }
+		],
+	},
+	//Deals damage and confuses with a chance based on Water tile count
+	"Water Pulse": {
+		name: "Water Pulse",
+		type: "Water",
+		category: "Special",
+		strategy: "basic-damage",
+		pp: 20,
+		power: 60,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			blue: 10
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Water Pulse.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "count-tiles", options: { type: "blue" } },
+			{ type: "load-value", value: 5 },
+			{ type: "multiply-numbers" },
+			{ type: "random-number", min: 0, max: 100 },
+			{ type: "jump-if-less-than", test: -1, against: -2, jumpTo: "confused" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "apply-status-effect", statusEffect: "confused", target: "opponent", label: "confused" }
 		],
 	},
 	//Forces the opponent to switch to a random pokemon

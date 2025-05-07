@@ -378,50 +378,20 @@ const pokemonData = {
 			purple: 2
 		},
 		learnset: [
-			{
-				name: "Play Nice",
-				unlock: { type: "level", amount: 1 }
-			},
-			{
-				name: "Sweet Kiss",
-				unlock: { type: "level", amount: 1 }
-			},
-			{
-				name: "Nuzzle",
-				unlock: { type: "level", amount: 1 }
-			},
-			{
-				name: "Nasty Plot",
-				unlock: { type: "level", amount: 1 }
-			},
-			{
-				name: "Charm",
-				unlock: { type: "level", amount: 1 }
-			},
-			{
-				name: "Thunder Shock",
-				unlock: { type: "level", amount: 1 }
-			},
-			{
-				name: "Tail Whip",
-				unlock: { type: "level", amount: 1 }
-			},
-			{
-				name: "Growl",
-				unlock: { type: "level", amount: 1 }
-			},
-			{
-				name: "Quick Attack",
-				unlock: { type: "level", amount: 1 }
-			},
-			{
-				name: "Thunder Wave",
-				unlock: { type: "level", amount: 4 }
-			},
-			{
-				name: "Double Team",
-				unlock: { type: "level", amount: 1 }
-			},
+			{ name: "Play Nice", unlock: { type: "level", amount: 1 } },
+			{ name: "Sweet Kiss", unlock: { type: "level", amount: 1 } },
+			{ name: "Nuzzle", unlock: { type: "level", amount: 1 } },
+			{ name: "Nasty Plot", unlock: { type: "level", amount: 1 } },
+			{ name: "Charm", unlock: { type: "level", amount: 1 } },
+			{ name: "Thunder Shock", unlock: { type: "level", amount: 1 } },
+			{ name: "Tail Whip", unlock: { type: "level", amount: 1 } },
+			{ name: "Growl", unlock: { type: "level", amount: 1 } },
+			{ name: "Quick Attack", unlock: { type: "level", amount: 1 } },
+			{ name: "Thunder Wave", unlock: { type: "level", amount: 4 } },
+			{ name: "Double Team", unlock: { type: "level", amount: 8 } },
+			{ name: "Electro Ball", unlock: { type: "level", amount: 12 } },
+			{ name: "Feint", unlock: { type: "level", amount: 16 } },
+			{ name: "Spark", unlock: { type: "level", amount: 20 } },
 		]
 	},
 	"Zubat": {
@@ -472,6 +442,7 @@ const pokemonData = {
 			{ name: "Astonish", unlock: { type: "level", amount: 5 } },
 			{ name: "Mean Look", unlock: { type: "level", amount: 10 } },
 			{ name: "Poison Fang", unlock: { type: "level", amount: 15 } },
+			{ name: "Quick Guard", unlock: { type: "level", amount: 20 } },
 		]
 	},
 	"Diglett-Alola": {
@@ -522,6 +493,8 @@ const pokemonData = {
 			{ name: "Growl", unlock: { type: "level", amount: 4 } },
 			{ name: "Astonish", unlock: { type: "level", amount: 8 } },
 			{ name: "Mud-Slap", unlock: { type: "level", amount: 12 } },
+			{ name: "Bulldoze", unlock: { type: "level", amount: 16 } },
+			{ name: "Sucker Punch", unlock: { type: "level", amount: 20 } },
 		]
 	},
 	"Meowth-Alola": {
@@ -573,6 +546,9 @@ const pokemonData = {
 			{ name: "Scratch", unlock: { type: "level", amount: 8 } },
 			{ name: "Pay Day", unlock: { type: "level", amount: 12 } },
 			{ name: "Bite", unlock: { type: "level", amount: 16 } },
+			{ name: "Taunt", unlock: { type: "level", amount: 20 } },
+			{ name: "Assurance", unlock: { type: "level", amount: 24 } },
+			{ name: "Fury Swipes", unlock: { type: "level", amount: 29 } },
 		]
 	},
 	"Mankey": {
@@ -625,6 +601,8 @@ const pokemonData = {
 			{ name: "Low Kick", unlock: { type: "level", amount: 8 } },
 			{ name: "Karate Chop", unlock: { type: "level", amount: 10 } },
 			{ name: "Seismic Toss", unlock: { type: "level", amount: 12 } },
+			{ name: "Swagger", unlock: { type: "level", amount: 17 } },
+			{ name: "Cross Chop", unlock: { type: "level", amount: 22 } },
 		]
 	},
 	"Growlithe": {
@@ -673,6 +651,9 @@ const pokemonData = {
 			{ name: "Leer", unlock: { type: "level", amount: 1 } },
 			{ name: "Howl", unlock: { type: "level", amount: 4 } },
 			{ name: "Bite", unlock: { type: "level", amount: 8 } },
+			{ name: "Flame Wheel", unlock: { type: "level", amount: 12 } },
+			{ name: "Helping Hand", unlock: { type: "level", amount: 16 } },
+			{ name: "Agility", unlock: { type: "level", amount: 20 } },
 		]
 	},
 	"Abra": {
@@ -768,41 +749,15 @@ const pokemonData = {
 			purple: 3
 		},
 		learnset: [
-			{
-				name: "Tackle",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "Curse",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "Growl",
-				unlock: {
-					type: "level",
-					amount: 3
-				}
-			},
-			{
-				name: "Water Gun",
-				unlock: {
-					type: "level",
-					amount: 6
-				}
-			},
-			{
-				name: "Yawn",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Curse", unlock: { type: "level", amount: 1 } },
+			{ name: "Growl", unlock: { type: "level", amount: 3 } },
+			{ name: "Water Gun", unlock: { type: "level", amount: 6 } },
+			{ name: "Yawn", unlock: { type: "level", amount: 9 } },
+			{ name: "Confusion", unlock: { type: "level", amount: 12 } },
+			{ name: "Disable", unlock: { type: "level", amount: 15 } },
+			{ name: "Water Pulse", unlock: { type: "level", amount: 18 } },
+			{ name: "Headbutt", unlock: { type: "level", amount: 21 } },
 		]
 	},
 	"Magnemite": {
@@ -2264,7 +2219,7 @@ const pokemonData = {
 			{ name: "Disarming Voice", unlock: { type: "level", amount: 6 } },
 			{ name: "Aqua Jet", unlock: { type: "level", amount: 9 } },
 			{ name: "Baby-Doll Eyes", unlock: { type: "level", amount: 12 } },
-			{ name: "Crunch", unlock: { type: "level", amount: 1 } },
+			{ name: "Water Pulse", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {

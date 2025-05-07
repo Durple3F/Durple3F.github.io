@@ -714,6 +714,7 @@ function loadResources(){
 		{name: "cascade6", type: "sound", url: "src/audio/Cascade6.wav"},
 		{name: "level-up", type: "sound", url: "src/audio/Level Up!.wav"},
 		{name: "healing", type: "sound", url: "src/audio/healing.mp3"},
+		{name: "shiny-appear", type: "sound", url: "src/audio/shiny_appear.mp3"},
 	]
 	loadedResources[3] = soundsToLoad.length
 

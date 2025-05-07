@@ -331,7 +331,8 @@ function startScene(name, options) {
 				let usablePokemon = getUsablePokemon(playerActivePokemon)
 				if (usablePokemon.length) {
 					$(".level-button").popover("hide")
-					resolvePromise(level.id)
+					resolvePromise()
+					beginLevel(level.id)
 				} else {
 					let message = getLocaleString("error-no-usable-pokemon", lang)
 					createAnnouncement("general", message)
@@ -358,8 +359,6 @@ function startScene(name, options) {
 
 			gameTag.append(listTag)
 			gameTag.append(routeTag)
-
-			promise = promise.then(levelID => beginLevel(levelID))
 		} break
 		case "pc": {
 			fadeInGame()
@@ -461,6 +460,7 @@ function startScene(name, options) {
 				})
 				pcBox.append(img)
 				img.on("mousedown", handleMouseDown2)
+				pcBox.off("mouseup").on("mouseup", handleMouseUp2)
 			}
 
 			let adminTag = $(`<div id='pc-admin'></div>`)
@@ -487,6 +487,7 @@ function startScene(name, options) {
 						container.css("cursor", "pointer")
 					}
 					container.on("mousedown", handleMouseDown)
+					container.on("mouseup", handleMouseUp)
 					activePokemonTag.append(container)
 				}
 				allBoxes = activePokemonTag.children(".active-pokemon-box")
@@ -583,49 +584,81 @@ function startScene(name, options) {
 				return viewPokemonInfo(pokemon, options)
 			}
 
-			const handleMouseDown = (event) => {
-				let box = $(event.currentTarget)
+			let activeBox
+			let lastMouseDownAt
+			let lastMouseDown
+			let mouseClickTime = 150
+			const handleMouseUp = (event) => {
+				let box = activeBox
 				let id = box.attr("data-index")
 				let index = parseInt(id)
 				let pokemon = playerActivePokemon[index]
+				if (!pokemon) return
+				let now = Date.now()
+				let diff = now - lastMouseDown
+				if (
+					diff < mouseClickTime ||
+					(mouse.x === lastMouseDownAt[0] && mouse.y === lastMouseDownAt[1])
+				){
+					let alreadySelected = box.hasClass("selected")
+					allBoxes.removeClass("selected")
+					if (!alreadySelected) {
+						box.addClass("selected")
+						openPokemon(pokemon)
+						.then(() => savePokemon(pokemon))
+						.then(() => box.removeClass("selected"))
+					}
+				}
+			}
+			const handleMouseDown = (event) => {
+				let box = $(event.currentTarget)
+				activeBox = box
+				let id = box.attr("data-index")
+				let index = parseInt(id)
+				let pokemon = playerActivePokemon[index]
+				lastMouseDown = Date.now()
+				lastMouseDownAt = [mouse.x, mouse.y]
 				stopHolding()
 				if (!pokemon) return
-				delay(100).then(() => {
-					if (!mouse.isDown) {
-						let alreadySelected = box.hasClass("selected")
-						allBoxes.removeClass("selected")
-						if (!alreadySelected) {
-							box.addClass("selected")
-							openPokemon(pokemon)
-							.then(() => savePokemon(pokemon))
-							.then(() => box.removeClass("selected"))
-						}
-					} else {
-						if (pokemon) {
-							heldPokemon = playerActivePokemon[index]
-							beginHolding(heldPokemon)
-							box.children("img").hide()
-						}
+				delay(mouseClickTime).then(() => {
+					if (mouse.isDown && pokemon) {
+						heldPokemon = playerActivePokemon[index]
+						beginHolding(heldPokemon)
+						box.children("img").hide()
 					}
 				})
+			}
+			const handleMouseUp2 = (event) => {
+				let box = activeBox
+				let id = box.attr("data-pokemon-id")
+				let pokemon = currentBoxPokemon.find(p => p.uuid === id)
+				if (!pokemon) return
+				let now = Date.now()
+				let diff = now - lastMouseDown
+				console.log(mouse.x, mouse.y, lastMouseDownAt)
+				if (
+					diff < mouseClickTime ||
+					(mouse.x === lastMouseDownAt[0] && mouse.y === lastMouseDownAt[1])
+				){
+					openPokemon(pokemon)
+					.then(() => savePokemon(pokemon))
+				}
 			}
 			const handleMouseDown2 = (event) => {
 				event.preventDefault()
 				let box = $(event.currentTarget)
+				activeBox = box
 				let id = box.attr("data-pokemon-id")
 				let pokemon = currentBoxPokemon.find(p => p.uuid === id)
+				lastMouseDown = Date.now()
+				lastMouseDownAt = [mouse.x, mouse.y]
 				stopHolding()
 				if (!pokemon) return
 				// console.log(p)
-				delay(100).then(() => {
-					if (!mouse.isDown) {
-						openPokemon(pokemon)
-						.then(() => savePokemon(pokemon))
-					} else {
-						heldPokemon = pokemon
-						beginHolding(heldPokemon)
-						box.hide()
-					}
+				delay(mouseClickTime).then(() => {
+					heldPokemon = pokemon
+					beginHolding(heldPokemon)
+					box.hide()
 				})
 			}
 			const beginHolding = pokemon => {
@@ -2086,6 +2119,9 @@ function getMoveHTML(move, options={}) {
 	moveRecharge.hide()
 	let typeIcon = getTypeIcon(move.type)
 	let moveCategory = getMoveCategory(move, options.parentMove)
+	if (move.power && !move.tags.includes("z-move")){
+		moveType.append(`<span>${move.power}</span>`)
+	}
 	moveType.append(`<img src='${getTypeIcon(moveCategory)}'>`)
 	if (typeIcon) {
 		moveType.append(`<img src='${typeIcon}'>`)

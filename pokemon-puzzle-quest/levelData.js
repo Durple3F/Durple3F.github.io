@@ -471,8 +471,8 @@ const levelData = [
 			{ type: "jump-if-lost", jumpTo: Infinity },
 			{ type: "jump", jumpTo: "TrainerChoice" },
 
-			{ type: "change-music", music: "SM Trainer Battle" },
-			{ type: "random-number", min: 1, max: 10, label: "TrainerChoice" },
+			{ type: "change-music", music: "SM Trainer Battle", label: "TrainerChoice" },
+			{ type: "random-number", min: 1, max: 10 },
 			{ type: "load-value", value: 3 },
 			{ type: "jump-if-less-than", jumpTo: "Kevin" },
 			{ type: "jump", jumpTo: "Madison" },

@@ -60,6 +60,7 @@ class Round {
 		this.currentlySwappingPokemon = false
 		this.canTilesMatchRightNow = true
 		this.currentCascade = 0
+		this.skipTimeSteps = false
 		this.matchesInCombo = []
 		this.statusEffects = []
 
@@ -806,6 +807,9 @@ class Round {
 	}
 
 	timeStep() {
+		if (this.skipTimeSteps){
+			return Promise.resolve()
+		}
 		let matches = this.board.getAllMatches()
 		let contents = this.board.contents
 		let activeTrainer = this.trainers[this.activePlayerIndex]
@@ -990,7 +994,7 @@ class Round {
 			if (status.type !== "status") continue
 			let statusName = status.name
 			if (statusName === "poisoned") {
-				activePokemon.hp -= Math.ceil(activePokemon.maxhp / 16)
+				activePokemon.hp -= Math.ceil(activePokemon.maxhp / 32)
 			}
 			if (statusName === "splinters") {
 				let sourceTrainer = status.sourceTrainer || otherTrainer
@@ -1016,18 +1020,7 @@ class Round {
 			for (let status of statusEffects) {
 				let isEnemy = status.sourceTrainer !== trainer
 				let statusName = status.name
-				if (isEnemy && statusName === "Burn") {
-					let damage = activePokemon.maxhp / 32
-					this.dealDamage({
-						from: status.sourcePokemon,
-						fromTrainer: status.sourceTrainer,
-						move: status.sourceMove,
-						to: activePokemon,
-						toTrainer: trainer,
-						damage: damage,
-						fixed: true
-					})
-				} else if (isEnemy && statusName === "Infested") {
+				if (isEnemy && statusName === "Infested") {
 					//Infested tiles eat some of your energy and give them to the opponent
 					let yourEnergy = activePokemon.energy
 					let usableTypes = Object.keys(yourEnergy).filter(key => yourEnergy[key] > 0)
@@ -1323,6 +1316,8 @@ class Round {
 		}
 
 		let activePlayerIndex = this.activePlayerIndex
+		let trainer = this.trainers[activePlayerIndex]
+		let activePokemon = trainer.activePokemon
 		let promise = Promise.resolve()
 
 		//Remove weird tiles from board
@@ -1420,6 +1415,28 @@ class Round {
 						return this.triggerMoveEffects(
 							trainer, activePokemon, move, "onTurnEnd"
 						)
+					})
+				}
+			}
+		}
+
+		//Stuff like Burned triggers at the end of the turn
+		let contents = this.board.tilesOnScreen()
+		for (let tile of contents) {
+			let statusEffects = tile.statusEffects
+			for (let status of statusEffects) {
+				let isEnemy = status.sourceTrainer !== trainer
+				let statusName = status.name
+				if (isEnemy && statusName === "Burn") {
+					let damage = Math.ceil(activePokemon.maxhp / 32)
+					this.dealDamage({
+						from: status.sourcePokemon,
+						fromTrainer: status.sourceTrainer,
+						move: status.sourceMove,
+						to: activePokemon,
+						toTrainer: trainer,
+						damage: damage,
+						fixed: true
 					})
 				}
 			}
@@ -2760,6 +2777,16 @@ class Round {
 
 		let otherTrainer = this.trainers.find(t => t !== trainer)
 		let otherPokemon = otherTrainer.activePokemon
+		//Very occasionally, the opponent may have statuses that affect your power.
+		let theirPowerEffects = otherPokemon.getStatusesOfType("power-alteration-opponent")
+		for (let statusEffect of theirPowerEffects) {
+			let applies = this.doesThisApplyToMove(move, statusEffect.appliesTo, effectiveType)
+			if (applies) {
+				let modification = statusEffect.modification
+				power = applyModification(power, modification)
+			}
+		}
+
 		let category = getMoveCategory(move, parentMove)
 
 		//Technician should apply first to be nice
@@ -2906,6 +2933,13 @@ class Round {
 		if (type && appliesTo.types) {
 			good.push(appliesTo.types.includes(type))
 		}
+		if (appliesTo.rechargeTurns){
+			let data = appliesTo.rechargeTurns
+			let operation = data.operation ?? "equal"
+			let val = data.value
+			let fits = comparisonCheck(move.rechargeTurns, operation, val)
+			good.push(fits)
+		}
 		let logic = appliesTo.logic
 		if (logic === "and") {
 			return good.every(v => v)
@@ -2939,6 +2973,8 @@ class Round {
 			effects: effects,
 			turnStartedOn: this.turn,
 			originalTrigger: trigger,
+			//Some triggers require information from the move that triggered them.
+			oldMoveUse: oldMoveUse,
 			completed: false,
 			info: [],
 			variables: {},
@@ -2971,11 +3007,24 @@ class Round {
 		//Put the move on recharge
 		let moveIndex = pokemon.moves.indexOf(move)
 		pokemon.moveUsage[moveIndex].recharge = move.rechargeTurns
+		let promise = Promise.resolve()
 
 		let moveUseObj = this.newMoveUseObj(trainer, pokemon, move, "effects")
 		moveUseObj.parentMove = parentMove
 		completedTriggers.forEach(trigger => moveUseObj.completedTriggers.push(trigger))
-		let promise = moveUseObj.promise
+
+		//First, let's check if there are any onOpponentUseMove events to consider.
+		let otherTrainer = this.trainers.find(t => t !== trainer)
+		let otherPokemon = otherTrainer.activePokemon
+		for (let theirMove of otherPokemon.activeMoves){
+			if (theirMove.onOpponentUseMove){
+				let triggerObj = this.newMoveUseObj(otherTrainer, otherPokemon, theirMove, "onOpponentUseMove", moveUseObj)
+				triggerObj.move = theirMove
+				promise = promise.then(() => triggerObj.promise)
+				this.advanceCurrentMove(triggerObj)
+				console.log(triggerObj)
+			}
+		}
 		
 		let types = pokemon.getEffectiveTypes()
 		let moveType = this.getEffectiveMoveType(trainer, pokemon, move)
@@ -3022,14 +3071,6 @@ class Round {
 			moveUseObj.resolve()
 			this.updateEverything()
 		} else {
-			promise = promise.then(() => {
-				if (moveUseObj.additionalPromises.length){
-					return Promise.all(moveUseObj.additionalPromises).then(() => {
-						this.finishCurrentMove()
-					})
-				}
-				return this.finishCurrentMove()
-			})
 			this.moveQueue.push(moveUseObj)
 			this.moveUseHistory.push(moveUseObj)
 			this.updateEverything()
@@ -3060,13 +3101,26 @@ class Round {
 				pokemon.addStatusEffect(statusEffect, trainer, pokemon, undefined)
 			}
 
-			//It's important to have this check, because otherwise,
-			//if you use a move while another one is being carried out,
-			//it creates a race condition where they're both being used
-			//at the same time.
-			if (this.moveQueue.length === 1) {
-				this.advanceCurrentMove(moveUseObj)
-			}
+			//Wait until the move is considered finished
+			promise = promise.then(() => {
+				//It's important to have this check, because otherwise,
+				//if you use a move while another one is being carried out,
+				//it creates a race condition where they're both being used
+				//at the same time.
+				if (this.moveQueue.length === 1) {
+					this.advanceCurrentMove(moveUseObj)
+				}
+				return moveUseObj.promise
+			})
+			
+			promise = promise.then(() => {
+				if (moveUseObj.additionalPromises.length){
+					return Promise.all(moveUseObj.additionalPromises).then(() => {
+						this.finishCurrentMove()
+					})
+				}
+				return this.finishCurrentMove()
+			})
 		}
 		return promise
 	}
@@ -3165,17 +3219,19 @@ class Round {
 
 		let shouldUpdate = true
 		let shouldResetMoves = false
+		let shouldTimeStep = shouldUpdate
 		let delayDuration = 50
 		if (!(effectType in pokemonMoveEffects)) {
 			console.warn("You never handled", effectType)
 			console.trace()
-			alert("SOMETHING FUCKED UP BAD PLEASE SEND ME A SCREENSHOT OF THE CONSOLE")
+			alert("SOMETHING WENT VERY WRONG PLEASE SEND ME A SCREENSHOT OF THE CONSOLE")
 			return promise
 		}
 
 		let effectData = pokemonMoveEffects[effectType]
 		delayDuration = effectData.delay ?? delayDuration
 		shouldUpdate = effectData.update ?? shouldUpdate
+		shouldTimeStep = shouldTimeStep && !effect.skipTimeSteps
 		shouldResetMoves = effectData.resetMoves ?? shouldResetMoves
 		let options = {}
 		options.promise = promise
@@ -3301,9 +3357,11 @@ class Round {
 				}
 				if (shouldUpdate) {
 					this.updateEverything()
+					if (shouldTimeStep){
+						return this.timeStep()
+					}
 				}
 			})
-			.then(() => this.timeStep())
 			.then(() => this.advanceCurrentMove(moveUseObj))
 		})
 
@@ -3311,7 +3369,8 @@ class Round {
 	}
 	finishCurrentMove() {
 		let moveUseObj
-		let promise = new Promise(resolve => {
+		let promise = this.timeStep()
+		promise = promise.then(() => new Promise(resolve => {
 			//Note: Bad name for this thing.
 			//This variable is a LIST of HOPEFULLY one moveUseObject.
 			moveUseObj = this.moveQueue.splice(0, 1)
@@ -3325,58 +3384,58 @@ class Round {
 				resolve()
 			}
 			this.resetCascade()
-		})
-			//Post-end-of-move effects like Confused
-			.then(() => {
-				if (!moveUseObj.length) {
-					console.warn("Uh oh! I think a move got ended twice!")
-					console.trace()
-				} else {
-					moveUseObj = moveUseObj[0]
-				}
-				moveUseObj.completed = true
+		}))
+		//Post-end-of-move effects like Confused
+		.then(() => {
+			if (!moveUseObj.length) {
+				console.warn("Uh oh! I think a move got ended twice!")
+				console.trace()
+			} else {
+				moveUseObj = moveUseObj[0]
+			}
+			moveUseObj.completed = true
 
-				let trainer = moveUseObj.trainer
-				let pokemon = moveUseObj.pokemon
-				let move = moveUseObj.move
-				let promises = []
-				let endedTurn = false
+			let trainer = moveUseObj.trainer
+			let pokemon = moveUseObj.pokemon
+			let move = moveUseObj.move
+			let promises = []
+			let endedTurn = false
 
-				if (pokemon && pokemon.statusEffects.length) {
-					let statusEffects = pokemon.statusEffects
-					for (let statusEffect of statusEffects) {
-						if (statusEffect.name === "confused") {
-							//50% chance that the turn ends.
-							let confuseChance = 0.5
-							if (Math.random() < confuseChance && !endedTurn) {
-								endedTurn = true
-								let p = this.createAnnouncement("general", "Turn ended due to confusion!", 1500)
-								promises.push(p)
-								// this.turnEnd(this.turn)
-							}
+			if (pokemon && pokemon.statusEffects.length) {
+				let statusEffects = pokemon.statusEffects
+				for (let statusEffect of statusEffects) {
+					if (statusEffect.name === "confused") {
+						//50% chance that the turn ends.
+						let confuseChance = 0.5
+						if (Math.random() < confuseChance && !endedTurn) {
+							endedTurn = true
+							let p = this.createAnnouncement("general", "Turn ended due to confusion!", 1500)
+							promises.push(p)
+							// this.turnEnd(this.turn)
 						}
 					}
 				}
+			}
 
-				let promise = Promise.all(promises)
-				//Confusion won't end this turn if the turn has already passed.
-				if (endedTurn && this.turn === moveUseObj.turnStartedOn) {
-					let turn = this.turn
-					this.currentlyEndingTurn = true
-					// this.turnEnd(this.turn)
-					promise = promise.then(() => {
-						return this.turnEnd(turn)
-					})
-				}
+			let promise = Promise.all(promises)
+			//Confusion won't end this turn if the turn has already passed.
+			if (endedTurn && this.turn === moveUseObj.turnStartedOn) {
+				let turn = this.turn
+				this.currentlyEndingTurn = true
+				// this.turnEnd(this.turn)
+				promise = promise.then(() => {
+					return this.turnEnd(turn)
+				})
+			}
 
-				return promise
-			})
-			.then(() => {
-				if (moveUseObj && moveUseObj.checkBetweenEffects) {
-					return this.checkForWinner()
-				}
-				return Promise.resolve()
-			})
+			return promise
+		})
+		.then(() => {
+			if (moveUseObj && moveUseObj.checkBetweenEffects) {
+				return this.checkForWinner()
+			}
+			return Promise.resolve()
+		})
 
 		promise = promise.then(() => {
 			let trainer = moveUseObj.trainer
@@ -3698,9 +3757,9 @@ class Round {
 		playSound(`cascade${cascade}`)
 	}
 
-	applyGravity() {
+	applyGravity(doTimeStep=true, animationSpeed=1) {
 		let now = Date.now()
-		let duration = 300
+		let duration = 300 / animationSpeed
 		//for each column, let's find all the tiles in that column.
 		let columns = []
 		for (let i = 0; i < this.board.width; i++) {
@@ -3728,7 +3787,11 @@ class Round {
 		animations.promise = animations.promise.then(() => {
 			let round = animations.info.round
 			round.applyLocationChanges(animations.info.newLocationMap)
-			return this.timeStep()
+			if (doTimeStep){
+				return this.timeStep()
+			} else {
+				return Promise.resolve()
+			}
 		})
 
 		return animations.promise
@@ -4231,7 +4294,7 @@ class Round {
 
 	fillTrainerTags(tags, classname) {
 		tags.side = $(`#board .board-side-container${classname} .board-side`)
-		tags.side.parent()[0].scroll(0, 0)
+		tags.side.parent()[0].scrollTo({top:0})
 		tags.sideTop = tags.side.children(".board-side-top")
 		tags.sideMiddle = tags.side.children(".board-side-middle")
 		tags.sideBottom = tags.side.children(".board-side-bottom")
@@ -4575,10 +4638,17 @@ class Round {
 
 		let sounds = pokemon.getAllSounds()
 		let cryUrl = sounds?.cry
-		if (cryUrl) {
+		if (cryUrl && !pokemon.gameRoundData.hasCried) {
+			pokemon.gameRoundData.hasCried = true
 			let cryName = `${pokemonId}-cry`
 			loadSound(cryName, "sound", cryUrl)
 				.then(() => playSound(cryName))
+				.then(() => delete pokemon.gameRoundData.hasCried)
+				.then(() => {
+					if (pokemon.isShiny){
+						playSound("shiny-appear")
+					}
+				})
 		}
 
 		if (facing !== correctFacing) {

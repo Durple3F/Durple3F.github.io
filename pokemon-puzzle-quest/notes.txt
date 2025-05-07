@@ -3,8 +3,12 @@ SOMETIMES status effects don't have moves attaches to them BE AWARE
 HOPEFULLY fixed
 - Music plays twice sometimes
 - Opponents don't care about cooldowns
+- Sometimes clicking play level doesn't work
+- Sometimes cries play twice
+  - Maybe due to end of turn start of turn?
 
 TODO
+- Add tooltips over tiles
 - Hau should ask at the beginning whether to pick the better or worse starter
 - Hau and Team Skull should get special battle themes
 - Give Curse a special cost depending on whether the user is Ghost type
@@ -18,4 +22,3 @@ TODO
 - Add a button that lets you swap which side the selection window is on
 - Z-crystal tooltip broken
 - Make All pokemon All abilities mode have some funny way to show
-- Make pokemon remember how many fights theyve participated in

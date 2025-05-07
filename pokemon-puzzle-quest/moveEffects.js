@@ -418,6 +418,16 @@ const pokemonMoveEffects = {
 			resolve(result)
 		}
 	},
+	"get-move-category": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let oldMove = effect.oldMove ?? true
+			let moveUse = oldMove ? options.moveUse.oldMoveUse : options.moveUse
+			let move = moveUse.move
+			let category = getMoveCategory(move, moveUse.parentMove)
+			resolve(category)
+		}
+	},
 	"apply-status-effect": {
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
@@ -505,6 +515,7 @@ const pokemonMoveEffects = {
 			let target = options.target
 			let statusName = effect.statusName
 			let result = target.getStatuses(statusName).length
+			console.log(statusName, result)
 			resolve(result)
 		}
 	},
@@ -763,6 +774,8 @@ const pokemonMoveEffects = {
 			let selection = params.selection ?? []
 			let chosenTiles = []
 			let chooseable = game.board.tilesOnScreen()
+			let maxDistance = effect.maxDistance ?? 1
+			let includeOriginal = effect.includeOriginal ?? false
 
 			chosenTiles = chooseable.filter(tile => {
 				let tx1 = tile.x
@@ -770,9 +783,13 @@ const pokemonMoveEffects = {
 				return selection.some(tile2 => {
 					let dx = Math.abs(tx1 - tile2.x)
 					let dy = Math.abs(ty1 - tile2.y)
-					return dx === 1 && dy === 1
+					return dx === dy && dx <= maxDistance && dx > 0
 				})
 			})
+			if (includeOriginal){
+				chosenTiles = chosenTiles.concat(selection)
+			}
+			chosenTiles = noDuplicates(chosenTiles)
 			
 			resolve(chosenTiles)
 		}
@@ -874,6 +891,18 @@ const pokemonMoveEffects = {
 					chosenTiles.push(tile)
 				}
 			}
+			resolve(chosenTiles)
+		}
+	},
+	"select-tiles-at": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let x = params.x
+			let y = params.y
+			let contents = game.board.tilesOnScreen()
+			let chosenTiles = contents.filter(tile => {
+				return tile.x === x && tile.y === y
+			})
 			resolve(chosenTiles)
 		}
 	},
@@ -1027,14 +1056,16 @@ const pokemonMoveEffects = {
 		}
 	},
 	"remove-tiles": {
+		update: true,
 		execute: (resolve, effect, params, game, options) => {
 			let selection = params.selection ?? []
-			let doTimeStep = false
+			let cascade = effect.cascade ?? true
+			let animationSpeed = effect.animationSpeed ?? 1
 			selection.forEach(tile => game.board.explodeTile(tile))
-			if (selection.length) {
+			if (selection.length && cascade) {
 				game.increaseCascade()
 			}
-			game.applyGravity()
+			game.applyGravity(false, animationSpeed)
 			.then(() => resolve())
 		}
 	},
@@ -1532,7 +1563,13 @@ const pokemonMoveEffects = {
 		execute: (resolve, effect, params, game, options) => {
 			let trainers = game.trainers
 			let trainer = options.moveUse.trainer
-			let result = trainers[0] === trainer ? effect.left : effect.right
+			let useParams = effect.useParams
+			let result
+			if (useParams){
+				result = trainers[0] === trainer ? params.left : params.right
+			} else {
+				result = trainers[0] === trainer ? effect.left : effect.right
+			}
 			resolve(result)
 		}
 	},

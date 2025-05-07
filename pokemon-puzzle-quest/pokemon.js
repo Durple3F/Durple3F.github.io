@@ -54,7 +54,9 @@ class Pokemon{
 		this.exp = options?.exp ?? this.getEXPNeededForLevel(this.level)
 
 		// this.learnset = this.data.learnset
-		this.moves = this.data.learnset.map(move => pokemonMoveData[move.name])
+		this.moves = this.data.learnset.map(move => {
+			return pokemonMoveData[move.name]
+		})
 		this.movesUnlockedMap = []
 		let movesUnlocked
 		if (options?.movesUnlocked){
@@ -763,7 +765,8 @@ class Pokemon{
 		let copy = {}
 		let toCopy = [
 			"uuid", "owner", "level", "nature",
-			"ivs", "evs", "exp", "isShiny",
+			"ivs", "evs", "exp", "friendship",
+			"isShiny",
 			"hadHiddenAbility"
 		]
 		for (let key of toCopy){
