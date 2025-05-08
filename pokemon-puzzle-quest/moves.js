@@ -2183,6 +2183,28 @@ const pokemonMoveData = {
 			{ type: "change-tile-weight", tileType: "black", add: -1 },
 		]
 	},
+	//Half damage from special moves for 5 turns
+	"Light Screen": {
+		name: "Light Screen",
+		type: "Psychic",
+		category: "Status",
+		strategy: "buff-user",
+		pp: 30,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 7,
+		energy: {
+			green: 3,
+			purple: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Light Screen.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "apply-status-effect", statusEffect: "light-screen", target: "user" },
+		],
+	},
 	//Deals damage based on opponent's weight
 	"Low Kick": {
 		name: "Low Kick",
@@ -2238,6 +2260,35 @@ const pokemonMoveData = {
 			{ type: "load-value", value: 120, label: "damage-6" },
 			{ type: "damage", additivePower: -1 },
 			{ type: "jump", jumpTo: Infinity },
+		],
+	},
+	//Deals bonus damage if you're faster
+	"Mach Punch": {
+		name: "Mach Punch",
+		type: "Fighting",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact", "punching"],
+		pp: 30,
+		power: 40,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			orange: 5,
+			yellow: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Mach Punch.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-stat", which: "speed", target: "opponent" },
+			{ type: "get-stat", which: "speed", target: "user" },
+			{ type: "jump-if-less-than", jumpTo: "big-damage" },
+			{ type: "damage" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "load-value", value: 40 },
+			{ type: "damage", additivePower: -1, label: "big-damage" }
 		],
 	},
 	//Prevents the opponent from switching out
@@ -2432,6 +2483,30 @@ const pokemonMoveData = {
 			}
 		],
 	},
+	//Deals damage equal the user's level
+	"Night Shade": {
+		name: "Night Shade",
+		type: "Ghost",
+		category: "Special",
+		strategy: "special",
+		tags: ["damage-dealing"],
+		pp: 15,
+		power: null,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			red: 3,
+			purple: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Night Shade.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-level", target: "user" },
+			{ type: "damage", amount: -1, fixed: true, finalImmunityCheck: true },
+		],
+	},
 	"Nuzzle": {
 		name: "Nuzzle",
 		type: "Electric",
@@ -2500,11 +2575,11 @@ const pokemonMoveData = {
 			{ type: "play-sound", name: "attack" },
 			{ type: "get-stat", which: "speed", target: "user" },
 			{ type: "get-stat", which: "speed", target: "opponent" },
-			{ type: "jump-if-less-than", jumpTo: 6 },
+			{ type: "jump-if-less-than", jumpTo: "big-damage" },
 			{ type: "damage" },
 			{ type: "jump", jumpTo: Infinity },
 			{ type: "load-value", value: 50 },
-			{ type: "damage", additivePower: -1 }
+			{ type: "damage", additivePower: -1, label: "big-damage" }
 		],
 	},
 	"Peck": {
@@ -2980,6 +3055,29 @@ const pokemonMoveData = {
 			} },
 		],
 	},
+	//Half damage from physical moves for 5 turns
+	"Reflect": {
+		name: "Reflect",
+		type: "Psychic",
+		category: "Status",
+		strategy: "buff-user",
+		pp: 20,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 7,
+		energy: {
+			red: 3,
+			purple: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Reflect.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "apply-status-effect", statusEffect: "reflect", target: "user" },
+		],
+	},
+	//Forces opponent to switch
 	"Roar": {
 		name: "Roar",
 		type: "Normal",
@@ -3082,6 +3180,55 @@ const pokemonMoveData = {
 			{ type: "remove-tiles", selection: -1 },
 		]
 	},
+	//Heal half your HP back
+	"Roost": {
+		name: "Roost",
+		type: "Flying",
+		category: "Status",
+		strategy: "buff-user",
+		tags: ["healing"],
+		pp: 5,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 10,
+		energy: {
+			green: 12,
+			blue: 12
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Roost part 1.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-max-hp", target: "user" },
+			{ type: "load-value", value: 0.5 },
+			{ type: "multiply-numbers", round: "up" },
+			{ type: "heal", target: "user", amount: -1 },
+		],
+	},
+	//Can't get statuses from opponents for 5 turns
+	"Safeguard": {
+		name: "Safeguard",
+		type: "Psychic",
+		category: "Status",
+		strategy: "buff-user",
+		pp: 25,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 7,
+		energy: {
+			blue: 3,
+			purple: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Safeguard.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "apply-status-effect", statusEffect: "safeguard", target: "user" },
+		],
+	},
+	//Gives Energy Down to a diamond area of tiles
 	"Sand Attack": {
 		name: "Sand Attack",
 		type: "Ground",
@@ -3180,8 +3327,8 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			orange: 8,
-			green: 6
+			orange: 5,
+			green: 3
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Seismic Toss.mp3"
@@ -3340,6 +3487,45 @@ const pokemonMoveData = {
 			{ type: "apply-status-effect", statusEffect: "paralyzed", target: "opponent" },
 		],
 	},
+	//Doubles the opponent's move costs for a while
+	"Spite": {
+		name: "Spite",
+		type: "Ghost",
+		category: "Status",
+		strategy: "special",
+		pp: 10,
+		power: null,
+		accuracy: 100,
+		rechargeTurns: 10,
+		energy: {
+			green: 4,
+			red: 4,
+			purple: 8
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Spite.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "apply-status-effect", target: "opponent", statusEffect: {
+				name: "spite-cost-reduction",
+				type: "cost-alteration",
+				stacks: false,
+				volatile: true,
+				appliesTo: {
+					logic: "not",
+				},
+				turns: 7,
+				numberOfApplications: 5,
+				modification: {
+					change: 2,
+					operation: "multiply"
+				},
+				energyCost: {}
+			} },
+		],
+	},
+	//Gives the opponent Splinters
 	"Stealth Rock": {
 		name: "Stealth Rock",
 		type: "Rock",
@@ -3365,6 +3551,7 @@ const pokemonMoveData = {
 			{ type: "apply-status-effect", statusEffect: "splinters", target: "opponent" }
 		]
 	},
+	//Lowers opponent's speed 2
 	"String Shot": {
 		name: "String Shot",
 		type: "Bug",
@@ -3393,6 +3580,7 @@ const pokemonMoveData = {
 			}
 		],
 	},
+	//Shuffles the board and ends the turn
 	"Struggle": {
 		name: "Struggle",
 		type: "Typeless",
@@ -3417,6 +3605,43 @@ const pokemonMoveData = {
 			{ type: "end-turn" }
 		],
 	},
+	//Swaps random tiles in random directions
+	"Struggle Bug": {
+		name: "Struggle Bug",
+		type: "Bug",
+		category: "Special",
+		strategy: "basic-damage",
+		pp: 20,
+		power: 50,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			green: 6,
+			yellow: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Struggle Bug.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{
+				type: "apply-debuff", target: "opponent", debuff: {
+					type: "stat",
+					stat: "specialAttack",
+					class: "debuff",
+					amount: -1
+				}
+			},
+			{ type: "load-value", value: 3 },
+			{ type: "select-random-tiles", count: -1, conditions: { types: ["green"] } },
+			{ type: "move-tiles-in-random-directions", selection: -1 },
+		]
+	},
+	//Places infectious status effects on the board that eventually paralyze
 	"Stun Spore": {
 		name: "Stun Spore",
 		type: "Grass",
@@ -3491,6 +3716,7 @@ const pokemonMoveData = {
 			{ type: "damage" },
 		]
 	},
+	//Deals damage equal to 50% of the enemy's HP
 	"Super Fang": {
 		name: "Super Fang",
 		type: "Normal",
@@ -3516,6 +3742,7 @@ const pokemonMoveData = {
 			{ type: "damage", amount: -1, fixed: true },
 		],
 	},
+	//Confuses the opponent
 	"Supersonic": {
 		name: "Supersonic",
 		type: "Normal",
@@ -3567,6 +3794,7 @@ const pokemonMoveData = {
 			}
 		]
 	},
+	//Confuses the opponent AND shuffles the board
 	"Sweet Kiss": {
 		name: "Sweet Kiss",
 		type: "Normal",
@@ -3589,6 +3817,7 @@ const pokemonMoveData = {
 			{ type: "shuffle-board" }
 		],
 	},
+	//Multi-use attack
 	"Swift": {
 		name: "Swift",
 		type: "Normal",
@@ -3639,6 +3868,7 @@ const pokemonMoveData = {
 			}
 		],
 	},
+	//Just damage
 	"Tackle": {
 		name: "Tackle",
 		type: "Normal",
@@ -3661,6 +3891,7 @@ const pokemonMoveData = {
 			{ type: "end-turn" }
 		],
 	},
+	//Decreases enemy defense 1
 	"Tail Whip": {
 		name: "Tail Whip",
 		type: "Normal",

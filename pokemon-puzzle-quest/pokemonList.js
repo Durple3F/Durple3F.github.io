@@ -911,6 +911,9 @@ const pokemonData = {
 			{ name: "Confuse Ray", unlock: { type: "level", amount: 1 } },
 			{ name: "Hypnosis", unlock: { type: "level", amount: 4 } },
 			{ name: "Mean Look", unlock: { type: "level", amount: 8 } },
+			{ name: "Payback", unlock: { type: "level", amount: 12 } },
+			{ name: "Spite", unlock: { type: "level", amount: 16 } },
+			{ name: "Curse", unlock: { type: "level", amount: 20 } },
 		]
 	},
 	"Drowzee": {
@@ -958,7 +961,9 @@ const pokemonData = {
 			{ name: "Hypnosis", unlock: { type: "level", amount: 1 } },
 			{ name: "Disable", unlock: { type: "level", amount: 5 } },
 			{ name: "Confusion", unlock: { type: "level", amount: 9 } },
-			{ name: "Bide", unlock: { type: "level", amount: 1 } },
+			{ name: "Headbutt", unlock: { type: "level", amount: 13 } },
+			{ name: "Poison Gas", unlock: { type: "level", amount: 17 } },
+			{ name: "Psybeam", unlock: { type: "level", amount: 21 } },
 		]
 	},
 	"Ledyba": {
@@ -1003,27 +1008,15 @@ const pokemonData = {
 			purple: 5
 		},
 		learnset: [
-			{
-				name: "Tackle",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "Supersonic",
-				unlock: {
-					type: "level",
-					amount: 5
-				}
-			},
-			{
-				name: "Swift",
-				unlock: {
-					type: "level",
-					amount: 8
-				}
-			}
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Supersonic", unlock: { type: "level", amount: 5 } },
+			{ name: "Swift", unlock: { type: "level", amount: 8 } },
+			{ name: "Light Screen", unlock: { type: "level", amount: 12 } },
+			{ name: "Reflect", unlock: { type: "level", amount: 12 } },
+			{ name: "Safeguard", unlock: { type: "level", amount: 12 } },
+			{ name: "Mach Punch", unlock: { type: "level", amount: 15 } },
+			{ name: "Roost", unlock: { type: "level", amount: 19 } },
+			{ name: "Struggle Bug", unlock: { type: "level", amount: 22 } },
 		]
 	},
 	"Spinarak": {
@@ -1068,34 +1061,14 @@ const pokemonData = {
 			purple: 3
 		},
 		learnset: [
-			{
-				name: "Poison Sting",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "String Shot",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "Absorb",
-				unlock: {
-					type: "level",
-					amount: 4
-				}
-			},
-			{
-				name: "Infestation",
-				unlock: {
-					type: "level",
-					amount: 7
-				}
-			},
+			{ name: "Poison Sting", unlock: { type: "level", amount: 1 } },
+			{ name: "String Shot", unlock: { type: "level", amount: 1 } },
+			{ name: "Absorb", unlock: { type: "level", amount: 5 } },
+			{ name: "Infestation", unlock: { type: "level", amount: 8 } },
+			{ name: "Scary Face", unlock: { type: "level", amount: 12 } },
+			{ name: "Night Shade", unlock: { type: "level", amount: 15 } },
+			{ name: "Shadow Sneak", unlock: { type: "level", amount: 19 } },
+			{ name: "Fury Swipes", unlock: { type: "level", amount: 22 } },
 		]
 	},
 	"Pichu": {
@@ -2178,7 +2151,7 @@ const pokemonData = {
 			{ name: "Disarming Voice", unlock: { type: "level", amount: 6 } },
 			{ name: "Aqua Jet", unlock: { type: "level", amount: 9 } },
 			{ name: "Baby-Doll Eyes", unlock: { type: "level", amount: 12 } },
-			{ name: "Acid Spray", unlock: { type: "level", amount: 1 } },
+			{ name: "Struggle Bug", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {

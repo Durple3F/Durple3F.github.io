@@ -230,6 +230,20 @@ const pokemonStatusData = {
 		class: "debuff",
 		name: "splinters"
 	},
+	"light screen": {
+		image: "src/img/icons/nested-hexagons.png",
+		color: "rgb(211, 107, 214)",
+		stacks: false,
+		class: "buff",
+		name: "light screen"
+	},
+	"safeguard": {
+		image: "src/img/icons/acid-shield.png",
+		color: "rgb(211, 107, 214)",
+		stacks: false,
+		class: "buff",
+		name: "safeguard"
+	},
 }
 for (let statusName in pokemonStatusData){
 	let statusType = pokemonStatusData[statusName]

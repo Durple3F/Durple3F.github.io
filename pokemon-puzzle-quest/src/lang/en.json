@@ -1392,10 +1392,20 @@
 			"description": "Deals damage. Lowers the chance of Grass tiles spawning by 50%, and makes Dark tiles more likely to spawn instead. Dark tiles are worth 1 purple energy AND 1 red energy each.",
 			"shortDescription": "Deals light damage and spawns Dark tiles"
 		},
+		"Light Screen": {
+			"name": "Light Screen",
+			"description": "Gives the user the Light Screen status for five turns. Special moves used against a Pokémon with Light Screen have their power halved.",
+			"shortDescription": "Reduces Special damage taken"
+		},
 		"Low Kick": {
 			"name": "Low Kick",
 			"description": "Deals damage. This move's power depends on the weight of the target. Its power is 20 against Pokémon which are less than 10kg, 40 when less than 25kg, 60 when less than 50kg, 80 when less than 100kg, 100 when less than 200kg, and 120 when greater than 200kg. This move is the only reason that I programmed in weights for Pokémon.",
 			"shortDescription": "Deals damage depending on weight"
+		},
+		"Mach Punch": {
+			"name": "Mach Punch",
+			"description": "Deals damage. If the opponent's speed stat is less than the speed stat of the user, this move's power increases by 40.",
+			"shortDescription": "Deals damage based on speed"
 		},
 		"Mean Look": {
 			"name": "Mean Look",
@@ -1492,6 +1502,11 @@
 			"description": "80% of the time, this move deals damage to the opponent with power ranging from 40-120. Otherwise, it heals the opponent for 25% of their max HP or maxes out their energy.",
 			"shortDescription": "Deals damage usually"
 		},
+		"Psybeam": {
+			"name": "Psybeam",
+			"description": "Deals damage and applies Confused 50% of the time. The user chooses two tiles. Each tile between them, including the chosen tiles, is shuffled.",
+			"shortDescription": "Deals damage and shuffles tiles"
+		},
 		"Pursuit": {
 			"name": "Pursuit",
 			"description": "Deals damage. If the opponent has been active for no more than 1 turn, this move's power doubles.",
@@ -1506,6 +1521,11 @@
 			"name": "Quick Guard",
 			"description": "Until the start of the user's next turn, moves that the opponent uses with a cooldown time of 1 or less have their power reduced by 75%.",
 			"shortDescription": "Temporarily makes quick attacks against you weaker"
+		},
+		"Reflect": {
+			"name": "Reflect",
+			"description": "Gives the user the Reflect status for five turns. Physical moves used against a Pokémon with Reflect have their power halved.",
+			"shortDescription": "Reduces Physical damage taken"
 		},
 		"Roar": {
 			"name": "Roar",
@@ -1522,6 +1542,16 @@
 			"name": "Rock Throw",
 			"description": "Deals damage. The user chooses a tile. All tiles in that column are removed.",
 			"shortDescription": "Removes a column of tiles"
+		},
+		"Roost": {
+			"name": "Roost",
+			"description": "The user heals HP equal to half their Max HP, rounded up.",
+			"shortDescription": "Heals half the user's Max HP"
+		},
+		"Safeguard": {
+			"name": "Safeguard",
+			"description": "Gives the user the Safeguard status for five turns. Pokémon with Safeguard can't receive status effects from other Pokémon.",
+			"shortDescription": "Prevents receiving status effects from other Pokémon"
 		},
 		"Sand Attack": {
 			"name": "Sand Attack",
@@ -1543,10 +1573,10 @@
 			"description": "Deals damage. If you and your opponent have a different number of Pokémon remaining, this move's power increases by 40.",
 			"shortDescription": "Deals damage"
 		},
-		"Psybeam": {
-			"name": "Psybeam",
-			"description": "Deals damage and applies Confused 50% of the time. The user chooses two tiles. Each tile between them, including the chosen tiles, is shuffled.",
-			"shortDescription": "Deals damage and shuffles tiles"
+		"Spite": {
+			"name": "Spite",
+			"description": "The next 5 times that the opponent uses a move, it has its energy cost doubled. This effect wears off after 7 turns.",
+			"shortDescription": "Raises the opponent's costs"
 		},
 		"Scary Face": {
 			"name": "Scary Face",
@@ -1587,6 +1617,11 @@
 			"name": "Struggle",
 			"description": "An attack of desperation only useful when there are no available moves. It also deals recoil damage to its user equal to 1/4 their max HP, before ending the current turn.",
 			"shortDescription": "Shuffle board"
+		},
+		"Struggle Bug": {
+			"name": "Struggle Bug",
+			"description": "Deals damage and lowers the opponent's Special Attack by a stage. Then, selects up to 3 random Grass tiles and swaps them with random adjacent tiles.",
+			"shortDescription": "Deals damage and swaps tiles"
 		},
 		"Stun Spore": {
 			"name": "Stun Spore",
@@ -2278,6 +2313,18 @@
 		"fear-frozen": {
 			"name": "Frozen in Fear",
 			"description": "This Pokémon can't be switched out voluntarily. If its owner matches 5 tiles in a row, it will snap back to reality."
+		},
+		"light-screen": {
+			"name": "Light Screen",
+			"description": "Special moves used against this Pokémon have their power halved."
+		},
+		"reflect": {
+			"name": "Reflect",
+			"description": "Physical moves used against this Pokémon have their power halved."
+		},
+		"safeguard": {
+			"name": "Safeguard",
+			"description": "This Pokémon can't receive status effects from other Pokémon."
 		}
 	},
 	"levels": {

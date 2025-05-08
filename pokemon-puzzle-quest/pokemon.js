@@ -224,6 +224,30 @@ class Pokemon{
 						turns: 4
 					}
 				} break
+				case "light-screen": {
+					status = {
+						name: "light-screen",
+						class: "buff",
+						volatile: true,
+						turns: 5
+					}
+				} break
+				case "reflect": {
+					status = {
+						name: "reflect",
+						class: "buff",
+						volatile: true,
+						turns: 5
+					}
+				} break
+				case "safeguard": {
+					status = {
+						name: "safeguard",
+						class: "buff",
+						volatile: true,
+						turns: 5
+					}
+				} break
 				default:
 					console.warn("You never handled", status)
 					status = {
@@ -370,6 +394,9 @@ class Pokemon{
 			if (isGrassType && this.trainer?.activePokemon?.hasAbility("Flower Veil")){
 				prevented = true
 			}
+		}
+		if (status.type === "status" && status.sourcePokemon !== this && this.hasAbility("safeguard")){
+			prevented = true
 		}
 
 		//There are some status effects that don't stack

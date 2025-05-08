@@ -2900,6 +2900,13 @@ class Round {
 		if (effectiveType === "Fire" && otherPokemon.hasAbility("Fluffy")){
 			power *= 2
 		}
+		//Light Screen and Reflect halve power (unless you have infilitrator)
+		if (category === "Special" && otherPokemon.hasStatus("light-screen") && !pokemon.hasAbility("Infiltrator")){
+			power *= 0.5
+		}
+		if (category === "Physical" && otherPokemon.hasStatus("reflect") && !pokemon.hasAbility("Infiltrator")){
+			power *= 0.5
+		}
 		//There's a bunch that are only active at low HP
 		if (pokemon.hp / pokemon.maxhp <= 1 / 3) {
 			if (effectiveType === "Fire" && pokemon.hasAbility("Blaze")) {

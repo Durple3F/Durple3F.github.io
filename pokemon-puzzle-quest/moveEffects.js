@@ -64,7 +64,7 @@ const pokemonMoveEffects = {
 	},
 	"swap-tiles": {
 		execute: (resolve, effect, params, game, options) => {
-			let selection = params.selection
+			let selection = params.selection || []
 			if (selection.length < 2) {
 				resolve()
 				return
@@ -208,6 +208,36 @@ const pokemonMoveEffects = {
 			game.animateMoveTiles(locationMap, 250)
 			.then(() => game.timeStep())
 			.then(() => resolve())
+		}
+	},
+	"move-tiles-in-random-directions": {
+		execute: (resolve, effect, params, game, options) => {
+			let selection = params.selection ?? []
+			let chooseable = game.board.tilesOnScreen()
+			let swapping = []
+			let alreadyChosen = []
+			for (let tile of selection){
+				swapping.push(tile)
+			}
+			for (let tile of swapping){
+				let nearby = chooseable.filter(tile2 => {
+					let dist = distance(tile.x, tile.y, tile2.x, tile2.y)
+					return dist === 1 && !swapping.includes(tile2) && !alreadyChosen.includes(tile2)
+				})
+				if (nearby.length === 0) continue
+				let chosen = randomChoice(nearby)
+				alreadyChosen.push(chosen)
+				let map = []
+				map.push([tile, [chosen.x, chosen.y]])
+				map.push([chosen, [tile.x, tile.y]])
+				let animOptions = {
+					callback: () => {
+						game.applyLocationChanges(map)
+						resolve()
+					}
+				}
+				game.animateSwitchLocations(tile, chosen, animOptions)
+			}
 		}
 	},
 	"time-step": {
