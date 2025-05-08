@@ -1150,6 +1150,11 @@
 			"shortDescription": "Deals some damage and removes tiles",
 			"choose": "Choose up to 4 tiles in a 2x2 square."
 		},
+		"Block": {
+			"name": "Block",
+			"description": "The opponent becomes unable to switch Pokémon until the user switches out.",
+			"shortDescription": "Prevents switching out"
+		},
 		"Brutal Swing": {
 			"name": "Brutal Swing",
 			"description": "Deals damage. Converts half of all Grass and Psychic tiles, rounded up, into Dark tiles. Dark tiles are worth 1 purple energy AND 1 red energy each.",
@@ -1164,6 +1169,11 @@
 			"name": "Bug Bite",
 			"description": "Deals damage. Then, drains 2 energy from the opponent's three most full energy types and gives it to the user.",
 			"shortDescription": "Deals some damage and drains energy"
+		},
+		"Bulk Up": {
+			"name": "Bulk Up",
+			"description": "Raises the user's Attack stat by 1 stage and its Defense by 1 stage.",
+			"shortDescription": "Raises user's Attack and Defense"
 		},
 		"Bulldoze": {
 			"name": "Bulldoze",
@@ -1246,6 +1256,11 @@
 			"description": "Deals damage. Then, 50% of the time, applies Paralyzed.",
 			"shortDescription": "Deals some damage and paralyzes"
 		},
+		"Drill Peck": {
+			"name": "Drill Peck",
+			"description": "Deals damage. Then a random row of tiles becomes Locked for 10 turns. Other trainers can't swap Locked tiles.",
+			"shortDescription": "Damages and locks a random row"
+		},
 		"Echoed Voice": {
 			"name": "Echoed Voice",
 			"description": "Deals damage. This move's yellow energy cost is reduced by 6 during your next turn.",
@@ -1281,6 +1296,11 @@
 			"description": "Removes the Invulnerable status from the opponent. Then, deals damage.",
 			"shortDescription": "Deals damage through invulnerability"
 		},
+		"Flail": {
+			"name": "Flail",
+			"description": "Deals damage. This move's power depends on the ratio of the user's HP to their Max HP. Its power is 200 while at less than 5% HP, 150 while at less than 10% HP, 100 while at less than 20% HP, 80 while at less than 35% HP, 40 while at less than 70% HP, and 20 otherwise.",
+			"shortDescription": "Deals damage depending on remaining HP"
+		},
 		"Flame Wheel": {
 			"name": "Flame Wheel",
 			"description": "Deals damage. There's a 50% chance for this move to inflict Burn 8 times on a random tile until the start of your next turn. At the end of their turn, the opponent takes damage equal to 1/32 of their max HP for each Burn status on the board.",
@@ -1295,6 +1315,11 @@
 			"name": "Focus Energy",
 			"description": "Raises the user's attack stat by 2 stages.",
 			"shortDescription": "Raises user's attack"
+		},
+		"Force Palm": {
+			"name": "Force Palm",
+			"description": "Deals damage. Has a 50% chance to paralyze the opponent.",
+			"shortDescription": "Deals damage and may paralyze"
 		},
 		"Fury Attack": {
 			"name": "Fury Attack",
@@ -1346,6 +1371,11 @@
 			"description": "Reduces the cooldown of the move with the user's highest cooldown by 5.",
 			"shortDescription": "Reduces highest cooldown"
 		},
+		"Hex": {
+			"name": "Hex",
+			"description": "Deals damage. If the target already had a negative status condition, instead it deals damage with 65 additional power.",
+			"shortDescription": "Deals extra damage to afflicted targets"
+		},
 		"Hone Claws": {
 			"name": "Hone Claws",
 			"description": "The next time that Pokémon uses a move which shares a type with it, the greatest color component(s) in that move's cost is reduced by 4.",
@@ -1376,6 +1406,11 @@
 			"description": "Deals damage. Then, the user chooses a tile. A plus-shaped area around that tile is removed.",
 			"shortDescription": "Deals some damage and removes tiles",
 			"choose": "Choose a tile."
+		},
+		"Knock Off": {
+			"name": "Knock Off",
+			"description": "Deals damage. Then, removes 10 energy from the opponent in two most energy types which it has the highest affinity for.",
+			"shortDescription": "Deals damage and removes energy"
 		},
 		"Leafage": {
 			"name": "Leafage",
@@ -1436,6 +1471,11 @@
 			"name": "Nasty Plot",
 			"description": "Raises the user's special attack stat by 2 stages.",
 			"shortDescription": "Raises user's special attack"
+		},
+		"Night Shade": {
+			"name": "Night Shade",
+			"description": "Deals damage exactly equal to the user's level.",
+			"shortDescription": "Deals damage equal to level"
 		},
 		"Nuzzle": {
 			"name": "Nuzzle",
@@ -1567,6 +1607,12 @@
 			"name": "Seismic Toss",
 			"description": "Deals damage exactly equal to the user's level.",
 			"shortDescription": "Deals damage equal to level"
+		},
+		"Shadow Ball": {
+			"name": "Shadow Ball",
+			"description": "Deals damage. If the opponent has any benched Pokémon remaining, this move also attacks one of them of your choice, with 30 less power.",
+			"shortDescription": "Damages a benched Pokémon",
+			"choose-pokemon": "Choose a Pokémon for Shadow Ball to deal damage to."
 		},
 		"Shadow Sneak": {
 			"name": "Shadow Sneak",

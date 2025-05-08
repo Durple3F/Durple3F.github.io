@@ -303,7 +303,7 @@ class Round {
 
 			if (this.result === "win") {
 				this.promise = this.promise.then(() => {
-					return this.showEndScreen("You win")
+					return this.showEndScreen("You win!")
 				})
 			} else if (this.result === "lose") {
 				let toGive = this.calculateEXPGained()
@@ -4613,6 +4613,13 @@ class Round {
 		})
 		for (let statusEffect of lostOnSwap) {
 			oldActive.removeStatus(statusEffect)
+		}
+		//Some status effects are lost when the opponent swaps
+		let lostOnOpponentSwap = otherPokemon.statusEffects.filter(statusEffect => {
+			return statusEffect.lostOnOpponentSwap
+		})
+		for (let statusEffect of lostOnOpponentSwap) {
+			otherPokemon.removeStatus(statusEffect)
 		}
 
 		//Transfer half of the old pokemon's energy into the new pokemon.

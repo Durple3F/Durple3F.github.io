@@ -548,6 +548,26 @@ const pokemonMoveEffects = {
 			resolve(result)
 		}
 	},
+	"has-any-status": {
+		update: false,
+		hasTarget: true,
+		targetType: "pokemon",
+		targetDefault: "user",
+		execute: (resolve, effect, params, game, options) => {
+			let target = options.target
+			let targetClass = effect.targetClass
+			let statuses = target.statusEffects.filter(statusEffect => {
+				return statusEffect.type === "status"
+			})
+			if (targetClass){
+				statuses = statuses.filter(statusEffect => {
+					return statusEffect.class === targetClass
+				})
+			}
+			let result = statuses.length > 0
+			resolve(result)
+		}
+	},
 	"get-status-gamedata": {
 		update: false,
 		hasTarget: true,
@@ -599,6 +619,13 @@ const pokemonMoveEffects = {
 				shuffleArray(canPick)
 				canPick.sort((a, b) => {
 					return energy[a] < energy[b] ? 1 : energy[a] > energy[b] ? -1 : 0
+				})
+				canPick.slice(0, count).forEach(c => result.push(c))
+			} else if (search === "most-mastery") {
+				let mastery = target.energyMastery
+				shuffleArray(canPick)
+				canPick.sort((a, b) => {
+					return mastery[a] < mastery[b] ? 1 : mastery[a] > mastery[b] ? -1 : 0
 				})
 				canPick.slice(0, count).forEach(c => result.push(c))
 			} else {
@@ -690,6 +717,20 @@ const pokemonMoveEffects = {
 				result[color] = target.energy[color] ?? 0
 			}
 			console.log(result)
+			resolve(result)
+		}
+	},
+	"get-energy-value": {
+		update: false,
+		hasTarget: true,
+		targetType: "pokemon",
+		targetDefault: "user",
+		execute: (resolve, effect, params, game, options) => {
+			let target = options.target
+			let result = 0
+			let color = params.color
+
+			result = target.energy[color] ?? 0
 			resolve(result)
 		}
 	},
@@ -1742,6 +1783,19 @@ const pokemonMoveEffects = {
 			let test = params.test ?? moveUseObj.info[effectIndex - 2]
 			let against = params.against ?? moveUseObj.info[effectIndex - 1]
 			if (test < against) {
+				moveUseObj.nextEffectIndex = options.index
+			}
+			resolve()
+		}
+	},
+	"jump-if-greater-than-or-equal-to": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let moveUseObj = options.moveUse
+			let effectIndex = options.effectIndex
+			let test = params.test ?? moveUseObj.info[effectIndex - 2]
+			let against = params.against ?? moveUseObj.info[effectIndex - 1]
+			if (test >= against) {
 				moveUseObj.nextEffectIndex = options.index
 			}
 			resolve()

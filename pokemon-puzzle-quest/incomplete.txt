@@ -16,11 +16,12 @@ Incomplete move lists:
 	Drowzee (lv 21)
 	Ledyba (lv 22)
 	Spinarak (lv 22)
-	Murkrow (lv 11)
-	Misdreavus (lv 19)
-	Delibird (lv 1)
-	Wingull (lv 10)
-	Drifloon (lv 12)
+	Murkrow (lv 35)
+	Misdreavus (lv 28)
+	Wingull (lv 26)
+	Makuhita (lv 22)
+	Bagon (lv 25)
+	Drifloon (lv 20)
 	Bonsly (lv 1)
 	Makuhita (lv 4)
 	Bagon (lv 10)
@@ -68,6 +69,9 @@ Missing Evolutions:
 	Misreavus
 	Delibird
 	Wingull
+	Makuhita
+	Bagon
+	Drifloon
 	Bonsly
 	Makuhita
 	Bagon

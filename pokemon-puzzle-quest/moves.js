@@ -466,6 +466,35 @@ const pokemonMoveData = {
 			{ type: "remove-tiles", selection: -1 }
 		]
 	},
+	//Prevents switching out permanently
+	"Block": {
+		name: "Block",
+		type: "Normal",
+		category: "Status",
+		strategy: "debuff-opponent",
+		pp: 5,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 10,
+		energy: {
+			blue: 4,
+			yellow: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Block.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "apply-status-effect", target: "opponent", statusEffect: {
+				name: "block-cant-switch",
+				type: "cant-switch",
+				stacks: false,
+				volatile: true,
+				lostOnSwap: true,
+				lostOnOpponentSwap: true
+			} },
+		],
+	},
 	//Replaces some Grass and Water tiles with Dark tiles
 	"Brutal Swing": {
 		name: "Brutal Swing",
@@ -575,6 +604,43 @@ const pokemonMoveData = {
 			{ type: "multiply-energy", amounts: -2, scale: -1 },
 			{ type: "gain-energy", amounts: -1, target: "user" }
 		]
+	},
+	//Raises attack 1 and defense 1
+	"Bulk Up": {
+		name: "Bulk Up",
+		type: "Fighting",
+		category: "Status",
+		strategy: "buff-user",
+		pp: 20,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 2,
+		energy: {
+			orange: 5,
+			green: 2
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Bulk Up.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{
+				type: "apply-debuff", target: "user", debuff: {
+					type: "stat",
+					stat: "attack",
+					class: "buff",
+					amount: 1
+				}
+			},
+			{
+				type: "apply-debuff", target: "user", debuff: {
+					type: "stat",
+					stat: "defense",
+					class: "buff",
+					amount: 1
+				}
+			},
+		],
 	},
 	//Removes the bottom layer of tiles
 	"Bulldoze": {
@@ -1184,6 +1250,42 @@ const pokemonMoveData = {
 			{ type: "apply-status-effect", statusEffect: "paralyzed", target: "opponent" }
 		]
 	},
+	//Locks a random row of tiles
+	"Drill Peck": {
+		name: "Drill Peck",
+		type: "Flying",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 25,
+		power: 40,
+		accuracy: 100,
+		rechargeTurns: 2,
+		energy: {
+			blue: 8,
+			yellow: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Drill Peck.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "get-board-height" },
+			{ type: "load-value", value: -1 },
+			{ type: "add-numbers" },
+			{ type: "load-value", value: 0 },
+			{ type: "random-number", min: -1, max: -2, useArgs: true },
+			{ type: "select-row", y: -1 },
+			{
+				type: "apply-status-to-tiles", selection: "group", which: -1,
+				status: { name: "Locked", type: "debuff", duration: 6 }
+			}
+		]
+	},
 	//Temporarily reduces its own cost
 	"Echoed Voice": {
 		name: "Echoed Voice",
@@ -1441,6 +1543,66 @@ const pokemonMoveData = {
 			{ type: "damage" }
 		]
 	},
+	//Deals damage based on HP/Max HP
+	"Flail": {
+		name: "Flail",
+		type: "Normal",
+		category: "Physical",
+		strategy: "special",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 15,
+		power: 0,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			green: 5,
+			red: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Flail.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-hp", target: "user" },
+			{ type: "get-max-hp", target: "user" },
+			{ type: "divide-numbers" },
+			{ type: "save-variable", name: "ratio", save: -1 },
+			{ type: "load-value", value: 0.05 },
+			{ type: "jump-if-less-than", jumpTo: "damage-1" },
+			{ type: "load-variable", name: "ratio" },
+			{ type: "load-value", value: 0.10 },
+			{ type: "jump-if-less-than", jumpTo: "damage-2" },
+			{ type: "load-variable", name: "ratio" },
+			{ type: "load-value", value: 0.20 },
+			{ type: "jump-if-less-than", jumpTo: "damage-3" },
+			{ type: "load-variable", name: "ratio" },
+			{ type: "load-value", value: 0.35 },
+			{ type: "jump-if-less-than", jumpTo: "damage-4" },
+			{ type: "load-variable", name: "ratio" },
+			{ type: "load-value", value: 0.70 },
+			{ type: "jump-if-less-than", jumpTo: "damage-5" },
+			{ type: "jump", jumpTo: "damage-6" },
+
+			{ type: "load-value", value: 200, label: "damage-1" },
+			{ type: "damage", additivePower: -1 },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "load-value", value: 150, label: "damage-2" },
+			{ type: "damage", additivePower: -1 },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "load-value", value: 100, label: "damage-3" },
+			{ type: "damage", additivePower: -1 },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "load-value", value: 80, label: "damage-4" },
+			{ type: "damage", additivePower: -1 },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "load-value", value: 40, label: "damage-5" },
+			{ type: "damage", additivePower: -1 },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "load-value", value: 20, label: "damage-6" },
+			{ type: "damage", additivePower: -1 },
+			{ type: "jump", jumpTo: Infinity },
+		],
+	},
 	//Burns the same tile 8 times sometimes
 	"Flame Wheel": {
 		name: "Flame Wheel",
@@ -1560,6 +1722,36 @@ const pokemonMoveData = {
 				}
 			}
 		],
+	},
+	//Damages and applies paralyzed
+	"Force Palm": {
+		name: "Force Palm",
+		type: "Fighting",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 10,
+		power: 60,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			orange: 8,
+			yellow: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Force Palm.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "random-number", min: 1, max: 10 },
+			{ type: "load-value", value: 6 },
+			{ type: "jump-if-less-than", jumpTo: Infinity },
+			{ type: "apply-status-effect", statusEffect: "paralyzed", target: "opponent" }
+		]
 	},
 	//Attacks once per match made this turn
 	"Fury Attack": {
@@ -1888,6 +2080,36 @@ const pokemonMoveData = {
 			{ type: "change-move-cooldown", target: "user", move: -2, amount: -1 },
 		],
 	},
+	//Deals double damage against pokemon with status effects
+	"Hex": {
+		name: "Hex",
+		type: "Ghost",
+		category: "Special",
+		strategy: "basic-damage",
+		tags: ["damage-dealing"],
+		pp: 10,
+		power: 65,
+		accuracy: 100,
+		rechargeTurns: 3,
+		energy: {
+			purple: 8,
+			red: 3,
+			green: 3,
+			blue: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Hex.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "has-any-status", target: "opponent", targetClass: "debuff" },
+			{ type: "jump-if-truthy", jumpTo: "big-damage" },
+			{ type: "damage" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "load-value", value: 65, label: "big-damage" },
+			{ type: "damage", additivePower: -1 },
+		],
+	},
 	//Reduces move costs so that the biggest cost color is reduced
 	"Hone Claws": {
 		name: "Hone Claws",
@@ -2095,6 +2317,36 @@ const pokemonMoveData = {
 				conditionArguments: [-3, -2, -1]
 			},
 			{ type: "remove-tiles", selection: -1 }
+		]
+	},
+	//Removes energy
+	"Knock Off": {
+		name: "Knock Off",
+		type: "Dark",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 20,
+		power: 65,
+		accuracy: 100,
+		rechargeTurns: 3,
+		energy: {
+			purple: 8,
+			orange: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Knock Off.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "load-value", value: 2 },
+			{ type: "select-energy-colors", search: "most-mastery", target: "opponent", count: -1 },
+			{ type: "load-value", value: -10 },
+			{ type: "gain-energy", count: -1, colors: -2, target: "opponent" },
 		]
 	},
 	//Converts random tiles to Grass tiles
@@ -2340,6 +2592,7 @@ const pokemonMoveData = {
 			{ type: "heal", target: "user", amount: -2, min: -1 },
 		],
 	},
+	//50% chance of raising attack 1
 	"Metal Claw": {
 		name: "Metal Claw",
 		type: "Steel",
@@ -3294,6 +3547,7 @@ const pokemonMoveData = {
 			}
 		],
 	},
+	//Basic damage and end turn
 	"Scratch": {
 		name: "Scratch",
 		type: "Normal",
@@ -3316,6 +3570,7 @@ const pokemonMoveData = {
 			{ type: "end-turn" }
 		],
 	},
+	//Deals damage exactly equal to user's level
 	"Seismic Toss": {
 		name: "Seismic Toss",
 		type: "Fighting",
@@ -3338,6 +3593,43 @@ const pokemonMoveData = {
 			{ type: "get-level", target: "user" },
 			{ type: "damage", amount: -1, fixed: true, finalImmunityCheck: true },
 		],
+	},
+	//Damages a non-active pokemon
+	"Shadow Ball": {
+		name: "Shadow Ball",
+		type: "Ghost",
+		category: "Special",
+		strategy: "basic-damage",
+		pp: 15,
+		power: 80,
+		accuracy: 100,
+		rechargeTurns: 2,
+		energy: {
+			purple: 15,
+			red: 5,
+			yellow: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Shadow Ball.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "get-viable-pokemon", target: "opponent" },
+			{ type: "get-active-pokemon", target: "opponent" },
+			{ type: "remove-element-from-list", list: -2, element: -1 },
+			{ type: "get-list-length", list: -1 },
+			{ type: "load-value", value: 1 },
+			{ type: "jump-if-less-than", jumpTo: Infinity },
+			{ type: "choose-pokemon", target: "user", message: "choose-pokemon", pokemon: -4, strategy: "damage" },
+			{ type: "load-value", value: 0 },
+			{ type: "get-element-from-list", list: -2, index: -1 },
+			{ type: "load-value", value: -30 },
+			{ type: "damage", toPokemon: -2, additivePower: -1 }
+		]
 	},
 	"Shadow Sneak": {
 		name: "Shadow Sneak",
@@ -3979,6 +4271,7 @@ const pokemonMoveData = {
 			} },
 		],
 	},
+	//Switch out without ending the turn
 	"Teleport": {
 		name: "Teleport",
 		type: "Psychic",
@@ -4225,6 +4518,7 @@ const pokemonMoveData = {
 			{ type: "remove-tiles", selection: -1 }
 		]
 	},
+	//Place tiles on the board that deal damage when matched
 	"Wrap": {
 		name: "Wrap",
 		type: "Normal",
@@ -4252,6 +4546,7 @@ const pokemonMoveData = {
 			},
 		],
 	},
+	//Gives Drowsy
 	"Yawn": {
 		name: "Yawn",
 		type: "Normal",
