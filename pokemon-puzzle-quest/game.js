@@ -1315,6 +1315,7 @@ class Round {
 			return
 		}
 
+		this.currentlyEndingTurn = true
 		let activePlayerIndex = this.activePlayerIndex
 		let trainer = this.trainers[activePlayerIndex]
 		let activePokemon = trainer.activePokemon
@@ -1422,6 +1423,7 @@ class Round {
 
 		//Stuff like Burned triggers at the end of the turn
 		let contents = this.board.tilesOnScreen()
+		let acidTiles = []
 		for (let tile of contents) {
 			let statusEffects = tile.statusEffects
 			for (let status of statusEffects) {
@@ -1438,7 +1440,46 @@ class Round {
 						damage: damage,
 						fixed: true
 					})
+				} else if (statusName === "Acidic"){
+					acidTiles.push(tile)
 				}
+			}
+		}
+		if (acidTiles.length){
+			acidTiles.sort((a, b) => {
+				return b.y - a.y
+			})
+			let energies = new Map()
+			this.trainers.forEach(t => {
+				energies.set(t, getEmptyEnergy())
+			})
+			let removedByAcid = []
+			for (let tile of acidTiles){
+				let tileBeneath = this.board.findTileAt(tile.x, tile.y + 1)
+				if (tileBeneath){
+					removedByAcid.push(tileBeneath)
+					promise = promise.then(() => {
+						this.board.removeFade(tileBeneath)
+						this.board.addNextTileToTopOfColumn(tileBeneath.x)
+						let acidic = tile.getStatuses("Acidic")[0]
+						let sourceTrainer = acidic.sourceTrainer
+						if (sourceTrainer){
+							let energyValue = this.getTileEnergyValue(tileBeneath)
+							let energy = energies.get(sourceTrainer)
+							energy = addEnergies(energy, energyValue)
+							energies.set(sourceTrainer, energy)
+						}
+					})
+				}
+			}
+			if (removedByAcid.length){
+				promise = promise.then(() => {
+					this.applyGravity()
+					energies.forEach((energy, trainer) => {
+						let activePokemon = trainer.activePokemon
+						this.giveEnergy(energy, trainer, activePokemon)
+					})
+				})
 			}
 		}
 
@@ -3553,6 +3594,7 @@ class Round {
 			&& this.state === "waiting"
 			&& this.hasBegun
 			&& !this.currentlySwappingPokemon
+			&& !this.currentlyEndingTurn
 
 		if (this.moveQueue.length) {
 			if (this.currentlySelecting.type === "swap") {
@@ -5468,10 +5510,7 @@ class Board {
 		if (index !== -1) {
 			this.remove(tile)
 			//Create a new tile at the top of the column to fill this one's space
-			let column = this.getColumn(tile.x)
-			let top = Math.min(-1, column[0].y - 1)
-			let newTile = this.getNextTile(tile.x, top)
-			this.add(newTile)
+			this.addNextTileToTopOfColumn(tile.x)
 			return true
 		}
 		return false
@@ -5625,6 +5664,12 @@ class Board {
 	//Note: Selects the entire column, regardless of whether the player can see it.
 	getColumn(x) {
 		return this.contents.filter(t => t.x === x).sort((a, b) => a.y - b.y)
+	}
+	addNextTileToTopOfColumn(x){
+		let column = this.getColumn(x)
+		let top = Math.min(-1, column[0].y - 1)
+		let newTile = this.getNextTile(x, top)
+		this.add(newTile)
 	}
 
 	getAdjacentTiles(tile) {

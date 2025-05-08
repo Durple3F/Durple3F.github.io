@@ -26,6 +26,37 @@ const pokemonMoveData = {
 			{ type: "heal", target: "user", amount: -2, min: -1 },
 		],
 	},
+	//Places status effects on tiles
+	"Acid Spray": {
+		name: "Acid Spray",
+		type: "Poison",
+		category: "Special",
+		strategy: "basic-damage",
+		pp: 20,
+		power: 40,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			yellow: 3,
+			purple: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Acid Spray.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "load-value", value: 3 },
+			{ type: "select-random-tiles", count: -1 },
+			{
+				type: "apply-status-to-tiles", selection: "group", which: -1,
+				status: { name: "Acidic", type: "buff" }
+			}
+		]
+	},
 	//Removes 3 tiles that share a color
 	"Aerial Ace": {
 		name: "Aerial Ace",
@@ -1717,6 +1748,43 @@ const pokemonMoveData = {
 			{ type: "load-value", value: 0 },
 			{ type: "select-all-tiles", y: -1 },
 			{ type: "shift-tiles", selection: -1, xOffset: -3, yOffset: -2 },
+		]
+	},
+	//Deals more damage to faster targets
+	"Gyro Ball": {
+		name: "Gyro Ball",
+		type: "Steel",
+		category: "Physical",
+		strategy: "special",
+		tags: ["makes-contact"],
+		pp: 5,
+		power: 0,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			yellow: 4,
+			green: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Gyro Ball.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-stat", whcih: "speed", target: "user" },
+			{ type: "load-value", value: 1 },
+			{ type: "max" },
+			{ type: "save-variable", name: "user-speed", save: -1 },
+			
+			{ type: "load-value", value: 25 },
+			{ type: "get-stat", whcih: "speed", target: "opponent" },
+			{ type: "multiply-numbers" },
+			{ type: "load-variable", name: "user-speed" },
+			{ type: "divide-numbers" },
+			{ type: "load-value", value: 1 },
+			{ type: "add-numbers" },
+			{ type: "load-value", value: 150 },
+			{ type: "min" },
+			{ type: "damage", additivePower: -1 },
 		]
 	},
 	//Become invulnerable for a turn

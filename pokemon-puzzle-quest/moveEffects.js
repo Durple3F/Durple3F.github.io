@@ -515,7 +515,6 @@ const pokemonMoveEffects = {
 			let target = options.target
 			let statusName = effect.statusName
 			let result = target.getStatuses(statusName).length
-			console.log(statusName, result)
 			resolve(result)
 		}
 	},
@@ -1681,6 +1680,28 @@ const pokemonMoveEffects = {
 			let val = Math.floor(Math.random() * (max - min + 1)) + min
 			moveUseObj.info[effectIndex] = val
 			resolve()
+		}
+	},
+	"min": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let moveUseObj = options.moveUse
+			let effectIndex = options.effectIndex
+			let val1 = moveUseObj.info[effectIndex - 2]
+			let val2 = moveUseObj.info[effectIndex - 1]
+			let val = Math.min(val1, val2)
+			resolve(val)
+		}
+	},
+	"max": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let moveUseObj = options.moveUse
+			let effectIndex = options.effectIndex
+			let val1 = moveUseObj.info[effectIndex - 2]
+			let val2 = moveUseObj.info[effectIndex - 1]
+			let val = Math.max(val1, val2)
+			resolve(val)
 		}
 	},
 	"jump-if-less-than": {

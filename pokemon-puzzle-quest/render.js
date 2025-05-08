@@ -109,14 +109,33 @@ function renderStatusEffects(tile, board, round, w, h, xOffset, yOffset){
 			status.frameIndex += 1
 			status.frameIndex %= frames.length * framesPerSprite
 			let curFrame = frames[frameIndex].frame
+			let fx = curFrame.x
+			let fy = curFrame.y
+			let fw = curFrame.w
+			let fh = curFrame.h
 			let x = tile.spriteX
 			let y = tile.spriteY
 			let w = tile.spriteWidth
 			let h = tile.spriteHeight
 
+			if (data.sizeX !== 1){
+				let spriteX = tile.spriteX
+				let spriteW = tile.spriteWidth
+				let sizeX = data.sizeX
+				x = spriteX - spriteW * ((sizeX - 1) * 0.5)
+				w = spriteW * sizeX
+			}
+			if (data.sizeY !== 1){
+				let spriteY = tile.spriteY
+				let spriteH = tile.spriteHeight
+				let sizeY = data.sizeY
+				y = spriteY - spriteH * ((sizeY - 1) * 0.5)
+				h = spriteH * sizeY
+			}
+
 			ctx.save()
-			ctx.globalAlpha = status.spriteOpacity
-			ctx.drawImage(sheet, curFrame.x, curFrame.y, curFrame.w, curFrame.h, x, y, w, h)
+			ctx.globalAlpha = status.spriteOpacity * tile.spriteOpacity
+			ctx.drawImage(sheet, fx, fy, fw, fh, x, y, w, h)
 			ctx.restore()
 		}
 		else if (!hasSpriteSheet){

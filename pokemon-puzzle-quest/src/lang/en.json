@@ -1086,11 +1086,21 @@
 			"description": "Deals damage. Then, heals the user for 50% of the damage dealt.",
 			"shortDescription": "Steals a little HP"
 		},
+		"Acid Spray": {
+			"name": "Acid Spray",
+			"description": "Deals damage. Then, applies the Acidic status effect to 3 random tiles. Tiles with Acidic remove the tile beneath them at the end of each turn, and the trainer who created the status gains energy based on the tiles removed.",
+			"shortDescription": "Deals light damage and corrodes tiles"
+		},
 		"Aerial Ace": {
 			"name": "Aerial Ace",
 			"description": "Deals damage. Then, the user chooses 3 tiles of the same color. Those tiles are removed.",
 			"shortDescription": "Deals some damage and removes tiles",
 			"choose": "Choose 3 tiles of the same color."
+		},
+		"Agility": {
+			"name": "Agility",
+			"description": "Raises the user's Speed stat by 2 stages.",
+			"shortDescription": "Raises user's Speed"
 		},
 		"Air Cutter": {
 			"name": "Air Cutter",
@@ -1310,6 +1320,11 @@
 			"name": "Gust",
 			"description": "Deals damage. Then, shifts the entire board away from the user by 1 tile.",
 			"shortDescription": "Shifts entire board"
+		},
+		"Gyro Ball": {
+			"name": "Gyro Ball",
+			"description": "Deals damage with power ranging from 0-150 based on the ratio between the opponent's speed and your speed.",
+			"shortDescription": "Deals more damage to fast targets"
 		},
 		"Harden": {
 			"name": "Harden",

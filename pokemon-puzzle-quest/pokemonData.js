@@ -290,6 +290,15 @@ const tileStatusData = {
 		spriteSheetJsonUrl: "src/img/spritesheets/poison powder.json",
 		framesPerSprite: 5
 	},
+	"Acidic": {
+		stacks: false,
+		url: "src/img/spritesheets/acidic.png",
+		hasSpriteSheet: true,
+		spriteSheetJsonUrl: "src/img/spritesheets/acidic.json",
+		framesPerSprite: 5,
+		sizeX: 3,
+		sizeY: 3
+	},
 }
 for (let tileStatusName in tileStatusData){
 	let status = tileStatusData[tileStatusName]
@@ -299,6 +308,8 @@ for (let tileStatusName in tileStatusData){
 	status.infectious = status.infectious ?? 0
 	status.hasSpriteSheet = status.hasSpriteSheet ?? false
 	status.framesPerSprite = status.framesPerSprite ?? 1
+	status.sizeX = status.sizeX ?? 1
+	status.sizeY = status.sizeY ?? 1
 }
 
 const natures = [

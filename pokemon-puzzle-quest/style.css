@@ -403,6 +403,9 @@ body {
 	transform: translate(-50%, -50%);
 	pointer-events: none;
 }
+#loading-bar > .count {
+	font-size: 1.5em;
+}
 #loading-bar > .start {
 	font-size: 2em;
 	font-weight: bold;

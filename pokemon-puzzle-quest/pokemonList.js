@@ -802,34 +802,13 @@ const pokemonData = {
 			orange: 2
 		},
 		learnset: [
-			{
-				name: "Thunder Shock",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "Tackle",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "Supersonic",
-				unlock: {
-					type: "level",
-					amount: 4
-				}
-			},
-			{
-				name: "Thunder Wave",
-				unlock: {
-					type: "level",
-					amount: 8
-				}
-			},
+			{ name: "Thunder Shock", unlock: { type: "level", amount: 1 } },
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Supersonic", unlock: { type: "level", amount: 4 } },
+			{ name: "Thunder Wave", unlock: { type: "level", amount: 8 } },
+			{ name: "Electro Ball", unlock: { type: "level", amount: 12 } },
+			{ name: "Gyro Ball", unlock: { type: "level", amount: 16 } },
+			{ name: "Spark", unlock: { type: "level", amount: 20 } },
 		]
 	},
 	"Grimer-Alola": {
@@ -876,34 +855,14 @@ const pokemonData = {
 			purple: 3
 		},
 		learnset: [
-			{
-				name: "Pound",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "Poison Gas",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			},
-			{
-				name: "Harden",
-				unlock: {
-					type: "level",
-					amount: 4
-				}
-			},
-			{
-				name: "Bite",
-				unlock: {
-					type: "level",
-					amount: 7
-				}
-			},
+			{ name: "Pound", unlock: { type: "level", amount: 1 } },
+			{ name: "Poison Gas", unlock: { type: "level", amount: 1 } },
+			{ name: "Harden", unlock: { type: "level", amount: 4 } },
+			{ name: "Bite", unlock: { type: "level", amount: 7 } },
+			{ name: "Disable", unlock: { type: "level", amount: 12 } },
+			{ name: "Acid Spray", unlock: { type: "level", amount: 15 } },
+			{ name: "Poison Fang", unlock: { type: "level", amount: 18 } },
+			{ name: "Minimize", unlock: { type: "level", amount: 21 } },
 		]
 	},
 	"Gastly": {
@@ -2219,7 +2178,7 @@ const pokemonData = {
 			{ name: "Disarming Voice", unlock: { type: "level", amount: 6 } },
 			{ name: "Aqua Jet", unlock: { type: "level", amount: 9 } },
 			{ name: "Baby-Doll Eyes", unlock: { type: "level", amount: 12 } },
-			{ name: "Water Pulse", unlock: { type: "level", amount: 1 } },
+			{ name: "Acid Spray", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {

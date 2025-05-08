@@ -1,8 +1,10 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
 5/7 (29.0k lines):
-	- Added Sucker Punch, Swagger, Cross Chop, Flame Wheel, Agility, Water Pulse, Headbutt
+	- Added Sucker Punch, Swagger, Cross Chop, Flame Wheel, Agility, Water Pulse, Headbutt, Gyro Ball
 	- Moves can now do things in reaction to the other pokemon using a move. Sucker Punch does that.
+	- Spritesheets can now have space that sticks out of the tile. Acid Spray does that.
+	- Added the Acidic status effect, which is pretty cool, if I say so myself.
 
 5/6 (28.5k lines):
 	- Added Spark, Quick Guard, Bulldoze
