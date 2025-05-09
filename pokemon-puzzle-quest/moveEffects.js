@@ -461,11 +461,20 @@ const pokemonMoveEffects = {
 	"apply-status-effect": {
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
+			let effectIndex = moveUseObj.effectIndex
 			let target = options.target
 			let statusEffect = window.structuredClone(effect.statusEffect)
 			let trainer = moveUseObj.trainer
 			let pokemon = moveUseObj.pokemon
 			let move = moveUseObj.move
+
+			if (effect.statusSettings){
+				for (let setting of effect.statusSettings){
+					let key = setting.key
+					let value = moveUseObj.info[effectIndex + setting.value]
+					statusEffect[key] = value
+				}
+			}
 			
 			target.addStatusEffect(statusEffect, trainer, pokemon, move)
 
@@ -475,7 +484,7 @@ const pokemonMoveEffects = {
 			){
 				let otherTrainer = game.trainers.find(t => t !== target.trainer)
 				let otherPokemon = otherTrainer.activePokemon
-				let status2 = window.structuredClone(effect.statusEffect)
+				let status2 = window.structuredClone(statusEffect)
 				otherPokemon.addStatusEffect(status2, trainer, pokemon, move)
 			}
 
@@ -854,6 +863,32 @@ const pokemonMoveEffects = {
 					let dx = Math.abs(tx1 - tile2.x)
 					let dy = Math.abs(ty1 - tile2.y)
 					return dx === dy && dx <= maxDistance && dx > 0
+				})
+			})
+			if (includeOriginal){
+				chosenTiles = chosenTiles.concat(selection)
+			}
+			chosenTiles = noDuplicates(chosenTiles)
+			
+			resolve(chosenTiles)
+		}
+	},
+	"select-tiles-orthogonally-adjacent-to": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let selection = params.selection ?? []
+			let chosenTiles = []
+			let chooseable = game.board.tilesOnScreen()
+			let maxDistance = effect.maxDistance ?? 1
+			let includeOriginal = effect.includeOriginal ?? false
+
+			chosenTiles = chooseable.filter(tile => {
+				let tx1 = tile.x
+				let ty1 = tile.y
+				return selection.some(tile2 => {
+					let dx = Math.abs(tx1 - tile2.x)
+					let dy = Math.abs(ty1 - tile2.y)
+					return dx + dy === 1 
 				})
 			})
 			if (includeOriginal){
@@ -1402,6 +1437,16 @@ const pokemonMoveEffects = {
 			// let newIndex = game.moveQueue.indexOf(newMoveUseObj)
 
 			// resolve(newIndex)
+		}
+	},
+	"reset-moves": {
+		update: false,
+		resetMoves: true,
+		hasTarget: true,
+		targetType: "pokemon",
+		targetDefault: "user",
+		execute: (resolve, effect, params, game, options) => {
+			resolve()
 		}
 	},
 	"learn-move": {

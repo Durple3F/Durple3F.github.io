@@ -644,9 +644,11 @@
 					"left": "+=5%",
 					"top": "+=3%"
 				}},
+				{ "type": "text", "speaker": "Team Skull Grunt C", "text": "", "auto": true },
+				{ "type": "change-background-image", "name": "route-bg-berry-farm" },
 				{ "type": "animate", "selector": "#dialogue", "css": {
 					"opacity": 1
-				}, "duration": 1000, "waitDuration": 100 },
+				}, "duration": 1000, "waitDuration": 1000 },
 				{ "type": "bounce", "speaker": "Team Skull Grunt C", "duration": 300, "waitDuration": 0 },
 				{ "type": "text", "speaker": "Team Skull Grunt C", "text": "Yo, I'm not gonna say it again, old man— hand over the berries!" },
 				{ "type": "bounce", "speaker": "Team Skull Grunt D", "duration": 300, "waitDuration": 0 },
@@ -1313,8 +1315,8 @@
 		},
 		"Focus Energy": {
 			"name": "Focus Energy",
-			"description": "Raises the user's attack stat by 2 stages.",
-			"shortDescription": "Raises user's attack"
+			"description": "Raises the user's Attack stat by 2 stages.",
+			"shortDescription": "Raises user's Attack"
 		},
 		"Force Palm": {
 			"name": "Force Palm",
@@ -1330,6 +1332,11 @@
 			"name": "Fury Swipes",
 			"description": "Deals damage. If this is the first time Fury Swipes was used this turn, its orange and yellow energy costs are reduced by 1.",
 			"shortDescription": "Multi-use light attack"
+		},
+		"Giga Drain": {
+			"name": "Giga Drain",
+			"description": "Deals damage. Then, heals the user for 50% of the damage dealt.",
+			"shortDescription": "Steals HP"
 		},
 		"Growl": {
 			"name": "Growl",
@@ -1401,6 +1408,11 @@
 			"description": "Deals damage. Converts a random tile into a Grass tile and gives it the Infested status. At the start of the opponent's turn, for each Infested tile, that tile drains 1 energy of a random color, and gives it to the user.",
 			"shortDescription": "Damages and infests a tile"
 		},
+		"Iron Defense": {
+			"name": "Iron Defense",
+			"description": "Raises the user's Defense stat by 2 stages.",
+			"shortDescription": "Raises user's Defense"
+		},
 		"Karate Chop": {
 			"name": "Karate Chop",
 			"description": "Deals damage. Then, the user chooses a tile. A plus-shaped area around that tile is removed.",
@@ -1451,6 +1463,11 @@
 			"name": "Mega Drain",
 			"description": "Deals damage. Then, heals the user for 50% of the damage dealt.",
 			"shortDescription": "Steals some HP"
+		},
+		"Mimic": {
+			"name": "Mimic",
+			"description": "The user becomes able to use the move which the opponent most recently used until the end of the battle. If they haven't used a move, this move does nothing.",
+			"shortDescription": "Learn enemy's last move for this battle"
 		},
 		"Minimize": {
 			"name": "Minimize",
@@ -1562,6 +1579,11 @@
 			"description": "Until the start of the user's next turn, moves that the opponent uses with a cooldown time of 1 or less have their power reduced by 75%.",
 			"shortDescription": "Temporarily makes quick attacks against you weaker"
 		},
+		"Razor Leaf": {
+			"name": "Razor Leaf",
+			"description": "Deals damage. This move's power increases by 3 for every Grass tile on the board.",
+			"shortDescription": "Damage based on Grass tiles"
+		},
 		"Reflect": {
 			"name": "Reflect",
 			"description": "Gives the user the Reflect status for five turns. Physical moves used against a Pokémon with Reflect have their power halved.",
@@ -1582,6 +1604,11 @@
 			"name": "Rock Throw",
 			"description": "Deals damage. The user chooses a tile. All tiles in that column are removed.",
 			"shortDescription": "Removes a column of tiles"
+		},
+		"Rock Tomb": {
+			"name": "Rock Tomb",
+			"description": "Deals damage. Then, 3 random non-Fighting tiles are selected. Tiles orthogonally adjacent to those tiles become Fighting tiles.",
+			"shortDescription": "Surrounds non-Fighting tiles with Fighting tiles"
 		},
 		"Roost": {
 			"name": "Roost",

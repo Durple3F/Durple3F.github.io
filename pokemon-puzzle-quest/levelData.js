@@ -868,6 +868,9 @@ const levelData = [
 		category: "Route 2",
 		name: "Route 2-6",
 		icon: "6",
+		images: {
+			"route-bg-berry-farm": "src/img/bg/berry farm.jpg"
+		},
 		reccomendedLevels: {
 			"normal": (pokemonList) => {
 				if (pokemonList.length >= 3) return 12
@@ -1395,9 +1398,6 @@ const levelData = [
 		name: "Route 3-6",
 		music: "SM Wild Pokemon Battle",
 		icon: "6",
-		images: {
-			"route-bg-melemele-meadow": "src/img/bg/melemele meadow.jpg"
-		},
 		reccomendedLevels: {
 			"normal": (pokemonList) => {
 				if (pokemonList.length >= 3) return 16

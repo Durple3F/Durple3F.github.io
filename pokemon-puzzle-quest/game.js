@@ -160,6 +160,10 @@ class Round {
 		let resolvePromise
 		let promise = new Promise(resolve => resolvePromise = resolve)
 		$("#board").addClass("no-pointer")
+		for (let trainer of this.trainers){
+			let tags = trainer.tags
+			tags.side.parent()[0].scrollTo({top:0})
+		}
 
 		let enemyTrainer = this.trainers[1]
 		let enemyData = enemyTrainer.data
@@ -2539,9 +2543,24 @@ class Round {
 			moves.push(pokemonMoveData["Struggle"])
 		}
 
-		this.trainers[trainerIndex].activePokemon.activeMoves.forEach(m => {
+		let trainer = this.trainers[trainerIndex]
+		let pokemon = trainer.activePokemon
+		pokemon.activeMoves.forEach(m => {
 			moves.push(m)
 		})
+
+		let addedMoveStatuses = pokemon.getStatusesOfType("add-move")
+		if (addedMoveStatuses.length){
+			for (let statusEffect of addedMoveStatuses){
+				let move = statusEffect.move
+				if (move){
+					moves.push(move)
+				}
+			}
+		}
+		moves = noDuplicates(moves)
+		console.log(moves)
+
 		return moves
 	}
 	canUseStruggle(trainerIndex) {
@@ -2988,6 +3007,9 @@ class Round {
 			let fits = comparisonCheck(move.rechargeTurns, operation, val)
 			good.push(fits)
 		}
+		if (appliesTo.move){
+			good.push(move === appliesTo.move)
+		}
 		let logic = appliesTo.logic
 		if (logic === "and") {
 			return good.every(v => v)
@@ -3329,7 +3351,7 @@ class Round {
 			if (effect.replacementsForResultObj) {
 				let replacementsList = effect.replacementsForResultObj
 				replacementsList.forEach(replacementObj => {
-					let path = replacementObj.path
+					let path = replacementObj.path ?? []
 					if (replacementObj.replacements) {
 						let values = replacementObj.replacements.map(givenIndex => {
 							let index
@@ -3374,6 +3396,7 @@ class Round {
 							console.warn("WEE OO WEE OO failed to find data", path, value, lastObj, val)
 						} else {
 							let key = replacementObj.key
+							console.log(lastObj, key, value)
 							lastObj[key] = value
 						}
 					}
@@ -4343,7 +4366,6 @@ class Round {
 
 	fillTrainerTags(tags, classname) {
 		tags.side = $(`#board .board-side-container${classname} .board-side`)
-		tags.side.parent()[0].scrollTo({top:0})
 		tags.sideTop = tags.side.children(".board-side-top")
 		tags.sideMiddle = tags.side.children(".board-side-middle")
 		tags.sideBottom = tags.side.children(".board-side-bottom")
@@ -4920,7 +4942,7 @@ class Round {
 				let thatTrainerIndex = this.trainers.indexOf(thatTrainer)
 				let thatPokemonIndex = thatTrainer.pokemon.indexOf(thatPokemon)
 				let thatMoveIndex = thatPokemon.moves.indexOf(thatMove)
-				//This is a jquery selection of both trainer's movelist tags.
+				//This is a jquery selection of both trainer's move tags.
 				let toSearch = this.trainers.map(trainer => trainer.tags.moveList)
 					.reduce((acc, v) => acc.add(v), $())
 				let selector = ".move"

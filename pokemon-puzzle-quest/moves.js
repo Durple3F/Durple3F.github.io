@@ -876,7 +876,7 @@ const pokemonMoveData = {
 			purple: 6
 		},
 		sounds: {
-			"attack": "src/audio/attacks/Charm.mp3"
+			"attack": "src/audio/attacks/Copycat part 1.mp3"
 		},
 		effects: [
 			{ type: "play-sound", name: "attack" },
@@ -1187,7 +1187,7 @@ const pokemonMoveData = {
 			{ type: "end-turn", label: "end" }
 		]
 	},
-	//Makes a match for the user
+	//Raises speed 1 and Makes a match for the user
 	"Double Team": {
 		name: "Double Team",
 		type: "Normal",
@@ -1198,8 +1198,8 @@ const pokemonMoveData = {
 		accuracy: null,
 		rechargeTurns: 1,
 		energy: {
-			blue: 6,
-			yellow: 4
+			blue: 7,
+			yellow: 5
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Double Team.mp3"
@@ -1703,7 +1703,7 @@ const pokemonMoveData = {
 		pp: 30,
 		power: null,
 		accuracy: null,
-		rechargeTurns: 2,
+		rechargeTurns: 4,
 		energy: {
 			blue: 7,
 			purple: 7
@@ -1849,6 +1849,33 @@ const pokemonMoveData = {
 			{ type: "remove-status-effect", target: "user", statusName: "fury-swipes-cost-reduction" },
 		]
 	},
+	//Steals HP
+	"Giga Drain": {
+		name: "Giga Drain",
+		type: "Grass",
+		category: "Special",
+		strategy: "basic-damage",
+		tags: ["healing"],
+		pp: 10,
+		power: 75,
+		accuracy: 100,
+		rechargeTurns: 2,
+		energy: {
+			green: 9,
+			red: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Giga Drain.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "load-value", value: 0.5 },
+			{ type: "multiply-numbers" },
+			{ type: "load-value", value: 1 },
+			{ type: "heal", target: "user", amount: -2, min: -1 },
+		],
+	},
 	//Lowers opponent's attack
 	"Growl": {
 		name: "Growl",
@@ -1907,6 +1934,14 @@ const pokemonMoveData = {
 		},
 		effects: [
 			{ type: "play-sound", name: "attack" },
+			{
+				type: "apply-debuff", target: "user", debuff: {
+					type: "stat",
+					stat: "attack",
+					class: "buff",
+					amount: 1
+				}
+			},
 			{ type: "load-value", value: 3 },
 			{ type: "select-random-tiles", count: -1, conditions: { types: ["green"] } },
 			{ type: "select-tiles-diagonal-to", selection: -1 },
@@ -2281,6 +2316,35 @@ const pokemonMoveData = {
 			},
 		]
 	},
+	//Raises defense 2
+	"Iron Defense": {
+		name: "Iron Defense",
+		type: "Steel",
+		category: "Status",
+		strategy: "buff-user",
+		pp: 15,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 2,
+		energy: {
+			blue: 6,
+			yellow: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Iron Defense.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{
+				type: "apply-debuff", target: "user", debuff: {
+					type: "stat",
+					stat: "defense",
+					class: "buff",
+					amount: 2
+				}
+			}
+		],
+	},
 	//Removes a plus-shaped chunk of the board
 	"Karate Chop": {
 		name: "Karate Chop",
@@ -2640,35 +2704,39 @@ const pokemonMoveData = {
 		accuracy: null,
 		rechargeTurns: 1,
 		energy: {
-			orange: 6,
-			purple: 6
+			orange: 4,
+			green: 3
 		},
 		sounds: {
-			"attack": "src/audio/attacks/Charm.mp3"
+			"attack": "src/audio/attacks/Mimic.mp3"
 		},
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "get-last-move", target: "opponent" },
+			{ type: "save-variable", name: "move", save: -1 },
 			{ type: "jump-if-truthy", jumpTo: "use-move" },
 			{ type: "jump", jumpTo: Infinity },
-			{ type: "wait", duration: 1000, label: "use-move" },
-			{ type: "get-last-move", target: "opponent" },
-			{ type: "use-move", move: -1 },
-			{ type: "is-z-move" },
-			{ type: "jump-if-truthy", jumpTo: "z-move" },
-			{ type: "jump", jumpTo: Infinity },
-			{ type: "trigger", key: "zEffects", label: "z-move" },
-		],
-		zEffects: [
-			{
-				type: "apply-debuff", target: "user",
-				debuff: { type: "stat", stat: "speed", class: "buff", amount: 1 }
-			},
+			{ type: "do-nothing", label: "use-move" },
+			{ type: "load-variable", name: "move" },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "mimic-added-move",
+				type: "add-move",
+				stacks: true,
+				volatile: true,
+				move: "%c%"
+			}, statusSettings: [
+				{
+					key: "move",
+					value: -1
+				}
+			] },
+			{ type: "reset-moves", target: "user" },
 		],
 		highlightOnHover: {
 			type: "last-enemy-move"
 		}
 	},
+	//Reduces your move costs but also reduces their power
 	"Minimize": {
 		name: "Minimize",
 		type: "Normal",
@@ -2719,6 +2787,7 @@ const pokemonMoveData = {
 			} },
 		],
 	},
+	//Gives random tiles Energy Down
 	"Mud-Slap": {
 		name: "Mud-Slap",
 		type: "Ground",
@@ -2748,6 +2817,7 @@ const pokemonMoveData = {
 			},
 		],
 	},
+	//Raises your special attack 2
 	"Nasty Plot": {
 		name: "Nasty Plot",
 		type: "Dark",
@@ -2756,10 +2826,10 @@ const pokemonMoveData = {
 		pp: 20,
 		power: null,
 		accuracy: null,
-		rechargeTurns: 2,
+		rechargeTurns: 4,
 		energy: {
-			orange: 5,
-			purple: 5
+			orange: 7,
+			purple: 7
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Nasty Plot.mp3"
@@ -3348,6 +3418,31 @@ const pokemonMoveData = {
 			} },
 		],
 	},
+	//Choose two Grass tiles, remove all tiles between them
+	"Razor Leaf": {
+		name: "Razor Leaf",
+		type: "Grass",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing"],
+		pp: 25,
+		power: 50,
+		accuracy: 95,
+		rechargeTurns: 2,
+		energy: {
+			green: 10
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Razor Leaf.mp3",
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "count-tiles", options: { type: "green" } },
+			{ type: "load-value", value: 3 },
+			{ type: "multiply-numbers" },
+			{ type: "damage", additivePower: -1 }
+		],
+	},
 	//Half damage from physical moves for 5 turns
 	"Reflect": {
 		name: "Reflect",
@@ -3472,6 +3567,35 @@ const pokemonMoveData = {
 			{ type: "select-column", x: -1 },
 			{ type: "remove-tiles", selection: -1 },
 		]
+	},
+	//Converts tiles orthogonally adjacent to random tiles
+	"Rock Tomb": {
+		name: "Rock Tomb",
+		type: "Rock",
+		category: "Physical",
+		strategy: "basic-damage",
+		pp: 15,
+		power: 60,
+		accuracy: 95,
+		rechargeTurns: 3,
+		energy: {
+			orange: 6,
+			blue: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Rock Tomb.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "load-value", value: 3 },
+			{ type: "select-random-tiles", count: -1, conditions: { notTypes: ["orange"] } },
+			{ type: "select-tiles-orthogonally-adjacent-to", selection: -1 },
+			{ type: "change-tile-type", selection: "group", which: -1, targetType: "orange" },
+		],
 	},
 	//Heal half your HP back
 	"Roost": {
@@ -3602,7 +3726,7 @@ const pokemonMoveData = {
 			yellow: 6
 		},
 		sounds: {
-			"attack": "src/audio/attacks/Pound.mp3"
+			"attack": "src/audio/attacks/Scratch.mp3"
 		},
 		effects: [
 			{ type: "play-sound", name: "attack" },
@@ -4422,7 +4546,7 @@ const pokemonMoveData = {
 			yellow: 3
 		},
 		sounds: {
-			"attack": "src/audio/attacks/Vice Grip.mp3"
+			"attack": "src/audio/attacks/Vise Grip.mp3"
 		},
 		effects: [
 			{ type: "play-sound", name: "attack" },
@@ -4953,6 +5077,9 @@ for (let moveName in pokemonMoveData){
 		!move.tags.includes("has-additional-effects")
 	){
 		move.tags.push("has-additional-effects")
+	}
+	if (move.sounds && !Object.values(move.sounds).some(v => v.includes(moveName))){
+		console.warn("Weird sound", moveName)
 	}
 }
 for (let name in pokemonData) {

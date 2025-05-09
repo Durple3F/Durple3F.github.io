@@ -77,7 +77,7 @@ function getEnergyIcon(type){
 }
 
 function getTypeIcon(type){
-	switch (type.toLowerCase()){
+	switch (type?.toLowerCase()){
 		case "normal":
 		return "src/img/types/normal.png"
 		case "fighting":

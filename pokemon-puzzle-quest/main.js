@@ -1,4 +1,4 @@
-const versionNumber = "v0.15.16.1"
+const versionNumber = "v0.15.17"
 let lang = "en"
 let playerName
 
@@ -349,7 +349,6 @@ function stopSound(name, fadeMusic=true){
 			}
 		}
 		if (sound.name === name){
-			console.log(sound, name)
 			let index = playingSounds.indexOf(sound)
 			if (index !== -1){
 				playingSounds.splice(index, 1)

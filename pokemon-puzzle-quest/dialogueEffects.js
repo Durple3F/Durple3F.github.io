@@ -240,6 +240,27 @@ const dialogueEffects = {
 			delay(waitDuration).then(() => resolve())
 		}
 	},
+	"change-background-image": {
+		hasTarget: false,
+		execute: (resolve, effect, progress, options) => {
+			if (!currentLevelProgress?.level){
+				return
+			}
+			let imgName = effect.name
+			let level = currentLevelProgress.level
+			let images = level.images
+			let wait = effect.wait ?? true
+			if (imgName in images){
+				let url = images[imgName]
+				let p = changeBackgroundImage(imgName, url)
+				if (wait){
+					p.then(() => resolve())
+				} else {
+					resolve()
+				}
+			}
+		}
+	},
 	"animate-speaker-nameplate": {
 		hasTarget: false,
 		execute: (resolve, effect, progress, options) => {

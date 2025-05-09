@@ -455,7 +455,7 @@ const pokemonData = {
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0050Diglett-Alola.png",
-			"largeShiny": "src/img/shiny-pokemon/050-Diglett.png",
+			"largeShiny": "src/img/shiny-pokemon/050-Diglett-Alola.png",
 			"home": "src/img/tiny-pokemon/Diglett-Alola.png"
 		},
 		sounds: {
@@ -1606,8 +1606,8 @@ const pokemonData = {
 			{ name: "Flail", unlock: { type: "level", amount: 4 } },
 			{ name: "Rock Throw", unlock: { type: "level", amount: 8 } },
 			{ name: "Block", unlock: { type: "level", amount: 12 } },
-			// { name: "Mimic", unlock: { type: "level", amount: 16 } },
-			// { name: "Rock Tomb", unlock: { type: "level", amount: 20 } },
+			{ name: "Mimic", unlock: { type: "level", amount: 16 } },
+			{ name: "Rock Tomb", unlock: { type: "level", amount: 20 } },
 		]
 	},
 	"Happiny": {
@@ -1653,18 +1653,13 @@ const pokemonData = {
 			purple: 2
 		},
 		learnset: [
-			{
-				name: "Pound",
-				unlock: { type: "level", amount: 1 }
-			},
-			{
-				name: "Copycat",
-				unlock: { type: "level", amount: 1 }
-			},
-			{
-				name: "Defense Curl",
-				unlock: { type: "level", amount: 4 }
-			},
+			{ name: "Pound", unlock: { type: "level", amount: 1 } },
+			{ name: "Copycat", unlock: { type: "level", amount: 1 } },
+			{ name: "Defense Curl", unlock: { type: "level", amount: 4 } },
+			{ name: "Sweet Kiss", unlock: { type: "level", amount: 8 } },
+			{ name: "Disarming Voice", unlock: { type: "level", amount: 12 } },
+			{ name: "Covet", unlock: { type: "level", amount: 16 } },
+			{ name: "Charm", unlock: { type: "level", amount: 20 } },
 		]
 	},
 	"Roggenrola": {
@@ -1715,6 +1710,7 @@ const pokemonData = {
 			{ name: "Stealth Rock", unlock: { type: "level", amount: 8 } },
 			{ name: "Mud-Slap", unlock: { type: "level", amount: 12 } },
 			{ name: "Smack Down", unlock: { type: "level", amount: 16 } },
+			{ name: "Iron Defense", unlock: { type: "level", amount: 20 } },
 		]
 	},
 	"Cottonee": {
@@ -1764,6 +1760,12 @@ const pokemonData = {
 			{ name: "Helping Hand", unlock: { type: "level", amount: 1 } },
 			{ name: "Fairy Wind", unlock: { type: "level", amount: 3 } },
 			{ name: "Stun Spore", unlock: { type: "level", amount: 6 } },
+			{ name: "Mega Drain", unlock: { type: "level", amount: 12 } },
+			{ name: "Razor Leaf", unlock: { type: "level", amount: 15 } },
+			{ name: "Growth", unlock: { type: "level", amount: 18 } },
+			{ name: "Poison Powder", unlock: { type: "level", amount: 21 } },
+			{ name: "Giga Drain", unlock: { type: "level", amount: 24 } },
+			{ name: "Charm", unlock: { type: "level", amount: 27 } },
 		]
 	},
 	"Petilil": {
@@ -2111,7 +2113,7 @@ const pokemonData = {
 			{ name: "Disarming Voice", unlock: { type: "level", amount: 6 } },
 			{ name: "Aqua Jet", unlock: { type: "level", amount: 9 } },
 			{ name: "Baby-Doll Eyes", unlock: { type: "level", amount: 12 } },
-			{ name: "Flail", unlock: { type: "level", amount: 1 } },
+			{ name: "Rock Tomb", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {
