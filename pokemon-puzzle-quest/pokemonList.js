@@ -447,7 +447,7 @@ const pokemonData = {
 	},
 	"Diglett-Alola": {
 		name: "Diglett-Alola",
-		number: "50",
+		number: "50a",
 		weight: {
 			pounds: 2.2,
 			kilograms: 1.0

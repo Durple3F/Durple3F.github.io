@@ -978,7 +978,9 @@ const levelData = [
 			{ type: "load-setting", key: "hardMode", label: "fight-ilima" },
 			{ type: "change-music", music: "SM Trainer Battle" },
 			{ type: "fight", trainer: 3, label: "Ilima" },
+			{ type: "jump-if-lost", jumpTo: Infinity },
 			{ type: "dialogue", source: "route-2-7-dialogue-won-2" },
+			{ type: "unlock-z-move-type", unlockedType: "Normal" },
 			{ type: "jump", jumpTo: Infinity },
 
 			{ type: "load-setting", key: "hardMode", label: "fight-rats" },
@@ -1412,7 +1414,7 @@ const levelData = [
 				targetPokemon: 4,
 				canPickDuplicates: true,
 				possiblePokemon: [
-					{ id: "Roggenrola", levelMin: 25, levelMax: 25, weight: 4, activeMoves: ["Play Nice"] },
+					{ id: "Roggenrola", levelMin: 25, levelMax: 25, weight: 4, activeMoves: ["Gust"] },
 				]
 			},
 			{

@@ -331,26 +331,29 @@ function playSound(name, fadeMusic=true){
 		fadeSoundVolume(snd, 0, snd.volume)
 	}
 	snd.play()
-	let duration = snd.duration
 	playingSounds.push({name: name, type: sounds[name].type, audio: snd})
-	setTimeout(() => {
+	snd.addEventListener("ended", () => {
 		resolvePromise()
-		delay(100).then(stopSound)
-	}, duration * 1000)
+		delay(100).then(() => stopSound(name))
+	})
 	return promise
 }
 function stopSound(name, fadeMusic=true){
 	let toCheck = playingSounds.map(p => p)
-	while (toCheck.length){
-		let sound = toCheck[0]
+	for (let sound of toCheck){
 		let snd = sound.audio
 		if (snd.paused){
 			let index = playingSounds.indexOf(sound)
-			playingSounds.splice(index, 1)
+			if (index !== -1){
+				playingSounds.splice(index, 1)
+			}
 		}
 		if (sound.name === name){
+			console.log(sound, name)
 			let index = playingSounds.indexOf(sound)
-			playingSounds.splice(index, 1)
+			if (index !== -1){
+				playingSounds.splice(index, 1)
+			}
 			if (sound.type === "music" && fadeMusic){
 				let originalVolume = snd.volume
 				fadeSoundVolume(snd, originalVolume, 0)
@@ -363,8 +366,6 @@ function stopSound(name, fadeMusic=true){
 				sound.audio.pause()
 			}
 		}
-
-		toCheck.splice(0, 1)
 	}
 }
 function unloadSound(name){

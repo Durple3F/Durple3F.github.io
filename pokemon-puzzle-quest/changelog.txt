@@ -1,5 +1,8 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
+5/9 (29.8k lines):
+	- Hopefully fixed that bug where music would play multiple times (again)
+
 5/8 (29.8k lines):
 	- Added Spite, Light Screen, Reflect, Safeguard, Roost, Struggle Bug, Night Shade, Hex, Drill Peck, Force Palm, Knock Off, Bulk Up, Shadow Ball, Flail
 	- Fiddled with some move prices for Focus Energy, Bite
