@@ -442,7 +442,7 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			purple: 12,
+			purple: 6,
 			green: 4,
 			yellow: 4
 		},
@@ -1705,8 +1705,8 @@ const pokemonMoveData = {
 		accuracy: null,
 		rechargeTurns: 2,
 		energy: {
-			blue: 5,
-			purple: 5
+			blue: 7,
+			purple: 7
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Focus Energy.mp3"
