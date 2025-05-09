@@ -2629,6 +2629,46 @@ const pokemonMoveData = {
 			}
 		],
 	},
+	//Adds the opponent's last used move to your active moves until the fight
+	"Mimic": {
+		name: "Mimic",
+		type: "Normal",
+		category: "Status",
+		strategy: "special",
+		pp: 20,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 1,
+		energy: {
+			orange: 6,
+			purple: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Charm.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-last-move", target: "opponent" },
+			{ type: "jump-if-truthy", jumpTo: "use-move" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "wait", duration: 1000, label: "use-move" },
+			{ type: "get-last-move", target: "opponent" },
+			{ type: "use-move", move: -1 },
+			{ type: "is-z-move" },
+			{ type: "jump-if-truthy", jumpTo: "z-move" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "trigger", key: "zEffects", label: "z-move" },
+		],
+		zEffects: [
+			{
+				type: "apply-debuff", target: "user",
+				debuff: { type: "stat", stat: "speed", class: "buff", amount: 1 }
+			},
+		],
+		highlightOnHover: {
+			type: "last-enemy-move"
+		}
+	},
 	"Minimize": {
 		name: "Minimize",
 		type: "Normal",

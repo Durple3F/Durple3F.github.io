@@ -1,6 +1,6 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-5/8 (29.5k lines):
+5/8 (29.8k lines):
 	- Added Spite, Light Screen, Reflect, Safeguard, Roost, Struggle Bug, Night Shade, Hex, Drill Peck, Force Palm, Knock Off, Bulk Up, Shadow Ball, Flail
 
 5/7 (29.0k lines):

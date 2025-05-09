@@ -5681,7 +5681,13 @@ class Board {
 	}
 	addNextTileToTopOfColumn(x){
 		let column = this.getColumn(x)
-		let top = Math.min(-1, column[0].y - 1)
+		let y
+		if (column.length){
+			y = column[0].y
+		} else {
+			y = -1
+		}
+		let top = Math.min(-1, y - 1)
 		let newTile = this.getNextTile(x, top)
 		this.add(newTile)
 	}
