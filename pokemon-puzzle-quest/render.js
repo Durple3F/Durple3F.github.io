@@ -46,8 +46,8 @@ function renderTile(tile, board, round, w, h, xOffset, yOffset, options){
 	let scale = tile.spriteRenderScale
 	x += xOffset + tilePaddingW * 0.5
 	y += yOffset + tilePaddingH * 0.5
-	let spriteW = tileW * tile.width - tilePaddingW
-	let spriteH = tileH * tile.height - tilePaddingH
+	let spriteW = tileW - tilePaddingW
+	let spriteH = tileH - tilePaddingH
 	spriteW = spriteW * scale
 	spriteH = spriteH * scale
 	x -= tileW * (scale - 1) * 0.5
@@ -66,8 +66,6 @@ function renderTile(tile, board, round, w, h, xOffset, yOffset, options){
 		let diff = 5*Math.min(1, 1 - highlight)
 		if (trueBlur){
 			ctx.save()
-			// ctx.filter = "blur(" + blurAmount + "px)"
-			// ctx.fillStyle = tileTypeColors[tile.type]
 			ctx.globalAlpha = tile.spriteOpacity
 			ctx.shadowColor = getHighlightColor(tile.type, now)
 			ctx.shadowBlur = blurAmount * 2
@@ -78,9 +76,7 @@ function renderTile(tile, board, round, w, h, xOffset, yOffset, options){
 		}
 	}
 
-	// ctx.filter = "none"
-
-	let sprite = sprites.images[tile.type]
+	let sprite = sprites.images[tile.type+"-"+tile.power]
 	ctx.save()
 	ctx.globalAlpha = tile.spriteOpacity
 	ctx.drawImage(sprite, x, y, spriteW, spriteH)

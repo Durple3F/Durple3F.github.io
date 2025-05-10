@@ -1458,7 +1458,6 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
-			{ type: "end-turn" }
 		],
 		onTurnStart: [
 			{ type: "is-trainers-turn", target: "user" },
@@ -2607,6 +2606,34 @@ const pokemonMoveData = {
 			{ type: "damage", additivePower: -1, label: "big-damage" }
 		],
 	},
+	//Empowers all Grass tiles
+	"Magical Leaf": {
+		name: "Magical Leaf",
+		type: "Grass",
+		category: "Special",
+		strategy: "basic-damage",
+		pp: 20,
+		power: 60,
+		accuracy: 100,
+		rechargeTurns: 5,
+		energy: {
+			// green: 10,
+			// purple: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Magical Leaf.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "load-value", value: 3 },
+			{ type: "select-all-tiles", targetType: "green" },
+			{ type: "empower-tiles", selection: -1 },
+		]
+	},
 	//Prevents the opponent from switching out
 	"Mean Look": {
 		name: "Mean Look",
@@ -2893,6 +2920,7 @@ const pokemonMoveData = {
 			{ type: "apply-status-effect", statusEffect: "paralyzed", target: "opponent" }
 		],
 	},
+	//Turns all Electric tiles into Rainbow tiles
 	"Pay Day": {
 		name: "Pay Day",
 		type: "Normal",

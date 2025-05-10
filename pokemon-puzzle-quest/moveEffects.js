@@ -1150,6 +1150,21 @@ const pokemonMoveEffects = {
 			resolve()
 		}
 	},
+	"empower-tiles": {
+		execute: (resolve, effect, params, game, options) => {
+			let selection = params.selection
+			selection.forEach(tile => {
+				//TODO I wish this had an animation
+				if (tile.power !== 1){
+					let copy = new Tile(tile.type, tile.x, tile.y, tile.power)
+					game.board.fakeContents.push(copy)
+					game.board.fadeOut(copy)
+				}
+				tile.power = 1
+			})
+			resolve(selection)
+		}
+	},
 	"count-tiles": {
 		update: false,
 		execute: (resolve, effect, params, game, options) => {

@@ -59,19 +59,49 @@ function getHealthColor(p){
 }
 
 let tileIconUrls = {
-	red: "src/img/tiles/red.png",
-	orange: "src/img/tiles/orange.png",
-	yellow: "src/img/tiles/yellow.png",
-	green: "src/img/tiles/green.png",
-	blue: "src/img/tiles/blue.png",
-	purple: "src/img/tiles/purple.png",
-	black: "src/img/tiles/black.png",
-	pink: "src/img/tiles/pink.png",
-	rainbow: "src/img/tiles/rainbow.png"
+	red: {
+		0: "src/img/tiles/red.png",
+		1: "src/img/tiles/red.png"
+	},
+	orange: {
+		0: "src/img/tiles/orange.png",
+		1: "src/img/tiles/orange.png"
+	},
+	yellow: {
+		0: "src/img/tiles/yellow.png",
+		1: "src/img/tiles/yellow 2.png"
+	},
+	green: {
+		0: "src/img/tiles/green.png",
+		1: "src/img/tiles/green 2.png"
+	},
+	blue: {
+		0: "src/img/tiles/blue.png",
+		1: "src/img/tiles/blue.png"
+	},
+	purple: {
+		0: "src/img/tiles/purple.png",
+		1: "src/img/tiles/purple.png"
+	},
+	black: {
+		0: "src/img/tiles/black.png",
+		1: "src/img/tiles/black.png"
+	},
+	pink: {
+		0: "src/img/tiles/pink.png",
+		1: "src/img/tiles/pink.png"
+	},
+	rainbow: {
+		0: "src/img/tiles/rainbow.png",
+		1: "src/img/tiles/rainbow.png"
+	},
 }
-function getEnergyIcon(type){
+function getEnergyIcon(type, power=0){
 	if (type in tileIconUrls){
-		return tileIconUrls[type]
+		let src = tileIconUrls[type]
+		if (power in src){
+			return src[power]
+		}
 	}
 	return `src/img/tiles/${type}.png`
 }

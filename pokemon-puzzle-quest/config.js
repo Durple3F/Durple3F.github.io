@@ -11,6 +11,8 @@ const config = {
 	antialiasing: true,
 	screenShake: true,
 	funnyMode: false,
+	//Tiles glow if they can be matched
+	tileHighlightHints: true,
 	cpuSpeed: 2,
 	textSpeed: 40,
 

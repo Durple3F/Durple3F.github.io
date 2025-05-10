@@ -1,4 +1,4 @@
-const versionNumber = "v0.15.17"
+const versionNumber = "v0.15.18"
 let lang = "en"
 let playerName
 
@@ -698,8 +698,10 @@ function loadResources(){
 	]
 	sprites = sprites.concat(
 		Object.keys(tileIconUrls)
-		.map(key => {
-			return {name: key, url: tileIconUrls[key]}
+		.flatMap(key => {
+			return Object.keys(tileIconUrls[key]).map(key2 => {
+				return {name: `${key}-${key2}`, url: tileIconUrls[key][key2]}
+			})
 		})
 	)
 	// sprites = sprites.concat(getAllStatusSprites())

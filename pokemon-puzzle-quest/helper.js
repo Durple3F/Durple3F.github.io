@@ -206,11 +206,20 @@ function isMouseSomewhereIn($selection){
 	return onElem || inElem
 }
 
-function getTileEnergyValue(type){
-	if (type instanceof Tile){
-		type = type.type
-	}
+function getTileEnergyValue(tile){
 	let energy = getEmptyEnergy()
+	let type
+	let power
+	if (typeof tile === "string"){
+		type = tile
+		power = 0
+	} else if (tile instanceof Tile){
+		type = tile.type
+		power = tile.power
+	} else {
+		console.warn("Unusual input", tile)
+		return energy
+	}
 	switch (type){
 		case "red": energy.red += 1
 		break
@@ -236,8 +245,13 @@ function getTileEnergyValue(type){
 		//Nothing happens
 		break
 		default:
-			console.warn("You never said what ",type,"should do")
+			console.warn("You never said what ",type,"should do", tile)
 	}
+
+	if (power > 0){
+		energy = multiplyEnergies(energy, 2)
+	}
+
 	return energy
 }
 

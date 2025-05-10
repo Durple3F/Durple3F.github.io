@@ -1817,6 +1817,9 @@ const pokemonData = {
 			{ name: "Stun Spore", unlock: { type: "level", amount: 6 } },
 			{ name: "Mega Drain", unlock: { type: "level", amount: 9 } },
 			{ name: "Charm", unlock: { type: "level", amount: 12 } },
+			{ name: "Magical Leaf", unlock: { type: "level", amount: 15 } },
+			{ name: "Sleep Powder", unlock: { type: "level", amount: 18 } },
+			{ name: "Giga Drain", unlock: { type: "level", amount: 21 } },
 		]
 	},
 	"Rufflet": {
@@ -2113,7 +2116,7 @@ const pokemonData = {
 			{ name: "Disarming Voice", unlock: { type: "level", amount: 6 } },
 			{ name: "Aqua Jet", unlock: { type: "level", amount: 9 } },
 			{ name: "Baby-Doll Eyes", unlock: { type: "level", amount: 12 } },
-			{ name: "Rock Tomb", unlock: { type: "level", amount: 1 } },
+			{ name: "Magical Leaf", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {

@@ -1,9 +1,13 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-5/9 (30.1k lines)!!!!!:
-	- Added Mimic, Rock Tomb, Iron Defense, Giga Drain, Razor Leaf
+5/10 (30.2k lines):
+	- Empowered tiles now all provide double energy in addition to any other effects
+
+5/9 (30.2k lines)!!!!!:
+	- Added Mimic, Rock Tomb, Iron Defense, Giga Drain, Razor Leaf, Magical Leaf
 	- Hopefully fixed that bug where music would play multiple times (again)
 	- Added a background to 2-6
+	- Added some new mechanics regarding making tiles more powerful. Right now only green tiles can be empowered.
 
 5/8 (29.8k lines):
 	- Added Spite, Light Screen, Reflect, Safeguard, Roost, Struggle Bug, Night Shade, Hex, Drill Peck, Force Palm, Knock Off, Bulk Up, Shadow Ball, Flail

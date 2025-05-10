@@ -532,7 +532,7 @@ class Round {
 		return result
 	}
 
-	handleEffects(matches) {
+	handleEffects(matches, tiles) {
 		let activeTrainer = this.trainers[this.activePlayerIndex]
 		let activePokemon = activeTrainer.activePokemon
 		let otherTrainer = this.trainers[this.inactivePlayerIndex]
@@ -635,7 +635,7 @@ class Round {
 		let energy = getEmptyEnergy()
 		//It's possible for a pokemon to give its opponent energy
 		let energyToOpponent = getEmptyEnergy()
-		let tiles = []
+		tiles = tiles ?? []
 		let matchTotals = getEmptyTileTypeTable()
 		for (let match of matches) {
 			match.forEach(t => tiles.push(t))
@@ -693,10 +693,28 @@ class Round {
 			energy = addEnergies(energy, change)
 		}
 
-		//Pikcup gives you energy when your opponent makes a 4-match
+		//Pickup gives you energy when your opponent makes a 4-match
 		if (madeFourMatch && otherPokemon.hasAbility("Pickup")) {
 			let toAdd = multiplyEnergies(energy, 0.5, "round")
 			energyToOpponent = addEnergies(energyToOpponent, toAdd)
+		}
+
+		//Empowered tiles do stuff when you match them
+		for (let tile of tiles){
+			if (tile.power === 0) continue
+			//Green tiles heal you for 5% of your Max HP
+			if (tile.type === "green"){
+				let amt = activePokemon.maxhp * 0.05 * -1
+				this.dealDamage({
+					from: activePokemon,
+					fromTrainer: activeTrainer,
+					to: activePokemon,
+					toTrainer: activeTrainer,
+					damage: amt,
+					fixed: true,
+					healing: true
+				})
+			}
 		}
 
 		this.giveEnergy(energy, activeTrainer, activePokemon)
@@ -2559,7 +2577,6 @@ class Round {
 			}
 		}
 		moves = noDuplicates(moves)
-		console.log(moves)
 
 		return moves
 	}
@@ -3540,6 +3557,9 @@ class Round {
 			}
 		})
 
+		//Highlights
+		promise = promise.then(() => this.applySpriteHighlights())
+
 		return promise
 	}
 	waitUntilNoMoveQueue(callback) {
@@ -3938,16 +3958,27 @@ class Round {
 		this.board.contents.push(tile)
 	}
 	applySpriteHighlights() {
-		for (let tile of this.board.tilesOnScreen()) {
+		let contents = this.board.tilesOnScreen()
+		for (let tile of contents) {
 			tile.spriteHighlightTarget = 0
 		}
-		let trainer = this.trainers[0]
-		let allSwaps = this.determineAvailableSwaps(trainer)
-		for (let swap of allSwaps) {
-			let tile1 = swap[0]
-			let tile2 = swap[1]
-			tile1.spriteHighlightTarget = 1
-			tile2.spriteHighlightTarget = 1
+		if (config["tileHighlightHints"]){
+			let trainer = this.trainers[0]
+			let allSwaps = this.determineAvailableSwaps(trainer)
+			for (let swap of allSwaps) {
+				let tile1 = swap[0]
+				let tile2 = swap[1]
+				tile1.spriteHighlightTarget = 1
+				tile2.spriteHighlightTarget = 1
+			}
+		} else {
+			for (let tile of contents) {
+				if (tile.type === "rainbow"){
+					tile.spriteHighlightTarget = 1
+					continue
+				}
+				tile.spriteHighlightTarget = tile.power
+			}
 		}
 	}
 	determineAvailableSwaps(trainer) {
@@ -5467,13 +5498,8 @@ class Board {
 	}
 
 	isFull() {
-		let sum = 0
-		for (let i = 0; i < this.contents.length; i++) {
-			let tile = this.contents[i]
-			sum += tile.width * tile.height
-		}
-		console.log(sum)
-		return sum === this.width * this.height
+		let contents = this.tilesOnScreen()
+		return contents.length === this.width * this.height
 	}
 
 	mapKey(tile) {
@@ -5507,20 +5533,27 @@ class Board {
 		let removed = this.remove(tile)
 		if (removed){
 			this.fakeContents.push(tile)
-			$({val: 1}).animate({val: 0}, {
-				duration: duration,
-				step: p => {
-					tile.spriteOpacity = p
-				},
-				complete: () => {
-					tile.spriteOpacity = 0
-					let index = this.fakeContents.indexOf(tile)
-					if (index !== -1){
-						this.fakeContents.splice(index, 1)
-					}
-				}
-			})
+			this.fadeOut(tile, duration)
 		}
+	}
+	fadeOut(tile, duration=250){
+		if (!tile) {
+			console.warn("fadeOut received not a tile", tile)
+			return
+		}
+		$({val: 1}).animate({val: 0}, {
+			duration: duration,
+			step: p => {
+				tile.spriteOpacity = p
+			},
+			complete: () => {
+				tile.spriteOpacity = 0
+				let index = this.fakeContents.indexOf(tile)
+				if (index !== -1){
+					this.fakeContents.splice(index, 1)
+				}
+			}
+		})
 	}
 	changeLocation(tile, x, y) {
 		let mapKey = x + "," + y
@@ -6089,15 +6122,14 @@ class Board {
 }
 
 class Tile {
-	constructor(type, x, y, width = 1, height = 1) {
+	constructor(type, x, y, power=0) {
 		if (type === "random") {
 			type = getRandomTileType()
 		}
 		this.type = type
 		this.x = x
 		this.y = y
-		this.width = width
-		this.height = height
+		this.power = power
 
 		this.statusEffects = []
 

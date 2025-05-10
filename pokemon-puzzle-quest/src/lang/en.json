@@ -1285,7 +1285,7 @@
 		},
 		"Fake Out": {
 			"name": "Fake Out",
-			"description": "Deals damage, then ends the turn. As long as the user has been the active Pokémon for more than two turns, this move's purple energy cost increases by 7.",
+			"description": "Deals damage. As long as the user has been the active Pokémon for more than two turns, this move's purple energy cost increases by 7.",
 			"shortDescription": "First-strike attack"
 		},
 		"Fake Tears": {
@@ -1453,6 +1453,11 @@
 			"name": "Mach Punch",
 			"description": "Deals damage. If the opponent's speed stat is less than the speed stat of the user, this move's power increases by 40.",
 			"shortDescription": "Deals damage based on speed"
+		},
+		"Magical Leaf": {
+			"name": "Magical Leaf",
+			"description": "Deals damage. Then, empowers all Grass tiles. When either trainer matches an empowered Grass tile, it provides twice its usual energy, and their active Pokémon heals 5% of its Max HP.",
+			"shortDescription": "Empowers all Grass tiles"
 		},
 		"Mean Look": {
 			"name": "Mean Look",
