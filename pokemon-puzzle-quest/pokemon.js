@@ -584,6 +584,13 @@ class Pokemon{
 			effectiveStat *= 1.5
 		}
 
+		let statChanges = this.getStatusesOfType("stat-alteration")
+		for (let statusEffect of statChanges){
+			let changedStatName = statusEffect.stat
+			if (changedStatName !== stat) continue
+			effectiveStat = applyModification(effectiveStat, statusEffect.modification)
+		}
+
 		return effectiveStat
 	}
 

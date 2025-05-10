@@ -2434,6 +2434,7 @@ const pokemonMoveData = {
 			{ type: "trigger", key: "additionalEffects" },
 		],
 		additionalEffects: [
+			{ type: "play-sound", name: "attack" },
 			{ type: "load-value", value: 3 },
 			{ type: "select-random-tiles", count: -1 },
 			{ type: "change-tile-type", selection: "group", which: -1, targetType: "green" },
@@ -2577,6 +2578,37 @@ const pokemonMoveData = {
 			{ type: "jump", jumpTo: Infinity },
 		],
 	},
+	//Shifts the bottom row of tiles
+	"Low Sweep": {
+		name: "Low Sweep",
+		type: "Fighting",
+		category: "Physical",
+		strategy: "basic-damage",
+		pp: 20,
+		power: 60,
+		accuracy: 100,
+		rechargeTurns: 2,
+		energy: {
+			orange: 10
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Low Sweep.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "get-board-height" },
+			{ type: "load-value", value: -1 },
+			{ type: "add-numbers" },
+			{ type: "select-row", y: -1 },
+			{ type: "get-side-number", left: 3, right: -3 },
+			{ type: "load-value", value: 0 },
+			{ type: "shift-tiles", selection: -3, xOffset: -2, yOffset: -1 },
+		]
+	},
 	//Deals bonus damage if you're faster
 	"Mach Punch": {
 		name: "Mach Punch",
@@ -2617,8 +2649,8 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 5,
 		energy: {
-			// green: 10,
-			// purple: 6
+			green: 10,
+			purple: 6
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Magical Leaf.mp3"
@@ -2897,6 +2929,7 @@ const pokemonMoveData = {
 			{ type: "damage", amount: -1, fixed: true, finalImmunityCheck: true },
 		],
 	},
+	//Paralyzes the opponent
 	"Nuzzle": {
 		name: "Nuzzle",
 		type: "Electric",
@@ -4352,6 +4385,36 @@ const pokemonMoveData = {
 			}
 		],
 	},
+	//Heals you whenever you make a green 4-match
+	"Synthesis": {
+		name: "Synthesis",
+		type: "Grass",
+		category: "Status",
+		strategy: "buff-user",
+		tags: ["healing"],
+		pp: 5,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 1,
+		energy: {
+			green: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Synthesis part 1.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "load-value", value: 3 },
+			{ type: "select-random-tiles", count: -1, conditions: { notTypes: ["green"] } },
+			{ type: "change-tile-type", selection: "group", which: -1, targetType: "green" },
+		],
+		onFourMatchGreen: [
+			{ type: "get-max-hp", target: "user" },
+			{ type: "load-value", value: 0.25 },
+			{ type: "multiply-numbers", round: "up" },
+			{ type: "heal", target: "user", amount: -1 },
+		]
+	},
 	//Just damage
 	"Tackle": {
 		name: "Tackle",
@@ -4401,6 +4464,39 @@ const pokemonMoveData = {
 					amount: -1
 				}
 			}
+		],
+	},
+	//Doubles your speed for 4 turns
+	"Tailwind": {
+		name: "Tailwind",
+		type: "Flying",
+		category: "Status",
+		strategy: "buff-user",
+		pp: 15,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 6,
+		energy: {
+			yellow: 6,
+			red: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Tailwind.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "tailwind-sped-up",
+				type: "stat-alteration",
+				stacks: true,
+				volatile: true,
+				turns: 4,
+				stat: "speed",
+				modification: {
+					change: 2,
+					operation: "multiply"
+				}
+			} },
 		],
 	},
 	//Deals big damage but has recoil
@@ -4708,6 +4804,46 @@ const pokemonMoveData = {
 				conditionArguments: [-1, -1, -1]
 			},
 			{ type: "remove-tiles", selection: -1 }
+		]
+	},
+	//Ups Atk 1 & SpAtk 1 then empower some orange tiles
+	"Work Up": {
+		name: "Work Up",
+		type: "Normal",
+		category: "Status",
+		strategy: "buff-user",
+		pp: 30,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 5,
+		energy: {
+			orange: 6,
+			red: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Work Up.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{
+				type: "apply-debuff", target: "user", debuff: {
+					type: "stat",
+					stat: "attack",
+					class: "buff",
+					amount: 1
+				}
+			},
+			{
+				type: "apply-debuff", target: "user", debuff: {
+					type: "stat",
+					stat: "specialAttack",
+					class: "buff",
+					amount: 1
+				}
+			},
+			{ type: "load-value", value: 3 },
+			{ type: "select-random-tiles", count: -1, conditions: { types: ["orange"] } },
+			{ type: "empower-tiles", selection: -1 },
 		]
 	},
 	//Place tiles on the board that deal damage when matched

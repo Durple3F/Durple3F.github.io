@@ -538,9 +538,10 @@ class Round {
 		let otherTrainer = this.trainers[this.inactivePlayerIndex]
 		let otherPokemon = otherTrainer.activePokemon
 
-		let madeFourMatch = matches.some(match => match.length >= 4)
+		let madeFourMatch = matches.some(match => doesMatchMeetCriteria(match, null, 4))
+		let madeFiveMatch = matches.some(match => doesMatchMeetCriteria(match, null, 5))
 		//On a 5-match:
-		if (matches.some(match => match.length >= 5)) {
+		if (madeFiveMatch) {
 			//Anger Point gives benefits when the opponent makes a 5-match
 			if (otherPokemon.hasAbility("Anger Point")) {
 				otherPokemon.addStatusEffect({
@@ -572,9 +573,7 @@ class Round {
 		}
 
 		//On an Orange 4-match:
-		if (matches.some(match => {
-			return match.length === 4 && match.every(tile => tile.type === "orange")
-		})) {
+		if (matches.some(match => doesMatchMeetCriteria(match, "orange", 4))) {
 			//Sand Veil speeds you up
 			if (activePokemon.hasAbility("Sand Veil")) {
 				activePokemon.addStatusEffect({
@@ -606,9 +605,8 @@ class Round {
 			}
 		}
 		//On a Blue 4-match:
-		if (matches.some(match => {
-			return match.length === 4 && match.every(tile => tile.type === "blue")
-		})) {
+		if (matches.some(match => doesMatchMeetCriteria(match, "blue", 4))) {
+			//Hydration removes a status
 			if (activePokemon.hasAbility("Hydration")) {
 				let canRemove = activePokemon.statusEffects
 					.filter(statusEffect => !statusEffect.volatile)
@@ -617,6 +615,7 @@ class Round {
 					activePokemon.removeStatus(randomStatus)
 				}
 			}
+			//Rain Dish heals you a bit
 			if (activePokemon.hp < activePokemon.maxhp && activePokemon.hasAbility("Rain Dish")) {
 				let gain = activePokemon.maxhp * 0.2
 				this.dealDamage({
@@ -702,8 +701,25 @@ class Round {
 		//Empowered tiles do stuff when you match them
 		for (let tile of tiles){
 			if (tile.power === 0) continue
+			let type = tile.type
+			//Orange tiles take off energy from your move costs
+			if (type === "orange"){
+				activePokemon.addStatusEffect({
+					name: "empowered-orange-cost-alteration",
+					type: "cost-alteration",
+					stacks: true,
+					volatile: true,
+					numberOfApplications: 1,
+					appliesTo: {
+						logic: "not"
+					},
+					energyCost: {
+						greatestColor: -3
+					}
+				})
+			}
 			//Green tiles heal you for 5% of your Max HP
-			if (tile.type === "green"){
+			else if (type === "green"){
 				let amt = activePokemon.maxhp * 0.05 * -1
 				this.dealDamage({
 					from: activePokemon,
@@ -836,12 +852,14 @@ class Round {
 		let contents = this.board.contents
 		let activeTrainer = this.trainers[this.activePlayerIndex]
 		let activePokemon = activeTrainer.activePokemon
+		let promise = Promise.resolve()
 
 		if (this.canTilesMatchRightNow === false){
 			return Promise.resolve()
 		}
 
-		let promise = new Promise(resolve => {
+		//Provide energy / other effects based on what matches were made
+		promise = promise.then(() => new Promise(resolve => {
 			if (matches.length > 0) {
 				this.increaseCascade()
 
@@ -873,7 +891,7 @@ class Round {
 				for (let tile of tiles) {
 					this.board.explodeTile(tile)
 				}
-				this.handleEffects(matches)
+				this.handleEffects(matches, tiles)
 
 				//A pokemon that is frozen in fear snaps out of it if any match made has a length of 5 or more.
 				if (activePokemon.hasStatus("fear-frozen")) {
@@ -887,8 +905,7 @@ class Round {
 
 				//Add those matches to the current combo
 				matches.forEach(m => this.matchesInCombo.push(m))
-				this.applyGravity()
-					.then(() => resolve())
+				resolve()
 			}
 			else {
 				this.applySpriteHighlights()
@@ -898,6 +915,39 @@ class Round {
 				}
 
 				resolve()
+			}
+		}))
+
+		//Some moves have effects that trigger on making certain kinds of matches
+		promise = promise.then(() => new Promise(res => {
+			if (!matches.length) return res()
+
+			
+			
+			let moveEffectPromise = Promise.resolve()
+			let moves = this.getAvailableMoves(this.activePlayerIndex)
+			for (let move of moves){
+				if (move.onFourMatchGreen){
+					let triggers = matches.filter(match => doesMatchMeetCriteria(match, "green", 4))
+					for (let trigger of triggers){
+						moveEffectPromise = moveEffectPromise.then(() => {
+							return this.triggerMoveEffects(
+								activeTrainer, activePokemon, move, "onFourMatchGreen"
+							)
+						})
+					}
+				}
+			}
+
+			moveEffectPromise.then(() => res())
+		}))
+
+		//Finally, move tiles down for gravity.
+		promise = promise.then(() => {
+			if (matches.length > 0) {
+				return this.applyGravity()
+			} else {
+				return Promise.resolve()
 			}
 		})
 
@@ -3156,6 +3206,7 @@ class Round {
 		if (hasParalyzed) {
 			pokemon.removeStatusesWithName("paralyzed")
 			moveUseObj.resolve()
+			moveUseObj.completed = true
 			this.updateEverything()
 		} else {
 			this.moveQueue.push(moveUseObj)
@@ -3221,6 +3272,7 @@ class Round {
 
 		if (effectIndex >= effects.length) {
 			moveUseObj.resolve()
+			moveUseObj.completed = true
 			return moveUseObj.promise
 		}
 
@@ -3429,6 +3481,7 @@ class Round {
 		promise = promise.then(() => {
 			if (executionFailed){
 				moveUseObj.resolve()
+				moveUseObj.completed = true
 				return Promise.resolve()
 			}
 
@@ -3481,7 +3534,6 @@ class Round {
 			} else {
 				moveUseObj = moveUseObj[0]
 			}
-			moveUseObj.completed = true
 
 			let trainer = moveUseObj.trainer
 			let pokemon = moveUseObj.pokemon

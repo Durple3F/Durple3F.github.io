@@ -1869,6 +1869,9 @@ const pokemonData = {
 			{ name: "Leer", unlock: { type: "level", amount: 1 } },
 			{ name: "Hone Claws", unlock: { type: "level", amount: 6 } },
 			{ name: "Wing Attack", unlock: { type: "level", amount: 12 } },
+			{ name: "Tailwind", unlock: { type: "level", amount: 18 } },
+			{ name: "Scary Face", unlock: { type: "level", amount: 24 } },
+			{ name: "Aerial Ace", unlock: { type: "level", amount: 30 } },
 		]
 	},
 	"Vullaby": {
@@ -1917,6 +1920,10 @@ const pokemonData = {
 			{ name: "Leer", unlock: { type: "level", amount: 1 } },
 			{ name: "Flatter", unlock: { type: "level", amount: 6 } },
 			{ name: "Pluck", unlock: { type: "level", amount: 12 } },
+			{ name: "Tailwind", unlock: { type: "level", amount: 18 } },
+			{ name: "Knock Off", unlock: { type: "level", amount: 24 } },
+			{ name: "Iron Defense", unlock: { type: "level", amount: 30 } },
+			{ name: "Whirlwind", unlock: { type: "level", amount: 36 } },
 		]
 	},
 	"Pancham": {
@@ -1966,6 +1973,8 @@ const pokemonData = {
 			{ name: "Arm Thrust", unlock: { type: "level", amount: 4 } },
 			{ name: "Taunt", unlock: { type: "level", amount: 8 } },
 			{ name: "Circle Throw", unlock: { type: "level", amount: 12 } },
+			{ name: "Low Sweep", unlock: { type: "level", amount: 16 } },
+			{ name: "Work Up", unlock: { type: "level", amount: 20 } },
 		]
 	},
 	"Rowlet": {
@@ -2015,6 +2024,12 @@ const pokemonData = {
 			{ name: "Leafage", unlock: { type: "level", amount: 3 } },
 			{ name: "Astonish", unlock: { type: "level", amount: 6 } },
 			{ name: "Peck", unlock: { type: "level", amount: 9 } },
+			{ name: "Shadow Sneak", unlock: { type: "level", amount: 12 } },
+			{ name: "Razor Leaf", unlock: { type: "level", amount: 15 } },
+			{ name: "Synthesis", unlock: { type: "level", amount: 18 } },
+			{ name: "Pluck", unlock: { type: "level", amount: 21 } },
+			{ name: "Nasty Plot", unlock: { type: "level", amount: 24 } },
+			{ name: "Sucker Punch", unlock: { type: "level", amount: 27 } },
 		]
 	},
 	"Litten": {
@@ -2066,6 +2081,10 @@ const pokemonData = {
 			{ name: "Roar", unlock: { type: "level", amount: 9 } },
 			{ name: "Fury Swipes", unlock: { type: "level", amount: 12 } },
 			{ name: "Bite", unlock: { type: "level", amount: 15 } },
+			{ name: "Double Kick", unlock: { type: "level", amount: 18 } },
+			{ name: "Fire Fang", unlock: { type: "level", amount: 21 } },
+			{ name: "Scary Face", unlock: { type: "level", amount: 24 } },
+			{ name: "Swagger", unlock: { type: "level", amount: 27 } },
 		]
 	},
 	"Popplio": {
@@ -2116,7 +2135,11 @@ const pokemonData = {
 			{ name: "Disarming Voice", unlock: { type: "level", amount: 6 } },
 			{ name: "Aqua Jet", unlock: { type: "level", amount: 9 } },
 			{ name: "Baby-Doll Eyes", unlock: { type: "level", amount: 12 } },
-			{ name: "Magical Leaf", unlock: { type: "level", amount: 1 } },
+			// { name: "Icy Wind", unlock: { type: "level", amount: 15 } },
+			// { name: "Sing", unlock: { type: "level", amount: 18 } },
+			// { name: "Bubble Beam", unlock: { type: "level", amount: 21 } },
+			// { name: "Encore", unlock: { type: "level", amount: 24 } },
+			{ name: "Synthesis", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {

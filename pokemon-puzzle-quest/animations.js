@@ -65,7 +65,7 @@ let tileIconUrls = {
 	},
 	orange: {
 		0: "src/img/tiles/orange.png",
-		1: "src/img/tiles/orange.png"
+		1: "src/img/tiles/orange 2.png"
 	},
 	yellow: {
 		0: "src/img/tiles/yellow.png",

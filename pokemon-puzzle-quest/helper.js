@@ -431,3 +431,13 @@ function getSuperEffectiveMult(type, defTypes){
 	}
 	return typeMult
 }
+
+function doesMatchMeetCriteria(match, type, minLength=0, maxLength=Infinity){
+	if (minLength && match.length < minLength) return false
+	if (maxLength && match.length > maxLength) return false
+	if (!type) return true
+	
+	let first = match.find(tile => tile.type === type)
+	if (!first) return false
+	return match.every(tile => first.matchesWith(tile))
+}

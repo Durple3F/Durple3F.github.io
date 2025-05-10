@@ -1,7 +1,12 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-5/10 (30.2k lines):
+5/10 (30.4k lines):
+	- Added Tailwind, Low Sweep, Work Up, Synthesis
 	- Empowered tiles now all provide double energy in addition to any other effects
+	- Added support for status effects which flatly multiply/add to stats
+	- Added empowered Fighting tiles
+	- Oops, Leafage has been missing a sound since June
+	- Moves are now allowed to have effects that trigger whenever you make a certain kind of match
 
 5/9 (30.2k lines)!!!!!:
 	- Added Mimic, Rock Tomb, Iron Defense, Giga Drain, Razor Leaf, Magical Leaf

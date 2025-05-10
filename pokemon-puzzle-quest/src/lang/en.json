@@ -1449,6 +1449,11 @@
 			"description": "Deals damage. This move's power depends on the weight of the target. Its power is 20 against Pokémon which are less than 10kg, 40 when less than 25kg, 60 when less than 50kg, 80 when less than 100kg, 100 when less than 200kg, and 120 when greater than 200kg. This move is the only reason that I programmed in weights for Pokémon.",
 			"shortDescription": "Deals damage depending on weight"
 		},
+		"Low Sweep": {
+			"name": "Low Sweep",
+			"description": "Deals damage. Then, shifts the bottom row 3 tiles away from the user.",
+			"shortDescription": "Shifts the bottom row away from the user"
+		},
 		"Mach Punch": {
 			"name": "Mach Punch",
 			"description": "Deals damage. If the opponent's speed stat is less than the speed stat of the user, this move's power increases by 40.",
@@ -1741,6 +1746,11 @@
 			"description": "Raises the user's Attack stat by 2 stages.",
 			"shortDescription": "Raises user's Attack"
 		},
+		"Synthesis": {
+			"name": "Synthesis",
+			"description": "Converts 3 random non-Grass tiles into Grass tiles.<br>Passive: Whenever this Pokémon's owner makes a match of 4 or more Grass tiles in a row while this Pokémon is active, this Pokémon restores HP equal to 1/4 of its Max HP.",
+			"shortDescription": "Passively restore HP"
+		},
 		"Tackle": {
 			"name": "Tackle",
 			"description": "Damage-dealing move with no special effects. Ends the turn.",
@@ -1750,6 +1760,11 @@
 			"name": "Tail Whip",
 			"description": "Lowers the opponent's defense stat by 1 stage.",
 			"shortDescription": "Lowers enemy defense"
+		},
+		"Tailwind": {
+			"name": "Tailwind",
+			"description": "Doubles the user's Speed for 4 turns.",
+			"shortDescription": "Doubles the user's Speed."
 		},
 		"Take Down": {
 			"name": "Take Down",
@@ -1801,6 +1816,11 @@
 			"name": "Wing Attack",
 			"description": "Deals damage. Then, a random line is chosen such that the line passes through the center of the board and has an angle between -45 and 45 degrees. All tiles with a distance of 0.5 or less from that line are removed.",
 			"shortDescription": "Removes tiles along a diagonal"
+		},
+		"Work Up": {
+			"name": "Work Up",
+			"description": "Raises the user's Attack and Special Attack by 1 stage each. Then, empowers 3 random Fighting tiles. Whenever either trainer matches an empowered Fighting tile, it provides twice its usual energy, and the greatest color component(s) of that active Pokémon's next move's energy cost is reduced by 3.",
+			"shortDescription": "Raises stats and empowers Fighting tiles"
 		},
 		"Wrap": {
 			"name": "Wrap",
@@ -1953,8 +1973,8 @@
 		},
 		"Hydration": {
 			"name": "Hydration",
-			"shortDescription": "On a Water-type 4-in-a-row, cures one random status",
-			"longDescription": "When this Pokémon's owner makes a match of 4 Water tiles in a row, this Pokémon recovers from one non-volatile status that it has."
+			"shortDescription": "On a Water-type 4-in-a-row or more, cures one random status",
+			"longDescription": "When this Pokémon's owner makes a match of 4 or more Water tiles in a row, this Pokémon recovers from one non-volatile status that it has."
 		},
 		"Hyper Cutter": {
 			"name": "Hyper Cutter",
@@ -2093,8 +2113,8 @@
 		},
 		"Rain Dish": {
 			"name": "Rain Dish",
-			"shortDescription": "On a Water-type 4-in-a-row, heals 20% of max HP",
-			"longDescription": "When this Pokémon's owner makes a match of 4 Water tiles in a row, this Pokémon heals HP equal to 20% of its max HP."
+			"shortDescription": "On a Water-type 4-in-a-row or more, heals 20% of max HP",
+			"longDescription": "When this Pokémon's owner makes a match of 4 or more Water tiles in a row, this Pokémon heals HP equal to 20% of its max HP."
 		},
 		"Rattled": {
 			"name": "Rattled",
@@ -2123,13 +2143,13 @@
 		},
 		"Sand Veil": {
 			"name": "Sand Veil",
-			"shortDescription": "On a Fighting-type 4-in-a-row, increase Speed a stage",
-			"longDescription": "When this Pokémon's owner makes a match of 4 Fighting tiles in a row, this Pokémon's Speed increases by 1 stage."
+			"shortDescription": "On a Fighting-type 4-in-a-row or more, increase Speed a stage",
+			"longDescription": "When this Pokémon's owner makes a match of 4 or more Fighting tiles in a row, this Pokémon's Speed increases by 1 stage."
 		},
 		"Sand Force": {
 			"name": "Sand Force",
-			"shortDescription": "On a Fighting-type 4-in-a-row, increase the power of the next Rock/Ground/Steel move used by 50%",
-			"longDescription": "When this Pokémon's owner makes a match of 4 Fighting tiles in a row, the power of the next Rock-, Ground-, or Steel-type move this Pokémon uses is increased by 50%."
+			"shortDescription": "On a Fighting-type 4-in-a-row or more, increase the power of the next Rock/Ground/Steel move used by 50%",
+			"longDescription": "When this Pokémon's owner makes a match of 4 or more Fighting tiles in a row, the power of the next Rock-, Ground-, or Steel-type move this Pokémon uses is increased by 50%."
 		},
 		"Scrappy": {
 			"name": "Scrappy",
