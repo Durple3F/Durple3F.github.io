@@ -4512,7 +4512,7 @@ class Round {
 		tags.pokeballContainers.children().show()
 	}
 
-	animateSendOutPokemon(trainerIndex, pokemon, animName) {
+	animateSendOutPokemon(trainerIndex, pokemon, animName, options={}) {
 		this.currentlySwappingPokemon = true
 
 		let resolvePromise
@@ -4619,7 +4619,7 @@ class Round {
 					delay(50).then(() => renderPokeballSmallCanvas(canvas, pokeballType, "open"))
 						.then(() => delay(300))
 						.then(() => renderPokeballSmallCanvas(canvas, pokeballType, "none"))
-					this.sendOutPokemon(trainerIndex, pokemon)
+					this.sendOutPokemon(trainerIndex, pokemon, options)
 
 					let h = pokemonSection.height()
 					pokemonTag.css({
@@ -4696,7 +4696,7 @@ class Round {
 		})
 		return promise
 	}
-	sendOutPokemon(trainerIndex, pokemon) {
+	sendOutPokemon(trainerIndex, pokemon, options) {
 		this.clearPokemonMoves(trainerIndex)
 		let tags = this.trainerTags[trainerIndex]
 		let name = pokemon.name
@@ -4732,8 +4732,9 @@ class Round {
 		//Remove volatile statuses too.
 		if (oldActive && oldActive !== pokemon) {
 			let energy = getEmptyEnergy()
+			let energyTransfer = options.keepEnergy ? 1 : 0.5
 			for (let color of colors) {
-				energy[color] = Math.floor(oldActive.energy[color] * 0.5)
+				energy[color] = Math.floor(oldActive.energy[color] * energyTransfer)
 				oldActive.energy[color] = 0
 			}
 			this.giveEnergy(energy, trainer, pokemon)

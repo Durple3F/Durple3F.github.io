@@ -2139,7 +2139,8 @@ const pokemonData = {
 			{ name: "Sing", unlock: { type: "level", amount: 18 } },
 			{ name: "Bubble Beam", unlock: { type: "level", amount: 21 } },
 			{ name: "Encore", unlock: { type: "level", amount: 24 } },
-			{ name: "Protect", unlock: { type: "level", amount: 1 } },
+			{ name: "Focus Energy", unlock: { type: "level", amount: 1 } },
+			{ name: "Baton Pass", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {
@@ -2564,6 +2565,8 @@ const pokemonData = {
 			{ name: "Peck", unlock: { type: "level", amount: 6 } },
 			{ name: "Helping Hand", unlock: { type: "level", amount: 10 } },
 			{ name: "Air Cutter", unlock: { type: "level", amount: 13 } },
+			{ name: "Baton Pass", unlock: { type: "level", amount: 16 } },
+			{ name: "Feather Dance", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Cutiefly": {

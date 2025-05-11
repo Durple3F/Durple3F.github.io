@@ -318,6 +318,38 @@ const pokemonMoveData = {
 			} },
 		],
 	},
+	//Swaps all your status effects with another pokemon's
+	"Baton Pass": {
+		name: "Baton Pass",
+		type: "Normal",
+		category: "Status",
+		strategy: "special",
+		tags: [],
+		pp: 40,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 7,
+		energy: {
+			// green: 8,
+			// orange: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Baton Pass.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-viable-pokemon", target: "user" },
+			{ type: "get-active-pokemon", target: "user" },
+			{ type: "remove-element-from-list", list: -2, element: -1 },
+			{ type: "get-list-length", list: -1 },
+			{ type: "load-value", value: 1 },
+			{ type: "jump-if-less-than", jumpTo: Infinity },
+			{ type: "choose-pokemon", target: "user", message: "choose-pokemon", pokemon: -4, strategy: "swap" },
+			{ type: "load-value", value: 0 },
+			{ type: "get-element-from-list", list: -2, index: -1 },
+			{ type: "swap-pokemon", target: "user", pokemon: -1, keepEnergy: true, batonPass: true },
+		]
+	},
 	//Deals damage based on all your remaining viable pokemon's stats
 	"Beat Up": {
 		name: "Beat Up",
@@ -1612,6 +1644,36 @@ const pokemonMoveData = {
 					stat: "specialDefense",
 					class: "debuff",
 					amount: -2
+				}
+			}
+		],
+	},
+	//Raises attack 2
+	"Feather Dance": {
+		name: "Feather Dance",
+		type: "Normal",
+		category: "Status",
+		strategy: "buff-user",
+		tags: ["dancing"],
+		pp: 15,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 4,
+		energy: {
+			blue: 7,
+			yellow: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Feather Dance.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{
+				type: "apply-debuff", target: "user", debuff: {
+					type: "stat",
+					stat: "attack",
+					class: "buff",
+					amount: 2
 				}
 			}
 		],
@@ -4804,7 +4866,7 @@ const pokemonMoveData = {
 			{ type: "choose-pokemon", target: "user", message: "choose-pokemon", pokemon: -4, strategy: "swap" },
 			{ type: "load-value", value: 0 },
 			{ type: "get-element-from-list", list: -2, index: -1 },
-			{ type: "swap-pokemon", target: "user", pokemon: -1 }
+			{ type: "swap-pokemon", target: "user", pokemon: -1, keepEnergy: true }
 		],
 	},
 	"Thunder Shock": {

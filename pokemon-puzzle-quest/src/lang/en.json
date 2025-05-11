@@ -1136,6 +1136,11 @@
 			"description": "Lowers the opponent's attack stat by 1 stage. Then, the opponent becomes unable to switch Pokémon for a turn.",
 			"shortDescription": "Lowers enemy attack and prevents switching"
 		},
+		"Baton Pass": {
+			"name": "Baton Pass",
+			"description": "The user swaps to a different Pokémon if possible. If they do, the old active Pokémon and the new active Pokémon exchange all status effects they have. The new Pokémon retains the old Pokémon's energy.",
+			"shortDescription": "Swap while keeping status effects"
+		},
 		"Beat Up": {
 			"name": "Beat Up",
 			"description": "For each usable Pokémon remaining in the user's party, deals damage based on that Pokémon's base Attack stat.",
@@ -1813,7 +1818,7 @@
 		},
 		"Teleport": {
 			"name": "Teleport",
-			"description": "The user swaps to a different Pokémon if possible.",
+			"description": "The user swaps to a different Pokémon if possible. The new Pokémon retains the old Pokémon's energy.",
 			"shortDescription": "Switch Pokémon",
 			"choose-pokemon": "Choose a Pokémon to teleport in."
 		},

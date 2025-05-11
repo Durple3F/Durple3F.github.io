@@ -1,8 +1,10 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-5/11 (30.7k lines):
-	- Added Fire Fang, Sing, Icy Wind, Encore
+5/11 (30.8k lines):
+	- Added Fire Fang, Sing, Icy Wind, Encore, Feather Dance
 	- ADDED PROTECT. I am NOT going through every single move to decide which effects are prevented when. It's fine.
+	- Added Baton Pass! I was prepared for this one from the start, GOD I hope I didn't mess up anywhere!!!
+	- When an effect instructs you to swap pokemon it can now allow that pokemon to retain its energy
 
 5/10 (30.4k lines):
 	- Added Tailwind, Low Sweep, Work Up, Synthesis, Double Kick

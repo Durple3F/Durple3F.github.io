@@ -551,11 +551,11 @@ const pokemonMoveEffects = {
 			//If the defender has protect, the entire event is prevented.
 			if (
 				target !== pokemon &&
-				["status", "stat"].includes(statusEffect.type) &&
+				["status", "stat"].includes(debuff.type) &&
 				target.hasStatus("protect") &&
 				!game.shouldMoveHaveTag("goes-through-protect", trainer, pokemon, move)
 			){
-				return resolve(statusEffect)
+				return resolve()
 			}
 
 			target.addStatusEffect(debuff, trainer, pokemon, move)
@@ -1427,16 +1427,51 @@ const pokemonMoveEffects = {
 		}
 	},
 	"swap-pokemon": {
+		update: true,
 		execute: (resolve, effect, params, game, options) => {
 			let pokemon = params.pokemon
 			let target = options.target
+			let activePokemon = target.activePokemon
 			let trainerIndex = game.trainers.indexOf(target)
 			console.log(params, pokemon)
+			let batonPass = effect.batonPass
+			let statusEffectsFromOld, statusEffectsFromNew
+			if (batonPass){
+				statusEffectsFromOld = activePokemon.statusEffects.filter(statusEffect => {
+					return !statusEffect.lostOnBatonPass
+				})
+				statusEffectsFromNew = pokemon.statusEffects.filter(statusEffect => {
+					return !statusEffect.lostOnBatonPass
+				})
+			}
 
 			let animation = game.animateSendOutPokemon(
-				trainerIndex, pokemon
+				trainerIndex, pokemon, undefined, {keepEnergy: effect.keepEnergy}
 			)
-			animation.then(() => resolve())
+			animation.then(() => {
+				if (batonPass){
+					statusEffectsFromOld.forEach(statusEffect => {
+						pokemon.addStatusEffect(
+							statusEffect,
+							statusEffect.sourceTrainer,
+							statusEffect.sourcePokemon,
+							statusEffect.sourceMove
+						)
+						activePokemon.removeStatus(statusEffect)
+					})
+					statusEffectsFromNew.forEach(statusEffect => {
+						activePokemon.addStatusEffect(
+							statusEffect,
+							statusEffect.sourceTrainer,
+							statusEffect.sourcePokemon,
+							statusEffect.sourceMove
+						)
+						pokemon.removeStatus(statusEffect)
+					})
+				}
+				
+				resolve()
+			})
 		}
 	},
 	"is-trainers-turn": {
