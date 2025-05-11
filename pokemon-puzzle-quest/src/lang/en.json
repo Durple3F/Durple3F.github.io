@@ -1157,6 +1157,11 @@
 			"description": "The opponent becomes unable to switch Pokémon until the user switches out.",
 			"shortDescription": "Prevents switching out"
 		},
+		"Brick Break": {
+			"name": "Brick Break",
+			"description": "Removes the Light Screen and Reflect status effects from the opponent. Then, deals damage.",
+			"shortDescription": "Removes damage reductions before damage"
+		},
 		"Brutal Swing": {
 			"name": "Brutal Swing",
 			"description": "Deals damage. Converts half of all Grass and Psychic tiles, rounded up, into Dark tiles. Dark tiles are worth 1 purple energy AND 1 red energy each.",
@@ -1248,6 +1253,11 @@
 			"description": "Deals damage. Has a 50% chance to confuse the opponent. Ends the turn.",
 			"shortDescription": "Deals light damage and may confuse"
 		},
+		"Double Kick": {
+			"name": "Double Kick",
+			"description": "Deals damage twice. This may trigger effects multiple times.",
+			"shortDescription": "Deals damage twice"
+		},
 		"Double Team": {
 			"name": "Double Team",
 			"description": "Raises the user's speed stat by 1 stage. Then, makes a random match somewhere on the board without ending the user's turn.",
@@ -1275,8 +1285,13 @@
 		},
 		"Ember": {
 			"name": "Ember",
-			"description": "Deals damage. There's a 50% chance for this move to inflict Burn on 3 random tiles for 5 turns. At the end of their turn, the opponent takes damage equal to 1/32 of their max HP for each Burn status on the board.",
+			"description": "Deals damage. There's a 50% chance for this move to inflict Burn on 3 random tiles for 3 turns. At the end of their turn, the opponent takes damage equal to 1/32 of their max HP for each of your Burn statuses on the board.",
 			"shortDescription": "Damages and might burn tiles"
+		},
+		"Encore": {
+			"name": "Encore",
+			"description": "Disables all moves but the move used most recently by the opponent for 5 turns.",
+			"shortDescription": "Disables all but one move"
 		},
 		"Fairy Wind": {
 			"name": "Fairy Wind",
@@ -1295,8 +1310,13 @@
 		},
 		"Feint": {
 			"name": "Feint",
-			"description": "Removes the Invulnerable status from the opponent. Then, deals damage.",
+			"description": "Removes the Invulnerable and Protected status effects from the opponent. Then, deals damage.",
 			"shortDescription": "Deals damage through invulnerability"
+		},
+		"Fire Fang": {
+			"name": "Fire Fang",
+			"description": "Deals damage and has a 50% chance to Burn 3 random tiles for 3 turns. If any tiles were already Burned by the user, instead it deals damage with 30 additional power and doesn't Burn tiles. At the end of their turn, the opponent takes damage equal to 1/32 of their max HP for each of your Burn statuses on the board.",
+			"shortDescription": "Deals some damage and might Burn"
 		},
 		"Flail": {
 			"name": "Flail",
@@ -1360,7 +1380,7 @@
 		},
 		"Harden": {
 			"name": "Harden",
-			"description": "Gives the user the Invulnerable status for one turn. It can't take damage for as long as it has that status. Then ends the turn.",
+			"description": "Gives the user the Invulnerable status until their next turn. They can't take damage for as long as they have that status. Then ends the turn.",
 			"shortDescription": "Temporary invulnerability"
 		},
 		"Haze": {
@@ -1402,6 +1422,11 @@
 			"name": "Hypnosis",
 			"description": "Has an 80% to apply Sleep to the opponent. Otherwise, it will apply Drowsy. When a Drowsy Pokémon ends their turn, they may become Asleep, and lose Drowsy. An Asleep Pokémon gets half as much energy (rounded up) from matches.",
 			"shortDescription": "Puts opponent to sleep"
+		},
+		"Icy Wind": {
+			"name": "Icy Wind",
+			"description": "Deals damage and lowers the opponent's Speed stat by a stage.",
+			"shortDescription": "Deals damage and lowers enemy Speed"
 		},
 		"Infestation": {
 			"name": "Infestation",
@@ -1569,6 +1594,11 @@
 			"description": "80% of the time, this move deals damage to the opponent with power ranging from 40-120. Otherwise, it heals the opponent for 25% of their max HP or maxes out their energy.",
 			"shortDescription": "Deals damage usually"
 		},
+		"Protect": {
+			"name": "Protect",
+			"description": "Gives the user the Protected status until their next turn. Then ends the turn. A Protected Pokémon can't be dealt damage by other Pokémon, have status conditions applied to it by other Pokémon, or have its stats raised or lowered by other Pokémon.",
+			"shortDescription": "Prevents effects from other Pokémon"
+		},
 		"Psybeam": {
 			"name": "Psybeam",
 			"description": "Deals damage and applies Confused 50% of the time. The user chooses two tiles. Each tile between them, including the chosen tiles, is shuffled.",
@@ -1665,6 +1695,11 @@
 			"name": "Scary Face",
 			"description": "Lowers the opponent's Speed stat by 2 stages.",
 			"shortDescription": "Lowers enemy Speed"
+		},
+		"Sing": {
+			"name": "Sing",
+			"description": "Applies Asleep to the opponent. An Asleep Pokémon gets half as much energy (rounded up) from matches.",
+			"shortDescription": "Puts opponent to sleep"
 		},
 		"Sketch": {
 			"name": "Sketch",

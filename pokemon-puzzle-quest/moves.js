@@ -495,6 +495,30 @@ const pokemonMoveData = {
 			} },
 		],
 	},
+	//Removes light screen & reflect
+	"Brick Break": {
+		name: "Brick Break",
+		type: "Fighting",
+		category: "Physical",
+		strategy: "basic-damage",
+		pp: 15,
+		power: 75,
+		accuracy: 100,
+		rechargeTurns: 2,
+		energy: {
+			red: 5,
+			orange: 8
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Brick Break.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "remove-status-effect", statusName: "light-screen" },
+			{ type: "remove-status-effect", statusName: "reflect" },
+			{ type: "damage" }
+		]
+	},
 	//Replaces some Grass and Water tiles with Dark tiles
 	"Brutal Swing": {
 		name: "Brutal Swing",
@@ -1116,7 +1140,7 @@ const pokemonMoveData = {
 		pp: 20,
 		power: null,
 		accuracy: 100,
-		rechargeTurns: 1,
+		rechargeTurns: 10,
 		energy: {
 			orange: 4,
 			purple: 6
@@ -1186,6 +1210,30 @@ const pokemonMoveData = {
 			{ type: "apply-status-effect", statusEffect: "confused", target: "opponent" },
 			{ type: "end-turn", label: "end" }
 		]
+	},
+	//Basic damage but twice
+	"Double Kick": {
+		name: "Double Kick",
+		type: "Fighting",
+		category: "Physical",
+		strategy: "special",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 30,
+		power: 30,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			orange: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Double Kick 1hit.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" }
+		],
 	},
 	//Raises speed 1 and Makes a match for the user
 	"Double Team": {
@@ -1400,9 +1448,58 @@ const pokemonMoveData = {
 			{ type: "select-random-tiles", count: -1 },
 			{
 				type: "apply-status-to-tiles", selection: "group", which: -1,
-				status: { name: "Burn", type: "debuff", duration: 5 }
+				status: { name: "Burn", type: "debuff", duration: 3 }
 			}
 		]
+	},
+	//The opponent becomes unable to use moves other than their last one
+	"Encore": {
+		name: "Encore",
+		type: "Normal",
+		category: "Status",
+		strategy: "special",
+		pp: 5,
+		power: null,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			yellow: 4,
+			purple: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Encore.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-last-move", target: "opponent" },
+			{ type: "jump-if-truthy", jumpTo: "add-disability" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "get-move-name", move: -3, label: "add-disability" },
+			{ type: "load-value", value: ["Transform", "Mimic", "Sketch", "Mirror Move", "Encore", "Struggle"] },
+			{ type: "add-element-to-list", list: -1, element: -2 },
+			{ type: "apply-status-effect", target: "opponent", statusEffect: {
+				name: "disable-disability",
+				type: "disability",
+				stacks: false,
+				volatile: true,
+				lostOnSwap: true,
+				batonPassable: false,
+				turns: 6, //It should be 5, but add 1 because their turn is about to start anyway
+				appliesTo: {
+					names: [],
+					logic: "not"
+				},
+			}, statusSettings: [
+				{
+					path: ["appliesTo"],
+					key: "names",
+					value: -1
+				}
+			] },
+		],
+		highlightOnHover: {
+			type: "last-enemy-move"
+		}
 	},
 	//Shifts a row of tiles
 	"Fairy Wind": {
@@ -1519,7 +1616,7 @@ const pokemonMoveData = {
 			}
 		],
 	},
-	//Removes invulnerable
+	//Removes invulnerable & protect
 	"Feint": {
 		name: "Feint",
 		type: "Normal",
@@ -1539,8 +1636,48 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "remove-status-effect", statusName: "invulnerable" },
+			{ type: "remove-status-effect", statusName: "protect" },
 			{ type: "damage" }
 		]
+	},
+	//Deals extra damage if tiles are already burning
+	"Fire Fang": {
+		name: "Fire Fang",
+		type: "Fire",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact", "biting"],
+		pp: 15,
+		power: 65,
+		accuracy: 95,
+		rechargeTurns: 2,
+		energy: {
+			red: 7,
+			yellow: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Fire Fang.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "select-tiles-with-status", statusName: "Burn", sourceTrainer: "target", target: "user" },
+			{ type: "get-list-length", list: -1 },
+			{ type: "load-value", value: 1 },
+			{ type: "jump-if-less-than", jumpTo: "small-damage" },
+			{ type: "load-value", value: 30 },
+			{ type: "damage", additivePower: -1 },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "damage", label: "small-damage" },
+			{ type: "random-number", min: 1, max: 10 },
+			{ type: "load-value", value: 0 },
+			{ type: "jump-if-less-than", jumpTo: Infinity },
+			{ type: "load-value", value: 3 },
+			{ type: "select-random-tiles", count: -1 },
+			{
+				type: "apply-status-to-tiles", selection: "group", which: -1,
+				status: { name: "Burn", type: "debuff", duration: 3 }
+			}
+		],
 	},
 	//Deals damage based on HP/Max HP
 	"Flail": {
@@ -2253,7 +2390,7 @@ const pokemonMoveData = {
 			{ type: "set-initiative", target: "opponent", initiative: -1 },
 		]
 	},
-	//Puts the opponent to sleep
+	//Puts the opponent to sleep half the time
 	"Hypnosis": {
 		name: "Hypnosis",
 		type: "Normal",
@@ -2264,7 +2401,7 @@ const pokemonMoveData = {
 		accuracy: 60,
 		rechargeTurns: 10,
 		energy: {
-			purple: 8
+			purple: 6
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Hypnosis part 1.mp3"
@@ -2278,6 +2415,39 @@ const pokemonMoveData = {
 			{ type: "jump", jumpTo: Infinity },
 			{ type: "apply-status-effect", statusEffect: "asleep", target: "opponent", label: "sleep" },
 		],
+	},
+	//Lowers speed 1
+	"Icy Wind": {
+		name: "Icy Wind",
+		type: "Ice",
+		category: "Special",
+		strategy: "basic-damage",
+		pp: 15,
+		power: 55,
+		accuracy: 95,
+		rechargeTurns: 4,
+		energy: {
+			red: 4,
+			blue: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Icy Wind.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{
+				type: "apply-debuff", target: "opponent", debuff: {
+					type: "stat",
+					stat: "speed",
+					class: "debuff",
+					amount: -1
+				}
+			}
+		]
 	},
 	//Places a status on tiles that steals energy from the opponent each turn
 	"Infestation": {
@@ -3338,6 +3508,30 @@ const pokemonMoveData = {
 			{ type: "jump", jumpTo: Infinity },
 		],
 	},
+	//Protect.
+	"Protect": {
+		name: "Protect",
+		type: "Normal",
+		category: "Status",
+		strategy: "buff-user",
+		pp: 10,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 7,
+		energy: {
+			orange: 2,
+			yellow: 2,
+			blue: 2
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Protect.mp3",
+			"bonk": "src/audio/attacks/Protect shield hit.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "apply-status-effect", statusEffect: "protect", target: "user" },
+		],
+	},
 	//Choose two tiles, shuffle them and all tiles between them
 	"Psybeam": {
 		name: "Psybeam",
@@ -3560,6 +3754,7 @@ const pokemonMoveData = {
 			{ type: "end-turn" }
 		],
 	},
+	//Removes an entire contiguous area of tiles
 	"Rock Smash": {
 		name: "Rock Smash",
 		type: "Fighting",
@@ -3594,6 +3789,7 @@ const pokemonMoveData = {
 			{ type: "remove-tiles", selection: -1 },
 		]
 	},
+	//Remove an entire column
 	"Rock Throw": {
 		name: "Rock Throw",
 		type: "Rock",
@@ -3882,6 +4078,28 @@ const pokemonMoveData = {
 			{ type: "damage", additivePower: -1 },
 			{ type: "jump", jumpTo: Infinity },
 			{ type: "damage", label: "tiny-damage" }
+		],
+	},
+	//Puts the opponent to sleep
+	"Sing": {
+		name: "Sing",
+		type: "Normal",
+		category: "Status",
+		strategy: "debuff-opponent",
+		pp: 15,
+		power: null,
+		accuracy: 55,
+		rechargeTurns: 10,
+		energy: {
+			blue: 3,
+			purple: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Sing part 1.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "apply-status-effect", statusEffect: "asleep", target: "opponent", label: "sleep" },
 		],
 	},
 	"Sketch": {
@@ -4695,6 +4913,7 @@ const pokemonMoveData = {
 		type: "Water",
 		category: "Special",
 		strategy: "basic-damage",
+		tags: [],
 		pp: 25,
 		power: 35, //originally 40
 		accuracy: 100,
@@ -4903,7 +5122,7 @@ const pokemonMoveData = {
 		category: "Physical",
 		inheritCategory: true,
 		strategy: "basic-damage",
-		tags: ["z-move", "damage-dealing"],
+		tags: ["z-move", "damage-dealing", "goes-through-protect"],
 		pp: null,
 		power: 100,
 		powerBasedOnParent: {
@@ -5040,7 +5259,7 @@ const pokemonMoveData = {
 		category: "Physical",
 		inheritCategory: true,
 		strategy: "basic-damage",
-		tags: ["z-move", "damage-dealing"],
+		tags: ["z-move", "damage-dealing", "goes-through-protect"],
 		pp: null,
 		power: 100,
 		powerBasedOnParent: {},

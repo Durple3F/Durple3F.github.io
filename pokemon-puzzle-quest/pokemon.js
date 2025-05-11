@@ -248,6 +248,14 @@ class Pokemon{
 						turns: 5
 					}
 				} break
+				case "protect": {
+					status = {
+						name: "protect",
+						class: "buff",
+						volatile: true,
+						turns: 1
+					}
+				} break
 				default:
 					console.warn("You never handled", status)
 					status = {
@@ -323,17 +331,10 @@ class Pokemon{
 		if (status.name === "paralyzed" && types.includes("Electric")){
 			prevented = true
 		}
-		//Pokemon with Vital Spirit can't become asleep
+		//Pokemon with Vital Spirit, Insomnia, or Comatose can't become asleep
 		if (
 			(status.name === "asleep" || status.name === "drowsy") && 
-			this.hasAbility("Vital Spirit")
-		){
-			prevented = true
-		}
-		//Pokemon with Insomnia can't become asleep
-		if (
-			(status.name === "asleep" || status.name === "drowsy") && 
-			this.hasAbility("Insomnia")
+			(this.hasAbility("Insomnia") || this.hasAbility("Vital Spirit") || this.hasAbility("Comatose"))
 		){
 			prevented = true
 		}
@@ -376,6 +377,7 @@ class Pokemon{
 		//Pokemon with Shield Dust prevent receiving statuses from other trainers 20% of the time
 		if (
 			status.sourceTrainer !== this.trainer &&
+			status.type === "status" &&
 			Math.random() < 0.2 &&
 			this.hasAbility("Shield Dust")
 		){

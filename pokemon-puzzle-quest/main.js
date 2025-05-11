@@ -1,4 +1,4 @@
-const versionNumber = "v0.15.19"
+const versionNumber = "v0.15.20"
 let lang = "en"
 let playerName
 
@@ -331,14 +331,28 @@ function playSound(name, fadeMusic=true){
 		fadeSoundVolume(snd, 0, snd.volume)
 	}
 	snd.play()
-	playingSounds.push({name: name, type: sounds[name].type, audio: snd})
+	let soundInstance = {name: name, type: sounds[name].type, audio: snd}
+	playingSounds.push(soundInstance)
 	snd.addEventListener("ended", () => {
 		resolvePromise()
-		delay(100).then(() => stopSound(name))
+		delay(100).then(() => stopSound(soundInstance))
 	})
 	return promise
 }
-function stopSound(name, fadeMusic=true){
+function stopSound(sound, fadeMusic=true){
+	if (typeof sound === "object"){
+		let snd = sound.audio
+		if (snd?.paused === false){
+			snd.pause()
+		}
+		let index = playingSounds.indexOf(sound)
+		if (index !== -1){
+			playingSounds.splice(index, 1)
+		}
+		return
+	}
+	let name = sound
+
 	let toCheck = playingSounds.map(p => p)
 	for (let sound of toCheck){
 		let snd = sound.audio
@@ -433,7 +447,7 @@ function changeMusic(name){
 			found = true
 		} else {
 			//If we find other songs playing, kill them.
-			stopSound(sound.name)
+			stopSound(sound)
 		}
 	})
 
@@ -673,10 +687,10 @@ function resetEntirePage(){
 	currentSceneInfo = {}
 
 	Object.values(sounds).forEach(sound => {
-		stopSound(sound.name)
+		stopSound(sound)
 	})
 	playingSounds.forEach(sound => {
-		stopSound(sound.name)
+		stopSound(sound)
 	})
 
 	$("body > div[data-initially-hidden='true']").fadeOut()

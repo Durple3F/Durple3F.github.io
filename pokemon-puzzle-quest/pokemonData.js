@@ -230,12 +230,26 @@ const pokemonStatusData = {
 		class: "debuff",
 		name: "splinters"
 	},
+	"protect": {
+		image: "src/img/icons/nested-hexagons-black.png",
+		color: "rgb(187, 236, 255)",
+		stacks: false,
+		class: "buff",
+		name: "protect"
+	},
 	"light screen": {
 		image: "src/img/icons/nested-hexagons.png",
 		color: "rgb(211, 107, 214)",
 		stacks: false,
 		class: "buff",
 		name: "light screen"
+	},
+	"reflect": {
+		image: "src/img/icons/mirror-mirror.png",
+		color: "rgb(211, 107, 214)",
+		stacks: false,
+		class: "buff",
+		name: "reflect"
 	},
 	"safeguard": {
 		image: "src/img/icons/acid-shield.png",

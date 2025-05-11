@@ -255,12 +255,18 @@ const pokemonMoveEffects = {
 	},
 	"damage": {
 		delay: 200,
+		hasTarget: true,
+		targetType: "pokemon",
+		targetDefault: "opponent",
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
+			let trainer = moveUseObj.trainer
+			let pokemon = moveUseObj.pokemon
+			let move = moveUseObj.move
 			let damageOptions = {
-				from: moveUseObj.pokemon,
-				fromTrainer: moveUseObj.trainer,
-				move: moveUseObj.move,
+				from: pokemon,
+				fromTrainer: trainer,
+				move: move,
 				parentMove: moveUseObj.parentMove,
 				directDamage: true
 			}
@@ -270,6 +276,20 @@ const pokemonMoveEffects = {
 				let toTrainer = game.getTrainerOfPokemon(toPokemon)
 				damageOptions.to = toPokemon
 				damageOptions.toTrainer = toTrainer
+			} else {
+				let toPokemon = options.target
+				let toTrainer = game.getTrainerOfPokemon(toPokemon)
+				damageOptions.to = toPokemon
+				damageOptions.toTrainer = toTrainer
+			}
+			
+			//If the defender has protect, the entire event of damage is prevented.
+			if (
+				damageOptions.to !== damageOptions.from &&
+				damageOptions.to.hasStatus("protect") &&
+				!game.shouldMoveHaveTag("goes-through-protect", trainer, pokemon, move)
+			){
+				return resolve(0)
 			}
 
 			if ("amount" in effect){
@@ -470,10 +490,26 @@ const pokemonMoveEffects = {
 
 			if (effect.statusSettings){
 				for (let setting of effect.statusSettings){
+					let obj = statusEffect
+					if ("path" in setting){
+						for (let key of setting.path){
+							obj = obj[key]
+						}
+					}
 					let key = setting.key
 					let value = moveUseObj.info[effectIndex + setting.value]
-					statusEffect[key] = value
+					obj[key] = value
 				}
+			}
+			
+			//If the defender has protect, the entire event is prevented so long as the debuff is visible.
+			if (
+				target !== pokemon &&
+				["status", "stat"].includes(statusEffect.type) &&
+				target.hasStatus("protect") &&
+				!game.shouldMoveHaveTag("goes-through-protect", trainer, pokemon, move)
+			){
+				return resolve(statusEffect)
 			}
 			
 			target.addStatusEffect(statusEffect, trainer, pokemon, move)
@@ -511,16 +547,18 @@ const pokemonMoveEffects = {
 			let trainer = moveUseObj.trainer
 			let pokemon = moveUseObj.pokemon
 			let move = moveUseObj.move
-
-			// if (!("volatile" in debuff)){
-			// 	debuff.volatile = true
-			// }
-			// if (!("tags" in debuff)){
-			// 	debuff.tags = []
-			// }
+			
+			//If the defender has protect, the entire event is prevented.
+			if (
+				target !== pokemon &&
+				["status", "stat"].includes(statusEffect.type) &&
+				target.hasStatus("protect") &&
+				!game.shouldMoveHaveTag("goes-through-protect", trainer, pokemon, move)
+			){
+				return resolve(statusEffect)
+			}
 
 			target.addStatusEffect(debuff, trainer, pokemon, move)
-			// options.target.statusEffects.push(debuff)
 			resolve()
 		}
 	},
@@ -996,6 +1034,35 @@ const pokemonMoveEffects = {
 					chosenTiles.push(tile)
 				}
 			}
+			resolve(chosenTiles)
+		}
+	},
+	"select-tiles-with-status": {
+		update: false,
+		hasTarget: true,
+		targetType: "trainer",
+		targetDefault: "user",
+		execute: (resolve, effect, params, game, options) => {
+			let chosenTiles = []
+			let chooseable = game.board.tilesOnScreen()
+			let statusName = effect.statusName
+			let sourceTrainerName = effect.sourceTrainer
+			let sourceTrainer
+			if (sourceTrainerName === "target"){
+				sourceTrainer = options.target
+			}
+			
+			chosenTiles = chooseable.filter(tile => {
+				return tile.hasStatus(statusName)
+			})
+			if (sourceTrainer){
+				chosenTiles = chosenTiles.filter(tile => {
+					let statuses = tile.getStatuses(statusName)
+					return statuses.some(statusEffect => statusEffect.sourceTrainer === sourceTrainer)
+				})
+			}
+			chosenTiles = noDuplicates(chosenTiles)
+			
 			resolve(chosenTiles)
 		}
 	},
@@ -1676,6 +1743,20 @@ const pokemonMoveEffects = {
 			list = list.filter(v => v !== element)
 			moveUseObj.info[effectIndex] = list
 			resolve()
+		}
+	},
+	"add-element-to-list": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let list = []
+			if (params.list){
+				params.list?.forEach(element => list.push(element))
+			}
+			let element = params.element
+			if (element){
+				list.push(element)
+			}
+			resolve(list)
 		}
 	},
 	"get-list-length": {

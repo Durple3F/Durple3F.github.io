@@ -2115,13 +2115,13 @@ function getMoveHTML(move, options={}) {
 	let moveRecharge = $(`<div class='move-recharge'></div>`)
 	moveRecharge.append(`<img src='src/img/recharge.png'>`)
 	moveRecharge.append(`<div class='count'>0</div>`)
-	moveType.append(moveRecharge)
 	moveRecharge.hide()
 	let typeIcon = getTypeIcon(move.type)
 	let moveCategory = getMoveCategory(move, options.parentMove)
 	if (move.power && !move.tags.includes("z-move")){
-		moveType.append(`<span>${move.power}</span>`)
+		moveType.append(`<div>${move.power}</div>`)
 	}
+	moveType.append(moveRecharge)
 	moveType.append(`<img src='${getTypeIcon(moveCategory)}'>`)
 	if (typeIcon) {
 		moveType.append(`<img src='${typeIcon}'>`)

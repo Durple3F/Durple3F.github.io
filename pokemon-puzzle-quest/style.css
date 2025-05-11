@@ -1381,6 +1381,8 @@ body {
 }
 .move > .move-top > .move-type > img {
 	height: 100%;
+}
+.move > .move-top > .move-type > * {
 	margin-left: 0.1em;
 }
 .move-popover > .stat-line {

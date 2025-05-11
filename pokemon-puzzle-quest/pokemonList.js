@@ -2135,11 +2135,11 @@ const pokemonData = {
 			{ name: "Disarming Voice", unlock: { type: "level", amount: 6 } },
 			{ name: "Aqua Jet", unlock: { type: "level", amount: 9 } },
 			{ name: "Baby-Doll Eyes", unlock: { type: "level", amount: 12 } },
-			// { name: "Icy Wind", unlock: { type: "level", amount: 15 } },
-			// { name: "Sing", unlock: { type: "level", amount: 18 } },
-			// { name: "Bubble Beam", unlock: { type: "level", amount: 21 } },
-			// { name: "Encore", unlock: { type: "level", amount: 24 } },
-			{ name: "Synthesis", unlock: { type: "level", amount: 1 } },
+			{ name: "Icy Wind", unlock: { type: "level", amount: 15 } },
+			{ name: "Sing", unlock: { type: "level", amount: 18 } },
+			{ name: "Bubble Beam", unlock: { type: "level", amount: 21 } },
+			{ name: "Encore", unlock: { type: "level", amount: 24 } },
+			{ name: "Protect", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {
@@ -2187,6 +2187,11 @@ const pokemonData = {
 			{ name: "Peck", unlock: { type: "level", amount: 1 } },
 			{ name: "Growl", unlock: { type: "level", amount: 3 } },
 			{ name: "Echoed Voice", unlock: { type: "level", amount: 7 } },
+			{ name: "Rock Smash", unlock: { type: "level", amount: 9 } },
+			{ name: "Supersonic", unlock: { type: "level", amount: 13 } },
+			{ name: "Pluck", unlock: { type: "level", amount: 15 } },
+			{ name: "Roost", unlock: { type: "level", amount: 19 } },
+			{ name: "Fury Attack", unlock: { type: "level", amount: 21 } },
 		]
 	},
 	"Yungoos": {
@@ -2237,6 +2242,11 @@ const pokemonData = {
 			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
 			{ name: "Leer", unlock: { type: "level", amount: 3 } },
 			{ name: "Payback", unlock: { type: "level", amount: 7 } },
+			{ name: "Sand Attack", unlock: { type: "level", amount: 10 } },
+			{ name: "Work Up", unlock: { type: "level", amount: 13 } },
+			{ name: "Bite", unlock: { type: "level", amount: 19 } },
+			{ name: "Mud-Slap", unlock: { type: "level", amount: 22 } },
+			{ name: "Super Fang", unlock: { type: "level", amount: 25 } },
 		]
 	},
 	"Gumshoos": {
@@ -2286,6 +2296,10 @@ const pokemonData = {
 			{ name: "Leer", unlock: { type: "level", amount: 1 } },
 			{ name: "Payback", unlock: { type: "level", amount: 1 } },
 			{ name: "Sand Attack", unlock: { type: "level", amount: 1 } },
+			{ name: "Work Up", unlock: { type: "level", amount: 13 } },
+			{ name: "Bite", unlock: { type: "level", amount: 19 } },
+			{ name: "Mud-Slap", unlock: { type: "level", amount: 23 } },
+			{ name: "Super Fang", unlock: { type: "level", amount: 27 } },
 		]
 	},
 	"Grubbin": {
@@ -2344,6 +2358,7 @@ const pokemonData = {
 			{ name: "String Shot", unlock: { type: "level", amount: 5 } },
 			{ name: "Bug Bite", unlock: { type: "level", amount: 10 } },
 			{ name: "Bite", unlock: { type: "level", amount: 15 } },
+			{ name: "Spark", unlock: { type: "level", amount: 21 } },
 		]
 	},
 	"Charjabug": {
@@ -2394,6 +2409,7 @@ const pokemonData = {
 			{ name: "Bug Bite", unlock: { type: "level", amount: 1 } },
 			{ name: "Charge", unlock: { type: "level", amount: 1 } }, //NOTE: Should be learned upon evolution.
 			{ name: "Bite", unlock: { type: "level", amount: 15 } },
+			{ name: "Spark", unlock: { type: "level", amount: 23 } },
 		]
 	},
 	"Crabrawler": {
@@ -2442,6 +2458,8 @@ const pokemonData = {
 			{ name: "Rock Smash", unlock: { type: "level", amount: 5 } },
 			{ name: "Leer", unlock: { type: "level", amount: 9 } },
 			{ name: "Bubble Beam", unlock: { type: "level", amount: 13 } },
+			{ name: "Protect", unlock: { type: "level", amount: 17 } },
+			{ name: "Brick Break", unlock: { type: "level", amount: 22 } },
 		]
 	},
 	"Oricorio": {

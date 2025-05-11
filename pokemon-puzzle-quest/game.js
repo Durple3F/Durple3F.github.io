@@ -921,8 +921,6 @@ class Round {
 		//Some moves have effects that trigger on making certain kinds of matches
 		promise = promise.then(() => new Promise(res => {
 			if (!matches.length) return res()
-
-			
 			
 			let moveEffectPromise = Promise.resolve()
 			let moves = this.getAvailableMoves(this.activePlayerIndex)
@@ -2382,7 +2380,9 @@ class Round {
 		let prevented = false
 		let isInvulnerable = defender.hasStatus("invulnerable")
 		if (isInvulnerable && attacker !== defender) {
-			if (!attacker.hasAbility("Infiltrator")) {
+			let bypassProtect = this.shouldMoveHaveTag("goes-through-protect", attackerTrainer, attacker, move)
+			let bypassInvulnerable = bypassProtect || attacker.hasAbility("Infiltrator")
+			if (!bypassInvulnerable) {
 				prevented = true
 			}
 		}
