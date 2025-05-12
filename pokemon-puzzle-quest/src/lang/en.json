@@ -1139,7 +1139,8 @@
 		"Baton Pass": {
 			"name": "Baton Pass",
 			"description": "The user swaps to a different Pokémon if possible. If they do, the old active Pokémon and the new active Pokémon exchange all status effects they have. The new Pokémon retains the old Pokémon's energy.",
-			"shortDescription": "Swap while keeping status effects"
+			"shortDescription": "Swap while keeping status effects",
+			"choose-pokemon": "Choose a Pokémon to pass the baton to."
 		},
 		"Beat Up": {
 			"name": "Beat Up",
@@ -1273,6 +1274,11 @@
 			"description": "Deals damage. Then, 50% of the time, applies Paralyzed.",
 			"shortDescription": "Deals some damage and paralyzes"
 		},
+		"Draining Kiss": {
+			"name": "Draining Kiss",
+			"description": "Deals damage. Then, heals the user for 75% of the damage dealt.",
+			"shortDescription": "Steals HP"
+		},
 		"Drill Peck": {
 			"name": "Drill Peck",
 			"description": "Deals damage. Then a random row of tiles becomes Locked for 10 turns. Other trainers can't swap Locked tiles.",
@@ -1298,6 +1304,11 @@
 			"description": "Disables all moves but the move used most recently by the opponent for 5 turns.",
 			"shortDescription": "Disables all but one move"
 		},
+		"Endure": {
+			"name": "Endure",
+			"description": "For the next 3 turns, damage that the user takes can't lower its HP below 1. Then this move's cooldown increases by 1.",
+			"shortDescription": "HP can't be lowered below 1"
+		},
 		"Fairy Wind": {
 			"name": "Fairy Wind",
 			"description": "Deals damage. Then, shifts a row of the user's choice 3 tiles to the right.",
@@ -1312,6 +1323,11 @@
 			"name": "Fake Tears",
 			"description": "Lowers the opponent's special defense stat by 2 stages.",
 			"shortDescription": "Lowers enemy special defense"
+		},
+		"Feather Dance": {
+			"name": "Feather Dance",
+			"description": "Raises the user's Attack stat by 2 stages.",
+			"shortDescription": "Raises user's Attack"
 		},
 		"Feint": {
 			"name": "Feint",
@@ -1410,7 +1426,7 @@
 		},
 		"Hone Claws": {
 			"name": "Hone Claws",
-			"description": "The next time that Pokémon uses a move which shares a type with it, the greatest color component(s) in that move's cost is reduced by 4.",
+			"description": "The next time this Pokémon uses a move which shares a type with it, the greatest color component(s) in that move's cost is reduced by 4.",
 			"shortDescription": "Next same-type move costs less"
 		},
 		"Howl": {
@@ -1458,6 +1474,11 @@
 			"name": "Leafage",
 			"description": "Deals damage. 3 random tiles are transformed into Grass tiles.",
 			"shortDescription": "Damages and turns tiles into Grass tiles"
+		},
+		"Leech Seed": {
+			"name": "Leech Seed",
+			"description": "Applies the Seedling status to the opponent for 10 turns. At the end of its turn, a Pokémon with Seedling loses HP equal to 1/16 of its Max HP, rounded down, and the opponent is healed the same amount of HP.",
+			"shortDescription": "Lowers enemy defense"
 		},
 		"Leer": {
 			"name": "Leer",
@@ -1624,6 +1645,11 @@
 			"description": "Until the start of the user's next turn, moves that the opponent uses with a cooldown time of 1 or less have their power reduced by 75%.",
 			"shortDescription": "Temporarily makes quick attacks against you weaker"
 		},
+		"Rapid Spin": {
+			"name": "Rapid Spin",
+			"description": "Removes the Seedling and Splinters status from the user, then removes any enemy Wrap, Infested, Static, and Locked status effects from all tiles on the board.",
+			"shortDescription": "Removes many statuses"
+		},
 		"Razor Leaf": {
 			"name": "Razor Leaf",
 			"description": "Deals damage. This move's power increases by 3 for every Grass tile on the board.",
@@ -1655,6 +1681,11 @@
 			"description": "Deals damage. Then, 3 random non-Fighting tiles are selected. Tiles orthogonally adjacent to those tiles become Fighting tiles.",
 			"shortDescription": "Surrounds non-Fighting tiles with Fighting tiles"
 		},
+		"Rollout": {
+			"name": "Rollout",
+			"description": "Deals damage, then disables Rollout and doubles its power for 5 turns before ending the turn. At the start of each turn, if Rollout is still disabled, it deals damage and doubles its power again.",
+			"shortDescription": "Deals damage over 5 turns"
+		},
 		"Roost": {
 			"name": "Roost",
 			"description": "The user heals HP equal to half their Max HP, rounded up.",
@@ -1669,6 +1700,11 @@
 			"name": "Sand Attack",
 			"description": "A random diamond-shaped area of tiles are given the Energy Down status. When an opponent removes those tiles, they're worth 1 less energy each.",
 			"shortDescription": "Weakens an area of tiles"
+		},
+		"Scary Face": {
+			"name": "Scary Face",
+			"description": "Lowers the opponent's Speed stat by 2 stages.",
+			"shortDescription": "Lowers enemy Speed"
 		},
 		"Scratch": {
 			"name": "Scratch",
@@ -1691,16 +1727,6 @@
 			"description": "Deals damage. If you and your opponent have a different number of Pokémon remaining, this move's power increases by 40.",
 			"shortDescription": "Deals damage"
 		},
-		"Spite": {
-			"name": "Spite",
-			"description": "The next 5 times that the opponent uses a move, it has its energy cost doubled. This effect wears off after 7 turns.",
-			"shortDescription": "Raises the opponent's costs"
-		},
-		"Scary Face": {
-			"name": "Scary Face",
-			"description": "Lowers the opponent's Speed stat by 2 stages.",
-			"shortDescription": "Lowers enemy Speed"
-		},
 		"Sing": {
 			"name": "Sing",
 			"description": "Applies Asleep to the opponent. An Asleep Pokémon gets half as much energy (rounded up) from matches.",
@@ -1710,6 +1736,11 @@
 			"name": "Sketch",
 			"description": "This Pokémon learns how to use the move the opponent most recently used. If they haven't used a move, this move does nothing.",
 			"shortDescription": "Learns the enemy's last move."
+		},
+		"Slam": {
+			"name": "Slam",
+			"description": "Deals damage. Then, this move's orange energy cost increases by 2.",
+			"shortDescription": "Deals damage"
 		},
 		"Sleep Powder": {
 			"name": "Sleep Powder",
@@ -1726,10 +1757,30 @@
 			"description": "Deals damage and has a 50% chance to paralyze the target. If the target was already Paralyzed, instead it deals damage with 20 additional power.",
 			"shortDescription": "Deals damage and might paralyze"
 		},
+		"Spit Up": {
+			"name": "Spit Up",
+			"description": "If the user has no stacks of Stockpile, this move does nothing. Otherwise, the user loses all stacks of Stockpile, and deals damage to the opponent with 100 additional power per stack removed.",
+			"shortDescription": "Spends Stockpiles to deal damage"
+		},
+		"Spite": {
+			"name": "Spite",
+			"description": "The next 3 times that the opponent uses a move, it has its energy cost doubled. This effect wears off after 7 turns.",
+			"shortDescription": "Raises the opponent's costs"
+		},
 		"Stealth Rock": {
 			"name": "Stealth Rock",
 			"description": "Applies Splinters to the opponent for 4 turns. At the beginning of their turn, they take damage as though they were hit by a 25 power move.",
 			"shortDescription": "Applies Splinters"
+		},
+		"Stockpile": {
+			"name": "Stockpile",
+			"description": "If the user has less than 3 stacks of Stockpile, they gain a stack of Stockpile and the user's Defense stat and Special Defense stats are each raised by 1 stage.",
+			"shortDescription": "Stores power and raises Defenses"
+		},
+		"Strength": {
+			"name": "Strength",
+			"description": "Deals damage. Then, if the target is still active, the user chooses a tile. Tiles in that column or the adjacent columns are shifted upwards by 4 tiles.",
+			"shortDescription": "Raises three columns"
 		},
 		"String Shot": {
 			"name": "String Shot",
@@ -1771,10 +1822,20 @@
 			"description": "Applies Confused to the opponent. However, the opponent's Attack is raised a stage. After a Confused Pokémon uses a move, there's a 50% chance for their turn to end.",
 			"shortDescription": "Confuses the opponent but buffs them"
 		},
+		"Swallow": {
+			"name": "Swallow",
+			"description": "If the user has no stacks of Stockpile, this move does nothing. Otherwise, the user loses all stacks of Stockpile, and heals HP based on how many stacks were removed. They heal 25% of their Max HP with one stack, 50% with two, and 100% with any more.",
+			"shortDescription": "Spends Stockpiles to heal"
+		},
 		"Sweet Kiss": {
 			"name": "Sweet Kiss",
 			"description": "Applies Confused. Then, shuffles the board. After a Confused Pokémon uses a move, there's a 50% chance for their turn to end.",
 			"shortDescription": "Confuses opponent and shuffles"
+		},
+		"Sweet Scent": {
+			"name": "Sweet Scent",
+			"description": "The next time that the opponent uses a move, the greatest color component(s) in that move's cost is increased by 3.",
+			"shortDescription": "Raises the opponent's costs"
 		},
 		"Swift": {
 			"name": "Swift",
@@ -1831,6 +1892,11 @@
 			"name": "Thunder Wave",
 			"description": "A random column of tiles is given the Static status effect. When the user removes a tile with Static, it explodes orthogonally adjacent tiles as well.",
 			"shortDescription": "Gives a column Static"
+		},
+		"Vine Whip": {
+			"name": "Vine Whip",
+			"description": "Damage-dealing move with no special effects.",
+			"shortDescription": "Deals some damage"
 		},
 		"Vise Grip": {
 			"name": "Vise Grip",
@@ -2463,6 +2529,14 @@
 		"safeguard": {
 			"name": "Safeguard",
 			"description": "This Pokémon can't receive status effects from other Pokémon."
+		},
+		"protect": {
+			"name": "Protected",
+			"description": "This Pokémon can't be dealt damage by other Pokémon, receive status effects from other Pokémon, or have its stat stages modified by other Pokémon."
+		},
+		"seedling": {
+			"name": "Seedling",
+			"description": "At the end of this Pokémon's turn, it loses HP equal to 1/16 of its Max HP, and its opponent is healed the same amount of HP."
 		}
 	},
 	"levels": {

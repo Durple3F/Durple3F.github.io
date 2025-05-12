@@ -330,8 +330,8 @@ const pokemonMoveData = {
 		accuracy: null,
 		rechargeTurns: 7,
 		energy: {
-			// green: 8,
-			// orange: 6
+			green: 8,
+			orange: 6
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Baton Pass.mp3"
@@ -1121,7 +1121,7 @@ const pokemonMoveData = {
 		accuracy: null,
 		rechargeTurns: 1,
 		energy: {
-			// orange: 10
+			orange: 10
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Defense Curl.mp3"
@@ -1330,6 +1330,33 @@ const pokemonMoveData = {
 			{ type: "apply-status-effect", statusEffect: "paralyzed", target: "opponent" }
 		]
 	},
+	//Steals HP
+	"Draining Kiss": {
+		name: "Draining Kiss",
+		type: "Fairy",
+		category: "Special",
+		strategy: "basic-damage",
+		tags: ["healing"],
+		pp: 10,
+		power: 50,
+		accuracy: 100,
+		rechargeTurns: 2,
+		energy: {
+			purple: 9,
+			red: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Draining Kiss part 1.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "load-value", value: 0.75 },
+			{ type: "multiply-numbers" },
+			{ type: "load-value", value: 1 },
+			{ type: "heal", target: "user", amount: -2, min: -1 },
+		],
+	},
 	//Locks a random row of tiles
 	"Drill Peck": {
 		name: "Drill Peck",
@@ -1532,6 +1559,47 @@ const pokemonMoveData = {
 		highlightOnHover: {
 			type: "last-enemy-move"
 		}
+	},
+	//You can't go below 1HP
+	"Endure": {
+		name: "Endure",
+		type: "Normal",
+		category: "Status",
+		strategy: "buff-user",
+		pp: 10,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 3,
+		energy: {
+			blue: 3,
+			red: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Endure.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "endure-enduring",
+				type: "damage-enduring",
+				stacks: true,
+				volatile: true,
+				turns: 3
+			} },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "endure-cooldown",
+				type: "cooldown-alteration",
+				stacks: true,
+				volatile: true,
+				appliesTo: {
+					name: "Endure"
+				},
+				modification: {
+					change: 1,
+					operation: "add"
+				}
+			} },
+		],
 	},
 	//Shifts a row of tiles
 	"Fairy Wind": {
@@ -2672,6 +2740,28 @@ const pokemonMoveData = {
 			{ type: "change-tile-type", selection: "group", which: -1, targetType: "green" },
 		]
 	},
+	//Every turn the defender has hp drained
+	"Leech Seed": {
+		name: "Leech Seed",
+		type: "Grass",
+		category: "Status",
+		strategy: "debuff-opponent",
+		pp: 10,
+		power: null,
+		accuracy: 90,
+		rechargeTurns: 5,
+		energy: {
+			red: 6,
+			green: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Leech Seed.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "apply-status-effect", statusEffect: "seedling", target: "opponent" },
+		],
+	},
 	//Lowers enemy defense 1
 	"Leer": {
 		name: "Leer",
@@ -3735,6 +3825,33 @@ const pokemonMoveData = {
 			} },
 		],
 	},
+	//Remove many status effects from yourself and the board
+	"Rapid Spin": {
+		name: "Rapid Spin",
+		type: "Normal",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 40,
+		power: 50,
+		accuracy: 100,
+		rechargeTurns: 2,
+		energy: {
+			red: 7
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Rapid Spin.mp3",
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "remove-status-from-all-tiles", statusName: "Wrap", exceptFriendlyStatuses: true },
+			{ type: "remove-status-from-all-tiles", statusName: "Infested", exceptFriendlyStatuses: true },
+			{ type: "remove-status-from-all-tiles", statusName: "Static", exceptFriendlyStatuses: true },
+			{ type: "remove-status-from-all-tiles", statusName: "Locked", exceptFriendlyStatuses: true },
+			{ type: "remove-status-effect", target: "user", statusName: "seedling" },
+			{ type: "remove-status-effect", target: "user", statusName: "splinters" },
+		],
+	},
 	//Choose two Grass tiles, remove all tiles between them
 	"Razor Leaf": {
 		name: "Razor Leaf",
@@ -3915,6 +4032,84 @@ const pokemonMoveData = {
 			{ type: "select-tiles-orthogonally-adjacent-to", selection: -1 },
 			{ type: "change-tile-type", selection: "group", which: -1, targetType: "orange" },
 		],
+	},
+	//Deals damage over multiple turns
+	"Rollout": {
+		name: "Rollout",
+		type: "Rock",
+		category: "Physical",
+		strategy: "special",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 20,
+		power: 30,
+		accuracy: 90,
+		rechargeTurns: 6,
+		energy: {
+			orange: 8,
+			yellow: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Rollout.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack", label: "damage" },
+			{ type: "damage" },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "rollout-attacking",
+				type: "disability",
+				stacks: false,
+				volatile: true,
+				turns: 5,
+				lostOnSwap: true,
+				lostOnBatonPass: true,
+				appliesTo: {
+					name: "Rollout"
+				},
+			} },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "rollout-double-power",
+				type: "power-alteration",
+				stacks: true,
+				lostOnSwap: true,
+				lostOnBatonPass: true,
+				appliesTo: {
+					names: ["Rollout"]
+				},
+				modification: {
+					change: 2,
+					operation: "multiply"
+				}
+			} },
+			{ type: "end-turn" },
+		],
+		onTurnStart: [
+			{ type: "is-trainers-turn", target: "user" },
+			{ type: "load-value", value: false },
+			{ type: "jump-if-equal", jumpTo: Infinity},
+
+			{ type: "get-status-stacks", target: "user", statusName: "rollout-attacking" },
+			{ type: "load-value", value: 1 },
+			{ type: "jump-if-greater-than-or-equal-to", jumpTo: "damage" },
+			{ type: "remove-status-effect", target: "user", statusName: "rollout-double-power" },
+			{ type: "jump", jumpTo: Infinity },
+
+			{ type: "play-sound", name: "attack", label: "damage" },
+			{ type: "damage" },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "rollout-double-power",
+				type: "power-alteration",
+				stacks: true,
+				lostOnSwap: true,
+				lostOnBatonPass: true,
+				appliesTo: {
+					names: ["Rollout"]
+				},
+				modification: {
+					change: 2,
+					operation: "multiply"
+				}
+			} },
+		]
 	},
 	//Heal half your HP back
 	"Roost": {
@@ -4114,6 +4309,7 @@ const pokemonMoveData = {
 			{ type: "damage", toPokemon: -2, additivePower: -1 }
 		]
 	},
+	//Deals more damage if you have a different number of pokemon remaining
 	"Shadow Sneak": {
 		name: "Shadow Sneak",
 		type: "Ghost",
@@ -4164,6 +4360,7 @@ const pokemonMoveData = {
 			{ type: "apply-status-effect", statusEffect: "asleep", target: "opponent", label: "sleep" },
 		],
 	},
+	//Permanently learn the last move used
 	"Sketch": {
 		name: "Sketch",
 		type: "Normal",
@@ -4198,6 +4395,41 @@ const pokemonMoveData = {
 			type: "last-enemy-move"
 		}
 	},
+	//Increases its own cost with each use
+	"Slam": {
+		name: "Slam",
+		type: "Normal",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 20,
+		power: 80,
+		accuracy: 75,
+		rechargeTurns: 1,
+		energy: {
+			red: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Slam.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "slam-cost-alteration",
+				type: "cost-alteration",
+				stacks: true,
+				volatile: true,
+				appliesTo: {
+					name: "Slam"
+				},
+				energyCost: {
+					orange: 2
+				}
+			} },
+		],
+	},
+	//Places infectious status effects on the board that eventually cause sleep
 	"Sleep Powder": {
 		name: "Sleep Powder",
 		type: "Grass",
@@ -4224,6 +4456,7 @@ const pokemonMoveData = {
 			}
 		],
 	},
+	//Shifts the board down
 	"Smack Down": {
 		name: "Smack Down",
 		type: "Rock",
@@ -4252,6 +4485,7 @@ const pokemonMoveData = {
 			{ type: "shift-tiles", selection: -1, xOffset: -2, yOffset: -3 },
 		]
 	},
+	//Paralyzes and deals more damage to paralyzed enemies
 	"Spark": {
 		name: "Spark",
 		type: "Electric",
@@ -4284,6 +4518,37 @@ const pokemonMoveData = {
 			{ type: "apply-status-effect", statusEffect: "paralyzed", target: "opponent" },
 		],
 	},
+	//Spends all your "stockpile" stacks for damage
+	"Spit Up": {
+		name: "Spit Up",
+		type: "Normal",
+		category: "Special",
+		strategy: "special",
+		tags: ["damage-dealing"],
+		pp: 10,
+		power: 0,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			yellow: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Spit Up.mp3"
+		},
+		effects: [
+			{ type: "get-status-stacks", statusName: "stockpile" },
+			{ type: "save-variable", name: "stacks", save: -1 },
+			{ type: "load-value", value: 1 },
+			{ type: "jump-if-less-than", jumpTo: Infinity },
+
+			{ type: "remove-status-effect", target: "user", statusName: "stockpile" },
+			{ type: "play-sound", name: "attack" },
+			{ type: "load-variable", name: "stacks" },
+			{ type: "load-value", value: 100 },
+			{ type: "multiply-numbers" },
+			{ type: "damage", additivePower: -1 },
+		]
+	},
 	//Doubles the opponent's move costs for a while
 	"Spite": {
 		name: "Spite",
@@ -4313,7 +4578,7 @@ const pokemonMoveData = {
 					logic: "not",
 				},
 				turns: 7,
-				numberOfApplications: 5,
+				numberOfApplications: 3,
 				modification: {
 					change: 2,
 					operation: "multiply"
@@ -4346,6 +4611,113 @@ const pokemonMoveData = {
 		],
 		additionalEffects: [
 			{ type: "apply-status-effect", statusEffect: "splinters", target: "opponent" }
+		]
+	},
+	//Gives the user a stack of "stockpile"
+	"Stockpile": {
+		name: "Stockpile",
+		type: "Normal",
+		category: "Status",
+		strategy: "special",
+		tags: [],
+		pp: 20,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 3,
+		energy: {
+			green: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Stockpile.mp3"
+		},
+		effects: [
+			{ type: "get-status-stacks", statusName: "stockpile" },
+			{ type: "load-value", value: 3 },
+			{ type: "jump-if-less-than", jumpTo: "stockpile" },
+			{ type: "jump", jumpTo: Infinity },
+
+			{ type: "play-sound", name: "attack", label: "stockpile" },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "stockpile",
+				type: "hidden",
+				stacks: true,
+				volatile: true
+			} },
+			
+			{
+				type: "apply-debuff", target: "user", debuff: {
+					type: "stat",
+					stat: "defense",
+					class: "buff",
+					amount: 1
+				}
+			},
+			{
+				type: "apply-debuff", target: "user", debuff: {
+					type: "stat",
+					stat: "specialDefense",
+					class: "buff",
+					amount: 1
+				}
+			},
+		],
+	},
+	//Shifts three columns upwards
+	"Strength": {
+		name: "Strength",
+		type: "Normal",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 15,
+		power: 80,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			orange: 8,
+			red: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Strength.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "is-active-pokemon-viable", target: "opponent" },
+			{ type: "jump-if-truthy", jumpTo: "grip" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "load-value", value: 1 },
+			{ type: "choose-tiles", count: -1, target: "user" },
+			{ type: "load-value", value: 0 },
+			{ type: "get-element-from-list", list: -2, index: -1 },
+			{ type: "get-tile-x", tile: -1 },
+			{ type: "save-variable", name: "x", save: -1 },
+			{ type: "select-column", x: -1 },
+			{ type: "save-variable", name: "selection1", save: -1 },
+			{ type: "log-value" },
+			{ type: "load-variable", name: "x" },
+			{ type: "load-value", value: 1 },
+			{ type: "add-numbers" },
+			{ type: "select-column", x: -1 },
+			{ type: "save-variable", name: "selection2", save: -1 },
+			{ type: "load-variable", name: "x" },
+			{ type: "load-value", value: -1 },
+			{ type: "add-numbers" },
+			{ type: "select-column", x: -1 },
+			{ type: "save-variable", name: "selection3", save: -1 },
+			
+			{ type: "load-variable", name: "selection1" },
+			{ type: "load-variable", name: "selection2" },
+			{ type: "combine-selections", selection1: -1, selection2: -2 },
+			{ type: "load-variable", name: "selection3" },
+			{ type: "combine-selections", selection1: -1, selection2: -2 },
+
+			{ type: "load-value", value: -4 },
+			{ type: "load-value", value: 0 },
+			{ type: "shift-tiles", selection: -3, xOffset: -1, yOffset: -2 },
 		]
 	},
 	//Lowers opponent's speed 2
@@ -4591,6 +4963,55 @@ const pokemonMoveData = {
 			}
 		]
 	},
+	//Spends all your "stockpile" stacks for healing
+	"Swallow": {
+		name: "Swallow",
+		type: "Normal",
+		category: "Status",
+		strategy: "special",
+		tags: ["healing"],
+		pp: 10,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 5,
+		energy: {
+			blue: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Swallow part 1.mp3"
+		},
+		effects: [
+			{ type: "get-status-stacks", statusName: "stockpile" },
+			{ type: "save-variable", name: "stacks", save: -1 },
+			{ type: "load-value", value: 1 },
+			{ type: "jump-if-less-than", jumpTo: Infinity },
+
+			{ type: "remove-status-effect", target: "user", statusName: "stockpile" },
+			{ type: "load-variable", name: "stacks" },
+			{ type: "load-value", value: 1 },
+			{ type: "jump-if-equal", jumpTo: "heal-1" },
+			{ type: "load-variable", name: "stacks" },
+			{ type: "load-value", value: 2 },
+			{ type: "jump-if-equal", jumpTo: "heal-2" },
+			{ type: "jump", jumpTo: "heal-3" },
+
+			{ type: "play-sound", name: "attack", label: "heal-1" },
+			{ type: "get-max-hp", target: "user" },
+			{ type: "load-value", value: 0.25 },
+			{ type: "multiply-numbers", round: "up" },
+			{ type: "heal", target: "user", amount: -1 },
+
+			{ type: "play-sound", name: "attack", label: "heal-2" },
+			{ type: "get-max-hp", target: "user" },
+			{ type: "load-value", value: 0.5 },
+			{ type: "multiply-numbers", round: "up" },
+			{ type: "heal", target: "user", amount: -1 },
+
+			{ type: "play-sound", name: "attack", label: "heal-3" },
+			{ type: "get-max-hp", target: "user" },
+			{ type: "heal", target: "user", amount: -1 },
+		]
+	},
 	//Confuses the opponent AND shuffles the board
 	"Sweet Kiss": {
 		name: "Sweet Kiss",
@@ -4612,6 +5033,40 @@ const pokemonMoveData = {
 			{ type: "play-sound", name: "attack" },
 			{ type: "apply-status-effect", statusEffect: "confused", target: "opponent" },
 			{ type: "shuffle-board" }
+		],
+	},
+	//Increases the enemy's move costs
+	"Sweet Scent": {
+		name: "Sweet Scent",
+		type: "Normal",
+		category: "Status",
+		strategy: "debuff-opponent",
+		pp: 20,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 3,
+		energy: {
+			green: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Sweet Scent.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-types", target: "user" },
+			{ type: "apply-status-effect", target: "opponent", statusEffect: {
+				name: "sweet-scent-cost-alteration",
+				type: "cost-alteration",
+				stacks: true,
+				volatile: true,
+				numberOfApplications: 1,
+				appliesTo: {
+					logic: "not"
+				},
+				energyCost: {
+					greatestColor: 3
+				}
+			} },
 		],
 	},
 	//Multi-use attack
@@ -4869,6 +5324,7 @@ const pokemonMoveData = {
 			{ type: "swap-pokemon", target: "user", pokemon: -1, keepEnergy: true }
 		],
 	},
+	//Give static to random tiles
 	"Thunder Shock": {
 		name: "Thunder Shock",
 		type: "Electric",
@@ -4901,6 +5357,7 @@ const pokemonMoveData = {
 			}
 		]
 	},
+	//Give Static to a whole column
 	"Thunder Wave": {
 		name: "Thunder Wave",
 		type: "Electric",
@@ -4935,6 +5392,29 @@ const pokemonMoveData = {
 			}
 		],
 	},
+	//Basic damage
+	"Vine Whip": {
+		name: "Vine Whip",
+		type: "Grass",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 25,
+		power: 45,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			green: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Vine Whip.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+		],
+	},
+	//Locks a tile
 	"Vise Grip": {
 		name: "Vise Grip",
 		type: "Normal",

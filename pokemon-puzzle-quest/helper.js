@@ -364,7 +364,18 @@ function fixLearnsets() {
 	//but this shouldn't ever happen (barring things like Metronome)
 	let allMoves = Object.values(pokemonMoveData)
 	for (let pokemon of allPokemon) {
+		let id = pokemon.id
 		let learnset = pokemon.learnset
+		for (let i = 0; i < learnset.length; i++){
+			let learnData = learnset[i]
+			let moveId = learnData.name
+			if (!pokemonMoveData[moveId]){
+				console.warn(id,"can learn",moveId,"which doesn't exist in move data")
+				learnset.splice(i, 1)
+				i--
+				continue
+			}
+		}
 		for (let move of allMoves) {
 			let name = move.name
 			let canLearn = learnset.find(l => l.name === name)
@@ -436,7 +447,7 @@ function doesMatchMeetCriteria(match, type, minLength=0, maxLength=Infinity){
 	if (minLength && match.length < minLength) return false
 	if (maxLength && match.length > maxLength) return false
 	if (!type) return true
-	
+
 	let first = match.find(tile => tile.type === type)
 	if (!first) return false
 	return match.every(tile => first.matchesWith(tile))

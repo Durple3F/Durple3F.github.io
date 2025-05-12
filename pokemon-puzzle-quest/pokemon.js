@@ -256,6 +256,14 @@ class Pokemon{
 						turns: 1
 					}
 				} break
+				case "seedling": {
+					status = {
+						name: "seedling",
+						class: "debuff",
+						volatile: true,
+						turns: 10
+					}
+				} break
 				default:
 					console.warn("You never handled", status)
 					status = {

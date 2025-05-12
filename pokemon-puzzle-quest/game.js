@@ -1027,6 +1027,8 @@ class Round {
 		this.resetCurrentlySelecting()
 		this.resetCascade()
 
+		let promise = Promise.resolve()
+
 		//Reset necessary data for pokemon.
 		for (let trainer of this.trainers) {
 			for (let pokemon of trainer.pokemon) {
@@ -1052,6 +1054,52 @@ class Round {
 			for (let moveUsage of pokemon.moveUsage) {
 				if (moveUsage.recharge > 0) {
 					moveUsage.recharge -= 1
+				}
+			}
+		}
+		
+		//Find any start-of-turn effects that moves may have.
+		//Also start-of-turn abilities!
+		for (let trainer of this.trainers) {
+			let trainerIndex = this.trainers.indexOf(trainer)
+			let activePokemon = trainer.activePokemon
+			let activeMoves = activePokemon.activeMoves
+
+			//Hustle increases some moves' costs.
+			if (this.activePlayerIndex === trainerIndex && activePokemon.hasAbility("Hustle")) {
+				for (let move of activeMoves) {
+					let category = getMoveCategory(move)
+					if (category !== "Physical") continue
+					let statusEffect = {
+						name: "hustle-cost-increase",
+						type: "cost-alteration",
+						stacks: true,
+						volatile: true,
+						appliesTo: {
+							name: move.name
+						},
+						turns: 1,
+						energyCost: {}
+					}
+					let modification = statusEffect.energyCost
+					let cost = move.energy
+					let totalEnergy = Object.values(cost).reduce((acc, val) => acc + val, 0)
+					let toAdd = Math.ceil(totalEnergy / 1.5)
+					for (let i = 0; i < toAdd; i++) {
+						let color = randomChoice(colors)
+						modification[color] = (modification[color] ?? 0) + 1
+					}
+					activePokemon.addStatusEffect(statusEffect, trainer, activePokemon, undefined)
+				}
+			}
+
+			for (let move of activeMoves) {
+				if (move.onTurnStart) {
+					promise = promise.then(() => {
+						return this.triggerMoveEffects(
+							trainer, activePokemon, move, "onTurnStart"
+						)
+					})
 				}
 			}
 		}
@@ -1309,57 +1357,9 @@ class Round {
 			this.removeStatus(status)
 		}
 
-		let promise = Promise.resolve()
-
 		//If it's the cpu's turn, wait a little bit
 		if (this.activePlayer !== "player") {
 			promise = promise.then(() => delay(300))
-		}
-
-		//Find any start-of-turn effects that moves may have.
-		//Also start-of-turn abilities!
-		for (let trainer of this.trainers) {
-			let trainerIndex = this.trainers.indexOf(trainer)
-			let activePokemon = trainer.activePokemon
-			let activeMoves = activePokemon.activeMoves
-
-			//Hustle increases some moves' costs.
-			if (this.activePlayerIndex === trainerIndex && activePokemon.hasAbility("Hustle")) {
-				for (let move of activeMoves) {
-					let category = getMoveCategory(move)
-					if (category !== "Physical") continue
-					let statusEffect = {
-						name: "hustle-cost-increase",
-						type: "cost-alteration",
-						stacks: true,
-						volatile: true,
-						appliesTo: {
-							name: move.name
-						},
-						turns: 1,
-						energyCost: {}
-					}
-					let modification = statusEffect.energyCost
-					let cost = move.energy
-					let totalEnergy = Object.values(cost).reduce((acc, val) => acc + val, 0)
-					let toAdd = Math.ceil(totalEnergy / 1.5)
-					for (let i = 0; i < toAdd; i++) {
-						let color = randomChoice(colors)
-						modification[color] = (modification[color] ?? 0) + 1
-					}
-					activePokemon.addStatusEffect(statusEffect, trainer, activePokemon, undefined)
-				}
-			}
-
-			for (let move of activeMoves) {
-				if (move.onTurnStart) {
-					promise = promise.then(() => {
-						return this.triggerMoveEffects(
-							trainer, activePokemon, move, "onTurnStart"
-						)
-					})
-				}
-			}
 		}
 
 		this.updateEverything()
@@ -1489,6 +1489,29 @@ class Round {
 					})
 				}
 			}
+		}
+
+		//End-of-turn status effects like Seedling
+		if (activePokemon.hasStatus("seedling")){
+			let otherTrainer = this.trainers.find(t => t !== trainer)
+			let otherPokemon = otherTrainer.activePokemon
+			let amt = Math.max(1, Math.floor(activePokemon.maxhp / 16))
+			this.dealDamage({
+				from: activePokemon,
+				fromTrainer: trainer,
+				to: activePokemon,
+				toTrainer: trainer,
+				damage: amt,
+				fixed: true
+			})
+			this.dealDamage({
+				from: activePokemon,
+				fromTrainer: trainer,
+				to: otherPokemon,
+				toTrainer: otherTrainer,
+				damage: -amt,
+				fixed: true
+			})
 		}
 
 		//Stuff like Burned triggers at the end of the turn
@@ -2408,6 +2431,11 @@ class Round {
 			damage = defender.hp - 1
 		}
 
+		//Having any "damage-enduring" statuses also makes you not die
+		if (defender.getStatusesOfType("damage-enduring").length) {
+			damage = defender.hp - 1
+		}
+
 		result.damageDealt = damage
 		if (damage) {
 			//Negative damage heals
@@ -3016,6 +3044,21 @@ class Round {
 
 		return power
 	}
+	getEffectiveMoveRecharge(trainer, pokemon, move) {
+		let cooldown = move.rechargeTurns
+		let cooldownEffects = pokemon.getStatusesOfType("cooldown-alteration")
+		let effectiveType = this.getEffectiveMoveType(trainer, pokemon, move)
+		for (let statusEffect of cooldownEffects) {
+			let applies = this.doesThisApplyToMove(move, statusEffect.appliesTo, effectiveType)
+			if (applies) {
+				let modification = statusEffect.modification
+				cooldown = applyModification(cooldown, modification)
+			}
+		}
+		if (cooldown < 0) cooldown = 0
+
+		return cooldown
+	}
 	getEffectiveMoveType(trainer, pokemon, move) {
 		if (!move) return "Typeless"
 		return move.type
@@ -3143,7 +3186,7 @@ class Round {
 		}
 		//Put the move on recharge
 		let moveIndex = pokemon.moves.indexOf(move)
-		pokemon.moveUsage[moveIndex].recharge = move.rechargeTurns
+		pokemon.moveUsage[moveIndex].recharge = this.getEffectiveMoveRecharge(trainer, pokemon, move)
 		let promise = Promise.resolve()
 
 		let moveUseObj = this.newMoveUseObj(trainer, pokemon, move, "effects")
@@ -4696,7 +4739,7 @@ class Round {
 		})
 		return promise
 	}
-	sendOutPokemon(trainerIndex, pokemon, options) {
+	sendOutPokemon(trainerIndex, pokemon, options={}) {
 		this.clearPokemonMoves(trainerIndex)
 		let tags = this.trainerTags[trainerIndex]
 		let name = pokemon.name
@@ -5137,10 +5180,20 @@ class Round {
 			let popoverHTML = () => {
 				let html = $(`<div class='move-popover'></div>`)
 				let statLine = $(`<div class="d-flex flex-row-reverse justify-content-between stat-line">`)
-				statLine.append(`<div class="move-recharge">
+				let cooldown = this.getEffectiveMoveRecharge(trainer, pokemon, move)
+				let rechargeSection = $(`<div class="move-recharge">
 						<img src="src/img/recharge.png">
-						<div class="count">${move.rechargeTurns}</div>
 					</div>`)
+				statLine.append(rechargeSection)
+				let cooldownCount = $(`<div class="count val">${cooldown}</div>`)
+				rechargeSection.append(cooldownCount)
+
+				if (cooldown > move.rechargeTurns){
+					cooldownCount.addClass("down")
+				} else if (cooldown < move.rechargeTurns){
+					cooldownCount.addClass("up")
+				}
+
 				let options = {
 					parentMove: parentMove
 				}

@@ -2139,8 +2139,8 @@ const pokemonData = {
 			{ name: "Sing", unlock: { type: "level", amount: 18 } },
 			{ name: "Bubble Beam", unlock: { type: "level", amount: 21 } },
 			{ name: "Encore", unlock: { type: "level", amount: 24 } },
-			{ name: "Focus Energy", unlock: { type: "level", amount: 1 } },
-			{ name: "Baton Pass", unlock: { type: "level", amount: 1 } },
+			{ name: "Stockpile", unlock: { type: "level", amount: 1 } },
+			{ name: "Rapid Spin", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {
@@ -2616,6 +2616,10 @@ const pokemonData = {
 			{ name: "Absorb", unlock: { type: "level", amount: 1 } },
 			{ name: "Fairy Wind", unlock: { type: "level", amount: 1 } },
 			{ name: "Stun Spore", unlock: { type: "level", amount: 6 } },
+			{ name: "Sweet Scent", unlock: { type: "level", amount: 12 } },
+			{ name: "Draining Kiss", unlock: { type: "level", amount: 18 } },
+			{ name: "Struggle Bug", unlock: { type: "level", amount: 24 } },
+			{ name: "Covet", unlock: { type: "level", amount: 30 } },
 		]
 	},
 	"Rockruff": {
@@ -2665,6 +2669,10 @@ const pokemonData = {
 			{ name: "Sand Attack", unlock: { type: "level", amount: 4 } },
 			{ name: "Double Team", unlock: { type: "level", amount: 8 } },
 			{ name: "Rock Throw", unlock: { type: "level", amount: 12 } },
+			{ name: "Howl", unlock: { type: "level", amount: 16 } },
+			{ name: "Bite", unlock: { type: "level", amount: 20 } },
+			{ name: "Rock Tomb", unlock: { type: "level", amount: 24 } },
+			{ name: "Roar", unlock: { type: "level", amount: 28 } },
 		]
 	},
 	"Stufful": {
@@ -2715,6 +2723,8 @@ const pokemonData = {
 			{ name: "Bide", unlock: { type: "level", amount: 6 } }, //Learned only in gen 7
 			{ name: "Payback", unlock: { type: "level", amount: 8 } },
 			{ name: "Brutal Swing", unlock: { type: "level", amount: 12 } },
+			{ name: "Endure", unlock: { type: "level", amount: 16 } },
+			{ name: "Strength", unlock: { type: "level", amount: 20 } },
 		]
 	},
 	"Comfey": {
@@ -2760,6 +2770,14 @@ const pokemonData = {
 		},
 		learnset: [
 			{ name: "Wrap", unlock: { type: "level", amount: 1 } },
+			{ name: "Growth", unlock: { type: "level", amount: 1 } },
+			{ name: "Vine Whip", unlock: { type: "level", amount: 3 } },
+			{ name: "Helping Hand", unlock: { type: "level", amount: 6 } },
+			{ name: "Draining Kiss", unlock: { type: "level", amount: 9 } },
+			{ name: "Charm", unlock: { type: "level", amount: 12 } },
+			{ name: "Magical Leaf", unlock: { type: "level", amount: 15 } },
+			{ name: "Synthesis", unlock: { type: "level", amount: 18 } },
+			{ name: "Leech Seed", unlock: { type: "level", amount: 21 } },
 		]
 	},
 	"Passimian": {
@@ -2810,6 +2828,7 @@ const pokemonData = {
 			{ name: "Rock Smash", unlock: { type: "level", amount: 5 } },
 			{ name: "Focus Energy", unlock: { type: "level", amount: 10 } },
 			{ name: "Beat Up", unlock: { type: "level", amount: 15 } },
+			{ name: "Scary Face", unlock: { type: "level", amount: 20 } },
 		]
 	},
 	"Komala": {
@@ -2855,6 +2874,15 @@ const pokemonData = {
 		},
 		learnset: [
 			{ name: "Defense Curl", unlock: { type: "level", amount: 1 } },
+			{ name: "Rollout", unlock: { type: "level", amount: 1 } },
+			{ name: "Stockpile", unlock: { type: "level", amount: 6 } },
+			{ name: "Spit Up", unlock: { type: "level", amount: 6 } },
+			{ name: "Swallow", unlock: { type: "level", amount: 6 } },
+			{ name: "Rapid Spin", unlock: { type: "level", amount: 11 } },
+			{ name: "Yawn", unlock: { type: "level", amount: 16 } },
+			{ name: "Slam", unlock: { type: "level", amount: 21 } },
+			{ name: "Flail", unlock: { type: "level", amount: 26 } },
+			{ name: "Sucker Punch", unlock: { type: "level", amount: 31 } },
 		]
 	},
 };

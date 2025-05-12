@@ -258,6 +258,13 @@ const pokemonStatusData = {
 		class: "buff",
 		name: "safeguard"
 	},
+	"seedling": {
+		image: "src/img/icons/plant-seed.png",
+		color: "rgb(27, 121, 43)",
+		stacks: false,
+		class: "debuff",
+		name: "seedling"
+	},
 }
 for (let statusName in pokemonStatusData){
 	let statusType = pokemonStatusData[statusName]

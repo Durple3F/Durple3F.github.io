@@ -1197,6 +1197,34 @@ const pokemonMoveEffects = {
 			resolve()
 		}
 	},
+	"remove-status-from-all-tiles": {
+		execute: (resolve, effect, params, game, options) => {
+			let moveUseObj = options.moveUse
+			let trainer = moveUseObj.trainer
+			let selection = game.board.tilesOnScreen()
+			let statusName = effect.statusName
+			let exceptFriendlyStatuses = effect.exceptFriendlyStatuses ?? false
+			selection.forEach(tile => {
+				let statusEffects = tile.statusEffects
+				let toRemove = []
+				for (let statusEffect of statusEffects){
+					if (exceptFriendlyStatuses){
+						if (statusEffect.trainer !== trainer && statusName === statusEffect.name){
+							toRemove.push(statusEffect)
+						}
+						continue
+					}
+					if (statusName === statusEffect.name){
+						toRemove.push(statusEffect)
+					}
+				}
+				toRemove.forEach(statusEffect => {
+					tile.removeStatus(statusEffect)
+				})
+			})
+			resolve()
+		}
+	},
 	"change-tile-type": {
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
