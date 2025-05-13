@@ -1,12 +1,16 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-5/13 (32.4k lines):
-	- Added Golbat, Alolan Dugtrio, Alolan Persian
-	- Added Screech, Night Slash
-	- Added Surge Surfer
+5/13 (32.6k lines):
+	- Added Golbat, Alolan Dugtrio, Alolan Persian, Arcanine
+	- Added Screech, Night Slash, Switcheroo, Power Gem
+	- Added Surge Surfer, Fur Coat
 	- Moved quite a lot of code regarding how pokemon's stats are decided during a game.
 	- Pokemon can now evolve based on friendship
 	- You can now see your pokemon's weight and friendship values in the pc
+	- Added effects for empowered red, yellow, blue, purple tiles
+	- Redid the image for empowered yellow tiles
+	- Added an image for empowered blue tiles
+	- Redid parts of how those new requirements from yesterday
 
 5/12 (32.0k lines):
 	- Added Vine Whip, Rollout, Stockpile, Spit Up, Swallow, Rapid Spin, Slam, Drill Run

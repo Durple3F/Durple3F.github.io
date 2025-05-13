@@ -543,19 +543,26 @@ class Round {
 			matches.forEach(match => {
 				this.playerMatches.push(match)
 
-				//Pikachu cares about how many yellow 5 matches it sees
-				if (doesMatchMeetCriteria(match, "yellow", 5)){
-					let key = "fiveMatchYellow"
-					let cur = activePokemon.evolutionTriggerData[key] ?? 0
-					cur += 1
-					activePokemon.evolutionTriggerData[key] = cur
+				//Mark down any five matches that just happened
+				//This matters for several pokemon's evolutions
+				let fiveMatchTriggers = {
+					"fiveMatchRed": "red",
+					"fiveMatchOrange": "orange",
+					"fiveMatchYellow": "yellow",
+					"fiveMatchGreen": "green",
+					"fiveMatchBlue": "blue",
+					"fiveMatchPurple": "purple",
 				}
-				//Pikachu cares about how many purple 5 matches it sees
-				if (doesMatchMeetCriteria(match, "purple", 5)){
-					let key = "fiveMatchPurple"
-					let cur = activePokemon.evolutionTriggerData[key] ?? 0
-					cur += 1
-					activePokemon.evolutionTriggerData[key] = cur
+				for (let trigger in fiveMatchTriggers){
+					let color = fiveMatchTriggers[trigger]
+					let good = doesMatchMeetCriteria(match, color, 3)
+					let triggerMatters = activePokemon.doesTriggerMatter(trigger)
+					if (good && triggerMatters){
+						let key = trigger
+						let cur = activePokemon.evolutionTriggerData[key] ?? 0
+						cur += 1
+						activePokemon.evolutionTriggerData[key] = cur
+					}
 				}
 			})
 		}
@@ -724,8 +731,19 @@ class Round {
 		for (let tile of tiles){
 			if (tile.power === 0) continue
 			let type = tile.type
-			//Orange tiles take off energy from your move costs
-			if (type === "orange"){
+			
+			//Red tiles deal damage to the opponent
+			if (type === "red"){
+				this.dealDamage({
+					from: activePokemon,
+					fromTrainer: activeTrainer,
+					to: otherPokemon,
+					toTrainer: otherTrainer,
+					power: activePokemon.level
+				})
+			}
+			//Orange tiles take off 3 energy from your move costs
+			else if (type === "orange"){
 				activePokemon.addStatusEffect({
 					name: "empowered-orange-cost-alteration",
 					type: "cost-alteration",
@@ -740,6 +758,11 @@ class Round {
 					}
 				})
 			}
+			//Yellow tiles give you 10 energy of a random color
+			else if (type === "yellow"){
+				let randomColor = randomChoice(colors)
+				energy[randomColor] += 10
+			}
 			//Green tiles heal you for 5% of your Max HP
 			else if (type === "green"){
 				let amt = activePokemon.maxhp * 0.05 * -1
@@ -752,6 +775,47 @@ class Round {
 					fixed: true,
 					healing: true
 				})
+			}
+			//Blue tiles multiply your energy gain by 30% (multiplicative, stacks) for this turn
+			else if (type === "blue"){
+				activePokemon.addStatusEffect({
+					name: "empowered-blue-energy-bonus",
+					type: "energy-gain-alteration",
+					stacks: true,
+					volatile: true,
+					turns: 1,
+					appliesTo: {},
+					modification: {
+						change: 1.3,
+						operation: "multiply"
+					}
+				})
+			}
+			//Purple tiles reduce a cooldown of yours by 1. The cooldown reduction is given to a random one of your greatest move cooldowns among available moves.
+			else if (type === "purple"){
+				let availableMoves = this.getAvailableMoves(this.activePlayerIndex)
+				let moveIndexes = availableMoves.map(move => activePokemon.moves.indexOf(move))
+				if (availableMoves.length){
+					let greatestCooldown = activePokemon.moveUsage[moveIndexes[0]].recharge
+					for (let i = 1; i < availableMoves.length; i++){
+						let cooldown = activePokemon.moveUsage[moveIndexes[i]].recharge
+						if (cooldown > greatestCooldown){
+							greatestCooldown = cooldown
+						}
+					}
+					if (greatestCooldown > 0){
+						let movesWithThatCooldown = availableMoves.filter((move, index) => {
+							let moveIndex = moveIndexes[index]
+							let cooldown = activePokemon.moveUsage[moveIndex].recharge
+							return cooldown === greatestCooldown
+						})
+						if (movesWithThatCooldown.length){
+							let randomMove = randomChoice(movesWithThatCooldown)
+							let moveIndex = moveIndexes[availableMoves.indexOf(randomMove)]
+							activePokemon.moveUsage[moveIndex].recharge--
+						}
+					}
+				}
 			}
 		}
 
@@ -800,12 +864,12 @@ class Round {
 				}
 			}
 		}
+		toAdd = multiplyEnergies(toAdd, 1, "down")
 
 		//Add little floaty bits for the energy they just gained/lost
 		for (let type in toAdd) {
 			let amt = toAdd[type]
 			if (amt) {
-				//TODO figure out why this broke
 				if (!trainer.tags.energyBars[type]) continue
 				let bar = trainer.tags.energyBars[type][0]
 				let cssColor = getCSSEnergyColor(type)

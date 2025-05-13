@@ -164,6 +164,16 @@ typeEffectiveness["Fairy"]["Fire"] = 0.5
 typeEffectiveness["Fairy"]["Dragon"] = 2
 typeEffectiveness["Fairy"]["Dark"] = 2
 
+//The list of all the different events which a pokemon may care about writing down when they happen
+const evolutionActiveTriggers = [
+	"fiveMatchRed",
+	"fiveMatchOrange",
+	"fiveMatchYellow",
+	"fiveMatchGreen",
+	"fiveMatchBlue",
+	"fiveMatchPurple"
+]
+
 const pokemonStatusData = {
 	"burn": {
 		image: "src/img/icons/burn.png",
@@ -442,13 +452,17 @@ function checkIfPokemonMeetsRequirements(pokemon, req){
 		let amt = req.amount
 		return pokemon.friendship >= amt
 	}
-	if (req.type === "fiveMatchYellow"){
+	let simpleTriggers = [
+		"fiveMatchRed",
+		"fiveMatchOrange",
+		"fiveMatchYellow",
+		"fiveMatchGreen",
+		"fiveMatchBlue",
+		"fiveMatchPurple",
+	]
+	if (simpleTriggers.includes(req.type)){
 		let amt = req.amount
-		return pokemon.evolutionTriggerData["fiveMatchYellow"] >= amt
-	}
-	if (req.type === "fiveMatchPurple"){
-		let amt = req.amount
-		return pokemon.evolutionTriggerData["fiveMatchPurple"] >= amt
+		return pokemon.evolutionTriggerData[req.type] >= amt
 	}
 	if (req.type === "never" || req.type === "hidden"){
 		return false
@@ -489,22 +503,25 @@ function getReasonPokemonDoesntMeetEvolutionRequirements(pokemon, evolveData, op
 	let evolveName = evolveData.name
 	if (!req) return "This evolution doesn't require anything. Why can't you use it? Man, Boo sucks at programming."
 	if (req.type === "level"){
-		let text = getLocaleString("pokemon-evolve-requirement-level", lang)
+		let text = getLocaleString("level", lang, ["evolution-requirements"])
 		text = applyReplacements(text, [req.amount, evolveName])
 		return text
 	}
 	if (req.type === "friendship"){
-		let text = getLocaleString("pokemon-evolve-requirement-friendship", lang)
+		let text = getLocaleString("friendship", lang, ["evolution-requirements"])
 		text = applyReplacements(text, [req.amount, evolveName])
 		return text
 	}
-	if (req.type === "fiveMatchYellow"){
-		let text = getLocaleString("pokemon-evolve-requirement-five-match-yellow", lang)
-		text = applyReplacements(text, [req.amount, evolveName])
-		return text
+	let simpleTriggers = {
+		"fiveMatchRed": "five-match-red",
+		"fiveMatchOrange": "five-match-orange",
+		"fiveMatchYellow": "five-match-yellow",
+		"fiveMatchGreen": "five-match-green",
+		"fiveMatchBlue": "five-match-blue",
+		"fiveMatchPurple": "five-match-purple",
 	}
-	if (req.type === "fiveMatchPurple"){
-		let text = getLocaleString("pokemon-evolve-requirement-five-match-purple", lang)
+	if (req.type in simpleTriggers){
+		let text = getLocaleString(simpleTriggers[req.type], lang, ["evolution-requirements"])
 		text = applyReplacements(text, [req.amount, evolveName])
 		return text
 	}

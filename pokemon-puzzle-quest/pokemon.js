@@ -119,12 +119,6 @@ class Pokemon{
 			}
 		}
 
-		this.gameRoundData = {}
-		this.friendship = options?.friendship ?? 0
-		this.everstoneActive = options?.everstoneActive ?? false
-		this.evolutionTriggerData = options?.evolutionTriggerData ?? {}
-		this.statusEffects = []
-
 		//You can only have 4 moves active at once
 		this.activeMoves = []
 		if (options.activeMoves){
@@ -147,6 +141,16 @@ class Pokemon{
 
 		this.turnsActive = 0
 		this.turnsParticipated = 0
+		
+		this.gameRoundData = {}
+		this.friendship = options?.friendship ?? 0
+		this.everstoneActive = options?.everstoneActive ?? false
+		this.evolutionTriggerData = options?.evolutionTriggerData ?? {}
+		this.statusEffects = []
+
+		this.data.relevantTriggers.forEach(trigger => {
+			this.evolutionTriggerData[trigger] = this.evolutionTriggerData[trigger] ?? 0
+		})
 
 		this.resetEverything()
 
@@ -811,6 +815,9 @@ class Pokemon{
 		return this.getLevelFromEXP(this.exp)
 	}
 
+	doesTriggerMatter(trigger){
+		return this.data.relevantTriggers.includes(trigger)
+	}
 	evolve(evolveTo){
 		let copy = {}
 		let toCopy = [

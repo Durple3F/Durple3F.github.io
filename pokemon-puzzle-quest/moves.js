@@ -3287,7 +3287,7 @@ const pokemonMoveData = {
 		type: "Dark",
 		category: "Physical",
 		strategy: "basic-damage",
-		tags: ["damage-dealing"],
+		tags: ["damage-dealing", "makes-contact"],
 		pp: 15,
 		power: 70,
 		accuracy: 100,
@@ -3639,6 +3639,54 @@ const pokemonMoveData = {
 			{ type: "damage" },
 			{ type: "end-turn" }
 		],
+	},
+	//Empower tiles near the center
+	"Power Gem": {
+		name: "Power Gem",
+		type: "Rock",
+		category: "Special",
+		strategy: "basic-damage",
+		pp: 20,
+		power: 80,
+		accuracy: 100,
+		rechargeTurns: 2,
+		energy: {
+			// orange: 6,
+			// red: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Power Gem.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "get-board-width" },
+			{ type: "load-value", value: -1 },
+			{ type: "add-numbers" },
+			{ type: "load-value", value: 2 },
+			{ type: "divide-numbers" },
+			{ type: "save-variable", name: "x", save: -1 },
+
+			{ type: "get-board-height" },
+			{ type: "load-value", value: -1 },
+			{ type: "add-numbers" },
+			{ type: "load-value", value: 2 },
+			{ type: "divide-numbers" },
+			{ type: "save-variable", name: "y", save: -1 },
+
+			{ type: "load-variable", name: "x" },
+			{ type: "load-variable", name: "y" },
+			{ type: "load-value", value: 2 },
+			{ 
+				type: "select-tiles-with-expression",
+				conditionExpression: "((x - %c%)^2 + (y - %c%)^2)^0.5 <= %c%",
+				conditionArguments: [-3, -2, -1]
+			},
+			{ type: "empower-tiles", selection: -1 },
+		]
 	},
 	//Dumps all your energy to raise your next move's power
 	"Power-Up Punch": {
@@ -5214,6 +5262,54 @@ const pokemonMoveData = {
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" }
 		],
+	},
+	//Swaps your most full energy with your opponent's
+	"Switcheroo": {
+		name: "Switcheroo",
+		type: "Dark",
+		category: "Status",
+		strategy: "special",
+		tags: [],
+		pp: 10,
+		power: null,
+		accuracy: 100,
+		rechargeTurns: 5,
+		energy: {
+			blue: 4,
+			orange: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Switcheroo.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+
+			{ type: "load-value", value: 1 },
+			{ type: "select-energy-colors", search: "most-full", target: "opponent", count: -1 },
+			{ type: "get-energy-values", target: "opponent", colors: -1 },
+			{ type: "save-variable", name: "opponent-energy", save: -1 },
+			{ type: "load-value", value: -1 },
+			{ type: "multiply-energy", amounts: -2, scale: -1 },
+			{ type: "gain-energy", amounts: -1, target: "opponent" },
+
+			{ type: "load-value", value: 1 },
+			{ type: "select-energy-colors", search: "most-full", target: "user", count: -1 },
+			{ type: "get-energy-values", target: "user", colors: -1 },
+			{ type: "save-variable", name: "user-energy", save: -1 },
+			{ type: "load-value", value: -1 },
+			{ type: "multiply-energy", amounts: -2, scale: -1 },
+			{ type: "gain-energy", amounts: -1, target: "user" },
+			{ type: "log-value", value: -1 },
+			
+			{ type: "load-variable", name: "opponent-energy" },
+			{ type: "gain-energy", amounts: -1, target: "user" },
+			{ type: "load-variable", name: "user-energy" },
+			{ type: "gain-energy", amounts: -1, target: "opponent" },
+
+			// { type: "load-value", value: 2 },
+			// { type: "choose-tiles", count: -1, target: "user" },
+			// { type: "swap-tiles", selection: -1 },
+		]
 	},
 	//Raises your attack 2
 	"Swords Dance": {

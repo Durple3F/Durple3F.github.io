@@ -15,10 +15,6 @@
 
 	"toggle-everstone": "Prevent this Pokémon from evolving?",
 	"evolve-select-evolution": "What would you like %c% to evolve into?",
-	"pokemon-evolve-requirement-level": "This Pokémon needs to be at least level %c% to evolve into %c-pname%.",
-	"pokemon-evolve-requirement-friendship": "This Pokémon needs to have at least %c% friendship to evolve into %c-pname%.",
-	"pokemon-evolve-requirement-five-match-yellow": "Match at least %c% five-in-a-row or better of Electric tiles while this Pokémon is active for it to evolve into %c-pname%",
-	"pokemon-evolve-requirement-five-match-purple": "Match at least %c% five-in-a-row or better of Psychic tiles while this Pokémon is active for it to evolve into %c-pname%",
 
 	"ask-to-rename-pokemon": "What would you like to name your %c%?",
 	"error-cant-remove-last-pokemon": "You can't put your only Pokémon into the PC.",
@@ -983,6 +979,9 @@
 		"Growlithe": {
 			"name": "Growlithe"
 		},
+		"Arcanine": {
+			"name": "Arcanine"
+		},
 		"Abra": {
 			"name": "Abra"
 		},
@@ -1645,6 +1644,11 @@
 			"description": "Damage-dealing move with no special effects. Ends the turn.",
 			"shortDescription": "Deals light damage"
 		},
+		"Power Gem": {
+			"name": "Power Gem",
+			"description": "Deals damage. Then, a circle of tiles near the center of the board are empowered. Empowered tiles are worth twice their usual energy values, and provide unique effects based on what color was matched.",
+			"shortDescription": "Sacrifices energy for the next attack"
+		},
 		"Power-Up Punch": {
 			"name": "Power-Up Punch",
 			"description": "Deals damage. Then, raises the user's Attack by a stage and removes all energy from the user. The next move that the user uses gains additional power equal to the amount of energy removed.",
@@ -1881,6 +1885,11 @@
 			"name": "Swift",
 			"description": "Deals damage. This move can be used more than once during a turn.",
 			"shortDescription": "Multi-use attack"
+		},
+		"Switcheroo": {
+			"name": "Switcheroo",
+			"description": "Both the user and opponent lose all energy that's currently in their most full energy color. That much of those colors of energy are given to each Pokémon's opponent.",
+			"shortDescription": "Exchange energy with the opponent"
 		},
 		"Swords Dance": {
 			"name": "Swords Dance",
@@ -2676,6 +2685,16 @@
 		"Route 3": {
 			"name": "Route 3"
 		}
+	},
+	"evolution-requirements": {
+		"level": "This Pokémon needs to be at least level %c% to evolve into %c-pname%.",
+		"friendship": "This Pokémon needs to have at least %c% friendship to evolve into %c-pname%.",
+		"five-match-red": "Match at least %c% five-in-a-row or better of Fire tiles while this Pokémon is active for it to evolve into %c-pname%",
+		"five-match-orange": "Match at least %c% five-in-a-row or better of Fighting tiles while this Pokémon is active for it to evolve into %c-pname%",
+		"five-match-yellow": "Match at least %c% five-in-a-row or better of Electric tiles while this Pokémon is active for it to evolve into %c-pname%",
+		"five-match-green": "Match at least %c% five-in-a-row or better of Grass tiles while this Pokémon is active for it to evolve into %c-pname%",
+		"five-match-blue": "Match at least %c% five-in-a-row or better of Water tiles while this Pokémon is active for it to evolve into %c-pname%",
+		"five-match-purple": "Match at least %c% five-in-a-row or better of Psychic tiles while this Pokémon is active for it to evolve into %c-pname%"
 	},
 	"stats": {
 		"weight": "Weight",

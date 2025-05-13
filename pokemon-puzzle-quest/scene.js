@@ -1737,6 +1737,7 @@ function viewPokemonInfo(pokemon, options = {}) {
 
 			section.popover({
 				content: getReasonPokemonDoesntMeetEvolutionRequirements(pokemon, evolveData),
+				placement: "top",
 				trigger: "hover"
 			})
 		})

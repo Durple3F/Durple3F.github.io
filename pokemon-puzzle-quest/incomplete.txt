@@ -10,9 +10,10 @@ Incomplete move lists:
 	Diglett-Alola (lv 20)
 	Dugtrio-Alola (lv 0)
 	Meowth-Alola (lv 32)
-	Persian-Alola (lv 0)
+	Persian-Alola (lv 36)
 	Mankey (lv 26)
 	Growlithe (lv 20)
+	Arcanine (lv 0)
 	Slowpoke (lv 21)
 	Magnemite (lv 20)
 	Grimer-Alola (lv 21)
@@ -54,7 +55,6 @@ Missing Evolutions:
 	Golbat
 	Mankey
 	Abra
-	Growlithe
 	Slowpoke
 	Magnemite
 	Grimer-Alola

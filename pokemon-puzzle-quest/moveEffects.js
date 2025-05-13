@@ -783,7 +783,6 @@ const pokemonMoveEffects = {
 			for (let color of colors) {
 				result[color] = target.energy[color] ?? 0
 			}
-			console.log(result)
 			resolve(result)
 		}
 	},

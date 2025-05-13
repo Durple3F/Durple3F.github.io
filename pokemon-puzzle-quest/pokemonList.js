@@ -1034,6 +1034,9 @@ const pokemonData = {
 			red: 3,
 			yellow: 3
 		},
+		evolutions: [
+			{ name: "Arcanine", unlock: { type: "fiveMatchRed", amount: 1 } }
+		],
 		learnset: [
 			{ name: "Ember", unlock: { type: "level", amount: 1 } },
 			{ name: "Leer", unlock: { type: "level", amount: 1 } },
@@ -1042,6 +1045,67 @@ const pokemonData = {
 			{ name: "Flame Wheel", unlock: { type: "level", amount: 12 } },
 			{ name: "Helping Hand", unlock: { type: "level", amount: 16 } },
 			{ name: "Agility", unlock: { type: "level", amount: 20 } },
+		]
+	},
+	"Arcanine": {
+		name: "Arcanine",
+		number: "59",
+		weight: {
+			pounds: 341.7,
+			kilograms: 155.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0059Arcanine.png",
+			"largeShiny": "src/img/shiny-pokemon/059-Arcanine.png",
+			"home": "src/img/tiny-pokemon/Arcanine.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/arcanine.mp3"
+		},
+		types: ["Fire"],
+		tags: [],
+		abilities: ["Intimidate", "Flash Fire"],
+		hiddenAbilities: ["Justified"],
+		stats: {
+			hp: 90,
+			attack: 110,
+			defense: 80,
+			specialAttack: 100,
+			specialDefense: 80,
+			speed: 95
+		},
+		expYield: 194,
+		evYield: {
+			hp: 0,
+			attack: 2,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			red: 3,
+			yellow: 3
+		},
+		learnset: [
+			{ name: "Flame Wheel", unlock: { type: "level", amount: 1 } },
+			{ name: "Helping Hand", unlock: { type: "level", amount: 1 } },
+			{ name: "Agility", unlock: { type: "level", amount: 1 } },
+			{ name: "Fire Fang", unlock: { type: "level", amount: 1 } },
+			// { name: "Retaliate", unlock: { type: "level", amount: 1 } },
+			{ name: "Crunch", unlock: { type: "level", amount: 1 } },
+			{ name: "Take Down", unlock: { type: "level", amount: 1 } },
+			{ name: "Roar", unlock: { type: "level", amount: 1 } },
+			// { name: "Play Rough", unlock: { type: "level", amount: 1 } },
+			// { name: "Reversal", unlock: { type: "level", amount: 1 } },
+			// { name: "Flare Blitz", unlock: { type: "level", amount: 1 } },
+			{ name: "Ember", unlock: { type: "level", amount: 1 } },
+			{ name: "Leer", unlock: { type: "level", amount: 1 } },
+			{ name: "Howl", unlock: { type: "level", amount: 1 } },
+			{ name: "Bite", unlock: { type: "level", amount: 1 } },
+			// { name: "Extreme Speed", unlock: { type: "level", amount: 1 } }, //note: should be learned on evolution
+			// { name: "Flamethrower", unlock: { type: "level", amount: 5 } },
 		]
 	},
 	"Abra": {
@@ -2527,7 +2591,7 @@ const pokemonData = {
 			{ name: "Sing", unlock: { type: "level", amount: 18 } },
 			{ name: "Bubble Beam", unlock: { type: "level", amount: 21 } },
 			{ name: "Encore", unlock: { type: "level", amount: 24 } },
-			{ name: "Night Slash", unlock: { type: "level", amount: 1 } },
+			{ name: "Power Gem", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {
@@ -3345,6 +3409,17 @@ for (let name in pokemonData) {
 	}
 	if (!pokemon.weight){
 		console.warn(pokemon, "is missing a weight")
+	}
+	if (!pokemon.relevantTriggers){
+		pokemon.relevantTriggers = []
+	}
+	if (pokemon.evolutions.length){
+		pokemon.evolutions.forEach(evolveData => {
+			let type = evolveData.unlock.type
+			if (!pokemon.relevantTriggers.includes(type) && evolutionActiveTriggers.includes(type)){
+				pokemon.relevantTriggers.push(type)
+			}
+		})
 	}
 
 	//Make sure all dex numbers are 4 digits long.
