@@ -438,6 +438,14 @@ function checkIfPokemonMeetsRequirements(pokemon, req){
 		//This is the type for when a move may only be learned by a pre-evolved version of that pokemon.
 		return false
 	}
+	if (req.type === "fiveMatchYellow"){
+		let amt = req.amount
+		return pokemon.evolutionTriggerData["fiveMatchYellow"] >= amt
+	}
+	if (req.type === "fiveMatchPurple"){
+		let amt = req.amount
+		return pokemon.evolutionTriggerData["fiveMatchPurple"] >= amt
+	}
 	if (req.type === "never" || req.type === "hidden"){
 		return false
 	}
@@ -470,6 +478,29 @@ function getReasonPokemonDoesntMeetRequirements(pokemon, move, options={}){
 	}
 	console.warn("You never handled this", req)
 	return "I don't know why they can't use this move. *shrug*"
+}
+function getReasonPokemonDoesntMeetEvolutionRequirements(pokemon, evolveData, options={}){
+	let pure = options.pure ?? false
+	let req = evolveData.unlock
+	let evolveName = evolveData.name
+	if (!req) return "This evolution doesn't require anything. Why can't you use it? Man, Boo sucks at programming."
+	if (req.type === "level"){
+		let text = getLocaleString("pokemon-evolve-requirement-level", lang)
+		text = applyReplacements(text, [req.amount, evolveName])
+		return text
+	}
+	if (req.type === "fiveMatchYellow"){
+		let text = getLocaleString("pokemon-evolve-requirement-five-match-yellow", lang)
+		text = applyReplacements(text, [req.amount, evolveName])
+		return text
+	}
+	if (req.type === "fiveMatchPurple"){
+		let text = getLocaleString("pokemon-evolve-requirement-five-match-purple", lang)
+		text = applyReplacements(text, [req.amount, evolveName])
+		return text
+	}
+	console.warn("You never handled this", req)
+	return "I don't know why they can't evolve. *shrug*"
 }
 
 function getEffectParams(effect, effectIndex, moveUseObj){

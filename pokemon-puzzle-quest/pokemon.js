@@ -121,6 +121,8 @@ class Pokemon{
 
 		this.gameRoundData = {}
 		this.friendship = options?.friendship ?? 0
+		this.everstoneActive = options?.everstoneActive ?? false
+		this.evolutionTriggerData = options?.evolutionTriggerData ?? {}
 		this.statusEffects = []
 
 		//You can only have 4 moves active at once
@@ -834,6 +836,7 @@ class Pokemon{
 			let move = oldMoves[i]
 			this.unlockMove(move.name)
 		})
+		this.activeMoves.forEach(move => this.removeActiveMove(move))
 		oldActive.forEach(move => this.addActiveMove(move))
 		let unlocks = this.determineUnlockedMoves()
 		let changes = this.unlockMoves(unlocks)

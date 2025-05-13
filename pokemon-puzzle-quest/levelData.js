@@ -1411,10 +1411,10 @@ const levelData = [
 		trainers: [
 			{
 				isWild: true,
-				targetPokemon: 4,
+				targetPokemon: 1,
 				canPickDuplicates: true,
 				possiblePokemon: [
-					{ id: "Roggenrola", levelMin: 25, levelMax: 25, weight: 4, activeMoves: ["Thunder Wave"] },
+					{ id: "Spearow", levelMin: 5, levelMax: 5, weight: 4 } //, activeMoves: ["Thunder Wave"] },
 				]
 			},
 			{

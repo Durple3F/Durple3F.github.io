@@ -1678,6 +1678,56 @@ function viewPokemonInfo(pokemon, options = {}) {
 	}
 	content.append(moveSection)
 
+	let data = pokemon.data
+	//EVOLUTIONS
+	if ((options.pc || options.dex) && data.evolutions.length){
+		let info = $(`<div class='info evolution-info'>`)
+		sections.append(info)
+		info.hide()
+		let tab = $(`<li class='nav-item' data-target-class='evolution-info'>
+			<a class="nav-link" href="#">Evolution</a>
+		</li>`)
+		tabs.append(tab)
+		
+		let everstoneSection = $("<div class='text-center m-3'>")
+		info.append(everstoneSection)
+		let everstoneToggle = $(`<input class="form-check-input" type="checkbox" value="" id="everstone-toggle">`)
+		everstoneToggle.prop("checked", pokemon.everstoneActive)
+		everstoneToggle.change(() => {
+			let checked = everstoneToggle.prop("checked")
+			pokemon.everstoneActive = checked
+		})
+		everstoneSection.append(everstoneToggle)
+		let everstoneText = getLocaleString("toggle-everstone", lang)
+		everstoneSection.append(`<label class='form-check-label' for="everstone-toggle">
+			<img src='src/img/Dream_Everstone_Sprite.png' style="height: 2em;">
+			${everstoneText}
+		</label>`)
+
+		let evolutions = data.evolutions
+		let evolutionsSection = $("<div class='pc-evolutions-display m-1'>")
+		info.append(evolutionsSection)
+		evolutions.forEach(evolveData => {
+			let name = evolveData.name
+			let pData = pokemonData[name]
+			let section = $("<div class='pc-evolution-item'>")
+			evolutionsSection.append(section)
+			let displayName = getLocaleString("name", lang, ["pokemon", name])
+			section.append(`<div class='pc-evolution-item-name'>
+				${displayName}
+			</div>`)
+			let img = $(`<div class='pc-evolution-item-img'>
+				<img src="${pData.imageSources.large}">
+			</div>`)
+			section.append(img)
+
+			section.popover({
+				content: getReasonPokemonDoesntMeetEvolutionRequirements(pokemon, evolveData),
+				trigger: "hover"
+			})
+		})
+	}
+
 	//LOCATIONS
 	if (options.dex) {
 		let info = $(`<div class='info location-info'>`)

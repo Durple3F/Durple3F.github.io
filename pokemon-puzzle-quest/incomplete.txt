@@ -1,9 +1,10 @@
 Incomplete move lists:
 	Butterfree (lv 20)
-	Rattata-Alola (lv 22)
-	Raticate-Alola (lv 24)
-	Spearow (lv 22)
-	Pikachu (lv 20)
+	Rattata-Alola (lv 28)
+	Raticate-Alola (lv 34)
+	Pikachu (lv 24)
+	Raichu (lv 0)
+	Raichu-Alola (lv 0)
 	Zubat (lv 20)
 	Diglett-Alola (lv 20)
 	Meowth-Alola (lv 29)
@@ -44,10 +45,9 @@ Incomplete move lists:
 	Stufful (lv 20)
 	Comfey (lv 21)
 	Passimian (lv 20)
-	Komala (lv 0)
+	Komala (lv 31)
 
 Missing Evolutions:
-	Spearow
 	Pikachu
 	Zubat
 	Diglet-Alola

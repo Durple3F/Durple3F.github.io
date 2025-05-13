@@ -1951,6 +1951,45 @@ body {
 	color: black;
 }
 
+#modal .pc-evolutions-display {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	flex-wrap: wrap;
+	align-items: center;
+}
+#modal .pc-evolutions-display .pc-evolution-item {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	border-radius: 1em;
+	height: 20em;
+	width: 20em;
+	padding: 1em;
+	transition: background-color 0.3s;
+}
+#modal .pc-evolutions-display .pc-evolution-item:hover {
+	background-color: #33333388;
+}
+#modal .pc-evolutions-display .pc-evolution-item.active {
+	background-color: #666666aa;
+}
+#modal .pc-evolutions-display .pc-evolution-item-name {
+	flex-grow: 0;
+}
+#modal .pc-evolutions-display .pc-evolution-item-img {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-grow: 1;
+	height: 90%;
+}
+#modal .pc-evolutions-display .pc-evolution-item-img img {
+	height: 100%;
+	display: block;
+}
+
 .evolution-container {
 	position: relative;
 }

@@ -224,6 +224,8 @@ const pokemonData = {
 			{ name: "Hyper Fang", unlock: { type: "level", amount: 16 } },
 			{ name: "Assurance", unlock: { type: "level", amount: 19 } },
 			{ name: "Crunch", unlock: { type: "level", amount: 22 } },
+			{ name: "Sucker Punch", unlock: { type: "level", amount: 25 } },
+			{ name: "Super Fang", unlock: { type: "level", amount: 28 } },
 		]
 	},
 	"Raticate-Alola": {
@@ -281,6 +283,8 @@ const pokemonData = {
 			{ name: "Hyper Fang", unlock: { type: "level", amount: 16 } },
 			{ name: "Assurance", unlock: { type: "level", amount: 19 } },
 			{ name: "Crunch", unlock: { type: "level", amount: 24 } },
+			{ name: "Sucker Punch", unlock: { type: "level", amount: 29 } },
+			{ name: "Super Fang", unlock: { type: "level", amount: 34 } },
 		]
 	},
 	"Spearow": {
@@ -321,9 +325,12 @@ const pokemonData = {
 			speed: 1
 		},
 		energyMastery: {
-			yellow: 5,
-			orange: 2
+			yellow: 4,
+			blue: 2
 		},
+		evolutions: [
+			{ name: "Fearow", unlock: { type: "level", amount: 20 } }
+		],
 		learnset: [
 			{ name: "Peck", unlock: { type: "level", amount: 1 } },
 			{ name: "Growl", unlock: { type: "level", amount: 1 } },
@@ -333,6 +340,69 @@ const pokemonData = {
 			{ name: "Aerial Ace", unlock: { type: "level", amount: 15 } },
 			{ name: "Wing Attack", unlock: { type: "level", amount: 18 } },
 			{ name: "Take Down", unlock: { type: "level", amount: 22 } },
+			{ name: "Agility", unlock: { type: "level", amount: 25 } },
+			{ name: "Focus Energy", unlock: { type: "level", amount: 29 } },
+			{ name: "Roost", unlock: { type: "level", amount: 32 } },
+			{ name: "Drill Peck", unlock: { type: "level", amount: 36 } },
+		]
+	},
+	"Fearow": {
+		name: "Fearow",
+		number: "22",
+		weight: {
+			pounds: 83.8,
+			kilograms: 38.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0022Fearow.png",
+			"largeShiny": "src/img/shiny-pokemon/022-Fearow.png",
+			"home": "src/img/tiny-pokemon/Fearow.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/fearow.mp3"
+		},
+		types: ["Normal", "Flying"],
+		tags: [],
+		abilities: ["Keen Eye"],
+		hiddenAbilities: ["Sniper"],
+		stats: {
+			hp: 65,
+			attack: 90,
+			defense: 65,
+			specialAttack: 61,
+			specialDefense: 61,
+			speed: 100
+		},
+		expYield: 155,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 2
+		},
+		energyMastery: {
+			yellow: 5,
+			blue: 2,
+			orange: 2
+		},
+		learnset: [
+			{ name: "Drill Run", unlock: { type: "level", amount: 1 } },
+			{ name: "Pluck", unlock: { type: "level", amount: 1 } },
+			{ name: "Peck", unlock: { type: "level", amount: 1 } },
+			{ name: "Growl", unlock: { type: "level", amount: 1 } },
+			{ name: "Leer", unlock: { type: "level", amount: 1 } },
+			{ name: "Assurance", unlock: { type: "level", amount: 8 } },
+			{ name: "Fury Attack", unlock: { type: "level", amount: 11 } },
+			{ name: "Aerial Ace", unlock: { type: "level", amount: 15 } },
+			{ name: "Wing Attack", unlock: { type: "level", amount: 18 } },
+			{ name: "Take Down", unlock: { type: "level", amount: 23 } },
+			{ name: "Agility", unlock: { type: "level", amount: 27 } },
+			{ name: "Focus Energy", unlock: { type: "level", amount: 32 } },
+			{ name: "Roost", unlock: { type: "level", amount: 36 } },
+			{ name: "Drill Peck", unlock: { type: "level", amount: 41 } },
 		]
 	},
 	"Pikachu": {
@@ -373,10 +443,14 @@ const pokemonData = {
 			speed: 2
 		},
 		energyMastery: {
-			yellow: 5,
-			orange: 3,
-			purple: 2
+			yellow: 3,
+			orange: 2,
+			purple: 1
 		},
+		evolutions: [
+			{ name: "Raichu", unlock: { type: "fiveMatchYellow", amount: 1 } },
+			{ name: "Raichu-Alola", unlock: { type: "fiveMatchPurple", amount: 1 } },
+		],
 		learnset: [
 			{ name: "Play Nice", unlock: { type: "level", amount: 1 } },
 			{ name: "Sweet Kiss", unlock: { type: "level", amount: 1 } },
@@ -392,6 +466,145 @@ const pokemonData = {
 			{ name: "Electro Ball", unlock: { type: "level", amount: 12 } },
 			{ name: "Feint", unlock: { type: "level", amount: 16 } },
 			{ name: "Spark", unlock: { type: "level", amount: 20 } },
+			{ name: "Agility", unlock: { type: "level", amount: 24 } },
+			// { name: "Iron Tail", unlock: { type: "level", amount: 28 } },
+			// { name: "Discharge", unlock: { type: "level", amount: 32 } },
+			// { name: "Thunderbolt", unlock: { type: "level", amount: 36 } },
+			{ name: "Light Screen", unlock: { type: "level", amount: 40 } },
+			// { name: "Thunder", unlock: { type: "level", amount: 44 } },
+		]
+	},
+	"Raichu": {
+		name: "Raichu",
+		number: "26",
+		weight: {
+			pounds: 66.1,
+			kilograms: 30.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0026Raichu.png",
+			"largeShiny": "src/img/shiny-pokemon/026-Raichu.png",
+			"home": "src/img/tiny-pokemon/Raichu.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/raichu.mp3"
+		},
+		types: ["Electric"],
+		tags: [],
+		abilities: ["Static"],
+		hiddenAbilities: ["Lightning Rod"],
+		stats: {
+			hp: 60,
+			attack: 90,
+			defense: 55,
+			specialAttack: 90,
+			specialDefense: 80,
+			speed: 110
+		},
+		expYield: 218,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 3
+		},
+		energyMastery: {
+			yellow: 4,
+			orange: 3,
+			purple: 2
+		},
+		learnset: [
+			{ name: "Play Nice", unlock: { type: "level", amount: 1 } },
+			{ name: "Sweet Kiss", unlock: { type: "level", amount: 1 } },
+			{ name: "Nuzzle", unlock: { type: "level", amount: 1 } },
+			{ name: "Nasty Plot", unlock: { type: "level", amount: 1 } },
+			{ name: "Charm", unlock: { type: "level", amount: 1 } },
+			{ name: "Thunder Wave", unlock: { type: "level", amount: 1 } },
+			{ name: "Double Team", unlock: { type: "level", amount: 1 } },
+			{ name: "Electro Ball", unlock: { type: "level", amount: 1 } },
+			{ name: "Feint", unlock: { type: "level", amount: 1 } },
+			{ name: "Spark", unlock: { type: "level", amount: 1 } },
+			{ name: "Agility", unlock: { type: "level", amount: 1 } },
+			// { name: "Iron Tail", unlock: { type: "level", amount: 1 } },
+			// { name: "Discharge", unlock: { type: "level", amount: 1 } },
+			{ name: "Light Screen", unlock: { type: "level", amount: 1 } },
+			// { name: "Thunder", unlock: { type: "level", amount: 1 } },
+			{ name: "Thunder Shock", unlock: { type: "level", amount: 1 } },
+			{ name: "Tail Whip", unlock: { type: "level", amount: 1 } },
+			{ name: "Growl", unlock: { type: "level", amount: 1 } },
+			{ name: "Quick Attack", unlock: { type: "level", amount: 1 } },
+			// { name: "Thunder Punch", unlock: { type: "level", amount: 1 } }, //note: learned on evolution
+			// { name: "Thunderbolt", unlock: { type: "level", amount: 5 } },
+		]
+	},
+	"Raichu-Alola": {
+		name: "Raichu",
+		id: "Raichu-Alola",
+		number: "26a",
+		weight: {
+			pounds: 46.3,
+			kilograms: 21.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0026Raichu-Alola.png",
+			"largeShiny": "src/img/shiny-pokemon/026-Raichu-Alola.png",
+			"home": "src/img/tiny-pokemon/Raichu-Alola.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/raichu.mp3"
+		},
+		types: ["Electric", "Psychic"],
+		tags: [],
+		abilities: ["Surge Surfer"],
+		hiddenAbilities: [],
+		stats: {
+			hp: 60,
+			attack: 85,
+			defense: 55,
+			specialAttack: 95,
+			specialDefense: 85,
+			speed: 110
+		},
+		expYield: 218,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 3
+		},
+		energyMastery: {
+			yellow: 4,
+			orange: 2,
+			purple: 3
+		},
+		learnset: [
+			{ name: "Play Nice", unlock: { type: "level", amount: 1 } },
+			{ name: "Sweet Kiss", unlock: { type: "level", amount: 1 } },
+			{ name: "Nuzzle", unlock: { type: "level", amount: 1 } },
+			{ name: "Nasty Plot", unlock: { type: "level", amount: 1 } },
+			{ name: "Charm", unlock: { type: "level", amount: 1 } },
+			{ name: "Thunder Wave", unlock: { type: "level", amount: 1 } },
+			{ name: "Double Team", unlock: { type: "level", amount: 1 } },
+			{ name: "Electro Ball", unlock: { type: "level", amount: 1 } },
+			{ name: "Feint", unlock: { type: "level", amount: 1 } },
+			{ name: "Spark", unlock: { type: "level", amount: 1 } },
+			{ name: "Agility", unlock: { type: "level", amount: 1 } },
+			// { name: "Iron Tail", unlock: { type: "level", amount: 1 } },
+			// { name: "Discharge", unlock: { type: "level", amount: 1 } },
+			{ name: "Light Screen", unlock: { type: "level", amount: 1 } },
+			// { name: "Thunder", unlock: { type: "level", amount: 1 } },
+			{ name: "Thunder Shock", unlock: { type: "level", amount: 1 } },
+			{ name: "Tail Whip", unlock: { type: "level", amount: 1 } },
+			{ name: "Growl", unlock: { type: "level", amount: 1 } },
+			{ name: "Quick Attack", unlock: { type: "level", amount: 1 } },
+			// { name: "Psychic", unlock: { type: "level", amount: 1 } }, //note: learned on evolution
+			// { name: "Thunderbolt", unlock: { type: "level", amount: 5 } },
 		]
 	},
 	"Zubat": {
@@ -1109,8 +1322,8 @@ const pokemonData = {
 			speed: 1
 		},
 		energyMastery: {
-			yellow: 4,
-			orange: 2
+			yellow: 3,
+			orange: 1
 		},
 		evolutions: [
 			{
@@ -2139,8 +2352,7 @@ const pokemonData = {
 			{ name: "Sing", unlock: { type: "level", amount: 18 } },
 			{ name: "Bubble Beam", unlock: { type: "level", amount: 21 } },
 			{ name: "Encore", unlock: { type: "level", amount: 24 } },
-			{ name: "Stockpile", unlock: { type: "level", amount: 1 } },
-			{ name: "Rapid Spin", unlock: { type: "level", amount: 1 } },
+			{ name: "Drill Run", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {

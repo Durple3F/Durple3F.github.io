@@ -1,7 +1,12 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-5/12 (31.5k lines):
-	- Added Vine Whip, Rollout, Stockpile, Spit Up, Swallow, Rapid Spin, Slam
+5/12 (32.0k lines):
+	- Added Vine Whip, Rollout, Stockpile, Spit Up, Swallow, Rapid Spin, Slam, Drill Run
+	- Added Fearow, Raichu, Alolan Raichu
+	- Added some new requirements to how certain pokemon evolve. You'll never guess which
+	- Added a system to allow you to disable a certain pokemon being checked for evolvability
+	- Added a new screen to the pc window
+	- If a pokemon may evolve into multiple different pokemon at the same time, you may choose which one it evolves into
 
 5/11 (31.0k lines):
 	- Added Fire Fang, Sing, Icy Wind, Encore, Feather Dance, Sweet Scent, Draining Kiss, Endure, Strength

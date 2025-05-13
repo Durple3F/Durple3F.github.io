@@ -4,6 +4,7 @@ HOPEFULLY fixed
 - Music plays twice sometimes
 - Opponents don't care about cooldowns
 - Sometimes clicking play level doesn't work
+- Sometimes the opponent swaps tiles and the animation looks like it goes offscreen???
 - Sometimes cries play twice
   - Maybe due to end of turn start of turn?
 
@@ -14,6 +15,7 @@ TODO
 - Give Curse a special cost depending on whether the user is Ghost type
 - Make Harden's cooldown increase with each use.
 - Add an animation when a shiny pokemon enters
+- Add some kind of filter/search/pages to the pokedex
 - Add a section in the pokedex where you can see how many you've caught/seen/etc
 - Pokedex entries
 - For some reason the loading bar at the beginning gets big long why does it do that why do they always do this to me

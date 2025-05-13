@@ -1393,6 +1393,36 @@ const pokemonMoveData = {
 			}
 		]
 	},
+	//Deals bonus damage based on speed stage
+	"Drill Run": {
+		name: "Drill Run",
+		type: "Ground",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 10,
+		power: 80,
+		accuracy: 95,
+		rechargeTurns: 1,
+		energy: {
+			orange: 4,
+			yellow: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Drill Run.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-stat-stage", target: "user", which: "speed" },
+			{ type: "load-value", value: 0 },
+			{ type: "max" },
+			{ type: "load-value", value: 0.1 },
+			{ type: "multiply-numbers" },
+			{ type: "load-value", value: 1 },
+			{ type: "add-numbers" },
+			{ type: "damage", multiplicativePower: -1 },
+		],
+	},
 	//Temporarily reduces its own cost
 	"Echoed Voice": {
 		name: "Echoed Voice",

@@ -300,6 +300,11 @@ const pokemonMoveEffects = {
 				damageOptions.additionalPower = damageOptions.additionalPower ?? 0
 				damageOptions.additionalPower += additivePower
 			}
+			if ("multiplicativePower" in effect) {
+				let multiplicativePower = params.multiplicativePower
+				damageOptions.multiplicativePower = damageOptions.additionalPower ?? 1
+				damageOptions.multiplicativePower *= multiplicativePower
+			}
 			if ("damageMult" in effect){
 				damageOptions.damageMult = damageOptions.damageMult ?? 1
 				damageOptions.damageMult *= effect.damageMult
@@ -410,10 +415,25 @@ const pokemonMoveEffects = {
 	},
 	"get-stat": {
 		update: false,
+		hasTarget: true,
+		targetType: "pokemon",
+		targetDefault: "user",
 		execute: (resolve, effect, params, game, options) => {
 			let target = options.target
 			let statName = effect.which ?? "attack"
 			let result = target.getStat(statName)
+			resolve(result)
+		}
+	},
+	"get-stat-stage": {
+		update: false,
+		hasTarget: true,
+		targetType: "pokemon",
+		targetDefault: "user",
+		execute: (resolve, effect, params, game, options) => {
+			let target = options.target
+			let statName = effect.which ?? "attack"
+			let result = target.getStatStage(statName)
 			resolve(result)
 		}
 	},

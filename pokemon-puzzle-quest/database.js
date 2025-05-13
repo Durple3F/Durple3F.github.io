@@ -206,6 +206,8 @@ function getPokemonSaveObj(pokemon){
 	obj.nature = pokemon.nature
 	obj.isShiny = pokemon.isShiny
 	obj.friendship = pokemon.friendship
+	obj.everstoneActive = pokemon.everstoneActive
+	obj.evolutionTriggerData = pokemon.evolutionTriggerData
 	obj.form = pokemon.form
 	obj.activeSlot = playerActivePokemon.indexOf(pokemon)
 	obj.activeMoves = pokemon.activeMoves.map(move => move.name)

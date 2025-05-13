@@ -10,8 +10,14 @@
 	"new-moves-message-plural": "%c% learned new moves!",
 	"new-moves-message-single": "%c% learned a new move!",
 
-	"pokemon-move-requirement-level": "Your Pokémon needs to be at least level %c% to use this move.",
-	"pokemon-move-requirement-level-error": "Your Pokémon needs to be at least... wait, they're high enough level. Huh????",
+	"pokemon-move-requirement-level": "This Pokémon needs to be at least level %c% to use this move.",
+	"pokemon-move-requirement-level-error": "This Pokémon needs to be at least... wait, they're high enough level. Huh????",
+
+	"toggle-everstone": "Prevent this Pokémon from evolving?",
+	"evolve-select-evolution": "What would you like %c% to evolve into?",
+	"pokemon-evolve-requirement-level": "This Pokémon needs to be at least level %c% to evolve into %c-pname%.",
+	"pokemon-evolve-requirement-five-match-yellow": "Match at least %c% five-in-a-row or better of Electric tiles while this Pokémon is active for it to evolve into %c-pname%",
+	"pokemon-evolve-requirement-five-match-purple": "Match at least %c% five-in-a-row or better of Psychic tiles while this Pokémon is active for it to evolve into %c-pname%",
 
 	"ask-to-rename-pokemon": "What would you like to name your %c%?",
 	"error-cant-remove-last-pokemon": "You can't put your only Pokémon into the PC.",
@@ -940,8 +946,17 @@
 		"Spearow": {
 			"name": "Spearow"
 		},
+		"Fearow": {
+			"name": "Fearow"
+		},
 		"Pikachu": {
 			"name": "Pikachu"
+		},
+		"Raichu": {
+			"name": "Raichu"
+		},
+		"Raichu-Alola": {
+			"name": "Raichu"
 		},
 		"Zubat": {
 			"name": "Zubat"
@@ -1283,6 +1298,11 @@
 			"name": "Drill Peck",
 			"description": "Deals damage. Then a random row of tiles becomes Locked for 10 turns. Other trainers can't swap Locked tiles.",
 			"shortDescription": "Damages and locks a random row"
+		},
+		"Drill Run": {
+			"name": "Drill Run",
+			"description": "Deals damage. This move deals 10% more damage times the number of stages above 0 that the user's Speed stat is at when the move deals damage",
+			"shortDescription": "Damages based on speed stage"
 		},
 		"Echoed Voice": {
 			"name": "Echoed Voice",

@@ -64,6 +64,7 @@ class Round {
 		this.matchesInCombo = []
 		this.statusEffects = []
 
+		this.playerMatches = []
 		this.moveUseHistory = []
 
 		this.promise = new Promise(resolve => {
@@ -537,6 +538,27 @@ class Round {
 		let activePokemon = activeTrainer.activePokemon
 		let otherTrainer = this.trainers[this.inactivePlayerIndex]
 		let otherPokemon = otherTrainer.activePokemon
+
+		if (this.activePlayerIndex === 0){
+			matches.forEach(match => {
+				this.playerMatches.push(match)
+
+				//Pikachu cares about how many yellow 5 matches it sees
+				if (doesMatchMeetCriteria(match, "yellow", 5)){
+					let key = "fiveMatchYellow"
+					let cur = activePokemon.evolutionTriggerData[key] ?? 0
+					cur += 1
+					activePokemon.evolutionTriggerData[key] = cur
+				}
+				//Pikachu cares about how many purple 5 matches it sees
+				if (doesMatchMeetCriteria(match, "purple", 5)){
+					let key = "fiveMatchPurple"
+					let cur = activePokemon.evolutionTriggerData[key] ?? 0
+					cur += 1
+					activePokemon.evolutionTriggerData[key] = cur
+				}
+			})
+		}
 
 		let madeFourMatch = matches.some(match => doesMatchMeetCriteria(match, null, 4))
 		let madeFiveMatch = matches.some(match => doesMatchMeetCriteria(match, null, 5))
@@ -1781,11 +1803,11 @@ class Round {
 			pText.append(`<p>${expText}</p>`)
 		}
 
-		let pokemon = this.trainers[0].pokemon
+		let pokemonList = this.trainers[0].pokemon
 		let body = modal.find(".modal-body")
 		let container = $(`<div class='d-flex flex-wrap justify-content-between container'></div>`)
-		for (let i = 0; i < pokemon.length; i++) {
-			let p = pokemon[i]
+		for (let i = 0; i < pokemonList.length; i++) {
+			let p = pokemonList[i]
 			let box = $(`<div class='col col-6'></div>`)
 			let chooseable = $(`<div class='chooseable m-1'></div>`)
 			let image = p.getImage()
@@ -1809,8 +1831,8 @@ class Round {
 		//The actual "give exp" code
 		let updatedPokemon = []
 		let learnedMoves = []
-		for (let i = 0; i < pokemon.length; i++) {
-			let p = pokemon[i]
+		for (let i = 0; i < pokemonList.length; i++) {
+			let p = pokemonList[i]
 			let gained = 0
 			if (p.uuid in toGive) {
 				gained = toGive[p.uuid].exp
@@ -1884,42 +1906,109 @@ class Round {
 		}
 
 		//Check if any pokemon should evolve
-		let canEvolve = updatedPokemon.filter(p => p.data.evolutions.length)
-		for (let p of canEvolve) {
-			let evolutions = p.data.evolutions
+		let canEvolve = pokemonList.filter(p => {
+			return p.data.evolutions.length && !p.everstoneActive
+		})
+		for (let pokemon of canEvolve) {
+			let evolutions = pokemon.data.evolutions
 			let possibilities = evolutions.filter(evo => {
-				return checkIfPokemonMeetsRequirements(p, evo.unlock)
+				return checkIfPokemonMeetsRequirements(pokemon, evo.unlock)
 			})
 			//TODO if there are multiple options, the player should get to choose
 			if (!possibilities.length) continue
 			let evolution = randomChoice(possibilities)
 			let evolveTo = pokemonData[evolution.name]
+			console.log(possibilities)
+			if (possibilities.length > 1){
+				promise = promise.then(() => new Promise(resolve => {
+					clearModal(modal)
+					modal.addClass("wide")
+					modal.modal("show")
+					let header = modal.find(".modal-header")
+					let message = getLocaleString("evolve-select-evolution", lang)
+					message = applyReplacements(message, [pokemon.name])
+					modal.find(".modal-title").html(`<h6 class='display-6'>${message}</h6>`)
+					let body = modal.find(".modal-body")
+					let btn = $(`<button class='btn btn-primary'>Confirm</button>`)
+					modal.find(".modal-footer").append(btn)
+
+					let chosen = evolution
+					let evolutionsSection = $("<div class='pc-evolutions-display m-1'>")
+					body.append(evolutionsSection)
+
+					possibilities.forEach(evolveData => {
+						let name = evolveData.name
+						let pData = pokemonData[name]
+						let section = $("<div class='pc-evolution-item'>")
+						evolutionsSection.append(section)
+						let displayName = getLocaleString("name", lang, ["pokemon", name])
+						section.append(`<div class='pc-evolution-item-name'>
+							${displayName}
+						</div>`)
+						let img = $(`<div class='pc-evolution-item-img'>
+							<img src="${pData.imageSources.large}">
+						</div>`)
+						section.append(img)
+						section.css("cursor", "pointer")
+
+						section.click(() => {
+							chosen = evolveData
+							evolutionsSection.children().removeClass("active")
+							section.addClass("active")
+						})
+					})
+
+					btn.click(() => {
+						modal.modal("hide")
+					})
+					modal.on("hidden.bs.modal", () => {
+						evolution = chosen
+						resolve()
+					})
+				}))
+			}
+
 			let announcementBox = $("<div class='d-flex text-center flex-column align-items-stretch'></div>")
 			promise = promise.then(() => new Promise(resolve => {
 				clearModal(modal)
 				modal.addClass("wide")
-				let message = `${p.name} is evolving!`
+				let message = `${pokemon.name} is evolving!`
 				modal.find(".modal-title").html(`<h6 class='display-6'>${message}</h6>`)
 				let btn = $(`<button class='btn btn-primary'>Continue</button>`)
 				modal.find(".modal-footer").append(btn)
 
-				let animation = doEvolutionAnimation(body, p, evolution)
+				let animation = doEvolutionAnimation(body, pokemon, evolution)
+				let doShowPokemonInfo = false
+				let notActive = []
 				animation.promise.then(() => {
 					if (animation.skipped) return
 					let newPokemonName = getLocaleString("name", lang, ["pokemon", evolveTo.id])
-					let message = `${p.name} evolved into ${newPokemonName}!`
+					let message = `${pokemon.name} evolved into ${newPokemonName}!`
 					modal.find(".modal-title").html(`<h6 class='display-6'>${message}</h6>`)
 
-					let changes = p.evolve(evolveTo)
+					let changes = pokemon.evolve(evolveTo)
 					for (let moveIndex of changes.unlocked) {
-						let learn = p.data.learnset[moveIndex]
+						let learn = pokemon.data.learnset[moveIndex]
 						let move = pokemonMoveData[learn.name]
 						let moveName = getLocaleString("name", lang, ["moves", move.name])
-						let text = `${p.name} learned ${moveName}!`
+						let text = `${pokemon.name} learned ${moveName}!`
 						createAnnouncement("general", text)
 						let anTag = $("<div></div>")
 						anTag.text(text)
 						announcementBox.append(anTag)
+					}
+
+					let unlockedMoves = changes.unlocked.map(moveIndex => {
+						let learnData = pokemon.data.learnset[moveIndex]
+						let moveId = learnData.name
+						let move = pokemonMoveData[moveId]
+						return move
+					})
+					notActive = unlockedMoves.filter(move => {
+						return pokemon.activeMoves.indexOf(move) === -1
+					})
+					if (notActive.length){
+						doShowPokemonInfo = true
 					}
 				})
 
@@ -1929,7 +2018,20 @@ class Round {
 					modal.modal("hide")
 				})
 				modal.on("hidden.bs.modal", () => {
-					resolve()
+					if (doShowPokemonInfo){
+						let messageKey = notActive.length !== 1 ? "new-moves-message-plural" : "new-moves-message-single"
+						let message = getLocaleString(messageKey, lang)
+						message = applyReplacements(message, [pokemon.name])
+						let options = {
+							message: message,
+							showOnlyActiveMoves: true,
+							highlightedMoves: notActive
+						}
+						viewPokemonInfo(pokemon, options)
+						.then(() => resolve())
+					} else {
+						resolve()
+					}
 					animation.skip()
 				})
 			}))
@@ -2310,6 +2412,9 @@ class Round {
 		power = options.power ?? power
 		if (options.additionalPower !== undefined) {
 			power += options.additionalPower
+		}
+		if (options.multiplicativePower !== undefined) {
+			power *= options.multiplicativePower
 		}
 		category = options.category ?? category
 		damageType = options.type ?? damageType
