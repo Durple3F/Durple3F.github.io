@@ -3281,6 +3281,71 @@ const pokemonMoveData = {
 			{ type: "damage", amount: -1, fixed: true, finalImmunityCheck: true },
 		],
 	},
+	//Converts a diagonal to Dark tiles
+	"Night Slash": {
+		name: "Night Slash",
+		type: "Dark",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing"],
+		pp: 15,
+		power: 70,
+		accuracy: 100,
+		rechargeTurns: 3,
+		energy: {
+			yellow: 5,
+			red: 8
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Night Slash.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "get-side-number", left: 1, right: 2 },
+			{ type: "load-value", value: 1 },
+			{ type: "jump-if-equal", jumpTo: "left"},
+			{ type: "jump", jumpTo: "right"},
+
+			{ type: "get-board-width", label: "left" },
+			{ type: "load-value", value: 0 },
+			{ type: "select-tiles-at", x: -1, y: -1 },
+			{ type: "save-variable", name: "tile1selection", save: -1 },
+			{ type: "get-board-height" },
+			{ type: "load-value", value: -1 },
+			{ type: "add-numbers" },
+			{ type: "get-board-width" },
+			{ type: "load-value", value: -1 },
+			{ type: "add-numbers" },
+			{ type: "select-tiles-at", x: -1, y: -4 },
+			{ type: "save-variable", name: "tile2selection", save: -1 },
+			{ type: "jump", jumpTo: "convert" },
+
+			{ type: "get-board-width", label: "right" },
+			{ type: "load-value", value: -1 },
+			{ type: "add-numbers" },
+			{ type: "load-value", value: 0 },
+			{ type: "select-tiles-at", x: -2, y: -1 },
+			{ type: "save-variable", name: "tile1selection", save: -1 },
+			{ type: "get-board-height" },
+			{ type: "load-value", value: -1 },
+			{ type: "add-numbers" },
+			{ type: "load-value", value: 0 },
+			{ type: "select-tiles-at", x: -1, y: -2 },
+			{ type: "save-variable", name: "tile2selection", save: -1 },
+			{ type: "jump", jumpTo: "convert" },
+
+			{ type: "load-variable", name: "tile1selection", label: "convert" },
+			{ type: "load-variable", name: "tile2selection" },
+			{ type: "combine-selections", selection1: -1, selection2: -2 },
+			{ type: "select-tiles-between", selection: -1 },
+			{ type: "combine-selections", selection1: -1, selection2: -2 },
+			{ type: "change-tile-type", selection: "group", which: -1, targetType: "black" },
+		],
+	},
 	//Paralyzes the opponent
 	"Nuzzle": {
 		name: "Nuzzle",
@@ -4034,7 +4099,7 @@ const pokemonMoveData = {
 			{ type: "remove-tiles", selection: -1 },
 		]
 	},
-	//Converts tiles orthogonally adjacent to random tiles
+	//Converts to orange tiles orthogonally adjacent to random tiles
 	"Rock Tomb": {
 		name: "Rock Tomb",
 		type: "Rock",
@@ -4276,6 +4341,36 @@ const pokemonMoveData = {
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
 			{ type: "end-turn" }
+		],
+	},
+	//Lowers their defense 2
+	"Screech": {
+		name: "Screech",
+		type: "Normal",
+		category: "Status",
+		strategy: "debuff-opponent",
+		tags: ["sound-based"],
+		pp: 40,
+		power: null,
+		accuracy: 85,
+		rechargeTurns: 5,
+		energy: {
+			blue: 3,
+			purple: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Screech.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{
+				type: "apply-debuff", target: "opponent", debuff: {
+					type: "stat",
+					stat: "defense",
+					class: "buff",
+					amount: -2
+				}
+			}
 		],
 	},
 	//Deals damage exactly equal to user's level

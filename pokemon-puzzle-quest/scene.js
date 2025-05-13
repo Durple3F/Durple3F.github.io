@@ -1469,6 +1469,8 @@ function viewPokemonInfo(pokemon, options = {}) {
 	let canSwitchActiveMoves = options.canSwitchActiveMoves ?? true
 	console.log(pokemon, options)
 
+	let data = pokemon.data
+
 	let modal = $("#modal")
 	clearModal(modal)
 	modal.modal("show")
@@ -1593,6 +1595,19 @@ function viewPokemonInfo(pokemon, options = {}) {
 		pure: options.pure
 	})
 	statsSection.append(masteryHTML)
+	//Misc stats like weight, friendship
+	if (true){
+		let weightTag = $(`<div class='stat'>
+			<span class='stat-name'>${getLocaleString("weight", lang, ["stats"])}</span>
+			<span class='stat-val'>${data.weight.kilograms}kg</span>
+		</div>`)
+		statsSection.append(weightTag)
+		let friendshipTag = $(`<div class='stat'>
+			<span class='stat-name'>${getLocaleString("friendship", lang, ["stats"])}</span>
+			<span class='stat-val'>${pokemon.friendship}</span>
+		</div>`)
+		statsSection.append(friendshipTag)
+	}
 
 	const toggleSelect = (move, moveTag) => {
 		let activeIndex = pokemon.activeMoves.indexOf(move)
@@ -1678,7 +1693,6 @@ function viewPokemonInfo(pokemon, options = {}) {
 	}
 	content.append(moveSection)
 
-	let data = pokemon.data
 	//EVOLUTIONS
 	if ((options.pc || options.dex) && data.evolutions.length){
 		let info = $(`<div class='info evolution-info'>`)
@@ -2089,9 +2103,14 @@ function getStatsHTML(pokemon, options = {}) {
 			effectiveVal = val
 		} else {
 			val = pokemon.getStat(stat)
-			effectiveVal = pokemon.getEffectiveStat(stat)
+			if (options.game){
+				effectiveVal = options.game.getEffectiveStat(stat, pokemon.trainer, pokemon)
+			} else {
+				effectiveVal = pokemon.getEffectiveStat(stat)
+			}
 		}
 		let statTag = $("<div class='stat'></div>")
+		stats.append(statTag)
 		statTag.append(`<span class='stat-name'>${statName}</span>`)
 		let statVal = $("<span class='stat-val'></span>")
 
@@ -2109,7 +2128,6 @@ function getStatsHTML(pokemon, options = {}) {
 			statVal.append(effectiveVal.toFixed(0))
 		}
 		statTag.append(statVal)
-		stats.append(statTag)
 	}
 	return stats
 }

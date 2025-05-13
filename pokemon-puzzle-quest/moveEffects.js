@@ -1259,6 +1259,11 @@ const pokemonMoveEffects = {
 			}
 			chosenTiles.forEach(tile => {
 				//TODO I wish this had an animation
+				if (tile.type !== effect.targetType){
+					let copy = new Tile(tile.type, tile.x, tile.y, tile.power)
+					game.board.fakeContents.push(copy)
+					game.board.fadeOut(copy)
+				}
 				tile.type = effect.targetType
 			})
 			moveUseObj.info[effectIndex] = chosenTiles

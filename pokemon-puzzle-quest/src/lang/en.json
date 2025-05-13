@@ -16,6 +16,7 @@
 	"toggle-everstone": "Prevent this Pokémon from evolving?",
 	"evolve-select-evolution": "What would you like %c% to evolve into?",
 	"pokemon-evolve-requirement-level": "This Pokémon needs to be at least level %c% to evolve into %c-pname%.",
+	"pokemon-evolve-requirement-friendship": "This Pokémon needs to have at least %c% friendship to evolve into %c-pname%.",
 	"pokemon-evolve-requirement-five-match-yellow": "Match at least %c% five-in-a-row or better of Electric tiles while this Pokémon is active for it to evolve into %c-pname%",
 	"pokemon-evolve-requirement-five-match-purple": "Match at least %c% five-in-a-row or better of Psychic tiles while this Pokémon is active for it to evolve into %c-pname%",
 
@@ -961,11 +962,20 @@
 		"Zubat": {
 			"name": "Zubat"
 		},
+		"Golbat": {
+			"name": "Golbat"
+		},
 		"Diglett-Alola": {
 			"name": "Diglett"
 		},
+		"Dugtrio-Alola": {
+			"name": "Dugtrio"
+		},
 		"Meowth-Alola": {
 			"name": "Meowth"
+		},
+		"Persian-Alola": {
+			"name": "Persian"
 		},
 		"Mankey": {
 			"name": "Mankey"
@@ -1575,6 +1585,11 @@
 			"description": "Deals damage exactly equal to the user's level.",
 			"shortDescription": "Deals damage equal to level"
 		},
+		"Night Slash": {
+			"name": "Night Slash",
+			"description": "Deals damage. Then, all tiles along the diagonal line from the top of the user's side of the board to the bottom of the other side are converted into Dark tiles. Dark tiles are worth 1 purple energy AND 1 red energy each.",
+			"shortDescription": "Turns a diagonal into Dark tiles"
+		},
 		"Nuzzle": {
 			"name": "Nuzzle",
 			"description": "Deals damage. Applies Paralyzed. When a Paralyzed Pokémon uses a move, the move does nothing, and they lose Paralyzed.",
@@ -1730,6 +1745,11 @@
 			"name": "Scratch",
 			"description": "Damage-dealing move with no special effects. Ends the turn.",
 			"shortDescription": "Deals light damage"
+		},
+		"Screech": {
+			"name": "Screech",
+			"description": "Lowers the opponent's Defense stat by 2 stages.",
+			"shortDescription": "Lowers enemy defense"
 		},
 		"Seismic Toss": {
 			"name": "Seismic Toss",
@@ -2077,6 +2097,11 @@
 			"shortDescription": "Prevents damage to this trainer's other Pokémon while this Pokémon is out",
 			"longDescription": "As long as this Pokémon is the active Pokémon, damage can't be dealt to non-active Pokémon owned by this Pokémon's owner."
 		},
+		"Fur Coat": {
+			"name": "Fur Coat",
+			"shortDescription": "Doubles Defense at all times",
+			"longDescription": "This Pokémon's Defense stat is doubled."
+		},
 		"Gluttony": {
 			"name": "Gluttony",
 			"shortDescription": "Heals when it's too full to gain energy",
@@ -2341,6 +2366,11 @@
 			"name": "Super Luck",
 			"shortDescription": "10% of the time and once per turn, makes its last move used free and reset its cooldown",
 			"longDescription": "After this Pokémon finishes using a move, 10% of the time, the cooldown for that move is reset to 0, and its next activation this turn costs no energy."
+		},
+		"Surge Surfer": {
+			"name": "Surge Surfer",
+			"shortDescription": "Gain extra speed while there's a lot of Electric tiles",
+			"longDescription": "Reduces this Pokémon's speed by 25%. However, its speed increases by 5% for each Electric tile on the board."
 		},
 		"Swarm": {
 			"name": "Swarm",
@@ -2646,6 +2676,10 @@
 		"Route 3": {
 			"name": "Route 3"
 		}
+	},
+	"stats": {
+		"weight": "Weight",
+		"friendship": "Friendship"
 	},
 	"settings": {
 		"toggle-skip-seen-dialogue": "Skip seen dialogue?",

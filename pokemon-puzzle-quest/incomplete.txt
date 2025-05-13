@@ -6,8 +6,11 @@ Incomplete move lists:
 	Raichu (lv 0)
 	Raichu-Alola (lv 0)
 	Zubat (lv 20)
+	Golbat (lv 20)
 	Diglett-Alola (lv 20)
-	Meowth-Alola (lv 29)
+	Dugtrio-Alola (lv 0)
+	Meowth-Alola (lv 32)
+	Persian-Alola (lv 0)
 	Mankey (lv 26)
 	Growlithe (lv 20)
 	Slowpoke (lv 21)
@@ -48,10 +51,7 @@ Incomplete move lists:
 	Komala (lv 31)
 
 Missing Evolutions:
-	Pikachu
-	Zubat
-	Diglet-Alola
-	Meowth-Alola
+	Golbat
 	Mankey
 	Abra
 	Growlithe

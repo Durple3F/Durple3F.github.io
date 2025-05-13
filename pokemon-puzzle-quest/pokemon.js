@@ -592,15 +592,19 @@ class Pokemon{
 		let modifier = numerator / denominator
 		let effectiveStat = val * modifier
 
-		if (stat === "attack" && this.hasAbility("Hustle")){
-			effectiveStat *= 1.5
-		}
-
 		let statChanges = this.getStatusesOfType("stat-alteration")
 		for (let statusEffect of statChanges){
 			let changedStatName = statusEffect.stat
 			if (changedStatName !== stat) continue
 			effectiveStat = applyModification(effectiveStat, statusEffect.modification)
+		}
+
+		if (stat === "attack" && this.hasAbility("Hustle")){
+			effectiveStat *= 1.5
+		}
+
+		if (stat === "defense" && this.hasAbility("Fur Coat")){
+			effectiveStat *= 2
 		}
 
 		return effectiveStat

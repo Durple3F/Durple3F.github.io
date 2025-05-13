@@ -82,6 +82,10 @@ const abilityData = {
 	"Friend Guard": {
 		id: "Friend Guard"
 	},
+	//Literally just doubles defense
+	"Fur Coat": {
+		id: "Fur Coat"
+	},
 	//You heal for energy that you don't gain due to being full
 	"Gluttony": {
 		id: "Gluttony"
@@ -293,6 +297,10 @@ const abilityData = {
 	//Skip cooldowns 10% of the time
 	"Super Luck": {
 		id: "Super Luck"
+	},
+	//Gets extra speed based on how many yellow tiles exist
+	"Surge Surfer": {
+		id: "Surge Surfer"
 	},
 	//Increase bug power at low hp
 	"Swarm": {

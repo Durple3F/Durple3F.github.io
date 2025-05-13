@@ -647,13 +647,68 @@ const pokemonData = {
 		energyMastery: {
 			green: 3,
 			yellow: 2,
-			purple: 2
+			purple: 1
 		},
+		evolutions: [
+			{ name: "Golbat", unlock: { type: "level", amount: 22 } }
+		],
 		learnset: [
 			{ name: "Absorb", unlock: { type: "level", amount: 1 } },
 			{ name: "Supersonic", unlock: { type: "level", amount: 1 } },
 			{ name: "Astonish", unlock: { type: "level", amount: 5 } },
 			{ name: "Mean Look", unlock: { type: "level", amount: 10 } },
+			{ name: "Poison Fang", unlock: { type: "level", amount: 15 } },
+			{ name: "Quick Guard", unlock: { type: "level", amount: 20 } },
+		]
+	},
+	"Golbat": {
+		name: "Golbat",
+		number: "42",
+		weight: {
+			pounds: 121.3,
+			kilograms: 55.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0042Golbat.png",
+			"largeShiny": "src/img/shiny-pokemon/042-Golbat.png",
+			"home": "src/img/tiny-pokemon/Zubat.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/golbat.mp3"
+		},
+		types: ["Poison", "Flying"],
+		tags: [],
+		abilities: ["Inner Focus"],
+		hiddenAbilities: ["Infiltrator"],
+		stats: {
+			hp: 75,
+			attack: 80,
+			defense: 70,
+			specialAttack: 65,
+			specialDefense: 75,
+			speed: 90
+		},
+		expYield: 159,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 2
+		},
+		energyMastery: {
+			green: 3,
+			yellow: 3,
+			purple: 3
+		},
+		learnset: [
+			{ name: "Screech", unlock: { type: "level", amount: 1 } },
+			{ name: "Absorb", unlock: { type: "level", amount: 1 } },
+			{ name: "Supersonic", unlock: { type: "level", amount: 1 } },
+			{ name: "Astonish", unlock: { type: "level", amount: 1 } },
+			{ name: "Mean Look", unlock: { type: "level", amount: 1 } },
 			{ name: "Poison Fang", unlock: { type: "level", amount: 15 } },
 			{ name: "Quick Guard", unlock: { type: "level", amount: 20 } },
 		]
@@ -700,11 +755,69 @@ const pokemonData = {
 			yellow: 2,
 			purple: 1
 		},
+		evolutions: [
+			{ name: "Dugtrio-Alola", unlock: { type: "level", amount: 26 } }
+		],
 		learnset: [
 			{ name: "Sand Attack", unlock: { type: "level", amount: 1 } },
 			{ name: "Metal Claw", unlock: { type: "level", amount: 1 } },
 			{ name: "Growl", unlock: { type: "level", amount: 4 } },
 			{ name: "Astonish", unlock: { type: "level", amount: 8 } },
+			{ name: "Mud-Slap", unlock: { type: "level", amount: 12 } },
+			{ name: "Bulldoze", unlock: { type: "level", amount: 16 } },
+			{ name: "Sucker Punch", unlock: { type: "level", amount: 20 } },
+		]
+	},
+	"Dugtrio-Alola": {
+		name: "Dugtrio-Alola",
+		number: "51a",
+		weight: {
+			pounds: 146.8,
+			kilograms: 66.6
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0051Dugtrio-Alola.png",
+			"largeShiny": "src/img/shiny-pokemon/051-Dugtrio-Alola.png",
+			"home": "src/img/tiny-pokemon/Dugtrio-Alola.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/dugtrio.mp3"
+		},
+		types: ["Ground", "Steel"],
+		tags: [],
+		abilities: ["Sand Veil", "Tangling Hair"],
+		hiddenAbilities: ["Sand Force"],
+		stats: {
+			hp: 35,
+			attack: 100,
+			defense: 60,
+			specialAttack: 50,
+			specialDefense: 70,
+			speed: 110
+		},
+		expYield: 149,
+		evYield: {
+			hp: 0,
+			attack: 2,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 3,
+			yellow: 2,
+			purple: 1
+		},
+		learnset: [
+			{ name: "Night Slash", unlock: { type: "level", amount: 1 } },
+			// { name: "Tri Attack", unlock: { type: "level", amount: 1 } },
+			{ name: "Sand Attack", unlock: { type: "level", amount: 1 } },
+			{ name: "Metal Claw", unlock: { type: "level", amount: 1 } },
+			{ name: "Growl", unlock: { type: "level", amount: 1 } },
+			{ name: "Astonish", unlock: { type: "level", amount: 1 } },
+			// { name: "Sand Tomb", unlock: { type: "level", amount: 1 } }, //note: learned on evolution
 			{ name: "Mud-Slap", unlock: { type: "level", amount: 12 } },
 			{ name: "Bulldoze", unlock: { type: "level", amount: 16 } },
 			{ name: "Sucker Punch", unlock: { type: "level", amount: 20 } },
@@ -752,6 +865,9 @@ const pokemonData = {
 			orange: 2,
 			purple: 5
 		},
+		evolutions: [
+			{ name: "Persian-Alola", unlock: { type: "friendship", amount: 50 } }
+		],
 		learnset: [
 			{ name: "Fake Out", unlock: { type: "level", amount: 1 } },
 			{ name: "Growl", unlock: { type: "level", amount: 1 } },
@@ -762,6 +878,65 @@ const pokemonData = {
 			{ name: "Taunt", unlock: { type: "level", amount: 20 } },
 			{ name: "Assurance", unlock: { type: "level", amount: 24 } },
 			{ name: "Fury Swipes", unlock: { type: "level", amount: 29 } },
+			{ name: "Screech", unlock: { type: "level", amount: 32 } },
+		]
+	},
+	"Persian-Alola": {
+		name: "Persian",
+		id: "Persian-Alola",
+		number: "53a",
+		weight: {
+			pounds: 72.8,
+			kilograms: 33.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0053Persian-Alola.png",
+			"largeShiny": "src/img/shiny-pokemon/053-Persian-Alola.png",
+			"home": "src/img/tiny-pokemon/Persian-Alola.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/persian.mp3"
+		},
+		types: ["Dark"],
+		tags: [],
+		abilities: ["Fur Coat", "Technician"],
+		hiddenAbilities: ["Rattled"],
+		stats: {
+			hp: 65,
+			attack: 60,
+			defense: 60,
+			specialAttack: 75,
+			specialDefense: 65,
+			speed: 115
+		},
+		expYield: 154,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 2
+		},
+		energyMastery: {
+			orange: 3,
+			yellow: 1,
+			purple: 5
+		},
+		learnset: [
+			{ name: "Switcheroo", unlock: { type: "level", amount: 1 } },
+			{ name: "Fake Out", unlock: { type: "level", amount: 1 } },
+			{ name: "Growl", unlock: { type: "level", amount: 1 } },
+			{ name: "Feint", unlock: { type: "level", amount: 1 } },
+			{ name: "Scratch", unlock: { type: "level", amount: 1 } },
+			{ name: "Power Gem", unlock: { type: "level", amount: 1 } }, //note: should be learned on evolution
+			{ name: "Pay Day", unlock: { type: "level", amount: 12 } },
+			{ name: "Bite", unlock: { type: "level", amount: 16 } },
+			{ name: "Taunt", unlock: { type: "level", amount: 20 } },
+			{ name: "Assurance", unlock: { type: "level", amount: 24 } },
+			{ name: "Fury Swipes", unlock: { type: "level", amount: 31 } },
+			{ name: "Screech", unlock: { type: "level", amount: 36 } },
 		]
 	},
 	"Mankey": {
@@ -2352,7 +2527,7 @@ const pokemonData = {
 			{ name: "Sing", unlock: { type: "level", amount: 18 } },
 			{ name: "Bubble Beam", unlock: { type: "level", amount: 21 } },
 			{ name: "Encore", unlock: { type: "level", amount: 24 } },
-			{ name: "Drill Run", unlock: { type: "level", amount: 1 } },
+			{ name: "Night Slash", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {

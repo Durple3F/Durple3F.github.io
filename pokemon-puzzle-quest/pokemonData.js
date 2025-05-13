@@ -438,6 +438,10 @@ function checkIfPokemonMeetsRequirements(pokemon, req){
 		//This is the type for when a move may only be learned by a pre-evolved version of that pokemon.
 		return false
 	}
+	if (req.type === "friendship"){
+		let amt = req.amount
+		return pokemon.friendship >= amt
+	}
 	if (req.type === "fiveMatchYellow"){
 		let amt = req.amount
 		return pokemon.evolutionTriggerData["fiveMatchYellow"] >= amt
@@ -486,6 +490,11 @@ function getReasonPokemonDoesntMeetEvolutionRequirements(pokemon, evolveData, op
 	if (!req) return "This evolution doesn't require anything. Why can't you use it? Man, Boo sucks at programming."
 	if (req.type === "level"){
 		let text = getLocaleString("pokemon-evolve-requirement-level", lang)
+		text = applyReplacements(text, [req.amount, evolveName])
+		return text
+	}
+	if (req.type === "friendship"){
+		let text = getLocaleString("pokemon-evolve-requirement-friendship", lang)
 		text = applyReplacements(text, [req.amount, evolveName])
 		return text
 	}

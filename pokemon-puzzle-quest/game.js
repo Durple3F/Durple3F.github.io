@@ -244,11 +244,6 @@ class Round {
 			}
 		}
 
-		//All your pokemon get a point of friendship
-		for (let pokemon of this.trainers[0].pokemon){
-			pokemon.friendship++
-		}
-
 		//Determine who goes first
 		let firstPlayer = this.getNextPlayer()
 		this.changeTurns(firstPlayer)
@@ -308,6 +303,11 @@ class Round {
 
 			if (this.result === "win") {
 				this.promise = this.promise.then(() => {
+					//All your pokemon get a point of friendship for each pokemon the opponent had
+					for (let pokemon of this.trainers[0].pokemon){
+						pokemon.friendship += this.trainers[1].pokemon.length
+					}
+
 					return this.showEndScreen("You win!")
 				})
 			} else if (this.result === "lose") {
@@ -1703,8 +1703,10 @@ class Round {
 			initiatives[playerIndex] += this.maxInitiative
 		} else {
 			let max = this.maxInitiative
-			let speed1 = this.trainers[0].activePokemon.getEffectiveStat("speed")
-			let speed2 = this.trainers[1].activePokemon.getEffectiveStat("speed")
+			let trainer1 = this.trainers[0]
+			let trainer2 = this.trainers[1]
+			let speed1 = this.getEffectiveStat("speed", trainer1, trainer1.activePokemon)
+			let speed2 = this.getEffectiveStat("speed", trainer2, trainer2.activePokemon)
 			let p1 = (max - initiatives[0]) / speed1
 			let p2 = (max - initiatives[1]) / speed2
 			p1 = Math.max(p1, 0)
@@ -2428,16 +2430,18 @@ class Round {
 		//If the pokemon uses a special move, this represents the special attack stat.
 		let atk, def
 		if (category === "Physical") {
-			atk = attacker.getEffectiveStat("attack")
-			def = defender.getEffectiveStat("defense")
+			atk = this.getEffectiveStat("attack", attackerTrainer, attacker)
+			def = this.getEffectiveStat("defense", defenderTrainer, defender)
 		} else if (category === "Special") {
-			atk = attacker.getEffectiveStat("specialAttack")
-			def = defender.getEffectiveStat("specialDefense")
+			atk = this.getEffectiveStat("specialAttack", attackerTrainer, attacker)
+			def = this.getEffectiveStat("specialDefense", defenderTrainer, defender)
 		} else if (category === "Status") {
 			//This should never run
-			atk = attacker.getEffectiveStat("attack")
-			def = defender.getEffectiveStat("defense")
+			atk = this.getEffectiveStat("attack", attackerTrainer, attacker)
+			def = this.getEffectiveStat("defense", defenderTrainer, defender)
 		} else {
+			atk = this.getEffectiveStat("attack", attackerTrainer, attacker)
+			def = this.getEffectiveStat("defense", defenderTrainer, defender)
 			console.warn("UNKNOWN CATEGORY", category)
 		}
 
@@ -3061,11 +3065,13 @@ class Round {
 		}
 
 		//Abilities that modify power
-		if (
-			pokemon.getEffectiveStat("speed") < otherPokemon.getEffectiveStat("speed") &&
-			pokemon.hasAbility("Analytic")
-		) {
-			power *= 1.3
+		//Analytic improves moves while you are slower than the enemy
+		if (pokemon.hasAbility("Analytic")) {
+			let speed1 = this.getEffectiveStat("speed", trainer, pokemon)
+			let speed2 = this.getEffectiveStat("speed", otherTrainer, otherPokemon)
+			if (speed1 < speed2) {
+				power *= 1.3
+			}
 		}
 		//Punching moves are good for Iron Fist
 		if (
@@ -3197,6 +3203,19 @@ class Round {
 		}
 
 		return hasTag
+	}
+	getEffectiveStat(statName, trainer, pokemon){
+		let stat = pokemon.getEffectiveStat(statName)
+
+		//Surge Surfer increases your speed at all times based on the number of electric tiles
+		if (statName === "speed" && pokemon.hasAbility("Surge Surfer")){
+			let diff = 0.75
+			let yellows = this.board.tilesOnScreen().filter(tile => tile.type === "yellow")
+			diff += yellows.length * 0.05
+			stat *= diff
+		}
+
+		return stat
 	}
 
 	doesThisApplyToMove(move, appliesTo, type) {
@@ -5030,7 +5049,7 @@ class Round {
 		let abilityDescription = getLocaleString("shortDescription", lang, ["abilities", ability.id])
 		abilityTag.append(`<span>${abilityName}: ${abilityDescription}</span>`)
 
-		let stats = getStatsHTML(pokemon)
+		let stats = getStatsHTML(pokemon, {game: this})
 		html.append(stats)
 
 		let mastery = getMasteryHTML(pokemon)
