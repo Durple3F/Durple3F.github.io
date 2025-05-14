@@ -1192,7 +1192,7 @@ const pokemonMoveData = {
 				stacks: false,
 				volatile: true,
 				lostOnSwap: true,
-				batonPassable: false,
+				lostOnBatonPass: true,
 				turns: 11, //It should be 10, but add 1 because their turn is about to start anyway
 				appliesTo: {
 					name: "%c%"
@@ -1572,7 +1572,7 @@ const pokemonMoveData = {
 				stacks: false,
 				volatile: true,
 				lostOnSwap: true,
-				batonPassable: false,
+				lostOnBatonPass: true,
 				turns: 6, //It should be 5, but add 1 because their turn is about to start anyway
 				appliesTo: {
 					names: [],
@@ -1798,6 +1798,42 @@ const pokemonMoveData = {
 			{ type: "remove-status-effect", statusName: "invulnerable" },
 			{ type: "remove-status-effect", statusName: "protect" },
 			{ type: "damage" }
+		]
+	},
+	//Gives you a bonus if it defeats the enemy
+	"Fell Stinger": {
+		name: "Fell Stinger",
+		type: "Bug",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 25,
+		power: 50,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			green: 3,
+			yellow: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Fell Stinger.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "is-active-pokemon-viable", target: "opponent" },
+			{ type: "jump-if-truthy", jumpTo: Infinity },
+			{
+				type: "apply-debuff", target: "user", debuff: {
+					type: "stat",
+					stat: "attack",
+					class: "buff",
+					amount: 2
+				}
+			}
 		]
 	},
 	//Deals extra damage if tiles are already burning
@@ -2712,6 +2748,77 @@ const pokemonMoveData = {
 			{ type: "remove-tiles", selection: -1 }
 		]
 	},
+	//Whenever the opponent uses a move, its purple cost increases
+	"Kinesis": {
+		name: "Kinesis",
+		type: "Psychic",
+		category: "Status",
+		strategy: "debuff-opponent",
+		tags: [],
+		pp: 15,
+		power: null,
+		accuracy: 80,
+		rechargeTurns: 1,
+		energy: {
+			purple: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Kinesis.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-last-move", target: "opponent" },
+			{ type: "jump-if-truthy", jumpTo: "use-move" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "get-move-name", move: -3, label: "use-move" },
+			{ type: "apply-status-effect", target: "opponent", statusEffect: {
+				name: "kinesis-cost-increase",
+				type: "cost-alteration",
+				stacks: true,
+				volatile: true,
+				lostOnSwap: true,
+				lostOnBatonPass: true,
+				appliesTo: {
+					name: "%c%"
+				},
+				energyCost: {
+					purple: 2
+				}
+			}, statusSettings: [
+				{
+					path: ["appliesTo"],
+					key: "name",
+					value: -1
+				}
+			] },
+		],
+		onOpponentUseMove: [
+			{ type: "get-triggering-move" },
+			{ type: "apply-status-effect", target: "opponent", statusEffect: {
+				name: "kinesis-cost-increase",
+				type: "cost-alteration",
+				stacks: true,
+				volatile: true,
+				lostOnSwap: true,
+				lostOnBatonPass: true,
+				appliesTo: {
+					move: "%c%"
+				},
+				energyCost: {
+					purple: 2
+				}
+			}, statusSettings: [
+				{
+					path: ["appliesTo"],
+					key: "move",
+					value: -1
+				}
+			] },
+		],
+		highlightOnHover: {
+			type: "last-enemy-move"
+		}
+	},
 	//Removes energy
 	"Knock Off": {
 		name: "Knock Off",
@@ -3228,6 +3335,42 @@ const pokemonMoveData = {
 			},
 		],
 	},
+	//Lowers enemy special attack and empowers some red tiles
+	"Mystical Fire": {
+		name: "Mystical Fire",
+		type: "Fire",
+		category: "Status",
+		strategy: "debuff-opponent",
+		pp: 10,
+		power: 75,
+		accuracy: 100,
+		rechargeTurns: 2,
+		energy: {
+			yellow: 4,
+			red: 7
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Mystical Fire.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{
+				type: "apply-debuff", target: "opponent", debuff: {
+					type: "stat",
+					stat: "specialAttack",
+					class: "debuff",
+					amount: -1
+				}
+			},
+			{ type: "load-value", value: 3 },
+			{ type: "select-random-tiles", count: -1, conditions: { types: ["red"] } },
+			{ type: "empower-tiles", selection: -1 },
+		],
+	},
 	//Raises your special attack 2
 	"Nasty Plot": {
 		name: "Nasty Plot",
@@ -3395,6 +3538,7 @@ const pokemonMoveData = {
 			{ type: "end-turn" }
 		],
 	},
+	//Deals extra damage against faster targets
 	"Payback": {
 		name: "Payback",
 		type: "Dark",
@@ -3423,6 +3567,7 @@ const pokemonMoveData = {
 			{ type: "damage", additivePower: -1, label: "big-damage" }
 		],
 	},
+	//Basic damage and end turn
 	"Peck": {
 		name: "Peck",
 		type: "Flying",
@@ -3444,6 +3589,60 @@ const pokemonMoveData = {
 			{ type: "damage" },
 			{ type: "end-turn" }
 		],
+	},
+	//Deals damage on a delay, THROUGH invulnerable
+	"Phantom Force": {
+		name: "Phantom Force",
+		type: "Ghost",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 10,
+		power: 90,
+		accuracy: 100,
+		rechargeTurns: 5,
+		energy: {
+			red: 4,
+			purple: 10
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Phantom Force part 1.mp3",
+			"activate": "src/audio/attacks/Phantom Force part 2.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "apply-status-effect", statusEffect: "invulnerable", target: "user" },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "phantom-force-using-phantom-force",
+				type: "hidden",
+				stacks: false,
+				volatile: true,
+				lostOnSwap: true,
+				lostOnBatonPass: true
+			} },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "phantom-force-wait-time",
+				type: "hidden",
+				stacks: false,
+				volatile: true,
+				lostOnSwap: true,
+				lostOnBatonPass: true,
+				turns: 1
+			} },
+			{ type: "end-turn" },
+		],
+		onTurnStart: [
+			{ type: "get-status-stacks", statusName: "phantom-force-using-phantom-force" },
+			{ type: "jump-if-truthy", jumpTo: "phantom-force-check" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "get-status-stacks", statusName: "phantom-force-wait-time", label: "phantom-force-check" },
+			{ type: "jump-if-truthy", jumpTo: Infinity },
+			{ type: "play-sound", name: "activate" },
+			{ type: "remove-status-effect", statusName: "invulnerable" },
+			{ type: "remove-status-effect", statusName: "protect" },
+			{ type: "damage" },
+			{ type: "remove-status-effect", target: "user", statusName: "phantom-force-using-phantom-force" },
+		]
 	},
 	"Play Nice": {
 		name: "Play Nice",
@@ -3618,6 +3817,7 @@ const pokemonMoveData = {
 			{ type: "apply-status-effect", statusEffect: "poisoned", target: "opponent" },
 		],
 	},
+	//Basic damage and end turn
 	"Pound": {
 		name: "Pound",
 		type: "Normal",
@@ -3651,8 +3851,8 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 2,
 		energy: {
-			// orange: 6,
-			// red: 6
+			orange: 6,
+			red: 6
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Power Gem.mp3"
@@ -3904,6 +4104,36 @@ const pokemonMoveData = {
 				}
 			} },
 		]
+	},
+	//Caps the opponent's initiative gain
+	"Quash": {
+		name: "Quash",
+		type: "Dark",
+		category: "Status",
+		strategy: "special",
+		tags: [],
+		pp: 15,
+		power: null,
+		accuracy: 100,
+		rechargeTurns: 5,
+		energy: {
+			blue: 5,
+			orange: 2
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Quash.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "apply-status-effect", target: "opponent", statusEffect: {
+				name: "quash-quashed",
+				type: "initiative-gain-cap-relative",
+				stacks: false,
+				volatile: true,
+				lostOnSwap: true,
+				turns: 5
+			} },
+		],
 	},
 	//Can be used multiple times in a turn
 	"Quick Attack": {

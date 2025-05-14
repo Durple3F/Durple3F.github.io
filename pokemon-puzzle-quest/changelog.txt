@@ -1,9 +1,12 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-5/13 (32.6k lines):
-	- Added Golbat, Alolan Dugtrio, Alolan Persian, Arcanine
-	- Added Screech, Night Slash, Switcheroo, Power Gem
-	- Added Surge Surfer, Fur Coat
+5/14 (33.2k lines):
+	- Added Phantom Force
+
+5/13 (33.2k lines):
+	- Added Golbat, Alolan Dugtrio, Alolan Persian, Arcanine, Kadabra, Hypno, Ledian, Ariados, Honchkrow, Mismagius
+	- Added Screech, Night Slash, Switcheroo, Power Gem, Kinesis, Fell Stinger, Quash, Mystical Fire
+	- Added Surge Surfer, Fur Coat, Moxie
 	- Moved quite a lot of code regarding how pokemon's stats are decided during a game.
 	- Pokemon can now evolve based on friendship
 	- You can now see your pokemon's weight and friendship values in the pc

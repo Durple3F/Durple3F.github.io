@@ -14,19 +14,25 @@ Incomplete move lists:
 	Mankey (lv 26)
 	Growlithe (lv 20)
 	Arcanine (lv 0)
+	Kadabra (lv 10)
 	Slowpoke (lv 21)
 	Magnemite (lv 20)
 	Grimer-Alola (lv 21)
 	Gastly (lv 20)
+	Haunter (lv 0)
 	Drowzee (lv 21)
+	Hypno (lv 21)
 	Ledyba (lv 22)
+	Ledian (lv 33)
 	Spinarak (lv 22)
+	Ariados (lv 31)
 	Murkrow (lv 35)
 	Misdreavus (lv 28)
 	Wingull (lv 26)
 	Makuhita (lv 22)
 	Bagon (lv 25)
 	Drifloon (lv 20)
+	Honchkrow (lv 35)
 	Bonsly (lv 20)
 	Roggenrola (lv 20)
 	Cottonee (lv 27)
@@ -58,12 +64,7 @@ Missing Evolutions:
 	Slowpoke
 	Magnemite
 	Grimer-Alola
-	Gastly
-	Drowzee
-	Ledyba
-	Spinarak
-	Murkrow
-	Misreavus
+	Haunter
 	Delibird
 	Wingull
 	Makuhita

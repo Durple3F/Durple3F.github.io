@@ -543,7 +543,7 @@ class Round {
 			matches.forEach(match => {
 				this.playerMatches.push(match)
 
-				//Mark down any five matches that just happened
+				//Mark down any five-matches that just happened
 				//This matters for several pokemon's evolutions
 				let fiveMatchTriggers = {
 					"fiveMatchRed": "red",
@@ -555,7 +555,29 @@ class Round {
 				}
 				for (let trigger in fiveMatchTriggers){
 					let color = fiveMatchTriggers[trigger]
-					let good = doesMatchMeetCriteria(match, color, 3)
+					let good = doesMatchMeetCriteria(match, color, 5)
+					let triggerMatters = activePokemon.doesTriggerMatter(trigger)
+					if (good && triggerMatters){
+						let key = trigger
+						let cur = activePokemon.evolutionTriggerData[key] ?? 0
+						cur += 1
+						activePokemon.evolutionTriggerData[key] = cur
+					}
+				}
+
+				//Mark down any four-matches that just happened
+				//This matters for several pokemon's evolutions
+				let fourMatchTriggers = {
+					"fourMatchRed": "red",
+					"fourMatchOrange": "orange",
+					"fourMatchYellow": "yellow",
+					"fourMatchGreen": "green",
+					"fourMatchBlue": "blue",
+					"fourMatchPurple": "purple",
+				}
+				for (let trigger in fourMatchTriggers){
+					let color = fourMatchTriggers[trigger]
+					let good = doesMatchMeetCriteria(match, color, 4)
 					let triggerMatters = activePokemon.doesTriggerMatter(trigger)
 					if (good && triggerMatters){
 						let key = trigger
@@ -1771,6 +1793,15 @@ class Round {
 			let trainer2 = this.trainers[1]
 			let speed1 = this.getEffectiveStat("speed", trainer1, trainer1.activePokemon)
 			let speed2 = this.getEffectiveStat("speed", trainer2, trainer2.activePokemon)
+
+			//Effects like Quash force one player's speed to be as low as the other's, but only for the purposes of initiative.
+			if (trainer1.activePokemon.getStatusesOfType("initiative-gain-cap-relative").length){
+				speed1 = Math.min(speed1, speed2)
+			}
+			if (trainer2.activePokemon.getStatusesOfType("initiative-gain-cap-relative").length){
+				speed2 = Math.min(speed1, speed2)
+			}
+
 			let p1 = (max - initiatives[0]) / speed1
 			let p2 = (max - initiatives[1]) / speed2
 			p1 = Math.max(p1, 0)
@@ -3422,6 +3453,20 @@ class Round {
 		promise = promise.then(() => {
 			if (changed) {
 				this.updateEverything()
+			}
+		})
+
+		//Moxie triggers as a move finishes
+		moveUseObj.promise = moveUseObj.promise.then(() => {
+			if (!isPokemonUsable(otherPokemon) && (pokemon.hasAbility("Moxie") || true)){
+				pokemon.addStatusEffect({
+					name: "moxie-powered-up",
+					type: "stat",
+					volatile: true,
+					class: "buff",
+					stat: "attack",
+					amount: 2
+				}, otherTrainer, otherPokemon, undefined)
 			}
 		})
 

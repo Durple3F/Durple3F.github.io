@@ -488,13 +488,21 @@ const pokemonMoveEffects = {
 			resolve(result)
 		}
 	},
+	"get-triggering-move": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let moveUseObj = options.moveUse.oldMoveUse
+			let move = moveUseObj.move
+			resolve(move)
+		}
+	},
 	"get-move-category": {
 		update: false,
 		execute: (resolve, effect, params, game, options) => {
 			let oldMove = effect.oldMove ?? true
-			let moveUse = oldMove ? options.moveUse.oldMoveUse : options.moveUse
-			let move = moveUse.move
-			let category = getMoveCategory(move, moveUse.parentMove)
+			let moveUseObj = oldMove ? options.moveUse.oldMoveUse : options.moveUse
+			let move = moveUseObj.move
+			let category = getMoveCategory(move, moveUseObj.parentMove)
 			resolve(category)
 		}
 	},

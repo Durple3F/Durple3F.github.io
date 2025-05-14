@@ -1085,7 +1085,7 @@ const pokemonData = {
 			speed: 0
 		},
 		energyMastery: {
-			red: 3,
+			red: 5,
 			yellow: 3
 		},
 		learnset: [
@@ -1146,8 +1146,11 @@ const pokemonData = {
 			speed: 0
 		},
 		energyMastery: {
-			purple: 7
+			purple: 6
 		},
+		evolutions: [
+			{ name: "Kadabra", unlock: { type: "level", amount: 16 } }
+		],
 		learnset: [
 			{
 				name: "Teleport",
@@ -1156,6 +1159,55 @@ const pokemonData = {
 					amount: 1
 				}
 			}
+		]
+	},
+	"Kadabra": {
+		name: "Kadabra",
+		number: "64",
+		weight: {
+			pounds: 124.6,
+			kilograms: 56.5
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0064Kadabra.png",
+			"largeShiny": "src/img/shiny-pokemon/064-Kadabra.png",
+			"home": "src/img/tiny-pokemon/Kadabra.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/kadabra.mp3"
+		},
+		types: ["Psychic"],
+		tags: [],
+		abilities: ["Synchronize", "Inner Focus"],
+		hiddenAbilities: ["Magic Guard"],
+		stats: {
+			hp: 40,
+			attack: 35,
+			defense: 30,
+			specialAttack: 120,
+			specialDefense: 70,
+			speed: 105
+		},
+		expYield: 140,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 2,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			purple: 8
+		},
+		learnset: [
+			{ name: "Confusion", unlock: { type: "level", amount: 1 } },
+			{ name: "Kinesis", unlock: { type: "level", amount: 1 } },
+			{ name: "Disable", unlock: { type: "level", amount: 1 } },
+			{ name: "Teleport", unlock: { type: "level", amount: 1 } },
+			{ name: "Psybeam", unlock: { type: "level", amount: 5 } },
+			{ name: "Reflect", unlock: { type: "level", amount: 10 } },
 		]
 	},
 	"Slowpoke": {
@@ -1358,11 +1410,67 @@ const pokemonData = {
 			orange: 3,
 			purple: 3
 		},
+		evolutions: [
+			{ name: "Haunter", unlock: { type: "level", amount: 25 } }
+		],
 		learnset: [
 			{ name: "Lick", unlock: { type: "level", amount: 1 } },
 			{ name: "Confuse Ray", unlock: { type: "level", amount: 1 } },
 			{ name: "Hypnosis", unlock: { type: "level", amount: 4 } },
 			{ name: "Mean Look", unlock: { type: "level", amount: 8 } },
+			{ name: "Payback", unlock: { type: "level", amount: 12 } },
+			{ name: "Spite", unlock: { type: "level", amount: 16 } },
+			{ name: "Curse", unlock: { type: "level", amount: 20 } },
+		]
+	},
+	"Haunter": {
+		name: "Haunter",
+		number: "93",
+		weight: {
+			pounds: 0.2,
+			kilograms: 0.1
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0093Haunter.png",
+			"largeShiny": "src/img/shiny-pokemon/093-Haunter.png",
+			"home": "src/img/tiny-pokemon/Haunter.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/haunter.mp3"
+		},
+		types: ["Ghost", "Poison"],
+		tags: [],
+		abilities: ["Levitate"],
+		hiddenAbilities: [],
+		stats: {
+			hp: 45,
+			attack: 50,
+			defense: 45,
+			specialAttack: 115,
+			specialDefense: 55,
+			speed: 95
+		},
+		expYield: 142,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 2,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			red: 2,
+			orange: 3,
+			purple: 3
+		},
+		learnset: [
+			{ name: "Lick", unlock: { type: "level", amount: 1 } },
+			{ name: "Confuse Ray", unlock: { type: "level", amount: 1 } },
+			{ name: "Hypnosis", unlock: { type: "level", amount: 1 } },
+			{ name: "Mean Look", unlock: { type: "level", amount: 1 } },
+			// { name: "Shadow Punch", unlock: { type: "level", amount: 1 } }, //note: should be learned on evolution
 			{ name: "Payback", unlock: { type: "level", amount: 12 } },
 			{ name: "Spite", unlock: { type: "level", amount: 16 } },
 			{ name: "Curse", unlock: { type: "level", amount: 20 } },
@@ -1401,18 +1509,73 @@ const pokemonData = {
 			hp: 0,
 			attack: 0,
 			defense: 0,
-			specialAttack: 1,
-			specialDefense: 0,
+			specialAttack: 0,
+			specialDefense: 1,
 			speed: 0
 		},
 		energyMastery: {
 			purple: 6
 		},
+		evolutions: [
+			{ name: "Hypno", unlock: { type: "level", amount: 26 } }
+		],
 		learnset: [
 			{ name: "Pound", unlock: { type: "level", amount: 1 } },
 			{ name: "Hypnosis", unlock: { type: "level", amount: 1 } },
 			{ name: "Disable", unlock: { type: "level", amount: 5 } },
 			{ name: "Confusion", unlock: { type: "level", amount: 9 } },
+			{ name: "Headbutt", unlock: { type: "level", amount: 13 } },
+			{ name: "Poison Gas", unlock: { type: "level", amount: 17 } },
+			{ name: "Psybeam", unlock: { type: "level", amount: 21 } },
+		]
+	},
+	"Hypno": {
+		name: "Hypno",
+		number: "97",
+		weight: {
+			pounds: 166.7,
+			kilograms: 75.6
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0097Hypno.png",
+			"largeShiny": "src/img/shiny-pokemon/097-Hypno.png",
+			"home": "src/img/tiny-pokemon/Hypno.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/hypno.mp3"
+		},
+		types: ["Psychic"],
+		tags: [],
+		abilities: ["Insomnia", "Forewarn"],
+		hiddenAbilities: ["Inner Focus"],
+		stats: {
+			hp: 85,
+			attack: 73,
+			defense: 70,
+			specialAttack: 73,
+			specialDefense: 115,
+			speed: 67
+		},
+		expYield: 169,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 2,
+			speed: 0
+		},
+		energyMastery: {
+			blue: 2,
+			purple: 6
+		},
+		learnset: [
+			{ name: "Switcheroo", unlock: { type: "level", amount: 1 } },
+			{ name: "Pound", unlock: { type: "level", amount: 1 } },
+			{ name: "Hypnosis", unlock: { type: "level", amount: 1 } },
+			{ name: "Disable", unlock: { type: "level", amount: 1 } },
+			{ name: "Confusion", unlock: { type: "level", amount: 1 } },
 			{ name: "Headbutt", unlock: { type: "level", amount: 13 } },
 			{ name: "Poison Gas", unlock: { type: "level", amount: 17 } },
 			{ name: "Psybeam", unlock: { type: "level", amount: 21 } },
@@ -1459,6 +1622,9 @@ const pokemonData = {
 			green: 3,
 			purple: 5
 		},
+		evolutions: [
+			{ name: "Ledian", unlock: { type: "level", amount: 18 } }
+		],
 		learnset: [
 			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
 			{ name: "Supersonic", unlock: { type: "level", amount: 5 } },
@@ -1469,6 +1635,62 @@ const pokemonData = {
 			{ name: "Mach Punch", unlock: { type: "level", amount: 15 } },
 			{ name: "Roost", unlock: { type: "level", amount: 19 } },
 			{ name: "Struggle Bug", unlock: { type: "level", amount: 22 } },
+		]
+	},
+	"Ledian": {
+		name: "Ledian",
+		number: "166",
+		weight: {
+			pounds: 78.5,
+			kilograms: 35.6
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0166Ledian.png",
+			"largeShiny": "src/img/shiny-pokemon/166-Ledian.png",
+			"home": "src/img/tiny-pokemon/Ledian.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/ledyba.mp3"
+		},
+		types: ["Bug", "Flying"],
+		tags: [],
+		abilities: ["Swarm", "Early Bird"],
+		hiddenAbilities: ["Iron Fist"],
+		stats: {
+			hp: 55,
+			attack: 35,
+			defense: 50,
+			specialAttack: 55,
+			specialDefense: 110,
+			speed: 85
+		},
+		expYield: 137,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 2,
+			speed: 0
+		},
+		energyMastery: {
+			green: 3,
+			blue: 2,
+			purple: 5
+		},
+		learnset: [
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Supersonic", unlock: { type: "level", amount: 1 } },
+			{ name: "Swift", unlock: { type: "level", amount: 1 } },
+			{ name: "Light Screen", unlock: { type: "level", amount: 12 } },
+			{ name: "Reflect", unlock: { type: "level", amount: 12 } },
+			{ name: "Safeguard", unlock: { type: "level", amount: 12 } },
+			{ name: "Mach Punch", unlock: { type: "level", amount: 15 } },
+			{ name: "Roost", unlock: { type: "level", amount: 20 } },
+			{ name: "Struggle Bug", unlock: { type: "level", amount: 24 } },
+			{ name: "Baton Pass", unlock: { type: "level", amount: 29 } },
+			{ name: "Agility", unlock: { type: "level", amount: 33 } },
 		]
 	},
 	"Spinarak": {
@@ -1512,6 +1734,9 @@ const pokemonData = {
 			green: 5,
 			purple: 3
 		},
+		evolutions: [
+			{ name: "Ariados", unlock: { type: "level", amount: 22 } }
+		],
 		learnset: [
 			{ name: "Poison Sting", unlock: { type: "level", amount: 1 } },
 			{ name: "String Shot", unlock: { type: "level", amount: 1 } },
@@ -1521,6 +1746,65 @@ const pokemonData = {
 			{ name: "Night Shade", unlock: { type: "level", amount: 15 } },
 			{ name: "Shadow Sneak", unlock: { type: "level", amount: 19 } },
 			{ name: "Fury Swipes", unlock: { type: "level", amount: 22 } },
+		]
+	},
+	"Ariados": {
+		name: "Ariados",
+		number: "168",
+		weight: {
+			pounds: 73.9,
+			kilograms: 33.5
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0168Ariados.png",
+			"largeShiny": "src/img/shiny-pokemon/168-Ariados.png",
+			"home": "src/img/tiny-pokemon/Ariados.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/ariados.mp3"
+		},
+		types: ["Bug", "Poison"],
+		tags: [],
+		abilities: ["Swarm", "Insomnia"],
+		hiddenAbilities: ["Sniper"],
+		stats: {
+			hp: 70,
+			attack: 90,
+			defense: 70,
+			specialAttack: 60,
+			specialDefense: 70,
+			speed: 40
+		},
+		expYield: 140,
+		evYield: {
+			hp: 0,
+			attack: 2,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			yellow: 1,
+			green: 5,
+			purple: 4
+		},
+		learnset: [
+			{ name: "Focus Energy", unlock: { type: "level", amount: 1 } },
+			{ name: "Fell Stinger", unlock: { type: "level", amount: 1 } },
+			{ name: "Bug Bite", unlock: { type: "level", amount: 1 } },
+			{ name: "Poison Sting", unlock: { type: "level", amount: 1 } },
+			{ name: "String Shot", unlock: { type: "level", amount: 1 } },
+			{ name: "Absorb", unlock: { type: "level", amount: 1 } },
+			{ name: "Swords Dance", unlock: { type: "level", amount: 1 } }, //note: should be learned on evolution
+			{ name: "Infestation", unlock: { type: "level", amount: 8 } },
+			{ name: "Scary Face", unlock: { type: "level", amount: 12 } },
+			{ name: "Night Shade", unlock: { type: "level", amount: 15 } },
+			{ name: "Shadow Sneak", unlock: { type: "level", amount: 19 } },
+			{ name: "Fury Swipes", unlock: { type: "level", amount: 23 } },
+			{ name: "Sucker Punch", unlock: { type: "level", amount: 28 } },
+			{ name: "Agility", unlock: { type: "level", amount: 31 } },
 		]
 	},
 	"Pichu": {
@@ -1565,13 +1849,7 @@ const pokemonData = {
 			orange: 1
 		},
 		evolutions: [
-			{
-				name: "Pikachu",
-				unlock: {
-					type: "level",
-					amount: 15
-				}
-			}
+			{ name: "Persian-Alola", unlock: { type: "friendship", amount: 40 } }
 		],
  		learnset: [
 			{ name: "Thunder Shock", unlock: { type: "level", amount: 1 } },
@@ -1626,7 +1904,7 @@ const pokemonData = {
 			purple: 3
 		},
 		evolutions: [
-			
+			{ name: "Honchkrow", unlock: { type: "fourMatchPurple", amount: 10 } }
 		],
 		learnset: [
 			{ name: "Peck", unlock: { type: "level", amount: 1 } },
@@ -1682,7 +1960,7 @@ const pokemonData = {
 			purple: 3
 		},
 		evolutions: [
-			
+			{ name: "Mismagius", unlock: { type: "fourMatchPurple", amount: 10 } }
 		],
 		learnset: [
 			{ name: "Growl", unlock: { type: "level", amount: 1 } },
@@ -2009,6 +2287,111 @@ const pokemonData = {
 			{ name: "Payback", unlock: { type: "level", amount: 12 } },
 			{ name: "Hex", unlock: { type: "level", amount: 16 } },
 			{ name: "Shadow Ball", unlock: { type: "level", amount: 20 } },
+		]
+	},
+	"Mismagius": {
+		name: "Mismagius",
+		number: "429",
+		weight: {
+			pounds: 9.7,
+			kilograms: 4.4
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0429Mismagius.png",
+			"largeShiny": "src/img/shiny-pokemon/429-Mismagius.png",
+			"home": "src/img/tiny-pokemon/Mismagius.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/mismagius.mp3"
+		},
+		types: ["Ghost"],
+		tags: [],
+		abilities: ["Levitate"],
+		hiddenAbilities: [],
+		stats: {
+			hp: 60,
+			attack: 60,
+			defense: 60,
+			specialAttack: 105,
+			specialDefense: 105,
+			speed: 105
+		},
+		expYield: 173,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 1,
+			specialDefense: 1,
+			speed: 0
+		},
+		energyMastery: {
+			red: 5,
+			purple: 5
+		},
+		learnset: [
+			{ name: "Mystical Fire", unlock: { type: "level", amount: 1 } },
+			{ name: "Power Gem", unlock: { type: "level", amount: 1 } },
+			{ name: "Phantom Force", unlock: { type: "level", amount: 1 } },
+			{ name: "Magical Leaf", unlock: { type: "level", amount: 1 } },
+			{ name: "Growl", unlock: { type: "level", amount: 1 } },
+			{ name: "Spite", unlock: { type: "level", amount: 1 } },
+			{ name: "Astonish", unlock: { type: "level", amount: 1 } },
+		]
+	},
+	"Honchkrow": {
+		name: "Honchkrow",
+		number: "430",
+		weight: {
+			pounds: 60.2,
+			kilograms: 27.3
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0430Honchkrow.png",
+			"largeShiny": "src/img/shiny-pokemon/430-Honchkrow.png",
+			"home": "src/img/tiny-pokemon/Honchkrow.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/honchkrow.mp3"
+		},
+		types: ["Dark", "Flying"],
+		tags: [],
+		abilities: ["Insomnia", "Super Luck"],
+		hiddenAbilities: ["Moxie"],
+		stats: {
+			hp: 100,
+			attack: 125,
+			defense: 52,
+			specialAttack: 105,
+			specialDefense: 52,
+			speed: 71
+		},
+		expYield: 177,
+		evYield: {
+			hp: 0,
+			attack: 2,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 2,
+			yellow: 1,
+			blue: 1,
+			purple: 4
+		},
+		learnset: [
+			{ name: "Night Slash", unlock: { type: "level", amount: 1 } },
+			{ name: "Sucker Punch", unlock: { type: "level", amount: 1 } },
+			{ name: "Astonish", unlock: { type: "level", amount: 1 } },
+			{ name: "Haze", unlock: { type: "level", amount: 1 } },
+			{ name: "Wing Attack", unlock: { type: "level", amount: 1 } },
+			{ name: "Quash", unlock: { type: "level", amount: 1 } },
+			{ name: "Swagger", unlock: { type: "level", amount: 25 } },
+			{ name: "Nasty Plot", unlock: { type: "level", amount: 35 } },
 		]
 	},
 	"Bonsly": {
@@ -2591,7 +2974,7 @@ const pokemonData = {
 			{ name: "Sing", unlock: { type: "level", amount: 18 } },
 			{ name: "Bubble Beam", unlock: { type: "level", amount: 21 } },
 			{ name: "Encore", unlock: { type: "level", amount: 24 } },
-			{ name: "Power Gem", unlock: { type: "level", amount: 1 } },
+			{ name: "Phantom Force", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {

@@ -178,6 +178,10 @@ const abilityData = {
 	"Moody": {
 		id: "Moody"
 	},
+	//Get an attack boost when another pokemon faints during your move
+	"Moxie": {
+		id: "Moxie"
+	},
 	//Cures status conditions on switch out
 	"Natural Cure": {
 		id: "Natural Cure"

@@ -171,7 +171,13 @@ const evolutionActiveTriggers = [
 	"fiveMatchYellow",
 	"fiveMatchGreen",
 	"fiveMatchBlue",
-	"fiveMatchPurple"
+	"fiveMatchPurple",
+	"fourMatchRed",
+	"fourMatchOrange",
+	"fourMatchYellow",
+	"fourMatchGreen",
+	"fourMatchBlue",
+	"fourMatchPurple",
 ]
 
 const pokemonStatusData = {
@@ -459,6 +465,12 @@ function checkIfPokemonMeetsRequirements(pokemon, req){
 		"fiveMatchGreen",
 		"fiveMatchBlue",
 		"fiveMatchPurple",
+		"fourMatchRed",
+		"fourMatchOrange",
+		"fourMatchYellow",
+		"fourMatchGreen",
+		"fourMatchBlue",
+		"fourMatchPurple",
 	]
 	if (simpleTriggers.includes(req.type)){
 		let amt = req.amount
@@ -513,16 +525,62 @@ function getReasonPokemonDoesntMeetEvolutionRequirements(pokemon, evolveData, op
 		return text
 	}
 	let simpleTriggers = {
-		"fiveMatchRed": "five-match-red",
-		"fiveMatchOrange": "five-match-orange",
-		"fiveMatchYellow": "five-match-yellow",
-		"fiveMatchGreen": "five-match-green",
-		"fiveMatchBlue": "five-match-blue",
-		"fiveMatchPurple": "five-match-purple",
+		"fiveMatchRed": [
+			"five-match-red",
+			"five-match-red-plural",
+		],
+		"fiveMatchOrange": [
+			"five-match-orange",
+			"five-match-orange-plural",
+		],
+		"fiveMatchYellow": [
+			"five-match-yellow",
+			"five-match-yellow-plural",
+		],
+		"fiveMatchGreen": [
+			"five-match-green",
+			"five-match-green-plural",
+		],
+		"fiveMatchBlue": [
+			"five-match-blue",
+			"five-match-blue-plural",
+		],
+		"fiveMatchPurple": [
+			"five-match-purple",
+			"five-match-purple-plural",
+		],
+		"fourMatchRed": [
+			"four-match-red",
+			"four-match-red-plural",
+		],
+		"fourMatchOrange": [
+			"four-match-orange",
+			"four-match-orange-plural",
+		],
+		"fourMatchYellow": [
+			"four-match-yellow",
+			"four-match-yellow-plural",
+		],
+		"fourMatchGreen": [
+			"four-match-green",
+			"four-match-green-plural",
+		],
+		"fourMatchBlue": [
+			"four-match-blue",
+			"four-match-blue-plural",
+		],
+		"fourMatchPurple": [
+			"four-match-purple",
+			"four-match-purple-plural",
+		],
 	}
 	if (req.type in simpleTriggers){
-		let text = getLocaleString(simpleTriggers[req.type], lang, ["evolution-requirements"])
+		let localeKeys = simpleTriggers[req.type]
+		let localeId = req.amount !== 1 ? localeKeys[1] : localeKeys[0]
+		let text = getLocaleString(localeId, lang, ["evolution-requirements"])
 		text = applyReplacements(text, [req.amount, evolveName])
+		let alreadyHave = pokemon.evolutionTriggerData[req.type]
+		text += ` (${alreadyHave} / ${req.amount})`
 		return text
 	}
 	console.warn("You never handled this", req)

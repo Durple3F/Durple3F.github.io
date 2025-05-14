@@ -985,6 +985,9 @@
 		"Abra": {
 			"name": "Abra"
 		},
+		"Kadabra": {
+			"name": "Kadabra"
+		},
 		"Slowpoke": {
 			"name": "Slowpoke"
 		},
@@ -997,14 +1000,26 @@
 		"Gastly": {
 			"name": "Gastly"
 		},
+		"Haunter": {
+			"name": "Haunter"
+		},
 		"Drowzee": {
 			"name": "Drowzee"
+		},
+		"Hypno": {
+			"name": "Hypno"
 		},
 		"Ledyba": {
 			"name": "Ledyba"
 		},
+		"Ledian": {
+			"name": "Ledian"
+		},
 		"Spinarak": {
 			"name": "Spinarak"
+		},
+		"Ariados": {
+			"name": "Ariados"
 		},
 		"Pichu": {
 			"name": "Pichu"
@@ -1032,6 +1047,12 @@
 		},
 		"Drifloon": {
 			"name": "Drifloon"
+		},
+		"Mismagius": {
+			"name": "Mismagius"
+		},
+		"Honchkrow": {
+			"name": "Honchkrow"
 		},
 		"Bonsly": {
 			"name": "Bonsly"
@@ -1363,6 +1384,11 @@
 			"description": "Removes the Invulnerable and Protected status effects from the opponent. Then, deals damage.",
 			"shortDescription": "Deals damage through invulnerability"
 		},
+		"Fell Stinger": {
+			"name": "Fell Stinger",
+			"description": "Deals damage. Then, if the target is fainted, the user's Attack is raised by 2 stages.",
+			"shortDescription": "Deals damage through invulnerability"
+		},
 		"Fire Fang": {
 			"name": "Fire Fang",
 			"description": "Deals damage and has a 50% chance to Burn 3 random tiles for 3 turns. If any tiles were already Burned by the user, instead it deals damage with 30 additional power and doesn't Burn tiles. At the end of their turn, the opponent takes damage equal to 1/32 of their max HP for each of your Burn statuses on the board.",
@@ -1494,6 +1520,11 @@
 			"shortDescription": "Deals some damage and removes tiles",
 			"choose": "Choose a tile."
 		},
+		"Kinesis": {
+			"name": "Kinesis",
+			"description": "Adds 2 purple energy to the energy cost of the move that the opponent most recently used until that opponent switches out. If they haven't used a move yet, this move does nothing.<br>Passive: Whenever the opponent uses a move, 2 purple energy is added to the cost of that move until that opponent switches out.",
+			"shortDescription": "Raises the opponent's costs"
+		},
 		"Knock Off": {
 			"name": "Knock Off",
 			"description": "Deals damage. Then, removes 10 energy from the opponent in two most energy types which it has the highest affinity for.",
@@ -1574,6 +1605,11 @@
 			"description": "Deals damage. 2 random tiles are given the Energy Down status. When an opponent removes those tiles, they're worth 1 less energy each.",
 			"shortDescription": "Weakens tiles"
 		},
+		"Mystical Fire": {
+			"name": "Mystical Fire",
+			"description": "Deals damage. Then, lowers the opponent's Special Attack a stage and empowers 3 random Fire tiles. Whenever either trainer matches an empowered Fire tile, it provides twice its usual energy, and their active Pokémon deals damage to the opponent with power equal to their level.",
+			"shortDescription": "Lowers enemy special attack and empowers Fire tiles"
+		},
 		"Nasty Plot": {
 			"name": "Nasty Plot",
 			"description": "Raises the user's special attack stat by 2 stages.",
@@ -1608,6 +1644,11 @@
 			"name": "Peck",
 			"description": "Damage-dealing move with no special effects. Ends the turn.",
 			"shortDescription": "Deals light damage"
+		},
+		"Phantom Force": {
+			"name": "Phantom Force",
+			"description": "The user gets the Invulnerable status until the start of their next turn. At the start of their next turn, the opponent loses Invulnerable and Protected, and this move deals damage.",
+			"shortDescription": "Deals double the damage received"
 		},
 		"Play Nice": {
 			"name": "Play Nice",
@@ -1673,6 +1714,11 @@
 			"name": "Pursuit",
 			"description": "Deals damage. If the opponent has been active for no more than 1 turn, this move's power doubles.",
 			"shortDescription": "More damage to fresh Pokémon"
+		},
+		"Quash": {
+			"name": "Quash",
+			"description": "For the opponent's next 5 turns, as initiative is calculated, they use the speed of the slower pokemon between both trainers instead.",
+			"shortDescription": "Prevents extra turns for fast Pokémon"
 		},
 		"Quick Attack": {
 			"name": "Quick Attack",
@@ -2226,6 +2272,11 @@
 			"shortDescription": "Raises/lowers stats randomly each turn",
 			"longDescription": "At the end of each turn, this Pokémon has a random one of its stats raised by 2 stages, then a random other stat decreased by 1 stage."
 		},
+		"Moxie": {
+			"name": "Moxie",
+			"shortDescription": "Attack raises 2 stages after causing the opponent to faint",
+			"longDescription": "Whenever the opponent faints during the resolution of a move of this Pokémon, this Pokémon's Attack stat raises by 2 stages."
+		},
 		"Natural Cure": {
 			"name": "Natural Cure",
 			"shortDescription": "On switching out, cure all statuses",
@@ -2690,11 +2741,29 @@
 		"level": "This Pokémon needs to be at least level %c% to evolve into %c-pname%.",
 		"friendship": "This Pokémon needs to have at least %c% friendship to evolve into %c-pname%.",
 		"five-match-red": "Match at least %c% five-in-a-row or better of Fire tiles while this Pokémon is active for it to evolve into %c-pname%",
+		"five-match-red-plural": "Match at least %c% five-in-a-rows or better of Fire tiles while this Pokémon is active for it to evolve into %c-pname%",
 		"five-match-orange": "Match at least %c% five-in-a-row or better of Fighting tiles while this Pokémon is active for it to evolve into %c-pname%",
+		"five-match-orange-plural": "Match at least %c% five-in-a-rows or better of Fighting tiles while this Pokémon is active for it to evolve into %c-pname%",
 		"five-match-yellow": "Match at least %c% five-in-a-row or better of Electric tiles while this Pokémon is active for it to evolve into %c-pname%",
+		"five-match-yellow-plural": "Match at least %c% five-in-a-rows or better of Electric tiles while this Pokémon is active for it to evolve into %c-pname%",
 		"five-match-green": "Match at least %c% five-in-a-row or better of Grass tiles while this Pokémon is active for it to evolve into %c-pname%",
+		"five-match-green-plural": "Match at least %c% five-in-a-rows or better of Grass tiles while this Pokémon is active for it to evolve into %c-pname%",
 		"five-match-blue": "Match at least %c% five-in-a-row or better of Water tiles while this Pokémon is active for it to evolve into %c-pname%",
-		"five-match-purple": "Match at least %c% five-in-a-row or better of Psychic tiles while this Pokémon is active for it to evolve into %c-pname%"
+		"five-match-blue-plural": "Match at least %c% five-in-a-rows or better of Water tiles while this Pokémon is active for it to evolve into %c-pname%",
+		"five-match-purple": "Match at least %c% five-in-a-row or better of Psychic tiles while this Pokémon is active for it to evolve into %c-pname%",
+		"five-match-purple-plural": "Match at least %c% five-in-a-rows or better of Psychic tiles while this Pokémon is active for it to evolve into %c-pname%",
+		"four-match-red": "Match at least %c% four-in-a-row or better of Fire tiles while this Pokémon is active for it to evolve into %c-pname%",
+		"four-match-red-plural": "Match at least %c% four-in-a-rows or better of Fire tiles while this Pokémon is active for it to evolve into %c-pname%",
+		"four-match-orange": "Match at least %c% four-in-a-row or better of Fighting tiles while this Pokémon is active for it to evolve into %c-pname%",
+		"four-match-orange-plural": "Match at least %c% four-in-a-rows or better of Fighting tiles while this Pokémon is active for it to evolve into %c-pname%",
+		"four-match-yellow": "Match at least %c% four-in-a-row or better of Electric tiles while this Pokémon is active for it to evolve into %c-pname%",
+		"four-match-yellow-plural": "Match at least %c% four-in-a-rows or better of Electric tiles while this Pokémon is active for it to evolve into %c-pname%",
+		"four-match-green": "Match at least %c% four-in-a-row or better of Grass tiles while this Pokémon is active for it to evolve into %c-pname%",
+		"four-match-green-plural": "Match at least %c% four-in-a-rows or better of Grass tiles while this Pokémon is active for it to evolve into %c-pname%",
+		"four-match-blue": "Match at least %c% four-in-a-row or better of Water tiles while this Pokémon is active for it to evolve into %c-pname%",
+		"four-match-blue-plural": "Match at least %c% four-in-a-rows or better of Water tiles while this Pokémon is active for it to evolve into %c-pname%",
+		"four-match-purple": "Match at least %c% four-in-a-row or better of Psychic tiles while this Pokémon is active for it to evolve into %c-pname%",
+		"four-match-purple-plural": "Match at least %c% four-in-a-rows or better of Psychic tiles while this Pokémon is active for it to evolve into %c-pname%"
 	},
 	"stats": {
 		"weight": "Weight",
