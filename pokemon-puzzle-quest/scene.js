@@ -176,9 +176,8 @@ function startScene(name, options) {
 			fadeInGame()
 			let routeName = options.name
 
-			if (routeName === "Route 1" || true) {
-				changeMusic("Route 201 (Day)")
-			}
+			//TODO change music based on route
+			changeMusic("Route 201 (Day)")
 
 			let listTag = $(`<div class='route-list'></div>`)
 			let routeTag = $(`<div class='route-screen'></div>`)
@@ -186,6 +185,7 @@ function startScene(name, options) {
 			let pcBtn = $(`<button class='btn btn-primary' id='pc-button'></button>`)
 			pcBtn.append(`<div class='route-button-text'>My PC</div>`)
 			pcBtn.click(() => {
+				routeTag.children(".level-button").popover("dispose")
 				changeScene("pc")
 			})
 			listTag.append(pcBtn)
@@ -1702,20 +1702,22 @@ function viewPokemonInfo(pokemon, options = {}) {
 		</li>`)
 		tabs.append(tab)
 		
-		let everstoneSection = $("<div class='text-center m-3'>")
-		info.append(everstoneSection)
-		let everstoneToggle = $(`<input class="form-check-input" type="checkbox" value="" id="everstone-toggle">`)
-		everstoneToggle.prop("checked", pokemon.everstoneActive)
-		everstoneToggle.change(() => {
-			let checked = everstoneToggle.prop("checked")
-			pokemon.everstoneActive = checked
-		})
-		everstoneSection.append(everstoneToggle)
-		let everstoneText = getLocaleString("toggle-everstone", lang)
-		everstoneSection.append(`<label class='form-check-label' for="everstone-toggle">
-			<img src='src/img/Dream_Everstone_Sprite.png' style="height: 2em;">
-			${everstoneText}
-		</label>`)
+		if (options.pc){
+			let everstoneSection = $("<div class='text-center m-3'>")
+			info.append(everstoneSection)
+			let everstoneToggle = $(`<input class="form-check-input" type="checkbox" value="" id="everstone-toggle">`)
+			everstoneToggle.prop("checked", pokemon.everstoneActive)
+			everstoneToggle.change(() => {
+				let checked = everstoneToggle.prop("checked")
+				pokemon.everstoneActive = checked
+			})
+			everstoneSection.append(everstoneToggle)
+			let everstoneText = getLocaleString("toggle-everstone", lang)
+			everstoneSection.append(`<label class='form-check-label' for="everstone-toggle">
+				<img src='src/img/Dream_Everstone_Sprite.png' style="height: 2em;">
+				${everstoneText}
+			</label>`)
+		}
 
 		let evolutions = data.evolutions
 		let evolutionsSection = $("<div class='pc-evolutions-display m-1'>")

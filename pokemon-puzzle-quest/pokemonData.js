@@ -445,10 +445,23 @@ function getTypeFromTileType(type){
 	}
 }
 
-function checkIfPokemonMeetsRequirements(pokemon, req){
+function checkIfPokemonMeetsRequirements(pokemon, req, party){
 	if (!req) return true
 	if (req.type === "level"){
 		return pokemon.level >= req.amount
+	}
+	if (req.type === "levelWithPartyMember"){
+		return pokemon.level >= req.amount &&
+		party.some(p => {
+			if (p === pokemon) return false
+			let partyReq = req.partyMember
+			if (partyReq.types){
+				let types = partyReq.types
+				let fits = types.every(type => p.types.includes(type))
+				if (!fits) return false
+			}
+			return true
+		})
 	}
 	if (req.type === "pre-evolve"){
 		//This is the type for when a move may only be learned by a pre-evolved version of that pokemon.
@@ -522,6 +535,14 @@ function getReasonPokemonDoesntMeetEvolutionRequirements(pokemon, evolveData, op
 	if (req.type === "friendship"){
 		let text = getLocaleString("friendship", lang, ["evolution-requirements"])
 		text = applyReplacements(text, [req.amount, evolveName])
+		return text
+	}
+	if (req.type === "levelWithPartyMember"){
+		let text = getLocaleString("levelWithPartyMember", lang, ["evolution-requirements"])
+		let partyMember = req.partyMember
+		let types = partyMember.types
+		let typeText = types.map(t => getLocaleString(t, lang, ["types"])).join(" / ")
+		text = applyReplacements(text, [req.amount, typeText, evolveName])
 		return text
 	}
 	let simpleTriggers = {

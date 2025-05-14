@@ -24,3 +24,4 @@ TODO
 - Add a button that lets you swap which side the selection window is on
 - Z-crystal tooltip broken
 - Make All pokemon All abilities mode have some funny way to show
+- Boldore is missing a shiny image

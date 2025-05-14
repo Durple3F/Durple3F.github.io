@@ -22,6 +22,7 @@ Incomplete move lists:
 	Haunter (lv 0)
 	Drowzee (lv 21)
 	Hypno (lv 21)
+	Chansey (lv 20)
 	Ledyba (lv 22)
 	Ledian (lv 33)
 	Spinarak (lv 22)
@@ -29,20 +30,31 @@ Incomplete move lists:
 	Murkrow (lv 35)
 	Misdreavus (lv 28)
 	Wingull (lv 26)
+	Pelipper (lv 0)
 	Makuhita (lv 22)
+	Hariyama (lv 22)
 	Bagon (lv 25)
 	Drifloon (lv 20)
+	Drifblim (lv 24)
 	Honchkrow (lv 35)
 	Bonsly (lv 20)
 	Roggenrola (lv 20)
+	Boldore (lv 24)
 	Cottonee (lv 27)
+	Whimsicott (lv 8)
 	Petilil (lv 21)
+	Lilligant (lv 9)
+	Lilligant-Hisui (lv 9)
 	Rufflet (lv 30)
 	Vullaby (lv 36)
 	Pancham (lv 20)
+	Pangoro (lv 0)
 	Rowlet (lv 27)
+	Dartrix (lv 35)
 	Litten (lv 27)
+	Torracat (lv 35)
 	Popplio (lv 24)
+	Brionne (lv 30)
 	Pikipek (lv 21)
 	Yungoos (lv 25)
 	Gumshoos (lv 27)
@@ -65,23 +77,16 @@ Missing Evolutions:
 	Magnemite
 	Grimer-Alola
 	Haunter
+	Chansey
 	Delibird
-	Wingull
-	Makuhita
 	Bagon
-	Drifloon
 	Bonsly
-	Makuhita
-	Bagon
-	Happiny
-	Roggenrola
-	Cottonee
-	Petilil
+	Boldore
 	Rufflet
 	Vullaby
 	Stufful
-	Rowlet
-	Litten
+	Dartrix
+	Torracat
 	Popplio
 	Pikipek
 	Charjabug

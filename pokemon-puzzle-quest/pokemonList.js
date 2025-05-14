@@ -329,7 +329,7 @@ const pokemonData = {
 			blue: 2
 		},
 		evolutions: [
-			{ name: "Fearow", unlock: { type: "level", amount: 20 } }
+			{ name: "Fearow", unlock: { type: "level", amount: 20 } },
 		],
 		learnset: [
 			{ name: "Peck", unlock: { type: "level", amount: 1 } },
@@ -1581,6 +1581,63 @@ const pokemonData = {
 			{ name: "Psybeam", unlock: { type: "level", amount: 21 } },
 		]
 	},
+	"Chansey": {
+		name: "Chansey",
+		number: "113",
+		weight: {
+			pounds: 76.3,
+			kilograms: 34.6
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0113Chansey.png",
+			"largeShiny": "src/img/shiny-pokemon/113-Chansey.png",
+			"home": "src/img/tiny-pokemon/Chansey.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/chansey.mp3"
+		},
+		types: ["Normal"],
+		tags: [],
+		abilities: ["Natural Cure", "Serene Grace"],
+		hiddenAbilities: ["Healer"],
+		stats: {
+			hp: 250,
+			attack: 5,
+			defense: 5,
+			specialAttack: 35,
+			specialDefense: 105,
+			speed: 50
+		},
+		expYield: 395,
+		evYield: {
+			hp: 2,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			green: 4,
+			blue: 2,
+			purple: 4
+		},
+		learnset: [
+			{ name: "Sweet Kiss", unlock: { type: "level", amount: 1 } },
+			{ name: "Disarming Voice", unlock: { type: "level", amount: 1 } },
+			{ name: "Covet", unlock: { type: "level", amount: 1 } },
+			{ name: "Charm", unlock: { type: "level", amount: 1 } },
+			{ name: "Pound", unlock: { type: "level", amount: 1 } },
+			{ name: "Copycat", unlock: { type: "level", amount: 1 } },
+			{ name: "Defense Curl", unlock: { type: "level", amount: 1 } },
+			{ name: "Tail Whip", unlock: { type: "level", amount: 4 } },
+			{ name: "Echoed Voice", unlock: { type: "level", amount: 8 } },
+			{ name: "Life Dew", unlock: { type: "level", amount: 12 } },
+			{ name: "Sing", unlock: { type: "level", amount: 16 } },
+			{ name: "Fling", unlock: { type: "level", amount: 20 } },
+		]
+	},
 	"Ledyba": {
 		name: "Ledyba",
 		number: "165",
@@ -2122,6 +2179,9 @@ const pokemonData = {
 			blue: 3,
 			purple: 1,
 		},
+		evolutions: [
+			{ name: "Pelipper", unlock: { type: "level", amount: 25 } }
+		],
 		learnset: [
 			{ name: "Growl", unlock: { type: "level", amount: 1 } },
 			{ name: "Water Gun", unlock: { type: "level", amount: 1 } },
@@ -2130,6 +2190,68 @@ const pokemonData = {
 			{ name: "Wing Attack", unlock: { type: "level", amount: 15 } },
 			{ name: "Water Pulse", unlock: { type: "level", amount: 20 } },
 			{ name: "Agility", unlock: { type: "level", amount: 26 } },
+		]
+	},
+	"Pelipper": {
+		name: "Pelipper",
+		number: "279",
+		weight: {
+			pounds: 61.7,
+			kilograms: 28.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0279Pelipper.png",
+			"largeShiny": "src/img/shiny-pokemon/279-Pelipper.png",
+			"home": "src/img/tiny-pokemon/Pelipper.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/pelipper.mp3"
+		},
+		types: ["Water", "Flying"],
+		tags: [],
+		abilities: ["Keen Eye", "Drizzle"],
+		hiddenAbilities: ["Rain Dish"],
+		stats: {
+			hp: 60,
+			attack: 50,
+			defense: 100,
+			specialAttack: 95,
+			specialDefense: 70,
+			speed: 65
+		},
+		expYield: 154,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 2,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			red: 1,
+			orange: 1,
+			yellow: 2,
+			green: 1,
+			blue: 4,
+			purple: 1,
+		},
+		learnset: [
+			{ name: "Protect", unlock: { type: "level", amount: 1 } },
+			// { name: "Soak", unlock: { type: "level", amount: 1 } },
+			{ name: "Quick Attack", unlock: { type: "level", amount: 1 } },
+			{ name: "Agility", unlock: { type: "level", amount: 1 } },
+			// { name: "Air Slash", unlock: { type: "level", amount: 1 } },
+			{ name: "Growl", unlock: { type: "level", amount: 1 } },
+			{ name: "Water Gun", unlock: { type: "level", amount: 1 } },
+			{ name: "Tailwind", unlock: { type: "level", amount: 1 } },
+			{ name: "Supersonic", unlock: { type: "level", amount: 1 } },
+			{ name: "Wing Attack", unlock: { type: "level", amount: 1 } },
+			{ name: "Water Pulse", unlock: { type: "level", amount: 1 } },
+			{ name: "Stockpile", unlock: { type: "level", amount: 1 } },
+			{ name: "Spit Up", unlock: { type: "level", amount: 1 } },
+			{ name: "Swallow", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Makuhita": {
@@ -2173,11 +2295,69 @@ const pokemonData = {
 			orange: 3,
 			red: 2
 		},
+		evolutions: [
+			{ name: "Hariyama", unlock: { type: "level", amount: 24 } }
+		],
 		learnset: [
 			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
 			{ name: "Focus Energy", unlock: { type: "level", amount: 1 } },
 			{ name: "Sand Attack", unlock: { type: "level", amount: 4 } },
 			{ name: "Arm Thrust", unlock: { type: "level", amount: 7 } },
+			{ name: "Fake Out", unlock: { type: "level", amount: 10 } },
+			{ name: "Force Palm", unlock: { type: "level", amount: 13 } },
+			{ name: "Whirlwind", unlock: { type: "level", amount: 16 } },
+			{ name: "Knock Off", unlock: { type: "level", amount: 19 } },
+			{ name: "Bulk Up", unlock: { type: "level", amount: 22 } },
+		]
+	},
+	"Hariyama": {
+		name: "Hariyama",
+		number: "297",
+		weight: {
+			pounds: 559.5,
+			kilograms: 253.8
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0297Hariyama.png",
+			"largeShiny": "src/img/shiny-pokemon/297-Hariyama.png",
+			"home": "src/img/tiny-pokemon/Hariyama.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/hariyama.mp3"
+		},
+		types: ["Fighting"],
+		tags: [],
+		abilities: ["Thick Fat", "Guts"],
+		hiddenAbilities: ["Sheer Force"],
+		stats: {
+			hp: 144,
+			attack: 120,
+			defense: 60,
+			specialAttack: 40,
+			specialDefense: 60,
+			speed: 50
+		},
+		expYield: 166,
+		evYield: {
+			hp: 2,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 5,
+			red: 3,
+			yellow: 2
+		},
+		learnset: [
+			{ name: "Brine", unlock: { type: "level", amount: 1 } },
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Focus Energy", unlock: { type: "level", amount: 1 } },
+			{ name: "Sand Attack", unlock: { type: "level", amount: 1 } },
+			{ name: "Arm Thrust", unlock: { type: "level", amount: 1 } },
 			{ name: "Fake Out", unlock: { type: "level", amount: 10 } },
 			{ name: "Force Palm", unlock: { type: "level", amount: 13 } },
 			{ name: "Whirlwind", unlock: { type: "level", amount: 16 } },
@@ -2279,6 +2459,9 @@ const pokemonData = {
 			yellow: 2,
 			purple: 5,
 		},
+		evolutions: [
+			{ name: "Drifblim", unlock: { type: "level", amount: 28 } }
+		],
 		learnset: [
 			{ name: "Minimize", unlock: { type: "level", amount: 1 } },
 			{ name: "Astonish", unlock: { type: "level", amount: 1 } },
@@ -2287,6 +2470,63 @@ const pokemonData = {
 			{ name: "Payback", unlock: { type: "level", amount: 12 } },
 			{ name: "Hex", unlock: { type: "level", amount: 16 } },
 			{ name: "Shadow Ball", unlock: { type: "level", amount: 20 } },
+		]
+	},
+	"Drifblim": {
+		name: "Drifblim",
+		number: "426",
+		weight: {
+			pounds: 33.1,
+			kilograms: 15.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0426Drifblim.png",
+			"largeShiny": "src/img/shiny-pokemon/426-Drifblim.png",
+			"home": "src/img/tiny-pokemon/Drifblim.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/drifblim.mp3"
+		},
+		types: ["Ghost", "Flying"],
+		tags: [],
+		abilities: ["Aftermath", "Unburden"],
+		hiddenAbilities: ["Flare Boost"],
+		stats: {
+			hp: 150,
+			attack: 80,
+			defense: 44,
+			specialAttack: 90,
+			specialDefense: 54,
+			speed: 80
+		},
+		expYield: 174,
+		evYield: {
+			hp: 2,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			red: 2,
+			yellow: 3,
+			purple: 5,
+		},
+		learnset: [
+			{ name: "Strength Sap", unlock: { type: "level", amount: 1 } },
+			{ name: "Minimize", unlock: { type: "level", amount: 1 } },
+			{ name: "Astonish", unlock: { type: "level", amount: 1 } },
+			{ name: "Gust", unlock: { type: "level", amount: 1 } },
+			{ name: "Focus Energy", unlock: { type: "level", amount: 1 } },
+			{ name: "Phantom Force", unlock: { type: "level", amount: 1 } }, //note: should be learned on evolution
+			{ name: "Payback", unlock: { type: "level", amount: 12 } },
+			{ name: "Hex", unlock: { type: "level", amount: 16 } },
+			{ name: "Shadow Ball", unlock: { type: "level", amount: 20 } },
+			{ name: "Spit Up", unlock: { type: "level", amount: 24 } },
+			{ name: "Swallow", unlock: { type: "level", amount: 24 } },
+			{ name: "Stockpile", unlock: { type: "level", amount: 24 } },
 		]
 	},
 	"Mismagius": {
@@ -2487,6 +2727,9 @@ const pokemonData = {
 			blue: 2,
 			purple: 2
 		},
+		evolutions: [
+			{ name: "Chansey", unlock: { type: "fourMatchGreen", amount: 10 } }
+		],
 		learnset: [
 			{ name: "Pound", unlock: { type: "level", amount: 1 } },
 			{ name: "Copycat", unlock: { type: "level", amount: 1 } },
@@ -2538,6 +2781,9 @@ const pokemonData = {
 			orange: 3,
 			green: 2
 		},
+		evolutions: [
+			{ name: "Boldore", unlock: { type: "level", amount: 25 } }
+		],
 		learnset: [
 			{ name: "Sand Attack", unlock: { type: "level", amount: 1 } },
 			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
@@ -2546,6 +2792,59 @@ const pokemonData = {
 			{ name: "Mud-Slap", unlock: { type: "level", amount: 12 } },
 			{ name: "Smack Down", unlock: { type: "level", amount: 16 } },
 			{ name: "Iron Defense", unlock: { type: "level", amount: 20 } },
+		]
+	},
+	"Boldore": {
+		name: "Boldore",
+		number: "525",
+		weight: {
+			pounds: 224.9,
+			kilograms: 102.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0525Boldore.png",
+			"largeShiny": "src/img/shiny-pokemon/525-Boldore.png",
+			"home": "src/img/tiny-pokemon/Boldore.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/boldore.mp3"
+		},
+		types: ["Rock"],
+		tags: [],
+		abilities: ["Sturdy", "Weak Armor"],
+		hiddenAbilities: ["Sand Force"],
+		stats: {
+			hp: 70,
+			attack: 105,
+			defense: 105,
+			specialAttack: 50,
+			specialDefense: 40,
+			speed: 20
+		},
+		expYield: 137,
+		evYield: {
+			hp: 0,
+			attack: 1,
+			defense: 1,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 3,
+			green: 2
+		},
+		learnset: [
+			{ name: "Power Gem", unlock: { type: "level", amount: 1 } },
+			{ name: "Sand Attack", unlock: { type: "level", amount: 1 } },
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Harden", unlock: { type: "level", amount: 1 } },
+			{ name: "Stealth Rock", unlock: { type: "level", amount: 1 } },
+			{ name: "Mud-Slap", unlock: { type: "level", amount: 12 } },
+			{ name: "Smack Down", unlock: { type: "level", amount: 16 } },
+			{ name: "Iron Defense", unlock: { type: "level", amount: 20 } },
+			{ name: "Headbutt", unlock: { type: "level", amount: 24 } },
 		]
 	},
 	"Cottonee": {
@@ -2590,6 +2889,9 @@ const pokemonData = {
 			blue: 2,
 			purple: 2
 		},
+		evolutions: [
+			{ name: "Whimsicott", unlock: { type: "fiveMatchGreen", amount: 1 } },
+		],
 		learnset: [
 			{ name: "Absorb", unlock: { type: "level", amount: 1 } },
 			{ name: "Helping Hand", unlock: { type: "level", amount: 1 } },
@@ -2601,6 +2903,76 @@ const pokemonData = {
 			{ name: "Poison Powder", unlock: { type: "level", amount: 21 } },
 			{ name: "Giga Drain", unlock: { type: "level", amount: 24 } },
 			{ name: "Charm", unlock: { type: "level", amount: 27 } },
+		]
+	},
+	"Whimsicott": {
+		name: "Whimsicott",
+		number: "547",
+		weight: {
+			pounds: 14.6,
+			kilograms: 6.6
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0547Whimsicott.png",
+			"largeShiny": "src/img/shiny-pokemon/547-Whimsicott.png",
+			"home": "src/img/tiny-pokemon/Whimsicott.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/whimsicott.mp3"
+		},
+		types: ["Grass", "Fairy"],
+		tags: [],
+		abilities: ["Prankster", "Infiltrator"],
+		hiddenAbilities: ["Chlorophyll"],
+		stats: {
+			hp: 60,
+			attack: 67,
+			defense: 85,
+			specialAttack: 77,
+			specialDefense: 75,
+			speed: 116
+		},
+		expYield: 168,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 2
+		},
+		energyMastery: {
+			yellow: 2,
+			green: 4,
+			blue: 2,
+			purple: 2
+		},
+		learnset: [
+			//I AM MAKING AN EXECUTIVE DECISION HERE THIS THING
+			//SHOULDN'T JUST LEARN EVERYTHING IN ONE BLAST
+			{ name: "Absorb", unlock: { type: "level", amount: 1 } },
+			{ name: "Helping Hand", unlock: { type: "level", amount: 1 } },
+			{ name: "Fairy Wind", unlock: { type: "level", amount: 3 } },
+			{ name: "Stun Spore", unlock: { type: "level", amount: 6 } },
+			{ name: "Tailwind", unlock: { type: "level", amount: 8 } },
+			// { name: "Moonblast", unlock: { type: "level", amount: 10 } },
+			{ name: "Mega Drain", unlock: { type: "level", amount: 12 } },
+			{ name: "Razor Leaf", unlock: { type: "level", amount: 15 } },
+			{ name: "Gust", unlock: { type: "level", amount: 16 } },
+			{ name: "Growth", unlock: { type: "level", amount: 18 } },
+			// { name: "Memento", unlock: { type: "level", amount: 20 } },
+			{ name: "Poison Powder", unlock: { type: "level", amount: 21 } },
+			{ name: "Giga Drain", unlock: { type: "level", amount: 24 } },
+			{ name: "Charm", unlock: { type: "level", amount: 27 } },
+			{ name: "Leech Seed", unlock: { type: "level", amount: 30 } },
+			// { name: "Cotton Spore", unlock: { type: "level", amount: 33 } },
+			// { name: "Energy Ball", unlock: { type: "level", amount: 36 } },
+			// { name: "Sunny Day", unlock: { type: "level", amount: 39 } },
+			// { name: "Endeavor", unlock: { type: "level", amount: 42 } },
+			// { name: "Hurricane", unlock: { type: "level", amount: 44 } },
+			// { name: "Cotton Guard", unlock: { type: "level", amount: 45 } },
+			// { name: "Solar Beam", unlock: { type: "level", amount: 48 } },
 		]
 	},
 	"Petilil": {
@@ -2645,6 +3017,10 @@ const pokemonData = {
 			green: 3,
 			blue: 1
 		},
+		evolutions: [
+			{ name: "Lilligant", unlock: { type: "fiveMatchGreen", amount: 1 } },
+			{ name: "Lilligant-Hisui", unlock: { type: "fiveMatchOrange", amount: 1 } },
+		],
 		learnset: [
 			{ name: "Absorb", unlock: { type: "level", amount: 1 } },
 			{ name: "Growth", unlock: { type: "level", amount: 1 } },
@@ -2655,6 +3031,151 @@ const pokemonData = {
 			{ name: "Magical Leaf", unlock: { type: "level", amount: 15 } },
 			{ name: "Sleep Powder", unlock: { type: "level", amount: 18 } },
 			{ name: "Giga Drain", unlock: { type: "level", amount: 21 } },
+		]
+	},
+	"Lilligant": {
+		name: "Lilligant",
+		number: "549",
+		weight: {
+			pounds: 35.9,
+			kilograms: 16.3
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0549Lilligant.png",
+			"largeShiny": "src/img/shiny-pokemon/549-Lilligant.png",
+			"home": "src/img/tiny-pokemon/Lilligant.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/lilligant.mp3"
+		},
+		types: ["Grass"],
+		tags: [],
+		abilities: ["Chlorophyll", "Own Tempo"],
+		hiddenAbilities: ["Leaf Guard"],
+		stats: {
+			hp: 70,
+			attack: 60,
+			defense: 75,
+			specialAttack: 110,
+			specialDefense: 75,
+			speed: 90
+		},
+		expYield: 168,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 2,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			yellow: 1,
+			green: 6,
+			blue: 2,
+			purple: 1
+		},
+		learnset: [
+			//Executive decision again
+			{ name: "Absorb", unlock: { type: "level", amount: 1 } },
+			{ name: "Growth", unlock: { type: "level", amount: 1 } },
+			{ name: "Helping Hand", unlock: { type: "level", amount: 3 } },
+			{ name: "Stun Spore", unlock: { type: "level", amount: 6 } },
+			{ name: "Mega Drain", unlock: { type: "level", amount: 9 } },
+			// { name: "Teeter Dance", unlock: { type: "level", amount: 10 } },
+			{ name: "Charm", unlock: { type: "level", amount: 12 } },
+			{ name: "Magical Leaf", unlock: { type: "level", amount: 15 } },
+			{ name: "Sleep Powder", unlock: { type: "level", amount: 18 } },
+			{ name: "Giga Drain", unlock: { type: "level", amount: 21 } },
+			{ name: "Leech Seed", unlock: { type: "level", amount: 24 } },
+			// { name: "After You", unlock: { type: "level", amount: 27 } },
+			// { name: "Quiver Dance", unlock: { type: "level", amount: 28 } },
+			// { name: "Energy Ball", unlock: { type: "level", amount: 30 } },
+			{ name: "Synthesis", unlock: { type: "level", amount: 33 } },
+			// { name: "Sunny Day", unlock: { type: "level", amount: 36 } },
+			// { name: "Entrainment", unlock: { type: "level", amount: 39 } },
+			// { name: "Leaf Storm", unlock: { type: "level", amount: 42 } },
+			// { name: "Petal Dance", unlock: { type: "level", amount: 46 } },
+			// { name: "Petal Blizzard", unlock: { type: "level", amount: 50 } },
+		]
+	},
+	"Lilligant-Hisui": {
+		name: "Lilligant",
+		id: "Lilligant-Hisui",
+		number: "549h",
+		weight: {
+			pounds: 42.3,
+			kilograms: 19.2
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0549Lilligant-Hisui.png",
+			"largeShiny": "src/img/shiny-pokemon/549-Lilligant-Hisui.png",
+			"home": "src/img/tiny-pokemon/Lilligant-Hisui.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/lilligant.mp3"
+		},
+		types: ["Grass", "Fighting"],
+		tags: [],
+		abilities: ["Chlorophyll", "Hustle"],
+		hiddenAbilities: ["Leaf Guard"],
+		stats: {
+			hp: 70,
+			attack: 105,
+			defense: 75,
+			specialAttack: 50,
+			specialDefense: 75,
+			speed: 105
+		},
+		expYield: 168,
+		evYield: {
+			hp: 0,
+			attack: 1,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 3,
+			yellow: 1,
+			green: 3,
+			blue: 2,
+			purple: 1
+		},
+		learnset: [
+			//Executive decision again
+			{ name: "Absorb", unlock: { type: "level", amount: 1 } },
+			{ name: "Growth", unlock: { type: "level", amount: 1 } },
+			{ name: "Rock Smash", unlock: { type: "level", amount: 1 } }, //note: should be learned on evolution
+			{ name: "Helping Hand", unlock: { type: "level", amount: 3 } },
+			{ name: "Leafage", unlock: { type: "level", amount: 5 } },
+			{ name: "Mega Drain", unlock: { type: "level", amount: 9 } },
+			{ name: "Stun Spore", unlock: { type: "level", amount: 9 } },
+			// { name: "Defog", unlock: { type: "level", amount: 12 } },
+			{ name: "Poison Powder", unlock: { type: "level", amount: 15 } },
+			{ name: "Magical Leaf", unlock: { type: "level", amount: 18 } },
+			// { name: "Energy Ball", unlock: { type: "level", amount: 21 } },
+			{ name: "Giga Drain", unlock: { type: "level", amount: 23 } },
+			{ name: "Leech Seed", unlock: { type: "level", amount: 25 } },
+			// { name: "After You", unlock: { type: "level", amount: 27 } },
+			{ name: "Sleep Powder", unlock: { type: "level", amount: 29 } },
+			{ name: "Synthesis", unlock: { type: "level", amount: 33 } },
+			// { name: "Drain Punch", unlock: { type: "level", amount: 34 } },
+			// { name: "Sunny Day", unlock: { type: "level", amount: 36 } },
+			// { name: "Recover", unlock: { type: "level", amount: 37 } },
+			// { name: "Leaf Blade", unlock: { type: "level", amount: 37 } },
+			// { name: "Entrainment", unlock: { type: "level", amount: 39 } },
+			// { name: "Mega Kick", unlock: { type: "level", amount: 40 } },
+			// { name: "Victory Dance", unlock: { type: "level", amount: 42 } },
+			// { name: "Leaf Storm", unlock: { type: "level", amount: 47 } },
+			// { name: "Petal Blizzard", unlock: { type: "level", amount: 50 } },
+			// { name: "Petal Dance", unlock: { type: "level", amount: 53 } },
+			// { name: "Axe Kick", unlock: { type: "level", amount: 55 } },
+			// { name: "Close Combat", unlock: { type: "level", amount: 57 } },
+			// { name: "Solar Blade", unlock: { type: "level", amount: 60 } },
 		]
 	},
 	"Rufflet": {
@@ -2802,11 +3323,70 @@ const pokemonData = {
 			orange: 4,
 			purple: 2
 		},
+		evolutions: [
+			{ name: "Pangoro", unlock: { type: "levelWithPartyMember", amount: 32, partyMember: {
+				types: ["Dark"]
+			} } },
+		],
 		learnset: [
 			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
 			{ name: "Leer", unlock: { type: "level", amount: 1 } },
 			{ name: "Arm Thrust", unlock: { type: "level", amount: 4 } },
 			{ name: "Taunt", unlock: { type: "level", amount: 8 } },
+			{ name: "Circle Throw", unlock: { type: "level", amount: 12 } },
+			{ name: "Low Sweep", unlock: { type: "level", amount: 16 } },
+			{ name: "Work Up", unlock: { type: "level", amount: 20 } },
+		]
+	},
+	"Pangoro": {
+		name: "Pangoro",
+		number: "675",
+		weight: {
+			pounds: 299.8,
+			kilograms: 136.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0675Pangoro.png",
+			"largeShiny": "src/img/shiny-pokemon/675-Pangoro.png",
+			"home": "src/img/tiny-pokemon/Pangoro.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/pangoro.mp3"
+		},
+		types: ["Fighting", "Dark"],
+		tags: [],
+		abilities: ["Iron Fist", "Mold Breaker"],
+		hiddenAbilities: ["Scrappy"],
+		stats: {
+			hp: 95,
+			attack: 124,
+			defense: 78,
+			specialAttack: 69,
+			specialDefense: 71,
+			speed: 58
+		},
+		expYield: 173,
+		evYield: {
+			hp: 0,
+			attack: 2,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 4,
+			purple: 4,
+			red: 2
+		},
+		learnset: [
+			{ name: "Night Slash", unlock: { type: "level", amount: 1 } }, //note: should be learned on evolution
+			// { name: "Bullet Punch", unlock: { type: "level", amount: 1 } },
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Leer", unlock: { type: "level", amount: 1 } },
+			{ name: "Arm Thrust", unlock: { type: "level", amount: 1 } },
+			{ name: "Taunt", unlock: { type: "level", amount: 1 } },
 			{ name: "Circle Throw", unlock: { type: "level", amount: 12 } },
 			{ name: "Low Sweep", unlock: { type: "level", amount: 16 } },
 			{ name: "Work Up", unlock: { type: "level", amount: 20 } },
@@ -2853,6 +3433,9 @@ const pokemonData = {
 			green: 5,
 			yellow: 3
 		},
+		evolutions: [
+			{ name: "Dartrix", unlock: { type: "level", amount: 17 } }
+		],
 		learnset: [
 			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
 			{ name: "Growl", unlock: { type: "level", amount: 1 } },
@@ -2865,6 +3448,63 @@ const pokemonData = {
 			{ name: "Pluck", unlock: { type: "level", amount: 21 } },
 			{ name: "Nasty Plot", unlock: { type: "level", amount: 24 } },
 			{ name: "Sucker Punch", unlock: { type: "level", amount: 27 } },
+		]
+	},
+	"Dartrix": {
+		name: "Dartrix",
+		number: "723",
+		weight: {
+			pounds: 35.3,
+			kilograms: 16.0
+		},
+		imageFacing: "right",
+		imageSources: {
+			"large": "src/img/pokemon/0723Dartrix.png",
+			"largeShiny": "src/img/shiny-pokemon/723-Dartrix.png",
+			"home": "src/img/tiny-pokemon/Dartrix.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/dartrix.mp3"
+		},
+		types: ["Grass"],
+		tags: [],
+		abilities: ["Overgrow"],
+		hiddenAbilities: ["Long Reach"],
+		stats: {
+			hp: 78,
+			attack: 75,
+			defense: 75,
+			specialAttack: 70,
+			specialDefense: 70,
+			speed: 52
+		},
+		expYield: 147,
+		evYield: {
+			hp: 2,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			red: 1,
+			yellow: 3,
+			green: 5,
+			purple: 1
+		},
+		learnset: [
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Growl", unlock: { type: "level", amount: 1 } },
+			{ name: "Leafage", unlock: { type: "level", amount: 1 } },
+			{ name: "Astonish", unlock: { type: "level", amount: 1 } },
+			{ name: "Peck", unlock: { type: "level", amount: 9 } },
+			{ name: "Shadow Sneak", unlock: { type: "level", amount: 12 } },
+			{ name: "Razor Leaf", unlock: { type: "level", amount: 15 } },
+			{ name: "Synthesis", unlock: { type: "level", amount: 20 } },
+			{ name: "Pluck", unlock: { type: "level", amount: 25 } },
+			{ name: "Nasty Plot", unlock: { type: "level", amount: 30 } },
+			{ name: "Sucker Punch", unlock: { type: "level", amount: 35 } },
 		]
 	},
 	"Litten": {
@@ -2908,6 +3548,9 @@ const pokemonData = {
 			red: 5,
 			purple: 3
 		},
+		evolutions: [
+			{ name: "Torracat", unlock: { type: "level", amount: 17 } }
+		],
 		learnset: [
 			{ name: "Scratch", unlock: { type: "level", amount: 1 } },
 			{ name: "Growl", unlock: { type: "level", amount: 1 } },
@@ -2920,6 +3563,63 @@ const pokemonData = {
 			{ name: "Fire Fang", unlock: { type: "level", amount: 21 } },
 			{ name: "Scary Face", unlock: { type: "level", amount: 24 } },
 			{ name: "Swagger", unlock: { type: "level", amount: 27 } },
+		]
+	},
+	"Torracat": {
+		name: "Torracat",
+		number: "726",
+		weight: {
+			pounds: 55.1,
+			kilograms: 25.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0726Torracat.png",
+			"largeShiny": "src/img/shiny-pokemon/726-Torracat.png",
+			"home": "src/img/tiny-pokemon/Torracat.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/torracat.mp3"
+		},
+		types: ["Fire"],
+		tags: [],
+		abilities: ["Blaze"],
+		hiddenAbilities: ["Intimidate"],
+		stats: {
+			hp: 65,
+			attack: 85,
+			defense: 50,
+			specialAttack: 80,
+			specialDefense: 50,
+			speed: 90
+		},
+		expYield: 147,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 2
+		},
+		energyMastery: {
+			red: 5,
+			orange: 1,
+			yellow: 1,
+			purple: 3
+		},
+		learnset: [
+			{ name: "Scratch", unlock: { type: "level", amount: 1 } },
+			{ name: "Growl", unlock: { type: "level", amount: 1 } },
+			{ name: "Ember", unlock: { type: "level", amount: 1 } },
+			{ name: "Lick", unlock: { type: "level", amount: 1 } },
+			{ name: "Roar", unlock: { type: "level", amount: 9 } },
+			{ name: "Fury Swipes", unlock: { type: "level", amount: 12 } },
+			{ name: "Bite", unlock: { type: "level", amount: 15 } },
+			{ name: "Double Kick", unlock: { type: "level", amount: 20 } },
+			{ name: "Fire Fang", unlock: { type: "level", amount: 25 } },
+			{ name: "Scary Face", unlock: { type: "level", amount: 30 } },
+			{ name: "Swagger", unlock: { type: "level", amount: 35 } },
 		]
 	},
 	"Popplio": {
@@ -2963,6 +3663,9 @@ const pokemonData = {
 			blue: 5,
 			purple: 3
 		},
+		evolutions: [
+			{ name: "Brionne", unlock: { type: "level", amount: 17 } }
+		],
 		learnset: [
 			{ name: "Pound", unlock: { type: "level", amount: 1 } },
 			{ name: "Growl", unlock: { type: "level", amount: 1 } },
@@ -2974,7 +3677,63 @@ const pokemonData = {
 			{ name: "Sing", unlock: { type: "level", amount: 18 } },
 			{ name: "Bubble Beam", unlock: { type: "level", amount: 21 } },
 			{ name: "Encore", unlock: { type: "level", amount: 24 } },
-			{ name: "Phantom Force", unlock: { type: "level", amount: 1 } },
+			{ name: "Fling", unlock: { type: "level", amount: 1 } },
+		]
+	},
+	"Brionne": {
+		name: "Brionne",
+		number: "729",
+		weight: {
+			pounds: 38.6,
+			kilograms: 17.5
+		},
+		imageFacing: "right",
+		imageSources: {
+			"large": "src/img/pokemon/0729Brionne.png",
+			"largeShiny": "src/img/shiny-pokemon/729-Brionne.png",
+			"home": "src/img/tiny-pokemon/Brionne.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/brionne.mp3"
+		},
+		types: ["Water"],
+		tags: [],
+		abilities: ["Torrent"],
+		hiddenAbilities: ["Liquid Voice"],
+		stats: {
+			hp: 60,
+			attack: 69,
+			defense: 69,
+			specialAttack: 91,
+			specialDefense: 81,
+			speed: 50
+		},
+		expYield: 147,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 2,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			yellow: 1,
+			green: 1,
+			blue: 5,
+			purple: 3
+		},
+		learnset: [
+			{ name: "Pound", unlock: { type: "level", amount: 1 } },
+			{ name: "Growl", unlock: { type: "level", amount: 1 } },
+			{ name: "Water Gun", unlock: { type: "level", amount: 1 } },
+			{ name: "Disarming Voice", unlock: { type: "level", amount: 1 } },
+			{ name: "Aqua Jet", unlock: { type: "level", amount: 9 } },
+			{ name: "Baby-Doll Eyes", unlock: { type: "level", amount: 12 } },
+			{ name: "Icy Wind", unlock: { type: "level", amount: 15 } },
+			{ name: "Sing", unlock: { type: "level", amount: 20 } },
+			{ name: "Bubble Beam", unlock: { type: "level", amount: 25 } },
+			{ name: "Encore", unlock: { type: "level", amount: 30 } },
 		]
 	},
 	"Pikipek": {

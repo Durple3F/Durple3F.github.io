@@ -1009,6 +1009,9 @@
 		"Hypno": {
 			"name": "Hypno"
 		},
+		"Chansey": {
+			"name": "Chansey"
+		},
 		"Ledyba": {
 			"name": "Ledyba"
 		},
@@ -1039,14 +1042,23 @@
 		"Wingull": {
 			"name": "Wingull"
 		},
+		"Pelipper": {
+			"name": "Pelipper"
+		},
 		"Makuhita": {
 			"name": "Makuhita"
+		},
+		"Hariyama": {
+			"name": "Hariyama"
 		},
 		"Bagon": {
 			"name": "Bagon"
 		},
 		"Drifloon": {
 			"name": "Drifloon"
+		},
+		"Drifblim": {
+			"name": "Drifblim"
 		},
 		"Mismagius": {
 			"name": "Mismagius"
@@ -1063,11 +1075,23 @@
 		"Roggenrola": {
 			"name": "Roggenrola"
 		},
+		"Boldore": {
+			"name": "Boldore"
+		},
 		"Cottonee": {
 			"name": "Cottonee"
 		},
+		"Whimsicott": {
+			"name": "Whimsicott"
+		},
 		"Petilil": {
 			"name": "Petilil"
+		},
+		"Lilligant": {
+			"name": "Lilligant"
+		},
+		"Lilligant-Hisui": {
+			"name": "Lilligant"
 		},
 		"Rufflet": {
 			"name": "Rufflet"
@@ -1078,14 +1102,26 @@
 		"Pancham": {
 			"name": "Pancham"
 		},
+		"Pangoro": {
+			"name": "Pangoro"
+		},
 		"Rowlet": {
 			"name": "Rowlet"
+		},
+		"Dartrix": {
+			"name": "Dartrix"
 		},
 		"Litten": {
 			"name": "Litten"
 		},
+		"Torracat": {
+			"name": "Torracat"
+		},
 		"Popplio": {
 			"name": "Popplio"
+		},
+		"Brionne": {
+			"name": "Brionne"
 		},
 		"Pikipek": {
 			"name": "Pikipek"
@@ -1178,8 +1214,8 @@
 		},
 		"Baby-Doll Eyes": {
 			"name": "Baby-Doll Eyes",
-			"description": "Lowers the opponent's attack stat by 1 stage. Then, the opponent becomes unable to switch Pokémon for a turn.",
-			"shortDescription": "Lowers enemy attack and prevents switching"
+			"description": "Lowers the opponent's Attack stat by 1 stage. Then, the opponent becomes unable to switch Pokémon for a turn.",
+			"shortDescription": "Lowers enemy Attack and prevents switching"
 		},
 		"Baton Pass": {
 			"name": "Baton Pass",
@@ -1213,6 +1249,11 @@
 			"description": "Removes the Light Screen and Reflect status effects from the opponent. Then, deals damage.",
 			"shortDescription": "Removes damage reductions before damage"
 		},
+		"Brine": {
+			"name": "Brine",
+			"description": "Deals damage. If the user has less than half their HP remaining, the damage is dealt with twice as much power instead.",
+			"shortDescription": "Deals damage based on remaining HP"
+		},
 		"Brutal Swing": {
 			"name": "Brutal Swing",
 			"description": "Deals damage. Converts half of all Grass and Psychic tiles, rounded up, into Dark tiles. Dark tiles are worth 1 purple energy AND 1 red energy each.",
@@ -1245,8 +1286,8 @@
 		},
 		"Charm": {
 			"name": "Charm",
-			"description": "Lowers the opponent's attack stat by 1 stage.",
-			"shortDescription": "Lowers enemy attack"
+			"description": "Lowers the opponent's Attack stat by 1 stage.",
+			"shortDescription": "Lowers enemy Attack"
 		},
 		"Circle Throw": {
 			"name": "Circle Throw",
@@ -1409,6 +1450,11 @@
 			"description": "Applies Confused to the opponent. However, the opponent's Special Attack is raised a stage. After a Confused Pokémon uses a move, there's a 50% chance for their turn to end.",
 			"shortDescription": "Confuses the opponent but buffs them"
 		},
+		"Fling": {
+			"name": "Fling",
+			"description": "Drains all energy from the user. This move deals damage with 3 additional power for each point of energy removed.",
+			"shortDescription": "Spends all energy to deal damage"
+		},
 		"Focus Energy": {
 			"name": "Focus Energy",
 			"description": "Raises the user's Attack stat by 2 stages.",
@@ -1436,12 +1482,12 @@
 		},
 		"Growl": {
 			"name": "Growl",
-			"description": "Lowers the opponent's attack stat by 1 stage. <span class='z-move-description'>Then raises the user's defense by 1 stage.</span>",
-			"shortDescription": "Lowers enemy attack"
+			"description": "Lowers the opponent's Attack stat by 1 stage. <span class='z-move-description'>Then raises the user's defense by 1 stage.</span>",
+			"shortDescription": "Lowers enemy Attack"
 		},
 		"Growth": {
 			"name": "Growth",
-			"description": "Raises the user's attack stat by 1 stage. Then, 3 random Grass tiles are selected. Tiles diagonally adjacent to those tiles become Grass tiles.",
+			"description": "Raises the user's Attack stat by 1 stage. Then, 3 random Grass tiles are selected. Tiles diagonally adjacent to those tiles become Grass tiles.",
 			"shortDescription": "Grows Grass diagonally"
 		},
 		"Gust": {
@@ -1550,6 +1596,11 @@
 			"description": "Deals damage. Lowers the chance of Grass tiles spawning by 50%, and makes Dark tiles more likely to spawn instead. Dark tiles are worth 1 purple energy AND 1 red energy each.",
 			"shortDescription": "Deals light damage and spawns Dark tiles"
 		},
+		"Life Dew": {
+			"name": "Life Dew",
+			"description": "For each usable Pokémon remaining in the user's party, that Pokémon is healed for 25% of their Max HP.",
+			"shortDescription": "Heals each of your Pokémon"
+		},
 		"Light Screen": {
 			"name": "Light Screen",
 			"description": "Gives the user the Light Screen status for five turns. Special moves used against a Pokémon with Light Screen have their power halved.",
@@ -1608,12 +1659,12 @@
 		"Mystical Fire": {
 			"name": "Mystical Fire",
 			"description": "Deals damage. Then, lowers the opponent's Special Attack a stage and empowers 3 random Fire tiles. Whenever either trainer matches an empowered Fire tile, it provides twice its usual energy, and their active Pokémon deals damage to the opponent with power equal to their level.",
-			"shortDescription": "Lowers enemy special attack and empowers Fire tiles"
+			"shortDescription": "Lowers enemy Special Attack and empowers Fire tiles"
 		},
 		"Nasty Plot": {
 			"name": "Nasty Plot",
-			"description": "Raises the user's special attack stat by 2 stages.",
-			"shortDescription": "Raises user's special attack"
+			"description": "Raises the user's Special Attack stat by 2 stages.",
+			"shortDescription": "Raises user's Special Attack"
 		},
 		"Night Shade": {
 			"name": "Night Shade",
@@ -1652,7 +1703,7 @@
 		},
 		"Play Nice": {
 			"name": "Play Nice",
-			"description": "Lowers the opponent's attack stat by 1 stage. Then, the user chooses two tiles. Those tiles are swapped.",
+			"description": "Lowers the opponent's Attack stat by 1 stage. Then, the user chooses two tiles. Those tiles are swapped.",
 			"shortDescription": "Debuffs opponent and disrupts board"
 		},
 		"Pluck": {
@@ -1688,7 +1739,7 @@
 		"Power Gem": {
 			"name": "Power Gem",
 			"description": "Deals damage. Then, a circle of tiles near the center of the board are empowered. Empowered tiles are worth twice their usual energy values, and provide unique effects based on what color was matched.",
-			"shortDescription": "Sacrifices energy for the next attack"
+			"shortDescription": "Empowers tiles near the center"
 		},
 		"Power-Up Punch": {
 			"name": "Power-Up Punch",
@@ -1871,6 +1922,11 @@
 			"name": "Strength",
 			"description": "Deals damage. Then, if the target is still active, the user chooses a tile. Tiles in that column or the adjacent columns are shifted upwards by 4 tiles.",
 			"shortDescription": "Raises three columns"
+		},
+		"Strength Sap": {
+			"name": "Strength Sap",
+			"description": "Lowers the opponent's Attack stat by 1 stage. Then, heals the user an amount of HP equal to the opponent's Attack stat prior to the debuff.",
+			"shortDescription": "Lowers enemy Attack and heals"
 		},
 		"String Shot": {
 			"name": "String Shot",
@@ -2117,6 +2173,11 @@
 			"shortDescription": "Raises this Pokémon's Attack 1 stage when its opponent lowers its stats",
 			"longDescription": "When this Pokémon receives a debuff from another source that lowers its stats, its Attack is increased by 1 stage."
 		},
+		"Drizzle": {
+			"name": "Drizzle",
+			"shortDescription": "Water tiles are more likely for 20 turns",
+			"longDescription": "When this Pokémon switches in, Water tiles become twice as likely to spawn for 20 turns. (This effect doesn't stack.)"
+		},
 		"Early Bird": {
 			"name": "Early Bird",
 			"shortDescription": "Sleep lasts half as long",
@@ -2166,6 +2227,11 @@
 			"name": "Guts",
 			"shortDescription": "Increases move power by 50% while this Pokémon has a status condition",
 			"longDescription": "As long as this Pokémon has a non-volatile status effect, the power of all of its moves is increased by 50%."
+		},
+		"Healer": {
+			"name": "Healer",
+			"shortDescription": "Healing done is increased by 10%",
+			"longDescription": "Healing effects of this Pokémon's moves heal 10% more HP, rounded down."
 		},
 		"Honey Gather": {
 			"name": "Honey Gather",
@@ -2739,6 +2805,7 @@
 	},
 	"evolution-requirements": {
 		"level": "This Pokémon needs to be at least level %c% to evolve into %c-pname%.",
+		"levelWithPartyMember": "This Pokémon needs to be at least level %c% while another Pokémon in the party is %c%-type to evolve into %c-pname%.",
 		"friendship": "This Pokémon needs to have at least %c% friendship to evolve into %c-pname%.",
 		"five-match-red": "Match at least %c% five-in-a-row or better of Fire tiles while this Pokémon is active for it to evolve into %c-pname%",
 		"five-match-red-plural": "Match at least %c% five-in-a-rows or better of Fire tiles while this Pokémon is active for it to evolve into %c-pname%",
@@ -2768,6 +2835,27 @@
 	"stats": {
 		"weight": "Weight",
 		"friendship": "Friendship"
+	},
+	"types": {
+		"Normal": "Normal",
+		"Fighting": "Fighting",
+		"Flying": "Flying",
+		"Poison": "Poison",
+		"Ground": "Ground",
+		"Rock": "Rock",
+		"Bug": "Bug",
+		"Ghost": "Ghost",
+		"Steel": "Steel",
+		"Fire": "Fire",
+		"Water": "Water",
+		"Grass": "Grass",
+		"Electric": "Electric",
+		"Psychic": "Psychic",
+		"Ice": "Ice",
+		"Dragon": "Dragon",
+		"Dark": "Dark",
+		"Fairy": "Fairy",
+		"Typeless": "Typeless"
 	},
 	"settings": {
 		"toggle-skip-seen-dialogue": "Skip seen dialogue?",

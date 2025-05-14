@@ -2009,7 +2009,7 @@ class Round {
 		for (let pokemon of canEvolve) {
 			let evolutions = pokemon.data.evolutions
 			let possibilities = evolutions.filter(evo => {
-				return checkIfPokemonMeetsRequirements(pokemon, evo.unlock)
+				return checkIfPokemonMeetsRequirements(pokemon, evo.unlock, pokemonList)
 			})
 			//TODO if there are multiple options, the player should get to choose
 			if (!possibilities.length) continue
@@ -3458,7 +3458,7 @@ class Round {
 
 		//Moxie triggers as a move finishes
 		moveUseObj.promise = moveUseObj.promise.then(() => {
-			if (!isPokemonUsable(otherPokemon) && (pokemon.hasAbility("Moxie") || true)){
+			if (!isPokemonUsable(otherPokemon) && pokemon.hasAbility("Moxie")){
 				pokemon.addStatusEffect({
 					name: "moxie-powered-up",
 					type: "stat",
@@ -5074,6 +5074,23 @@ class Round {
 			}
 		}
 
+		//Drizzle makes blue tiles more likely for a while
+		if (pokemon.hasAbility("Drizzle")){
+			this.addStatusEffect({
+				name: "drizzle-weights",
+				type: "tile-weight-alteration",
+				stacks: false,
+				volatile: true,
+				turns: 20,
+				weights: {
+					blue: {
+						change: 2,
+						operation: "multiply"
+					}
+				}
+			})
+		}
+
 		let sounds = pokemon.getAllSounds()
 		let cryUrl = sounds?.cry
 		if (cryUrl && !pokemon.gameRoundData.hasCried) {
@@ -5224,7 +5241,20 @@ class Round {
 	}
 
 	addStatusEffect(statusEffect) {
-		this.statusEffects.push(statusEffect)
+		let existingCopies = this.statusEffects.filter(status2 => {
+			return statusEffect.name && status2.name === statusEffect.name
+		})
+		let prevented = false
+		let stacks = statusEffect.stacks
+		if (existingCopies.length && !stacks){
+			prevented = true
+		} else if (typeof stacks === "number" && existingCopies.length >= stacks){
+			prevented = true
+		}
+
+		if (!prevented){
+			this.statusEffects.push(statusEffect)
+		}
 	}
 	removeStatus(statusEffect) {
 		let index = this.statusEffects.indexOf(statusEffect)

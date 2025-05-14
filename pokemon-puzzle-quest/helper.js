@@ -358,6 +358,7 @@ function fixLearnsets() {
 	}
 	if (failsafe >= 100) {
 		console.warn("Failed to fix some pokemon's learnsets")
+		console.log(evolvedForms)
 	}
 
 	//Then, make sure that all pokemon technically *can* use moves not in their learnset,

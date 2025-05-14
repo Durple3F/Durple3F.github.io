@@ -551,6 +551,37 @@ const pokemonMoveData = {
 			{ type: "damage" }
 		]
 	},
+	//Deals extra damage while below half health
+	"Brine": {
+		name: "Brine",
+		type: "Water",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing"],
+		pp: 10,
+		power: 65,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			red: 3,
+			blue: 6,
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Brine.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-hp", target: "user" },
+			{ type: "get-max-hp", target: "user" },
+			{ type: "divide-numbers" },
+			{ type: "load-value", value: 0.5 },
+			{ type: "jump-if-less-than", jumpTo: "big-damage" },
+			{ type: "damage" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "load-value", value: 2 },
+			{ type: "damage", multiplicativePower: -1, label: "big-damage" }
+		],
+	},
 	//Replaces some Grass and Water tiles with Dark tiles
 	"Brutal Swing": {
 		name: "Brutal Swing",
@@ -2026,6 +2057,34 @@ const pokemonMoveData = {
 			}
 		]
 	},
+	//Deals damage based on how much energy you have stored up
+	"Fling": {
+		name: "Fling",
+		type: "Dark",
+		category: "Physical",
+		strategy: "special",
+		tags: ["damage-dealing"],
+		pp: 10,
+		power: 0,
+		accuracy: 100,
+		rechargeTurns: 3,
+		energy: {},
+		sounds: {
+			"attack": "src/audio/attacks/Fling.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-total-energy", target: "user" },
+			{ type: "load-value", value: 3 },
+			{ type: "multiply-numbers" },
+			{ type: "damage", additivePower: -1 },
+			{ type: "get-energy-values", target: "user" },
+			{ type: "load-value", value: -1 },
+			{ type: "multiply-energy", amounts: -2, scale: -1 },
+			{ type: "gain-energy", amounts: -1, target: "user" },
+			{ type: "log-value" },
+		],
+	},
 	//Raises attack 2
 	"Focus Energy": {
 		name: "Focus Energy",
@@ -2957,6 +3016,57 @@ const pokemonMoveData = {
 			{ type: "multiply-numbers" },
 			{ type: "change-tile-weight", tileType: "black", add: -1 },
 		]
+	},
+	//Heals all of your non-fainted pokemon
+	"Life Dew": {
+		name: "Life Dew",
+		type: "Water",
+		category: "Status",
+		strategy: "special",
+		pp: 10,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 5,
+		energy: {
+			green: 5,
+			blue: 7,
+			purple: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Heal.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-viable-pokemon", target: "user" },
+			{ type: "save-variable", name: "pokemon", save: -1 },
+			{ type: "get-list-length", list: -1 },
+			{ type: "save-variable", name: "length", save: -1 },
+			{ type: "load-value", value: 0 },
+			{ type: "save-variable", name: "counter", save: -1 },
+			
+			{ type: "load-variable", name: "counter" },
+			{ type: "load-variable", name: "length" },
+			{ type: "jump-if-less-than", jumpTo: "startLoop" },
+			{ type: "jump", jumpTo: "endLoop" },
+
+			{ type: "load-variable", name: "pokemon", label: "startLoop" },
+			{ type: "load-variable", name: "counter" },
+			{ type: "get-element-from-list", list: -2, index: -1 },
+			{ type: "get-max-hp", pokemon: -1 },
+			{ type: "load-value", value: 0.25 },
+			{ type: "multiply-numbers", round: "up" },
+			{ type: "heal", pokemon: -4, amount: -1 },
+
+			{ type: "load-variable", name: "counter" },
+			{ type: "load-value", value: 1 },
+			{ type: "add-numbers" },
+			{ type: "save-variable", name: "counter", save: -1 },
+			{ type: "load-variable", name: "length" },
+			{ type: "jump-if-less-than", jumpTo: "startLoop" },
+			{ type: "jump", jumpTo: "endLoop" },
+
+			{ type: "do-nothing", label: "endLoop" }
+		],
 	},
 	//Half damage from special moves for 5 turns
 	"Light Screen": {
@@ -5123,6 +5233,41 @@ const pokemonMoveData = {
 			{ type: "shift-tiles", selection: -3, xOffset: -1, yOffset: -2 },
 		]
 	},
+	//Debuffs enemy attack, and heals HP equal to their old attack
+	"Strength Sap": {
+		name: "Strength Sap",
+		type: "Grass",
+		category: "Status",
+		strategy: "debuff-opponent",
+		tags: ["healing"],
+		pp: 10,
+		power: null,
+		accuracy: 100,
+		rechargeTurns: 3,
+		energy: {
+			red: 3,
+			green: 5,
+			purple: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Absorb part 1.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-stat", which: "attack", target: "opponent" },
+			{ type: "save-variable", name: "attack", save: -1 },
+			{
+				type: "apply-debuff", target: "opponent", debuff: {
+					type: "stat",
+					class: "debuff",
+					stat: "attack",
+					amount: -1
+				}
+			},
+			{ type: "load-variable", name: "attack" },
+			{ type: "heal", target: "user", amount: -1 },
+		],
+	},
 	//Lowers opponent's speed 2
 	"String Shot": {
 		name: "String Shot",
@@ -6454,9 +6599,9 @@ for (let moveName in pokemonMoveData){
 	){
 		move.tags.push("has-additional-effects")
 	}
-	if (move.sounds && !Object.values(move.sounds).some(v => v.includes(moveName))){
-		console.warn("Weird sound", moveName)
-	}
+	// if (move.sounds && !Object.values(move.sounds).some(v => v.includes(moveName))){
+	// 	console.warn("Weird sound", moveName)
+	// }
 }
 for (let name in pokemonData) {
 	pokemonData[name].learnset.splice(0, 0, {

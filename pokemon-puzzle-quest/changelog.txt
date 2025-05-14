@@ -1,7 +1,12 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-5/14 (33.2k lines):
-	- Added Phantom Force
+5/14 (34.4k lines):
+	- Added Pelipper, Hariyama, Drifblim, Chansey, Boldore, Whimsicott(*), Lilligant(*), Hisuian Lilligant (*), Pangoro
+	- Finally added Dartrix, Torracat, and Brionne!
+	- Added Phantom Force, Brine, Strength Sap, Life Dew, Fling
+	- Added Drizzle, Healer
+	- Added a new type of evolution requirement
+	- Fixed the way that hovering over level buttons while the screen was fading out would still show the tooltip
 
 5/13 (33.2k lines):
 	- Added Golbat, Alolan Dugtrio, Alolan Persian, Arcanine, Kadabra, Hypno, Ledian, Ariados, Honchkrow, Mismagius

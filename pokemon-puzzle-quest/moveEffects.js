@@ -326,8 +326,12 @@ const pokemonMoveEffects = {
 		targetDefault: "user",
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
+			let healer = moveUseObj.pokemon
 			let effectIndex = options.effectIndex
 			let target = options.target
+			if (params.pokemon){
+				target = params.pokemon
+			}
 			let toTrainer = game.getTrainerOfPokemon(target)
 
 			let amount = params.amount ?? 0
@@ -348,6 +352,11 @@ const pokemonMoveEffects = {
 				let toTrainer = game.getTrainerOfPokemon(toPokemon)
 				damageOptions.to = toPokemon
 				damageOptions.toTrainer = toTrainer
+			}
+			
+			if (healer.hasAbility("Healer")){
+				amount *= 1.1
+				amount = Math.floor(amount)
 			}
 
 			damageOptions.damage = -amount
@@ -397,8 +406,11 @@ const pokemonMoveEffects = {
 		targetType: "pokemon",
 		targetDefault: "user",
 		execute: (resolve, effect, params, game, options) => {
-			let target = options.target
-			let result = target.hp
+			let pokemon = options.target
+			if (params.pokemon){
+				pokemon = params.pokemon
+			}
+			let result = pokemon.hp
 			resolve(result)
 		}
 	},
@@ -408,8 +420,11 @@ const pokemonMoveEffects = {
 		targetType: "pokemon",
 		targetDefault: "user",
 		execute: (resolve, effect, params, game, options) => {
-			let target = options.target
-			let result = target.maxhp
+			let pokemon = options.target
+			if (params.pokemon){
+				pokemon = params.pokemon
+			}
+			let result = pokemon.maxhp
 			resolve(result)
 		}
 	},
@@ -786,9 +801,9 @@ const pokemonMoveEffects = {
 		execute: (resolve, effect, params, game, options) => {
 			let target = options.target
 			let result = {}
-			let colors = params.colors
+			let whichColors = params.colors ?? colors.map(c => c)
 
-			for (let color of colors) {
+			for (let color of whichColors) {
 				result[color] = target.energy[color] ?? 0
 			}
 			resolve(result)
@@ -805,6 +820,24 @@ const pokemonMoveEffects = {
 			let color = params.color
 
 			result = target.energy[color] ?? 0
+			resolve(result)
+		}
+	},
+	"get-total-energy": {
+		update: false,
+		hasTarget: true,
+		targetType: "pokemon",
+		targetDefault: "user",
+		execute: (resolve, effect, params, game, options) => {
+			let target = options.target
+			let result = 0
+
+			if (target){
+				for (let color in target.energy){
+					result += target.energy[color]
+				}
+			}
+
 			resolve(result)
 		}
 	},

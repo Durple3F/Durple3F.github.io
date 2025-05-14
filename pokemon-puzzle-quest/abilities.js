@@ -54,6 +54,10 @@ const abilityData = {
 	"Defiant": {
 		id: "Defiant"
 	},
+	//Doubles Water tile frequency for 20 turns after it enters
+	"Drizzle": {
+		id: "Drizzle"
+	},
 	//Wake up quicker from sleep
 	"Early Bird": {
 		id: "Early Bird"
@@ -93,6 +97,10 @@ const abilityData = {
 	//Power raised 50% while has non-volatile status
 	"Guts": {
 		id: "Guts"
+	},
+	//Increases healing of moves by 10%
+	"Healer": {
+		id: "Healer"
 	},
 	//50% more energy from 4-matches
 	"Honey Gather": {
