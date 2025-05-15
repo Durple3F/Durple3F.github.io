@@ -453,3 +453,22 @@ function doesMatchMeetCriteria(match, type, minLength=0, maxLength=Infinity){
 	if (!first) return false
 	return match.every(tile => first.matchesWith(tile))
 }
+
+function isItThisTimeRightNow(timeName){
+	let now = new Date()
+	let hour = now.getHours()
+	if (timeName === "Day"){
+		return hour >= 10 && hour < 17
+	}
+	if (timeName === "Evening"){
+		return hour >= 17 && hour < 18
+	}
+	if (timeName === "Night"){
+		return hour >= 18 || hour < 6
+	}
+	if (timeName === "Morning"){
+		return hour >= 6 && hour < 10
+	}
+	console.warn("Time???", timeName, now)
+	return false
+}

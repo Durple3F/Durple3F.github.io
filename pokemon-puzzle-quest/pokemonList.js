@@ -3777,6 +3777,9 @@ const pokemonData = {
 			yellow: 4,
 			orange: 2
 		},
+		evolutions: [
+			{ name: "Trumbeak", unlock: { type: "level", amount: 14 } }
+		],
 		learnset: [
 			{ name: "Peck", unlock: { type: "level", amount: 1 } },
 			{ name: "Growl", unlock: { type: "level", amount: 3 } },
@@ -3786,6 +3789,122 @@ const pokemonData = {
 			{ name: "Pluck", unlock: { type: "level", amount: 15 } },
 			{ name: "Roost", unlock: { type: "level", amount: 19 } },
 			{ name: "Fury Attack", unlock: { type: "level", amount: 21 } },
+		]
+	},
+	"Trumbeak": {
+		name: "Trumbeak",
+		number: "732",
+		weight: {
+			pounds: 32.6,
+			kilograms: 14.8
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0732Trumbeak.png",
+			"largeShiny": "src/img/shiny-pokemon/732-Trumbeak.png",
+			"home": "src/img/tiny-pokemon/Trumbeak.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/trumbeak.mp3"
+		},
+		tags: [],
+		types: ["Normal", "Flying"],
+		abilities: ["Keen Eye", "Skill Link"],
+		hiddenAbilities: ["Pickup"],
+		stats: {
+			hp: 55,
+			attack: 85,
+			defense: 50,
+			specialAttack: 40,
+			specialDefense: 50,
+			speed: 75
+		},
+		expYield: 124,
+		evYield: {
+			hp: 0,
+			attack: 2,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			yellow: 4,
+			orange: 2,
+			blue: 2
+		},
+		evolutions: [
+			{ name: "Toucannon", unlock: { type: "level", amount: 28 } }
+		],
+		learnset: [
+			{ name: "Echoed Voice", unlock: { type: "level", amount: 1 } }, //note: should be learned via move reminder
+			// { name: "Rock Blast", unlock: { type: "level", amount: 1 } },
+			{ name: "Peck", unlock: { type: "level", amount: 1 } },
+			{ name: "Growl", unlock: { type: "level", amount: 1 } },
+			{ name: "Rock Smash", unlock: { type: "level", amount: 1 } },
+			{ name: "Supersonic", unlock: { type: "level", amount: 13 } },
+			{ name: "Pluck", unlock: { type: "level", amount: 16 } },
+			{ name: "Roost", unlock: { type: "level", amount: 21 } },
+			{ name: "Fury Attack", unlock: { type: "level", amount: 24 } },
+			{ name: "Screech", unlock: { type: "level", amount: 29 } },
+			{ name: "Drill Peck", unlock: { type: "level", amount: 32 } },
+		]
+	},
+	"Toucannon": {
+		name: "Toucannon",
+		number: "733",
+		weight: {
+			pounds: 57.3,
+			kilograms: 26.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0733Toucannon.png",
+			"largeShiny": "src/img/shiny-pokemon/733-Toucannon.png",
+			"home": "src/img/tiny-pokemon/Toucannon.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/toucannon.mp3"
+		},
+		tags: [],
+		types: ["Normal", "Flying"],
+		abilities: ["Keen Eye", "Skill Link"],
+		hiddenAbilities: ["Sheer Force"],
+		stats: {
+			hp: 80,
+			attack: 120,
+			defense: 75,
+			specialAttack: 75,
+			specialDefense: 75,
+			speed: 60
+		},
+		expYield: 218,
+		evYield: {
+			hp: 0,
+			attack: 3,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			yellow: 5,
+			orange: 3,
+			blue: 2
+		},
+		learnset: [
+			// { name: "Rock Blast", unlock: { type: "level", amount: 1 } },
+			{ name: "Peck", unlock: { type: "level", amount: 1 } },
+			{ name: "Growl", unlock: { type: "level", amount: 1 } },
+			{ name: "Echoed Voice", unlock: { type: "level", amount: 1 } },
+			{ name: "Rock Smash", unlock: { type: "level", amount: 1 } },
+			// { name: "Beak Blast", unlock: { type: "level", amount: 1 } }, //note: should be learned on evolution
+			{ name: "Supersonic", unlock: { type: "level", amount: 13 } },
+			{ name: "Pluck", unlock: { type: "level", amount: 16 } },
+			{ name: "Roost", unlock: { type: "level", amount: 21 } },
+			{ name: "Fury Attack", unlock: { type: "level", amount: 24 } },
+			{ name: "Screech", unlock: { type: "level", amount: 30 } },
+			{ name: "Drill Peck", unlock: { type: "level", amount: 34 } },
 		]
 	},
 	"Yungoos": {
@@ -3938,13 +4057,7 @@ const pokemonData = {
 			green: 5
 		},
 		evolutions: [
-			{
-				name: "Charjabug",
-				unlock: {
-					type: "level",
-					amount: 20
-				}
-			}
+			{ name: "Charjabug", unlock: { type: "level", amount: 20 } }
 		],
 		learnset: [
 			{ name: "Vise Grip", unlock: { type: "level", amount: 1 } },
@@ -3996,12 +4109,74 @@ const pokemonData = {
 			yellow: 4,
 			green: 5
 		},
+		evolutions: [
+			{ name: "Vikavolt", unlock: { type: "fiveMatchYellow", amount: 3 } },
+		],
 		learnset: [
 			{ name: "Vise Grip", unlock: { type: "level", amount: 1 } },
 			{ name: "Mud-Slap", unlock: { type: "level", amount: 1 } },
 			{ name: "String Shot", unlock: { type: "level", amount: 1 } },
 			{ name: "Bug Bite", unlock: { type: "level", amount: 1 } },
 			{ name: "Charge", unlock: { type: "level", amount: 1 } }, //NOTE: Should be learned upon evolution.
+			{ name: "Bite", unlock: { type: "level", amount: 15 } },
+			{ name: "Spark", unlock: { type: "level", amount: 23 } },
+		]
+	},
+	"Vikavolt": {
+		name: "Vikavolt",
+		number: "738",
+		weight: {
+			pounds: 99.2,
+			kilograms: 45.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0738Vikavolt.png",
+			"largeShiny": "src/img/shiny-pokemon/738-Vikavolt.png",
+			"home": "src/img/tiny-pokemon/Vikavolt.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/vikavolt.mp3"
+		},
+		tags: [],
+		types: ["Bug", "Electric"],
+		abilities: ["Levitate"],
+		hiddenAbilities: [],
+		stats: {
+			hp: 77,
+			attack: 70,
+			defense: 90,
+			specialAttack: 145,
+			specialDefense: 75,
+			speed: 43
+		},
+		expYield: 225,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 3,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 2,
+			yellow: 4,
+			green: 3,
+			blue: 1
+		},
+		learnset: [
+			{ name: "Charge", unlock: { type: "level", amount: 1 } },
+			{ name: "Crunch", unlock: { type: "level", amount: 1 } },
+			// { name: "Discharge", unlock: { type: "level", amount: 1 } },
+			{ name: "String Shot", unlock: { type: "level", amount: 1 } },
+			{ name: "Vise Grip", unlock: { type: "level", amount: 1 } }, // note: move reminder
+			// { name: "Dig", unlock: { type: "level", amount: 1 } }, // note: move reminder
+			{ name: "Mud-Slap", unlock: { type: "level", amount: 1 } }, // note: move reminder
+			{ name: "Iron Defense", unlock: { type: "level", amount: 1 } }, // note: move reminder
+			// { name: "X-Scissor", unlock: { type: "level", amount: 1 } }, // note: move reminder
+			{ name: "Bug Bite", unlock: { type: "level", amount: 1 } }, // note: move reminder
+			// { name: "Thunderbolt", unlock: { type: "level", amount: 1 } }, //note: evolution
 			{ name: "Bite", unlock: { type: "level", amount: 15 } },
 			{ name: "Spark", unlock: { type: "level", amount: 23 } },
 		]
@@ -4159,7 +4334,7 @@ const pokemonData = {
 			{ name: "Helping Hand", unlock: { type: "level", amount: 10 } },
 			{ name: "Air Cutter", unlock: { type: "level", amount: 13 } },
 			{ name: "Baton Pass", unlock: { type: "level", amount: 16 } },
-			{ name: "Feather Dance", unlock: { type: "level", amount: 1 } },
+			{ name: "Feather Dance", unlock: { type: "level", amount: 20 } },
 		]
 	},
 	"Cutiefly": {
@@ -4205,6 +4380,9 @@ const pokemonData = {
 			blue: 1,
 			purple: 1
 		},
+		evolutions: [
+			{ name: "Ribombee", unlock: { type: "level", amount: 20 } }
+		],
 		learnset: [
 			{ name: "Absorb", unlock: { type: "level", amount: 1 } },
 			{ name: "Fairy Wind", unlock: { type: "level", amount: 1 } },
@@ -4213,6 +4391,61 @@ const pokemonData = {
 			{ name: "Draining Kiss", unlock: { type: "level", amount: 18 } },
 			{ name: "Struggle Bug", unlock: { type: "level", amount: 24 } },
 			{ name: "Covet", unlock: { type: "level", amount: 30 } },
+		]
+	},
+	"Ribombee": {
+		name: "Ribombee",
+		number: "743",
+		weight: {
+			pounds: 1.1,
+			kilograms: 0.5
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0743Ribombee.png",
+			"largeShiny": "src/img/shiny-pokemon/742-Cutiefly.png",
+			"home": "src/img/tiny-pokemon/Ribombee.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/ribombee.mp3"
+		},
+		tags: [],
+		types: ["Bug", "Fairy"],
+		abilities: ["Honey Gather", "Shield Dust"],
+		hiddenAbilities: ["Sweet Veil"],
+		stats: {
+			hp: 60,
+			attack: 55,
+			defense: 60,
+			specialAttack: 95,
+			specialDefense: 70,
+			speed: 124
+		},
+		expYield: 162,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 2
+		},
+		energyMastery: {
+			yellow: 1,
+			green: 4,
+			blue: 2,
+			purple: 3
+		},
+		learnset: [
+			{ name: "Absorb", unlock: { type: "level", amount: 1 } },
+			{ name: "Fairy Wind", unlock: { type: "level", amount: 1 } },
+			{ name: "Stun Spore", unlock: { type: "level", amount: 1 } },
+			{ name: "Sweet Scent", unlock: { type: "level", amount: 1 } },
+			// { name: "Pollen Puff", unlock: { type: "level", amount: 1 } }, //note: evolution
+			{ name: "Draining Kiss", unlock: { type: "level", amount: 18 } },
+			{ name: "Struggle Bug", unlock: { type: "level", amount: 24 } },
+			{ name: "Covet", unlock: { type: "level", amount: 32 } },
+			{ name: "Switcheroo", unlock: { type: "level", amount: 40 } },
 		]
 	},
 	"Rockruff": {
@@ -4256,6 +4489,11 @@ const pokemonData = {
 			orange: 3,
 			blue: 2,
 		},
+		evolutions: [
+			{ name: "Lycanroc-Midday", unlock: { type: "levelWhileTime", time: "Day", amount: 25 } },
+			{ name: "Lycanroc-Midnight", unlock: { type: "levelWhileTime", time: "Night", amount: 25 } },
+			{ name: "Lycanroc-Dusk", unlock: { type: "levelWhileTime", time: "Evening", amount: 30 } },
+		],
 		learnset: [
 			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
 			{ name: "Leer", unlock: { type: "level", amount: 1 } },
@@ -4266,6 +4504,189 @@ const pokemonData = {
 			{ name: "Bite", unlock: { type: "level", amount: 20 } },
 			{ name: "Rock Tomb", unlock: { type: "level", amount: 24 } },
 			{ name: "Roar", unlock: { type: "level", amount: 28 } },
+		]
+	},
+	"Lycanroc-Midday": {
+		name: "Lycanroc",
+		id: "Lycanroc-Midday",
+		number: "745α",
+		weight: {
+			pounds: 55.1,
+			kilograms: 25.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0745Lycanroc.png",
+			"largeShiny": "src/img/shiny-pokemon/745-Lycanroc-Midday.png",
+			"home": "src/img/tiny-pokemon/Lycanroc-Midday.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/lycanroc.mp3"
+		},
+		types: ["Rock"],
+		tags: [],
+		abilities: ["Keen Eye", "Sand Rush"],
+		hiddenAbilities: ["Steadfast"],
+		stats: {
+			hp: 75,
+			attack: 115,
+			defense: 65,
+			specialAttack: 55,
+			specialDefense: 65,
+			speed: 112
+		},
+		expYield: 170,
+		evYield: {
+			hp: 0,
+			attack: 2,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 5,
+			yellow: 2,
+			blue: 3
+		},
+		learnset: [
+			// { name: "Accelerock", unlock: { type: "level", amount: 1 } },
+			{ name: "Quick Guard", unlock: { type: "level", amount: 1 } },
+			{ name: "Quick Attack", unlock: { type: "level", amount: 1 } },
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Leer", unlock: { type: "level", amount: 1 } },
+			{ name: "Sand Attack", unlock: { type: "level", amount: 1 } },
+			{ name: "Double Team", unlock: { type: "level", amount: 1 } },
+			{ name: "Sucker Punch", unlock: { type: "level", amount: 1 } }, //note: evolution
+			{ name: "Rock Throw", unlock: { type: "level", amount: 12 } },
+			{ name: "Howl", unlock: { type: "level", amount: 16 } },
+			{ name: "Bite", unlock: { type: "level", amount: 20 } },
+			{ name: "Rock Tomb", unlock: { type: "level", amount: 24 } },
+			{ name: "Roar", unlock: { type: "level", amount: 30 } },
+		]
+	},
+	"Lycanroc-Midnight": {
+		name: "Lycanroc",
+		id: "Lycanroc-Midnight",
+		number: "745β",
+		weight: {
+			pounds: 55.1,
+			kilograms: 25.0
+		},
+		imageFacing: "right",
+		imageSources: {
+			"large": "src/img/pokemon/0745Lycanroc-Midnight.png",
+			"largeShiny": "src/img/shiny-pokemon/745-Lycanroc-Midnight.png",
+			"home": "src/img/tiny-pokemon/Lycanroc-Midnight.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/lycanroc-midnight.mp3"
+		},
+		types: ["Rock"],
+		tags: [],
+		abilities: ["Keen Eye", "Vital Spirit"],
+		hiddenAbilities: ["No Guard"],
+		stats: {
+			hp: 85,
+			attack: 115,
+			defense: 75,
+			specialAttack: 55,
+			specialDefense: 75,
+			speed: 82
+		},
+		expYield: 170,
+		evYield: {
+			hp: 0,
+			attack: 2,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 5,
+			yellow: 2,
+			purple: 3
+		},
+		learnset: [
+			{ name: "Endure", unlock: { type: "level", amount: 1 } },
+			// { name: "Reversal", unlock: { type: "level", amount: 1 } },
+			{ name: "Taunt", unlock: { type: "level", amount: 1 } },
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Leer", unlock: { type: "level", amount: 1 } },
+			{ name: "Sand Attack", unlock: { type: "level", amount: 1 } },
+			{ name: "Double Team", unlock: { type: "level", amount: 1 } },
+			// { name: "Counter", unlock: { type: "level", amount: 1 } }, //note: evolution
+			{ name: "Rock Throw", unlock: { type: "level", amount: 12 } },
+			{ name: "Howl", unlock: { type: "level", amount: 16 } },
+			{ name: "Bite", unlock: { type: "level", amount: 20 } },
+			{ name: "Rock Tomb", unlock: { type: "level", amount: 24 } },
+			{ name: "Roar", unlock: { type: "level", amount: 30 } },
+		]
+	},
+	"Lycanroc-Dusk": {
+		name: "Lycanroc",
+		id: "Lycanroc-Dusk",
+		number: "745γ",
+		weight: {
+			pounds: 55.1,
+			kilograms: 25.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0745Lycanroc-Dusk.png",
+			"largeShiny": "src/img/shiny-pokemon/745-Lycanroc-Dusk.png",
+			"home": "src/img/tiny-pokemon/Lycanroc-Dusk.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/lycanroc-dusk.mp3"
+		},
+		types: ["Rock"],
+		tags: [],
+		abilities: ["Tough Claws"],
+		hiddenAbilities: [],
+		stats: {
+			hp: 75,
+			attack: 117,
+			defense: 65,
+			specialAttack: 55,
+			specialDefense: 65,
+			speed: 110
+		},
+		expYield: 170,
+		evYield: {
+			hp: 0,
+			attack: 2,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 6,
+			blue: 1,
+			yellow: 2,
+			purple: 1
+		},
+		learnset: [
+			{ name: "Sucker Punch", unlock: { type: "level", amount: 1 } },
+			// { name: "Accelerock", unlock: { type: "level", amount: 1 } },
+			{ name: "Quick Guard", unlock: { type: "level", amount: 1 } },
+			{ name: "Quick Attack", unlock: { type: "level", amount: 1 } },
+			// { name: "Counter", unlock: { type: "level", amount: 1 } },
+			{ name: "Endure", unlock: { type: "level", amount: 1 } },
+			// { name: "Reversal", unlock: { type: "level", amount: 1 } },
+			{ name: "Taunt", unlock: { type: "level", amount: 1 } },
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Leer", unlock: { type: "level", amount: 1 } },
+			{ name: "Sand Attack", unlock: { type: "level", amount: 1 } },
+			{ name: "Double Team", unlock: { type: "level", amount: 1 } },
+			// { name: "Crush Claw", unlock: { type: "level", amount: 1 } }, //note: evolution
+			{ name: "Rock Throw", unlock: { type: "level", amount: 12 } },
+			{ name: "Howl", unlock: { type: "level", amount: 16 } },
+			{ name: "Bite", unlock: { type: "level", amount: 20 } },
+			{ name: "Rock Tomb", unlock: { type: "level", amount: 24 } },
+			{ name: "Roar", unlock: { type: "level", amount: 30 } },
 		]
 	},
 	"Stufful": {
@@ -4576,6 +4997,6 @@ for (let name in pokemonData) {
 	pokemon.number = justDigits + modifier
 	let same = Object.values(pokemonData).filter(p => p.number === pokemon.number)
 	if (same.length !== 1){
-		console.warning("These pokemon share a number", same, pokemon)
+		console.warn("These pokemon share a number", same, pokemon)
 	}
 }

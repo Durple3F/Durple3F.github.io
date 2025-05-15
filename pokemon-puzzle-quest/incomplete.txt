@@ -56,14 +56,21 @@ Incomplete move lists:
 	Popplio (lv 24)
 	Brionne (lv 30)
 	Pikipek (lv 21)
+	Trumbeak (lv 0)
+	Toucannon (lv 0)
 	Yungoos (lv 25)
 	Gumshoos (lv 27)
 	Grubbin (lv 21)
 	Charjabug (lv 23)
+	Vikavolt (lv 0)
 	Crabrawler (lv 22)
 	Oricorio (lv 20)
 	Cutiefly (lv 30)
+	Ribombee (lv 0)
 	Rockruff (lv 28)
+	Lycanroc-Midday (lv 0)
+	Lycanroc-Midnight (lv 0)
+	Lycanroc-Dusk (lv 0)
 	Stufful (lv 20)
 	Comfey (lv 21)
 	Passimian (lv 20)
@@ -87,16 +94,12 @@ Missing Evolutions:
 	Stufful
 	Dartrix
 	Torracat
-	Popplio
-	Pikipek
-	Charjabug
-	Cutiefly
-	Rockruff
-	Stufful
+	Brionne
 	Crabrawler
+	Stufful
 
 Missing Abilities:
-	- None! :)
+	- Sand Rush
 
 Missing Shiny Variations:
 	- None! :)

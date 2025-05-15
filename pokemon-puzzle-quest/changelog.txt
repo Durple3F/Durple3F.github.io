@@ -1,12 +1,17 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-5/14 (34.4k lines):
-	- Added Pelipper, Hariyama, Drifblim, Chansey, Boldore, Whimsicott(*), Lilligant(*), Hisuian Lilligant (*), Pangoro
+5/15 (34.7k lines):
+	- 
+
+5/14 (34.7k lines):
+	- Added Pelipper, Hariyama, Drifblim, Chansey, Boldore, Whimsicott(*), Lilligant(*), Hisuian Lilligant (*), Pangoro, Trumbeak, Toucannon, Vikavolt, Ribombee, All Three Lycanrocs
 	- Finally added Dartrix, Torracat, and Brionne!
 	- Added Phantom Force, Brine, Strength Sap, Life Dew, Fling
 	- Added Drizzle, Healer
 	- Added a new type of evolution requirement
 	- Fixed the way that hovering over level buttons while the screen was fading out would still show the tooltip
+	- Now, if you have a choice between possible evolutions, and you don't choose one, the pokemon no longer picks one at random. It now simply doesn't evolve.
+	- Lycanroc is 3 different pokemon I am NOT messing with forms with that.
 
 5/13 (33.2k lines):
 	- Added Golbat, Alolan Dugtrio, Alolan Persian, Arcanine, Kadabra, Hypno, Ledian, Ariados, Honchkrow, Mismagius

@@ -463,6 +463,9 @@ function checkIfPokemonMeetsRequirements(pokemon, req, party){
 			return true
 		})
 	}
+	if (req.type === "levelWhileTime"){
+		return pokemon.level >= req.amount && isItThisTimeRightNow(req.time)
+	}
 	if (req.type === "pre-evolve"){
 		//This is the type for when a move may only be learned by a pre-evolved version of that pokemon.
 		return false
@@ -545,6 +548,11 @@ function getReasonPokemonDoesntMeetEvolutionRequirements(pokemon, evolveData, op
 		text = applyReplacements(text, [req.amount, typeText, evolveName])
 		return text
 	}
+	if (req.type === "levelWhileTime"){
+		let text = getLocaleString(req.time, lang, ["evolution-requirements", "levelWhileTime"])
+		text = applyReplacements(text, [req.amount, evolveName])
+		return text
+	}
 	let simpleTriggers = {
 		"fiveMatchRed": [
 			"five-match-red",
@@ -605,7 +613,7 @@ function getReasonPokemonDoesntMeetEvolutionRequirements(pokemon, evolveData, op
 		return text
 	}
 	console.warn("You never handled this", req)
-	return "I don't know why they can't evolve. *shrug*"
+	return getLocaleString("default", lang, ["evolution-requirements"])
 }
 
 function getEffectParams(effect, effectIndex, moveUseObj){

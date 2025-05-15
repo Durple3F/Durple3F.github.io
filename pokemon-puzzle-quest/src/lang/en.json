@@ -1126,6 +1126,12 @@
 		"Pikipek": {
 			"name": "Pikipek"
 		},
+		"Trumbeak": {
+			"name": "Trumbeak"
+		},
+		"Toucannon": {
+			"name": "Toucannon"
+		},
 		"Yungoos": {
 			"name": "Yungoos"
 		},
@@ -1138,17 +1144,32 @@
 		"Charjabug": {
 			"name": "Charjabug"
 		},
+		"Vikavolt": {
+			"name": "Vikavolt"
+		},
 		"Crabrawler": {
 			"name": "Crabrawler"
 		},
 		"Cutiefly": {
 			"name": "Cutiefly"
 		},
+		"Ribombee": {
+			"name": "Ribombee"
+		},
 		"Oricorio": {
 			"name": "Oricorio"
 		},
 		"Rockruff": {
 			"name": "Rockruff"
+		},
+		"Lycanroc-Midday": {
+			"name": "Lycanroc"
+		},
+		"Lycanroc-Midnight": {
+			"name": "Lycanroc"
+		},
+		"Lycanroc-Dusk": {
+			"name": "Lycanroc"
 		},
 		"Stufful": {
 			"name": "Stufful"
@@ -2804,6 +2825,7 @@
 		}
 	},
 	"evolution-requirements": {
+		"default": "I don't know why they can't evolve. *shrug*",
 		"level": "This Pokémon needs to be at least level %c% to evolve into %c-pname%.",
 		"levelWithPartyMember": "This Pokémon needs to be at least level %c% while another Pokémon in the party is %c%-type to evolve into %c-pname%.",
 		"friendship": "This Pokémon needs to have at least %c% friendship to evolve into %c-pname%.",
@@ -2830,7 +2852,13 @@
 		"four-match-blue": "Match at least %c% four-in-a-row or better of Water tiles while this Pokémon is active for it to evolve into %c-pname%",
 		"four-match-blue-plural": "Match at least %c% four-in-a-rows or better of Water tiles while this Pokémon is active for it to evolve into %c-pname%",
 		"four-match-purple": "Match at least %c% four-in-a-row or better of Psychic tiles while this Pokémon is active for it to evolve into %c-pname%",
-		"four-match-purple-plural": "Match at least %c% four-in-a-rows or better of Psychic tiles while this Pokémon is active for it to evolve into %c-pname%"
+		"four-match-purple-plural": "Match at least %c% four-in-a-rows or better of Psychic tiles while this Pokémon is active for it to evolve into %c-pname%",
+		"levelWhileTime": {
+			"Day": "This Pokémon needs to win a battle from 10am-5pm while at least level %c% to evolve into %c-pname%.",
+			"Evening": "This Pokémon needs to win a battle from 5pm-6pm while at least level %c% to evolve into %c-pname%.",
+			"Night": "This Pokémon needs to win a battle from 6pm-6am while at least level %c% to evolve into %c-pname%.",
+			"Morning": "This Pokémon needs to win a battle from 6am-10am while at least level %c% to evolve into %c-pname%."
+		}
 	},
 	"stats": {
 		"weight": "Weight",

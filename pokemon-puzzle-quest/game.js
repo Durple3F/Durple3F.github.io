@@ -2013,9 +2013,8 @@ class Round {
 			})
 			//TODO if there are multiple options, the player should get to choose
 			if (!possibilities.length) continue
-			let evolution = randomChoice(possibilities)
-			let evolveTo = pokemonData[evolution.name]
-			console.log(possibilities)
+
+			let evolution
 			if (possibilities.length > 1){
 				promise = promise.then(() => new Promise(resolve => {
 					clearModal(modal)
@@ -2063,10 +2062,17 @@ class Round {
 						resolve()
 					})
 				}))
+			} else if (possibilities.length === 1){
+				evolution = randomChoice(possibilities)
 			}
 
 			let announcementBox = $("<div class='d-flex text-center flex-column align-items-stretch'></div>")
 			promise = promise.then(() => new Promise(resolve => {
+				if (!evolution){
+					return resolve()
+				}
+
+				let evolveTo = pokemonData[evolution.name]
 				clearModal(modal)
 				modal.addClass("wide")
 				let message = `${pokemon.name} is evolving!`

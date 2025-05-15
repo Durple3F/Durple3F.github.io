@@ -1414,7 +1414,7 @@ const levelData = [
 				targetPokemon: 1,
 				canPickDuplicates: true,
 				possiblePokemon: [
-					{ id: "Spearow", levelMin: 5, levelMax: 5, weight: 4 } //, activeMoves: ["Thunder Wave"] },
+					{ id: "Rockruff", levelMin: 25, levelMax: 25, weight: 4 }
 				]
 			},
 			{

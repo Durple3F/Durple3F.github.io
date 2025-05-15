@@ -868,4 +868,13 @@ class Pokemon{
 	getAllSounds(){
 		return getPokemonSounds(this.data, this)
 	}
+	getImageFacing(){
+		if (this.data.hasForms){
+			let formInfo = this.data.forms[this.form] ?? this.data.forms[this.data.defaultForm]
+			if ("imageFacing" in formInfo){
+				return formInfo.imageFacing
+			}
+		}
+		return this.data.imageFacing
+	}
 }

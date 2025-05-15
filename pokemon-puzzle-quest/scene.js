@@ -930,7 +930,8 @@ function startScene(name, options) {
 			let allPokemonSections = pokemonListTag.children(".pokemon-section")
 			let bgUpAmt = 0
 			const pcTick = () => {
-				bgUpAmt = Date.now() % 100000000
+				let height = $(allPokemonSections[0]).height()
+				bgUpAmt = Date.now() % (height * 100)
 				let amt = bgUpAmt / 100
 				allPokemonSections.css("background-position", `top ${amt}px left`)
 			}

@@ -1755,7 +1755,7 @@ body {
 
 	background-color: var(--ui-primary-bg);
 	background-image: repeating-linear-gradient(
-		18deg,
+		20deg,
 		transparent 1em,
 		/* white 1.2em, */
 		rgba(99, 145, 219, 0.228) 1.2em,
