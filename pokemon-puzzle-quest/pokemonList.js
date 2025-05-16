@@ -2365,6 +2365,115 @@ const pokemonData = {
 			{ name: "Bulk Up", unlock: { type: "level", amount: 22 } },
 		]
 	},
+	"Sableye": {
+		name: "Sableye",
+		number: "302",
+		weight: {
+			pounds: 24.3,
+			kilograms: 11.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0302Sableye.png",
+			"largeShiny": "src/img/shiny-pokemon/302-Sableye.png",
+			"home": "src/img/tiny-pokemon/Sableye.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/sableye.mp3"
+		},
+		types: ["Dark", "Ghost"],
+		tags: [],
+		abilities: ["Keen Eye", "Stall"],
+		hiddenAbilities: ["Prankster"],
+		stats: {
+			hp: 50,
+			attack: 75,
+			defense: 75,
+			specialAttack: 65,
+			specialDefense: 65,
+			speed: 50
+		},
+		expYield: 133,
+		evYield: {
+			hp: 0,
+			attack: 1,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			purple: 4,
+			yellow: 2
+		},
+		learnset: [
+			{ name: "Leer", unlock: { type: "level", amount: 1 } },
+			{ name: "Scratch", unlock: { type: "level", amount: 1 } },
+			{ name: "Astonish", unlock: { type: "level", amount: 3 } },
+			{ name: "Shadow Sneak", unlock: { type: "level", amount: 9 } },
+			{ name: "Fake Out", unlock: { type: "level", amount: 12 } },
+			{ name: "Disable", unlock: { type: "level", amount: 15 } },
+			{ name: "Detect", unlock: { type: "level", amount: 18 } },
+			{ name: "Night Shade", unlock: { type: "level", amount: 21 } },
+		]
+	},
+	"Mawile": {
+		name: "Mawile",
+		number: "303",
+		weight: {
+			pounds: 24.3,
+			kilograms: 11.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0303Mawile.png",
+			"largeShiny": "src/img/shiny-pokemon/303-Mawile.png",
+			"home": "src/img/tiny-pokemon/Mawile.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/mawile.mp3"
+		},
+		types: ["Steel", "Fairy"],
+		tags: [],
+		abilities: ["Hyper Cutter", "Intimidate"],
+		hiddenAbilities: ["Sheer Force"],
+		stats: {
+			hp: 50,
+			attack: 85,
+			defense: 85,
+			specialAttack: 55,
+			specialDefense: 55,
+			speed: 50
+		},
+		expYield: 133,
+		evYield: {
+			hp: 0,
+			attack: 1,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			yellow: 2,
+			green: 2,
+			purple: 2
+		},
+		learnset: [
+			{ name: "Astonish", unlock: { type: "level", amount: 1 } },
+			{ name: "Growl", unlock: { type: "level", amount: 1 } },
+			{ name: "Fairy Wind", unlock: { type: "level", amount: 4 } },
+			{ name: "Baton Pass", unlock: { type: "level", amount: 8 } },
+			{ name: "Bite", unlock: { type: "level", amount: 12 } },
+			{ name: "Stockpile", unlock: { type: "level", amount: 16 } },
+			{ name: "Swallow", unlock: { type: "level", amount: 16 } },
+			{ name: "Spit Up", unlock: { type: "level", amount: 16 } },
+			{ name: "Sucker Punch", unlock: { type: "level", amount: 20 } },
+			{ name: "Iron Defense", unlock: { type: "level", amount: 24 } },
+			{ name: "Crunch", unlock: { type: "level", amount: 28 } },
+			{ name: "Sweet Scent", unlock: { type: "level", amount: 32 } },
+		]
+	},
 	"Bagon": {
 		name: "Bagon",
 		number: "371",
@@ -3392,6 +3501,56 @@ const pokemonData = {
 			{ name: "Work Up", unlock: { type: "level", amount: 20 } },
 		]
 	},
+	"Carbink": {
+		name: "Carbink",
+		number: "703",
+		weight: {
+			pounds: 12.6,
+			kilograms: 5.7
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0703Carbink.png",
+			"largeShiny": "src/img/shiny-pokemon/703-Carbink.png",
+			"home": "src/img/tiny-pokemon/Carbink.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/carbink.mp3"
+		},
+		types: ["Rock", "Fairy"],
+		tags: [],
+		abilities: ["Clear Body"],
+		hiddenAbilities: ["Sturdy"],
+		stats: {
+			hp: 50,
+			attack: 50,
+			defense: 150,
+			specialAttack: 50,
+			specialDefense: 150,
+			speed: 50
+		},
+		expYield: 100,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 1,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			purple: 4,
+			red: 2
+		},
+		learnset: [
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Harden", unlock: { type: "level", amount: 1 } },
+			{ name: "Guard Split", unlock: { type: "level", amount: 5 } },
+			{ name: "Smack Down", unlock: { type: "level", amount: 10 } },
+			{ name: "Flail", unlock: { type: "level", amount: 15 } },
+			{ name: "Ancient Power", unlock: { type: "level", amount: 20 } },
+		]
+	},
 	"Rowlet": {
 		name: "Rowlet",
 		number: "722",
@@ -3677,7 +3836,7 @@ const pokemonData = {
 			{ name: "Sing", unlock: { type: "level", amount: 18 } },
 			{ name: "Bubble Beam", unlock: { type: "level", amount: 21 } },
 			{ name: "Encore", unlock: { type: "level", amount: 24 } },
-			{ name: "Fling", unlock: { type: "level", amount: 1 } },
+			{ name: "Guard Split", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Brionne": {
@@ -4739,6 +4898,120 @@ const pokemonData = {
 			{ name: "Brutal Swing", unlock: { type: "level", amount: 12 } },
 			{ name: "Endure", unlock: { type: "level", amount: 16 } },
 			{ name: "Strength", unlock: { type: "level", amount: 20 } },
+		]
+	},
+	"Bounsweet": {
+		name: "Bounsweet",
+		number: "761",
+		weight: {
+			pounds: 7.1,
+			kilograms: 3.2
+		},
+		imageFacing: "right",
+		imageSources: {
+			"large": "src/img/pokemon/0761Bounsweet.png",
+			"largeShiny": "src/img/shiny-pokemon/761-Bounsweet.png",
+			"home": "src/img/tiny-pokemon/Bounsweet.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/bounsweet.mp3"
+		},
+		types: ["Grass"],
+		tags: [],
+		abilities: ["Leaf Guard", "Oblivious"],
+		hiddenAbilities: ["Sweet Veil"],
+		stats: {
+			hp: 42,
+			attack: 30,
+			defense: 38,
+			specialAttack: 30,
+			specialDefense: 38,
+			speed: 32
+		},
+		expYield: 42,
+		evYield: {
+			hp: 1,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			green: 3,
+			purple: 1
+		},
+		evolutions: [
+			{ name: "Steenee", unlock: { type: "level", amount: 18 } }
+		],
+		learnset: [
+			{ name: "Splash", unlock: { type: "level", amount: 1 } },
+			{ name: "Play Nice", unlock: { type: "level", amount: 4 } },
+			{ name: "Rapid Spin", unlock: { type: "level", amount: 8 } },
+			{ name: "Razor Leaf", unlock: { type: "level", amount: 12 } },
+			{ name: "Sweet Scent", unlock: { type: "level", amount: 16 } },
+			{ name: "Magical Leaf", unlock: { type: "level", amount: 20 } },
+			{ name: "Flail", unlock: { type: "level", amount: 24 } },
+			// { name: "Teeter Dance", unlock: { type: "level", amount: 28 } },
+			// { name: "Aromatic Mist", unlock: { type: "level", amount: 32 } },
+		]
+	},
+	"Steenee": {
+		name: "Steenee",
+		number: "762",
+		weight: {
+			pounds: 18.1,
+			kilograms: 8.2
+		},
+		imageFacing: "right",
+		imageSources: {
+			"large": "src/img/pokemon/0762Steenee.png",
+			"largeShiny": "src/img/shiny-pokemon/762-Steenee.png",
+			"home": "src/img/tiny-pokemon/Steenee.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/steenee.mp3"
+		},
+		types: ["Grass"],
+		tags: [],
+		abilities: ["Leaf Guard", "Oblivious"],
+		hiddenAbilities: ["Sweet Veil"],
+		stats: {
+			hp: 52,
+			attack: 40,
+			defense: 48,
+			specialAttack: 40,
+			specialDefense: 48,
+			speed: 62
+		},
+		expYield: 102,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 2
+		},
+		energyMastery: {
+			green: 3,
+			yellow: 2,
+			purple: 2
+		},
+		learnset: [
+			{ name: "Double Slap", unlock: { type: "level", amount: 1 } },
+			{ name: "Splash", unlock: { type: "level", amount: 1 } },
+			{ name: "Play Nice", unlock: { type: "level", amount: 1 } },
+			{ name: "Rapid Spin", unlock: { type: "level", amount: 1 } },
+			{ name: "Razor Leaf", unlock: { type: "level", amount: 1 } },
+			{ name: "Sweet Scent", unlock: { type: "level", amount: 17 } },
+			{ name: "Magical Leaf", unlock: { type: "level", amount: 21 } },
+			// { name: "Teeter Dance", unlock: { type: "level", amount: 25 } },
+			// { name: "Stomp", unlock: { type: "level", amount: 29 } },
+			// { name: "Aromatic Mist", unlock: { type: "level", amount: 33 } },
+			// { name: "Captivate", unlock: { type: "level", amount: 37 } },
+			// { name: "Aromatherapy", unlock: { type: "level", amount: 41 } },
+			// { name: "Leaf Storm", unlock: { type: "level", amount: 45 } },
 		]
 	},
 	"Comfey": {

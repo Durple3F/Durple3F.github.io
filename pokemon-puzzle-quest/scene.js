@@ -1082,11 +1082,11 @@ function beginLevel(levelID) {
 	currentLevelProgress.promise = levelPromise
 
 	let levelChangesMap = new Map()
-	if (level.reccomendedLevels && config["lowerLevelsToRecommendedLevels"]){
+	if (level.recommendedLevels && config["lowerLevelsToRecommendedLevels"]){
 		let key = config["hardMode"] ? "hard" : "normal"
-		let reccomendation = level.reccomendedLevels
-		if (key in reccomendation){
-			let lvl = reccomendation[key]
+		let recommendation = level.recommendedLevels
+		if (key in recommendation){
+			let lvl = recommendation[key]
 			if (typeof lvl === "function"){
 				lvl = lvl(playerActivePokemon)
 			}

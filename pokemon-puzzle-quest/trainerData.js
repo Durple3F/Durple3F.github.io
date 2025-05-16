@@ -110,6 +110,13 @@ const NPCTrainerData = {
 			trainer: "src/img/trainers/acetrainer-gen7.png"
 		}
 	},
+	"Ace-Trainer-Gen7-F": {
+		name: "Ace Trainer",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/acetrainerf-gen7.png"
+		}
+	},
 	"Aroma-Lady": {
 		name: "Aroma Lady",
 		type: "trainer",

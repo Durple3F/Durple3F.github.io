@@ -152,6 +152,78 @@ const pokemonMoveData = {
 			{ type: "remove-tiles", selection: -1 }
 		]
 	},
+	//Deals damage with a chance to raise all stats
+	"Ancient Power": {
+		name: "Ancient Power",
+		type: "Rock",
+		category: "Special",
+		strategy: "basic-damage",
+		pp: 5,
+		power: 60,
+		accuracy: 100,
+		rechargeTurns: 3,
+		energy: {
+			red: 3,
+			orange: 3,
+			yellow: 3,
+			green: 3,
+			blue: 3,
+			purple: 3,
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Ancient Power.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "random-number", min: 1, max: 10 },
+			{ type: "load-value", value: 6 },
+			{ type: "jump-if-less-than", jumpTo: Infinity },
+			{
+				type: "apply-debuff", target: "user", debuff: {
+					type: "stat",
+					stat: "attack",
+					class: "buff",
+					amount: 1
+				}
+			},
+			{
+				type: "apply-debuff", target: "user", debuff: {
+					type: "stat",
+					stat: "defense",
+					class: "buff",
+					amount: 1
+				}
+			},
+			{
+				type: "apply-debuff", target: "user", debuff: {
+					type: "stat",
+					stat: "specialAttack",
+					class: "buff",
+					amount: 1
+				}
+			},
+			{
+				type: "apply-debuff", target: "user", debuff: {
+					type: "stat",
+					stat: "specialDefense",
+					class: "buff",
+					amount: 1
+				}
+			},
+			{
+				type: "apply-debuff", target: "user", debuff: {
+					type: "stat",
+					stat: "speed",
+					class: "buff",
+					amount: 1
+				}
+			},
+		]
+	},
 	//Converts your non-orange energy into orange
 	"Arm Thrust": {
 		name: "Arm Thrust",
@@ -1194,6 +1266,43 @@ const pokemonMoveData = {
 			},
 		],
 	},
+	//Protect but orange. I'm not messing with it.
+	"Detect": {
+		name: "Detect",
+		type: "Fighting",
+		category: "Status",
+		strategy: "buff-user",
+		pp: 5,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 7,
+		energy: {
+			red: 2,
+			orange: 4,
+			yellow: 2
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Detect.mp3",
+			"bonk": "src/audio/attacks/Detect shield hit.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "apply-status-effect", statusEffect: "protect", target: "user" },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "detect-cooldown",
+				type: "cooldown-alteration",
+				stacks: true,
+				volatile: true,
+				appliesTo: {
+					name: "Detect"
+				},
+				modification: {
+					change: 1,
+					operation: "add"
+				}
+			} },
+		],
+	},
 	//Makes the opponent unable to use their last move
 	"Disable": {
 		name: "Disable",
@@ -1272,6 +1381,46 @@ const pokemonMoveData = {
 			{ type: "jump-if-less-than", jumpTo: "end" },
 			{ type: "apply-status-effect", statusEffect: "confused", target: "opponent" },
 			{ type: "end-turn", label: "end" }
+		]
+	},
+	//Lowers its own cost this turn
+	"Double Slap": {
+		name: "Double Slap",
+		type: "Normal",
+		category: "Physical",
+		strategy: "special",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 10,
+		power: 15,
+		accuracy: 85,
+		rechargeTurns: 0,
+		energy: {
+			orange: 3,
+			green: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Double Slap 1hit.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "double-slap-cost-reduction",
+				type: "cost-alteration",
+				stacks: false,
+				volatile: true,
+				appliesTo: {
+					name: "Double Slap"
+				},
+				turns: 1,
+				energyCost: {
+					orange: -1,
+					green: -1
+				}
+			} }
+		],
+		onTurnEnd: [
+			{ type: "remove-status-effect", target: "user", statusName: "double-slap-cost-reduction" },
 		]
 	},
 	//Basic damage but twice
@@ -2339,6 +2488,111 @@ const pokemonMoveData = {
 			{ type: "change-tile-type", selection: "group", which: -1, targetType: "green" },
 		],
 	},
+	//Both pokemon have their defensive stats averaged together
+	"Guard Split": {
+		name: "Guard Split",
+		type: "Psychic",
+		category: "Status",
+		strategy: "special",
+		pp: 10,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 6,
+		energy: {
+			purple: 4,
+			blue: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Guard Split.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+
+			{ type: "get-stat", which: "defense", target: "user" },
+			{ type: "get-stat", which: "defense", target: "opponent" },
+			{ type: "add-numbers" },
+			{ type: "load-value", value: 2 },
+			{ type: "divide-numbers" },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "guard-split-defense",
+				type: "stat-alteration",
+				stacks: true,
+				volatile: true,
+				lostOnSwap: true,
+				stat: "defense",
+				modification: {
+					change: "%c%",
+					operation: "set"
+				}
+			}, statusSettings: [
+				{
+					path: ["modification"],
+					key: "change",
+					value: -1
+				}
+			] },
+			{ type: "apply-status-effect", target: "opponent", statusEffect: {
+				name: "guard-split-defense",
+				type: "stat-alteration",
+				stacks: true,
+				volatile: true,
+				lostOnSwap: true,
+				stat: "defense",
+				modification: {
+					change: "%c%",
+					operation: "set"
+				}
+			}, statusSettings: [
+				{
+					path: ["modification"],
+					key: "change",
+					value: -2
+				}
+			] },
+
+			{ type: "get-stat", which: "specialDefense", target: "user" },
+			{ type: "get-stat", which: "specialDefense", target: "opponent" },
+			{ type: "add-numbers" },
+			{ type: "load-value", value: 2 },
+			{ type: "divide-numbers" },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "guard-split-defense",
+				type: "stat-alteration",
+				stacks: true,
+				volatile: true,
+				lostOnSwap: true,
+				stat: "specialDefense",
+				modification: {
+					change: "%c%",
+					operation: "set"
+				}
+			}, statusSettings: [
+				{
+					path: ["modification"],
+					key: "change",
+					value: -1
+				}
+			] },
+			{ type: "apply-status-effect", target: "opponent", statusEffect: {
+				name: "guard-split-defense",
+				type: "stat-alteration",
+				stacks: true,
+				volatile: true,
+				lostOnSwap: true,
+				stat: "specialDefense",
+				modification: {
+					change: "%c%",
+					operation: "set"
+				}
+			}, statusSettings: [
+				{
+					path: ["modification"],
+					key: "change",
+					value: -2
+				}
+			] },
+		],
+	},
 	//Pushes the entire board to the side
 	"Gust": {
 		name: "Gust",
@@ -2930,7 +3184,6 @@ const pokemonMoveData = {
 			{ type: "trigger", key: "additionalEffects" },
 		],
 		additionalEffects: [
-			{ type: "play-sound", name: "attack" },
 			{ type: "load-value", value: 3 },
 			{ type: "select-random-tiles", count: -1 },
 			{ type: "change-tile-type", selection: "group", which: -1, targetType: "green" },
@@ -4135,6 +4388,19 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "apply-status-effect", statusEffect: "protect", target: "user" },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "protect-cooldown",
+				type: "cooldown-alteration",
+				stacks: true,
+				volatile: true,
+				appliesTo: {
+					name: "Protect"
+				},
+				modification: {
+					change: 1,
+					operation: "add"
+				}
+			} },
 		],
 	},
 	//Choose two tiles, shuffle them and all tiles between them
@@ -5099,6 +5365,30 @@ const pokemonMoveData = {
 				energyCost: {}
 			} },
 		],
+	},
+	//Makes a single random tile blue
+	"Splash": {
+		name: "Splash",
+		type: "Grass",
+		category: "Status",
+		strategy: "special",
+		pp: 40,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 1,
+		energy: {},
+		sounds: {
+			"attack": "src/audio/attacks/Splash.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "random-number", min: 1, max: 10 },
+			{ type: "load-value", value: 10 },
+			{ type: "jump-if-less-than", jumpTo: Infinity },
+			{ type: "load-value", value: 1 },
+			{ type: "select-random-tiles", count: -1, conditions: { notTypes: ["blue"] } },
+			{ type: "change-tile-type", selection: "group", which: -1, targetType: "blue" },
+		]
 	},
 	//Gives the opponent Splinters
 	"Stealth Rock": {

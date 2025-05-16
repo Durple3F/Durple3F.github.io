@@ -399,6 +399,7 @@ function applyModification(val, modification){
 	switch (operation){
 		case "add": return val + change
 		case "multiply": return val * change
+		case "set": return change
 	}
 	console.warn("You never handled", operation)
 	return val

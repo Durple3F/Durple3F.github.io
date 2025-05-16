@@ -64,7 +64,7 @@ const levelData = [
 		name: "Rival Battle 1",
 		forgiving: true,
 		icon: "1",
-		reccomendedLevels: {
+		recommendedLevels: {
 			"normal": 5,
 			"hard": 5
 		},
@@ -144,7 +144,7 @@ const levelData = [
 		name: "Route 1-2",
 		icon: "2",
 		music: "SM Wild Pokemon Battle",
-		reccomendedLevels: {
+		recommendedLevels: {
 			"normal": 5,
 			"hard": 5
 		},
@@ -215,7 +215,7 @@ const levelData = [
 		name: "Route 1-3",
 		icon: "3",
 		music: "SM Wild Pokemon Battle",
-		reccomendedLevels: {
+		recommendedLevels: {
 			"normal": 6,
 			"hard": 6
 		},
@@ -285,7 +285,7 @@ const levelData = [
 		category: "Route 1",
 		name: "Rival Battle 2",
 		icon: "4",
-		reccomendedLevels: {
+		recommendedLevels: {
 			"normal": (pokemonList) => {
 				if (pokemonList.length >= 3) return 6
 				return 7
@@ -387,7 +387,7 @@ const levelData = [
 		name: "Route 1-5",
 		icon: "5",
 		music: "SM Wild Pokemon Battle",
-		reccomendedLevels: {
+		recommendedLevels: {
 			"normal": (pokemonList) => {
 				if (pokemonList.length >= 3) return 7
 				return 9
@@ -492,7 +492,7 @@ const levelData = [
 		category: "Route 1",
 		name: "Route 1-6",
 		icon: "6",
-		reccomendedLevels: {
+		recommendedLevels: {
 			"normal": (pokemonList) => {
 				if (pokemonList.length >= 3) return 8
 				return 10
@@ -532,7 +532,7 @@ const levelData = [
 		name: "Route 1-7",
 		icon: "7",
 		music: "SM Trainers' School",
-		reccomendedLevels: {
+		recommendedLevels: {
 			"normal": (pokemonList) => {
 				if (pokemonList.length >= 3) return 8
 				return 10
@@ -608,7 +608,7 @@ const levelData = [
 		name: "Route 2-1",
 		music: "SM Wild Pokemon Battle",
 		icon: "1",
-		reccomendedLevels: {
+		recommendedLevels: {
 			"normal": (pokemonList) => {
 				if (pokemonList.length >= 3) return 9
 				return 12
@@ -648,7 +648,7 @@ const levelData = [
 		category: "Route 2",
 		name: "Route 2-2",
 		icon: "2",
-		reccomendedLevels: {
+		recommendedLevels: {
 			"normal": (pokemonList) => {
 				if (pokemonList.length >= 3) return 10
 				return 13
@@ -733,7 +733,7 @@ const levelData = [
 		name: "Route 2-3",
 		music: "SM Wild Pokemon Battle",
 		icon: "3",
-		reccomendedLevels: {
+		recommendedLevels: {
 			"normal": (pokemonList) => {
 				if (pokemonList.length >= 3) return 10
 				return 13
@@ -782,7 +782,7 @@ const levelData = [
 		name: "Route 2-4",
 		music: "SM Wild Pokemon Battle",
 		icon: "4",
-		reccomendedLevels: {
+		recommendedLevels: {
 			"normal": (pokemonList) => {
 				if (pokemonList.length >= 3) return 11
 				return 13
@@ -832,7 +832,7 @@ const levelData = [
 		name: "Route 2-5",
 		music: "SM Wild Pokemon Battle",
 		icon: "5",
-		reccomendedLevels: {
+		recommendedLevels: {
 			"normal": (pokemonList) => {
 				if (pokemonList.length >= 3) return 12
 				return 15
@@ -871,7 +871,7 @@ const levelData = [
 		images: {
 			"route-bg-berry-farm": "src/img/bg/berry farm.jpg"
 		},
-		reccomendedLevels: {
+		recommendedLevels: {
 			"normal": (pokemonList) => {
 				if (pokemonList.length >= 3) return 12
 				return 15
@@ -919,7 +919,7 @@ const levelData = [
 			"route-bg-verdant-cavern-entrance": "src/img/bg/cave entrance.jpg",
 			"route-bg-verdant-cavern": "src/img/bg/verdant cavern.jpg",
 		},
-		reccomendedLevels: {
+		recommendedLevels: {
 			"normal": (pokemonList) => {
 				if (pokemonList.length >= 3) return 14
 				return 16
@@ -1020,7 +1020,7 @@ const levelData = [
 		images: {
 			"route-bg-cliff-path": "src/img/bg/cliff path.jpg"
 		},
-		reccomendedLevels: {
+		recommendedLevels: {
 			"normal": (pokemonList) => {
 				if (pokemonList.length >= 3) return 14
 				return 16
@@ -1072,7 +1072,7 @@ const levelData = [
 		images: {
 			"route-bg-cliff-path": "src/img/bg/cliff path.jpg"
 		},
-		reccomendedLevels: {
+		recommendedLevels: {
 			"normal": (pokemonList) => {
 				if (pokemonList.length >= 3) return 14
 				return 16
@@ -1087,7 +1087,7 @@ const levelData = [
 				isWild: true,
 				targetPokemon: 4,
 				canPickDuplicates: false,
-				reccomendedLevels: {
+				recommendedLevels: {
 					"normal": (pokemonList) => {
 						if (pokemonList.length >= 3) return 14
 						return 16
@@ -1135,7 +1135,7 @@ const levelData = [
 		images: {
 			"route-bg-melemele-meadow": "src/img/bg/melemele meadow.jpg"
 		},
-		reccomendedLevels: {
+		recommendedLevels: {
 			"normal": (pokemonList) => {
 				if (pokemonList.length >= 3) return 15
 				return 17
@@ -1164,8 +1164,8 @@ const levelData = [
 				name: "Thistle",
 				class: "Aroma-Lady",
 				pokemon: [
-					{ id: "Cottonee", level: 13 },
-					{ id: "Cutiefly", level: 14 },
+					{ id: "Cottonee", name: "Juniper", level: 13 },
+					{ id: "Cutiefly", name: "Mote", level: 14 },
 				]
 			},
 		],
@@ -1187,7 +1187,7 @@ const levelData = [
 		images: {
 			"route-bg-forest-path": "src/img/bg/forest path.jpg"
 		},
-		reccomendedLevels: {
+		recommendedLevels: {
 			"normal": (pokemonList) => {
 				if (pokemonList.length >= 4) return 14
 				return 16
@@ -1307,7 +1307,7 @@ const levelData = [
 		images: {
 			"route-bg-iki-town": "src/img/bg/iki town.jpg"
 		},
-		reccomendedLevels: {
+		recommendedLevels: {
 			"normal": 15,
 			"hard": 15
 		},
@@ -1391,50 +1391,150 @@ const levelData = [
 			{ type: "unlock-z-move-type", unlockedType: "Fighting" },
 		]
 	},
-	//3-6: 
+	//3-6: Roggenrola, Carbink, Sableye, Mawile + others | Sheri
 	{
 		id: "Route 3-6",
 		category: "Route 3",
 		name: "Route 3-6",
 		music: "SM Wild Pokemon Battle",
 		icon: "6",
-		reccomendedLevels: {
+		images: {
+			"route-bg-cave-inside": "src/img/bg/cave inside.jpg"
+		},
+		recommendedLevels: {
 			"normal": (pokemonList) => {
-				if (pokemonList.length >= 3) return 16
-				return 18
+				if (pokemonList.length >= 3) return 17
+				return 19
 			},
 			"hard": (pokemonList) => {
-				if (pokemonList.length >= 3) return 16
-				return 18
+				if (pokemonList.length >= 3) return 17
+				return 19
 			}
 		},
 		trainers: [
 			{
 				isWild: true,
-				targetPokemon: 1,
-				canPickDuplicates: true,
+				targetPokemon: 4,
+				canPickDuplicates: false,
 				possiblePokemon: [
-					{ id: "Rockruff", levelMin: 25, levelMax: 25, weight: 4 }
+					{ id: "Roggenrola", levelMin: 12, levelMax: 15, weight: 3 },
+					{ id: "Carbink", levelMin: 12, levelMax: 15, weight: 3 },
+					{ id: "Sableye", levelMin: 12, levelMax: 15, weight: 3 },
+					{ id: "Mawile", levelMin: 12, levelMax: 15, weight: 3 },
+					{ id: "Zubat", levelMin: 12, levelMax: 15, weight: 1 },
+					{ id: "Diglett-Alola", levelMin: 12, levelMax: 15, weight: 1 },
+					{ id: "Rockruff", levelMin: 12, levelMax: 15, weight: 0.5 },
 				]
 			},
+			//Easy
 			{
-				name: "Thistle",
-				class: "Aroma-Lady",
+				name: "Sheri",
+				class: "Ace-Trainer-Gen7-F",
 				pokemon: [
-					{ id: "Cottonee", level: 13 },
-					{ id: "Cutiefly", level: 14 },
+					{
+						id: "Rockruff",
+						name: "Roxie",
+						level: 14,
+						activeMoves: ["Howl", "Rock Throw", "Bite", "Double Team"],
+					},
+					{
+						id: "Pikachu",
+						name: "Nyoom",
+						level: 13,
+						activeMoves: ["Thunder Shock", "Double Team", "Agility", "Feint"],
+					},
+					{
+						id: "Bounsweet",
+						name: "Fresa",
+						level: 15,
+						activeMoves: ["Razor Leaf", "Play Nice", "Magical Leaf", "Flail"],
+					},
+				]
+			},
+			//Hard
+			{
+				name: "Sheri",
+				class: "Ace-Trainer-Gen7-F",
+				pokemon: [
+					{
+						id: "Pikachu",
+						name: "Nyoom",
+						level: 13,
+						activeMoves: ["Electro Ball", "Double Team", "Agility", "Feint"],
+						ivs: { hp: 15, attack: 5, defense: 15, specialAttack: 25, specialDefense: 0, speed: 25 },
+						evs: { hp: 15, attack: 10, defense: 5, specialAttack: 20, specialDefense: 5, speed: 30 },
+					},
+					{
+						id: "Rockruff",
+						name: "Roxie",
+						level: 14,
+						activeMoves: ["Howl", "Rock Throw", "Bite", "Double Team"],
+						ivs: { hp: 25, attack: 25, defense: 15, specialAttack: 5, specialDefense: 5, speed: 15 },
+						evs: { hp: 15, attack: 30, defense: 25, specialAttack: 5, specialDefense: 0, speed: 10 },
+					},
+					{
+						id: "Steenee",
+						name: "Fresa",
+						level: 15,
+						activeMoves: ["Razor Leaf", "Play Nice", "Magical Leaf", "Flail"],
+						ivs: { hp: 25, attack: 25, defense: 15, specialAttack: 5, specialDefense: 5, speed: 15 },
+						evs: { hp: 35, attack: 30, defense: 5, specialAttack: 5, specialDefense: 0, speed: 10 },
+					},
 				]
 			},
 		],
 		effects: [
-			// { type: "change-background-image", name: "route-bg-melemele-meadow" },
+			{ type: "change-background-image", name: "route-bg-cave-inside" },
 			{ type: "fight", trainer: 0 },
-			// { type: "jump-if-lost", jumpTo: Infinity },
-			// { type: "dialogue", source: "route-3-3-dialogue" },
-			// { type: "change-music", music: "SM Trainer Battle" },
-			// { type: "fight", trainer: 1 },
+			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "dialogue", source: "route-3-6-dialogue" },
+			{ type: "change-music", music: "SM Trainer Battle" },
+			{ type: "load-setting", key: "hardMode" },
+			{ type: "load-value", value: true },
+			{ type: "jump-if-equal", jumpTo: "hardMode" },
+			{ type: "jump", jumpTo: "easyMode" },
+			{ type: "fight", trainer: 1, label: "easyMode" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "fight", trainer: 1, label: "hardMode" },
+			{ type: "jump", jumpTo: Infinity },
 		]
 	},
+	//3-7:
+	//UNLOCK FLYING Z
+	// {
+	// 	id: "Route 3-7",
+	// 	category: "Route 3",
+	// 	name: "Route 3-7",
+	// 	music: "SM Wild Pokemon Battle",
+	// 	icon: "7",
+	// 	images: {
+	// 		"route-bg-farthest-hollow": "src/img/bg/farthest hollow.jpg"
+	// 	},
+	// 	recommendedLevels: {
+	// 		"normal": (pokemonList) => {
+	// 			if (pokemonList.length >= 3) return 17
+	// 			return 19
+	// 		},
+	// 		"hard": (pokemonList) => {
+	// 			if (pokemonList.length >= 3) return 17
+	// 			return 19
+	// 		}
+	// 	},
+	// 	trainers: [
+	// 		{
+	// 			isWild: true,
+	// 			targetPokemon: 5,
+	// 			canPickDuplicates: true,
+	// 			possiblePokemon: [
+	// 				{ id: "Roggenrola", levelMin: 13, levelMax: 15, weight: 3 },
+	// 			]
+	// 		},
+	// 	],
+	// 	effects: [
+	// 		{ type: "change-background-image", name: "route-bg-farthest-hollow" },
+	// 		{ type: "fight", trainer: 0 },
+	// 	]
+	// },
 ]
 
 for (let categoryId in levelCategoryData) {

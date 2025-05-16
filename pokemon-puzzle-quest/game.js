@@ -654,6 +654,21 @@ class Round {
 					}
 				}, activeTrainer, activePokemon, undefined)
 			}
+			//Sand Rush speeds you up a LOT
+			if (activePokemon.hasAbility("Sand Rush")) {
+				activePokemon.addStatusEffect({
+					name: "sand-rush-sped-up",
+					type: "stat-alteration",
+					stacks: true,
+					volatile: true,
+					turns: 4,
+					stat: "speed",
+					modification: {
+						change: 2,
+						operation: "multiply"
+					}
+				}, activeTrainer, activePokemon, undefined)
+			}
 		}
 		//On a Blue 4-match:
 		if (matches.some(match => doesMatchMeetCriteria(match, "blue", 4))) {
@@ -1791,6 +1806,8 @@ class Round {
 			let max = this.maxInitiative
 			let trainer1 = this.trainers[0]
 			let trainer2 = this.trainers[1]
+			let max1 = max + trainer1.activePokemon.getMaxInitiativeModifier()
+			let max2 = max + trainer2.activePokemon.getMaxInitiativeModifier()
 			let speed1 = this.getEffectiveStat("speed", trainer1, trainer1.activePokemon)
 			let speed2 = this.getEffectiveStat("speed", trainer2, trainer2.activePokemon)
 
@@ -1802,8 +1819,8 @@ class Round {
 				speed2 = Math.min(speed1, speed2)
 			}
 
-			let p1 = (max - initiatives[0]) / speed1
-			let p2 = (max - initiatives[1]) / speed2
+			let p1 = (max1 - initiatives[0]) / speed1
+			let p2 = (max2 - initiatives[1]) / speed2
 			p1 = Math.max(p1, 0)
 			p2 = Math.max(p2, 0)
 			if (p1 < p2) {
@@ -1818,10 +1835,10 @@ class Round {
 			initiatives[1] = Math.round(initiatives[1])
 
 			//Just a nice thing, if there's a tie, err in favor of the player.
-			if (initiatives[0] > max - 1) {
-				initiatives[0] = max
+			if (initiatives[0] > max1 - 1) {
+				initiatives[0] = max1
 			}
-			if (initiatives[0] === initiatives[1]) {
+			if (initiatives[0] === max1 && initiatives[1] === max2) {
 				initiatives[1] -= 1
 			}
 		}
@@ -3188,6 +3205,14 @@ class Round {
 		) {
 			power *= 1.5
 		}
+		//Makes contact-y moves are good for Tough Claws
+		if (
+			this.shouldMoveHaveTag("makes-contact", trainer, pokemon, move) &&
+			pokemon.hasAbility("Tough Claws")
+		) {
+			power *= 1.3
+		}
+		//Sheer Force makes moves with additional effects stronger
 		if (move?.tags.includes("has-additional-effects") && pokemon.hasAbility("Sheer Force")) {
 			power *= 1.3
 		}
@@ -3430,12 +3455,18 @@ class Round {
 				console.log(triggerObj)
 			}
 		}
+
+		//Pokemon with No Guard remove Invulnerable when they use a move
+		if (pokemon.hasAbility("No Guard")){
+			otherPokemon.removeStatusesWithName("invulnerable")
+		}
 		
 		let types = pokemon.getEffectiveTypes()
 		let moveType = this.getEffectiveMoveType(trainer, pokemon, move)
 		let isZMove = trainer.zMoveReady && types.includes(moveType)
 		moveUseObj.isZMove = isZMove
 
+		//Some status effects only apply a certain number of times
 		let changed = false
 		let statusEffects = pokemon.statusEffects
 		for (let statusEffect of statusEffects) {
@@ -4500,7 +4531,9 @@ class Round {
 	updateInitiative(trainerIndex, animate, duration = 300) {
 		let tags = this.trainerTags[trainerIndex]
 		let initiative = this.initiativeValues[trainerIndex]
-		let max = this.maxInitiative
+		let trainer = this.trainers[trainerIndex]
+		let pokemon = trainer.activePokemon
+		let max = this.maxInitiative + pokemon.getMaxInitiativeModifier()
 		let p = initiative / max
 		let percent = (p * 100) + "%"
 		let text = formatNumber(initiative)

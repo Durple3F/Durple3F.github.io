@@ -378,6 +378,15 @@ class Pokemon{
 		){
 			prevented = true
 		}
+		//Pokemon with Clear Body can't have their stats lowered by stages
+		if (
+			status.type === "stat" &&
+			status.sourcePokemon !== this &&
+			status.amount < 0 &&
+			this.hasAbility("Clear Body")
+		){
+			prevented = true
+		}
 		//Pokemon with Big Pecks can't have their Defense lowered by stages
 		if (
 			status.type === "stat" &&
@@ -612,6 +621,13 @@ class Pokemon{
 		}
 
 		return effectiveStat
+	}
+	getMaxInitiativeModifier(){
+		//Stall adds 50 to your max initiative
+		if (this.hasAbility("Stall")){
+			return 50
+		}
+		return 0
 	}
 
 	getEffectiveTypes(){

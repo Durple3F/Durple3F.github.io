@@ -1,7 +1,11 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-5/15 (34.7k lines):
-	- 
+5/15 (35.6k lines):
+	- Added Carbink, Sableye, Mawile, Bounsweet, Steenee
+	- Added Guard Split, Ancient Power, Splash, Double Slap
+	- Added Clear Body, Sand Rush, Tough Claws, No Guard, Stall
+	- Added a background to 3-6
+	- Added dialogue to 3-6
 
 5/14 (34.7k lines):
 	- Added Pelipper, Hariyama, Drifblim, Chansey, Boldore, Whimsicott(*), Lilligant(*), Hisuian Lilligant (*), Pangoro, Trumbeak, Toucannon, Vikavolt, Ribombee, All Three Lycanrocs
@@ -132,7 +136,7 @@
 	- Lots of work on how the Z-Move meter looks.
 
 4/27 (25.5k lines):
-	- I can now set reccomended levels for each route, so that I can hopefully scale the player's pokemon down to something good-ish for the level...
+	- I can now set recommended levels for each route, so that I can hopefully scale the player's pokemon down to something good-ish for the level...
 	- Pokemon changed this way are returned to their normal levels once the level finishes.
 	- However, because of this, now you must finish the route (win/lose/flee/whatever) before any of your pokemon have their data saved. If you refresh during fight 2 of 3, any changes to your pokemon from fight 1 are forgotten.
 	- Fixed some dialogue errors. Makana's Rockruff is no longer semitransparent.

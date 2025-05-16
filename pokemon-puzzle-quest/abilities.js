@@ -34,6 +34,10 @@ const abilityData = {
 	"Chlorophyll": {
 		id: "Chlorophyll"
 	},
+	//Prevents receiving statuses that lower stats
+	"Clear Body": {
+		id: "Clear Body"
+	},
 	//Always counts as being asleep
 	"Comatose": {
 		id: "Comatose"
@@ -194,6 +198,10 @@ const abilityData = {
 	"Natural Cure": {
 		id: "Natural Cure"
 	},
+	//Removes invulnerable before each attack
+	"No Guard": {
+		id: "No Guard"
+	},
 	//Can't have energy drained by other pokemon
 	"Oblivious": {
 		id: "Oblivious"
@@ -250,13 +258,17 @@ const abilityData = {
 	"Run Away": {
 		id: "Run Away"
 	},
-	//On an orange 4-match, increase speed
-	"Sand Veil": {
-		id: "Sand Veil"
-	},
 	//On an orange 4-match, increase next Rock/Ground/Steel move's power
 	"Sand Force": {
 		id: "Sand Force"
+	},
+	//On an orange 4-match, double speed for 4 turns
+	"Sand Rush": {
+		id: "Sand Rush"
+	},
+	//On an orange 4-match, increase speed
+	"Sand Veil": {
+		id: "Sand Veil"
 	},
 	//You can deal damage to ghost-type pokemon
 	"Scrappy": {
@@ -289,6 +301,10 @@ const abilityData = {
 	//Double power on moves while the opponent switched in <= 2 turns ago
 	"Stakeout": {
 		id: "Stakeout"
+	},
+	//Prevents your initiative gain from exceeding your opponent's
+	"Stall": {
+		id: "Stall"
 	},
 	//Paralyzes on contact sometimes
 	"Static": {
@@ -345,6 +361,10 @@ const abilityData = {
 	//Increase water power at low hp
 	"Torrent": {
 		id: "Torrent"
+	},
+	//Moves that Make Contact are 30% stronger
+	"Tough Claws": {
+		id: "Tough Claws"
 	},
 	//Healing moves cost less
 	"Triage": {

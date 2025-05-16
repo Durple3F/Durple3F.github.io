@@ -922,6 +922,21 @@
 				{ "type": "load-player-name" },
 				{ "type": "text", "speaker": "Hala", "text": "I wish you luck with the rest of your journey, %c%.", "values": [-1] }
 			]
+		},
+		"route-3-6-dialogue": {
+			"events": [
+				{ "type": "bounce", "speaker": "Sheri", "duration": 400, "waitDuration": 0 }
+			],
+			"callbacks": {},
+			"effects": [
+				{ "type": "get-speaker", "name": "Sheri", "class": "Ace-Trainer-Gen7-F" },
+				{ "type": "text", "speaker": "Sheri", "text": "So, $@start-italics|@$you're$@end-italics|@$ the one who got past Hala, huh? I assume he gave you the same advice as me when I was your age." },
+				{ "type": "text", "speaker": "Sheri", "text": "I'm glad the tradition's still going." },
+				{ "type": "text", "speaker": "Sheri", "text": "When I was your age, I got really mad at all the adults acting like roadblocks until they said I was “^^strong enough.”" },
+				{ "type": "text", "speaker": "Sheri", "text": "But I promise, they have good reason. It definitely helped me a lot, growing up." },
+				{ "type": "text", "speaker": "Sheri", "text": "And to be honest... I've kinda always been waiting for a moment like this, when I can be someone else's roadblock!" },
+				{ "type": "text", "speaker": "Sheri", "text": "$@start-bold|@$$@font-size:1.2|@$En garde!$@font-size:1|@$$@end-bold|@$$@wait-20|@$ ", "auto": true }
+			]
 		}
 	},
 	"pokemon": {
@@ -1051,6 +1066,12 @@
 		"Hariyama": {
 			"name": "Hariyama"
 		},
+		"Sableye": {
+			"name": "Sableye"
+		},
+		"Mawile": {
+			"name": "Mawile"
+		},
 		"Bagon": {
 			"name": "Bagon"
 		},
@@ -1104,6 +1125,9 @@
 		},
 		"Pangoro": {
 			"name": "Pangoro"
+		},
+		"Carbink": {
+			"name": "Carbink"
 		},
 		"Rowlet": {
 			"name": "Rowlet"
@@ -1174,6 +1198,12 @@
 		"Stufful": {
 			"name": "Stufful"
 		},
+		"Bounsweet": {
+			"name": "Bounsweet"
+		},
+		"Steenee": {
+			"name": "Steenee"
+		},
 		"Comfey": {
 			"name": "Comfey"
 		},
@@ -1211,6 +1241,11 @@
 			"description": "Deals damage. The user chooses a tile. Then, that tile and a V-shaped selection around it are removed.",
 			"shortDescription": "Removes a V of tiles.",
 			"choose": "Choose a tile to cut a V-shape around."
+		},
+		"Ancient Power": {
+			"name": "Ancient Power",
+			"description": "Deals damage. Then, 50% of the time, raises the user's Attack, Defense, Special Attack, Special Defense, and Speed stats by 1 stage each.",
+			"shortDescription": "Deals damage and raises user's stats"
 		},
 		"Arm Thrust": {
 			"name": "Arm Thrust",
@@ -1356,6 +1391,11 @@
 			"description": "Raises the user's defense stat by 1 stage. <span class='z-move-description'>Then the user's speed increases by a stage.</span>",
 			"shortDescription": "Raises defense and buffs other moves"
 		},
+		"Detect": {
+			"name": "Detect",
+			"description": "Gives the user the Protected status until their next turn. Then ends the turn. A Protected Pokémon can't be dealt damage by other Pokémon, have status conditions applied to it by other Pokémon, or have its stats raised or lowered by other Pokémon. This move's cooldown increases by 1 with each use.",
+			"shortDescription": "Prevents effects from other Pokémon"
+		},
 		"Disable": {
 			"name": "Disable",
 			"description": "Disables the move used most recently by the opponent for 10 turns.",
@@ -1370,6 +1410,11 @@
 			"name": "Double Kick",
 			"description": "Deals damage twice. This may trigger effects multiple times.",
 			"shortDescription": "Deals damage twice"
+		},
+		"Double Slap": {
+			"name": "Double Slap",
+			"description": "Deals damage. If this is the first time Double Slap was used this turn, its orange and green energy costs are reduced by 1.",
+			"shortDescription": "Multi-use light attack"
 		},
 		"Double Team": {
 			"name": "Double Team",
@@ -1511,6 +1556,11 @@
 			"description": "Raises the user's Attack stat by 1 stage. Then, 3 random Grass tiles are selected. Tiles diagonally adjacent to those tiles become Grass tiles.",
 			"shortDescription": "Grows Grass diagonally"
 		},
+		"Guard Split": {
+			"name": "Guard Split",
+			"description": "Both Pokémon have their Defense stats set to the average value between both Pokémon. The same is true for their Special Defense stats. This effect wears off on a Pokémon when it swaps out.",
+			"shortDescription": "Averages both Pokémon's defenses"
+		},
 		"Gust": {
 			"name": "Gust",
 			"description": "Deals damage. Then, shifts the entire board away from the user by 1 tile.",
@@ -1554,7 +1604,7 @@
 		"Howl": {
 			"name": "Howl",
 			"description": "This Pokémon's energy gain is increased by 50% until their next turn.",
-			"shortDescription": "Temporarily doubles energy"
+			"shortDescription": "Temporarily doubles energy gain"
 		},
 		"Hyper Fang": {
 			"name": "Hyper Fang",
@@ -1774,7 +1824,7 @@
 		},
 		"Protect": {
 			"name": "Protect",
-			"description": "Gives the user the Protected status until their next turn. Then ends the turn. A Protected Pokémon can't be dealt damage by other Pokémon, have status conditions applied to it by other Pokémon, or have its stats raised or lowered by other Pokémon.",
+			"description": "Gives the user the Protected status until their next turn. Then ends the turn. A Protected Pokémon can't be dealt damage by other Pokémon, have status conditions applied to it by other Pokémon, or have its stats raised or lowered by other Pokémon. This move's cooldown increases by 1 with each use.",
 			"shortDescription": "Prevents effects from other Pokémon"
 		},
 		"Psybeam": {
@@ -1928,6 +1978,11 @@
 			"name": "Spite",
 			"description": "The next 3 times that the opponent uses a move, it has its energy cost doubled. This effect wears off after 7 turns.",
 			"shortDescription": "Raises the opponent's costs"
+		},
+		"Splash": {
+			"name": "Splash",
+			"description": "Does nothing 90% of the time. 10% of the time, a random non-Water tile becomes a Water tile.",
+			"shortDescription": "Doesn't do much"
 		},
 		"Stealth Rock": {
 			"name": "Stealth Rock",
@@ -2169,6 +2224,11 @@
 			"shortDescription": "On a non-Grass match, adds some green energy anyway",
 			"longDescription": "Each match this Pokémon makes that contains no Grass tiles provides green energy equal to 1/3 the greatest amount of one color of energy added, rounded down."
 		},
+		"Clear Body": {
+			"name": "Clear Body",
+			"shortDescription": "Other Pokémon can't lower this Pokémon's stat stages",
+			"longDescription": "Other Pokémon can't give this Pokémon status effects which lower its stats by any number of stages."
+		},
 		"Comatose": {
 			"name": "Comatose",
 			"shortDescription": "Always counts as being Asleep",
@@ -2369,6 +2429,11 @@
 			"shortDescription": "On switching out, cure all statuses",
 			"longDescription": "Whenever this Pokémon's user switches it out, all of its status conditions are cured."
 		},
+		"No Guard": {
+			"name": "No Guard",
+			"shortDescription": "Removes Invulnerable from opponent on attacking",
+			"longDescription": "As this Pokémon begins to use a move, the opponent loses Invulnerable."
+		},
 		"Oblivious": {
 			"name": "Oblivious",
 			"shortDescription": "Can't have energy drained by other Pokémon",
@@ -2439,15 +2504,20 @@
 			"shortDescription": "Raises Speed 2 stages if damaged last turn",
 			"longDescription": "At the end of each turn, if this Pokémon was dealt damage during that turn, its Speed stat is raised 2 stages during the next turn."
 		},
-		"Sand Veil": {
-			"name": "Sand Veil",
-			"shortDescription": "On a Fighting-type 4-in-a-row or more, increase Speed a stage",
-			"longDescription": "When this Pokémon's owner makes a match of 4 or more Fighting tiles in a row, this Pokémon's Speed increases by 1 stage."
-		},
 		"Sand Force": {
 			"name": "Sand Force",
 			"shortDescription": "On a Fighting-type 4-in-a-row or more, increase the power of the next Rock/Ground/Steel move used by 50%",
 			"longDescription": "When this Pokémon's owner makes a match of 4 or more Fighting tiles in a row, the power of the next Rock-, Ground-, or Steel-type move this Pokémon uses is increased by 50%."
+		},
+		"Sand Rush": {
+			"name": "Sand Rush",
+			"shortDescription": "On a Fighting-type 4-in-a-row or more, doubles Speed for 4 turns",
+			"longDescription": "When this Pokémon's owner makes a match of 4 or more Fighting tiles in a row, this Pokémon's Speed stat is doubled for 4 turns."
+		},
+		"Sand Veil": {
+			"name": "Sand Veil",
+			"shortDescription": "On a Fighting-type 4-in-a-row or more, increase Speed a stage",
+			"longDescription": "When this Pokémon's owner makes a match of 4 or more Fighting tiles in a row, this Pokémon's Speed stat increases by 1 stage."
 		},
 		"Scrappy": {
 			"name": "Scrappy",
@@ -2488,6 +2558,11 @@
 			"name": "Stakeout",
 			"shortDescription": "Doubles move power against Pokémon that just switched in",
 			"longDescription": "Moves that this Pokémon uses against Pokémon which have been active for 2 or fewer turns have their power increased by 100%."
+		},
+		"Stall": {
+			"name": "Stall",
+			"shortDescription": "+50 max initiative",
+			"longDescription": "This Pokémon requires 50 additional initiative before they can take a turn."
 		},
 		"Static": {
 			"name": "Static",
@@ -2558,6 +2633,11 @@
 			"name": "Torrent",
 			"shortDescription": "Water moves are stronger at low health",
 			"longDescription": "Water moves that this Pokémon uses while at less than or equal to 1/3 HP have their power increased by 50%."
+		},
+		"Tough Claws": {
+			"name": "Tough Claws",
+			"shortDescription": "This Pokémon's moves that make contact get +30% power",
+			"longDescription": "The power of moves that make contact used by this Pokémon are increased by 30%."
 		},
 		"Triage": {
 			"name": "Triage",
