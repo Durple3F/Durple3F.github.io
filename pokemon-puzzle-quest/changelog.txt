@@ -1,11 +1,27 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
+5/17 (36.1k lines):
+	- Hopefully fixed that bug where hovering over a z-move meter gave patently incorrect info about how full it was
+	- Added Supersonic Skystrike
+	- Added a hard mode to 3-7
+	- Added an animation to z-moves
+
+5/16 (36.1k lines):
+	- Added Machop, Machoke, Spinda
+	- Added Revenge, Foresight, Teeter Dance, Body Slam
+	- Added a background to 3-7
+	- Added dialogue to 3-7
+	- Redid quite a bit of code regarding super effective-ness, so now it can take abilities into account.
+	- Added a system for making pokemon temporarily not immune to certain types.
+	- Smack Down does that ^ now
+
 5/15 (35.6k lines):
 	- Added Carbink, Sableye, Mawile, Bounsweet, Steenee
 	- Added Guard Split, Ancient Power, Splash, Double Slap
 	- Added Clear Body, Sand Rush, Tough Claws, No Guard, Stall
 	- Added a background to 3-6
 	- Added dialogue to 3-6
+	- Added an easy and hard version of 3-6
 
 5/14 (34.7k lines):
 	- Added Pelipper, Hariyama, Drifblim, Chansey, Boldore, Whimsicott(*), Lilligant(*), Hisuian Lilligant (*), Pangoro, Trumbeak, Toucannon, Vikavolt, Ribombee, All Three Lycanrocs

@@ -599,6 +599,36 @@ const pokemonMoveData = {
 			} },
 		],
 	},
+	//50% chance to paralyze opponent
+	"Body Slam": {
+		name: "Body Slam",
+		type: "Normal",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 15,
+		power: 85,
+		accuracy: 100,
+		rechargeTurns: 2,
+		energy: {
+			red: 5,
+			orange: 9
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Body Slam.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "random-number", min: 1, max: 10 },
+			{ type: "load-value", value: 6 },
+			{ type: "jump-if-less-than", jumpTo: Infinity },
+			{ type: "apply-status-effect", statusEffect: "paralyzed", target: "opponent" }
+		]
+	},
 	//Removes light screen & reflect
 	"Brick Break": {
 		name: "Brick Break",
@@ -2292,6 +2322,36 @@ const pokemonMoveData = {
 			{ type: "jump-if-less-than", jumpTo: Infinity },
 			{ type: "apply-status-effect", statusEffect: "paralyzed", target: "opponent" }
 		]
+	},
+	//Makes the opponent vulnerable to fighting and normal
+	"Foresight": {
+		name: "Foresight",
+		type: "Normal",
+		category: "Status",
+		strategy: "special",
+		pp: 40,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 4,
+		energy: {
+			green: 3,
+			purple: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Foresight.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "apply-status-effect", target: "opponent", statusEffect: {
+				name: "foresight-vulnerability",
+				type: "type-vulnerability",
+				stacks: false,
+				volatile: true,
+				appliesTo: {
+					types: ["Fighting", "Normal"]
+				},
+			} },
+		],
 	},
 	//Attacks once per match made this turn
 	"Fury Attack": {
@@ -4648,6 +4708,33 @@ const pokemonMoveData = {
 			{ type: "apply-status-effect", statusEffect: "reflect", target: "user" },
 		],
 	},
+	//Deals more damage if you took damage since your last turn ended
+	"Revenge": {
+		name: "Revenge",
+		type: "Fighting",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 10,
+		power: 60,
+		accuracy: 100,
+		rechargeTurns: 4,
+		energy: {
+			orange: 5,
+			red: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Revenge.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-pokemon-data", target: "opponent", key: "damagedSinceLastOwnTurn" },
+			{ type: "jump-if-truthy", jumpTo: "double-damage" },
+			{ type: "damage" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "damage", damageMult: 2, label: "double-damage" },
+		],
+	},
 	//Forces opponent to switch
 	"Roar": {
 		name: "Roar",
@@ -5262,6 +5349,16 @@ const pokemonMoveData = {
 			{ type: "load-value", value: 0 },
 			{ type: "select-all-tiles" },
 			{ type: "shift-tiles", selection: -1, xOffset: -2, yOffset: -3 },
+			
+			{ type: "apply-status-effect", target: "opponent", statusEffect: {
+				name: "foresight-vulnerability",
+				type: "type-vulnerability",
+				stacks: false,
+				volatile: true,
+				appliesTo: {
+					types: ["Ground"]
+				},
+			} },
 		]
 	},
 	//Paralyzes and deals more damage to paralyzed enemies
@@ -6180,6 +6277,34 @@ const pokemonMoveData = {
 			} },
 		],
 	},
+	//Confuses the opponent and moves their energy around
+	"Teeter Dance": {
+		name: "Teeter Dance",
+		type: "Normal",
+		category: "Status",
+		strategy: "debuff-opponent",
+		tags: ["dancing"],
+		pp: 20,
+		power: null,
+		accuracy: 100,
+		rechargeTurns: 4,
+		energy: {
+			red: 2,
+			yellow: 2,
+			blue: 2,
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Teeter Dance part 1.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "apply-status-effect", statusEffect: "confused", target: "opponent" },
+			{ type: "load-value", value: 1 },
+			{ type: "shift-energy", shift: -1, target: "opponent" },
+			{ type: "load-value", value: -1 },
+			{ type: "shift-energy", shift: -1, target: "user" },
+		],
+	},
 	//Switch out without ending the turn
 	"Teleport": {
 		name: "Teleport",
@@ -6653,7 +6778,9 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "part1", wait: true },
 			{ type: "play-sound", name: "part3" },
-			{ type: "wait", duration: 5000 },
+			{ type: "z-move-animation", animationType: "Normal", resolveOn: "wait", waitBeforeFinishMove: true },
+			{ type: "save-variable", name: "animPromise", save: -1 },
+			// { type: "wait", duration: 5000 },
 			{ type: "load-value", value: 5 },
 			{ type: "select-random-tiles", count: -1 },
 			{ type: "remove-tiles", selection: -1, delay: 50 },
@@ -6678,7 +6805,10 @@ const pokemonMoveData = {
 			{ type: "load-value", value: 5 },
 			{ type: "select-random-tiles", count: -1 },
 			{ type: "remove-tiles", selection: -1, delay: 50 },
+			{ type: "load-variable", name: "animPromise" },
+			{ type: "promise-wait" },
 			{ type: "damage", delay: 0 },
+			{ type: "end-turn" },
 		],
 	},
 	"All-Out Pummeling": {
@@ -6690,7 +6820,46 @@ const pokemonMoveData = {
 		tags: ["z-move", "damage-dealing", "goes-through-protect"],
 		pp: null,
 		power: 100,
-		powerBasedOnParent: {},
+		powerBasedOnParent: {
+			"Arm Thrust": 100,
+			"Aura Sphere": 160,
+			"Brick Break": 140,
+			"Circle Throw": 120,
+			"Close Combat": 190,
+			"Counter": 100,
+			"Cross Chop": 180,
+			"Double Kick": 100,
+			"Drain Punch": 140,
+			"Dynamic Punch": 180,
+			"Final Gambit": 180,
+			"Flying Press": 170,
+			"Focus Blast": 190,
+			"Focus Punch": 200,
+			"Force Palm": 120,
+			"Hammer Arm": 180,
+			"High Jump Kick": 195,
+			"Jump Kick": 180,
+			"Karate Chop": 100,
+			"Low Kick": 160,
+			"Low Sweep": 120,
+			"Mach Punch": 100,
+			"Power-Up Punch": 100,
+			"Revenge": 120,
+			"Reversal": 160,
+			"Rock Smash": 100,
+			"Rolling Kick": 120,
+			"Sacred Sword": 175,
+			"Secret Sword": 160,
+			"Seismic Toss": 100,
+			"Sky Uppercut": 160,
+			"Storm Throw": 120,
+			"Submission": 160,
+			"Superpower": 190,
+			"Triple Kick": 120,
+			"Vacuum Wave": 100,
+			"Vital Throw": 140,
+			"Wake-Up Slap": 140,
+		},
 		accuracy: null,
 		rechargeTurns: 1,
 		energy: {},
@@ -6702,7 +6871,13 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "part1", wait: true },
 			{ type: "play-sound", name: "part3", waitBeforeFinishMove: true },
-			{ type: "wait", duration: 5000 },
+			{ type: "z-move-animation", animationType: "Fighting", resolveOn: "wait", waitBeforeFinishMove: true, durations: {
+				"expand": 4500,
+				"wait": 6000,
+				"shrink": 3000
+			} },
+			{ type: "save-variable", name: "animPromise", save: -1 },
+			// { type: "wait", duration: 5000 },
 			
 			{ type: "damage", delay: 0, damageMult: 1/15 },
 			{ type: "load-value", value: 1 },
@@ -6782,7 +6957,71 @@ const pokemonMoveData = {
 				conditionArguments: [-3, -2, -1]
 			},
 			{ type: "remove-tiles", selection: -1, delay: 50 },
-			{ type: "time-step" }
+			{ type: "time-step" },
+			{ type: "load-variable", name: "animPromise" },
+			{ type: "promise-wait" },
+			{ type: "end-turn" },
+		],
+	},
+	"Supersonic Skystrike": {
+		name: "Supersonic Skystrike",
+		type: "Flying",
+		category: "Physical",
+		inheritCategory: true,
+		strategy: "basic-damage",
+		tags: ["z-move", "damage-dealing", "goes-through-protect"],
+		pp: null,
+		power: 100,
+		powerBasedOnParent: {
+			"Acrobatics": 100,
+			"Aerial Ace": 120,
+			"Aeroblast": 180,
+			"Air Cutter": 120,
+			"Air Slash": 140,
+			"Beak Blast": 180,
+			"Bounce": 160,
+			"Brave Bird": 190,
+			"Chatter": 120,
+			"Dragon Ascent": 190,
+			"Drill Peck": 160,
+			"Fly": 175,
+			"Gust": 100,
+			"Hurricane": 185,
+			"Oblivion Wing": 160,
+			"Peck": 100,
+			"Pluck": 120,
+			"Sky Attack": 200,
+			"Sky Drop": 120,
+			"Wing Attack": 120,
+		},
+		accuracy: null,
+		rechargeTurns: 1,
+		energy: {},
+		sounds: {
+			"part1": "src/audio/attacks/Supersonic Skystrike part 1.mp3",
+			"part2": "src/audio/attacks/Supersonic Skystrike part 2.mp3",
+			"part3": "src/audio/attacks/Supersonic Skystrike part 3.mp3",
+		},
+		effects: [
+			{ type: "play-sound", name: "part1", wait: true },
+			{ type: "play-sound", name: "part3", waitBeforeFinishMove: true },
+			{ type: "z-move-animation", animationType: "Flying" },
+			
+			{ type: "load-value", value: 45 },
+			{ 
+				type: "select-tiles-with-expression",
+				conditionExpression: "abs((tan(%c% deg) * (x + 0.5)) - y + ((h*0.5) - (tan(%c% deg) * (w*0.5))))/sqrt(tan(%c% deg)^2 + 1) <= 0.7",
+				conditionArguments: [-1, -1, -1]
+			},
+			{ type: "load-value", value: -45 },
+			{ 
+				type: "select-tiles-with-expression",
+				conditionExpression: "abs((tan(%c% deg) * (x + 0.5)) - y + ((h*0.5) - (tan(%c% deg) * (w*0.5))))/sqrt(tan(%c% deg)^2 + 1) <= 0.7",
+				conditionArguments: [-1, -1, -1]
+			},
+			{ type: "combine-selections", selection1: -1, selection2: -3 },
+			{ type: "remove-tiles", selection: -1 },
+			{ type: "end-turn" },
 		],
 	},
 	// Prev version

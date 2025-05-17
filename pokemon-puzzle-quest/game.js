@@ -42,7 +42,7 @@ class Round {
 		})
 		this.maxInitiative = 100
 		this.struggleTest = false
-		this.zMoveTest = false
+		this.zMoveTest = true
 		if (this.zMoveTest){
 			this.trainers.forEach(trainer => trainer.zMeterFullness = 1)
 		}
@@ -198,7 +198,7 @@ class Round {
 			tags.initiative.animate({ opacity: "1" })
 			tags.zMeter.animate({ opacity: "1" })
 
-			tags.zMeter.popover({
+			tags.zMeter.popover("dispose").popover({
 				trigger: "hover",
 				placement: i === 0 ? "right" : "left",
 				customClass: "z-meter-popover",
@@ -1149,6 +1149,8 @@ class Round {
 		this.matchesInCombo.length = 0
 		this.resetCurrentlySelecting()
 		this.resetCascade()
+		let trainer = this.trainers[this.activePlayerIndex]
+		let otherTrainer = this.trainers[this.inactivePlayerIndex]
 
 		let promise = Promise.resolve()
 
@@ -1160,9 +1162,9 @@ class Round {
 				data.movesUsedThisTurn = 0
 			}
 		}
-
-		let trainer = this.trainers[this.activePlayerIndex]
-		let otherTrainer = this.trainers[this.inactivePlayerIndex]
+		//The active pokemon gets marked as having not been damaged on their own turn yet so far
+		trainer.activePokemon.gameRoundData.damagedLastOwnTurn = !!trainer.activePokemon.gameRoundData.damagedThisOwnTurn
+		trainer.activePokemon.gameRoundData.damagedThisOwnTurn = false
 
 		//This pokemon has been active for one more turn
 		trainer.activePokemon.turnsActive++
@@ -1538,6 +1540,8 @@ class Round {
 						stat: "speed",
 						amount: 2
 					}, activePokemon.trainer, activePokemon, undefined)
+				} else {
+					activePokemon.removeStatusesWithName("run-away-boosted")
 				}
 			}
 			//Pokemon with Shed Skin have a chance to cure a status at the end of their turn
@@ -1708,6 +1712,9 @@ class Round {
 
 			let activeTrainer = this.trainers[this.activePlayerIndex]
 			let activePokemon = activeTrainer.activePokemon
+
+			//This is when the timer for "being damaged since your last turn" starts
+			activePokemon.gameRoundData.damagedSinceLastOwnTurn = false
 
 			//A Drowsy pokemon becomes asleep.
 			if (activePokemon.hasStatus("drowsy")) {
@@ -2586,7 +2593,7 @@ class Round {
 		else if (getsStab) {
 			damage *= 1.5
 		}
-		let typeMult = getSuperEffectiveMult(damageType, defenderTypes)
+		let typeMult = this.getSuperEffectiveMult(damageType, defender)
 
 		//Scrappy allows your damage to hit Ghosts
 		if (
@@ -2676,6 +2683,11 @@ class Round {
 				let shakeAmount = damage / defender.maxhp * 10
 				shakeBoard(shakeAmount)
 				defender.gameRoundData.damagedThisTurn = true
+				if (defender === this.trainers[this.activePlayerIndex].activePokemon){
+					defender.gameRoundData.damagedThisOwnTurn = true
+				} else {
+					defender.gameRoundData.damagedSinceLastOwnTurn = true
+				}
 
 				//If the defender has any status effects that remember how much
 				//damage they were dealt, count that.
@@ -3343,6 +3355,39 @@ class Round {
 
 		return stat
 	}
+	getSuperEffectiveMult(type, defender){
+		let vulnerabilities = []
+		let defTypes = defender.getEffectiveTypes()
+		let vulnerabilityStatusEffects = defender.getStatusesOfType("type-vulnerability")
+		if (vulnerabilityStatusEffects.length){
+			let newVulnerabilities = vulnerabilityStatusEffects.flatMap(statusEffect => {
+				return statusEffect.appliesTo.types
+			})
+			newVulnerabilities = noDuplicates(newVulnerabilities)
+			newVulnerabilities.forEach(t => vulnerabilities.push(t))
+		}
+
+		let typeMult = 1
+		for (let defType of defTypes){
+			if (!(type in typeEffectiveness)){
+				console.trace(type)
+			}
+			let mult = typeEffectiveness[type][defType]
+			if (mult === 0 && vulnerabilities.includes(defType)){
+				mult = 1
+			}
+
+			if (
+				mult === 0 && defType === "Ghost" &&
+				defender.hasAbility("Scrappy")
+			){
+				mult = 1
+			}
+
+			typeMult *= mult
+		}
+		return typeMult
+	}
 
 	doesThisApplyToMove(move, appliesTo, type) {
 		if (!move) return false
@@ -3509,7 +3554,7 @@ class Round {
 
 		//If the player is using their z-move, once the move is done, un-ready it
 		if (moveUseObj.isZMove){
-			promise = promise.then(() => {
+			moveUseObj.promise = moveUseObj.promise.then(() => {
 				let trainerIndex = this.trainers.indexOf(trainer)
 				this.unreadyZMove(trainerIndex)
 			})
@@ -3855,17 +3900,14 @@ class Round {
 			let endedTurn = false
 
 			if (pokemon && pokemon.statusEffects.length) {
-				let statusEffects = pokemon.statusEffects
-				for (let statusEffect of statusEffects) {
-					if (statusEffect.name === "confused") {
-						//50% chance that the turn ends.
-						let confuseChance = 0.5
-						if (Math.random() < confuseChance && !endedTurn) {
-							endedTurn = true
-							let p = this.createAnnouncement("general", "Turn ended due to confusion!", 1500)
-							promises.push(p)
-							// this.turnEnd(this.turn)
-						}
+				if (pokemon.hasStatus("confused")){
+					//50% chance that the turn ends.
+					let confuseChance = 0.5
+					if (Math.random() < confuseChance && !endedTurn) {
+						endedTurn = true
+						let p = this.createAnnouncement("general", "Turn ended due to confusion!", 1500)
+						promises.push(p)
+						// this.turnEnd(this.turn)
 					}
 				}
 			}
@@ -5600,14 +5642,7 @@ class Round {
 				let otherTrainer = this.trainers.find(t => t !== thisTrainer)
 				let otherPokemon = otherTrainer.activePokemon
 				let defendingTypes = otherPokemon.getEffectiveTypes()
-				let typeMult = getSuperEffectiveMult(type, defendingTypes)
-
-				if (
-					typeMult === 0 && defendingTypes.includes("Ghost") &&
-					thisPokemon.hasAbility("Scrappy")
-				){
-					typeMult = 1
-				}
+				let typeMult = this.getSuperEffectiveMult(type, otherPokemon)
 
 				if (typeMult > 1) {
 					moveTag.attr("data-effectiveness", "super-effective")
@@ -5862,6 +5897,8 @@ class Trainer {
 				tags.zMeter.popover('update')
 			}
 		})
+
+		console.log(this)
 
 		let pokemon = this.activePokemon
 		let fullness = (this.zMeterFullness * 100).toFixed(0)
@@ -6991,5 +7028,7 @@ function getZMove(trainer, pokemon, move, type){
 		return pokemonMoveData["Breakneck Blitz"]
 	} else if (type === "Fighting" && unlocked.includes("Fighting")){
 		return pokemonMoveData["All-Out Pummeling"]
+	} else if (type === "Flying" && unlocked.includes("Flying")){
+		return pokemonMoveData["Supersonic Skystrike"]
 	}
 }

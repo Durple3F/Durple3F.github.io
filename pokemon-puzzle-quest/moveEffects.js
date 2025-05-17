@@ -777,6 +777,28 @@ const pokemonMoveEffects = {
 			resolve(result)
 		}
 	},
+	"shift-energy": {
+		hasTarget: true,
+		targetType: "trainer",
+		targetDefault: "user",
+		execute: (resolve, effect, params, game, options) => {
+			let moveUseObj = options.moveUse
+			let target = options.target
+			let pokemon = target.activePokemon
+			let shift = params.shift
+			
+			let newEnergy = getEmptyEnergy()
+			for (let color of colors){
+				let curEnergy = pokemon.energy[color]
+				let nextColor = colors[(colors.indexOf(color) + shift) % colors.length]
+				newEnergy[nextColor] = curEnergy
+			}
+			let toAdd = addEnergies(newEnergy, multiplyEnergies(pokemon.energy, -1))
+			game.giveEnergy(toAdd, target, pokemon)
+			
+			resolve()
+		}
+	},
 	"get-energy-capacities": {
 		update: false,
 		hasTarget: true,
@@ -2135,6 +2157,109 @@ const pokemonMoveEffects = {
 			resolve()
 		}
 	},
+	"promise-wait": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let moveUseObj = options.moveUse
+			let effectIndex = options.effectIndex
+			let data = moveUseObj.info[effectIndex - 1]
+			if ("promise" in data){
+				data.promise.then(() => resolve())
+			} else {
+				resolve()
+			}
+		}
+	},
+
+	"z-move-animation": {
+		update: false,
+		hasTarget: true,
+		targetType: "trainer",
+		targetDefault: "user",
+		execute: (resolve, effect, params, game, options) => {
+			let resolveAnimation
+			let animPromise = new Promise(res => resolveAnimation = res)
+			let moveUseObj = options.moveUse
+			let trainer = moveUseObj.trainer
+			let otherTrainer = game.trainers.find(t => t !== trainer)
+			game.trainers.forEach(t => {
+				let bg = t.tags.side.children(".board-side-bg")
+				bg.css("transition", "none")
+				bg.fadeOut(500)
+				moveUseObj.promise.then(() => {
+					bg.fadeIn(500, () => bg.css("transition", ""))
+				})
+			})
+			let zMoveOverlay = $("#background-z-move-overlay")
+			let canvas = zMoveOverlay.children(".main-canvas")[0]
+			let ctx = canvas.getContext("2d")
+			let w = canvas.width = $(window).width()
+			let h = canvas.height = $(window).height()
+			let pokemonBox = trainer.tags.pokemonImage
+			let otherPokemonBox = otherTrainer.tags.pokemonImage
+			let bounds = pokemonBox[0].getBoundingClientRect()
+			let bounds2 = otherPokemonBox[0].getBoundingClientRect()
+			let centerStartPosition = {
+				x: bounds.x + bounds.width * 0.5,
+				y: bounds.y + bounds.height * 0.5
+			}
+			let centerEndPosition = {
+				x: bounds2.x + bounds2.width * 0.5,
+				y: bounds2.y + bounds2.height * 0.5
+			}
+			let color = typeColors[effect.animationType]
+
+			const circleGrow = (flip, location, duration) => {
+				return new Promise(res => {
+					$({val: 0}).animate({val: 1}, {
+						duration: duration,
+						step: p => {
+							ctx.clearRect(0, 0, w, h)
+							if (flip){
+								p = 1 - p
+							}
+							let r1 = p * Math.max(w, h)
+							let r2 = r1 * 2
+							let gradient = ctx.createRadialGradient(
+								location.x, location.y, r1,
+								location.x, location.y, r2
+							)
+							gradient.addColorStop(0, color)
+							gradient.addColorStop(0.5, color)
+							gradient.addColorStop(1, color + "00")
+							ctx.fillStyle = gradient
+							ctx.fillRect(0, 0, w, h)
+						},
+						complete: () => {
+							res()
+						}
+					})
+				})
+			}
+			let durations = effect.durations ?? {}
+			let resolveOn = effect.resolveOn ?? "finish"
+			let finalWait = effect.waitBeforeFinishMove ?? false
+
+			circleGrow(false, centerStartPosition, durations.expand ?? 5000)
+			.then(() => {
+				if (resolveOn === "wait"){
+					resolve({promise: animPromise})
+				}
+				return delay(durations.wait ?? 5500)
+			})
+			.then(() => circleGrow(true, centerEndPosition, durations.shrink ?? 1000))
+			.then(() => {
+				if (resolveOn === "finish"){
+					resolve(animPromise)
+				}
+				resolveAnimation()
+			})
+
+			if (finalWait){
+				moveUseObj.additionalPromises.push(animPromise)
+			}
+		}
+	}
 }
 for (let effectType in pokemonMoveEffects) {
 	let effect = pokemonMoveEffects[effectType]

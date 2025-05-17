@@ -46,6 +46,10 @@ const abilityData = {
 	"Compound Eyes": {
 		id: "Compound Eyes"
 	},
+	//Stat changes do the opposite
+	"Contrary": {
+		id: "Contrary"
+	},
 	//Lowers the defender's Special Attack on contact
 	"Cute Charm": {
 		id: "Cute Charm"
@@ -341,6 +345,10 @@ const abilityData = {
 	//Clones some statuses for the opponent
 	"Synchronize": {
 		id: "Synchronize"
+	},
+	//Speed is doubled while confused
+	"Tangled Feet": {
+		id: "Tangled Feet"
 	},
 	//On damage that makes contact attacker is slowed
 	"Tangling Hair": {

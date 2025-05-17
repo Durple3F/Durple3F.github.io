@@ -1495,46 +1495,135 @@ const levelData = [
 			{ type: "jump", jumpTo: "easyMode" },
 			{ type: "fight", trainer: 1, label: "easyMode" },
 			{ type: "jump", jumpTo: Infinity },
-			{ type: "fight", trainer: 1, label: "hardMode" },
+			{ type: "fight", trainer: 2, label: "hardMode" },
 			{ type: "jump", jumpTo: Infinity },
 		]
 	},
 	//3-7:
 	//UNLOCK FLYING Z
-	// {
-	// 	id: "Route 3-7",
-	// 	category: "Route 3",
-	// 	name: "Route 3-7",
-	// 	music: "SM Wild Pokemon Battle",
-	// 	icon: "7",
-	// 	images: {
-	// 		"route-bg-farthest-hollow": "src/img/bg/farthest hollow.jpg"
-	// 	},
-	// 	recommendedLevels: {
-	// 		"normal": (pokemonList) => {
-	// 			if (pokemonList.length >= 3) return 17
-	// 			return 19
-	// 		},
-	// 		"hard": (pokemonList) => {
-	// 			if (pokemonList.length >= 3) return 17
-	// 			return 19
-	// 		}
-	// 	},
-	// 	trainers: [
-	// 		{
-	// 			isWild: true,
-	// 			targetPokemon: 5,
-	// 			canPickDuplicates: true,
-	// 			possiblePokemon: [
-	// 				{ id: "Roggenrola", levelMin: 13, levelMax: 15, weight: 3 },
-	// 			]
-	// 		},
-	// 	],
-	// 	effects: [
-	// 		{ type: "change-background-image", name: "route-bg-farthest-hollow" },
-	// 		{ type: "fight", trainer: 0 },
-	// 	]
-	// },
+	{
+		id: "Route 3-7",
+		category: "Route 3",
+		name: "Route 3-7",
+		music: "SM Wild Pokemon Battle",
+		icon: "7",
+		images: {
+			"route-bg-farthest-hollow": "src/img/bg/farthest hollow.jpg"
+		},
+		recommendedLevels: {
+			"normal": (pokemonList) => {
+				if (pokemonList.length >= 3) return 17
+				return 19
+			},
+			"hard": (pokemonList) => {
+				if (pokemonList.length >= 3) return 17
+				return 19
+			}
+		},
+		trainers: [
+			{
+				isWild: true,
+				targetPokemon: 4,
+				canPickDuplicates: false,
+				possiblePokemon: [
+					{ id: "Machop", levelMin: 12, levelMax: 15, weight: 3 },
+					{ id: "Spinda", levelMin: 12, levelMax: 15, weight: 3 },
+					{ id: "Rockruff", levelMin: 12, levelMax: 15, weight: 3 },
+					{ id: "Roggenrola", levelMin: 12, levelMax: 15, weight: 1 },
+					{ id: "Carbink", levelMin: 12, levelMax: 15, weight: 1 },
+				]
+			},
+			//Easy
+			//Mandibuzz: Sandtrap
+			//Hawlucha: Topspin
+			//Skarmory: Nine Iron
+			{
+				name: "Kahili",
+				canUseZMoves: true,
+				zMoveUsableTypes: ["Fighting"],
+				pokemon: [
+					{
+						id: "Zubat",
+						name: "Slice",
+						level: 14,
+						pokeball: "ultraball",
+						activeMoves: ["Mean Look", "Aerial Ace", "Supersonic", "Absorb"],
+						//(Uses a TM)
+					},
+					{
+						id: "Oricorio",
+						form: "Baile",
+						name: "Fairway",
+						level: 15,
+						pokeball: "ultraball",
+						activeMoves: ["Air Cutter", "Helping Hand", "Growl", "Peck"],
+					},
+					{
+						id: "Trumbeak",
+						name: "Caddy",
+						level: 16,
+						pokeball: "ultraball",
+						activeMoves: ["Pluck", "Supersonic", "Growl", "Echoed Voice"],
+					},
+				]
+			},
+			//Hard
+			{
+				name: "Kahili",
+				canUseZMoves: true,
+				zMoveUsableTypes: ["Fighting"],
+				pokemon: [
+					{
+						id: "Zubat",
+						name: "Slice",
+						level: 14,
+						pokeball: "ultraball",
+						activeMoves: ["Mean Look", "Aerial Ace", "Absorb", "Poison Fang"],
+						ivs: { hp: 15, attack: 25, defense: 15, specialAttack: 25, specialDefense: 0, speed: 5 },
+						evs: { hp: 15, attack: 25, defense: 15, specialAttack: 25, specialDefense: 0, speed: 5 },
+						//(Uses a TM and gets a move 1 level early)
+					},
+					{
+						id: "Oricorio",
+						form: "Baile",
+						name: "Fairway",
+						level: 15,
+						pokeball: "ultraball",
+						activeMoves: ["Air Cutter", "Helping Hand", "Growl", "Peck"],
+						ivs: { hp: 15, attack: 5, defense: 15, specialAttack: 25, specialDefense: 0, speed: 25 },
+						evs: { hp: 15, attack: 10, defense: 15, specialAttack: 25, specialDefense: 0, speed: 20 },
+					},
+					{
+						id: "Trumbeak",
+						name: "Caddy",
+						level: 16,
+						pokeball: "ultraball",
+						activeMoves: ["Pluck", "Supersonic", "Growl", "Echoed Voice"],
+						ivs: { hp: 15, attack: 25, defense: 15, specialAttack: 5, specialDefense: 20, speed: 25 },
+						evs: { hp: 15, attack: 40, defense: 15, specialAttack: 50, specialDefense: 20, speed: 25 },
+					},
+				]
+			},
+		],
+		effects: [
+			{ type: "change-background-image", name: "route-bg-farthest-hollow" },
+			{ type: "fight", trainer: 0 },
+			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "dialogue", source: "route-3-7-dialogue" },
+			{ type: "change-music", music: "SM Trainer Battle" },
+			{ type: "load-setting", key: "hardMode" },
+			{ type: "load-value", value: true },
+			{ type: "jump-if-equal", jumpTo: "hardMode" },
+			{ type: "jump", jumpTo: "easyMode" },
+			{ type: "fight", trainer: 1, label: "easyMode" },
+			{ type: "jump", jumpTo: "win-check" },
+			{ type: "fight", trainer: 2, label: "hardMode" },
+			{ type: "jump", jumpTo: "win-check" },
+			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
+			{ type: "dialogue", source: "route-3-7-dialogue-won" },
+			{ type: "unlock-z-move-type", unlockedType: "Flying" },
+		]
+	},
 ]
 
 for (let categoryId in levelCategoryData) {

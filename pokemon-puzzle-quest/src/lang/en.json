@@ -937,6 +937,30 @@
 				{ "type": "text", "speaker": "Sheri", "text": "And to be honest... I've kinda always been waiting for a moment like this, when I can be someone else's roadblock!" },
 				{ "type": "text", "speaker": "Sheri", "text": "$@start-bold|@$$@font-size:1.2|@$En garde!$@font-size:1|@$$@end-bold|@$$@wait-20|@$ ", "auto": true }
 			]
+		},
+		"route-3-7-dialogue": {
+			"events": [],
+			"callbacks": {},
+			"effects": [
+				{ "type": "get-speaker", "name": "Kahili", "class": "Kahili" },
+				{ "type": "text", "speaker": "Kahili", "text": "Oh! Hello there. I hope I didn't accidentally bonk you with any of my practice shots." },
+				{ "type": "text", "speaker": "Kahili", "text": "Usually it's just me and the Pokémon out here, and they don't seem to mind me practicing. $@font-size:0.6|@$Although I may have given that Spinda a concussion... $@font-size:0.5|@$(not that anyone could tell.)$@font-size:1|@$" },
+				{ "type": "text", "speaker": "Kahili", "text": "Anyway, it's nice to meet you. Are you taking part in the island challenge?" },
+				{ "type": "text", "speaker": "Kahili", "text": "Judging by that Z-Power Ring, you don't know how to use $@red|Flying-type@$ Z-moves yet, do you?" },
+				{ "type": "text", "speaker": "Kahili", "text": "I could teach you. But, well, I want to see what you're made of first!" }
+			]
+		},
+		"route-3-7-dialogue-won": {
+			"events": [],
+			"callbacks": {},
+			"effects": [
+				{ "type": "get-speaker", "name": "Narrator", "class": "Narrator" },
+				{ "type": "get-speaker", "name": "Kahili", "class": "Kahili" },
+				{ "type": "text", "speaker": "Kahili", "text": "Well! I can tell you show some promise." },
+				{ "type": "text", "speaker": "Kahili", "text": "We'll definitely meet again, and next time we do, it'll be off the green!" },
+				{ "type": "text", "speaker": "Kahili", "text": "Here, take this Z-crystal and get on your way. I need to get back to practicing my forward swing." },
+				{ "type": "text", "speaker": "Narrator", "text": "Your Flying-type Pokémon can now use Z-moves!" }
+			]
 		}
 	},
 	"pokemon": {
@@ -1002,6 +1026,12 @@
 		},
 		"Kadabra": {
 			"name": "Kadabra"
+		},
+		"Machop": {
+			"name": "Machop"
+		},
+		"Machoke": {
+			"name": "Machoke"
 		},
 		"Slowpoke": {
 			"name": "Slowpoke"
@@ -1071,6 +1101,9 @@
 		},
 		"Mawile": {
 			"name": "Mawile"
+		},
+		"Spinda": {
+			"name": "Spinda"
 		},
 		"Bagon": {
 			"name": "Bagon"
@@ -1299,6 +1332,11 @@
 			"name": "Block",
 			"description": "The opponent becomes unable to switch Pokémon until the user switches out.",
 			"shortDescription": "Prevents switching out"
+		},
+		"Body Slam": {
+			"name": "Body Slam",
+			"description": "Deals damage. Then, 50% of the time, applies Paralyzed.",
+			"shortDescription": "Deals damage and paralyzes"
 		},
 		"Brick Break": {
 			"name": "Brick Break",
@@ -1530,6 +1568,11 @@
 			"name": "Force Palm",
 			"description": "Deals damage. Has a 50% chance to paralyze the opponent.",
 			"shortDescription": "Deals damage and may paralyze"
+		},
+		"Foresight": {
+			"name": "Foresight",
+			"description": "The opponent becomes vulnerable to Normal and Fighting type moves.",
+			"shortDescription": "Removes Fighting and Normal immunity"
 		},
 		"Fury Attack": {
 			"name": "Fury Attack",
@@ -1867,6 +1910,11 @@
 			"description": "Gives the user the Reflect status for five turns. Physical moves used against a Pokémon with Reflect have their power halved.",
 			"shortDescription": "Reduces Physical damage taken"
 		},
+		"Revenge": {
+			"name": "Revenge",
+			"description": "Deals damage. This move deals double damage if its user took damage since their last turn ended.",
+			"shortDescription": "Deals extra retaliation damage"
+		},
 		"Roar": {
 			"name": "Roar",
 			"description": "The opponent must swap to a different Pokémon if possible. Then ends the turn.",
@@ -1961,7 +2009,7 @@
 		},
 		"Smack Down": {
 			"name": "Smack Down",
-			"description": "Deals damage. Then, shifts the entire board downwards by 2 tiles.",
+			"description": "Deals damage. Then, shifts the entire board downwards by 2 tiles. The opponent becomes vulnerable to Ground-type moves.",
 			"shortDescription": "Lowers entire board"
 		},
 		"Spark": {
@@ -2104,6 +2152,11 @@
 			"description": "Disables all Status moves that the opponent has for 8 turns.",
 			"shortDescription": "Disables opponent's Status moves"
 		},
+		"Teeter Dance": {
+			"name": "Teeter Dance",
+			"description": "Applies Confused, then shifts the energy in each of the opponent's energy bars 1 bar to the right, and in each of the user's energy bars 1 bar to the left. After a Confused Pokémon uses a move, there's a 50% chance for their turn to end.",
+			"shortDescription": "Applies Confused and moves energy around"
+		},
 		"Teleport": {
 			"name": "Teleport",
 			"description": "The user swaps to a different Pokémon if possible. The new Pokémon retains the old Pokémon's energy.",
@@ -2175,6 +2228,11 @@
 			"name": "All-Out Pummeling",
 			"description": "<span class='z-move-description'>Punches a circular hole into a random spot on the board. Then does that again, five more times. Deals damage with power based on the move it's replacing.</span>",
 			"shortDescription": "Deals huge damage and removes chunks of tiles"
+		},
+		"Supersonic Skystrike": {
+			"name": "Supersonic Skystrike",
+			"description": "<span class='z-move-description'>Slices through the board twice removing all tiles along both diagonals. Then, deals damage with power based on the move it's replacing.</span>",
+			"shortDescription": "Deals huge damage and slices through the board"
 		}
 	},
 	"abilities": {
@@ -2238,6 +2296,11 @@
 			"name": "Compound Eyes",
 			"shortDescription": "On a match that doesn't combo, raises Special Attack 1 stage 50% of the time",
 			"longDescription": "At the end of this Pokémon's turn, if it makes only one match of exactly three tiles, this ability has a 50% chance to raise its Special Attack by 1 stage."
+		},
+		"Contrary": {
+			"name": "Contrary",
+			"shortDescription": "Stat stage alterations do the opposite",
+			"longDescription": "If an effect changes this Pokémon's stat stages, its stats are changed in the opposite way."
 		},
 		"Cute Charm": {
 			"name": "Cute Charm",
@@ -2609,6 +2672,11 @@
 			"shortDescription": "Copies received Paralyze and Poisoned statuses for the opponent",
 			"longDescription": "When this Pokémon receives the Paralyze or Poisoned status effects from an effect of a move, the opponent also gets the same status."
 		},
+		"Tangled Feet": {
+			"name": "Tangled Feet",
+			"shortDescription": "Speed is doubled while confused",
+			"longDescription": "As long as this Pokémon is confused, its Speed stat is doubled."
+		},
 		"Tangling Hair": {
 			"name": "Tangling Hair",
 			"shortDescription": "Lowers an attacker's Speed when they make contact with this Pokémon",
@@ -2891,6 +2959,10 @@
 		"Route 3-6": {
 			"name": "Route 3-6",
 			"description": "Before heading to Akala, you step into a cave along Ten Carat Hill."
+		},
+		"Route 3-7": {
+			"name": "Route 3-7",
+			"description": "Through the cave is a secluded valley with some rare Pokémon in it."
 		}
 	},
 	"route-categories": {

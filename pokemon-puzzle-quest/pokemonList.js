@@ -1152,13 +1152,7 @@ const pokemonData = {
 			{ name: "Kadabra", unlock: { type: "level", amount: 16 } }
 		],
 		learnset: [
-			{
-				name: "Teleport",
-				unlock: {
-					type: "level",
-					amount: 1
-				}
-			}
+			{ name: "Teleport", unlock: { type: "level", amount: 1 } }
 		]
 	},
 	"Kadabra": {
@@ -1208,6 +1202,115 @@ const pokemonData = {
 			{ name: "Teleport", unlock: { type: "level", amount: 1 } },
 			{ name: "Psybeam", unlock: { type: "level", amount: 5 } },
 			{ name: "Reflect", unlock: { type: "level", amount: 10 } },
+		]
+	},
+	"Machop": {
+		name: "Machop",
+		number: "66",
+		weight: {
+			pounds: 43.0,
+			kilograms: 19.5
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0066Machop.png",
+			"largeShiny": "src/img/shiny-pokemon/066-Machop.png",
+			"home": "src/img/tiny-pokemon/Machop.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/machop.mp3"
+		},
+		types: ["Fighting"],
+		tags: [],
+		abilities: ["Guts", "No Guard"],
+		hiddenAbilities: ["Steadfast"],
+		stats: {
+			hp: 70,
+			attack: 80,
+			defense: 50,
+			specialAttack: 35,
+			specialDefense: 35,
+			speed: 35
+		},
+		expYield: 61,
+		evYield: {
+			hp: 0,
+			attack: 1,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 6
+		},
+		evolutions: [
+			{ name: "Machoke", unlock: { type: "level", amount: 28 } }
+		],
+		learnset: [
+			//Gen 7 learnset
+			{ name: "Low Kick", unlock: { type: "level", amount: 1 } },
+			{ name: "Leer", unlock: { type: "level", amount: 1 } },
+			{ name: "Focus Energy", unlock: { type: "level", amount: 3 } },
+			{ name: "Karate Chop", unlock: { type: "level", amount: 7 } },
+			{ name: "Foresight", unlock: { type: "level", amount: 9 } },
+			{ name: "Low Sweep", unlock: { type: "level", amount: 13 } },
+			{ name: "Seismic Toss", unlock: { type: "level", amount: 15 } },
+			{ name: "Revenge", unlock: { type: "level", amount: 19 } },
+			{ name: "Knock Off", unlock: { type: "level", amount: 21 } },
+		]
+	},
+	"Machoke": {
+		name: "Machoke",
+		number: "67",
+		weight: {
+			pounds: 155.4,
+			kilograms: 70.5
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0067Machoke.png",
+			"largeShiny": "src/img/shiny-pokemon/067-Machoke.png",
+			"home": "src/img/tiny-pokemon/Machoke.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/machoke.mp3"
+		},
+		types: ["Fighting"],
+		tags: [],
+		abilities: ["Guts", "No Guard"],
+		hiddenAbilities: ["Steadfast"],
+		stats: {
+			hp: 80,
+			attack: 100,
+			defense: 70,
+			specialAttack: 50,
+			specialDefense: 60,
+			speed: 45
+		},
+		expYield: 142,
+		evYield: {
+			hp: 0,
+			attack: 2,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 8
+		},
+		learnset: [
+			//Gen 7 learnset
+			{ name: "Low Kick", unlock: { type: "level", amount: 1 } },
+			{ name: "Leer", unlock: { type: "level", amount: 1 } },
+			{ name: "Focus Energy", unlock: { type: "level", amount: 1 } },
+			{ name: "Karate Chop", unlock: { type: "level", amount: 1 } },
+			{ name: "Foresight", unlock: { type: "level", amount: 9 } },
+			{ name: "Low Sweep", unlock: { type: "level", amount: 13 } },
+			{ name: "Seismic Toss", unlock: { type: "level", amount: 15 } },
+			{ name: "Revenge", unlock: { type: "level", amount: 19 } },
+			{ name: "Knock Off", unlock: { type: "level", amount: 21 } },
 		]
 	},
 	"Slowpoke": {
@@ -2474,6 +2577,61 @@ const pokemonData = {
 			{ name: "Sweet Scent", unlock: { type: "level", amount: 32 } },
 		]
 	},
+	"Spinda": {
+		name: "Spinda",
+		number: "327",
+		weight: {
+			pounds: 11.0,
+			kilograms: 5.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0327Spinda.png",
+			"largeShiny": "src/img/shiny-pokemon/327-Spinda.png",
+			"home": "src/img/tiny-pokemon/Spinda.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/spinda.mp3"
+		},
+		types: ["Normal"],
+		tags: [],
+		abilities: ["Own Tempo", "Tangled Feet"],
+		hiddenAbilities: ["Contrary"],
+		stats: {
+			hp: 60,
+			attack: 60,
+			defense: 60,
+			specialAttack: 60,
+			specialDefense: 60,
+			speed: 60
+		},
+		expYield: 126,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 1,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			red: 1,
+			orange: 1,
+			yellow: 1,
+			green: 1,
+			blue: 1,
+			purple: 4
+		},
+		learnset: [
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Copycat", unlock: { type: "level", amount: 5 } },
+			{ name: "Teeter Dance", unlock: { type: "level", amount: 9 } },
+			{ name: "Psybeam", unlock: { type: "level", amount: 14 } },
+			{ name: "Hypnosis", unlock: { type: "level", amount: 19 } },
+			{ name: "Body Slam", unlock: { type: "level", amount: 23 } },
+			{ name: "Sucker Punch", unlock: { type: "level", amount: 28 } },
+		]
+	},
 	"Bagon": {
 		name: "Bagon",
 		number: "371",
@@ -3192,7 +3350,7 @@ const pokemonData = {
 			{ name: "Helping Hand", unlock: { type: "level", amount: 3 } },
 			{ name: "Stun Spore", unlock: { type: "level", amount: 6 } },
 			{ name: "Mega Drain", unlock: { type: "level", amount: 9 } },
-			// { name: "Teeter Dance", unlock: { type: "level", amount: 10 } },
+			{ name: "Teeter Dance", unlock: { type: "level", amount: 10 } },
 			{ name: "Charm", unlock: { type: "level", amount: 12 } },
 			{ name: "Magical Leaf", unlock: { type: "level", amount: 15 } },
 			{ name: "Sleep Powder", unlock: { type: "level", amount: 18 } },
@@ -3836,7 +3994,7 @@ const pokemonData = {
 			{ name: "Sing", unlock: { type: "level", amount: 18 } },
 			{ name: "Bubble Beam", unlock: { type: "level", amount: 21 } },
 			{ name: "Encore", unlock: { type: "level", amount: 24 } },
-			{ name: "Guard Split", unlock: { type: "level", amount: 1 } },
+			{ name: "Teeter Dance", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Brionne": {
@@ -4952,7 +5110,7 @@ const pokemonData = {
 			{ name: "Sweet Scent", unlock: { type: "level", amount: 16 } },
 			{ name: "Magical Leaf", unlock: { type: "level", amount: 20 } },
 			{ name: "Flail", unlock: { type: "level", amount: 24 } },
-			// { name: "Teeter Dance", unlock: { type: "level", amount: 28 } },
+			{ name: "Teeter Dance", unlock: { type: "level", amount: 28 } },
 			// { name: "Aromatic Mist", unlock: { type: "level", amount: 32 } },
 		]
 	},
@@ -5006,7 +5164,7 @@ const pokemonData = {
 			{ name: "Razor Leaf", unlock: { type: "level", amount: 1 } },
 			{ name: "Sweet Scent", unlock: { type: "level", amount: 17 } },
 			{ name: "Magical Leaf", unlock: { type: "level", amount: 21 } },
-			// { name: "Teeter Dance", unlock: { type: "level", amount: 25 } },
+			{ name: "Teeter Dance", unlock: { type: "level", amount: 25 } },
 			// { name: "Stomp", unlock: { type: "level", amount: 29 } },
 			// { name: "Aromatic Mist", unlock: { type: "level", amount: 33 } },
 			// { name: "Captivate", unlock: { type: "level", amount: 37 } },

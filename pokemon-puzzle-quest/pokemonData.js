@@ -19,6 +19,26 @@ const types = [
 	"Fairy",
 	"Typeless"
 ]
+const typeColors = {
+	"Water": "#2381ef",
+	"Steel": "#60a1b7",
+	"Rock": "#aea981",
+	"Psychic": "#ee4079",
+	"Poison": "#9240cc",
+	"Normal": "#9fa19e",
+	"Ice": "#3ed9ff",
+	"Ground": "#915118",
+	"Grass": "#3ea125",
+	"Ghost": "#703f70",
+	"Flying": "#81b8ee",
+	"Fire": "#e62222",
+	"Fighting": "#ff7f00",
+	"Fairy": "#ee70ee",
+	"Electric": "#fabf00",
+	"Dragon": "#5160e1",
+	"Dark": "#86548b",
+	"Bug": "#91a110",
+}
 const typeEffectiveness = {}
 for (let type of types){
 	typeEffectiveness[type] = {}

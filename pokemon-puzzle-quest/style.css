@@ -2170,6 +2170,8 @@ body {
 	background-size: cover;
 	z-index: -100;
 }
+#background-z-move-overlay, 
+#background-z-move-overlay > canvas, 
 #background-canvas {
 	position: absolute;
 	top: 0; left: 0;

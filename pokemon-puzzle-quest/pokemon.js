@@ -591,8 +591,9 @@ class Pokemon{
 		let statusEffects = this.statusEffects.filter(effect => {
 			return effect.type === "stat" && effect.stat === stat
 		})
+		let contrary = this.hasAbility("Contrary") ? -1 : 1
 		statusEffects.forEach(effect => {
-			stage += effect.amount
+			stage += effect.amount * contrary
 		})
 		return Math.max(-6, Math.min(6, stage))
 	}
@@ -617,6 +618,10 @@ class Pokemon{
 		}
 
 		if (stat === "defense" && this.hasAbility("Fur Coat")){
+			effectiveStat *= 2
+		}
+
+		if (stat === "speed" && this.hasStatus("confused") && this.hasAbility("Tangled Feet")){
 			effectiveStat *= 2
 		}
 

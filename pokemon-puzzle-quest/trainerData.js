@@ -103,6 +103,14 @@ const NPCTrainerData = {
 		},
 		textStyle: {}
 	},
+	"Kahili": {
+		name: "Kahili",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/kahili.png"
+		},
+		textStyle: {}
+	},
 	"Ace-Trainer-Gen7": {
 		name: "Ace Trainer",
 		type: "trainer",
