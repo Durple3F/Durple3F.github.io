@@ -54,6 +54,15 @@ const levelCategoryData = {
 			]
 		}
 	},
+	"Route 4": {
+		id: "Route 4",
+		startsUnlocked: false,
+		prerequisites: {
+			levelsBeaten: [
+				"Route 3-5"
+			]
+		}
+	},
 }
 
 const levelData = [
@@ -1499,7 +1508,7 @@ const levelData = [
 			{ type: "jump", jumpTo: Infinity },
 		]
 	},
-	//3-7:
+	//3-7: Machop, Spinda, Rockruff | Kahili
 	//UNLOCK FLYING Z
 	{
 		id: "Route 3-7",
@@ -1540,7 +1549,7 @@ const levelData = [
 			{
 				name: "Kahili",
 				canUseZMoves: true,
-				zMoveUsableTypes: ["Fighting"],
+				zMoveUsableTypes: ["Flying"],
 				pokemon: [
 					{
 						id: "Zubat",
@@ -1558,6 +1567,7 @@ const levelData = [
 						pokeball: "ultraball",
 						activeMoves: ["Air Cutter", "Helping Hand", "Growl", "Peck"],
 					},
+					//Canonically named Touckey
 					{
 						id: "Trumbeak",
 						name: "Caddy",
@@ -1571,7 +1581,7 @@ const levelData = [
 			{
 				name: "Kahili",
 				canUseZMoves: true,
-				zMoveUsableTypes: ["Fighting"],
+				zMoveUsableTypes: ["Flying"],
 				pokemon: [
 					{
 						id: "Zubat",
@@ -1593,6 +1603,7 @@ const levelData = [
 						ivs: { hp: 15, attack: 5, defense: 15, specialAttack: 25, specialDefense: 0, speed: 25 },
 						evs: { hp: 15, attack: 10, defense: 15, specialAttack: 25, specialDefense: 0, speed: 20 },
 					},
+					//Canonically named Touckey
 					{
 						id: "Trumbeak",
 						name: "Caddy",
@@ -1622,6 +1633,171 @@ const levelData = [
 			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
 			{ type: "dialogue", source: "route-3-7-dialogue-won" },
 			{ type: "unlock-z-move-type", unlockedType: "Flying" },
+		]
+	},
+
+	//4-1: Fight with Dexio/Sina
+	{
+		id: "Route 4-1",
+		category: "Route 4",
+		name: "Route 4-1",
+		music: "SM Trainer Battle",
+		icon: "1",
+		images: {
+			"route-bg-tide-song-interior": "src/img/bg/tide song interior.jpg",
+			"route-bg-tide-song-exterior": "src/img/bg/tide song exterior.jpg"
+		},
+		recommendedLevels: {
+			"normal": (pokemonList) => {
+				if (pokemonList.length >= 3) return 17
+				return 19
+			},
+			"hard": (pokemonList) => {
+				if (pokemonList.length >= 3) return 17
+				return 19
+			}
+		},
+		trainers: [
+			//Easy
+			{
+				name: "Dexio",
+				pokemon: [
+					{
+						id: "Slowpoke",
+						name: "Slouch",
+						level: 15,
+						pokeball: "ultraball",
+						activeMoves: ["Disable", "Confusion", "Yawn", "Water Gun"],
+					},
+					{
+						id: "Espeon",
+						name: "Epsilon",
+						level: 15,
+						pokeball: "ultraball",
+						activeMoves: ["Confusion", "Psybeam", "Sand Attack", "Quick Attack"],
+					},
+					{
+						id: "Raichu-Alola",
+						name: "Indra",
+						level: 15,
+						pokeball: "ultraball",
+						activeMoves: ["Light Screen", "Agility", "Thunder Shock", "Quick Attack"],
+					},
+				]
+			},
+			{
+				name: "Sina",
+				pokemon: [
+					{
+						id: "Smoochum",
+						name: "Mwah",
+						level: 15,
+						pokeball: "ultraball",
+						activeMoves: ["Confusion", "Covet", "Sing", "Powder Snow"],
+					},
+					{
+						id: "Glaceon",
+						name: "Glimmer",
+						level: 15,
+						pokeball: "ultraball",
+						activeMoves: ["Icy Wind", "Covet", "Double-Edge", "Growl"],
+					},
+					{
+						id: "Snowball",
+						name: "Sandshrew-Alola",
+						level: 15,
+						pokeball: "ultraball",
+						activeMoves: ["Fury Cutter", "Rollout", "Powder Snow", "Mist"],
+					},
+				]
+			},
+			//Hard
+			{
+				name: "Dexio",
+				pokemon: [
+					{
+						id: "Slowpoke",
+						name: "Slouch",
+						level: 15,
+						pokeball: "ultraball",
+						activeMoves: ["Disable", "Confusion", "Yawn", "Water Gun"],
+						ivs: { hp: 15, attack: 25, defense: 15, specialAttack: 25, specialDefense: 0, speed: 5 },
+						evs: { hp: 15, attack: 25, defense: 15, specialAttack: 25, specialDefense: 20, speed: 5 },
+					},
+					{
+						id: "Espeon",
+						name: "Epsilon",
+						level: 15,
+						pokeball: "ultraball",
+						activeMoves: ["Confusion", "Psybeam", "Sand Attack", "Quick Attack"],
+						ivs: { hp: 15, attack: 25, defense: 15, specialAttack: 25, specialDefense: 0, speed: 5 },
+						evs: { hp: 15, attack: 5, defense: 15, specialAttack: 35, specialDefense: 25, speed: 25 },
+					},
+					{
+						id: "Raichu-Alola",
+						name: "Indra",
+						level: 15,
+						pokeball: "ultraball",
+						activeMoves: ["Light Screen", "Agility", "Thunder Shock", "Quick Attack"],
+						ivs: { hp: 15, attack: 5, defense: 15, specialAttack: 25, specialDefense: 15, speed: 25 },
+						evs: { hp: 25, attack: 15, defense: 15, specialAttack: 35, specialDefense: 0, speed: 25 },
+					},
+				]
+			},
+			{
+				name: "Sina",
+				pokemon: [
+					{
+						id: "Smoochum",
+						name: "Mwah",
+						level: 15,
+						pokeball: "ultraball",
+						activeMoves: ["Confusion", "Covet", "Sing", "Powder Snow"],
+						ivs: { hp: 15, attack: 25, defense: 0, specialAttack: 25, specialDefense: 15, speed: 5 },
+						evs: { hp: 15, attack: 25, defense: 0, specialAttack: 25, specialDefense: 15, speed: 5 },
+					},
+					{
+						id: "Glaceon",
+						name: "Glimmer",
+						level: 15,
+						pokeball: "ultraball",
+						activeMoves: ["Icy Wind", "Covet", "Double-Edge", "Growl"],
+						ivs: { hp: 15, attack: 25, defense: 15, specialAttack: 25, specialDefense: 10, speed: 25 },
+						evs: { hp: 15, attack: 40, defense: 15, specialAttack: 25, specialDefense: 10, speed: 5 },
+					},
+					{
+						id: "Snowball",
+						name: "Sandshrew-Alola",
+						level: 15,
+						pokeball: "ultraball",
+						activeMoves: ["Fury Cutter", "Rollout", "Powder Snow", "Iron Defense"],
+						ivs: { hp: 15, attack: 25, defense: 25, specialAttack: 5, specialDefense: 25, speed: 5 },
+						evs: { hp: 15, attack: 25, defense: 40, specialAttack: 5, specialDefense: 25, speed: 5 },
+					},
+				]
+			},
+		],
+		effects: [
+			{ type: "change-background-image", name: "route-bg-tide-song-interior" },
+			{ type: "dialogue", source: "route-4-1-dialogue" },
+			{ type: "load-setting", key: "hardMode" },
+			{ type: "load-value", value: true },
+			{ type: "jump-if-equal", jumpTo: "hardMode" },
+			{ type: "jump", jumpTo: "easyMode" },
+			
+			{ type: "fight", trainer: 0, label: "easyMode" },
+			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "fight", trainer: 1 },
+			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "jump", jumpTo: "end" },
+			
+			{ type: "fight", trainer: 2, label: "hardMode" },
+			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "fight", trainer: 3 },
+			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "jump", jumpTo: "end" },
+
+			{ type: "dialogue", source: "route-4-1-dialogue-won", label: "end" },
 		]
 	},
 ]

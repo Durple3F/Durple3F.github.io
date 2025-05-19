@@ -694,6 +694,41 @@ class Round {
 					fixed: true
 				})
 			}
+			//Snow Cloak makes the next damage-dealing mvoe the opponent uses cost 40% more.
+			if (activePokemon.hasAbility("Snow Cloak")){
+				otherPokemon.addStatusEffect({
+					name: "snow-cloak-cost-alteration",
+					type: "cost-alteration",
+					stacks: true,
+					volatile: true,
+					numberOfApplications: 1,
+					turns: 3,
+					appliesTo: {
+						tag: "damage-dealing"
+					},
+					modification: {
+						change: 1.4,
+						operation: "multiply"
+					},
+					energyCost: {}
+				}, activeTrainer, activePokemon)
+			}
+		}
+		//On a Blue or Yellow 4-match:
+		if (matches.some(match => doesMatchMeetCriteria(match, "blue", 4) || doesMatchMeetCriteria(match, "yellow", 4))){
+			//Ice Body heals you less than rain dish does, but also triggers on yellow matches
+			if (activePokemon.hp < activePokemon.maxhp && activePokemon.hasAbility("Ice Body")) {
+				let gain = activePokemon.maxhp * 0.1
+				this.dealDamage({
+					from: activePokemon,
+					fromTrainer: activeTrainer,
+					move: undefined,
+					to: activePokemon,
+					toTrainer: activeTrainer,
+					damage: -gain,
+					fixed: true
+				})
+			}
 		}
 
 		let energiesToAdd = []
@@ -853,6 +888,21 @@ class Round {
 						}
 					}
 				}
+			}
+		}
+
+		//If the match contains an enemy Frozen tile, get Frostbite
+		let freezes = tiles.flatMap(tile => {
+			let freezes = tile.getStatuses("Freeze")
+			return freezes.filter(statusEffect => statusEffect.sourceTrainer !== activeTrainer || true)
+		})
+		if (freezes.length){
+			let first = freezes[0]
+			let frostbites = activePokemon.getStatuses("frostbite")
+			if (frostbites.length){
+				frostbites[0].turns += 2
+			} else {
+				activePokemon.addStatusEffect("frostbite", first.sourceTrainer, first.sourcePokemon, first.sourceMove)
 			}
 		}
 
@@ -1235,23 +1285,6 @@ class Round {
 		let statusEffects = activePokemon.statusEffects
 		for (let status of statusEffects) {
 			if (status.type !== "status") continue
-			let statusName = status.name
-			if (statusName === "poisoned") {
-				activePokemon.hp -= Math.ceil(activePokemon.maxhp / 32)
-			}
-			if (statusName === "splinters") {
-				let sourceTrainer = status.sourceTrainer || otherTrainer
-				let sourcePokemon = status.sourcePokemon || otherPokemon
-				let sourceMove = status.sourceMove
-				this.dealDamage({
-					fromTrainer: sourceTrainer,
-					from: sourcePokemon,
-					toTrainer: trainer,
-					to: activePokemon,
-					move: sourceMove,
-					power: 25
-				})
-			}
 		}
 		let contents = this.board.tilesOnScreen()
 
@@ -1640,6 +1673,26 @@ class Round {
 				fixed: true
 			})
 		}
+		if (activePokemon.hasStatus("poisoned")) {
+			activePokemon.hp -= Math.ceil(activePokemon.maxhp / 32)
+		}
+		if (activePokemon.hasStatus("frostbite")) {
+			activePokemon.hp -= Math.ceil(activePokemon.maxhp / 32)
+		}
+		if (activePokemon.hasStatus("splinters")) {
+			let splinters = activePokemon.getStatuses("splinters")[0]
+			let sourceTrainer = splinters?.sourceTrainer || otherTrainer
+			let sourcePokemon = splinters?.sourcePokemon || otherPokemon
+			let sourceMove = splinters?.sourceMove
+			this.dealDamage({
+				fromTrainer: sourceTrainer,
+				from: sourcePokemon,
+				toTrainer: trainer,
+				to: activePokemon,
+				move: sourceMove,
+				power: 25
+			})
+		}
 
 		//Stuff like Burned triggers at the end of the turn
 		let contents = this.board.tilesOnScreen()
@@ -1813,8 +1866,8 @@ class Round {
 			let max = this.maxInitiative
 			let trainer1 = this.trainers[0]
 			let trainer2 = this.trainers[1]
-			let max1 = max + trainer1.activePokemon.getMaxInitiativeModifier()
-			let max2 = max + trainer2.activePokemon.getMaxInitiativeModifier()
+			let max1 = this.getMaxInitiative(trainer1, trainer1.activePokemon)
+			let max2 = this.getMaxInitiative(trainer2, trainer2.activePokemon)
 			let speed1 = this.getEffectiveStat("speed", trainer1, trainer1.activePokemon)
 			let speed2 = this.getEffectiveStat("speed", trainer2, trainer2.activePokemon)
 
@@ -3355,6 +3408,29 @@ class Round {
 
 		return stat
 	}
+	getMaxInitiativeModifier(trainer, pokemon){
+		let mod = 0
+
+		//Stall adds 50 to your max initiative
+		if (pokemon.hasAbility("Stall")){
+			mod += 50
+		}
+
+		return mod
+	}
+	getMaxInitiative(trainer, pokemon){
+		let max = this.maxInitiative
+
+		//Frozen tiles each add 10 to the maximum
+		let frozenTiles = this.board.tilesOnScreen().filter(tile => {
+			let freezes = tile.getStatuses("Freeze")
+			return freezes.some(statusEffect => statusEffect.sourceTrainer !== trainer)
+		})
+		max += frozenTiles.length * 10
+
+		let mod = max + this.getMaxInitiativeModifier(trainer, pokemon)
+		return mod
+	}
 	getSuperEffectiveMult(type, defender){
 		let vulnerabilities = []
 		let defTypes = defender.getEffectiveTypes()
@@ -3414,6 +3490,12 @@ class Round {
 		}
 		if (appliesTo.move){
 			good.push(move === appliesTo.move)
+		}
+		if (appliesTo.tag){
+			good.push(move.tags.includes(appliesTo.tag))
+		}
+		if (appliesTo.tags){
+			good.push(appliesTo.tags.every(tag => move.tags.includes(tag)))
 		}
 		let logic = appliesTo.logic
 		if (logic === "and") {
@@ -3531,12 +3613,6 @@ class Round {
 				}
 			}
 		}
-
-		promise = promise.then(() => {
-			if (changed) {
-				this.updateEverything()
-			}
-		})
 
 		//Moxie triggers as a move finishes
 		moveUseObj.promise = moveUseObj.promise.then(() => {
@@ -3962,6 +4038,10 @@ class Round {
 					}
 				}
 			}
+		})
+
+		promise = promise.then(() => {
+			this.updateEverything()
 		})
 
 		//Highlights
@@ -4575,19 +4655,17 @@ class Round {
 		let initiative = this.initiativeValues[trainerIndex]
 		let trainer = this.trainers[trainerIndex]
 		let pokemon = trainer.activePokemon
-		let max = this.maxInitiative + pokemon.getMaxInitiativeModifier()
+		let max = this.getMaxInitiative(trainer, pokemon)
 		let p = initiative / max
 		let percent = (p * 100) + "%"
 		let text = formatNumber(initiative)
 		tags.initiativeBar.attr("data-width", percent)
-		let oldTarget = tags.initiativeBar.attr("data-target")
-		let needToAnimate = Number(oldTarget) !== initiative
 		tags.initiativeBar.attr("data-target", initiative)
 		if (!animate) {
 			tags.initiativeCurrent.text(text)
 			tags.initiativeMax.text(max)
 			tags.initiativeBar.css("width", percent)
-		} else if (needToAnimate) {
+		} else {
 			let oldInitiative = parseInt(tags.initiativeCurrent.text())
 			animateTextCounter(oldInitiative, initiative, tags.initiativeCurrent, duration)
 

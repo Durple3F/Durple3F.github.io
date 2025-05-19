@@ -1413,6 +1413,31 @@ const pokemonMoveData = {
 			{ type: "end-turn", label: "end" }
 		]
 	},
+	//Deals huge damage, but has recoil
+	"Double-Edge": {
+		name: "Double-Edge",
+		type: "Normal",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 15,
+		power: 120,
+		accuracy: 100,
+		rechargeTurns: 2,
+		energy: {
+			red: 12,
+			yellow: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Double-Edge.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "recoil-damage", damageMult: 1/3 },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+	},
 	//Lowers its own cost this turn
 	"Double Slap": {
 		name: "Double Slap",
@@ -2409,6 +2434,78 @@ const pokemonMoveData = {
 			{ type: "damage" }
 		]
 	},
+	//Doubles its own power with each use, but if you don't use it for a turn, the bonus resets
+	"Fury Cutter": {
+		name: "Fury Cutter",
+		type: "Bug",
+		category: "Physical",
+		strategy: "special",
+		pp: 20,
+		power: 40,
+		accuracy: 95,
+		rechargeTurns: 1,
+		energy: {
+			orange: 3,
+			green: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Fury Cutter.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "fury-cutter-powered-up",
+				type: "power-alteration",
+				stacks: true,
+				volatile: true,
+				lostOnSwap: true,
+				lostOnBatonPass: true,
+				appliesTo: {
+					name: "Fury Cutter"
+				},
+				modification: {
+					change: 2,
+					operation: "multiply"
+				}
+			} },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "fury-cutter-cost-increase",
+				type: "cost-alteration",
+				stacks: true,
+				volatile: true,
+				appliesTo: {
+					name: "Fury Cutter"
+				},
+				energyCost: {
+					orange: 1,
+					green: 1
+				}
+			} },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "fury-cutter-used-fury-cutter",
+				type: "hidden",
+				stacks: false,
+				volatile: true
+			} },
+		],
+		onTurnEnd: [
+			{ type: "is-trainers-turn", target: "user" },
+			{ type: "load-value", value: false },
+			{ type: "jump-if-equal", jumpTo: Infinity},
+
+			{ type: "get-status-stacks", target: "user", statusName: "fury-cutter-used-fury-cutter" },
+			{ type: "load-value", value: 0 },
+			{ type: "jump-if-equal", jumpTo: "remove-bonus" },
+			{ type: "jump", jumpTo: "end" },
+			{ type: "remove-status-effect", target: "user", statusName: "fury-cutter-powered-up", label: "remove-bonus" },
+			{ type: "remove-status-effect", target: "user", statusName: "fury-cutter-cost-increase" },
+			{ type: "remove-status-effect", target: "user", statusName: "fury-cutter-used-fury-cutter", label: "end" },
+		]
+	},
 	//Lowers its own cost this turn
 	"Fury Swipes": {
 		name: "Fury Swipes",
@@ -2984,6 +3081,38 @@ const pokemonMoveData = {
 			{ type: "jump", jumpTo: Infinity },
 			{ type: "apply-status-effect", statusEffect: "asleep", target: "opponent", label: "sleep" },
 		],
+	},
+	//Locks random tiles
+	"Ice Shard": {
+		name: "Ice Shard",
+		type: "Ice",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing"],
+		pp: 30,
+		power: 40,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			blue: 3,
+			yellow: 2
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Ice Shard.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "load-value", value: 3 },
+			{ type: "select-random-tiles", count: -1 },
+			{
+				type: "apply-status-to-tiles", selection: "group", which: -1,
+				status: { name: "Locked", type: "debuff", duration: 5 }
+			}
+		]
 	},
 	//Lowers speed 1
 	"Icy Wind": {
@@ -3728,6 +3857,29 @@ const pokemonMoveData = {
 			} },
 		],
 	},
+	//Prevents receiving stat debuffs
+	"Mist": {
+		name: "Mist",
+		type: "Ice",
+		category: "Status",
+		strategy: "special",
+		tags: [],
+		pp: 30,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 5,
+		energy: {
+			blue: 3,
+			green: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Mist.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "apply-status-effect", statusEffect: "mist", target: "user" }
+		],
+	},
 	//Gives random tiles Energy Down
 	"Mud-Slap": {
 		name: "Mud-Slap",
@@ -4067,6 +4219,7 @@ const pokemonMoveData = {
 			{ type: "remove-status-effect", target: "user", statusName: "phantom-force-using-phantom-force" },
 		]
 	},
+	//The user may swap any two tiles
 	"Play Nice": {
 		name: "Play Nice",
 		type: "Normal",
@@ -4098,6 +4251,7 @@ const pokemonMoveData = {
 			{ type: "swap-tiles", selection: -1 },
 		],
 	},
+	//Steals energy
 	"Pluck": {
 		name: "Pluck",
 		type: "Flying",
@@ -4132,6 +4286,7 @@ const pokemonMoveData = {
 			{ type: "gain-energy", amounts: -1, target: "user" }
 		],
 	},
+	//Poisons but deals extra damage if they're already poisoned
 	"Poison Fang": {
 		name: "Poison Fang",
 		type: "Poison",
@@ -4263,6 +4418,37 @@ const pokemonMoveData = {
 			{ type: "end-turn" }
 		],
 	},
+	//Freezes a tile
+	"Powder Snow": {
+		name: "Powder Snow",
+		type: "Ice",
+		category: "Special",
+		strategy: "basic-damage",
+		pp: 25,
+		power: 40,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			blue: 4,
+			yellow: 2
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Powder Snow.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "load-value", value: 1 },
+			{ type: "select-random-tiles", count: -1 },
+			{
+				type: "apply-status-to-tiles", selection: "group", which: -1,
+				status: { name: "Freeze", type: "debuff" }
+			}
+		]
+	},
 	//Empower tiles near the center
 	"Power Gem": {
 		name: "Power Gem",
@@ -4333,7 +4519,7 @@ const pokemonMoveData = {
 			{ type: "trigger", key: "additionalEffects" },
 		],
 		additionalEffects: [
-			{type: "apply-debuff", target: "opponent", debuff: {
+			{ type: "apply-debuff", target: "user", debuff: {
 				type: "stat",
 				stat: "attack",
 				class: "buff",

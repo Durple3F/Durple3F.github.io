@@ -189,6 +189,14 @@ class Pokemon{
 						volatile: false
 					}
 				} break
+				case "frostbite": {
+					status = {
+						name: "frostbite",
+						class: "debuff",
+						volatile: false,
+						turns: 2
+					}
+				} break
 				case "invulnerable": {
 					status = {
 						name: "invulnerable",
@@ -270,6 +278,15 @@ class Pokemon{
 						turns: 10
 					}
 				} break
+				case "mist": {
+					status = {
+						name: "mist",
+						class: "buff",
+						volatile: true,
+						lostOnSwap: true,
+						turns: 10
+					}
+				} break
 				default:
 					console.warn("You never handled", status)
 					status = {
@@ -343,6 +360,15 @@ class Pokemon{
 		}
 		//Electric pokemon can't be paralyzed
 		if (status.name === "paralyzed" && types.includes("Electric")){
+			prevented = true
+		}
+		//Pokemon can't have their stats lowered by stages while Misty
+		if (
+			status.type === "stat" &&
+			status.sourcePokemon !== this &&
+			status.amount < 0 &&
+			this.hasStatus("mist")
+		){
 			prevented = true
 		}
 		//Pokemon with Vital Spirit, Insomnia, or Comatose can't become asleep
@@ -626,13 +652,6 @@ class Pokemon{
 		}
 
 		return effectiveStat
-	}
-	getMaxInitiativeModifier(){
-		//Stall adds 50 to your max initiative
-		if (this.hasAbility("Stall")){
-			return 50
-		}
-		return 0
 	}
 
 	getEffectiveTypes(){

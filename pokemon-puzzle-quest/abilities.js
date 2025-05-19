@@ -126,6 +126,10 @@ const abilityData = {
 	"Hyper Cutter": {
 		id: "Hyper Cutter"
 	},
+	//On a blue or yellow 4-match, heal 10% max HP
+	"Ice Body": {
+		id: "Ice Body"
+	},
 	//Deals damage through Indestructible
 	"Infiltrator": {
 		id: "Infiltrator"
@@ -177,6 +181,10 @@ const abilityData = {
 	//Moves don't count as making contact
 	"Long Reach": {
 		id: "Long Reach"
+	},
+	//Debuff status conditions from other pokemon are applied to the opponent instead
+	"Magic Bounce": {
+		id: "Magic Bounce"
 	},
 	//Prevents indirect damage
 	"Magic Guard": {
@@ -301,6 +309,10 @@ const abilityData = {
 	//Grants a power boost after a 5-match
 	"Sniper": {
 		id: "Sniper"
+	},
+	//On a blue 4-match, the opponent's next damage-dealing move costs 40% more for 3 turns
+	"Snow Cloak": {
+		id: "Snow Cloak"
 	},
 	//Double power on moves while the opponent switched in <= 2 turns ago
 	"Stakeout": {

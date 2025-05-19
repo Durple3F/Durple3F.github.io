@@ -516,6 +516,9 @@ body {
 	/* Can you BELIEVE they used 1050 as the z-index for modals?? 1050??? */
 	z-index: 2000;
 }
+#game-announcements * {
+	pointer-events: none;
+}
 #game-announcements > .announcement {
 	padding-top: 0.3em;
 	padding-bottom: 0.3em;
@@ -1280,7 +1283,7 @@ body {
 }
 .move.usable[data-move-type="Ice"] {
 	background-color: var(--type-ice);
-	color: var(--move-text-lighter);
+	color: var(--move-text-dark);
 }
 .move.usable[data-move-type="Ice"]:active {
 	box-shadow: 0 0 var(--move-shadow-size) var(--type-ice);

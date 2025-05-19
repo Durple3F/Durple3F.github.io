@@ -61,7 +61,7 @@ function getHealthColor(p){
 let tileIconUrls = {
 	red: {
 		0: "src/img/tiles/red.png",
-		1: "src/img/tiles/red.png"
+		1: "src/img/tiles/red 2.png"
 	},
 	orange: {
 		0: "src/img/tiles/orange.png",

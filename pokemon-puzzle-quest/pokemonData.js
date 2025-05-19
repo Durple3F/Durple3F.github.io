@@ -229,6 +229,13 @@ const pokemonStatusData = {
 		class: "debuff",
 		name: "paralyzed"
 	},
+	"frostbite": {
+		image: "src/img/icons/beveled-star.png",
+		color: "rgb(69, 197, 186)",
+		stacks: false,
+		class: "debuff",
+		name: "frostbite"
+	},
 	"invulnerable": {
 		image: "src/img/icons/shield.png",
 		color: "rgb(122, 104, 223)",
@@ -301,6 +308,13 @@ const pokemonStatusData = {
 		class: "debuff",
 		name: "seedling"
 	},
+	"mist": {
+		image: "src/img/icons/fog.png",
+		color: "rgb(70, 70, 70)",
+		stacks: false,
+		class: "buff",
+		name: "mist"
+	},
 }
 for (let statusName in pokemonStatusData){
 	let statusType = pokemonStatusData[statusName]
@@ -336,6 +350,9 @@ const tileStatusData = {
 	},
 	"Bubbly": {
 		url: "src/img/icons/bubble.png"
+	},
+	"Freeze": {
+		url: "src/img/icons/beveled-star.png"
 	},
 	"Stun Spore": {
 		stacks: false,

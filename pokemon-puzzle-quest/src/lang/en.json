@@ -961,38 +961,110 @@
 				{ "type": "text", "speaker": "Kahili", "text": "Here, take this Z-crystal and get on your way. I need to get back to practicing my forward swing." },
 				{ "type": "text", "speaker": "Narrator", "text": "Your Flying-type Pokémon can now use Z-moves!" }
 			]
+		},
+		"route-4-1-dialogue": {
+			"events": [],
+			"callbacks": {},
+			"effects": [
+				{ "type": "get-speaker", "name": "Dexio", "class": "Dexio" },
+				{ "type": "get-speaker", "name": "Sina", "class": "Sina", "position": "left", "facing": "right" },
+				{ "type": "text", "speaker": "Sina", "text": "Ahhh... this hotel is something else, Dex. Can we hang out here a little longer?" },
+				{ "type": "text", "speaker": "Dexio", "text": "$@start-italics|@$sigh$@end-italics|@$$@wait-10|@$ ", "auto": true },
+				{ "type": "fade-out-text", "text": "sigh" },
+				{ "type": "text", "speaker": "Dexio", "text": "You already know we can't, Sina. We need to head out to get some data. There'll be $@start-italics|@$plenty$@end-italics|@$ of time to relax once we're done." },
+				{ "type": "text", "speaker": "Sina", "text": "Can we at $@start-italics|@$least$@end-italics|@$ get that data on the beach? Think about it, if new trainers show up, that's where they gotta come from, right?" },
+				{ "type": "text", "speaker": "Dexio", "text": "...Not a bad point, actually. Sure, let's go." },
+				{ "type": "animate", "selector": "#dialogue", "css": {
+					"opacity": 0
+				}, "duration": 1000, "waitDuration": 1000 },
+				{ "type": "remove-speaker", "speaker": "Sina" },
+				{ "type": "get-speaker", "name": "Sina", "class": "Sina" },
+				{ "type": "text", "speaker": "Sina", "text": "", "auto": true },
+				{ "type": "style-speaker", "speaker": "Dexio", "css": {
+					"left": "-=10%"
+				}},
+				{ "type": "change-background-image", "name": "route-bg-tide-song-exterior" },
+				{ "type": "animate", "selector": "#dialogue", "css": {
+					"opacity": 1
+				}, "duration": 1000, "waitDuration": 600 },
+				{ "type": "text", "speaker": "Sina", "text": "Hey! I think that's one of those “island challenge” trainers!" },
+				{ "type": "text", "speaker": "Dexio", "text": "I think you're right... hey, want to help with a research study?" },
+				{ "type": "text", "speaker": "Dexio", "text": "We're researchers from Kalos here on official research purposes to take observations, mainly focused on this “Z-Power” phenomenon." },
+				{ "type": "text", "speaker": "Sina", "text": "That's the intent, anyway. So far, we've mainly been focused on if these malasada things live up to the hype." },
+				{ "type": "text", "speaker": "Dexio", "text": "That's beside the point." },
+				{ "type": "text", "speaker": "Sina", "text": "(They do.)" },
+				{ "type": "text", "speaker": "Dexio", "text": "Thank you Sina.$@wait-10|@$ So, we've been looking for trainers like you, wearing bracelets like yours." },
+				{ "type": "text", "speaker": "Dexio", "text": "Seeing the kinds of Pokémon trainers use here and the kinds of moves they know—$@wait-10|@$ ", "auto": true },
+				{ "type": "text", "speaker": "Sina", "text": "I think they understand, Dex. Anyway, wanna battle? For the sake of science, of course." }
+			]
+		},
+		"route-4-1-dialogue-won": {
+			"events": [],
+			"callbacks": {},
+			"effects": [
+				{ "type": "get-speaker", "name": "Dexio", "class": "Dexio" },
+				{ "type": "get-speaker", "name": "Sina", "class": "Sina" },
+				{ "type": "style-speaker", "speaker": "Dexio", "css": {
+					"left": "-=10%"
+				}},
+				{ "type": "text", "speaker": "Dexio", "text": "Nice! These are some very useful readings. The energy coming from that bracelet is even more interesting than I expected..." },
+				{ "type": "text", "speaker": "Sina", "text": "That's his way of saying thank you. Thanks for helping with our little study, buddy!" },
+				{ "type": "text", "speaker": "Sina", "text": "We'll be off looking for more trainers, getting more data points, that kind of thing..." },
+				{ "type": "text", "speaker": "Dexio", "text": "...Checking out that golf course behind the hotel maybe..." },
+				{ "type": "text", "speaker": "Sina", "text": "Ooh! May$@start-italics|@$be$@end-italics|@$, Dex! See ya around!" },
+				{ "type": "go-out-from-onscreen", "speaker": "Sina", "direction": "left", "duration": 1000, "waitDuration": 0 },
+				{ "type": "go-out-from-onscreen", "speaker": "Dexio", "direction": "left", "duration": 1000, "waitDuration": 1000, "additionalLeft": -0.1 }
+			]
 		}
 	},
 	"pokemon": {
 		"Caterpie": {
-			"name": "Caterpie"
+			"name": "Caterpie",
+			"pokedex-entry": "If it likes you, it will try to follow you around. Unfortunately, it's not very fast, it sometimes prefers to stick to its trainer's legs."
 		},
 		"Metapod": {
-			"name": "Metapod"
+			"name": "Metapod",
+			"pokedex-entry": "Pokémon researchers have concluded that Caterpie has absolutely no idea why they turn into this, and are anxiously hoping that it stops soon. “That's probably fine,” says one such researcher."
 		},
 		"Butterfree": {
-			"name": "Butterfree"
+			"name": "Butterfree",
+			"pokedex-entry": "Butterfree have favorite flowers, and return to them often. Some gardeners take extra special care of flowers that they know the local Butterfree like."
 		},
 		"Rattata-Alola": {
-			"name": "Rattata"
+			"name": "Rattata",
+			"pokedex-entry": "Unlike its mainland cousin, this Pokémon dislikes open spaces. It's known to hoard food, only to forget where it hid that hoard."
 		},
 		"Raticate-Alola": {
-			"name": "Raticate"
+			"name": "Raticate",
+			"pokedex-entry": "Alolan Raticate are very picky about what they eat. They send their Rattata underlings to find fresh food for them."
 		},
 		"Spearow": {
-			"name": "Spearow"
+			"name": "Spearow",
+			"pokedex-entry": "Spearow are very stubborn, glaring down and pecking at any Pokémon they view as invading their territory, regardless of size. Nearby Spearow seem to understand this, and join other Spearow exhibiting this behavior to defend their territories."
 		},
 		"Fearow": {
-			"name": "Fearow"
+			"name": "Fearow",
+			"pokedex-entry": "Its beak is especially good at fishing Caterpie and other Bug Pokémon out of deep soil. It sees the subtle movements of the grass from high in the air, and dives down to peck the ground at high speeds."
 		},
 		"Pikachu": {
-			"name": "Pikachu"
+			"name": "Pikachu",
+			"pokedex-entry": "Nobody has heard of Pikachu. What is this thing"
 		},
 		"Raichu": {
-			"name": "Raichu"
+			"name": "Raichu",
+			"pokedex-entry": "When agitated enough, it's known to send electric discharges outwards from its body. When that happens, in more ways than one, it needs an outlet."
 		},
 		"Raichu-Alola": {
-			"name": "Raichu"
+			"name": "Raichu",
+			"pokedex-entry": "Some scientists believe that the environment of Alola is better suited to this Pokémon's regional form. Other scientists disagree, saying “he's just chill like that.”"
+		},
+		"Sandshrew-Alola": {
+			"name": "Sandshrew",
+			"pokedex-entry": "Alolan Sandshrew, like their mainland cousins, curl into a ball and roll away to evade predators. Unlike its cousins, it hasn't fully learned that it's difficult to turn while on ice."
+		},
+		"Sandslash-Alola": {
+			"name": "Sandslash",
+			"pokedex-entry": "Mount Lanakila often sees Sandslash racing down it at high speeds. The nearby village makes sure any would-be climbers are aware of the danger."
 		},
 		"Zubat": {
 			"name": "Zubat"
@@ -1072,6 +1144,9 @@
 		"Pichu": {
 			"name": "Pichu"
 		},
+		"Espeon": {
+			"name": "Espeon"
+		},
 		"Murkrow": {
 			"name": "Murkrow"
 		},
@@ -1083,6 +1158,9 @@
 		},
 		"Smeargle": {
 			"name": "Smeargle"
+		},
+		"Smoochum": {
+			"name": "Smoochum"
 		},
 		"Wingull": {
 			"name": "Wingull"
@@ -1125,6 +1203,9 @@
 		},
 		"Happiny": {
 			"name": "Happiny"
+		},
+		"Glaceon": {
+			"name": "Glaceon"
 		},
 		"Roggenrola": {
 			"name": "Roggenrola"
@@ -1350,7 +1431,7 @@
 		},
 		"Brutal Swing": {
 			"name": "Brutal Swing",
-			"description": "Deals damage. Converts half of all Grass and Psychic tiles, rounded up, into Dark tiles. Dark tiles are worth 1 purple energy AND 1 red energy each.",
+			"description": "Deals damage. The user takes recoil damage equal to 1/4 of the damage dealt. Converts half of all Grass and Psychic tiles, rounded up, into Dark tiles. Dark tiles are worth 1 purple energy AND 1 red energy each.",
 			"shortDescription": "Turns tiles into Dark tiles"
 		},
 		"Bubble Beam": {
@@ -1458,6 +1539,11 @@
 			"name": "Double Team",
 			"description": "Raises the user's speed stat by 1 stage. Then, makes a random match somewhere on the board without ending the user's turn.",
 			"shortDescription": "Raises speed & makes a match"
+		},
+		"Double-Edge": {
+			"name": "Double-Edge",
+			"description": "Deals damage. The user takes recoil damage equal to 1/3 of the damage dealt.",
+			"shortDescription": "Deals lots of damage with recoil"
 		},
 		"Dragon Breath": {
 			"name": "Dragon Breath",
@@ -1579,6 +1665,11 @@
 			"description": "At the end of your turn, deals damage a number of times equal to the number of matches made that turn (max 5).",
 			"shortDescription": "Damage per match this turn"
 		},
+		"Fury Cutter": {
+			"name": "Fury Cutter",
+			"description": "Deals damage. This move's power is doubled, and its orange and green energy costs are increased by 1. At the end of each turn, if the user hasn't used Fury Cutter during that turn, these effects are removed.",
+			"shortDescription": "Damages and grows stronger"
+		},
 		"Fury Swipes": {
 			"name": "Fury Swipes",
 			"description": "Deals damage. If this is the first time Fury Swipes was used this turn, its orange and yellow energy costs are reduced by 1.",
@@ -1658,6 +1749,11 @@
 			"name": "Hypnosis",
 			"description": "Has an 80% to apply Sleep to the opponent. Otherwise, it will apply Drowsy. When a Drowsy Pokémon ends their turn, they may become Asleep, and lose Drowsy. An Asleep Pokémon gets half as much energy (rounded up) from matches.",
 			"shortDescription": "Puts opponent to sleep"
+		},
+		"Ice Shard": {
+			"name": "Ice Shard",
+			"description": "Deals damage. 3 random tiles become Locked for 5 turns. Other trainers can't swap Locked tiles.",
+			"shortDescription": "Damages and locks tiles"
 		},
 		"Icy Wind": {
 			"name": "Icy Wind",
@@ -1750,6 +1846,11 @@
 			"description": "Deals damage. Then, heals the user for 50% of the damage dealt.",
 			"shortDescription": "Steals some HP"
 		},
+		"Metal Claw": {
+			"name": "Metal Claw",
+			"description": "Deals damage. Has a 50% chance to raise the user's Attack by a stage.",
+			"shortDescription": "Damages and may raise Attack"
+		},
 		"Mimic": {
 			"name": "Mimic",
 			"description": "The user becomes able to use the move which the opponent most recently used until the end of the battle. If they haven't used a move, this move does nothing.",
@@ -1760,10 +1861,10 @@
 			"description": "Until the start of the user's next turn, their damage-dealing moves have their costs halved (rounded up), and their power reduced by 25%.",
 			"shortDescription": "Reduces move costs and powers"
 		},
-		"Metal Claw": {
-			"name": "Metal Claw",
-			"description": "Deals damage. Has a 50% chance to raise the user's Attack by a stage.",
-			"shortDescription": "Damages and may raise Attack"
+		"Mist": {
+			"name": "Mist",
+			"description": "Gives the user the Mist status effect for 10 turns. As long as a Pokémon has Mist, it can't receive debuffs which lower its stats from other Pokémon.",
+			"shortDescription": "Prevents stat reductions"
 		},
 		"Mud-Slap": {
 			"name": "Mud-Slap",
@@ -1849,6 +1950,11 @@
 			"name": "Pound",
 			"description": "Damage-dealing move with no special effects. Ends the turn.",
 			"shortDescription": "Deals light damage"
+		},
+		"Powder Snow": {
+			"name": "Powder Snow",
+			"description": "Deals damage. Then, applies the Freeze status to a random tile. Each Frozen tile on the board increases the amount of initiative required for the opponent to make a move by 10. When the opponent matches a Frozen tile, they have the Frostbite status effect applied to them for 2 turns.",
+			"shortDescription": "Damages and freezes a tile"
 		},
 		"Power Gem": {
 			"name": "Power Gem",
@@ -2397,6 +2503,11 @@
 			"shortDescription": "Other Pokémon can't lower this Pokémon's Attack stages",
 			"longDescription": "Other Pokémon can't give this Pokémon status effects which lower its Attack stat by any number of stages."
 		},
+		"Ice Body": {
+			"name": "Ice Body",
+			"shortDescription": "On a Water-type or Electric-type 4-in-a-row or more, heals 10% of max HP",
+			"longDescription": "When this Pokémon's owner makes a match of 4 or more Water or Electric tiles in a row, this Pokémon heals HP equal to 10% of its max HP."
+		},
 		"Infiltrator": {
 			"name": "Infiltrator",
 			"shortDescription": "This Pokémon can deal damage through Invulnerable",
@@ -2461,6 +2572,11 @@
 			"name": "Long Reach",
 			"shortDescription": "Moves don't make contact",
 			"longDescription": "Moves that this Pokémon uses don't count as making contact."
+		},
+		"Magic Bounce": {
+			"name": "Magic Bounce",
+			"shortDescription": "Debuff status conditions from other Pokémon are applied to the opponent instead",
+			"longDescription": "If an effect of another Pokémon's move would apply a debuffing status condition to this Pokémon, it's applied to its opponent instead."
 		},
 		"Magic Guard": {
 			"name": "Magic Guard",
@@ -2616,6 +2732,11 @@
 			"name": "Sniper",
 			"shortDescription": "On a 5-in-a-row, next move's power is doubled",
 			"longDescription": "When this Pokémon makes a 5-in-a-row match during this Pokémon's turn, the power of its next move is doubled."
+		},
+		"Snow Cloak": {
+			"name": "Snow Cloak",
+			"shortDescription": "On a Water-type 4-in-a-row or more, enemy damage-dealing moves cost 40% more for 3 turns.",
+			"longDescription": "When this Pokémon's owner makes a match of 4 or more Water tiles in a row, the next time that the opponent uses a damage-dealing move, it costs 40% more."
 		},
 		"Stakeout": {
 			"name": "Stakeout",
@@ -2849,7 +2970,15 @@
 		},
 		"poisoned": {
 			"name": "Poisoned",
-			"description": "At the beginning of this Pokémon's turn, it will take 1/32 of its max HP in damage."
+			"description": "At the end of this Pokémon's turn, it will take 1/32 of its max HP in damage."
+		},
+		"frostbite": {
+			"name": "Frostbite",
+			"description": "At the end of this Pokémon's turn, it will take 1/32 of its max HP in damage."
+		},
+		"splinters": {
+			"name": "Splinters",
+			"description": "At the end of this Pokémon's turn, it will take damage as though the opponent had used a 25 power move."
 		},
 		"drowsy": {
 			"name": "Drowsy",
@@ -2882,6 +3011,10 @@
 		"seedling": {
 			"name": "Seedling",
 			"description": "At the end of this Pokémon's turn, it loses HP equal to 1/16 of its Max HP, and its opponent is healed the same amount of HP."
+		},
+		"mist": {
+			"name": "Mist",
+			"description": "Prevents this Pokémon from receiving stat stage debuffs from other Pokémon."
 		}
 	},
 	"levels": {
@@ -2963,6 +3096,10 @@
 		"Route 3-7": {
 			"name": "Route 3-7",
 			"description": "Through the cave is a secluded valley with some rare Pokémon in it."
+		},
+		"Route 4-1": {
+			"name": "Route 4-1",
+			"description": "You step off the boat and onto the sandy beach of Akala Island. Heahea City is right next to the dock, and you stop at the Tide Song Hotel there."
 		}
 	},
 	"route-categories": {
@@ -2974,6 +3111,9 @@
 		},
 		"Route 3": {
 			"name": "Route 3"
+		},
+		"Route 4": {
+			"name": "Route 4"
 		}
 	},
 	"evolution-requirements": {

@@ -1,5 +1,7 @@
 const textCharacterDurationMap = {
-	"&nbsp;": 0.5,
+	"&nbsp;": 0.7,
+	".": 5,
+	".)": 2,
 	",": 3,
 	"!": 7,
 	"?": 10,

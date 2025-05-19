@@ -607,6 +607,63 @@ const pokemonData = {
 			// { name: "Thunderbolt", unlock: { type: "level", amount: 5 } },
 		]
 	},
+	"Sandshrew-Alola": {
+		name: "Sandshrew",
+		id: "Sandshrew-Alola",
+		number: "27a",
+		weight: {
+			pounds: 88.2,
+			kilograms: 40.0
+		},
+		imageFacing: "right",
+		imageSources: {
+			"large": "src/img/pokemon/0027Sandshrew-Alola.png",
+			"largeShiny": "src/img/shiny-pokemon/027-Sandshrew-Alola.png",
+			"home": "src/img/tiny-pokemon/Sandshrew-Alola.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/sandshrew.mp3"
+		},
+		types: ["Ice", "Steel"],
+		tags: [],
+		abilities: ["Snow Cloak"],
+		hiddenAbilities: ["Slush Rush"],
+		stats: {
+			hp: 50,
+			attack: 75,
+			defense: 90,
+			specialAttack: 10,
+			specialDefense: 35,
+			speed: 40
+		},
+		expYield: 60,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 1,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			green: 1,
+			yellow: 3,
+			blue: 1
+		},
+		learnset: [
+			{ name: "Scratch", unlock: { type: "level", amount: 1 } },
+			{ name: "Defense Curl", unlock: { type: "level", amount: 1 } },
+			{ name: "Mist", unlock: { type: "level", amount: 3 } },
+			{ name: "Powder Snow", unlock: { type: "level", amount: 6 } },
+			{ name: "Rollout", unlock: { type: "level", amount: 9 } },
+			{ name: "Fury Cutter", unlock: { type: "level", amount: 12 } },
+			{ name: "Rapid Spin", unlock: { type: "level", amount: 15 } },
+			{ name: "Metal Claw", unlock: { type: "level", amount: 18 } },
+			{ name: "Swift", unlock: { type: "level", amount: 21 } },
+			{ name: "Fury Swipes", unlock: { type: "level", amount: 24 } },
+			{ name: "Iron Defense", unlock: { type: "level", amount: 27 } },
+		]
+	},
 	"Zubat": {
 		name: "Zubat",
 		number: "41",
@@ -2021,6 +2078,67 @@ const pokemonData = {
 			{ name: "Charm", unlock: { type: "level", amount: 20 } },
 		]
 	},
+	"Espeon": {
+		name: "Espeon",
+		number: "196",
+		weight: {
+			pounds: 58.4,
+			kilograms: 26.5
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0196Espeon.png",
+			"largeShiny": "src/img/shiny-pokemon/196-Espeon.png",
+			"home": "src/img/tiny-pokemon/Espeon.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/espeon.mp3"
+		},
+		types: ["Psychic"],
+		tags: [],
+		abilities: ["Synchronize"],
+		hiddenAbilities: ["Magic Bounce"],
+		stats: {
+			hp: 65,
+			attack: 65,
+			defense: 60,
+			specialAttack: 130,
+			specialDefense: 95,
+			speed: 110
+		},
+		expYield: 184,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 2,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			blue: 3,
+			purple: 6
+		},
+		learnset: [
+			{ name: "Covet", unlock: { type: "level", amount: 1 } },
+			{ name: "Bite", unlock: { type: "level", amount: 1 } },
+			{ name: "Copycat", unlock: { type: "level", amount: 1 } },
+			{ name: "Baton Pass", unlock: { type: "level", amount: 1 } },
+			{ name: "Take Down", unlock: { type: "level", amount: 1 } },
+			{ name: "Charm", unlock: { type: "level", amount: 1 } },
+			{ name: "Double-Edge", unlock: { type: "level", amount: 1 } },
+			{ name: "Helping Hand", unlock: { type: "level", amount: 1 } },
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Growl", unlock: { type: "level", amount: 1 } },
+			{ name: "Tail Whip", unlock: { type: "level", amount: 1 } },
+			{ name: "Confusion", unlock: { type: "level", amount: 1 } }, //evolution
+			{ name: "Sand Attack", unlock: { type: "level", amount: 5 } },
+			{ name: "Quick Attack", unlock: { type: "level", amount: 10 } },
+			{ name: "Baby-Doll Eyes", unlock: { type: "level", amount: 15 } },
+			{ name: "Swift", unlock: { type: "level", amount: 20 } },
+			{ name: "Psybeam", unlock: { type: "level", amount: 25 } },
+		]
+	},
 	"Murkrow": {
 		name: "Murkrow",
 		number: "198",
@@ -2235,6 +2353,57 @@ const pokemonData = {
 					amount: 1
 				}
 			},
+		]
+	},
+	"Smoochum": {
+		name: "Smoochum",
+		number: "238",
+		weight: {
+			pounds: 13.2,
+			kilograms: 6.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0238Smoochum.png",
+			"largeShiny": "src/img/shiny-pokemon/238-Smoochum.png",
+			"home": "src/img/tiny-pokemon/Smoochum.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/smoochum.mp3"
+		},
+		types: ["Ice", "Psychic"],
+		tags: [],
+		abilities: ["Oblivious", "Forewarn"],
+		hiddenAbilities: ["Hydration"],
+		stats: {
+			hp: 45,
+			attack: 30,
+			defense: 15,
+			specialAttack: 85,
+			specialDefense: 65,
+			speed: 65
+		},
+		expYield: 61,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 1,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			purple: 2,
+			blue: 3
+		},
+		learnset: [
+			{ name: "Lick", unlock: { type: "level", amount: 1 } },
+			{ name: "Pound", unlock: { type: "level", amount: 1 } },
+			{ name: "Powder Snow", unlock: { type: "level", amount: 4 } },
+			{ name: "Copycat", unlock: { type: "level", amount: 8 } },
+			{ name: "Confusion", unlock: { type: "level", amount: 12 } },
+			{ name: "Covet", unlock: { type: "level", amount: 16 } },
+			{ name: "Sing", unlock: { type: "level", amount: 20 } },
 		]
 	},
 	"Wingull": {
@@ -3005,6 +3174,67 @@ const pokemonData = {
 			{ name: "Disarming Voice", unlock: { type: "level", amount: 12 } },
 			{ name: "Covet", unlock: { type: "level", amount: 16 } },
 			{ name: "Charm", unlock: { type: "level", amount: 20 } },
+		]
+	},
+	"Glaceon": {
+		name: "Glaceon",
+		number: "471",
+		weight: {
+			pounds: 57.1,
+			kilograms: 25.9
+		},
+		imageFacing: "right",
+		imageSources: {
+			"large": "src/img/pokemon/0471Glaceon.png",
+			"largeShiny": "src/img/shiny-pokemon/471-Glaceon.png",
+			"home": "src/img/tiny-pokemon/Glaceon.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/glaceon.mp3"
+		},
+		types: ["Ice"],
+		tags: [],
+		abilities: ["Snow Cloak"],
+		hiddenAbilities: ["Ice Body"],
+		stats: {
+			hp: 65,
+			attack: 60,
+			defense: 110,
+			specialAttack: 130,
+			specialDefense: 95,
+			speed: 65
+		},
+		expYield: 184,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 2,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			yellow: 5,
+			blue: 5
+		},
+		learnset: [
+			{ name: "Covet", unlock: { type: "level", amount: 1 } },
+			{ name: "Swift", unlock: { type: "level", amount: 1 } },
+			{ name: "Copycat", unlock: { type: "level", amount: 1 } },
+			{ name: "Baton Pass", unlock: { type: "level", amount: 1 } },
+			{ name: "Take Down", unlock: { type: "level", amount: 1 } },
+			{ name: "Charm", unlock: { type: "level", amount: 1 } },
+			{ name: "Double-Edge", unlock: { type: "level", amount: 1 } },
+			{ name: "Helping Hand", unlock: { type: "level", amount: 1 } },
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Growl", unlock: { type: "level", amount: 1 } },
+			{ name: "Tail Whip", unlock: { type: "level", amount: 1 } },
+			{ name: "Icy Wind", unlock: { type: "level", amount: 1 } }, //evolutiomn
+			{ name: "Sand Attack", unlock: { type: "level", amount: 5 } },
+			{ name: "Quick Attack", unlock: { type: "level", amount: 10 } },
+			{ name: "Baby-Doll Eyes", unlock: { type: "level", amount: 15 } },
+			{ name: "Ice Shard", unlock: { type: "level", amount: 20 } },
+			{ name: "Bite", unlock: { type: "level", amount: 25 } },
 		]
 	},
 	"Roggenrola": {
@@ -3994,7 +4224,7 @@ const pokemonData = {
 			{ name: "Sing", unlock: { type: "level", amount: 18 } },
 			{ name: "Bubble Beam", unlock: { type: "level", amount: 21 } },
 			{ name: "Encore", unlock: { type: "level", amount: 24 } },
-			{ name: "Teeter Dance", unlock: { type: "level", amount: 1 } },
+			{ name: "Fury Cutter", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Brionne": {

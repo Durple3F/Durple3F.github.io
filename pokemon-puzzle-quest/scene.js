@@ -286,7 +286,7 @@ function startScene(name, options) {
 							// console.log(currentHoveredElement, onPopover, inPopover, onBtn, inBtn)
 							//If the mouse is NOWHERE RELATED TO THE LEVEL
 							if (!onPopover && !onBtn) {
-								btn.popover("hide")
+								btn?.popover("hide")
 							} else {
 								p.off("mouseleave")
 								p.on("mouseleave", waitBeforeHiding)
@@ -1391,11 +1391,15 @@ function choosePokemon(message, pokemon, minChooseable = 1, maxChooseable = 1) {
 	const choose = (i) => {
 		if (chosen.includes(i)) {
 			let index = chosen.indexOf(i)
+			let currentlyLegal = isLegal()
 			chosen.splice(index, 1)
+			if (currentlyLegal && !isLegal()){
+				chosen.splice(index, 0, i)
+			}
 		} else {
 			chosen.push(i)
 			if (chosen.length > maxChooseable) {
-				let unchosenI = chosen.shift()
+				chosen.splice(0, 1)
 			}
 		}
 
@@ -1406,8 +1410,11 @@ function choosePokemon(message, pokemon, minChooseable = 1, maxChooseable = 1) {
 
 		checkLegality()
 	}
+	const isLegal = () => {
+		return chosen.length >= minChooseable && chosen.length <= maxChooseable
+	}
 	const checkLegality = () => {
-		if (chosen.length >= minChooseable && chosen.length <= maxChooseable) {
+		if (isLegal()) {
 			btn.attr("disabled", false)
 		} else {
 			btn.attr("disabled", true)
@@ -1565,12 +1572,12 @@ function viewPokemonInfo(pokemon, options = {}) {
 	let image = pokemon.getImage()
 	let content = $(`
 		<div class='info pokemon-info'>
-			<div class='pokemon-section'>
+			<div class='pokemon-section m-2'>
 				<div class='image text-center'>
 					<img src='${image}' class='pokemon-image'>
 				</div>
 			</div>
-			<div class='move-section'></div>
+			<div class='move-section m-2'></div>
 		</div>
 	`)
 	sections.append(content)
@@ -1607,6 +1614,13 @@ function viewPokemonInfo(pokemon, options = {}) {
 			<span class='stat-val'>${pokemon.friendship}</span>
 		</div>`)
 		statsSection.append(friendshipTag)
+	}
+	//Pokedex entry if it has one
+	if (true){
+		let entry = getLocaleString("pokedex-entry", lang, ["pokemon", data.id], null)
+		if (entry){
+			pokemonSection.append(`<span>${entry}</span>`)
+		}
 	}
 
 	const toggleSelect = (move, moveTag) => {

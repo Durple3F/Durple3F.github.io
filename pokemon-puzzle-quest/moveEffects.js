@@ -544,6 +544,8 @@ const pokemonMoveEffects = {
 					obj[key] = value
 				}
 			}
+
+			let prevented = false
 			
 			//If the defender has protect, the entire event is prevented so long as the debuff is visible.
 			if (
@@ -552,11 +554,30 @@ const pokemonMoveEffects = {
 				target.hasStatus("protect") &&
 				!game.shouldMoveHaveTag("goes-through-protect", trainer, pokemon, move)
 			){
-				return resolve(statusEffect)
+				prevented = true
 			}
 			
+			if (
+				pokemon !== target &&
+				typeof statusEffect === "string" && 
+				statusEffect in pokemonStatusData &&
+				pokemonStatusData[statusEffect].class === "debuff" &&
+				target.hasAbility("Magic Bounce")
+			){
+				let otherTrainer = game.trainers.find(t => t !== target.trainer)
+				let otherPokemon = otherTrainer.activePokemon
+				let status2 = window.structuredClone(statusEffect)
+				otherPokemon.addStatusEffect(status2, trainer, pokemon, move)
+				prevented = true
+			}
+
+			if (prevented){
+				return resolve(statusEffect)
+			}
+
 			target.addStatusEffect(statusEffect, trainer, pokemon, move)
 
+			//Synchronize makes the opponent also get paralyzed or poison statuses
 			if (
 				(statusEffect === "paralyzed" || statusEffect === "poisoned") && 
 				target.hasAbility("Synchronize")

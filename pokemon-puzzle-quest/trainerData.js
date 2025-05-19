@@ -111,6 +111,22 @@ const NPCTrainerData = {
 		},
 		textStyle: {}
 	},
+	"Dexio": {
+		name: "Dexio",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/dexio.png"
+		},
+		textStyle: {}
+	},
+	"Sina": {
+		name: "Sina",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/sina.png"
+		},
+		textStyle: {}
+	},
 	"Ace-Trainer-Gen7": {
 		name: "Ace Trainer",
 		type: "trainer",

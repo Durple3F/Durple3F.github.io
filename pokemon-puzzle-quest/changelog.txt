@@ -1,10 +1,29 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-5/17 (36.1k lines):
+5/19 (37.3k lines):
+	- Added another background to 4-1
+	- Added a hard mode version to 4-1
+	- Pokemon can now have pokedex entries if I feel like writing them.
+	- Added some entries
+
+5/18 (37.0k lines):
+	- Added Smoochum, Alolan Sandshrew
+	- Added Powder Snow, Mist, Fury Cutter
+	- Added Ice Body
+	- Added Freeze, Frostbite, Mist
+	- Poison and Splinters trigger at the end of the turn now.
+	- Added an image for empowered red tiles.
+	- Added a background to 4-1
+
+5/17 (36.8k lines):
+	- Added Espeon, Glaceon
+	- Added Double-Edge, Ice Shard
+	- Added Magic Bounce
 	- Hopefully fixed that bug where hovering over a z-move meter gave patently incorrect info about how full it was
 	- Added Supersonic Skystrike
 	- Added a hard mode to 3-7
 	- Added an animation to z-moves
+	- Now if you're instructed to pick a pokemon, it doesn't let you accidentally make the selection illegal
 
 5/16 (36.1k lines):
 	- Added Machop, Machoke, Spinda
