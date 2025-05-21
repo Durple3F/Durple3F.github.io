@@ -1,10 +1,24 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
+5/21 (38.8k lines):
+	- Added Anticipation
+	- Added some more pokedex entries
+
+5/20 (38.1k lines):
+	- Added Mudbray, Mudsdale, Igglybuff, Jigglypuff, Wigglytuff, Eevee
+	- Added Stomp, Counter, Round, Rest, Hyper Voice, Last Resort
+	- Added Competitive, Frisk
+	- Added some more pokedex entries
+	- Stall has an upside now
+
 5/19 (37.3k lines):
+	- Added Lillipup, Herdier, Stoutland
+	- Added Retaliate, Play Rough, Reversal, Ice Fang, Thunder Fang
 	- Added another background to 4-1
 	- Added a hard mode version to 4-1
 	- Pokemon can now have pokedex entries if I feel like writing them.
 	- Added some entries
+	- Wild Pokemon should now almost never be spawned without a damage-dealing move
 
 5/18 (37.0k lines):
 	- Added Smoochum, Alolan Sandshrew

@@ -648,8 +648,8 @@ const pokemonMoveData = {
 		},
 		effects: [
 			{ type: "play-sound", name: "attack" },
-			{ type: "remove-status-effect", statusName: "light-screen" },
-			{ type: "remove-status-effect", statusName: "reflect" },
+			{ type: "remove-status-effect", target: "opponent", statusName: "light-screen" },
+			{ type: "remove-status-effect", target: "opponent", statusName: "reflect" },
 			{ type: "damage" }
 		]
 	},
@@ -1090,6 +1090,45 @@ const pokemonMoveData = {
 			type: "last-enemy-move"
 		}
 	},
+	//Deals damage based on the last damage dealt to the user
+	"Counter": {
+		name: "Counter",
+		type: "Fighting",
+		category: "Physical",
+		strategy: "special",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 20,
+		power: 0,
+		accuracy: 100,
+		rechargeTurns: 1,
+		bypassEffectiveness: true,
+		energy: {
+			orange: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Counter.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-last-damage-dealt-to", target: "user" },
+			{ type: "save-variable", name: "damage", save: -1 },
+			{ type: "get-last-damage-type-dealt-to", target: "user" },
+			{ type: "save-variable", name: "type", save: -1 },
+			{ type: "load-value", value: "Normal" },
+			{ type: "jump-if-equal", jumpTo: "multiply" },
+			{ type: "load-variable", name: "type" },
+			{ type: "load-value", value: "Fighting" },
+			{ type: "jump-if-equal", jumpTo: "multiply" },
+
+			{ type: "load-variable", name: "damage", label: "multiply" },
+			{ type: "load-value", value: 2 },
+			{ type: "multiply-numbers" },
+			{ type: "save-variable", name: "damage", save: -1 },
+
+			{ type: "load-variable", name: "damage", label: "damage" },
+			{ type: "damage", amount: -1, fixed: true },
+		],
+	},
 	//Steals energy
 	"Covet": {
 		name: "Covet",
@@ -1161,7 +1200,7 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 2,
 		energy: {
-			purple: 14,
+			purple: 8,
 			green: 6,
 			yellow: 6
 		},
@@ -2030,8 +2069,8 @@ const pokemonMoveData = {
 		},
 		effects: [
 			{ type: "play-sound", name: "attack" },
-			{ type: "remove-status-effect", statusName: "invulnerable" },
-			{ type: "remove-status-effect", statusName: "protect" },
+			{ type: "remove-status-effect", target: "opponent", statusName: "invulnerable" },
+			{ type: "remove-status-effect", target: "opponent", statusName: "protect" },
 			{ type: "damage" }
 		]
 	},
@@ -3056,6 +3095,33 @@ const pokemonMoveData = {
 			{ type: "set-initiative", target: "opponent", initiative: -1 },
 		]
 	},
+	//Empowers some yellow tiles
+	"Hyper Voice": {
+		name: "Hyper Voice",
+		type: "Normal",
+		category: "Special",
+		strategy: "basic-damage",
+		pp: 10,
+		power: 90,
+		accuracy: 100,
+		rechargeTurns: 3,
+		energy: {
+			yellow: 10,
+			red: 8
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Hyper Voice.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "select-all-tiles", targetType: "yellow" },
+			{ type: "empower-tiles", selection: -1 },
+		]
+	},
 	//Puts the opponent to sleep half the time
 	"Hypnosis": {
 		name: "Hypnosis",
@@ -3080,6 +3146,42 @@ const pokemonMoveData = {
 			{ type: "apply-status-effect", statusEffect: "drowsy", target: "opponent" },
 			{ type: "jump", jumpTo: Infinity },
 			{ type: "apply-status-effect", statusEffect: "asleep", target: "opponent", label: "sleep" },
+		],
+	},
+	//Freezes but deals extra damage if they're already freezy
+	"Ice Fang": {
+		name: "Ice Fang",
+		type: "Ice",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact", "biting"],
+		pp: 15,
+		power: 65,
+		accuracy: 95,
+		rechargeTurns: 2,
+		energy: {
+			blue: 7,
+			yellow: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Ice Fang.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "select-tiles-with-status", statusName: "Freeze", sourceTrainer: "target", target: "user" },
+			{ type: "get-list-length", list: -1 },
+			{ type: "load-value", value: 1 },
+			{ type: "jump-if-less-than", jumpTo: "small-damage" },
+			{ type: "load-value", value: 20 },
+			{ type: "damage", additivePower: -1 },
+			{ type: "jump", jumpTo: "add-status" },
+			{ type: "damage", label: "small-damage" },
+			{ type: "load-value", value: 1, label: "add-status" },
+			{ type: "select-random-tiles", count: -1 },
+			{
+				type: "apply-status-to-tiles", selection: "group", which: -1,
+				status: { name: "Freeze", type: "debuff" }
+			}
 		],
 	},
 	//Locks random tiles
@@ -3349,6 +3451,137 @@ const pokemonMoveData = {
 			{ type: "select-energy-colors", search: "most-mastery", target: "opponent", count: -1 },
 			{ type: "load-value", value: -10 },
 			{ type: "gain-energy", count: -1, colors: -2, target: "opponent" },
+		]
+	},
+	//Does nothing unless the user has used all their other moves
+	"Last Resort": {
+		name: "Last Resort",
+		type: "Normal",
+		category: "Physical",
+		strategy: "special",
+		pp: 5,
+		power: 140,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			red: 5,
+			orange: 5,
+			yellow: 5,
+			green: 5,
+			blue: 5,
+			purple: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Last Resort.mp3"
+		},
+		effects: [
+			{ type: "load-value", value: true },
+			{ type: "save-variable", name: "canUse", save: -1 },
+
+			{ type: "get-available-moves", target: "user" },
+			{ type: "load-value", value: "Last Resort" },
+			{ type: "remove-element-from-list", list: -2, element: -1 },
+			{ type: "save-variable", name: "allMoves", save: -1 },
+			{ type: "get-list-length", list: -1 },
+			{ type: "save-variable", name: "length", save: -1 },
+			{ type: "load-value", value: 0 },
+			{ type: "save-variable", name: "counter", save: -1 },
+			
+			{ type: "load-variable", name: "counter" },
+			{ type: "load-variable", name: "length" },
+			{ type: "jump-if-less-than", jumpTo: "startLoop" },
+			{ type: "jump", jumpTo: "endLoop" },
+
+			{ type: "load-variable", name: "allMoves", label: "startLoop" },
+			{ type: "load-variable", name: "counter" },
+			{ type: "get-element-from-list", list: -2, index: -1 },
+			{ type: "get-total-move-uses", moveName: -1 },
+			{ type: "load-value", value: 1 },
+			{ type: "jump-if-less-than", jumpTo: "disable" },
+			{ type: "jump", jumpTo: "continue" },
+
+			{ type: "load-value", value: false, label: "disable" },
+			{ type: "save-variable", name: "canUse", save: -1 },
+
+			{ type: "do-nothing", label: "continue" },
+			{ type: "load-variable", name: "counter" },
+			{ type: "load-value", value: 1 },
+			{ type: "add-numbers" },
+			{ type: "save-variable", name: "counter", save: -1 },
+			{ type: "load-variable", name: "length" },
+			{ type: "jump-if-less-than", jumpTo: "startLoop" },
+			{ type: "jump", jumpTo: "endLoop" },
+
+			{ type: "do-nothing", label: "endLoop" },
+			{ type: "load-variable", name: "canUse" },
+			{ type: "jump-if-truthy", jumpTo: "use" },
+			{ type: "jump", jumpTo: Infinity },
+			
+			{ type: "play-sound", name: "attack", label: "use" },
+			{ type: "damage" },
+		],
+		onTurnStart: [
+			{ type: "trigger", key: "usabilityCheck" },
+		],
+		onFinishUsingMove: [
+			{ type: "trigger", key: "usabilityCheck" },
+		],
+		usabilityCheck: [
+			{ type: "load-value", value: true },
+			{ type: "save-variable", name: "canUse", save: -1 },
+
+			{ type: "get-available-moves", target: "user" },
+			{ type: "load-value", value: "Last Resort" },
+			{ type: "remove-element-from-list", list: -2, element: -1 },
+			{ type: "save-variable", name: "allMoves", save: -1 },
+			{ type: "get-list-length", list: -1 },
+			{ type: "save-variable", name: "length", save: -1 },
+			{ type: "load-value", value: 0 },
+			{ type: "save-variable", name: "counter", save: -1 },
+			
+			{ type: "load-variable", name: "counter" },
+			{ type: "load-variable", name: "length" },
+			{ type: "jump-if-less-than", jumpTo: "startLoop" },
+			{ type: "jump", jumpTo: "endLoop" },
+
+			{ type: "load-variable", name: "allMoves", label: "startLoop" },
+			{ type: "load-variable", name: "counter" },
+			{ type: "get-element-from-list", list: -2, index: -1 },
+			{ type: "get-total-move-uses", moveName: -1 },
+			{ type: "load-value", value: 1 },
+			{ type: "jump-if-less-than", jumpTo: "disable" },
+			{ type: "jump", jumpTo: "continue" },
+
+			{ type: "load-value", value: false, label: "disable" },
+			{ type: "save-variable", name: "canUse", save: -1 },
+
+			{ type: "do-nothing", label: "continue" },
+			{ type: "load-variable", name: "counter" },
+			{ type: "load-value", value: 1 },
+			{ type: "add-numbers" },
+			{ type: "save-variable", name: "counter", save: -1 },
+			{ type: "load-variable", name: "length" },
+			{ type: "jump-if-less-than", jumpTo: "startLoop" },
+			{ type: "jump", jumpTo: "endLoop" },
+
+			{ type: "do-nothing", label: "endLoop" },
+			{ type: "load-variable", name: "canUse" },
+			{ type: "jump-if-truthy", jumpTo: "remove-disability" },
+			{ type: "jump", jumpTo: "add-disability" },
+			
+			{ type: "apply-status-effect", target: "user", label: "add-disability", statusEffect: {
+				name: "last-resort-disabled",
+				type: "disability",
+				stacks: false,
+				volatile: true,
+				appliesTo: {
+					name: "Last Resort"
+				},
+			} },
+			{ type: "jump", jumpTo: Infinity },
+			
+			{ type: "do-nothing", label: "remove-disability" },
+			{ type: "remove-status-effect", target: "user", statusName: "last-resort-disabled" },
 		]
 	},
 	//Converts random tiles to Grass tiles
@@ -4213,8 +4446,8 @@ const pokemonMoveData = {
 			{ type: "get-status-stacks", statusName: "phantom-force-wait-time", label: "phantom-force-check" },
 			{ type: "jump-if-truthy", jumpTo: Infinity },
 			{ type: "play-sound", name: "activate" },
-			{ type: "remove-status-effect", statusName: "invulnerable" },
-			{ type: "remove-status-effect", statusName: "protect" },
+			{ type: "remove-status-effect", target: "opponent", statusName: "invulnerable" },
+			{ type: "remove-status-effect", target: "opponent", statusName: "protect" },
 			{ type: "damage" },
 			{ type: "remove-status-effect", target: "user", statusName: "phantom-force-using-phantom-force" },
 		]
@@ -4248,6 +4481,35 @@ const pokemonMoveData = {
 			},
 			{ type: "load-value", value: 2 },
 			{ type: "choose-tiles", count: -1, target: "user" },
+			{ type: "swap-tiles", selection: -1 },
+		],
+	},
+	//Swaps 2 random tiles
+	"Play Rough": {
+		name: "Play Rough",
+		type: "Fairy",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 10,
+		power: 90,
+		accuracy: 90,
+		rechargeTurns: 1,
+		energy: {
+			purple: 6,
+			yellow: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Play Rough.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "load-value", value: 2 },
+			{ type: "select-random-tiles", count: -1 },
 			{ type: "swap-tiles", selection: -1 },
 		],
 	},
@@ -4319,6 +4581,7 @@ const pokemonMoveData = {
 			{ type: "apply-status-effect", statusEffect: "poisoned", target: "opponent" },
 		],
 	},
+	//Applies poison
 	"Poison Gas": {
 		name: "Poison Gas",
 		type: "Poison",
@@ -4342,6 +4605,7 @@ const pokemonMoveData = {
 			{ type: "apply-status-effect", statusEffect: "poisoned", target: "opponent" },
 		],
 	},
+	//Places infectious status effects on the board that eventually poison
 	"Poison Powder": {
 		name: "Poison Powder",
 		type: "Grass",
@@ -4368,6 +4632,7 @@ const pokemonMoveData = {
 			}
 		],
 	},
+	//Deals damage and might poison
 	"Poison Sting": {
 		name: "Poison Sting",
 		type: "Poison",
@@ -4894,6 +5159,142 @@ const pokemonMoveData = {
 			{ type: "apply-status-effect", statusEffect: "reflect", target: "user" },
 		],
 	},
+	//Heal all your HP back, but all your moves are disabled until the sleep is gone
+	"Rest": {
+		name: "Rest",
+		type: "Psychic",
+		category: "Status",
+		strategy: "special",
+		tags: ["healing"],
+		pp: 5,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 10,
+		energy: {
+			green: 12,
+			purple: 12
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Rest part 1.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "remove-status-effect", target: "user", statusName: "asleep" },
+			{ type: "apply-status-effect", statusEffect: "asleep", target: "user" },
+
+			{ type: "get-status-stacks", target: "user", statusName: "asleep" },
+			{ type: "load-value", value: 1 },
+			{ type: "jump-if-greater-than-or-equal-to", jumpTo: "heal" },
+			{ type: "jump", jumpTo: Infinity },
+
+			{ type: "get-max-hp", target: "user", label: "heal" },
+			{ type: "heal", target: "user", amount: -1 },
+			
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "rest-resting",
+				type: "disability",
+				stacks: false,
+				volatile: true,
+				appliesTo: {
+					logic: "not"
+				},
+			} },
+		],
+		onTurnStart: [
+			{ type: "get-status-stacks", target: "user", statusName: "rest-resting" },
+			{ type: "load-value", value: 1 },
+			{ type: "jump-if-greater-than-or-equal-to", jumpTo: "sleep-check" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "get-status-stacks", target: "user", statusName: "asleep", label: "sleep-check" },
+			{ type: "load-value", value: 1 },
+			{ type: "jump-if-less-than", jumpTo: "ready-to-wake" },
+			{ type: "jump", jumpTo: Infinity },
+			
+			{ type: "apply-status-effect", statusEffect: "asleep", target: "user", label: "ready-to-wake" },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "rest-waking",
+				type: "hidden",
+				stacks: false,
+				volatile: true,
+			} },
+		],
+		onTurnEnd: [
+			{ type: "get-status-stacks", target: "user", statusName: "rest-waking" },
+			{ type: "load-value", value: 1 },
+			{ type: "jump-if-greater-than-or-equal-to", jumpTo: "wake-up" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "remove-status-effect", target: "user", statusName: "asleep", label: "wake-up" },
+			{ type: "remove-status-effect", target: "user", statusName: "rest-resting" },
+			{ type: "remove-status-effect", target: "user", statusName: "rest-waking" },
+		]
+	},
+	//Changes power whenever another of your pokemon faints
+	"Retaliate": {
+		name: "Retaliate",
+		type: "Normal",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 5,
+		power: 70,
+		accuracy: 100,
+		rechargeTurns: 2,
+		energy: {
+			orange: 5,
+			yellow: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Retaliate.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+		],
+		onTurnStart: [
+			{ type: "remove-status-effect", target: "user", statusName: "retaliate-power-increase-by-fainted" },
+			{ type: "remove-status-effect", target: "user", statusName: "retaliate-power-increase-by-turns" },
+			{ type: "has-own-pokemon-fainted-since-last-turn", target: "user" },
+			{ type: "load-value", value: false },
+			{ type: "jump-if-equal", jumpTo: Infinity },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "retaliate-power-increase-by-fainted",
+				type: "power-alteration",
+				stacks: false,
+				lostOnSwap: true,
+				lostOnBatonPass: true,
+				appliesTo: {
+					name: "Retaliate"
+				},
+				modification: {
+					change: 2,
+					operation: "multiply"
+				}
+			} },
+			{ type: "get-turns-since-last-turn", target: "user" },
+			{ type: "load-value", value: 10 },
+			{ type: "multiply-numbers" },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "retaliate-power-increase-by-turns",
+				type: "power-alteration",
+				stacks: false,
+				lostOnSwap: true,
+				lostOnBatonPass: true,
+				appliesTo: {
+					name: "Retaliate"
+				},
+				modification: {
+					change: 0,
+					operation: "add"
+				}
+			}, statusSettings: [
+				{
+					path: ["modification"],
+					key: "change",
+					value: -1
+				}
+			] },
+		]
+	},
 	//Deals more damage if you took damage since your last turn ended
 	"Revenge": {
 		name: "Revenge",
@@ -4919,6 +5320,66 @@ const pokemonMoveData = {
 			{ type: "damage" },
 			{ type: "jump", jumpTo: Infinity },
 			{ type: "damage", damageMult: 2, label: "double-damage" },
+		],
+	},
+	//Flail, but Fighting this time
+	"Reversal": {
+		name: "Reversal",
+		type: "Fighting",
+		category: "Physical",
+		strategy: "special",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 15,
+		power: 0,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			orange: 5,
+			blue: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Reversal.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-hp", target: "user" },
+			{ type: "get-max-hp", target: "user" },
+			{ type: "divide-numbers" },
+			{ type: "save-variable", name: "ratio", save: -1 },
+			{ type: "load-value", value: 0.05 },
+			{ type: "jump-if-less-than", jumpTo: "damage-1" },
+			{ type: "load-variable", name: "ratio" },
+			{ type: "load-value", value: 0.10 },
+			{ type: "jump-if-less-than", jumpTo: "damage-2" },
+			{ type: "load-variable", name: "ratio" },
+			{ type: "load-value", value: 0.20 },
+			{ type: "jump-if-less-than", jumpTo: "damage-3" },
+			{ type: "load-variable", name: "ratio" },
+			{ type: "load-value", value: 0.35 },
+			{ type: "jump-if-less-than", jumpTo: "damage-4" },
+			{ type: "load-variable", name: "ratio" },
+			{ type: "load-value", value: 0.70 },
+			{ type: "jump-if-less-than", jumpTo: "damage-5" },
+			{ type: "jump", jumpTo: "damage-6" },
+
+			{ type: "load-value", value: 200, label: "damage-1" },
+			{ type: "damage", additivePower: -1 },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "load-value", value: 150, label: "damage-2" },
+			{ type: "damage", additivePower: -1 },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "load-value", value: 100, label: "damage-3" },
+			{ type: "damage", additivePower: -1 },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "load-value", value: 80, label: "damage-4" },
+			{ type: "damage", additivePower: -1 },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "load-value", value: 40, label: "damage-5" },
+			{ type: "damage", additivePower: -1 },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "load-value", value: 20, label: "damage-6" },
+			{ type: "damage", additivePower: -1 },
+			{ type: "jump", jumpTo: Infinity },
 		],
 	},
 	//Forces opponent to switch
@@ -5158,6 +5619,82 @@ const pokemonMoveData = {
 			{ type: "multiply-numbers", round: "up" },
 			{ type: "heal", target: "user", amount: -1 },
 		],
+	},
+	//Permanently increases the power of all Round moves from either trainer
+	"Round": {
+		name: "Round",
+		type: "Normal",
+		category: "Special",
+		strategy: "basic-damage",
+		tags: ["damage-dealing", "sound-based"],
+		pp: 15,
+		power: 60,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			yellow: 6,
+			purple: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Round.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "remove-status-effect", target: "user", statusName: "round-resonated" },
+			{ type: "load-value", value: "Round" },
+			{ type: "get-total-move-uses", moveName: -1 },
+			{ type: "load-value", value: 10 },
+			{ type: "multiply-numbers" },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "round-resonated",
+				type: "power-alteration",
+				stacks: false,
+				volatile: true,
+				lostOnSwap: true,
+				lostOnBatonPass: true,
+				appliesTo: {
+					name: "Round"
+				},
+				modification: {
+					change: 0,
+					operation: "add"
+				}
+			}, statusSettings: [
+				{
+					path: ["modification"],
+					key: "change",
+					value: -1
+				}
+			] },
+		],
+		onTurnStart: [
+			{ type: "remove-status-effect", target: "user", statusName: "round-resonated" },
+			{ type: "get-total-move-uses", moveName: "Round" },
+			{ type: "load-value", value: 10 },
+			{ type: "multiply-numbers" },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "round-resonated",
+				type: "power-alteration",
+				stacks: false,
+				volatile: true,
+				lostOnSwap: true,
+				lostOnBatonPass: true,
+				appliesTo: {
+					name: "Round"
+				},
+				modification: {
+					change: 0,
+					operation: "add"
+				}
+			}, statusSettings: [
+				{
+					path: ["modification"],
+					key: "change",
+					value: -1
+				}
+			] },
+		]
 	},
 	//Can't get statuses from opponents for 5 turns
 	"Safeguard": {
@@ -5409,7 +5946,7 @@ const pokemonMoveData = {
 		},
 		effects: [
 			{ type: "play-sound", name: "attack" },
-			{ type: "apply-status-effect", statusEffect: "asleep", target: "opponent", label: "sleep" },
+			{ type: "apply-status-effect", statusEffect: "asleep", target: "opponent" },
 		],
 	},
 	//Permanently learn the last move used
@@ -5747,6 +6284,38 @@ const pokemonMoveData = {
 				}
 			},
 		],
+	},
+	//Removes a random chunk of the board
+	"Stomp": {
+		name: "Stomp",
+		type: "Normal",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 20,
+		power: 65,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			red: 4,
+			orange: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Stomp.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "load-value", value: 1 },
+			{ type: "select-random-tiles", count: -1 },
+			{ type: "load-value", value: 3 },
+			{ type: "load-value", value: 3 },
+			{ type: "expand-tile-selection", selection: -3, width: -2, height: -1 },
+			{ type: "remove-tiles", selection: -1 }
+		]
 	},
 	//Shifts three columns upwards
 	"Strength": {
@@ -6519,6 +7088,39 @@ const pokemonMoveData = {
 			{ type: "load-value", value: 0 },
 			{ type: "get-element-from-list", list: -2, index: -1 },
 			{ type: "swap-pokemon", target: "user", pokemon: -1, keepEnergy: true }
+		],
+	},
+	//Paralyzes but deals extra damage if they're already paralyzed
+	"Thunder Fang": {
+		name: "Thunder Fang",
+		type: "Electric",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact", "biting"],
+		pp: 15,
+		power: 65,
+		accuracy: 100,
+		rechargeTurns: 2,
+		energy: {
+			yellow: 7,
+			green: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Thunder Fang.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-status-stacks", statusName: "paralyzed" },
+			{ type: "load-value", value: 1 },
+			{ type: "jump-if-less-than", jumpTo: "small-damage" },
+			{ type: "load-value", value: 20 },
+			{ type: "damage", additivePower: -1 },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "damage", label: "small-damage" },
+			// { type: "random-number", min: 1, max: 10 },
+			// { type: "load-value", value: 6 },
+			// { type: "jump-if-less-than", jumpTo: Infinity },
+			{ type: "apply-status-effect", statusEffect: "paralyzed", target: "opponent" },
 		],
 	},
 	//Give static to random tiles

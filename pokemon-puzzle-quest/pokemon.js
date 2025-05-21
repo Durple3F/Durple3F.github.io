@@ -498,14 +498,27 @@ class Pokemon{
 		
 		if (this.hasAbility("Defiant")){
 			let addedFromAnotherSource = result.added.filter(statusEffect => {
-				return statusEffect.sourcePokemon !== this
+				return statusEffect.sourcePokemon !== this && statusEffect.type === "stat" && statusEffect.amount < 0
 			})
 			if (addedFromAnotherSource.length){
 				this.addStatusEffect({
 					type: "stat",
 					class: "debuff",
 					stat: "attack",
-					amount: 1
+					amount: 2
+				}, this.trainer, this, undefined)
+			}
+		}
+		if (this.hasAbility("Competitive")){
+			let addedFromAnotherSource = result.added.filter(statusEffect => {
+				return statusEffect.sourcePokemon !== this && statusEffect.type === "stat" && statusEffect.amount < 0
+			})
+			if (addedFromAnotherSource.length){
+				this.addStatusEffect({
+					type: "stat",
+					class: "debuff",
+					stat: "specialAttack",
+					amount: 2
 				}, this.trainer, this, undefined)
 			}
 		}
@@ -712,8 +725,8 @@ class Pokemon{
 		})
 		let toAdd = 4 - this.activeMoves.length
 		let adding = []
-		//Pick up to 4 of the most recently unlocked moves
-		// chooseable = chooseable.reverse().slice(0, toAdd)
+		//If we have a damaging move already, that's awesome
+		let alreadyHasDamagingMove = this.activeMoves.some(move => move.tags.includes("damage-dealing"))
 
 		//v2: Decide which moves to add by starting with the first 4 we possibly could,
 		//then replacing a random one one by one, simulating the player making choices
@@ -722,8 +735,22 @@ class Pokemon{
 			if (adding.length < toAdd){
 				adding.push(move)
 			} else {
-				let index = Math.floor(Math.random() * adding.length)
-				adding.splice(index, 1, move)
+				let damagingMoves = adding.filter(move => move.tags.includes("damage-dealing"))
+				if (alreadyHasDamagingMove || damagingMoves.length > 1){
+					let index = Math.floor(Math.random() * adding.length)
+					adding.splice(index, 1, move)
+				} else {
+					//If we only have one damaging move, be careful and only remove moves that arent that
+					let nonDamagingIndexes = adding.map((move, index) => {
+						if (!move.tags.includes("damage-dealing")){
+							return index
+						} else {
+							return undefined
+						}
+					}).filter(index => index !== undefined)
+					let index = randomChoice(nonDamagingIndexes)
+					adding.splice(index, 1, move)
+				}
 			}
 		}
 		adding.forEach(m => this.addActiveMove(m))

@@ -66,6 +66,7 @@ class Round {
 
 		this.playerMatches = []
 		this.moveUseHistory = []
+		this.eventHistory = []
 
 		this.promise = new Promise(resolve => {
 			this.resolve = resolve
@@ -350,10 +351,12 @@ class Round {
 		let faintedTrainers = []
 		if (playerSwaps) {
 			playerActivePokemon.fainted = true
+			this.eventHistory.push({type: "pokemon-fainted", pokemon: playerActivePokemon, trainer: playerTrainer})
 			faintedTrainers.push(playerTrainer)
 		}
 		if (enemySwaps) {
 			enemyActivePokemon.fainted = true
+			this.eventHistory.push({type: "pokemon-fainted", pokemon: enemyActivePokemon, trainer: enemyTrainer})
 			faintedTrainers.push(enemyTrainer)
 		}
 
@@ -713,6 +716,22 @@ class Round {
 					energyCost: {}
 				}, activeTrainer, activePokemon)
 			}
+			//Slush Rush is like Sand Rush but Blue
+			//Slush Rush speeds you up a LOT
+			if (activePokemon.hasAbility("Slush Rush")) {
+				activePokemon.addStatusEffect({
+					name: "slush-rush-sped-up",
+					type: "stat-alteration",
+					stacks: true,
+					volatile: true,
+					turns: 4,
+					stat: "speed",
+					modification: {
+						change: 2,
+						operation: "multiply"
+					}
+				}, activeTrainer, activePokemon, undefined)
+			}
 		}
 		//On a Blue or Yellow 4-match:
 		if (matches.some(match => doesMatchMeetCriteria(match, "blue", 4) || doesMatchMeetCriteria(match, "yellow", 4))){
@@ -744,6 +763,15 @@ class Round {
 		}
 		tiles = noDuplicates(tiles)
 
+		let highestMastery = Object.keys(activePokemon.energyMastery).reduce((acc, key) => {
+			let amt = activePokemon.energyMastery[key]
+			return amt > acc ? amt : acc
+		}, 0)
+		let favoriteTypes = Object.keys(activePokemon.energyMastery).filter(key => {
+			let amt = activePokemon.energyMastery[key]
+			return amt === highestMastery
+		})
+
 		//Each pokemon has stats governing how much bonus energy they should get
 		//From different match types.
 		for (let type in matchTotals) {
@@ -751,6 +779,11 @@ class Round {
 			let energyValue = activePokemon.getBonusEnergy(type)
 			let totalEnergy = multiplyEnergies(energyValue, count, "up")
 			energy = addEnergies(totalEnergy, energy)
+
+			//Frisk gives you energy when your opponent makes a match in colors they have the most affinity to
+			if (favoriteTypes.includes(type) && otherPokemon.hasAbility("Frisk")){
+				energyToOpponent = addEnergies(energyToOpponent, totalEnergy)
+			}
 		}
 
 		//Let's give the active player energy of each color based on tiles matched
@@ -765,6 +798,11 @@ class Round {
 		//If the active pokemon is Asleep, they get less energy.
 		if (activePokemon.hasStatus("asleep")) {
 			energy = multiplyEnergies(energy, 0.5, "up")
+		}
+
+		//Pokemon with Stall get bonus energy
+		if (activePokemon.hasAbility("Stall")){
+			energy = multiplyEnergies(energy, 1.5, "up")
 		}
 
 		//Pokemon with Chlorophyll get bonus green energy
@@ -795,7 +833,7 @@ class Round {
 
 		//Pickup gives you energy when your opponent makes a 4-match
 		if (madeFourMatch && otherPokemon.hasAbility("Pickup")) {
-			let toAdd = multiplyEnergies(energy, 0.5, "round")
+			let toAdd = multiplyEnergies(energy, 0.5, "up")
 			energyToOpponent = addEnergies(energyToOpponent, toAdd)
 		}
 
@@ -1201,6 +1239,12 @@ class Round {
 		this.resetCascade()
 		let trainer = this.trainers[this.activePlayerIndex]
 		let otherTrainer = this.trainers[this.inactivePlayerIndex]
+		this.eventHistory.push({
+			type: "turn-start",
+			trainer: trainer,
+			trainerIndex: this.activePlayerIndex,
+			turn: this.turn
+		})
 
 		let promise = Promise.resolve()
 
@@ -2733,7 +2777,15 @@ class Round {
 			defender.hp -= damage
 
 			if (damage > 0) {
-				let shakeAmount = damage / defender.maxhp * 10
+				this.eventHistory.push({
+					type: "damage-dealt",
+					attacker: attacker,
+					defender: defender,
+					damageDealt: damage,
+					damageType: damageType
+				})
+
+				let shakeAmount = Math.min(damage / defender.maxhp * 10, 100)
 				shakeBoard(shakeAmount)
 				defender.gameRoundData.damagedThisTurn = true
 				if (defender === this.trainers[this.activePlayerIndex].activePokemon){
@@ -2758,8 +2810,19 @@ class Round {
 				let stillUsable = isPokemonUsable(defender)
 				let madeContact = this.shouldMoveHaveTag("makes-contact", attackerTrainer, attacker, move)
 				
+				//Stamina raises the defender's defense
+				if (defender.hasAbility("Stamina")) {
+					defender.addStatusEffect({
+						name: "stamina-boosted",
+						type: "stat",
+						volatile: true,
+						class: "buff",
+						stat: "defense",
+						amount: 1
+					}, defender.trainer, defender, undefined)
+				}
 				//Weak Armor lowers defense but raises speed
-				if (defender.hasAbility("Weak Armor")) {
+				if (category === "Physical" && defender.hasAbility("Weak Armor")) {
 					defender.addStatusEffect({
 						name: "weak-armor-weakened",
 						type: "stat",
@@ -2778,8 +2841,8 @@ class Round {
 					}, defender.trainer, defender, undefined)
 				}
 				//Tangling Hair lowers the attacker's speed
-				if (defender.hasAbility("Tangling Hair")) {
-					if (attacker !== defender && madeContact) {
+				if (madeContact && defender.hasAbility("Tangling Hair")) {
+					if (attacker !== defender) {
 						attacker.addStatusEffect({
 							name: "tangling-hair-weakened",
 							type: "stat",
@@ -2790,31 +2853,26 @@ class Round {
 					}
 				}
 				//Static paralyzes the attacker sometimes
-				if (defender.hasAbility("Static")) {
+				if (madeContact && defender.hasAbility("Static")) {
 					if (
 						attacker !== defender &&
-						madeContact &&
 						Math.random() < 0.3
 					) {
 						attacker.addStatusEffect("paralyzed", attackerTrainer, attacker, undefined)
 					}
 				}
 				//Poison Touch poisons the attacker sometimes
-				if (defender.hasAbility("Poison Touch")) {
+				if (madeContact && defender.hasAbility("Poison Touch")) {
 					if (
 						attacker !== defender &&
-						madeContact &&
 						Math.random() < 0.3
 					) {
 						attacker.addStatusEffect("poisoned", attackerTrainer, attacker, undefined)
 					}
 				}
 				//Cute Charm lowers the defender's Special Attack
-				if (attacker.hasAbility("Cute Charm")) {
-					if (
-						attacker !== defender &&
-						madeContact
-					) {
+				if (madeContact && attacker.hasAbility("Cute Charm")) {
+					if (attacker !== defender) {
 						defender.addStatusEffect({
 							name: "cute-charm-weakened",
 							type: "stat",
@@ -2825,17 +2883,15 @@ class Round {
 					}
 				}
 				//Rattled raises speed on Bug Dark or Ghost moves
-				if (defender.hasAbility("Rattled")) {
-					if (damageType === "Bug" || damageType === "Ghost" || damageType === "Dark") {
-						defender.addStatusEffect({
-							name: "rattled-sped-up",
-							type: "stat",
-							volatile: true,
-							class: "buff",
-							stat: "speed",
-							amount: 1
-						}, defender.trainer, defender, undefined)
-					}
+				if ((damageType === "Bug" || damageType === "Ghost" || damageType === "Dark") && defender.hasAbility("Rattled")) {
+					defender.addStatusEffect({
+						name: "rattled-sped-up",
+						type: "stat",
+						volatile: true,
+						class: "buff",
+						stat: "speed",
+						amount: 1
+					}, defender.trainer, defender, undefined)
 				}
 				//Flash Fire powers up Fire moves on being hit with Fire damage
 				if (damageType === "Fire" && defender.hasAbility("Flash Fire")) {
@@ -3094,6 +3150,8 @@ class Round {
 	}
 
 	getEffectiveCost(trainer, pokemon, move, options = {}) {
+		let otherTrainer = this.trainers.find(t => t !== trainer)
+		let otherPokemon = otherTrainer.activePokemon
 		let parentMove = options.parentMove ?? move
 		let cost = {}
 		if (!cost.energyCost) {
@@ -3106,6 +3164,8 @@ class Round {
 		}
 		let energyCost = cost.energyCost
 
+		let type = this.getEffectiveMoveType(trainer, pokemon, move)
+		let typeMult = this.getSuperEffectiveMult(type, otherPokemon)
 		let category = getMoveCategory(move, parentMove)
 
 		//Keen Eye reduces the effects of opponents' cost increases
@@ -3184,6 +3244,13 @@ class Round {
 		if (move.tags.includes("healing") && pokemon.hasAbility("Triage")) {
 			for (let color in energyCost) {
 				energyCost[color] = energyCost[color] * 0.7
+			}
+		}
+		if (move.tags.includes("damage-dealing") && typeMult > 1 && otherPokemon.hasAbility("Anticipation")){
+			let factor = (typeMult - 1) * 0.5
+			factor = factor < 1 ? factor : Math.sqrt(factor)
+			for (let color in energyCost){
+				energyCost[color] += energyCost[color] * factor
 			}
 		}
 
@@ -3960,8 +4027,9 @@ class Round {
 			}
 			this.resetCascade()
 		}))
+
 		//Post-end-of-move effects like Confused
-		.then(() => {
+		promise = promise.then(() => {
 			if (!moveUseObj.length) {
 				console.warn("Uh oh! I think a move got ended twice!")
 				console.trace()
@@ -3975,16 +4043,14 @@ class Round {
 			let promises = []
 			let endedTurn = false
 
-			if (pokemon && pokemon.statusEffects.length) {
-				if (pokemon.hasStatus("confused")){
-					//50% chance that the turn ends.
-					let confuseChance = 0.5
-					if (Math.random() < confuseChance && !endedTurn) {
-						endedTurn = true
-						let p = this.createAnnouncement("general", "Turn ended due to confusion!", 1500)
-						promises.push(p)
-						// this.turnEnd(this.turn)
-					}
+			if (pokemon.hasStatus("confused")){
+				//50% chance that the turn ends.
+				let confuseChance = 0.5
+				if (Math.random() < confuseChance && !endedTurn) {
+					endedTurn = true
+					let p = this.createAnnouncement("general", "Turn ended due to confusion!", 1500)
+					promises.push(p)
+					// this.turnEnd(this.turn)
 				}
 			}
 
@@ -4001,11 +4067,29 @@ class Round {
 
 			return promise
 		})
-		.then(() => {
+		
+		promise = promise.then(() => {
 			if (moveUseObj && moveUseObj.checkBetweenEffects) {
 				return this.checkForWinner()
 			}
 			return Promise.resolve()
+		})
+		
+		//onFinishUsingMove effects
+		promise = promise.then(() => {
+			let triggers = []
+			let trainer = moveUseObj.trainer
+			let pokemon = moveUseObj.pokemon
+			for (let move of pokemon.activeMoves){
+				if (move.onFinishUsingMove){
+					let triggerObj = this.newMoveUseObj(trainer, pokemon, move, "onFinishUsingMove", moveUseObj)
+					triggerObj.move = move
+					promise = promise.then(() => triggerObj.promise)
+					this.advanceCurrentMove(triggerObj)
+					console.log(triggerObj)
+				}
+			}
+			return Promise.all(triggers)
 		})
 
 		promise = promise.then(() => {
@@ -5729,6 +5813,10 @@ class Round {
 				} else if (typeMult <= 0.5) {
 					moveTag.attr("data-effectiveness", "not-very-effective")
 				} else {
+					moveTag.attr("data-effectiveness", "")
+				}
+
+				if (thisMove.bypassEffectiveness){
 					moveTag.attr("data-effectiveness", "")
 				}
 			} else {

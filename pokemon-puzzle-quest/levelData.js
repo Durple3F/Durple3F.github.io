@@ -1800,6 +1800,59 @@ const levelData = [
 			{ type: "dialogue", source: "route-4-1-dialogue-won", label: "end" },
 		]
 	},
+	//4-2
+	{
+		id: "Route 4-2",
+		category: "Route 4",
+		name: "Route 4-2",
+		music: "SM Wild Pokemon Battle",
+		icon: "2",
+		images: {
+			"route-bg-cave-inside": "src/img/bg/cave inside.jpg"
+		},
+		recommendedLevels: {
+			"normal": (pokemonList) => {
+				if (pokemonList.length >= 3) return 17
+				return 20
+			},
+			"hard": (pokemonList) => {
+				if (pokemonList.length >= 3) return 17
+				return 20
+			}
+		},
+		trainers: [
+			{
+				isWild: true,
+				targetPokemon: 4,
+				canPickDuplicates: false,
+				possiblePokemon: [
+					{ id: "Mudbray", levelMin: 12, levelMax: 15, weight: 3 },
+					{ id: "Lillipup", levelMin: 12, levelMax: 15, weight: 3 },
+					{ id: "Pikipek", levelMin: 12, levelMax: 15, weight: 1 },
+					{ id: "Grubbin", levelMin: 12, levelMax: 15, weight: 1 },
+					{ id: "Yungoos", levelMin: 12, levelMax: 15, weight: 1 },
+					{ id: "Rattata-Alola", levelMin: 12, levelMax: 15, weight: 1 },
+					{ id: "Igglybuff", levelMin: 12, levelMax: 15, weight: 0.2 },
+					{ id: "Eevee", levelMin: 12, levelMax: 15, weight: 0.2 },
+				]
+			},
+		],
+		effects: [
+			// { type: "change-background-image", name: "route-bg-cave-inside" },
+			{ type: "fight", trainer: 0 },
+			// { type: "jump-if-lost", jumpTo: Infinity },
+			// { type: "dialogue", source: "route-3-6-dialogue" },
+			// { type: "change-music", music: "SM Trainer Battle" },
+			// { type: "load-setting", key: "hardMode" },
+			// { type: "load-value", value: true },
+			// { type: "jump-if-equal", jumpTo: "hardMode" },
+			// { type: "jump", jumpTo: "easyMode" },
+			// { type: "fight", trainer: 1, label: "easyMode" },
+			// { type: "jump", jumpTo: Infinity },
+			// { type: "fight", trainer: 2, label: "hardMode" },
+			// { type: "jump", jumpTo: Infinity },
+		]
+	},
 ]
 
 for (let categoryId in levelCategoryData) {

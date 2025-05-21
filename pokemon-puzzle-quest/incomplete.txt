@@ -6,6 +6,7 @@ Incomplete move lists:
 	Raichu (lv 0)
 	Raichu-Alola (lv 0)
 	Sandshrew-Alola (lv 27)
+	Jigglypuff (lv 28)
 	Zubat (lv 20)
 	Golbat (lv 20)
 	Diglett-Alola (lv 20)
@@ -30,6 +31,7 @@ Incomplete move lists:
 	Ledian (lv 33)
 	Spinarak (lv 22)
 	Ariados (lv 31)
+	Igglybuff (lv 20)
 	Espeon (lv 25)
 	Murkrow (lv 35)
 	Misdreavus (lv 28)
@@ -47,6 +49,9 @@ Incomplete move lists:
 	Honchkrow (lv 35)
 	Bonsly (lv 20)
 	Glaceon (lv 25)
+	Lillipup (lv 40)
+	Herdier (lv 54)
+	Stoutland (lv 62)
 	Roggenrola (lv 20)
 	Boldore (lv 24)
 	Cottonee (lv 27)
@@ -81,6 +86,8 @@ Incomplete move lists:
 	Lycanroc-Midday (lv 0)
 	Lycanroc-Midnight (lv 0)
 	Lycanroc-Dusk (lv 0)
+	Mudbray (lv 24)
+	Mudsdale (lv 24)
 	Stufful (lv 20)
 	Bounsweet (lv 28)
 	Steenee (lv 25)
@@ -97,7 +104,7 @@ Missing Evolutions:
 	Grimer-Alola
 	Haunter
 	Chansey
-	Delibird
+	Eevee
 	Bagon
 	Bonsly
 	Boldore

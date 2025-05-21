@@ -1621,6 +1621,92 @@ const pokemonMoveEffects = {
 			resolve(result)
 		}
 	},
+	"has-own-pokemon-fainted-since-last-turn": {
+		update: false,
+		hasTarget: true,
+		targetType: "trainer",
+		targetDefault: "user",
+		execute: (resolve, effect, params, game, options) => {
+			let target = options.target
+			let result = false
+			let events = game.eventHistory.toReversed()
+			for (let i = 0; i < events.length; i++){
+				let event = events[i]
+				//On finding our previous turn we can stop
+				if (event.type === "turn-start" && event.turn !== game.turn && event.trainer === target){
+					break
+				}
+				if (event.type === "pokemon-fainted" && target.pokemon.includes(event.pokemon)){
+					result = true
+				}
+			}
+			resolve(result)
+		}
+	},
+	"get-turns-since-last-turn": {
+		update: false,
+		hasTarget: true,
+		targetType: "trainer",
+		targetDefault: "user",
+		execute: (resolve, effect, params, game, options) => {
+			let target = options.target
+			let result = 0
+			let events = game.eventHistory.toReversed()
+			for (let i = 0; i < events.length; i++){
+				let event = events[i]
+				let type = event.type
+				//On finding our previous turn we can stop
+				if (type === "turn-start" && event.turn !== game.turn && event.trainer === target){
+					break
+				} else if (type === "turn-start"){
+					result++
+				}
+			}
+			resolve(result)
+		}
+	},
+	"get-last-damage-dealt-to": {
+		update: false,
+		hasTarget: true,
+		targetType: "pokemon",
+		targetDefault: "user",
+		execute: (resolve, effect, params, game, options) => {
+			let target = options.target
+			let result = 0
+			let events = game.eventHistory.toReversed()
+			for (let i = 0; i < events.length; i++){
+				let event = events[i]
+				let type = event.type
+				//On finding our previous turn we can stop
+				if (type === "damage-dealt" && event.defender === target){
+					result = event.damageDealt
+					break
+				}
+			}
+			resolve(result)
+		}
+	},
+	"get-last-damage-type-dealt-to": {
+		update: false,
+		hasTarget: true,
+		targetType: "pokemon",
+		targetDefault: "user",
+		execute: (resolve, effect, params, game, options) => {
+			let target = options.target
+			let result = "Typeless"
+			let events = game.eventHistory.toReversed()
+			for (let i = 0; i < events.length; i++){
+				let event = events[i]
+				let type = event.type
+				//On finding our previous turn we can stop
+				if (type === "damage-dealt" && event.defender === target){
+					result = event.damageType
+					break
+				}
+			}
+			resolve(result)
+		}
+	},
 	"get-move": {
 		update: false,
 		execute: (resolve, effect, params, game, options) => {
@@ -1634,6 +1720,19 @@ const pokemonMoveEffects = {
 		execute: (resolve, effect, params, game, options) => {
 			let move = params.move
 			let result = move.name
+			resolve(result)
+		}
+	},
+	"get-available-moves": {
+		update: false,
+		hasTarget: true,
+		targetType: "trainer",
+		targetDefault: "user",
+		execute: (resolve, effect, params, game, options) => {
+			let target = options.target
+			let trainerIndex = game.trainers.indexOf(target)
+			let availableMoves = game.getAvailableMoves(trainerIndex)
+			let result = availableMoves.map(move => move.id)
 			resolve(result)
 		}
 	},
@@ -1662,6 +1761,25 @@ const pokemonMoveEffects = {
 				return
 			}
 			let result = moveUseObj.move
+			resolve(result)
+		}
+	},
+	"get-total-move-uses": {
+		update: false,
+		// Note: no default
+		// hasTarget: true,
+		// targetType: "pokemon",
+		execute: (resolve, effect, params, game, options) => {
+			// let target = options.target
+			let result = 0
+			let events = game.moveUseHistory.toReversed()
+			let moveName = params.moveName
+			for (let i = 0; i < events.length; i++){
+				let moveUse = game.moveUseHistory[i]
+				if (moveUse?.move?.name === moveName){
+					result++
+				}
+			}
 			resolve(result)
 		}
 	},
@@ -1928,6 +2046,18 @@ const pokemonMoveEffects = {
 				list.push(element)
 			}
 			resolve(list)
+		}
+	},
+	"get-index-of-item": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let list = params.list
+			let item = params.item
+			let result = -1
+			if (list?.includes(item)){
+				result = list.indexOf(item)
+			}
+			resolve(result)
 		}
 	},
 	"get-list-length": {

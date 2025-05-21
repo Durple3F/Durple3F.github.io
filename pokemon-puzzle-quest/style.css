@@ -1937,11 +1937,17 @@ body {
 #modal.summary .nav-tabs {
 	border-bottom: none;
 }
+#modal.summary .nav-tabs .nav-item {
+	margin-left: 0.25em;
+	margin-right: 0.25em;
+}
 #modal.summary .nav-tabs .nav-item .nav-link {
 	border-radius: 0;
 	border-bottom-left-radius: var(--bs-border-radius);
 	border-bottom-right-radius: var(--bs-border-radius);
 	border-top: none;
+	color: white;
+	background-color: rgb(54, 54, 54);
 	/* background-color: var(--modal-border-color); */
 }
 #modal.summary .nav-tabs .nav-item .nav-link:hover {
@@ -1951,6 +1957,11 @@ body {
 }
 #modal.summary .nav-tabs .nav-item .nav-link.active {
 	background-color: white;
+	color: black;
+}
+#modal.summary .nav-tabs .nav-item .nav-link.active:hover {
+	background-color: rgb(189, 189, 189);
+	border-color: rgb(189, 189, 189);
 	color: black;
 }
 

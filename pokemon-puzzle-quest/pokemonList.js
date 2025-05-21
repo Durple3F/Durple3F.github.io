@@ -664,6 +664,136 @@ const pokemonData = {
 			{ name: "Iron Defense", unlock: { type: "level", amount: 27 } },
 		]
 	},
+	"Jigglypuff": {
+		name: "Jigglypuff",
+		number: "39",
+		weight: {
+			pounds: 12.1,
+			kilograms: 5.5
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0039Jigglypuff.png",
+			"largeShiny": "src/img/shiny-pokemon/039-Jigglypuff.png",
+			"home": "src/img/tiny-pokemon/Jigglypuff.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/jigglypuff.mp3"
+		},
+		types: ["Normal", "Fairy"],
+		tags: [],
+		abilities: ["Cute Charm", "Competitive"],
+		hiddenAbilities: ["Friend Guard"],
+		stats: {
+			hp: 115,
+			attack: 45,
+			defense: 20,
+			specialAttack: 45,
+			specialDefense: 25,
+			speed: 20
+		},
+		expYield: 95,
+		evYield: {
+			hp: 2,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			purple: 4,
+			blue: 2,
+			red: 1
+		},
+		evolutions: [
+			{ name: "Wigglytuff", unlock: { type: "fiveMatchBlue", amount: 1 } },
+		],
+ 		learnset: [
+			{ name: "Sweet Kiss", unlock: { type: "level", amount: 1 } },
+			{ name: "Disarming Voice", unlock: { type: "level", amount: 1 } },
+			{ name: "Disable", unlock: { type: "level", amount: 1 } },
+			{ name: "Charm", unlock: { type: "level", amount: 1 } },
+			{ name: "Sing", unlock: { type: "level", amount: 1 } },
+			{ name: "Pound", unlock: { type: "level", amount: 1 } },
+			{ name: "Copycat", unlock: { type: "level", amount: 1 } },
+			{ name: "Defense Curl", unlock: { type: "level", amount: 1 } },
+			{ name: "Echoed Voice", unlock: { type: "level", amount: 4 } },
+			{ name: "Covet", unlock: { type: "level", amount: 8 } },
+			{ name: "Stockpile", unlock: { type: "level", amount: 12 } },
+			{ name: "Spit Up", unlock: { type: "level", amount: 12 } },
+			{ name: "Swallow", unlock: { type: "level", amount: 12 } },
+			{ name: "Round", unlock: { type: "level", amount: 16 } },
+			{ name: "Rest", unlock: { type: "level", amount: 20 } },
+			{ name: "Body Slam", unlock: { type: "level", amount: 24 } },
+			{ name: "Mimic", unlock: { type: "level", amount: 28 } },
+		]
+	},
+	"Wigglytuff": {
+		name: "Wigglytuff",
+		number: "40",
+		weight: {
+			pounds: 26.5,
+			kilograms: 12.0
+		},
+		imageFacing: "right",
+		imageSources: {
+			"large": "src/img/pokemon/0040Wigglytuff.png",
+			"largeShiny": "src/img/shiny-pokemon/040-Wigglytuff.png",
+			"home": "src/img/tiny-pokemon/Wigglytuff.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/wigglytuff.mp3"
+		},
+		types: ["Normal", "Fairy"],
+		tags: [],
+		abilities: ["Cute Charm", "Competitive"],
+		hiddenAbilities: ["Frisk"],
+		stats: {
+			hp: 140,
+			attack: 70,
+			defense: 45,
+			specialAttack: 85,
+			specialDefense: 50,
+			speed: 45
+		},
+		expYield: 196,
+		evYield: {
+			hp: 3,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			purple: 5,
+			blue: 3,
+			red: 2
+		},
+ 		learnset: [
+			{ name: "Sweet Kiss", unlock: { type: "level", amount: 1 } },
+			{ name: "Disarming Voice", unlock: { type: "level", amount: 1 } },
+			{ name: "Disable", unlock: { type: "level", amount: 1 } },
+			{ name: "Charm", unlock: { type: "level", amount: 1 } },
+			{ name: "Echoed Voice", unlock: { type: "level", amount: 1 } },
+			{ name: "Covet", unlock: { type: "level", amount: 1 } },
+			{ name: "Stockpile", unlock: { type: "level", amount: 1 } },
+			{ name: "Swallow", unlock: { type: "level", amount: 1 } },
+			{ name: "Spit Up", unlock: { type: "level", amount: 1 } },
+			{ name: "Round", unlock: { type: "level", amount: 1 } },
+			{ name: "Rest", unlock: { type: "level", amount: 1 } },
+			{ name: "Body Slam", unlock: { type: "level", amount: 1 } },
+			{ name: "Mimic", unlock: { type: "level", amount: 1 } },
+			{ name: "Hyper Voice", unlock: { type: "level", amount: 1 } },
+			{ name: "Double-Edge", unlock: { type: "level", amount: 1 } },
+			{ name: "Sing", unlock: { type: "level", amount: 1 } },
+			{ name: "Pound", unlock: { type: "level", amount: 1 } },
+			{ name: "Copycat", unlock: { type: "level", amount: 1 } },
+			{ name: "Defense Curl", unlock: { type: "level", amount: 1 } },
+			{ name: "Play Rough", unlock: { type: "level", amount: 5 } },
+		]
+	},
 	"Zubat": {
 		name: "Zubat",
 		number: "41",
@@ -1798,6 +1928,74 @@ const pokemonData = {
 			{ name: "Fling", unlock: { type: "level", amount: 20 } },
 		]
 	},
+	"Eevee": {
+		name: "Eevee",
+		number: "133",
+		weight: {
+			pounds: 14.3,
+			kilograms: 6.5
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0133Eevee.png",
+			"largeShiny": "src/img/shiny-pokemon/133-Eevee.png",
+			"home": "src/img/tiny-pokemon/Eevee.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/eevee.mp3"
+		},
+		types: ["Normal"],
+		tags: [],
+		abilities: ["Run Away", "Adaptability"],
+		hiddenAbilities: ["Anticipation"],
+		stats: {
+			hp: 55,
+			attack: 55,
+			defense: 50,
+			specialAttack: 45,
+			specialDefense: 65,
+			speed: 55
+		},
+		expYield: 65,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 1,
+			speed: 0
+		},
+		energyMastery: {
+			red: 1,
+			orange: 1,
+			yellow: 1,
+			green: 1,
+			blue: 1,
+			purple: 1,
+		},
+		evolutions: [
+			{ name: "Espeon", unlock: { type: "fiveMatchPurple", amount: 1 } },
+			{ name: "Glaceon", unlock: { type: "fourMatchBlue", amount: 10 } },
+		],
+		learnset: [
+			{ name: "Covet", unlock: { type: "level", amount: 1 } },
+			{ name: "Helping Hand", unlock: { type: "level", amount: 1 } },
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Growl", unlock: { type: "level", amount: 1 } },
+			{ name: "Tail Whip", unlock: { type: "level", amount: 1 } },
+			{ name: "Sand Attack", unlock: { type: "level", amount: 5 } },
+			{ name: "Quick Attack", unlock: { type: "level", amount: 10 } },
+			{ name: "Baby-Doll Eyes", unlock: { type: "level", amount: 15 } },
+			{ name: "Swift", unlock: { type: "level", amount: 20 } },
+			{ name: "Bite", unlock: { type: "level", amount: 25 } },
+			{ name: "Copycat", unlock: { type: "level", amount: 30 } },
+			{ name: "Baton Pass", unlock: { type: "level", amount: 35 } },
+			{ name: "Take Down", unlock: { type: "level", amount: 40 } },
+			{ name: "Charm", unlock: { type: "level", amount: 45 } },
+			{ name: "Double-Edge", unlock: { type: "level", amount: 50 } },
+			{ name: "Last Resort", unlock: { type: "level", amount: 55 } },
+		]
+	},
 	"Ledyba": {
 		name: "Ledyba",
 		number: "165",
@@ -2066,7 +2264,7 @@ const pokemonData = {
 			orange: 1
 		},
 		evolutions: [
-			{ name: "Persian-Alola", unlock: { type: "friendship", amount: 40 } }
+			{ name: "Pikachu", unlock: { type: "friendship", amount: 40 } }
 		],
  		learnset: [
 			{ name: "Thunder Shock", unlock: { type: "level", amount: 1 } },
@@ -2075,6 +2273,61 @@ const pokemonData = {
 			{ name: "Sweet Kiss", unlock: { type: "level", amount: 8 } },
 			{ name: "Nuzzle", unlock: { type: "level", amount: 12 } },
 			{ name: "Nasty Plot", unlock: { type: "level", amount: 16 } },
+			{ name: "Charm", unlock: { type: "level", amount: 20 } },
+		]
+	},
+	"Igglybuff": {
+		name: "Igglybuff",
+		number: "174",
+		weight: {
+			pounds: 2.2,
+			kilograms: 1.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0174Igglybuff.png",
+			"largeShiny": "src/img/shiny-pokemon/174-Igglybuff.png",
+			"home": "src/img/tiny-pokemon/Igglybuff.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/igglybuff.mp3"
+		},
+		types: ["Normal", "Fairy"],
+		tags: [],
+		abilities: ["Cute Charm", "Competitive"],
+		hiddenAbilities: ["Friend Guard"],
+		stats: {
+			hp: 90,
+			attack: 30,
+			defense: 15,
+			specialAttack: 40,
+			specialDefense: 20,
+			speed: 15
+		},
+		expYield: 42,
+		evYield: {
+			hp: 1,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			purple: 3,
+			blue: 1
+		},
+		evolutions: [
+			{ name: "Jigglypuff", unlock: { type: "friendship", amount: 40 } }
+		],
+ 		learnset: [
+			{ name: "Sing", unlock: { type: "level", amount: 1 } },
+			{ name: "Pound", unlock: { type: "level", amount: 1 } },
+			{ name: "Copycat", unlock: { type: "level", amount: 1 } },
+			{ name: "Defense Curl", unlock: { type: "level", amount: 4 } },
+			{ name: "Sweet Kiss", unlock: { type: "level", amount: 8 } },
+			{ name: "Disarming Voice", unlock: { type: "level", amount: 12 } },
+			{ name: "Disable", unlock: { type: "level", amount: 16 } },
 			{ name: "Charm", unlock: { type: "level", amount: 20 } },
 		]
 	},
@@ -3237,6 +3490,185 @@ const pokemonData = {
 			{ name: "Bite", unlock: { type: "level", amount: 25 } },
 		]
 	},
+	"Lillipup": {
+		name: "Lillipup",
+		number: "506",
+		weight: {
+			pounds: 9.0,
+			kilograms: 4.1
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0506Lillipup.png",
+			"largeShiny": "src/img/shiny-pokemon/506-Lillipup.png",
+			"home": "src/img/tiny-pokemon/Lillipup.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/lillipup.mp3"
+		},
+		types: ["Normal"],
+		tags: [],
+		abilities: ["Vital Spirit", "Pickup"],
+		hiddenAbilities: ["Run Away"],
+		stats: {
+			hp: 45,
+			attack: 60,
+			defense: 45,
+			specialAttack: 25,
+			specialDefense: 45,
+			speed: 55
+		},
+		expYield: 55,
+		evYield: {
+			hp: 0,
+			attack: 1,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 3,
+			purple: 2
+		},
+		evolutions: [
+			{ name: "Herdier", unlock: { type: "level", amount: 16 } }
+		],
+		learnset: [
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Leer", unlock: { type: "level", amount: 1 } },
+			{ name: "Work Up", unlock: { type: "level", amount: 4 } },
+			{ name: "Bite", unlock: { type: "level", amount: 8 } },
+			{ name: "Retaliate", unlock: { type: "level", amount: 12 } },
+			{ name: "Baby-Doll Eyes", unlock: { type: "level", amount: 17 } },
+			{ name: "Play Rough", unlock: { type: "level", amount: 20 } },
+			{ name: "Crunch", unlock: { type: "level", amount: 24 } },
+			{ name: "Take Down", unlock: { type: "level", amount: 28 } },
+			{ name: "Helping Hand", unlock: { type: "level", amount: 32 } },
+			{ name: "Reversal", unlock: { type: "level", amount: 36 } },
+			{ name: "Roar", unlock: { type: "level", amount: 40 } },
+		]
+	},
+	"Herdier": {
+		name: "Herdier",
+		number: "507",
+		weight: {
+			pounds: 32.4,
+			kilograms: 14.7
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0507Herdier.png",
+			"largeShiny": "src/img/shiny-pokemon/507-Herdier.png",
+			"home": "src/img/tiny-pokemon/Herdier.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/herdier.mp3"
+		},
+		types: ["Normal"],
+		tags: [],
+		abilities: ["Intimidate", "Sand Rush"],
+		hiddenAbilities: ["Scrappy"],
+		stats: {
+			hp: 65,
+			attack: 80,
+			defense: 65,
+			specialAttack: 35,
+			specialDefense: 65,
+			speed: 60
+		},
+		expYield: 130,
+		evYield: {
+			hp: 0,
+			attack: 2,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 4,
+			purple: 3,
+			red: 1
+		},
+		evolutions: [
+			{ name: "Stoutland", unlock: { type: "level", amount: 32 } }
+		],
+		learnset: [
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Leer", unlock: { type: "level", amount: 1 } },
+			{ name: "Work Up", unlock: { type: "level", amount: 1 } },
+			{ name: "Bite", unlock: { type: "level", amount: 1 } },
+			{ name: "Retaliate", unlock: { type: "level", amount: 12 } },
+			{ name: "Baby-Doll Eyes", unlock: { type: "level", amount: 19 } },
+			{ name: "Play Rough", unlock: { type: "level", amount: 24 } },
+			{ name: "Crunch", unlock: { type: "level", amount: 30 } },
+			{ name: "Take Down", unlock: { type: "level", amount: 36 } },
+			{ name: "Helping Hand", unlock: { type: "level", amount: 42 } },
+			{ name: "Reversal", unlock: { type: "level", amount: 48 } },
+			{ name: "Roar", unlock: { type: "level", amount: 54 } },
+		]
+	},
+	"Stoutland": {
+		name: "Stoutland",
+		number: "508",
+		weight: {
+			pounds: 134.5,
+			kilograms: 61.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0508Stoutland.png",
+			"largeShiny": "src/img/shiny-pokemon/508-Stoutland.png",
+			"home": "src/img/tiny-pokemon/Stoutland.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/stoutland.mp3"
+		},
+		types: ["Normal"],
+		tags: [],
+		abilities: ["Intimidate", "Sand Rush"],
+		hiddenAbilities: ["Scrappy"],
+		stats: {
+			hp: 85,
+			attack: 110,
+			defense: 90,
+			specialAttack: 45,
+			specialDefense: 90,
+			speed: 80
+		},
+		expYield: 225,
+		evYield: {
+			hp: 0,
+			attack: 3,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 5,
+			purple: 4,
+			red: 2
+		},
+		learnset: [
+			{ name: "Ice Fang", unlock: { type: "level", amount: 1 } },
+			{ name: "Fire Fang", unlock: { type: "level", amount: 1 } },
+			{ name: "Thunder Fang", unlock: { type: "level", amount: 1 } },
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Leer", unlock: { type: "level", amount: 1 } },
+			{ name: "Work Up", unlock: { type: "level", amount: 1 } },
+			{ name: "Bite", unlock: { type: "level", amount: 1 } },
+			{ name: "Retaliate", unlock: { type: "level", amount: 12 } },
+			{ name: "Baby-Doll Eyes", unlock: { type: "level", amount: 19 } },
+			{ name: "Play Rough", unlock: { type: "level", amount: 24 } },
+			{ name: "Crunch", unlock: { type: "level", amount: 30 } },
+			{ name: "Take Down", unlock: { type: "level", amount: 38 } },
+			{ name: "Helping Hand", unlock: { type: "level", amount: 46 } },
+			{ name: "Reversal", unlock: { type: "level", amount: 54 } },
+			{ name: "Roar", unlock: { type: "level", amount: 62 } },
+		]
+	},
 	"Roggenrola": {
 		name: "Roggenrola",
 		number: "524",
@@ -4224,7 +4656,7 @@ const pokemonData = {
 			{ name: "Sing", unlock: { type: "level", amount: 18 } },
 			{ name: "Bubble Beam", unlock: { type: "level", amount: 21 } },
 			{ name: "Encore", unlock: { type: "level", amount: 24 } },
-			{ name: "Fury Cutter", unlock: { type: "level", amount: 1 } },
+			{ name: "Last Resort", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Brionne": {
@@ -5234,6 +5666,114 @@ const pokemonData = {
 			{ name: "Bite", unlock: { type: "level", amount: 20 } },
 			{ name: "Rock Tomb", unlock: { type: "level", amount: 24 } },
 			{ name: "Roar", unlock: { type: "level", amount: 30 } },
+		]
+	},
+	"Mudbray": {
+		name: "Mudbray",
+		number: "749",
+		weight: {
+			pounds: 242.5,
+			kilograms: 100.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0749Mudbray.png",
+			"largeShiny": "src/img/shiny-pokemon/749-Mudbray.png",
+			"home": "src/img/tiny-pokemon/Mudbray.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/mudbray.mp3"
+		},
+		tags: [],
+		types: ["Ground"],
+		abilities: ["Own Tempo", "Stamina"],
+		hiddenAbilities: ["Inner Focus"],
+		stats: {
+			hp: 70,
+			attack: 100,
+			defense: 70,
+			specialAttack: 45,
+			specialDefense: 55,
+			speed: 45
+		},
+		expYield: 77,
+		evYield: {
+			hp: 0,
+			attack: 1,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 4,
+			green: 3
+		},
+		evolutions: [
+			{ name: "Mudsdale", unlock: { type: "level", amount: 30 } }
+		],
+		learnset: [
+			{ name: "Mud-Slap", unlock: { type: "level", amount: 1 } },
+			{ name: "Rock Smash", unlock: { type: "level", amount: 1 } },
+			{ name: "Iron Defense", unlock: { type: "level", amount: 4 } },
+			{ name: "Double Kick", unlock: { type: "level", amount: 8 } },
+			{ name: "Bulldoze", unlock: { type: "level", amount: 12 } },
+			{ name: "Stomp", unlock: { type: "level", amount: 16 } },
+			{ name: "Strength", unlock: { type: "level", amount: 20 } },
+			{ name: "Counter", unlock: { type: "level", amount: 24 } },
+		]
+	},
+	"Mudsdale": {
+		name: "Mudsdale",
+		number: "750",
+		weight: {
+			pounds: 2028.3,
+			kilograms: 920.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0750Mudsdale.png",
+			"largeShiny": "src/img/shiny-pokemon/750-Mudsdale.png",
+			"home": "src/img/tiny-pokemon/Mudsdale.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/mudsdale.mp3"
+		},
+		tags: [],
+		types: ["Ground"],
+		abilities: ["Own Tempo", "Stamina"],
+		hiddenAbilities: ["Inner Focus"],
+		stats: {
+			hp: 100,
+			attack: 125,
+			defense: 100,
+			specialAttack: 55,
+			specialDefense: 85,
+			speed: 35
+		},
+		expYield: 175,
+		evYield: {
+			hp: 0,
+			attack: 2,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 5,
+			green: 4,
+			yellow: 1
+		},
+		learnset: [
+			{ name: "Mud-Slap", unlock: { type: "level", amount: 1 } },
+			{ name: "Rock Smash", unlock: { type: "level", amount: 1 } },
+			{ name: "Iron Defense", unlock: { type: "level", amount: 1 } },
+			{ name: "Double Kick", unlock: { type: "level", amount: 1 } },
+			{ name: "Bulldoze", unlock: { type: "level", amount: 12 } },
+			{ name: "Stomp", unlock: { type: "level", amount: 16 } },
+			{ name: "Strength", unlock: { type: "level", amount: 20 } },
+			{ name: "Counter", unlock: { type: "level", amount: 24 } },
 		]
 	},
 	"Stufful": {

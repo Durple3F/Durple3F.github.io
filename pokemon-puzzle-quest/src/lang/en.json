@@ -1010,7 +1010,7 @@
 				{ "type": "text", "speaker": "Dexio", "text": "Nice! These are some very useful readings. The energy coming from that bracelet is even more interesting than I expected..." },
 				{ "type": "text", "speaker": "Sina", "text": "That's his way of saying thank you. Thanks for helping with our little study, buddy!" },
 				{ "type": "text", "speaker": "Sina", "text": "We'll be off looking for more trainers, getting more data points, that kind of thing..." },
-				{ "type": "text", "speaker": "Dexio", "text": "...Checking out that golf course behind the hotel maybe..." },
+				{ "type": "text", "speaker": "Dexio", "text": "...Checking out that golf course we saw when we flew in maybe..." },
 				{ "type": "text", "speaker": "Sina", "text": "Ooh! May$@start-italics|@$be$@end-italics|@$, Dex! See ya around!" },
 				{ "type": "go-out-from-onscreen", "speaker": "Sina", "direction": "left", "duration": 1000, "waitDuration": 0 },
 				{ "type": "go-out-from-onscreen", "speaker": "Dexio", "direction": "left", "duration": 1000, "waitDuration": 1000, "additionalLeft": -0.1 }
@@ -1064,19 +1064,31 @@
 		},
 		"Sandslash-Alola": {
 			"name": "Sandslash",
-			"pokedex-entry": "Mount Lanakila often sees Sandslash racing down it at high speeds. The nearby village makes sure any would-be climbers are aware of the danger."
+			"pokedex-entry": "The people of Mount Lanakila often see Sandslash racing down the mountain at high speeds. The residents try to make sure any would-be climbers are aware of the danger."
+		},
+		"Jigglypuff": {
+			"name": "Jigglypuff",
+			"pokedex-entry": "Some trainers keep this Pokémon near their beds at night to help them sleep. It can get so invested in this nightly performance that it never seems to catch the moment its trainer falls asleep, and only stops singing when it hears its trainer's snore."
+		},
+		"Wigglytuff": {
+			"name": "Wigglytuff",
+			"pokedex-entry": "Its body is incredibly soft, enough that a hug feels like your arms are wrapped around a warm marshmallow. When Wigglypuff takes a deep breath, its body more than doubles in size."
 		},
 		"Zubat": {
-			"name": "Zubat"
+			"name": "Zubat",
+			"pokedex-entry": "They navigate the air through echolocation, though some Zubat are better at this than others. It's not unheard of for a Zubat to crash screaming into trainers on late night walks."
 		},
 		"Golbat": {
-			"name": "Golbat"
+			"name": "Golbat",
+			"pokedex-entry": "Golbat's fangs are hollow and specialized for sucking blood. Swarms of Golbat have been observed phlebotomizing large Pokémon in events that some Pokémon researchers have deemed “not very fun to watch.”"
 		},
 		"Diglett-Alola": {
-			"name": "Diglett"
+			"name": "Diglett",
+			"pokedex-entry": "The hairs on this Pokémon's head are made of a metallic substance, and are able to receive radio waves. Alolan Diglett appear to be calmed by their favorite music being played from nearby radio stations."
 		},
 		"Dugtrio-Alola": {
-			"name": "Dugtrio"
+			"name": "Dugtrio",
+			"pokedex-entry": "Despite the fact that its thick coat of hair is really just metallic fibers, it seems to enjoy being given a spa treatment. Trainers are advised to use steel wool in place of a regular brush, though."
 		},
 		"Meowth-Alola": {
 			"name": "Meowth"
@@ -1129,6 +1141,10 @@
 		"Chansey": {
 			"name": "Chansey"
 		},
+		"Eevee": {
+			"name": "Eevee",
+			"pokedex-entry": "Due to its unstable genetic makeup, its preferences change often. Trainers of this fickle Pokémon may need to make Eevee's habitat just as adaptable as Eevee itself to sate its cravings."
+		},
 		"Ledyba": {
 			"name": "Ledyba"
 		},
@@ -1143,6 +1159,10 @@
 		},
 		"Pichu": {
 			"name": "Pichu"
+		},
+		"Igglybuff": {
+			"name": "Igglybuff",
+			"pokedex-entry": "It bounces and rolls everywhere it goes, singing its little song. Its singing is... not great. But it's trying."
 		},
 		"Espeon": {
 			"name": "Espeon"
@@ -1207,6 +1227,18 @@
 		"Glaceon": {
 			"name": "Glaceon"
 		},
+		"Lillipup": {
+			"name": "Lillipup",
+			"pokedex-entry": "If a Lillipup walks up to you with a stick in its mouth, you have to play fetch with it. This is a federally recognized law in most Pokémon regions."
+		},
+		"Herdier": {
+			"name": "Herdier",
+			"pokedex-entry": "It only lets the trainers it trusts most help groom its fur. Without help, its daily ritual of grooming its fur can take hours."
+		},
+		"Stoutland": {
+			"name": "Stoutland",
+			"pokedex-entry": "Rescue teams use this Pokémon to pull hikers out of landslides and avalanches. After a job well done, the team is sure to give Stoutland treats and cuddles."
+		},
 		"Roggenrola": {
 			"name": "Roggenrola"
 		},
@@ -1256,10 +1288,16 @@
 			"name": "Torracat"
 		},
 		"Popplio": {
-			"name": "Popplio"
+			"name": "Popplio",
+			"pokedex-entry": "It loves being the center of attention. Whenever it's alone, it's practicing tricks with its water bubbles to show off the next day."
 		},
 		"Brionne": {
-			"name": "Brionne"
+			"name": "Brionne",
+			"pokedex-entry": "When it's happy, it twirls around in the water and sings a song. The water bubbles it creates pop in perfect rhythm with the song's beat."
+		},
+		"Primarina": {
+			"name": "Primarina",
+			"pokedex-entry": "It likes to use its water powers to make waterslides for Popplio and other baby Pokémon to play on."
 		},
 		"Pikipek": {
 			"name": "Pikipek"
@@ -1308,6 +1346,14 @@
 		},
 		"Lycanroc-Dusk": {
 			"name": "Lycanroc"
+		},
+		"Mudbray": {
+			"name": "Mudbray",
+			"pokedex-entry": "Mudbray loves being sprayed with mud and eating dirt. If it's not covered in a thick coat of mud, it gets agitated and stops listening to others. Be nice to Mudbray. Throw some mud at that little guy."
+		},
+		"Mudsdale": {
+			"name": "Mudsdale",
+			"pokedex-entry": "Mudsdale's hind legs are strong enough to put a hole into just about anything. A team of criminals once tried to use one to break into a bank vault, but their Mudsdale was too stubborn to carry out the plan."
 		},
 		"Stufful": {
 			"name": "Stufful"
@@ -1484,6 +1530,11 @@
 			"description": "Uses the effects of the move the opponent most recently used. If they haven't used a move, this move does nothing. <span class='z-move-description'>Then the user's speed increases by a stage.</span>",
 			"shortDescription": "Copies enemy's last move"
 		},
+		"Counter": {
+			"name": "Counter",
+			"description": "Deals damage exactly equal to the last damage dealt to the user by another Pokémon. If that damage was Normal- or Fighting-type damage, it deals twice as much damage as was dealt instead.",
+			"shortDescription": "Deals damage equal to damage taken"
+		},
 		"Covet": {
 			"name": "Covet",
 			"description": "Deals damage. Then, drains 6 energy from the opponent's two most full energy types and gives it to the user.",
@@ -1623,7 +1674,7 @@
 		"Fire Fang": {
 			"name": "Fire Fang",
 			"description": "Deals damage and has a 50% chance to Burn 3 random tiles for 3 turns. If any tiles were already Burned by the user, instead it deals damage with 30 additional power and doesn't Burn tiles. At the end of their turn, the opponent takes damage equal to 1/32 of their max HP for each of your Burn statuses on the board.",
-			"shortDescription": "Deals some damage and might Burn"
+			"shortDescription": "Deals damage and might Burn"
 		},
 		"Flail": {
 			"name": "Flail",
@@ -1745,10 +1796,20 @@
 			"description": "Deals damage. Then, removes 30 initiative from the opponent.",
 			"shortDescription": "Deals damage and slows opponent"
 		},
+		"Hyper Voice": {
+			"name": "Hyper Voice",
+			"description": "Deals damage. Then, empowers all Electric tiles. Whenever either trainer matches an empowered Electric tile, it provides twice its usual energy, and that trainer's active Pokémon gains 10 energy of a random color.",
+			"shortDescription": "Deals damage and empowers Electric tiles"
+		},
 		"Hypnosis": {
 			"name": "Hypnosis",
 			"description": "Has an 80% to apply Sleep to the opponent. Otherwise, it will apply Drowsy. When a Drowsy Pokémon ends their turn, they may become Asleep, and lose Drowsy. An Asleep Pokémon gets half as much energy (rounded up) from matches.",
 			"shortDescription": "Puts opponent to sleep"
+		},
+		"Ice Fang": {
+			"name": "Ice Fang",
+			"description": "Deals damage. If any tiles are Frozen by the user, instead it deals damage with 20 additional power. Then, Freezes a random tile. Each Frozen tile on the board increases the amount of initiative required for the opponent to make a move by 10. When the opponent matches a Frozen tile, they have the Frostbite status effect applied to them for 2 turns.",
+			"shortDescription": "Deals damage and Freezes a tile."
 		},
 		"Ice Shard": {
 			"name": "Ice Shard",
@@ -1785,6 +1846,11 @@
 			"name": "Knock Off",
 			"description": "Deals damage. Then, removes 10 energy from the opponent in two most energy types which it has the highest affinity for.",
 			"shortDescription": "Deals damage and removes energy"
+		},
+		"Last Resort": {
+			"name": "Last Resort",
+			"description": "Deals damage. This move is disabled as long as there's another move that the user hasn't used yet, and will fail if used.",
+			"shortDescription": "Deals damage as a final attack"
 		},
 		"Leafage": {
 			"name": "Leafage",
@@ -1921,6 +1987,11 @@
 			"description": "Lowers the opponent's Attack stat by 1 stage. Then, the user chooses two tiles. Those tiles are swapped.",
 			"shortDescription": "Debuffs opponent and disrupts board"
 		},
+		"Play Rough": {
+			"name": "Play Rough",
+			"description": "Deals damage. Then, two random tiles are swapped.",
+			"shortDescription": "Deals damage and disrupts board"
+		},
 		"Pluck": {
 			"name": "Pluck",
 			"description": "Deals damage. Then, drains half of the energy from the opponent's tmost full energy type and gives it to the user.",
@@ -2016,10 +2087,25 @@
 			"description": "Gives the user the Reflect status for five turns. Physical moves used against a Pokémon with Reflect have their power halved.",
 			"shortDescription": "Reduces Physical damage taken"
 		},
+		"Rest": {
+			"name": "Rest",
+			"description": "The user heals all their HP. Then, they fall asleep. For as long as they're asleep, their moves are disabled.",
+			"shortDescription": "Heals all HP but puts the user to sleep"
+		},
+		"Retaliate": {
+			"name": "Retaliate",
+			"description": "Deals damage. At the beginning of the user's turn, if another of its trainer's Pokémon fainted since their last turn, this move's power doubles. It then gains 10 additional power for each turn since their last turn.",
+			"shortDescription": "Deals huge damage when allies faint"
+		},
 		"Revenge": {
 			"name": "Revenge",
 			"description": "Deals damage. This move deals double damage if its user took damage since their last turn ended.",
 			"shortDescription": "Deals extra retaliation damage"
+		},
+		"Reversal": {
+			"name": "Reversal",
+			"description": "Deals damage. This move's power depends on the ratio of the user's HP to their Max HP. Its power is 200 while at less than 5% HP, 150 while at less than 10% HP, 100 while at less than 20% HP, 80 while at less than 35% HP, 40 while at less than 70% HP, and 20 otherwise.",
+			"shortDescription": "Deals damage depending on remaining HP"
 		},
 		"Roar": {
 			"name": "Roar",
@@ -2051,6 +2137,11 @@
 			"name": "Roost",
 			"description": "The user heals HP equal to half their Max HP, rounded up.",
 			"shortDescription": "Heals half the user's Max HP"
+		},
+		"Round": {
+			"name": "Round",
+			"description": "Deals damage. This move's power increases by 10 for each time it has been used previously during a battle, by any Pokémon.",
+			"shortDescription": "Deals damage and increases its power"
 		},
 		"Safeguard": {
 			"name": "Safeguard",
@@ -2147,6 +2238,11 @@
 			"name": "Stockpile",
 			"description": "If the user has less than 3 stacks of Stockpile, they gain a stack of Stockpile and the user's Defense stat and Special Defense stats are each raised by 1 stage.",
 			"shortDescription": "Stores power and raises Defenses"
+		},
+		"Stomp": {
+			"name": "Stomp",
+			"description": "Deals damage. Then, a random 3x3 area of tiles is removed.",
+			"shortDescription": "Deals damage and removes tiles"
 		},
 		"Strength": {
 			"name": "Strength",
@@ -2269,6 +2365,11 @@
 			"shortDescription": "Switch Pokémon",
 			"choose-pokemon": "Choose a Pokémon to teleport in."
 		},
+		"Thunder Fang": {
+			"name": "Thunder Fang",
+			"description": "Deals damage and Paralyzes the target. If the target was already Paralyzed, instead it deals damage with 20 additional power.",
+			"shortDescription": "Deals damage and paralyzes"
+		},
 		"Thunder Shock": {
 			"name": "Thunder Shock",
 			"description": "Deals damage. 2 random tiles are given the Static status effect. When the user removes a tile with Static, it explodes orthogonally adjacent tiles as well.",
@@ -2368,6 +2469,11 @@
 			"shortDescription": "Maxes out Attack when the opponent matches 5+ tiles in a row.",
 			"longDescription": "When the opponent makes a match of 5 or more tiles in a row, this Pokémon's Attack increases by 6 stages."
 		},
+		"Anticipation": {
+			"name": "Anticipation",
+			"shortDescription": "Super-effective moves used against this Pokémon cost more",
+			"longDescription": "The cost of damage dealing, super-effective moves used by opponents is increased based on the effectiveness of that move."
+		},
 		"Battery": {
 			"name": "Battery",
 			"shortDescription": "Increases special move power of this trainer's Pokémon by 30%, even while this Pokémon isn't active.",
@@ -2398,6 +2504,11 @@
 			"shortDescription": "Always counts as being Asleep",
 			"longDescription": "This Pokémon counts as being Asleep at all times."
 		},
+		"Competitive": {
+			"name": "Competitive",
+			"shortDescription": "Raises this Pokémon's Special Attack 2 stages when its opponent lowers its stats",
+			"longDescription": "When this Pokémon receives a debuff from another Pokémon that lowers its stats, its Special Attack is increased by 2 stages."
+		},
 		"Compound Eyes": {
 			"name": "Compound Eyes",
 			"shortDescription": "On a match that doesn't combo, raises Special Attack 1 stage 50% of the time",
@@ -2420,8 +2531,8 @@
 		},
 		"Defiant": {
 			"name": "Defiant",
-			"shortDescription": "Raises this Pokémon's Attack 1 stage when its opponent lowers its stats",
-			"longDescription": "When this Pokémon receives a debuff from another source that lowers its stats, its Attack is increased by 1 stage."
+			"shortDescription": "Raises this Pokémon's Attack 2 stages when its opponent lowers its stats",
+			"longDescription": "When this Pokémon receives a debuff from another Pokémon that lowers its stats, its Attack is increased by 2 stages."
 		},
 		"Drizzle": {
 			"name": "Drizzle",
@@ -2462,6 +2573,11 @@
 			"name": "Friend Guard",
 			"shortDescription": "Prevents damage to this trainer's other Pokémon while this Pokémon is out",
 			"longDescription": "As long as this Pokémon is the active Pokémon, damage can't be dealt to non-active Pokémon owned by this Pokémon's owner."
+		},
+		"Frisk": {
+			"name": "Frisk",
+			"shortDescription": "Gets some energy from the opponent's high-affinity matches",
+			"longDescription": "When the opponent makes a match of one of the types that they have the highest affinity in, this Pokémon gets some energy as well. The energy added is equal to the amount of energy added by that Pokémon's affinity in that energy type."
 		},
 		"Fur Coat": {
 			"name": "Fur Coat",
@@ -2636,7 +2752,7 @@
 		"Pickup": {
 			"name": "Pickup",
 			"shortDescription": "Gets some energy from the opponent's 4-in-a-row matches",
-			"longDescription": "When the opponent makes a 4-in-a-row match, this Pokémon gets some energy as well. The energy added is equal to 1/4 of the energy added by that match and any matches made simultaneously with it, rounded."
+			"longDescription": "When the opponent makes a 4-in-a-row match, this Pokémon gets some energy as well. The energy added is equal to 1/2 of the energy added by that match and any matches made simultaneously with it, rounded up."
 		},
 		"Poison Touch": {
 			"name": "Poison Touch",
@@ -2728,6 +2844,11 @@
 			"shortDescription": "Increases move power by 5 for each move used earlier this turn",
 			"longDescription": "The power of moves this Pokémon uses is increased by 5 for each move that it used earlier this turn."
 		},
+		"Slush Rush": {
+			"name": "Slush Rush",
+			"shortDescription": "On a Water-type 4-in-a-row or more, doubles Speed for 4 turns",
+			"longDescription": "When this Pokémon's owner makes a match of 4 or more Water tiles in a row, this Pokémon's Speed stat is doubled for 4 turns."
+		},
 		"Sniper": {
 			"name": "Sniper",
 			"shortDescription": "On a 5-in-a-row, next move's power is doubled",
@@ -2745,8 +2866,13 @@
 		},
 		"Stall": {
 			"name": "Stall",
-			"shortDescription": "+50 max initiative",
-			"longDescription": "This Pokémon requires 50 additional initiative before they can take a turn."
+			"shortDescription": "+50 max initiative, but +50% energy from matches, rounded up.",
+			"longDescription": "This Pokémon requires 50 additional initiative before they can take a turn. However, the energy they gain from making matches is increased by 50%, rounded up."
+		},
+		"Stamina": {
+			"name": "Stamina",
+			"shortDescription": "Being damaged raises Defense by a stage",
+			"longDescription": "When this Pokémon takes damage, its Defense is raised by a stage."
 		},
 		"Static": {
 			"name": "Static",

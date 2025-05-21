@@ -42,6 +42,10 @@ const abilityData = {
 	"Comatose": {
 		id: "Comatose"
 	},
+	//On receiving a stat debuff, special attack raises 2 stages
+	"Competitive": {
+		id: "Competitive"
+	},
 	//At the end of each turn, 20% chance to cure one non-volatile status
 	"Compound Eyes": {
 		id: "Compound Eyes"
@@ -58,7 +62,7 @@ const abilityData = {
 	"Dancer": {
 		id: "Dancer"
 	},
-	//Get a stage of attack when you get a stat debuff
+	//On receiving a stat debuff, attack raises 2 stages
 	"Defiant": {
 		id: "Defiant"
 	},
@@ -93,6 +97,10 @@ const abilityData = {
 	//Protects your non-active pokemon
 	"Friend Guard": {
 		id: "Friend Guard"
+	},
+	//Gives you some energy when the opponent makes a move in their favorite colors
+	"Frisk": {
+		id: "Frisk"
 	},
 	//Literally just doubles defense
 	"Fur Coat": {
@@ -306,6 +314,10 @@ const abilityData = {
 	"Skill Link": {
 		id: "Skill Link"
 	},
+	//On a blue 4-match, double speed for 4 turns
+	"Slush Rush": {
+		id: "Slush Rush"
+	},
 	//Grants a power boost after a 5-match
 	"Sniper": {
 		id: "Sniper"
@@ -318,7 +330,11 @@ const abilityData = {
 	"Stakeout": {
 		id: "Stakeout"
 	},
-	//Prevents your initiative gain from exceeding your opponent's
+	//Raises defense on being damaged
+	"Stamina": {
+		"id": "Stamina"
+	},
+	//Changes your max initiative
 	"Stall": {
 		id: "Stall"
 	},
