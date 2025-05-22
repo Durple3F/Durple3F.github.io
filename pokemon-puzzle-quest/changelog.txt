@@ -1,8 +1,8 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-5/22 (39.1k lines):
+5/22 (39.4k lines):
 	- Added Rattata
-	- Added 4-3
+	- Added 4-2, 4-3
 	- You can now choose which pokeball type your pokemon are in.
 	- Added luxury balls
 

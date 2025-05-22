@@ -211,7 +211,7 @@ const pokemonData = {
 			purple: 2
 		},
 		evolutions: [
-			{ name: "Raticate-Alola", unlock: { type: "level", amount: 20 } }
+			// { name: "Raticate", unlock: { type: "level", amount: 20 } }
 		],
 		learnset: [
 			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
