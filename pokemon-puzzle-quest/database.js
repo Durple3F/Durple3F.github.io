@@ -222,6 +222,7 @@ function getPokemonSaveObj(pokemon){
 	obj.pcBox = pokemon.pcBox
 	obj.pcBoxX = pokemon.pcBoxX
 	obj.pcBoxY = pokemon.pcBoxY
+	obj.pokeballType = pokemon.pokeballType
 	return obj
 }
 function savePokemonObj(data){

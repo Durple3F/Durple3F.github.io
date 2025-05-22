@@ -143,6 +143,9 @@ class Pokemon{
 		this.turnsParticipated = 0
 		
 		this.gameRoundData = {}
+		if (options?.isAce){
+			this.gameRoundData.isAce = true
+		}
 		this.friendship = options?.friendship ?? 0
 		this.everstoneActive = options?.everstoneActive ?? false
 		this.evolutionTriggerData = options?.evolutionTriggerData ?? {}

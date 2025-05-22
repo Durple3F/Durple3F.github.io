@@ -577,7 +577,7 @@ const levelData = [
 				name: "Joseph",
 				class: "Rising-Star",
 				pokemon: [
-					{ id: "Grimer-Alola", pokeball: "greatball", level: 8, ability: "Poison Touch" }
+					{ id: "Grimer-Alola", pokeball: "great ball", level: 8, ability: "Poison Touch" }
 				]
 			},
 			{
@@ -687,22 +687,22 @@ const levelData = [
 			{
 				name: "Ilima",
 				pokemon: [
-					{ id: "Yungoos", level: 9, name: "Reginald", pokeball: "ultraball", activeMoves: ["Tackle", "Pursuit", "Leer"] },
-					{ id: "Smeargle", level: 10, name: "Inkwell", pokeball: "ultraball", activeMoves: ["Ember", "Tackle"] },
+					{ id: "Yungoos", level: 9, name: "Reginald", pokeball: "ultra ball", activeMoves: ["Tackle", "Pursuit", "Leer"] },
+					{ id: "Smeargle", level: 10, name: "Inkwell", pokeball: "ultra ball", activeMoves: ["Ember", "Tackle"] },
 				]
 			},
 			{
 				name: "Ilima",
 				pokemon: [
-					{ id: "Yungoos", level: 9, name: "Reginald", pokeball: "ultraball", activeMoves: ["Tackle", "Pursuit", "Leer"] },
-					{ id: "Smeargle", level: 10, name: "Inkwell", pokeball: "ultraball", activeMoves: ["Water Gun", "Tackle"] },
+					{ id: "Yungoos", level: 9, name: "Reginald", pokeball: "ultra ball", activeMoves: ["Tackle", "Pursuit", "Leer"] },
+					{ id: "Smeargle", level: 10, name: "Inkwell", pokeball: "ultra ball", activeMoves: ["Water Gun", "Tackle"] },
 				]
 			},
 			{
 				name: "Ilima",
 				pokemon: [
-					{ id: "Yungoos", level: 9, name: "Reginald", pokeball: "ultraball", activeMoves: ["Tackle", "Pursuit", "Leer"] },
-					{ id: "Smeargle", level: 10, name: "Inkwell", pokeball: "ultraball", activeMoves: ["Leafage", "Tackle"] },
+					{ id: "Yungoos", level: 9, name: "Reginald", pokeball: "ultra ball", activeMoves: ["Tackle", "Pursuit", "Leer"] },
+					{ id: "Smeargle", level: 10, name: "Inkwell", pokeball: "ultra ball", activeMoves: ["Leafage", "Tackle"] },
 				]
 			},
 		],
@@ -972,9 +972,9 @@ const levelData = [
 			{
 				name: "Ilima",
 				pokemon: [
-					{ id: "Gumshoos", level: 15, name: "Reginald", pokeball: "ultraball", activeMoves: ["Bite", "Hyper Fang", "Super Fang", "Leer"] },
-					{ id: "Smeargle", level: 15, name: "Inkwell", pokeball: "ultraball", activeMoves: ["Tackle", "Ember", "Leafage", "Water Gun"] },
-					{ id: "Komala", level: 15, name: "Nibsby", pokeball: "ultraball", activeMoves: ["Yawn", "Bite", "Pound", "Focus Energy"] },
+					{ id: "Gumshoos", level: 15, name: "Reginald", pokeball: "ultra ball", activeMoves: ["Bite", "Hyper Fang", "Super Fang", "Leer"] },
+					{ id: "Smeargle", level: 15, name: "Inkwell", pokeball: "ultra ball", activeMoves: ["Tackle", "Ember", "Leafage", "Water Gun"] },
+					{ id: "Komala", level: 15, name: "Nibsby", pokeball: "ultra ball", activeMoves: ["Yawn", "Bite", "Pound", "Focus Energy"] },
 				]
 			},
 		],
@@ -1058,7 +1058,7 @@ const levelData = [
 				name: "Tatiana",
 				class: "Rising-Star-F",
 				pokemon: [
-					{ id: "Petilil", level: 13, pokeball: "greatball", name: "Direvine the Destroyer" }
+					{ id: "Petilil", level: 13, pokeball: "great ball", name: "Direvine the Destroyer" }
 				]
 			},
 		],
@@ -1555,7 +1555,7 @@ const levelData = [
 						id: "Zubat",
 						name: "Slice",
 						level: 14,
-						pokeball: "ultraball",
+						pokeball: "ultra ball",
 						activeMoves: ["Mean Look", "Aerial Ace", "Supersonic", "Absorb"],
 						//(Uses a TM)
 					},
@@ -1564,7 +1564,7 @@ const levelData = [
 						form: "Baile",
 						name: "Fairway",
 						level: 15,
-						pokeball: "ultraball",
+						pokeball: "ultra ball",
 						activeMoves: ["Air Cutter", "Helping Hand", "Growl", "Peck"],
 					},
 					//Canonically named Touckey
@@ -1572,7 +1572,7 @@ const levelData = [
 						id: "Trumbeak",
 						name: "Caddy",
 						level: 16,
-						pokeball: "ultraball",
+						pokeball: "ultra ball",
 						activeMoves: ["Pluck", "Supersonic", "Growl", "Echoed Voice"],
 					},
 				]
@@ -1587,7 +1587,7 @@ const levelData = [
 						id: "Zubat",
 						name: "Slice",
 						level: 14,
-						pokeball: "ultraball",
+						pokeball: "ultra ball",
 						activeMoves: ["Mean Look", "Aerial Ace", "Absorb", "Poison Fang"],
 						ivs: { hp: 15, attack: 25, defense: 15, specialAttack: 25, specialDefense: 0, speed: 5 },
 						evs: { hp: 15, attack: 25, defense: 15, specialAttack: 25, specialDefense: 0, speed: 5 },
@@ -1598,7 +1598,7 @@ const levelData = [
 						form: "Baile",
 						name: "Fairway",
 						level: 15,
-						pokeball: "ultraball",
+						pokeball: "ultra ball",
 						activeMoves: ["Air Cutter", "Helping Hand", "Growl", "Peck"],
 						ivs: { hp: 15, attack: 5, defense: 15, specialAttack: 25, specialDefense: 0, speed: 25 },
 						evs: { hp: 15, attack: 10, defense: 15, specialAttack: 25, specialDefense: 0, speed: 20 },
@@ -1608,7 +1608,7 @@ const levelData = [
 						id: "Trumbeak",
 						name: "Caddy",
 						level: 16,
-						pokeball: "ultraball",
+						pokeball: "ultra ball",
 						activeMoves: ["Pluck", "Supersonic", "Growl", "Echoed Voice"],
 						ivs: { hp: 15, attack: 25, defense: 15, specialAttack: 5, specialDefense: 20, speed: 25 },
 						evs: { hp: 15, attack: 40, defense: 15, specialAttack: 50, specialDefense: 20, speed: 25 },
@@ -1666,21 +1666,21 @@ const levelData = [
 						id: "Slowpoke",
 						name: "Slouch",
 						level: 15,
-						pokeball: "ultraball",
+						pokeball: "ultra ball",
 						activeMoves: ["Disable", "Confusion", "Yawn", "Water Gun"],
 					},
 					{
 						id: "Espeon",
 						name: "Epsilon",
 						level: 15,
-						pokeball: "ultraball",
+						pokeball: "ultra ball",
 						activeMoves: ["Confusion", "Psybeam", "Sand Attack", "Quick Attack"],
 					},
 					{
 						id: "Raichu-Alola",
 						name: "Indra",
 						level: 15,
-						pokeball: "ultraball",
+						pokeball: "ultra ball",
 						activeMoves: ["Light Screen", "Agility", "Thunder Shock", "Quick Attack"],
 					},
 				]
@@ -1692,21 +1692,21 @@ const levelData = [
 						id: "Smoochum",
 						name: "Mwah",
 						level: 15,
-						pokeball: "ultraball",
+						pokeball: "ultra ball",
 						activeMoves: ["Confusion", "Covet", "Sing", "Powder Snow"],
 					},
 					{
 						id: "Glaceon",
 						name: "Glimmer",
 						level: 15,
-						pokeball: "ultraball",
+						pokeball: "ultra ball",
 						activeMoves: ["Icy Wind", "Covet", "Double-Edge", "Growl"],
 					},
 					{
 						id: "Snowball",
 						name: "Sandshrew-Alola",
 						level: 15,
-						pokeball: "ultraball",
+						pokeball: "ultra ball",
 						activeMoves: ["Fury Cutter", "Rollout", "Powder Snow", "Mist"],
 					},
 				]
@@ -1719,7 +1719,7 @@ const levelData = [
 						id: "Slowpoke",
 						name: "Slouch",
 						level: 15,
-						pokeball: "ultraball",
+						pokeball: "ultra ball",
 						activeMoves: ["Disable", "Confusion", "Yawn", "Water Gun"],
 						ivs: { hp: 15, attack: 25, defense: 15, specialAttack: 25, specialDefense: 0, speed: 5 },
 						evs: { hp: 15, attack: 25, defense: 15, specialAttack: 25, specialDefense: 20, speed: 5 },
@@ -1728,7 +1728,7 @@ const levelData = [
 						id: "Espeon",
 						name: "Epsilon",
 						level: 15,
-						pokeball: "ultraball",
+						pokeball: "ultra ball",
 						activeMoves: ["Confusion", "Psybeam", "Sand Attack", "Quick Attack"],
 						ivs: { hp: 15, attack: 25, defense: 15, specialAttack: 25, specialDefense: 0, speed: 5 },
 						evs: { hp: 15, attack: 5, defense: 15, specialAttack: 35, specialDefense: 25, speed: 25 },
@@ -1737,7 +1737,7 @@ const levelData = [
 						id: "Raichu-Alola",
 						name: "Indra",
 						level: 15,
-						pokeball: "ultraball",
+						pokeball: "ultra ball",
 						activeMoves: ["Light Screen", "Agility", "Thunder Shock", "Quick Attack"],
 						ivs: { hp: 15, attack: 5, defense: 15, specialAttack: 25, specialDefense: 15, speed: 25 },
 						evs: { hp: 25, attack: 15, defense: 15, specialAttack: 35, specialDefense: 0, speed: 25 },
@@ -1751,7 +1751,7 @@ const levelData = [
 						id: "Smoochum",
 						name: "Mwah",
 						level: 15,
-						pokeball: "ultraball",
+						pokeball: "ultra ball",
 						activeMoves: ["Confusion", "Covet", "Sing", "Powder Snow"],
 						ivs: { hp: 15, attack: 25, defense: 0, specialAttack: 25, specialDefense: 15, speed: 5 },
 						evs: { hp: 15, attack: 25, defense: 0, specialAttack: 25, specialDefense: 15, speed: 5 },
@@ -1760,7 +1760,7 @@ const levelData = [
 						id: "Glaceon",
 						name: "Glimmer",
 						level: 15,
-						pokeball: "ultraball",
+						pokeball: "ultra ball",
 						activeMoves: ["Icy Wind", "Covet", "Double-Edge", "Growl"],
 						ivs: { hp: 15, attack: 25, defense: 15, specialAttack: 25, specialDefense: 10, speed: 25 },
 						evs: { hp: 15, attack: 40, defense: 15, specialAttack: 25, specialDefense: 10, speed: 5 },
@@ -1769,7 +1769,7 @@ const levelData = [
 						id: "Snowball",
 						name: "Sandshrew-Alola",
 						level: 15,
-						pokeball: "ultraball",
+						pokeball: "ultra ball",
 						activeMoves: ["Fury Cutter", "Rollout", "Powder Snow", "Iron Defense"],
 						ivs: { hp: 15, attack: 25, defense: 25, specialAttack: 5, specialDefense: 25, speed: 5 },
 						evs: { hp: 15, attack: 25, defense: 40, specialAttack: 5, specialDefense: 25, speed: 5 },
@@ -1800,7 +1800,7 @@ const levelData = [
 			{ type: "dialogue", source: "route-4-1-dialogue-won", label: "end" },
 		]
 	},
-	//4-2
+	//4-2: Mudbray, Lillipup + others | Jody
 	{
 		id: "Route 4-2",
 		category: "Route 4",
@@ -1808,7 +1808,7 @@ const levelData = [
 		music: "SM Wild Pokemon Battle",
 		icon: "2",
 		images: {
-			"route-bg-cave-inside": "src/img/bg/cave inside.jpg"
+			"route-bg-forest-path": "src/img/bg/forest path.jpg"
 		},
 		recommendedLevels: {
 			"normal": (pokemonList) => {
@@ -1836,21 +1836,208 @@ const levelData = [
 					{ id: "Eevee", levelMin: 12, levelMax: 15, weight: 0.2 },
 				]
 			},
+			//Easy
+			{
+				name: "Jody",
+				class: "Bellhop",
+				pokemon: [
+					{
+						id: "Drifloon",
+						name: "Porter",
+						level: 14,
+						pokeball: "luxury ball",
+						activeMoves: ["Minimize", "Astonish", "Focus Energy", "Payback"],
+					},
+					{
+						id: "Fomantis",
+						name: "Snippy",
+						level: 14,
+						pokeball: "luxury ball",
+						activeMoves: ["Razor Leaf", "Growth", "Fury Cutter", "Leafage"],
+					},
+					{
+						id: "Lillipup",
+						name: "Baxter",
+						isAce: true,
+						level: 15,
+						pokeball: "premier ball",
+						activeMoves: ["Play Rough", "Take Down", "Reversal", "Work Up"],
+					},
+				]
+			},
+			//Hard
+			{
+				name: "Jody",
+				class: "Bellhop",
+				pokemon: [
+					{
+						id: "Drifloon",
+						name: "Porter",
+						level: 14,
+						pokeball: "luxury ball",
+						activeMoves: ["Minimize", "Astonish", "Focus Energy", "Payback"],
+						ivs: { hp: 15, attack: 25, defense: 15, specialAttack: 5, specialDefense: 20, speed: 25 },
+						evs: { hp: 15, attack: 30, defense: 15, specialAttack: 20, specialDefense: 40, speed: 30 },
+					},
+					{
+						id: "Fomantis",
+						name: "Snippy",
+						level: 14,
+						pokeball: "luxury ball",
+						activeMoves: ["Razor Leaf", "Growth", "Ingrain", "Leafage"],
+						ivs: { hp: 15, attack: 25, defense: 15, specialAttack: 5, specialDefense: 20, speed: 25 },
+						evs: { hp: 30, attack: 40, defense: 15, specialAttack: 10, specialDefense: 20, speed: 50 },
+					},
+					{
+						id: "Lillipup",
+						name: "Baxter",
+						isAce: true,
+						level: 15,
+						pokeball: "premier ball",
+						activeMoves: ["Play Rough", "Retaliate", "Reversal", "Work Up"],
+						ivs: { hp: 15, attack: 25, defense: 15, specialAttack: 5, specialDefense: 20, speed: 25 },
+						evs: { hp: 40, attack: 80, defense: 15, specialAttack: 10, specialDefense: 20, speed: 25 },
+					},
+				]
+			},
 		],
 		effects: [
-			// { type: "change-background-image", name: "route-bg-cave-inside" },
+			{ type: "change-background-image", name: "route-bg-forest-path" },
 			{ type: "fight", trainer: 0 },
-			// { type: "jump-if-lost", jumpTo: Infinity },
-			// { type: "dialogue", source: "route-3-6-dialogue" },
-			// { type: "change-music", music: "SM Trainer Battle" },
-			// { type: "load-setting", key: "hardMode" },
-			// { type: "load-value", value: true },
-			// { type: "jump-if-equal", jumpTo: "hardMode" },
-			// { type: "jump", jumpTo: "easyMode" },
-			// { type: "fight", trainer: 1, label: "easyMode" },
-			// { type: "jump", jumpTo: Infinity },
-			// { type: "fight", trainer: 2, label: "hardMode" },
-			// { type: "jump", jumpTo: Infinity },
+			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "dialogue", source: "route-4-2-dialogue" },
+			{ type: "change-music", music: "SM Trainer Battle" },
+			{ type: "load-setting", key: "hardMode" },
+			{ type: "load-value", value: true },
+			{ type: "jump-if-equal", jumpTo: "hardMode" },
+			{ type: "jump", jumpTo: "easyMode" },
+			{ type: "fight", trainer: 1, label: "easyMode" },
+			{ type: "jump", jumpTo: "win-check" },
+			{ type: "fight", trainer: 2, label: "hardMode" },
+			{ type: "jump", jumpTo: "win-check" },
+			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
+			{ type: "dialogue", source: "route-4-2-dialogue-won" },
+		]
+	},
+	//4-3: Igglybuff, Eevee | Scotty
+	{
+		id: "Route 4-3",
+		category: "Route 4",
+		name: "Route 4-3",
+		music: "SM Wild Pokemon Battle",
+		icon: "3",
+		images: {
+			"route-bg-forest-path": "src/img/bg/forest path.jpg"
+		},
+		recommendedLevels: {
+			"normal": (pokemonList) => {
+				if (pokemonList.length >= 3) return 17
+				return 20
+			},
+			"hard": (pokemonList) => {
+				if (pokemonList.length >= 3) return 17
+				return 20
+			}
+		},
+		trainers: [
+			{
+				isWild: true,
+				targetPokemon: 4,
+				canPickDuplicates: false,
+				possiblePokemon: [
+					{ id: "Igglybuff", levelMin: 13, levelMax: 15, weight: 3 },
+					{ id: "Eevee", levelMin: 13, levelMax: 15, weight: 3 },
+					{ id: "Pikipek", levelMin: 13, levelMax: 15, weight: 1 },
+					{ id: "Grubbin", levelMin: 13, levelMax: 15, weight: 1 },
+					{ id: "Yungoos", levelMin: 13, levelMax: 15, weight: 1 },
+					{ id: "Rattata-Alola", levelMin: 13, levelMax: 15, weight: 1 },
+					{ id: "Mudbray", levelMin: 13, levelMax: 15, weight: 0.2 },
+					{ id: "Lillipup", levelMin: 13, levelMax: 15, weight: 0.2 },
+				]
+			},
+			//Easy
+			{
+				name: "Scotty",
+				class: "Sightseer",
+				pokemon: [
+					{
+						id: "Sableye",
+						name: "Ruby",
+						level: 15,
+						pokeball: "pokeball",
+						activeMoves: ["Fake Out", "Astonish", "Shadow Sneak", "Disable"],
+					},
+					{
+						id: "Rattata",
+						name: "Reggie",
+						level: 15,
+						pokeball: "great ball",
+						activeMoves: ["Hyper Fang", "Focus Energy", "Quick Attack", "Bite"],
+						ivs: { hp: 15, attack: 25, defense: 15, specialAttack: 5, specialDefense: 5, speed: 25 },
+						evs: { hp: 20, attack: 40, defense: 15, specialAttack: 10, specialDefense: 20, speed: 30 },
+					},
+					{
+						id: "Rattata-Alola",
+						name: "Reggie II",
+						isAce: true,
+						level: 13,
+						pokeball: "pokeball",
+						activeMoves: ["Focus Energy", "Tackle", "Hyper Fang", "Tail Whip"],
+					},
+				]
+			},
+			//Hard
+			{
+				name: "Scotty",
+				class: "Sightseer",
+				pokemon: [
+					{
+						id: "Sableye",
+						name: "Ruby",
+						level: 15,
+						pokeball: "pokeball",
+						activeMoves: ["Fake Out", "Astonish", "Shadow Sneak", "Disable"],
+						ivs: { hp: 15, attack: 25, defense: 15, specialAttack: 5, specialDefense: 5, speed: 25 },
+						evs: { hp: 30, attack: 50, defense: 30, specialAttack: 10, specialDefense: 20, speed: 40 },
+					},
+					{
+						id: "Rattata",
+						name: "Reggie",
+						level: 15,
+						pokeball: "great ball",
+						activeMoves: ["Hyper Fang", "Focus Energy", "Quick Attack", "Bite"],
+						ivs: { hp: 15, attack: 25, defense: 15, specialAttack: 5, specialDefense: 5, speed: 25 },
+						evs: { hp: 40, attack: 60, defense: 35, specialAttack: 10, specialDefense: 40, speed: 50 },
+					},
+					{
+						id: "Rattata-Alola",
+						name: "Reggie II",
+						isAce: true,
+						level: 15,
+						pokeball: "pokeball",
+						activeMoves: ["Focus Energy", "Tackle", "Quick Attack", "Tail Whip"],
+						ivs: { hp: 15, attack: 25, defense: 15, specialAttack: 5, specialDefense: 5, speed: 25 },
+						evs: { hp: 20, attack: 40, defense: 15, specialAttack: 10, specialDefense: 20, speed: 30 },
+					},
+				]
+			},
+		],
+		effects: [
+			{ type: "change-background-image", name: "route-bg-forest-path" },
+			{ type: "fight", trainer: 0 },
+			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "dialogue", source: "route-4-3-dialogue" },
+			{ type: "change-music", music: "SM Trainer Battle" },
+			{ type: "load-setting", key: "hardMode" },
+			{ type: "load-value", value: true },
+			{ type: "jump-if-equal", jumpTo: "hardMode" },
+			{ type: "jump", jumpTo: "easyMode" },
+			{ type: "fight", trainer: 1, label: "easyMode" },
+			{ type: "jump", jumpTo: "win-check" },
+			{ type: "fight", trainer: 2, label: "hardMode" },
+			{ type: "jump", jumpTo: "win-check" },
+			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
+			{ type: "dialogue", source: "route-4-3-dialogue-won" },
 		]
 	},
 ]
@@ -1958,11 +2145,41 @@ function determineUnlockedLevels() {
 	}
 }
 
+const pokeballImages = {
+	"pokeball": {
+		"icon": "src/img/balls/pokeball.png"
+	},
+	"great ball": {
+		"icon": "src/img/balls/great ball.png"
+	},
+	"ultra ball": {
+		"icon": "src/img/balls/ultra ball.png"
+	},
+	"premier ball": {
+		"icon": "src/img/balls/premier ball.png"
+	},
+	"luxury ball": {
+		"icon": "src/img/balls/luxury ball.png"
+	},
+}
 const pokeballSpriteData = {
 	types: {
 		"pokeball": [0, 3],
-		"greatball": [0, 29],
-		"ultraball": [0, 55]
+		"great ball": [0, 3 + 26 * 1],
+		"ultra ball": [0, 3 + 26 * 2],
+		"master ball": [0, 3 + 26 * 3],
+		"premier ball": [0, 3 + 26 * 4],
+		"cherish ball": [0, 3 + 26 * 5],
+		"luxury ball": [0, 3 + 26 * 6],
+		"nest ball": [0, 3 + 26 * 7],
+		"net ball": [0, 3 + 26 * 8],
+		"dive ball": [0, 3 + 26 * 9],
+		"repeat ball": [0, 3 + 26 * 10],
+		"timer ball": [0, 3 + 26 * 11],
+		"safari ball": [0, 3 + 26 * 12],
+		"quick ball": [0, 3 + 26 * 13],
+		"dusk ball": [0, 3 + 26 * 14],
+		"heal ball": [0, 3 + 26 * 15],
 	},
 	sprites: {
 		"none": [1, 1, 0, 0],

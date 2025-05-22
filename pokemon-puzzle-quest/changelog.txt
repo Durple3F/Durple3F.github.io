@@ -1,8 +1,18 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
+5/22 (39.1k lines):
+	- Added Rattata
+	- Added 4-3
+	- You can now choose which pokeball type your pokemon are in.
+	- Added luxury balls
+
 5/21 (38.8k lines):
+	- Added Fomantis
+	- Added Ingrain
 	- Added Anticipation
 	- Added some more pokedex entries
+	- The icons of pokeballs shown on the sides of the screen now actually show which type of pokeball they use.
+	- Added images for great balls, ultra balls, and premier balls.
 
 5/20 (38.1k lines):
 	- Added Mudbray, Mudsdale, Igglybuff, Jigglypuff, Wigglytuff, Eevee

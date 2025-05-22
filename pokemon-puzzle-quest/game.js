@@ -2563,7 +2563,7 @@ class Round {
 		let animation = this.animateSwitchLocations(bestSwap[0], bestSwap[1])
 		return animation.promise
 	}
-	computerChoosePokemon(pokemon, reason, minChooseable = 1, maxChooseable = 1) {
+	computerChoosePokemon(pokemonList, reason, minChooseable = 1, maxChooseable = 1) {
 		//TODO have the logic here be based on which reason they could be choosing stuff
 		//Current reasons are:
 		// - swap (The computer is changing their active pokemon)
@@ -2571,8 +2571,18 @@ class Round {
 		let resolvePromise
 		let promise = new Promise(resolve => resolvePromise = resolve)
 
-		let chosen = pokemon[Math.floor(Math.random() * pokemon.length)]
-		resolvePromise([chosen])
+		if (reason === "swap"){
+			let nonAces = pokemonList.filter(pokemon => !pokemon.gameRoundData.isAce)
+			let canPick = nonAces
+			if (!nonAces.length){
+				canPick = pokemonList
+			}
+			let chosen = randomChoice(canPick)
+			resolvePromise([chosen])
+		} else {
+			let chosen = randomChoice(pokemonList)
+			resolvePromise([chosen])
+		}
 
 		return promise
 	}
@@ -4870,7 +4880,12 @@ class Round {
 			let pokeball = container.children(".pokeball")
 			let pokemon = pokemonList[i]
 			if (pokemon) {
-				pokeball.attr("src", "src/img/Poké_Ball_icon.png")
+				let pokeballType = pokemon.pokeballType
+				let pokeballData = pokeballImages["pokeball"]
+				if (pokeballType in pokeballImages){
+					pokeballData = pokeballImages[pokeballType]
+				}
+				pokeball.attr("src", pokeballData.icon)
 				pokeball.css({
 					opacity: 1
 				})
@@ -4885,7 +4900,6 @@ class Round {
 
 				}
 			} else {
-				// pokeball.attr("src", "src/img/Poké_Ball_icon_empty.svg")
 				pokeball.hide()
 			}
 		}
@@ -6880,9 +6894,13 @@ function beginRound(trainerData) {
 		let weights = possiblePokemon.map(pokemonData => {
 			return pokemonData.weight ?? 1
 		})
-		let rand = weightedRandom(possiblePokemon, weights)
-		let toAdd = rand.item
-		pokemonData.push(toAdd)
+		if (possiblePokemon.length){
+			let rand = weightedRandom(possiblePokemon, weights)
+			let toAdd = rand.item
+			pokemonData.push(toAdd)
+		} else {
+			break
+		}
 	}
 	while (targetPokemon < pokemonData.length && pokemonData.length) {
 		pokemonData.splice(pokemonData.length - 1, 1)

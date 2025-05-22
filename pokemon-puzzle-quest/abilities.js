@@ -18,6 +18,10 @@ const abilityData = {
 	"Anger Point": {
 		id: "Anger Point"
 	},
+	//Raises the cost of opponent's super effective moves
+	"Anticipation": {
+		id: "Anticipation"
+	},
 	//Prevents receiving statuses that lower Defense
 	"Big Pecks": {
 		id: "Big Pecks"

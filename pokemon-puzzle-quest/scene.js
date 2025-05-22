@@ -99,7 +99,7 @@ function startScene(name, options) {
 				for (let i = 0; i < group.length; i++) {
 					let pokemon = group[i]
 					let tag = $(`<div class='ball ball-${i + 1}'>
-					<img src='src/img/balls/pokeball.png'>
+					<img src='src/img/pokeball.png'>
 					</div>`)
 					chooseTag.append(tag)
 					tags.push([tag, pokemon])
@@ -1782,6 +1782,31 @@ function viewPokemonInfo(pokemon, options = {}) {
 			<a class="nav-link" href="#">Misc</a>
 		</li>`)
 		tabs.append(tab)
+
+		const changePokeball = type => {
+			pokemon.pokeballType = type
+		}
+		let pokeballSection = $("<div class='pokeball-section d-flex justify-content-around'>")
+		info.append(pokeballSection)
+		for (let pokeballType in pokeballImages){
+			let pokeball = $("<div class='pokeball-option p-2 m-2'>")
+			let data = pokeballImages[pokeballType]
+			let img = $("<img>")
+			pokeball.append(img)
+			img.attr("src", data.icon)
+			img.css("height", "5em")
+
+			if (pokemon.pokeballType === pokeballType){
+				pokeball.addClass("active")
+			}
+			pokeball.click(() => {
+				pokeballSection.children(".active").removeClass("active")
+				pokeball.addClass("active")
+				changePokeball(pokeballType)
+			})
+
+			pokeballSection.append(pokeball)
+		}
 
 		let abilitySection = $("<div class='ability-section'>")
 		info.append(abilitySection)

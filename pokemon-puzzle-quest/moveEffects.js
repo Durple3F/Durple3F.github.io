@@ -1565,11 +1565,19 @@ const pokemonMoveEffects = {
 	"swap-pokemon": {
 		update: true,
 		execute: (resolve, effect, params, game, options) => {
+			let moveUseObj = options.moveUse
+			let trainerUser = options.trainer
 			let pokemon = params.pokemon
 			let target = options.target
 			let activePokemon = target.activePokemon
 			let trainerIndex = game.trainers.indexOf(target)
-			console.log(params, pokemon)
+
+			if (target !== trainerUser && activePokemon.getStatusesOfType("cant-be-force-switched").length){
+				let message = getLocaleString("force-swap-prevented", lang)
+				game.createAnnouncement("general", message)
+				return resolve()
+			}
+			
 			let batonPass = effect.batonPass
 			let statusEffectsFromOld, statusEffectsFromNew
 			if (batonPass){

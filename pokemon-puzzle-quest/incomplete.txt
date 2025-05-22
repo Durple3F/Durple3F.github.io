@@ -1,5 +1,6 @@
 Incomplete move lists:
 	Butterfree (lv 20)
+	Rattata (lv 28)
 	Rattata-Alola (lv 28)
 	Raticate-Alola (lv 34)
 	Pikachu (lv 24)
@@ -88,6 +89,7 @@ Incomplete move lists:
 	Lycanroc-Dusk (lv 0)
 	Mudbray (lv 24)
 	Mudsdale (lv 24)
+	Fomantis (lv 20)
 	Stufful (lv 20)
 	Bounsweet (lv 28)
 	Steenee (lv 25)
@@ -96,6 +98,7 @@ Incomplete move lists:
 	Komala (lv 31)
 
 Missing Evolutions:
+	Rattata
 	Golbat
 	Mankey
 	Abra
@@ -115,6 +118,7 @@ Missing Evolutions:
 	Torracat
 	Brionne
 	Crabrawler
+	Fomantis
 	Stufful
 
 Missing Abilities:
@@ -124,8 +128,7 @@ Missing Shiny Variations:
 	- None! :)
 
 Incomplete Z-Moves:
-	- Breakneck Blitz doesn't look very good
-	- All-Out Pummeling
+	- 
 
 Incomplete Z-ified moves:
 	- Everything except Growl, Defense Curl, and Copycat

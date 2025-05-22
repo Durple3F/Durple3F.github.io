@@ -169,6 +169,64 @@ const pokemonData = {
 			{ name: "Whirlwind", unlock: { type: "level", amount: 20 } },
 		]
 	},
+	"Rattata": {
+		name: "Rattata",
+		number: "19",
+		weight: {
+			pounds: 7.7,
+			kilograms: 3.5
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0019Rattata.png",
+			"largeShiny": "src/img/shiny-pokemon/019-Rattata.png",
+			"home": "src/img/tiny-pokemon/Rattata.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/rattata.mp3"
+		},
+		types: ["Normal"],
+		tags: [],
+		abilities: ["Run Away", "Guts"],
+		hiddenAbilities: ["Hustle"],
+		stats: {
+			hp: 30,
+			attack: 56,
+			defense: 35,
+			specialAttack: 25,
+			specialDefense: 35,
+			speed: 72
+		},
+		expYield: 51,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 1
+		},
+		energyMastery: {
+			orange: 3,
+			purple: 2
+		},
+		evolutions: [
+			{ name: "Raticate-Alola", unlock: { type: "level", amount: 20 } }
+		],
+		learnset: [
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Tail Whip", unlock: { type: "level", amount: 1 } },
+			{ name: "Quick Attack", unlock: { type: "level", amount: 4 } },
+			{ name: "Focus Energy", unlock: { type: "level", amount: 7 } },
+			{ name: "Bite", unlock: { type: "level", amount: 10 } },
+			{ name: "Pursuit", unlock: { type: "level", amount: 13 } },
+			{ name: "Hyper Fang", unlock: { type: "level", amount: 16 } },
+			{ name: "Assurance", unlock: { type: "level", amount: 19 } },
+			{ name: "Crunch", unlock: { type: "level", amount: 22 } },
+			{ name: "Sucker Punch", unlock: { type: "level", amount: 25 } },
+			{ name: "Super Fang", unlock: { type: "level", amount: 28 } },
+		]
+	},
 	"Rattata-Alola": {
 		name: "Rattata",
 		id: "Rattata-Alola",
@@ -5774,6 +5832,59 @@ const pokemonData = {
 			{ name: "Stomp", unlock: { type: "level", amount: 16 } },
 			{ name: "Strength", unlock: { type: "level", amount: 20 } },
 			{ name: "Counter", unlock: { type: "level", amount: 24 } },
+		]
+	},
+	"Fomantis": {
+		name: "Fomantis",
+		number: "753",
+		weight: {
+			pounds: 3.3,
+			kilograms: 1.5
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0753Fomantis.png",
+			"largeShiny": "src/img/shiny-pokemon/753-Fomantis.png",
+			"home": "src/img/tiny-pokemon/Fomantis.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/fomantis.mp3"
+		},
+		tags: [],
+		types: ["Grass"],
+		abilities: ["Leaf Guard"],
+		hiddenAbilities: ["Contrary"],
+		stats: {
+			hp: 40,
+			attack: 55,
+			defense: 35,
+			specialAttack: 50,
+			specialDefense: 35,
+			speed: 35
+		},
+		expYield: 50,
+		evYield: {
+			hp: 0,
+			attack: 1,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 4,
+			green: 3
+		},
+		evolutions: [
+			{ name: "Lurantis", unlock: { type: "level", amount: 34 } }
+		],
+		learnset: [
+			{ name: "Leafage", unlock: { type: "level", amount: 1 } },
+			{ name: "Fury Cutter", unlock: { type: "level", amount: 1 } },
+			{ name: "Growth", unlock: { type: "level", amount: 5 } },
+			{ name: "Ingrain", unlock: { type: "level", amount: 10 } },
+			{ name: "Razor Leaf", unlock: { type: "level", amount: 15 } },
+			{ name: "Sweet Scent", unlock: { type: "level", amount: 20 } },
 		]
 	},
 	"Stufful": {

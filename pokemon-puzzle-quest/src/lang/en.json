@@ -6,6 +6,7 @@
 	"error-cant-switch-status": "A status effect prevents this Pokémon from switching out.",
 	"error-cant-switch-fear-frozen": "Your active Pokémon is too frozen in fear to retreat!",
 	"error-cant-switch-magnet-pull": "Your active Pokémon is held in place by magnetic force.",
+	"force-swap-prevented": "The Pokémon can't be forced to switch out.",
 	
 	"new-moves-message-plural": "%c% learned new moves!",
 	"new-moves-message-single": "%c% learned a new move!",
@@ -1015,6 +1016,82 @@
 				{ "type": "go-out-from-onscreen", "speaker": "Sina", "direction": "left", "duration": 1000, "waitDuration": 0 },
 				{ "type": "go-out-from-onscreen", "speaker": "Dexio", "direction": "left", "duration": 1000, "waitDuration": 1000, "additionalLeft": -0.1 }
 			]
+		},
+		"route-4-2-dialogue": {
+			"events": [],
+			"callbacks": {},
+			"effects": [
+				{ "type": "get-speaker", "name": "Narrator", "class": "Narrator" },
+				{ "type": "get-speaker", "name": "Jody", "class": "Bellhop" },
+				{ "type": "display-image", "src": "src/img/pokemon/0425Drifloon.png", "name": "Drifloon", "position": {
+					"type": "relative",
+					"relative": "Jody",
+					"widthFactor": 0.5,
+					"heightFactor": 0.5
+				}},
+				{ "type": "style-image", "image": "Drifloon", "css": {
+					"left": "-=10%",
+					"top": "+=12%",
+					"transform": "scaleX(-1) rotate(20deg)"
+				}},
+				{ "type": "looping-animation", "name": "Float", "targetType": "image", "image": "Drifloon", "states": [
+					{
+						"duration": 1000,
+						"css": {
+							"top": "-=2%"
+						}
+					},
+					{
+						"duration": 1000,
+						"css": {
+							"top": "+=2%"
+						}
+					}
+				]},
+				{ "type": "text", "speaker": "Narrator", "text": "As you continue, you see a man talking animatedly to a Drifloon." },
+				{ "type": "text", "speaker": "Jody", "text": "Hmm... perhaps I could have you carry the guests' bags to their rooms?" },
+				{ "type": "text", "speaker": "Jody", "text": "The laundry chutes don't get too much use, so maybe you could travel that way?" },
+				{ "type": "bounce", "speaker": "Jody", "duration": 400, "waitDuration": 0 },
+				{ "type": "text", "speaker": "Jody", "text": "Oh, hello. Sorry, I didn't see you approach!" },
+				{ "type": "text", "speaker": "Jody", "text": "I've been told to do more to “innovate” Tide Song Hotel. So I thought... tourists come to Alola to see the region's Pokémon, right?" },
+				{ "type": "text", "speaker": "Jody", "text": "So I'm trying to come up with some ideas for how some local Pokémon can help add some pizzazz!" },
+				{ "type": "text", "speaker": "Jody", "text": "It's not going... too well, so far, if I'm honest. They seem like they could use a break. Wanna have a battle so they can let off some steam?" }
+			]
+		},
+		"route-4-2-dialogue-won": {
+			"events": [],
+			"callbacks": {},
+			"effects": [
+				{ "type": "get-speaker", "name": "Jody", "class": "Bellhop" },
+				{ "type": "text", "speaker": "Narrator", "text": "Whew! Well, they definitely show promise... I'll keep working on making Tide Song Hotel the greatest in Alola!" }
+			]
+		},
+		"route-4-3-dialogue": {
+			"events": [],
+			"callbacks": {},
+			"effects": [
+				{ "type": "get-speaker", "name": "Scotty", "class": "Sightseer" },
+				{ "type": "text", "speaker": "Scotty", "text": "Hey! Are you a tourist too? There's so many cool Pokémon here!" },
+				{ "type": "text", "speaker": "Scotty", "text": "Earlier I saw a Rattata with a $@start-italics|@$mustache$@end-italics|@$!!! He looks like he runs a little restaurant or something!" },
+				{ "type": "text", "speaker": "Scotty", "text": "Everything is cooler here! The trees are wavier, the food is tastier, the Meowth are meaner..." },
+				{ "type": "text", "speaker": "Scotty", "text": "I could do without that last part! One of them stole my phone! I $@start-italics|@$still$@end-italics|@$ don't have my phone! but this place is still awesome!" },
+				{ "type": "text", "speaker": "Scotty", "text": "C’mon, battle me! I wanna show you all my new Pokémon!" }
+			]
+		},
+		"route-4-3-dialogue-won": {
+			"events": [],
+			"callbacks": {},
+			"effects": [
+				{ "type": "get-speaker", "name": "Narrator", "class": "Narrator" },
+				{ "type": "get-speaker", "name": "Scotty", "class": "Sightseer" },
+				{ "type": "text", "speaker": "Scotty", "text": "Neat! I'm gonna try and find the way out of here now!" },
+				{ "type": "text", "speaker": "Scotty", "text": "I have NO idea which way is out." },
+				{ "type": "animate-speaker", "speaker": "Scotty",
+				  "duration": 500, "waitDuration": 400, "css": {
+					"opacity": 0
+				}},
+				{ "type": "text", "speaker": "Narrator", "text": "(There is a very clear path that you follow out of the forest.)" }
+			]
 		}
 	},
 	"pokemon": {
@@ -1029,6 +1106,10 @@
 		"Butterfree": {
 			"name": "Butterfree",
 			"pokedex-entry": "Butterfree have favorite flowers, and return to them often. Some gardeners take extra special care of flowers that they know the local Butterfree like."
+		},
+		"Rattata": {
+			"name": "Rattata",
+			"pokedex-entry": "Rattata is the gold standard for test subjects in research studies. They have enough intelligence that researchers need to consider the placebo effect in their studies."
 		},
 		"Rattata-Alola": {
 			"name": "Rattata",
@@ -1355,6 +1436,14 @@
 			"name": "Mudsdale",
 			"pokedex-entry": "Mudsdale's hind legs are strong enough to put a hole into just about anything. A team of criminals once tried to use one to break into a bank vault, but their Mudsdale was too stubborn to carry out the plan."
 		},
+		"Fomantis": {
+			"name": "Fomantis",
+			"pokedex-entry": "It takes long naps in the forest, and dislikes being woken up by trainers who mistake it for a flower. It waves its claws in the air while making a whining sound in protest."
+		},
+		"Lurantis": {
+			"name": "Lurantis",
+			"pokedex-entry": "The bright colors of Lurantis's body are cultivated over its life. Some trainers dedicate themselves to maintaining this Pokémon's leaves and keeping them happy."
+		},
 		"Stufful": {
 			"name": "Stufful"
 		},
@@ -1430,7 +1519,7 @@
 		},
 		"Baby-Doll Eyes": {
 			"name": "Baby-Doll Eyes",
-			"description": "Lowers the opponent's Attack stat by 1 stage. Then, the opponent becomes unable to switch Pokémon for a turn.",
+			"description": "Lowers the opponent's Attack stat by 1 stage. Then, the opponent becomes unable to switch Pokémon for 4 turns.",
 			"shortDescription": "Lowers enemy Attack and prevents switching"
 		},
 		"Baton Pass": {
@@ -1648,7 +1737,7 @@
 		},
 		"Fake Out": {
 			"name": "Fake Out",
-			"description": "Deals damage. As long as the user has been the active Pokémon for more than two turns, this move's purple energy cost increases by 7.",
+			"description": "Deals damage. As long as the user has been the active Pokémon for more than two turns, this move's purple energy cost increases by 4.",
 			"shortDescription": "First-strike attack"
 		},
 		"Fake Tears": {
@@ -1825,6 +1914,11 @@
 			"name": "Infestation",
 			"description": "Deals damage. Converts a random tile into a Grass tile and gives it the Infested status. At the start of the opponent's turn, for each Infested tile, that tile drains 1 energy of a random color, and gives it to the user.",
 			"shortDescription": "Damages and infests a tile"
+		},
+		"Ingrain": {
+			"name": "Ingrain",
+			"description": "The user becomes rooted to the ground, and will heal 1/32 of their Max HP at the end of each of their turns, rounded up. They also become immune to effects of opponent's moves that would force it to switch out.",
+			"shortDescription": "Heals over time"
 		},
 		"Iron Defense": {
 			"name": "Iron Defense",
@@ -3226,6 +3320,14 @@
 		"Route 4-1": {
 			"name": "Route 4-1",
 			"description": "You step off the boat and onto the sandy beach of Akala Island. Heahea City is right next to the dock, and you stop at the Tide Song Hotel there."
+		},
+		"Route 4-2": {
+			"name": "Route 4-2",
+			"description": "The hotel overlooks a winding forest path, filled with new Pokémon native to Akala Island."
+		},
+		"Route 4-3": {
+			"name": "Route 4-3",
+			"description": "Deeper in the forest, different Pokémon can be found around a small spring."
 		}
 	},
 	"route-categories": {

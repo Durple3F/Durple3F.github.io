@@ -385,7 +385,7 @@ const pokemonMoveData = {
 				stacks: false,
 				volatile: true,
 				lostOnSwap: true,
-				turns: 2,
+				turns: 5,
 				lostOnBatonPass: true
 			} },
 		],
@@ -1951,7 +1951,7 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 1,
 		energy: {
-			purple: 5
+			purple: 4
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Fake Out.mp3"
@@ -1979,7 +1979,7 @@ const pokemonMoveData = {
 					name: "Fake Out"
 				},
 				energyCost: {
-					purple: 7
+					purple: 4
 				}
 			} },
 			{ type: "jump", jumpTo: Infinity },
@@ -3284,6 +3284,49 @@ const pokemonMoveData = {
 				status: { name: "Infested", type: "debuff", duration: null }
 			},
 		]
+	},
+	//Get HP every turn and prevent being forced to switch
+	"Ingrain": {
+		name: "Ingrain",
+		type: "Grass",
+		category: "Status",
+		strategy: "buff-self",
+		tags: ["healing"],
+		pp: 20,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 5,
+		energy: {
+			green: 10,
+			orange: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Ingrain part 1.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "ingrain-cant-be-force-switched",
+				type: "cant-be-force-switched",
+				stacks: false,
+				volatile: true,
+				lostOnSwap: true,
+			} },
+		],
+		onTurnStart: [
+			{ type: "is-trainers-turn", target: "user" },
+			{ type: "load-value", value: false },
+			{ type: "jump-if-equal", jumpTo: Infinity},
+
+			{ type: "get-status-stacks", target: "user", statusName: "ingrain-cant-be-force-switched" },
+			{ type: "load-value", value: 1 },
+			{ type: "jump-if-less-than", jumpTo: Infinity},
+
+			{ type: "get-max-hp", target: "user" },
+			{ type: "load-value", value: 1/32 },
+			{ type: "multiply-numbers", round: "up" },
+			{ type: "heal", target: "user", amount: -1 },
+		],
 	},
 	//Raises defense 2
 	"Iron Defense": {

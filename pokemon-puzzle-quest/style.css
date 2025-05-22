@@ -69,6 +69,7 @@ body {
 	--move-usable: #6774dc;
 	--move-usable-focus: #7777ff;
 	--move-unusable: rgb(60, 60, 60);
+	--move-focus: rgb(75, 75, 75);
 	--move-tooltip: rgba(40, 40, 40, 1);
 	--health-high: #47c72c;
 	--health-med: #ffcc03;
@@ -1922,6 +1923,26 @@ body {
 /* Hide scrollbar */
 #modal.summary .pokemon-info > .move-section::-webkit-scrollbar {
 	display: none;
+}
+
+#modal.summary .advanced-info > .pokeball-section {
+	width: 90%;
+	margin: auto;
+}
+#modal.summary .advanced-info > .pokeball-section .pokeball-option {
+	background-color: var(--move-unusable);
+	border-radius: 1em;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+#modal.summary .advanced-info > .pokeball-section .pokeball-option:hover {
+	background-color: var(--move-focus);
+}
+#modal.summary .advanced-info > .pokeball-section .pokeball-option.active {
+	background-color: var(--move-usable);
+}
+#modal.summary .advanced-info > .pokeball-section .pokeball-option.active:hover {
+	background-color: var(--move-usable-focus);
 }
 
 #modal.summary .charts {

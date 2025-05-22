@@ -12,7 +12,8 @@ const defaultDialogueStyle = {
 	namePlateTextBackground: "linear-gradient(-182deg, white 20%, skyblue 80%)",
 	namePlateBackgroundColor: "var(--ui-primary-bg)",
 	namePlateBackground2: "repeating-linear-gradient( -0.5deg, transparent, transparent 0.1em, rgba(125, 143, 247, 0.266) 0.15em, transparent 0.25em )",
-	namePlateBackground2Color: "rgb(0, 68, 255)"
+	namePlateBackground2Color: "rgb(0, 68, 255)",
+	namePlateOpacity: 1
 }
 const NPCTrainerData = {
 	"Narrator": {
@@ -162,6 +163,13 @@ const NPCTrainerData = {
 			trainer: "src/img/trainers/beauty-gen7.png"
 		}
 	},
+	"Bellhop": {
+		name: "Bellhop",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/bellhop.png"
+		}
+	},
 	"Lass-Gen7": {
 		name: "Lass",
 		type: "trainer",
@@ -202,6 +210,13 @@ const NPCTrainerData = {
 		type: "trainer",
 		imageSources: {
 			trainer: "src/img/trainers/risingstarf.png"
+		}
+	},
+	"Sightseer": {
+		name: "Sightseer",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/sightseer.png"
 		}
 	},
 	"Teacher-Gen7": {

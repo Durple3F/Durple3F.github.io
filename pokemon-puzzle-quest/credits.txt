@@ -13,6 +13,8 @@ Also the pokemon cries are from there too https://play.pokemonshowdown.com/audio
   - Lillie
   - The Masked Royal
   - Ilima
+  - Dexio
+  - Sina
   - Youngster Gen 7
   - Young Athlete F
   - Lass Gen 7
@@ -21,8 +23,10 @@ Also the pokemon cries are from there too https://play.pokemonshowdown.com/audio
   - Teacher Gen 7
   - Beauty Gen 7
 - kyledove made the sprites for:
-  - Preschooler F Gen 7
   - Ace Trainer Gen 7
+  - Bellhop
+  - Preschooler F Gen 7
+  - Sightseer
 - ZacWeavile made the sprites for:
   - Team Skull Grunt
 - Gnomowladny made the sprites for:
