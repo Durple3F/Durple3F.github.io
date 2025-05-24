@@ -427,6 +427,9 @@ const natures = [
 	{name: "careful", increase: "specialDefense", decrease: "specialAttack"},
 	{name: "quirky", increase: "specialDefense", decrease: "specialDefense"},
 ]
+function getNature(name){
+	return natures.find(nature => nature.name === name)
+}
 function getRandomNature(){
 	return randomChoice(natures)
 }

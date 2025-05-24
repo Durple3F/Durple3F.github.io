@@ -1,4 +1,4 @@
-const versionNumber = "v0.16.11"
+const versionNumber = "v0.16.12"
 let lang = "en"
 let playerName
 
@@ -1157,7 +1157,7 @@ function beginNewGame(){
 		boxes.forEach(box => playerPCBoxes.push(box))
 	})
 	.then(() => startScene("choose-starter"))
-	.then(() => changeScene("route", {name: "Route 1"}))
+	.then(() => changeScene("route"))
 }
 
 function continueGame(){
@@ -1191,7 +1191,7 @@ function continueGame(){
 			return Promise.resolve()
 		}
 	})
-	.then(() => changeScene("route", {name: "Route 1"}))
+	.then(() => changeScene("route"))
 }
 
 function handleVisibilityChange(){

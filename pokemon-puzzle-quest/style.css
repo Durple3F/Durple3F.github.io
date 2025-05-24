@@ -288,13 +288,14 @@ body {
 #settings-btn {
 	position: absolute;
 	z-index: 10;
-	bottom: 0;
-	left: 0;
+	bottom: -0.2em;
+	right: -0.2em;
 	cursor: pointer;
-	background-color: var(--move-unusable);
+	background-color: var(--move-focus);
+	border: 0.2em solid rgb(50, 50, 50);
 	padding: 0.35em 0.5em;
 	font-size: 3vh;
-	border-top-right-radius: 25%;
+	border-top-left-radius: 25%;
 	transition: background-color 0.25s;
 }
 #settings-btn:hover {
@@ -2002,6 +2003,7 @@ body {
 	height: 20em;
 	width: 20em;
 	padding: 1em;
+	cursor: pointer;
 	transition: background-color 0.3s;
 }
 #modal .pc-evolutions-display .pc-evolution-item:hover {

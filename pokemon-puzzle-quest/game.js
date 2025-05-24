@@ -694,6 +694,7 @@ class Round {
 					to: activePokemon,
 					toTrainer: activeTrainer,
 					damage: -gain,
+					healing: true,
 					fixed: true
 				})
 			}
@@ -745,6 +746,7 @@ class Round {
 					to: activePokemon,
 					toTrainer: activeTrainer,
 					damage: -gain,
+					heal: true,
 					fixed: true
 				})
 			}
@@ -991,6 +993,13 @@ class Round {
 		}
 		toAdd = multiplyEnergies(toAdd, 1, "down")
 
+		this.eventHistory.push({
+			type: "energy-gained",
+			trainer: trainer,
+			pokemon: pokemon,
+			energy: energy
+		})
+
 		//Add little floaty bits for the energy they just gained/lost
 		for (let type in toAdd) {
 			let amt = toAdd[type]
@@ -1031,6 +1040,7 @@ class Round {
 					to: pokemon,
 					toTrainer: trainer,
 					damage: -notGainedTotal,
+					healing: true,
 					fixed: true
 				})
 			}
@@ -1238,7 +1248,9 @@ class Round {
 		this.resetCurrentlySelecting()
 		this.resetCascade()
 		let trainer = this.trainers[this.activePlayerIndex]
+		let activePokemon = trainer.activePokemon
 		let otherTrainer = this.trainers[this.inactivePlayerIndex]
+		let otherPokemon = otherTrainer.activePokemon
 		this.eventHistory.push({
 			type: "turn-start",
 			trainer: trainer,
@@ -1257,15 +1269,15 @@ class Round {
 			}
 		}
 		//The active pokemon gets marked as having not been damaged on their own turn yet so far
-		trainer.activePokemon.gameRoundData.damagedLastOwnTurn = !!trainer.activePokemon.gameRoundData.damagedThisOwnTurn
-		trainer.activePokemon.gameRoundData.damagedThisOwnTurn = false
+		activePokemon.gameRoundData.damagedLastOwnTurn = !!trainer.activePokemon.gameRoundData.damagedThisOwnTurn
+		activePokemon.gameRoundData.damagedThisOwnTurn = false
 
 		//This pokemon has been active for one more turn
-		trainer.activePokemon.turnsActive++
-		trainer.activePokemon.turnsParticipated++
+		activePokemon.turnsActive++
+		activePokemon.turnsParticipated++
 
 		//This ability only triggers once per turn
-		trainer.activePokemon.gameRoundData.superLuckTriggered = false
+		activePokemon.gameRoundData.superLuckTriggered = false
 
 		//Reduce move cooldowns
 		for (let pokemon of trainer.pokemon) {
@@ -1324,8 +1336,6 @@ class Round {
 		}
 
 		//Handle start-of-turn effects
-		let activePokemon = trainer.activePokemon
-		let otherPokemon = otherTrainer.activePokemon
 		let statusEffects = activePokemon.statusEffects
 		for (let status of statusEffects) {
 			if (status.type !== "status") continue
@@ -1509,6 +1519,31 @@ class Round {
 					)
 				}
 			}
+		}
+
+		//Start-of-turn abilities
+		//Telepathy gives you 1 energy of each type your opponent gained since your last turn
+		if (activePokemon.hasAbility("Telepathy")){
+			let considered = []
+			for (let i = this.eventHistory.length - 1; i >= 0; i--){
+				let event = this.eventHistory[i]
+				if (event.type === "turn-start" && event.trainer === trainer && event.turn !== this.turn){
+					break
+				} else if (event.type === "energy-gained" && event.trainer !== trainer){
+					considered.push(event)
+				}
+			}
+			let energyToGive = getEmptyEnergy()
+			for (let event of considered){
+				let energy = event.energy
+				for (let color in energyToGive){
+					if (energyToGive[color]) continue
+					if (energy[color] > 0){
+						energyToGive[color] = 1
+					}
+				}
+			}
+			this.giveEnergy(energyToGive, trainer, activePokemon)
 		}
 
 		//Reduce status effect durations
@@ -1714,6 +1749,7 @@ class Round {
 				to: otherPokemon,
 				toTrainer: otherTrainer,
 				damage: -amt,
+				healing: true,
 				fixed: true
 			})
 		}
@@ -2947,6 +2983,17 @@ class Round {
 						})
 					}
 				}
+				//Sap Sipper gives you an attack boost
+				if (damageType === "Grass" && defender.hasAbility("Sap Sipper")){
+					defender.addStatusEffect({
+						name: "sap-sipper-attack-up",
+						type: "stat",
+						volatile: true,
+						class: "buff",
+						stat: "attack",
+						amount: 1
+					}, defender.trainer, defender, undefined)
+				}
 			}
 		}
 
@@ -4049,7 +4096,10 @@ class Round {
 
 			let trainer = moveUseObj.trainer
 			let pokemon = moveUseObj.pokemon
+			let otherTrainer = this.trainers.find(t => t !== trainer)
+			let otherPokemon = otherTrainer.activePokemon
 			let move = moveUseObj.move
+			let type = this.getEffectiveMoveType(trainer, pokemon, move)
 			let promises = []
 			let endedTurn = false
 
@@ -5286,6 +5336,7 @@ class Round {
 					to: oldActive,
 					toTrainer: trainer,
 					damage: -gain,
+					healing: true,
 					fixed: true
 				})
 			}
@@ -5346,6 +5397,25 @@ class Round {
 					}
 				}
 			})
+		}
+
+		//Plus/Minus makes your special attack go up
+		if (
+			(pokemon.hasAbility("Plus") || pokemon.hasAbility("Minus")) &&
+			trainer.pokemon.some(p => p !== pokemon && (p.hasAbility("Plus") || p.hasAbility("Minus")))
+		){
+			pokemon.addStatusEffect({
+				name: "plus-minus-boosted",
+				type: "stat-alteration",
+				stacks: false,
+				volatile: true,
+				lostOnSwap: true,
+				stat: "specialAttack",
+				modification: {
+					change: 1.5,
+					operation: "multiply"
+				}
+			}, trainer, pokemon, undefined)
 		}
 
 		let sounds = pokemon.getAllSounds()
@@ -6946,6 +7016,9 @@ function beginRound(trainerData) {
 		}
 		if (data.ivs){
 			options.ivs = data.ivs
+		}
+		if (data.nature){
+			options.nature = data.nature
 		}
 		let pokemon = new Pokemon(options.name, options.id, options)
 		logPokemonAs("seen", pokemon)

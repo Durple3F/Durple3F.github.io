@@ -2,6 +2,7 @@ class Pokemon{
 	constructor(name, pokemonName, options={}){
 		this.uuid = options?.uuid ?? window.crypto.randomUUID()
 		this.owner = options?.owner ?? playerSaveId
+		this.originalOwner = options?.originalOwner ?? this.owner
 		this.pokemonId = pokemonName ?? options.id
 		this.data = pokemonData[this.pokemonId]
 
@@ -22,6 +23,12 @@ class Pokemon{
 		this.pokeballType = options?.pokeballType ?? "pokeball"
 
 		this.nature = options?.nature ?? getRandomNature()
+		if (typeof this.nature === "string" && getNature(this.nature)){
+			this.nature = getNature(this.nature)
+		}
+		if (!this.nature.name || !getNature(this.nature.name)){
+			this.nature = getRandomNature()
+		}
 		this.isShiny = false
 		if ("isShiny" in options){
 			this.isShiny = options.isShiny
@@ -623,8 +630,8 @@ class Pokemon{
 		}
 		let result = initial + 5
 		let natureMult = 1
-		if (this.nature.increase === stat) natureMult += 0.1
-		if (this.nature.decrease === stat) natureMult -= 0.1
+		if (this?.nature.increase === stat) natureMult += 0.1
+		if (this?.nature.decrease === stat) natureMult -= 0.1
 		result = Math.floor(result * natureMult)
 		return result
 	}

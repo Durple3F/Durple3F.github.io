@@ -206,6 +206,10 @@ const abilityData = {
 	"Magnet Pull": {
 		id: "Magnet Pull"
 	},
+	//Buffs special attack if another one of your pokemon has Plus/Minus
+	"Minus": {
+		id: "Minus"
+	},
 	//If your move's power is lowered to less than it is by default, re-raises it back to the default.
 	"Mold Breaker": {
 		id: "Mold Breaker"
@@ -245,6 +249,10 @@ const abilityData = {
 	//Get some energy from enemy 4-matches
 	"Pickup": {
 		id: "Pickup"
+	},
+	//Buffs special attack if another one of your pokemon has Plus/Minus
+	"Plus": {
+		id: "Plus"
 	},
 	//Poisons the opponent sometimes when they make contact
 	"Poison Touch": {
@@ -293,6 +301,10 @@ const abilityData = {
 	//On an orange 4-match, increase speed
 	"Sand Veil": {
 		id: "Sand Veil"
+	},
+	//Buffs you when you're hit by a grass move
+	"Sap Sipper": {
+		id: "Sap Sipper"
 	},
 	//You can deal damage to ghost-type pokemon
 	"Scrappy": {
@@ -389,6 +401,10 @@ const abilityData = {
 	//Powers up weak moves
 	"Technician": {
 		id: "Technician"
+	},
+	//Gives you energy based on what the opponent does
+	"Telepathy": {
+		id: "Telepathy"
 	},
 	//Reduces stats during damage calc for Fire and Ice moves
 	"Thick Fat": {

@@ -1090,6 +1090,35 @@ const pokemonMoveData = {
 			type: "last-enemy-move"
 		}
 	},
+	//Lowers speed 2
+	"Cotton Spore": {
+		name: "Cotton Spore",
+		type: "Grass",
+		category: "Status",
+		strategy: "debuff-opponent",
+		pp: 40,
+		power: null,
+		accuracy: 100,
+		rechargeTurns: 6,
+		energy: {
+			green: 5,
+			blue: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Spore.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{
+				type: "apply-debuff", target: "opponent", debuff: {
+					type: "stat",
+					stat: "speed",
+					class: "debuff",
+					amount: -2
+				}
+			}
+		]
+	},
 	//Deals damage based on the last damage dealt to the user
 	"Counter": {
 		name: "Counter",
@@ -1452,6 +1481,53 @@ const pokemonMoveData = {
 			{ type: "end-turn", label: "end" }
 		]
 	},
+	//Might paralyze the enemy
+	"Discharge": {
+		name: "Discharge",
+		type: "Electric",
+		category: "Special",
+		strategy: "basic-damage",
+		tags: ["damage-dealing"],
+		pp: 15,
+		power: 80,
+		accuracy: 100,
+		rechargeTurns: 5,
+		energy: {
+			red: 6,
+			yellow: 8,
+			green: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Discharge.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "random-number", min: 1, max: 10 },
+			{ type: "load-value", value: 6 },
+			{ type: "jump-if-less-than", jumpTo: "end-step1" },
+			{ type: "apply-status-effect", statusEffect: "paralyzed", target: "opponent" },
+			{ type: "do-nothing", label: "end-step1" },
+
+			{ type: "load-value", value: ["yellow"] },
+			{ type: "get-energy-values", target: "user", colors: -1 },
+			{ type: "save-variable", name: "energy-obj", save: -1 },
+			{ type: "load-value", value: -1 },
+			{ type: "multiply-energy", amounts: -2, scale: -1 },
+			{ type: "gain-energy", amounts: -1, target: "user" },
+
+			{ type: "load-variable", name: "energy-obj" },
+			{ type: "load-value", value: "yellow" },
+			{ type: "get-element-from-obj", obj: -2, key: -1 },
+			{ type: "load-value", value: 0.2 },
+			{ type: "multiply-numbers", round: "down" },
+			{ type: "select-random-tiles", count: -1, conditions: { types: ["yellow"] } },
+			{ type: "empower-tiles", selection: -1 },
+		]
+	},
 	//Deals huge damage, but has recoil
 	"Double-Edge": {
 		name: "Double-Edge",
@@ -1474,7 +1550,6 @@ const pokemonMoveData = {
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
 			{ type: "recoil-damage", damageMult: 1/3 },
-			{ type: "trigger", key: "additionalEffects" },
 		],
 	},
 	//Lowers its own cost this turn
@@ -2927,6 +3002,56 @@ const pokemonMoveData = {
 			{ type: "set-initiative", target: "opponent", initiative: -1 },
 		]
 	},
+	//Removes debuff statuses from all of your non-fainted pokemon
+	"Heal Bell": {
+		name: "Heal Bell",
+		type: "Normal",
+		category: "Status",
+		strategy: "special",
+		tags: ["sound-based"],
+		pp: 5,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 5,
+		energy: {
+			green: 5,
+			blue: 7,
+			purple: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Heal Bell.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-viable-pokemon", target: "user" },
+			{ type: "save-variable", name: "pokemon", save: -1 },
+			{ type: "get-list-length", list: -1 },
+			{ type: "save-variable", name: "length", save: -1 },
+			{ type: "load-value", value: 0 },
+			{ type: "save-variable", name: "counter", save: -1 },
+			
+			{ type: "load-variable", name: "counter" },
+			{ type: "load-variable", name: "length" },
+			{ type: "jump-if-less-than", jumpTo: "startLoop" },
+			{ type: "jump", jumpTo: "endLoop" },
+
+			{ type: "load-variable", name: "pokemon", label: "startLoop" },
+			{ type: "load-variable", name: "counter" },
+			{ type: "get-element-from-list", list: -2, index: -1 },
+			{ type: "remove-all-status-effects",
+				statusType: "status", statusClass: "debuff", pokemon: -1 },
+
+			{ type: "load-variable", name: "counter" },
+			{ type: "load-value", value: 1 },
+			{ type: "add-numbers" },
+			{ type: "save-variable", name: "counter", save: -1 },
+			{ type: "load-variable", name: "length" },
+			{ type: "jump-if-less-than", jumpTo: "startLoop" },
+			{ type: "jump", jumpTo: "endLoop" },
+
+			{ type: "do-nothing", label: "endLoop" }
+		],
+	},
 	//Reduces move cooldown
 	"Helping Hand": {
 		name: "Helping Hand",
@@ -3024,6 +3149,49 @@ const pokemonMoveData = {
 					value: -1
 				}
 			] },
+		],
+	},
+	//Deals less damage if it's used second in a turn
+	"Horn Attack": {
+		name: "Horn Attack",
+		type: "Normal",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 25,
+		power: 70, //originally 65
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			red: 6,
+			yellow: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Horn Attack.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+		],
+		onTurnStart: [
+			{ type: "remove-status-effect", target: "user", statusName: "horn-attack-small-damage" },
+		],
+		onFinishUsingMove: [
+			{ type: "apply-status-effect", target: "user", label: "add-status", statusEffect: {
+				name: "horn-attack-small-damage",
+				type: "power-alteration",
+				stacks: true,
+				turns: 1,
+				lostOnSwap: true,
+				lostOnBatonPass: true,
+				appliesTo: {
+					name: "Horn Attack"
+				},
+				modification: {
+					change: -10,
+					operation: "add"
+				}
+			} },
 		],
 	},
 	//Energy gain is multiplied this turn
@@ -3741,6 +3909,7 @@ const pokemonMoveData = {
 		type: "Water",
 		category: "Status",
 		strategy: "special",
+		tags: ["healing"],
 		pp: 10,
 		power: null,
 		accuracy: null,

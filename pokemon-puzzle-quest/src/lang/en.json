@@ -1092,6 +1092,73 @@
 				}},
 				{ "type": "text", "speaker": "Narrator", "text": "(There is a very clear path that you follow out of the forest.)" }
 			]
+		},
+		"route-4-4-dialogue": {
+			"events": [],
+			"callbacks": {},
+			"effects": [
+				{ "type": "get-speaker", "name": "Hau", "class": "Hau" },
+				{ "type": "come-in-from-offscreen", "speaker": "Hau", "direction": "left", "duration": 700, "waitDuration": 200 },
+				{ "type": "load-player-name" },
+				{ "type": "text", "speaker": "Hau", "text": "Hey %c%! You made it past the first trial!", "values": [-1] },
+				{ "type": "text", "speaker": "Hau", "text": "Check out these old west vibes! I’ve never felt anything like this back home!" },
+				{ "type": "text", "speaker": "Hau", "text": "It’s so cool seeing all these Pokémon they don’t have on Melemele island!" },
+				{ "type": "text", "speaker": "Hau", "text": "I even caught a few new favorites..." },
+				{ "type": "text", "speaker": "Hau", "text": "And I just can’t wait to show ’em off!" },
+				{ "type": "text", "speaker": "Hau", "text": "Let’s battle!" }
+			]
+		},
+		"route-4-4-dialogue-won": {
+			"events": [],
+			"callbacks": {},
+			"effects": [
+				{ "type": "get-speaker", "name": "Hau", "class": "Hau" },
+				{ "type": "text", "speaker": "Hau", "text": "$@start-italics|@$Man!$@end-italics|@$ How’d you come up with a battle plan like that?" },
+				{ "type": "text", "speaker": "Hau", "text": "I guess I’ve gotta keep training! I’ll go start making my way to the next trial!" }
+			]
+		},
+		"route-4-5-dialogue": {
+			"events": [],
+			"callbacks": {},
+			"effects": [
+				{ "type": "get-speaker", "name": "Gerald", "class": "Gentleman-Gen7" },
+				{ "type": "text", "speaker": "Gerald", "text": "Howdy, trainer! I haven’t seen you around the ranch before. Welcome to Paniola Ranch, finest ranch in Alola." },
+				{ "type": "text", "speaker": "Gerald", "text": "It’s not $@start-italics|@$my$@end-italics|@$ ranch or anything. I’m just friends with the owner." },
+				{ "type": "text", "speaker": "Gerald", "text": "Hey, fun fact, did you know “Paniola” is Hawaiian for “cowboy?” I’m... not at all sure what a “Hawaii” is, but... something just tells me that’s true." },
+				{ "type": "text", "speaker": "Gerald", "text": "I give that little info nugget to all the newcomers I see! Which ain’t many! So while you’re here, wanna battle?$@wait-10|@$ ", "auto": true },
+				{ "type": "get-speaker", "name": "Wesley", "class": "Pokemon-Breeder-Gen7" },
+				{ "type": "come-in-from-offscreen", "speaker": "Wesley", "direction": "left", "duration": 800, "waitDuration": 600 },
+				{ "type": "animate-speaker", "speaker": "Gerald",
+				  "duration": 500, "waitDuration": 0, "css": {
+					"left": "-=20%"
+				}},
+				{ "type": "transform-speaker", "speaker": "Gerald", "transform": "scaleX(-1)", "duration": 300, "waitDuration": 0 },
+				{ "type": "text", "speaker": "Wesley", "text": "Gerald! They’re loose again! Tauros got riled up— somethin’ spooked the whole herd!" },
+				{ "type": "text", "speaker": "Wesley", "text": "You, trainer— can you help a bit? Gerald and I’ll do what we can, we just need all the help we can get!" }
+			]
+		},
+		"route-4-5-dialogue-won": {
+			"events": [],
+			"callbacks": {},
+			"effects": [
+				{ "type": "get-speaker", "name": "Gerald", "class": "Gentleman-Gen7", "position": "left", "facing": "right" },
+				{ "type": "get-speaker", "name": "Wesley", "class": "Pokemon-Breeder-Gen7" },
+				{ "type": "display-image", "src": "src/img/pokemon/0179Mareep.png", "name": "Mareep", "position": {
+					"type": "relative",
+					"relative": "Wesley",
+					"widthFactor": 0.5,
+					"heightFactor": 0.5
+				}},
+				{ "type": "style-image", "image": "Mareep", "css": {
+					"left": "-=3%",
+					"top": "+=40%"
+				}},
+				{ "type": "text", "speaker": "Wesley", "text": "Whew... thanks for your help, trainer. We really gotta keep this li’l thing in its own pen." },
+				{ "type": "text", "speaker": "Gerald", "text": "I know you’re new here, trainer, but this is NOT the first time she’s done caused a ruckus." },
+				{ "type": "text", "speaker": "Wesley", "text": "You were a big help. I’m gonna go get her fed and calmed down." },
+				{ "type": "go-out-from-onscreen", "image": "Mareep", "targetType": "image", "direction": "right", "duration": 5000, "waitDuration": 0 },
+				{ "type": "go-out-from-onscreen", "speaker": "Wesley", "direction": "right", "additionalLeft": 0.03, "duration": 5000, "waitDuration": 3000 }
+			]
 		}
 	},
 	"pokemon": {
@@ -1172,10 +1239,12 @@
 			"pokedex-entry": "Despite the fact that its thick coat of hair is really just metallic fibers, it seems to enjoy being given a spa treatment. Trainers are advised to use steel wool in place of a regular brush, though."
 		},
 		"Meowth-Alola": {
-			"name": "Meowth"
+			"name": "Meowth",
+			"pokedex-entry": "When this Pokémon sees a person accidentally trip and fall over, it will sneer and laugh at them for minutes on end. However, if <i>its</i> delicate pride is wounded, it will rush at anyone that makes fun of it and claw at them."
 		},
 		"Persian-Alola": {
-			"name": "Persian"
+			"name": "Persian",
+			"pokedex-entry": "Long ago, a royal family brought Meowth into Alola from far away. It became so accustomed to their luxurious treatment that even now it can’t help but act superior."
 		},
 		"Mankey": {
 			"name": "Mankey"
@@ -1222,6 +1291,10 @@
 		"Chansey": {
 			"name": "Chansey"
 		},
+		"Tauros": {
+			"name": "Tauros",
+			"pokedex-entry": "Pokémon ranch owners will tell you that Tauros is a “perfectly kind and polite” Pokémon once it's well trained. They’ll say that other trainers just “don’t understand” how to take proper care of a Tauros. Maybe they’re right. I still don’t believe them."
+		},
 		"Eevee": {
 			"name": "Eevee",
 			"pokedex-entry": "Due to its unstable genetic makeup, its preferences change often. Trainers of this fickle Pokémon may need to make Eevee's habitat just as adaptable as Eevee itself to sate its cravings."
@@ -1245,6 +1318,18 @@
 			"name": "Igglybuff",
 			"pokedex-entry": "It bounces and rolls everywhere it goes, singing its little song. Its singing is... not great. But it's trying."
 		},
+		"Mareep": {
+			"name": "Mareep",
+			"pokedex-entry": "Due to the high amount of static electricity, approaching a herd of Mareep should be done with extreme caution."
+		},
+		"Flaaffy": {
+			"name": "Flaaffy",
+			"pokedex-entry": "Flaaffy accumulates electricity throughout the day. When it’s all charged up, it lets out a constant, low hum."
+		},
+		"Ampharos": {
+			"name": "Ampharos",
+			"pokedex-entry": "When Ampharos sneezes, its body becomes so bright that it looks one of those ridiculously strong flashlights has been pointed at the sky. The beacon of light is fully visible even in broad daylight."
+		},
 		"Espeon": {
 			"name": "Espeon"
 		},
@@ -1262,6 +1347,10 @@
 		},
 		"Smoochum": {
 			"name": "Smoochum"
+		},
+		"Miltank": {
+			"name": "Miltank",
+			"pokedex-entry": "Sometimes in the morning, Pokémon ranch owners will find crop circles have appeared in their fields. Most of the time, it was just a prank orchestrated by Miltank. The rest of the time, it was actually aliens."
 		},
 		"Wingull": {
 			"name": "Wingull"
@@ -1355,6 +1444,10 @@
 		},
 		"Carbink": {
 			"name": "Carbink"
+		},
+		"Noibat": {
+			"name": "Noibat",
+			"pokedex-entry": "Many researchers laud this Pokémon's ability to emit 200,000 hertz screeches, which it uses in echolocation and in battle. However, its ears are impressive too! High frequency sounds reflect off of objects more than they pass through, which means even more of that powerful sound gets back to Noibat. So really, the Pokémon that hears Noibat's screeches the most is Noibat itself!"
 		},
 		"Rowlet": {
 			"name": "Rowlet"
@@ -1619,6 +1712,11 @@
 			"description": "Uses the effects of the move the opponent most recently used. If they haven't used a move, this move does nothing. <span class='z-move-description'>Then the user's speed increases by a stage.</span>",
 			"shortDescription": "Copies enemy's last move"
 		},
+		"Cotton Spore": {
+			"name": "Cotton Spore",
+			"description": "Lowers the opponent's Speed stat by 2 stages.",
+			"shortDescription": "Lowers enemy Speed"
+		},
 		"Counter": {
 			"name": "Counter",
 			"description": "Deals damage exactly equal to the last damage dealt to the user by another Pokémon. If that damage was Normal- or Fighting-type damage, it deals twice as much damage as was dealt instead.",
@@ -1664,6 +1762,11 @@
 			"name": "Disarming Voice",
 			"description": "Deals damage. Has a 50% chance to confuse the opponent. Ends the turn.",
 			"shortDescription": "Deals light damage and may confuse"
+		},
+		"Discharge": {
+			"name": "Discharge",
+			"description": "Deals damage and has a 50% chance to paralyze the opponent. Then, the user loses all yellow energy they have, and for each 5 energy removed this way, a random Electric tile is empowered. When a trainer matches an empowered Electric tile, they gain 10 energy in a random color",
+			"shortDescription": "Paralyzes and spends energy to empower tiles"
 		},
 		"Double Kick": {
 			"name": "Double Kick",
@@ -1860,6 +1963,11 @@
 			"description": "Deals damage. Then, removes half of the target's initiative.",
 			"shortDescription": "Deals damage and slows opponent"
 		},
+		"Heal Bell": {
+			"name": "Heal Bell",
+			"description": "For each usable Pokémon remaining in the user's party, that Pokémon has all their negative status conditions removed.",
+			"shortDescription": "Removes statuses from each of your Pokémon"
+		},
 		"Helping Hand": {
 			"name": "Helping Hand",
 			"description": "Reduces the cooldown of the move with the user's highest cooldown by 5.",
@@ -1873,6 +1981,11 @@
 		"Hone Claws": {
 			"name": "Hone Claws",
 			"description": "The next time this Pokémon uses a move which shares a type with it, the greatest color component(s) in that move's cost is reduced by 4.",
+			"shortDescription": "Next same-type move costs less"
+		},
+		"Horn Attack": {
+			"name": "Horn Attack",
+			"description": "Deals damage. For each move used before Horn Attack in a turn, its power decreases by 10.",
 			"shortDescription": "Next same-type move costs less"
 		},
 		"Howl": {
@@ -2798,6 +2911,11 @@
 			"shortDescription": "Prevents Steel-type opponents retreating",
 			"longDescription": "The opposing Pokémon can't retreat as long as it's Steel-type and this Pokémon is active."
 		},
+		"Minus": {
+			"name": "Minus",
+			"shortDescription": "Raises Special Attack by 50% when it enters if another Pokémon has Plus or Minus",
+			"longDescription": "When this Pokémon is put into play, if its user has another Pokémon with Plus or Minus, this Pokémon's Special Attack is increased by 50%."
+		},
 		"Mold Breaker": {
 			"name": "Mold Breaker",
 			"shortDescription": "This Pokémon's move power can't be lower than the default value.",
@@ -2847,6 +2965,11 @@
 			"name": "Pickup",
 			"shortDescription": "Gets some energy from the opponent's 4-in-a-row matches",
 			"longDescription": "When the opponent makes a 4-in-a-row match, this Pokémon gets some energy as well. The energy added is equal to 1/2 of the energy added by that match and any matches made simultaneously with it, rounded up."
+		},
+		"Plus": {
+			"name": "Plus",
+			"shortDescription": "Raises Special Attack by 50% when it enters if another Pokémon has Plus or Minus",
+			"longDescription": "When this Pokémon is put into play, if its user has another Pokémon with Plus or Minus, this Pokémon's Special Attack is increased by 50%."
 		},
 		"Poison Touch": {
 			"name": "Poison Touch",
@@ -2907,6 +3030,11 @@
 			"name": "Sand Veil",
 			"shortDescription": "On a Fighting-type 4-in-a-row or more, increase Speed a stage",
 			"longDescription": "When this Pokémon's owner makes a match of 4 or more Fighting tiles in a row, this Pokémon's Speed stat increases by 1 stage."
+		},
+		"Sap Sipper": {
+			"name": "Sap Sipper",
+			"shortDescription": "Raises Attack a stage when hit with a Grass-type move",
+			"longDescription": "When this Pokémon is dealt damage by a Grass-type move, its Attack is increased by a stage."
 		},
 		"Scrappy": {
 			"name": "Scrappy",
@@ -3028,6 +3156,11 @@
 			"shortDescription": "Moves with power 60 or less have their power raised 50%",
 			"longDescription": "Moves that this Pokémon uses which have a power of 60 or less have their power raised by 50%."
 		},
+		"Telepathy": {
+			"name": "Telepathy",
+			"shortDescription": "At the start of its turn, gains 1 energy of each color its opponent gained since its last turn",
+			"longDescription": "At the start of this Pokémon's turn, it gains 1 energy of each color of energy that its opponent has gained since the start of this Pokémon's previous turn."
+		},
 		"Thick Fat": {
 			"name": "Thick Fat",
 			"shortDescription": "Reduces damage taken from Fire- or Ice-type moves.",
@@ -3035,7 +3168,7 @@
 		},
 		"Tinted Lens": {
 			"name": "Tinted Lens",
-			"shortDescription": "\"Not very effective\" moves used do double damage.",
+			"shortDescription": "“Not very effective” moves used do double damage.",
 			"longDescription": "As a move this Pokémon uses deals damage, if the type effectiveness of that damage is 0.5 or less, its damage is doubled."
 		},
 		"Torrent": {
@@ -3302,7 +3435,7 @@
 			"description": "Off the beaten path, you find a meadow filled with yellow flowers."
 		},
 		"Route 3-4": {
-			"name": "Route 3-4",
+			"name": "Rival Battle 3",
 			"description": "Heading back to Iki Town, you meet back up with Hau."
 		},
 		"Route 3-5": {
@@ -3328,6 +3461,14 @@
 		"Route 4-3": {
 			"name": "Route 4-3",
 			"description": "Deeper in the forest, different Pokémon can be found around a small spring."
+		},
+		"Route 4-4": {
+			"name": "Rival Battle 4",
+			"description": "As you walk into the dusty, sun-soaked streets of Paniola Town, Hau spots you, and runs up to you for a battle."
+		},
+		"Route 4-5": {
+			"name": "Rival Battle 5",
+			"description": "On the outskirts of the town is Paniola Ranch, where something's clearly stirred up the Tauros more than usual."
 		}
 	},
 	"route-categories": {

@@ -170,6 +170,13 @@ const NPCTrainerData = {
 			trainer: "src/img/trainers/bellhop.png"
 		}
 	},
+	"Gentleman-Gen7": {
+		name: "Gentleman",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/gentleman-gen7.png"
+		}
+	},
 	"Lass-Gen7": {
 		name: "Lass",
 		type: "trainer",

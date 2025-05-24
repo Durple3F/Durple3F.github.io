@@ -26,12 +26,16 @@ function downloadLocale(name){
 }
 function checkLocale(locale, langName){
 	if (locale["pokemon"]){
+		let missingDexEntries = []
 		Object.values(pokemonData)
 		.forEach(pData => {
 			let id = pData.id
 			let locData = locale["pokemon"][id]
 			if (!locData){
 				console.warn("Locale data is missing pokemon data for",id,langName)
+			}
+			if (locData && !locData["pokedex-entry"]){
+				missingDexEntries.push(id)
 			}
 
 			let learnset = pData.learnset ?? []
@@ -42,6 +46,9 @@ function checkLocale(locale, langName){
 				}
 			})
 		})
+		if (missingDexEntries.length){
+			console.log(missingDexEntries)
+		}
 	} else {
 		console.warn("Locale data is missing pokemon data", langName)
 	}

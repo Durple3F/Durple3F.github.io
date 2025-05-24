@@ -18,7 +18,7 @@ const dialogueEffects = {
 		}
 	},
 	"reset-position": {
-		hasSpeaker: true,
+		hasTarget: true,
 		execute: (resolve, effect, progress, options) => {
 			let speaker = options.speaker
 			let tag = speaker.tag
@@ -31,7 +31,7 @@ const dialogueEffects = {
 		}
 	},
 	"bounce": {
-		hasSpeaker: true,
+		hasTarget: true,
 		execute: (resolve, effect, progress, options) => {
 			let speaker = options.speaker
 			let tag = speaker.tag
@@ -63,7 +63,7 @@ const dialogueEffects = {
 		}
 	},
 	"come-in-from-offscreen": {
-		hasSpeaker: true,
+		hasTarget: true,
 		execute: (resolve, effect, progress, options) => {
 			let speaker = options.speaker
 			let tag = speaker.tag
@@ -118,10 +118,45 @@ const dialogueEffects = {
 		}
 	},
 	"go-out-from-onscreen": {
-		hasSpeaker: true,
+		hasTarget: true,
 		execute: (resolve, effect, progress, options) => {
-			let speaker = options.speaker
-			let tag = speaker.tag
+			let tag
+			if (effect.targetType === "image"){
+				tag = options.target
+				console.log(options)
+			} else {
+				let speaker = options.speaker
+				tag = speaker.tag
+			}
+			let direction = effect.direction
+			let duration = effect.duration ?? 500
+			let wait = effect.waitDuration ?? duration
+
+			let initialPosition = tag.position()
+			let finalPosition = {}
+			for (let key in initialPosition){
+				finalPosition[key] = initialPosition[key]
+			}
+
+			if (direction === "right"){
+				finalPosition["left"] = $(window).width() * 1.1
+			} else if (direction === "left"){
+				let xOffset = ($(window).width() - options.dialogueContainer.width()) * 0.5
+				finalPosition["left"] = - tag.width() - xOffset
+			}
+
+			if (effect.additionalLeft){
+				finalPosition["left"] += options.dialogueTag.width() * effect.additionalLeft
+			}
+
+			tag.animate(finalPosition, duration)
+			delay(wait).then(() => resolve())
+		}
+	},
+	"go-out-from-onscreen-image": {
+		hasTarget: true,
+		execute: (resolve, effect, progress, options) => {
+			let tag = options.target
 			let direction = effect.direction
 			let duration = effect.duration ?? 500
 			let wait = effect.waitDuration ?? duration

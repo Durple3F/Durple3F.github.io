@@ -641,7 +641,19 @@ const pokemonMoveEffects = {
 		execute: (resolve, effect, params, game, options) => {
 			let target = options.target
 			let statusEffects = target.statusEffects
+			let statusType = effect.statusType
+			let statusClass = effect.statusClass
+			if (params.pokemon){
+				target = params.pokemon
+			}
+
 			for (let statusEffect of statusEffects){
+				if (statusType && statusEffect.type !== statusType){
+					continue
+				}
+				if (statusClass && statusEffect.class !== statusClass){
+					continue
+				}
 				target.removeStatus(statusEffect)
 			}
 			resolve()
@@ -2012,6 +2024,30 @@ const pokemonMoveEffects = {
 
 			moveUseObj.info[effectIndex] = element
 			resolve()
+		}
+	},
+	"get-element-from-obj": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let moveUseObj = options.moveUse
+			let obj = params.obj
+			let key = params.key ?? 0
+			let element
+
+			if (!obj) {
+				console.error("I didn't get a list!", moveUseObj)
+			} else {
+				if (key in obj) {
+					element = obj[key]
+				} else {
+					console.warn(
+						"Tried to find an item at an index that didn't exist!",
+						obj, key
+					)
+				}
+			}
+
+			resolve(element)
 		}
 	},
 	"random-choice-from-list": {

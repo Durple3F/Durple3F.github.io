@@ -194,6 +194,9 @@ function getPokemonSaveObj(pokemon){
 	let obj = {}
 	obj.uuid = pokemon.uuid
 	obj.owner = pokemon.owner
+	if (pokemon.owner !== pokemon.originalOwner){
+		obj.originalOwner = pokemon.originalOwner
+	}
 	obj.name = pokemon.name
 	obj.pokemonName = pokemon.pokemonName
 	obj.pokemonId = pokemon.pokemonId
@@ -203,12 +206,16 @@ function getPokemonSaveObj(pokemon){
 	obj.exp = pokemon.exp
 	obj.ivs = pokemon.ivs
 	obj.evs = pokemon.evs
-	obj.nature = pokemon.nature
+	obj.nature = pokemon.nature.name
 	obj.isShiny = pokemon.isShiny
 	obj.friendship = pokemon.friendship
-	obj.everstoneActive = pokemon.everstoneActive
+	if (pokemon.everstoneActive){
+		obj.everstoneActive = pokemon.everstoneActive
+	}
 	obj.evolutionTriggerData = pokemon.evolutionTriggerData
-	obj.form = pokemon.form
+	if (pokemon.form){
+		obj.form = pokemon.form
+	}
 	obj.activeSlot = playerActivePokemon.indexOf(pokemon)
 	obj.activeMoves = pokemon.activeMoves.map(move => move.name)
 	obj.movesUnlocked = pokemon.movesUnlockedMap.map((v, i) => {
@@ -218,7 +225,9 @@ function getPokemonSaveObj(pokemon){
 	if (obj.ability === "No Ability"){
 		delete obj.ability
 	}
-	obj.hadHiddenAbility = pokemon.hadHiddenAbility
+	if (pokemon.hadHiddenAbility){
+		obj.hadHiddenAbility = pokemon.hadHiddenAbility
+	}
 	obj.pcBox = pokemon.pcBox
 	obj.pcBoxX = pokemon.pcBoxX
 	obj.pcBoxY = pokemon.pcBoxY

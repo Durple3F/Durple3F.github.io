@@ -83,6 +83,7 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Popplio",
+						name: "Bubble",
 						level: 5,
 						ability: "Torrent"
 					}
@@ -93,6 +94,7 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Rowlet",
+						name: "Bonsai",
 						level: 5,
 						ability: "Overgrow"
 					}
@@ -103,6 +105,7 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Litten",
+						name: "Blaze",
 						level: 5,
 						ability: "Blaze"
 					}
@@ -310,12 +313,14 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Popplio",
+						name: "Bubble",
 						level: 7,
 						ability: "Torrent",
 						activeMoves: ["Pound", "Water Gun", "Growl"]
 					},
 					{
 						id: "Pichu",
+						name: "Kiki",
 						level: 6,
 						ability: "Static",
 						activeMoves: ["Thunder Shock", "Tail Whip", "Charm"]
@@ -327,12 +332,14 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Rowlet",
+						name: "Bonsai",
 						level: 7,
 						ability: "Overgrow",
 						activeMoves: ["Tackle", "Growl", "Leafage"]
 					},
 					{
 						id: "Pichu",
+						name: "Kiki",
 						level: 6,
 						ability: "Static",
 						activeMoves: ["Thunder Shock", "Tail Whip", "Charm"]
@@ -344,12 +351,14 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Litten",
+						name: "Blaze",
 						level: 7,
 						ability: "Blaze",
 						activeMoves: ["Scratch", "Growl", "Ember"]
 					},
 					{
 						id: "Pichu",
+						name: "Kiki",
 						level: 6,
 						ability: "Static",
 						activeMoves: ["Thunder Shock", "Tail Whip", "Charm"]
@@ -1212,18 +1221,20 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Popplio",
+						name: "Bubble",
 						level: 14,
 						ability: "Torrent",
 						activeMoves: ["Water Gun", "Growl", "Disarming Voice", "Baby-Doll Eyes"],
-						ivs: { hp: 25, attack: 15, defense: 15, specialAttack: 25, specialDefense: 10, speed: 31 },
+						ivs: { hp: 25, attack: 15, defense: 15, specialAttack: 25, specialDefense: 10, speed: 15 },
 						evs: { hp: 5, attack: 5, defense: 5, specialAttack: 20, specialDefense: 5, speed: 10 },
 					},
 					{
 						id: "Pikachu",
+						name: "Kiki",
 						level: 14,
 						ability: "Static",
-						activeMoves: ["Growl", "Play Nice", "Quick Ball", "Electro Ball"],
-						ivs: { hp: 15, attack: 15, defense: 15, specialAttack: 25, specialDefense: 10, speed: 31 },
+						activeMoves: ["Growl", "Play Nice", "Quick Attack", "Electro Ball"],
+						ivs: { hp: 15, attack: 15, defense: 15, specialAttack: 25, specialDefense: 10, speed: 20 },
 						evs: { hp: 5, attack: 5, defense: 5, specialAttack: 5, specialDefense: 5, speed: 20 },
 					},
 				]
@@ -1233,18 +1244,20 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Rowlet",
+						name: "Bonsai",
 						level: 14,
 						ability: "Overgrow",
 						activeMoves: ["Leafage", "Growl", "Peck", "Astonish"],
-						ivs: { hp: 25, attack: 15, defense: 15, specialAttack: 25, specialDefense: 10, speed: 31 },
+						ivs: { hp: 25, attack: 15, defense: 15, specialAttack: 25, specialDefense: 10, speed: 15 },
 						evs: { hp: 5, attack: 5, defense: 5, specialAttack: 20, specialDefense: 5, speed: 10 },
 					},
 					{
 						id: "Pikachu",
+						name: "Kiki",
 						level: 14,
 						ability: "Static",
-						activeMoves: ["Growl", "Play Nice", "Quick Ball", "Electro Ball"],
-						ivs: { hp: 15, attack: 15, defense: 15, specialAttack: 25, specialDefense: 10, speed: 31 },
+						activeMoves: ["Growl", "Play Nice", "Quick Attack", "Electro Ball"],
+						ivs: { hp: 15, attack: 15, defense: 15, specialAttack: 25, specialDefense: 10, speed: 20 },
 						evs: { hp: 5, attack: 5, defense: 5, specialAttack: 5, specialDefense: 5, speed: 20 },
 					},
 				]
@@ -1254,18 +1267,20 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Litten",
+						name: "Blaze",
 						level: 14,
 						ability: "Blaze",
 						activeMoves: ["Ember", "Growl", "Lick", "Leer"],
-						ivs: { hp: 25, attack: 15, defense: 15, specialAttack: 25, specialDefense: 10, speed: 31 },
+						ivs: { hp: 25, attack: 15, defense: 15, specialAttack: 25, specialDefense: 10, speed: 15 },
 						evs: { hp: 5, attack: 5, defense: 5, specialAttack: 20, specialDefense: 5, speed: 10 },
 					},
 					{
 						id: "Pikachu",
+						name: "Kiki",
 						level: 14,
 						ability: "Static",
-						activeMoves: ["Growl", "Play Nice", "Quick Ball", "Electro Ball"],
-						ivs: { hp: 15, attack: 15, defense: 15, specialAttack: 25, specialDefense: 10, speed: 31 },
+						activeMoves: ["Growl", "Play Nice", "Quick Attack", "Electro Ball"],
+						ivs: { hp: 15, attack: 15, defense: 15, specialAttack: 25, specialDefense: 10, speed: 20 },
 						evs: { hp: 5, attack: 5, defense: 5, specialAttack: 5, specialDefense: 5, speed: 20 },
 					},
 				]
@@ -1430,6 +1445,7 @@ const levelData = [
 					{ id: "Carbink", levelMin: 12, levelMax: 15, weight: 3 },
 					{ id: "Sableye", levelMin: 12, levelMax: 15, weight: 3 },
 					{ id: "Mawile", levelMin: 12, levelMax: 15, weight: 3 },
+					{ id: "Noibat", levelMin: 12, levelMax: 15, weight: 1 },
 					{ id: "Zubat", levelMin: 12, levelMax: 15, weight: 1 },
 					{ id: "Diglett-Alola", levelMin: 12, levelMax: 15, weight: 1 },
 					{ id: "Rockruff", levelMin: 12, levelMax: 15, weight: 0.5 },
@@ -2038,6 +2054,324 @@ const levelData = [
 			{ type: "jump", jumpTo: "win-check" },
 			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
 			{ type: "dialogue", source: "route-4-3-dialogue-won" },
+		]
+	},
+	//4-4: Rival Battle 4
+	{
+		id: "Route 4-4",
+		category: "Route 4",
+		name: "Rival Battle 4",
+		icon: "4",
+		images: {
+			"route-bg-paniola-town": "src/img/bg/paniola town.jpg"
+		},
+		recommendedLevels: {
+			"normal": (pokemonList) => {
+				if (pokemonList.length >= 5) return 18
+				return 18
+			},
+			"hard": (pokemonList) => {
+				if (pokemonList.length >= 5) return 15
+				return 16
+			}
+		},
+		trainers: [
+			{
+				name: "Hau",
+				canUseZMoves: true,
+				zMoveUsableTypes: ["Normal"],
+				pokemon: [
+					{
+						id: "Brionne",
+						name: "Bubble",
+						level: 16,
+						ability: "Torrent",
+						activeMoves: ["Water Gun", "Growl", "Pound", "Aqua Jet"],
+						ivs: { hp: 25, attack: 15, defense: 15, specialAttack: 25, specialDefense: 10, speed: 15 },
+						evs: { hp: 10, attack: 15, defense: 5, specialAttack: 30, specialDefense: 5, speed: 20 },
+					},
+					{
+						id: "Pikachu",
+						name: "Kiki",
+						level: 15,
+						ability: "Static",
+						activeMoves: ["Growl", "Play Nice", "Quick Attack", "Electro Ball"],
+						ivs: { hp: 15, attack: 15, defense: 15, specialAttack: 25, specialDefense: 10, speed: 20 },
+						evs: { hp: 15, attack: 20, defense: 10, specialAttack: 15, specialDefense: 15, speed: 20 },
+					},
+					{
+						id: "Noibat",
+						name: "Echo",
+						level: 14,
+						ability: "Infiltrator",
+						activeMoves: ["Tackle", "Bite", "Double Team", "Supersonic"],
+						ivs: { hp: 15, attack: 25, defense: 15, specialAttack: 10, specialDefense: 10, speed: 20 },
+						evs: { hp: 5, attack: 10, defense: 5, specialAttack: 5, specialDefense: 5, speed: 20 },
+					},
+					{
+						id: "Eevee",
+						name: "Scout",
+						level: 14,
+						ability: "Adaptability",
+						activeMoves: ["Baby-Doll Eyes", "Play Nice", "Swift", "Copycat"],
+						ivs: { hp: 15, attack: 25, defense: 15, specialAttack: 10, specialDefense: 10, speed: 20 },
+						evs: { hp: 5, attack: 10, defense: 5, specialAttack: 5, specialDefense: 5, speed: 20 },
+					},
+				]
+			},
+			{
+				name: "Hau",
+				canUseZMoves: true,
+				zMoveUsableTypes: ["Normal"],
+				pokemon: [
+					{
+						id: "Dartrix",
+						name: "Bonsai",
+						level: 17,
+						ability: "Overgrow",
+						activeMoves: ["Leafage", "Growl", "Peck", "Astonish"],
+						ivs: { hp: 25, attack: 15, defense: 15, specialAttack: 25, specialDefense: 10, speed: 15 },
+						evs: { hp: 10, attack: 15, defense: 5, specialAttack: 30, specialDefense: 5, speed: 20 },
+					},
+					{
+						id: "Pikachu",
+						name: "Kiki",
+						level: 16,
+						ability: "Static",
+						activeMoves: ["Growl", "Play Nice", "Quick Attack", "Electro Ball"],
+						ivs: { hp: 15, attack: 15, defense: 15, specialAttack: 25, specialDefense: 10, speed: 20 },
+						evs: { hp: 15, attack: 20, defense: 10, specialAttack: 15, specialDefense: 15, speed: 20 },
+					},
+					{
+						id: "Noibat",
+						name: "Echo",
+						level: 14,
+						ability: "Infiltrator",
+						activeMoves: ["Tackle", "Bite", "Double Team", "Supersonic"],
+						ivs: { hp: 15, attack: 25, defense: 15, specialAttack: 10, specialDefense: 10, speed: 20 },
+						evs: { hp: 5, attack: 10, defense: 5, specialAttack: 5, specialDefense: 5, speed: 20 },
+					},
+					{
+						id: "Eevee",
+						name: "Scout",
+						level: 14,
+						ability: "Adaptability",
+						activeMoves: ["Baby-Doll Eyes", "Play Nice", "Swift", "Copycat"],
+						ivs: { hp: 15, attack: 25, defense: 15, specialAttack: 10, specialDefense: 10, speed: 20 },
+						evs: { hp: 5, attack: 10, defense: 5, specialAttack: 5, specialDefense: 5, speed: 20 },
+					},
+				]
+			},
+			{
+				name: "Hau",
+				canUseZMoves: true,
+				zMoveUsableTypes: ["Normal"],
+				pokemon: [
+					{
+						id: "Torracat",
+						name: "Blaze",
+						level: 17,
+						ability: "Blaze",
+						activeMoves: ["Ember", "Growl", "Scratch", "Lick"],
+						ivs: { hp: 25, attack: 15, defense: 15, specialAttack: 25, specialDefense: 10, speed: 15 },
+						evs: { hp: 10, attack: 15, defense: 5, specialAttack: 30, specialDefense: 5, speed: 20 },
+					},
+					{
+						id: "Pikachu",
+						name: "Kiki",
+						level: 16,
+						ability: "Static",
+						activeMoves: ["Growl", "Play Nice", "Quick Attack", "Electro Ball"],
+						ivs: { hp: 15, attack: 15, defense: 15, specialAttack: 25, specialDefense: 10, speed: 20 },
+						evs: { hp: 15, attack: 20, defense: 10, specialAttack: 15, specialDefense: 15, speed: 20 },
+					},
+					{
+						id: "Noibat",
+						name: "Echo",
+						level: 14,
+						ability: "Infiltrator",
+						activeMoves: ["Tackle", "Bite", "Double Team", "Supersonic"],
+						ivs: { hp: 15, attack: 25, defense: 15, specialAttack: 10, specialDefense: 10, speed: 20 },
+						evs: { hp: 5, attack: 10, defense: 5, specialAttack: 5, specialDefense: 5, speed: 20 },
+					},
+					{
+						id: "Eevee",
+						name: "Scout",
+						level: 14,
+						ability: "Adaptability",
+						activeMoves: ["Baby-Doll Eyes", "Play Nice", "Swift", "Copycat"],
+						ivs: { hp: 15, attack: 25, defense: 15, specialAttack: 10, specialDefense: 10, speed: 20 },
+						evs: { hp: 5, attack: 10, defense: 5, specialAttack: 5, specialDefense: 5, speed: 20 },
+					},
+				]
+			}
+		],
+		effects: [
+			{ type: "change-background-image", name: "route-bg-paniola-town" },
+
+			{ type: "dialogue", source: "route-4-4-dialogue" },
+			{ type: "change-music", music: "SM Trainer Battle" },
+			{ type: "load-setting", key: "hardMode" },
+			{ type: "load-value", value: true },
+			{ type: "jump-if-equal", jumpTo: "hardMode" },
+			{ type: "jump", jumpTo: "easyMode" },
+
+			{ type: "load-player-info", key: "chosen-starter", label: "easyMode" },
+			{ type: "load-value", value: "Rowlet" },
+			{ type: "jump-if-equal", jumpTo: "Popplio" },
+			{ type: "load-player-info", key: "chosen-starter" },
+			{ type: "load-value", value: "Litten" },
+			{ type: "jump-if-equal", jumpTo: "Rowlet" },
+			{ type: "jump", jumpTo: "Litten" },
+
+			{ type: "load-player-info", key: "chosen-starter", label: "hardMode" },
+			{ type: "load-value", value: "Rowlet" },
+			{ type: "jump-if-equal", jumpTo: "Litten" },
+			{ type: "load-player-info", key: "chosen-starter" },
+			{ type: "load-value", value: "Litten" },
+			{ type: "jump-if-equal", jumpTo: "Popplio" },
+			{ type: "jump", jumpTo: "Rowlet" },
+
+			{ type: "fight", trainer: 1, label: "Rowlet" },
+			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "jump", jumpTo: "won" },
+			{ type: "fight", trainer: 2, label: "Litten" },
+			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "jump", jumpTo: "won" },
+			{ type: "fight", trainer: 0, label: "Popplio" },
+			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "jump", jumpTo: "won" },
+			
+			{ type: "dialogue", source: "route-4-4-dialogue-won", label: "won" },
+		]
+	},
+	//4-5: Tauros, Miltank, Mareep | 
+	{
+		id: "Route 4-5",
+		category: "Route 4",
+		name: "Route 4-5",
+		music: "SM Wild Pokemon Battle",
+		icon: "5	",
+		images: {
+			"route-bg-forest-path": "src/img/bg/forest path.jpg"
+		},
+		recommendedLevels: {
+			"normal": (pokemonList) => {
+				if (pokemonList.length >= 3) return 17
+				return 20
+			},
+			"hard": (pokemonList) => {
+				if (pokemonList.length >= 3) return 17
+				return 20
+			}
+		},
+		trainers: [
+			{
+				isWild: true,
+				targetPokemon: 4,
+				canPickDuplicates: false,
+				possiblePokemon: [
+					{ id: "Mareep", levelMin: 13, levelMax: 15, weight: 3 },
+					{ id: "Miltank", levelMin: 13, levelMax: 15, weight: 3 },
+					{ id: "Tauros", levelMin: 13, levelMax: 15, weight: 3 },
+					{ id: "Lillipup", levelMin: 13, levelMax: 15, weight: 1 },
+					{ id: "Mudbray", levelMin: 13, levelMax: 15, weight: 1 },
+				]
+			},
+			//Easy
+			{
+				name: "Wesley",
+				class: "Pokemon-Breeder-Gen7",
+				bypassTrainerAnimation: true,
+				pokemon: [
+					{
+						id: "Tauros",
+						level: 15,
+						pokeball: "pokeball",
+						activeMoves: ["Assurance", "Payback", "Work Up", "Tackle"],
+					},
+					{
+						id: "Tauros",
+						level: 16,
+						pokeball: "pokeball",
+						activeMoves: ["Assurance", "Horn Attack", "Payback", "Work Up"],
+					},
+					{
+						id: "Miltank",
+						level: 15,
+						pokeball: "pokeball",
+						activeMoves: ["Stomp", "Heal Bell", "Rollout", "Defense Curl"],
+					},
+					{
+						id: "Mareep",
+						name: "The Troublemaker",
+						isAce: true,
+						level: 5,
+						pokeball: "pokeball",
+						activeMoves: ["Charge", "Discharge"],
+					},
+				]
+			},
+			//Hard
+			{
+				name: "Wesley",
+				class: "Pokemon-Breeder-Gen7",
+				bypassTrainerAnimation: true,
+				pokemon: [
+					{
+						id: "Tauros",
+						level: 15,
+						pokeball: "pokeball",
+						activeMoves: ["Assurance", "Payback", "Work Up", "Tackle"],
+						ivs: { hp: 15, attack: 25, defense: 15, specialAttack: 5, specialDefense: 5, speed: 25 },
+						evs: { hp: 50, attack: 50, defense: 35, specialAttack: 10, specialDefense: 20, speed: 30 },
+					},
+					{
+						id: "Tauros",
+						level: 16,
+						pokeball: "pokeball",
+						activeMoves: ["Assurance", "Horn Attack", "Payback", "Work Up"],
+						ivs: { hp: 15, attack: 25, defense: 15, specialAttack: 5, specialDefense: 5, speed: 25 },
+						evs: { hp: 60, attack: 60, defense: 5, specialAttack: 10, specialDefense: 20, speed: 20 },
+					},
+					{
+						id: "Miltank",
+						level: 15,
+						pokeball: "pokeball",
+						activeMoves: ["Stomp", "Heal Bell", "Rollout", "Defense Curl"],
+						ivs: { hp: 25, attack: 25, defense: 15, specialAttack: 5, specialDefense: 15, speed: 5 },
+						evs: { hp: 80, attack: 20, defense: 35, specialAttack: 10, specialDefense: 40, speed: 0 },
+					},
+					{
+						id: "Mareep",
+						name: "The Troublemaker",
+						isAce: true,
+						level: 13,
+						pokeball: "pokeball",
+						activeMoves: ["Charge", "Discharge"],
+						nature: "Rash",
+						ivs: { hp: 15, attack: 25, defense: 15, specialAttack: 31, specialDefense: 5, speed: 25 },
+						evs: { hp: 0, attack: 0, defense: 0, specialAttack: 100, specialDefense: 0, speed: 0 },
+					},
+				]
+			},
+		],
+		effects: [
+			// { type: "change-background-image", name: "route-bg-forest-path" },
+			{ type: "fight", trainer: 0 },
+			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "dialogue", source: "route-4-5-dialogue" },
+			{ type: "change-music", music: "SM Trainer Battle" },
+			{ type: "load-setting", key: "hardMode" },
+			{ type: "load-value", value: true },
+			{ type: "jump-if-equal", jumpTo: "hardMode" },
+			{ type: "jump", jumpTo: "easyMode" },
+			{ type: "fight", trainer: 1, label: "easyMode" },
+			{ type: "jump", jumpTo: "win-check" },
+			{ type: "fight", trainer: 1, label: "hardMode" },
+			{ type: "jump", jumpTo: "win-check" },
+			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
+			{ type: "dialogue", source: "route-4-5-dialogue-won" },
 		]
 	},
 ]

@@ -1986,6 +1986,59 @@ const pokemonData = {
 			{ name: "Fling", unlock: { type: "level", amount: 20 } },
 		]
 	},
+	"Tauros": {
+		name: "Tauros",
+		number: "128",
+		weight: {
+			pounds: 194.9,
+			kilograms: 88.4
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0128Tauros.png",
+			"largeShiny": "src/img/shiny-pokemon/128-Tauros.png",
+			"home": "src/img/tiny-pokemon/Tauros.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/tauros.mp3"
+		},
+		types: ["Normal"],
+		tags: [],
+		abilities: ["Intimidate", "Anger Point"],
+		hiddenAbilities: ["Sheer Force"],
+		stats: {
+			hp: 75,
+			attack: 100,
+			defense: 95,
+			specialAttack: 40,
+			specialDefense: 70,
+			speed: 110
+		},
+		expYield: 172,
+		evYield: {
+			hp: 0,
+			attack: 1,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 1
+		},
+		energyMastery: {
+			red: 1,
+			orange: 4,
+			yellow: 2,
+			green: 3
+		},
+		learnset: [
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Tail Whip", unlock: { type: "level", amount: 1 } },
+			{ name: "Work Up", unlock: { type: "level", amount: 5 } },
+			{ name: "Payback", unlock: { type: "level", amount: 10 } },
+			{ name: "Assurance", unlock: { type: "level", amount: 15 } },
+			{ name: "Horn Attack", unlock: { type: "level", amount: 20 } },
+			{ name: "Scary Face", unlock: { type: "level", amount: 25 } },
+		]
+	},
 	"Eevee": {
 		name: "Eevee",
 		number: "133",
@@ -2389,6 +2442,181 @@ const pokemonData = {
 			{ name: "Charm", unlock: { type: "level", amount: 20 } },
 		]
 	},
+	"Mareep": {
+		name: "Mareep",
+		number: "179",
+		weight: {
+			pounds: 17.2,
+			kilograms: 7.8
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0179Mareep.png",
+			"largeShiny": "src/img/shiny-pokemon/179-Mareep.png",
+			"home": "src/img/tiny-pokemon/Mareep.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/mareep.mp3"
+		},
+		types: ["Electric"],
+		tags: [],
+		abilities: ["Static"],
+		hiddenAbilities: ["Plus"],
+		stats: {
+			hp: 55,
+			attack: 40,
+			defense: 40,
+			specialAttack: 65,
+			specialDefense: 45,
+			speed: 35
+		},
+		expYield: 56,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 1,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			yellow: 3,
+			blue: 1
+		},
+		evolutions: [
+			{ name: "Flaaffy", unlock: { type: "level", amount: 15 } }
+		],
+ 		learnset: [
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Growl", unlock: { type: "level", amount: 1 } },
+			{ name: "Thunder Wave", unlock: { type: "level", amount: 4 } },
+			{ name: "Thunder Shock", unlock: { type: "level", amount: 8 } },
+			{ name: "Cotton Spore", unlock: { type: "level", amount: 11 } },
+			{ name: "Charge", unlock: { type: "level", amount: 15 } },
+			{ name: "Take Down", unlock: { type: "level", amount: 18 } },
+			{ name: "Electro Ball", unlock: { type: "level", amount: 22 } },
+			{ name: "Confuse Ray", unlock: { type: "level", amount: 25 } },
+			{ name: "Power Gem", unlock: { type: "level", amount: 29 } },
+		]
+	},
+	"Flaaffy": {
+		name: "Flaaffy",
+		number: "180",
+		weight: {
+			pounds: 29.3,
+			kilograms: 13.3
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0180Flaaffy.png",
+			"largeShiny": "src/img/shiny-pokemon/180-Flaaffy.png",
+			"home": "src/img/tiny-pokemon/Flaaffy.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/flaaffy.mp3"
+		},
+		types: ["Electric"],
+		tags: [],
+		abilities: ["Static"],
+		hiddenAbilities: ["Plus"],
+		stats: {
+			hp: 70,
+			attack: 55,
+			defense: 55,
+			specialAttack: 80,
+			specialDefense: 60,
+			speed: 45
+		},
+		expYield: 128,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 2,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			yellow: 4,
+			green: 1,
+			blue: 2
+		},
+		evolutions: [
+			{ name: "Ampharos", unlock: { type: "level", amount: 30 } }
+		],
+ 		learnset: [
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Growl", unlock: { type: "level", amount: 1 } },
+			{ name: "Thunder Wave", unlock: { type: "level", amount: 6 } },
+			{ name: "Thunder Shock", unlock: { type: "level", amount: 9 } },
+			{ name: "Cotton Spore", unlock: { type: "level", amount: 11 } },
+			{ name: "Charge", unlock: { type: "level", amount: 16 } },
+			{ name: "Take Down", unlock: { type: "level", amount: 20 } },
+			{ name: "Electro Ball", unlock: { type: "level", amount: 25 } },
+			{ name: "Confuse Ray", unlock: { type: "level", amount: 29 } },
+			{ name: "Power Gem", unlock: { type: "level", amount: 34 } },
+		]
+	},
+	"Ampharos": {
+		name: "Ampharos",
+		number: "181",
+		weight: {
+			pounds: 135.6,
+			kilograms: 61.5
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0181Ampharos.png",
+			"largeShiny": "src/img/shiny-pokemon/181-Ampharos.png",
+			"home": "src/img/tiny-pokemon/Ampharos.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/ampharos.mp3"
+		},
+		types: ["Electric"],
+		tags: [],
+		abilities: ["Static"],
+		hiddenAbilities: ["Plus"],
+		stats: {
+			hp: 90,
+			attack: 75,
+			defense: 85,
+			specialAttack: 115,
+			specialDefense: 90,
+			speed: 55
+		},
+		expYield: 230,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 3,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			yellow: 6,
+			green: 2,
+			blue: 2
+		},
+ 		learnset: [
+			// { name: "Zap Cannon", unlock: { type: "level", amount: 1 } },
+			// { name: "Magnetic Flux", unlock: { type: "level", amount: 1 } },
+			// { name: "Dragon Pulse", unlock: { type: "level", amount: 1 } },
+			// { name: "Fire Punch", unlock: { type: "level", amount: 1 } },
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Growl", unlock: { type: "level", amount: 1 } },
+			{ name: "Thunder Wave", unlock: { type: "level", amount: 1 } },
+			{ name: "Thunder Shock", unlock: { type: "level", amount: 1 } },
+			// { name: "Thunder Punch", unlock: { type: "level", amount: 1 } }, //note: evolution
+			{ name: "Cotton Spore", unlock: { type: "level", amount: 11 } },
+			{ name: "Charge", unlock: { type: "level", amount: 16 } },
+			{ name: "Take Down", unlock: { type: "level", amount: 20 } },
+			{ name: "Electro Ball", unlock: { type: "level", amount: 25 } },
+			{ name: "Confuse Ray", unlock: { type: "level", amount: 29 } },
+			{ name: "Power Gem", unlock: { type: "level", amount: 35 } },
+		]
+	},
 	"Espeon": {
 		name: "Espeon",
 		number: "196",
@@ -2715,6 +2943,59 @@ const pokemonData = {
 			{ name: "Confusion", unlock: { type: "level", amount: 12 } },
 			{ name: "Covet", unlock: { type: "level", amount: 16 } },
 			{ name: "Sing", unlock: { type: "level", amount: 20 } },
+		]
+	},
+	"Miltank": {
+		name: "Miltank",
+		number: "241",
+		weight: {
+			pounds: 166.4,
+			kilograms: 75.5
+		},
+		imageFacing: "right",
+		imageSources: {
+			"large": "src/img/pokemon/0241Miltank.png",
+			"largeShiny": "src/img/shiny-pokemon/241-Miltank.png",
+			"home": "src/img/tiny-pokemon/Miltank.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/miltank.mp3"
+		},
+		types: ["Normal"],
+		tags: [],
+		abilities: ["Thick Fat", "Scrappy"],
+		hiddenAbilities: ["Sap Sipper"],
+		stats: {
+			hp: 95,
+			attack: 80,
+			defense: 105,
+			specialAttack: 40,
+			specialDefense: 70,
+			speed: 100
+		},
+		expYield: 172,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 2,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 3,
+			green: 2,
+			blue: 3,
+			purple: 2,
+		},
+		learnset: [
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Growl", unlock: { type: "level", amount: 1 } },
+			{ name: "Rollout", unlock: { type: "level", amount: 5 } },
+			{ name: "Defense Curl", unlock: { type: "level", amount: 10 } },
+			{ name: "Stomp", unlock: { type: "level", amount: 15 } },
+			{ name: "Heal Bell", unlock: { type: "level", amount: 20 } },
+			{ name: "Headbutt", unlock: { type: "level", amount: 25 } },
 		]
 	},
 	"Wingull": {
@@ -4429,6 +4710,59 @@ const pokemonData = {
 			{ name: "Ancient Power", unlock: { type: "level", amount: 20 } },
 		]
 	},
+	"Noibat": {
+		name: "Noibat",
+		number: "714",
+		weight: {
+			pounds: 17.6,
+			kilograms: 8.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0714Noibat.png",
+			"largeShiny": "src/img/shiny-pokemon/714-Noibat.png",
+			"home": "src/img/tiny-pokemon/Noibat.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/noibat.mp3"
+		},
+		types: ["Flying", "Dragon"],
+		tags: [],
+		abilities: ["Frisk", "Infiltrator"],
+		hiddenAbilities: ["Telepathy"],
+		stats: {
+			hp: 40,
+			attack: 30,
+			defense: 35,
+			specialAttack: 45,
+			specialDefense: 40,
+			speed: 55
+		},
+		expYield: 49,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 1
+		},
+		energyMastery: {
+			orange: 1,
+			yellow: 1,
+			blue: 2,
+			purple: 1
+		},
+		learnset: [
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Absorb", unlock: { type: "level", amount: 1 } },
+			{ name: "Gust", unlock: { type: "level", amount: 4 } },
+			{ name: "Supersonic", unlock: { type: "level", amount: 8 } },
+			{ name: "Double Team", unlock: { type: "level", amount: 12 } },
+			{ name: "Wing Attack", unlock: { type: "level", amount: 16 } },
+			{ name: "Bite", unlock: { type: "level", amount: 20 } },
+		]
+	},
 	"Rowlet": {
 		name: "Rowlet",
 		number: "722",
@@ -4714,7 +5048,7 @@ const pokemonData = {
 			{ name: "Sing", unlock: { type: "level", amount: 18 } },
 			{ name: "Bubble Beam", unlock: { type: "level", amount: 21 } },
 			{ name: "Encore", unlock: { type: "level", amount: 24 } },
-			{ name: "Last Resort", unlock: { type: "level", amount: 1 } },
+			{ name: "Discharge", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Brionne": {

@@ -1,10 +1,27 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-5/22 (39.4k lines):
-	- Added Rattata
-	- Added 4-2, 4-3
+5/24 (40.5k lines):
+	- Added Discharge
+	- Added 4-5
+	- Took a few steps to reduce how big save file sizes were. It won't reduce it by much.
+
+5/23 (40.2k lines):
+	- Added Mareep, Flaaffy, Ampharos
+	- Added Cotton Spore
+	- Added Sap Sipper, Plus, Minus
+	- Added some pokedex entries
+
+5/22 (40.0k lines)!!!!!:
+	- Added Rattata, Noibat, Tauros, Miltank
+	- Added Horn Attack, Heal Bell
+	- Added Telepathy
+	- Added 4-2, 4-3, 4-4. They were all mostly finished, but now they have dialogue & stuff.
 	- You can now choose which pokeball type your pokemon are in.
 	- Added luxury balls
+	- Added a background for 4-4.
+	- The game now remembers which route you were last looking at in most circumstances.
+	- You can now quickly go to the levels that a pokemon is obtainable in from the pokedex.
+	- Added some more pokedex entries
 
 5/21 (38.8k lines):
 	- Added Fomantis

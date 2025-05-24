@@ -1,5 +1,5 @@
 let currentSceneInfo = {}
-function startScene(name, options) {
+function startScene(name, options={}) {
 	let resolvePromise
 	let promise = new Promise(resolve => resolvePromise = resolve)
 	let gameTag = $("#game")
@@ -174,7 +174,7 @@ function startScene(name, options) {
 		case "route": {
 			changeBackgroundImage("none")
 			fadeInGame()
-			let routeName = options.name
+			let routeName = options.name ?? playerSaveInfo["last-route"] ?? "Route 1"
 
 			//TODO change music based on route
 			changeMusic("Route 201 (Day)")
@@ -220,6 +220,7 @@ function startScene(name, options) {
 					let routeLevels = getLevelsInCategory(routeName)
 					displayLevels(routeLevels)
 					shownCategory = routeName
+					playerSaveInfo["last-route"] = routeName
 				}
 				listTag.children(".highlight").removeClass("highlight")
 				let categoryBtn = listTag.children(`[data-category="${routeName}"]`)
@@ -837,7 +838,7 @@ function startScene(name, options) {
 			adminTag.append(confirmButton)
 			confirmButton.click(() => {
 				leaveScene()
-				changeScene("route", { name: "Route 1" })
+				changeScene("route")
 			})
 
 			let pokedexText = getLocaleString("pokedex", lang)
@@ -1252,17 +1253,21 @@ function advanceCurrentLevel() {
 				currentLevelProgress.info[effectIndex] = data.variables
 				resolvePromise()
 			} else {
-				let dialogue = getLocaleString(dialogueName, lang, ["dialogue"], {})
-				beginDialogue(dialogue)
-					.then(val => {
-						currentLevelProgress.info[effectIndex] = val.variables
-					})
-					.then(() => {
-						if (!seenDialogue.includes(dialogueName)) {
-							seenDialogue.push(dialogueName)
-						}
-						resolvePromise()
-					})
+				let dialogue = getLocaleString(dialogueName, lang, ["dialogue"], null)
+				if (dialogue){
+					beginDialogue(dialogue)
+						.then(val => {
+							currentLevelProgress.info[effectIndex] = val.variables
+						})
+						.then(() => {
+							if (!seenDialogue.includes(dialogueName)) {
+								seenDialogue.push(dialogueName)
+							}
+							resolvePromise()
+						})
+				} else {
+					resolvePromise()
+				}
 			}
 		} break
 		case "random-number": {
@@ -1477,6 +1482,7 @@ function viewPokemonInfo(pokemon, options = {}) {
 	console.log(pokemon, options)
 
 	let data = pokemon.data
+	let closing = true
 
 	let modal = $("#modal")
 	clearModal(modal)
@@ -1556,13 +1562,6 @@ function viewPokemonInfo(pokemon, options = {}) {
 		<a class="nav-link active" href="#">Info</a>
 	</li>`)
 	tabs.append(infoTab)
-
-	if (options.dex) {
-		let findingTab = $(`<li class='nav-item' data-target-class='location-info'>
-			<a class="nav-link" href="#">Locations</a>
-		</li>`)
-		tabs.append(findingTab)
-	}
 
 	//SECTIONS
 	let sections = $("<div class='info-sections'>")
@@ -1756,20 +1755,52 @@ function viewPokemonInfo(pokemon, options = {}) {
 				placement: "top",
 				trigger: "hover"
 			})
+
+			section.click(() => {
+				closing = false
+				section.popover("dispose")
+				modal.modal("hide")
+				delay(400).then(() => {
+					let pokemonId = pData.id
+					let pokemonOptions = {
+						isShiny: false
+					}
+					let evolvePokemon = new Pokemon(undefined, pokemonId, pokemonOptions)
+					viewPokemonInfo(evolvePokemon, {dex: true})
+				})
+			})
 		})
 	}
 
 	//LOCATIONS
 	if (options.dex) {
-		let info = $(`<div class='info location-info'>`)
-		sections.append(info)
-		info.hide()
+		let findingTab = $(`<li class='nav-item' data-target-class='location-info'>
+			<a class="nav-link" href="#">Locations</a>
+		</li>`)
 
+		let info = $(`<div class='info location-info'>`)
+		let locationsTag = $("<div class='d-flex justify-content-center'>")
+		info.append(locationsTag)
+
+		let shouldAdd = false
 		for (let level of levelData) {
 			if (level.obtainablePokemon.includes(pokemon.data.id)) {
+				shouldAdd = true
 				let name = getLocaleString("name", lang, ["levels", level.id])
-				info.append(name)
+				let button = $("<div class='btn btn-primary m-2'>")
+				button.html(name)
+				locationsTag.append(button)
+				button.click(() => {
+					modal.modal("hide")
+					delay(400).then(() => beginLevel(level.id))
+				})
 			}
+		}
+
+		if (shouldAdd){
+			tabs.append(findingTab)
+			sections.append(info)
+			info.hide()
 		}
 	}
 
@@ -1975,8 +2006,10 @@ function viewPokemonInfo(pokemon, options = {}) {
 		modal.modal("hide")
 	})
 	modal.on("hidden.bs.modal", () => {
-		moveSection.children(".move").popover("hide")
-		resolvePromise()
+		moveSection.children(".move").popover("dispose")
+		if (closing){
+			resolvePromise()
+		}
 	})
 	return promise
 }
