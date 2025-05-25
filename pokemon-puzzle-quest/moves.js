@@ -4325,6 +4325,59 @@ const pokemonMoveData = {
 			{ type: "apply-status-effect", statusEffect: "mist", target: "user" }
 		],
 	},
+	//Heals HP based on how many blue tiles there are
+	"Moonlight": {
+		name: "Moonlight",
+		type: "Fairy",
+		category: "Status",
+		strategy: "special",
+		tags: ["healing"],
+		pp: 5,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 1,
+		energy: {
+			blue: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Moonlight part 1.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "count-tiles", options: { type: "blue" } },
+			{ type: "load-value", value: 0.05 },
+			{ type: "multiply-numbers" },
+			{ type: "get-max-hp", target: "user" },
+			{ type: "multiply-numbers" },
+			{ type: "load-value", value: 1 },
+			{ type: "heal", target: "user", amount: -2, min: -1 },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "moonlight-cooldown",
+				type: "cooldown-alteration",
+				stacks: true,
+				volatile: true,
+				appliesTo: {
+					name: "Moonlight"
+				},
+				modification: {
+					change: 2,
+					operation: "add"
+				}
+			} },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "moonlight-cost-alteration",
+				type: "cost-alteration",
+				stacks: true,
+				volatile: true,
+				appliesTo: {
+					name: "Moonlight"
+				},
+				energyCost: {
+					blue: 4
+				}
+			} },
+		],
+	},
 	//Gives random tiles Energy Down
 	"Mud-Slap": {
 		name: "Mud-Slap",

@@ -287,7 +287,7 @@ const dialogueEffects = {
 			let wait = effect.wait ?? true
 			if (imgName in images){
 				let url = images[imgName]
-				let p = changeBackgroundImage(imgName, url)
+				let p = changeBackgroundImage(imgName, url, false)
 				if (wait){
 					p.then(() => resolve())
 				} else {
@@ -357,6 +357,12 @@ const dialogueEffects = {
 		execute: (resolve, effect, progress, options) => {
 			let music = effect.music
 			changeMusic(music)
+			resolve()
+		}
+	},
+	"stop-music": {
+		execute: (resolve, effect, progress, options) => {
+			stopMusic()
 			resolve()
 		}
 	},

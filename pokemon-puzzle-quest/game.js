@@ -2899,7 +2899,7 @@ class Round {
 					}
 				}
 				//Static paralyzes the attacker sometimes
-				if (madeContact && defender.hasAbility("Static")) {
+				if (madeContact && attacker !== defender && defender.hasAbility("Static")) {
 					if (
 						attacker !== defender &&
 						Math.random() < 0.3
@@ -2908,7 +2908,7 @@ class Round {
 					}
 				}
 				//Poison Touch poisons the attacker sometimes
-				if (madeContact && defender.hasAbility("Poison Touch")) {
+				if (madeContact && attacker !== defender && defender.hasAbility("Poison Touch")) {
 					if (
 						attacker !== defender &&
 						Math.random() < 0.3
@@ -2917,7 +2917,7 @@ class Round {
 					}
 				}
 				//Cute Charm lowers the defender's Special Attack
-				if (madeContact && attacker.hasAbility("Cute Charm")) {
+				if (madeContact && attacker !== defender && attacker.hasAbility("Cute Charm")) {
 					if (attacker !== defender) {
 						defender.addStatusEffect({
 							name: "cute-charm-weakened",
@@ -2969,7 +2969,7 @@ class Round {
 					}, defender.trainer, defender, undefined)
 				}
 				//Aftermath deals damage to the attacker
-				if (madeContact && wasUsable && !stillUsable && defender.hasAbility("Aftermath")) {
+				if (madeContact && attacker !== defender && wasUsable && !stillUsable && defender.hasAbility("Aftermath")) {
 					if (defender !== attacker) {
 						let revengeDamage = Math.ceil(attacker.maxhp * 0.25)
 						this.dealDamage({
@@ -2993,6 +2993,20 @@ class Round {
 						stat: "attack",
 						amount: 1
 					}, defender.trainer, defender, undefined)
+				}
+				//Effect spore puts a random spore status on a random tile without that status
+				if (madeContact && attacker !== defender && defender.hasAbility("Effect Spore")){
+					let statusNames = ["Stun Spore", "Poison Powder", "Sleep Powder"]
+					let statusName = randomChoice(statusNames)
+					let tilesWithout = this.board.tilesOnScreen().filter(tile => !tile.hasStatus(statusName))
+					if (tilesWithout.length){
+						let randomTile = randomChoice(tilesWithout)
+						let color = defenderTrainer === this.trainers[0] ? "friendly" : "enemy"
+						randomTile.addStatusEffect(
+							{ name: "Stun Spore", type: "debuff", duration: 5 },
+							defenderTrainer, defender, undefined, color
+						)
+					}
 				}
 			}
 		}
@@ -5148,9 +5162,15 @@ class Round {
 			first = first.then(() => trainerAnimations[animName](trainerTag))
 		}
 
+		const trainerMoveToSide = () => {
+			trainerTag.animate({
+				left: "40%"
+			}, 900)
+		}
+
 		//If this is a wild pokemon, the pokemon just slides in from the side.
-		//Otherwise, it enters from a pokeball.	
-		if (trainerIndex === 0 || !trainer.data.isWild) {
+		//Otherwise, it enters from a pokeball.
+		if (trainerIndex === 0 || (!trainer.data.isWild && !trainer.data.bypassTrainerAnimation)) {
 			//First, the trainer throws the pokeball, then moves to the side.
 			let pokeballType = pokemon.pokeballType
 			first = first.then(() => {
@@ -5161,9 +5181,7 @@ class Round {
 				})
 
 				return new Promise(resolve => {
-					trainerTag.animate({
-						left: "40%"
-					}, 900)
+					trainerMoveToSide(900)
 
 					renderPokeballSmallCanvas(canvas, pokeballType, "closed")
 					renderPokeballSpinSmallCanvas(pokeballTag, spinDirection)
@@ -5248,6 +5266,7 @@ class Round {
 				})
 		} else {
 			first = first.then(() => new Promise(resolve => {
+				trainerMoveToSide(0)
 				this.sendOutPokemon(trainerIndex, pokemon)
 				let width = pokemonSection.width()
 				let facing = pokemon.data.imageFacing

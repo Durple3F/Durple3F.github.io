@@ -1154,10 +1154,44 @@
 					"top": "+=40%"
 				}},
 				{ "type": "text", "speaker": "Wesley", "text": "Whew... thanks for your help, trainer. We really gotta keep this li’l thing in its own pen." },
-				{ "type": "text", "speaker": "Gerald", "text": "I know you’re new here, trainer, but this is NOT the first time she’s done caused a ruckus." },
+				{ "type": "text", "speaker": "Gerald", "text": "I know you’re new here, trainer, but this is NOT the first time she’s caused a ruckus." },
 				{ "type": "text", "speaker": "Wesley", "text": "You were a big help. I’m gonna go get her fed and calmed down." },
 				{ "type": "go-out-from-onscreen", "image": "Mareep", "targetType": "image", "direction": "right", "duration": 5000, "waitDuration": 0 },
 				{ "type": "go-out-from-onscreen", "speaker": "Wesley", "direction": "right", "additionalLeft": 0.03, "duration": 5000, "waitDuration": 3000 }
+			]
+		},
+		"route-4-6-dialogue": {
+			"events": [],
+			"callbacks": {},
+			"effects": [
+				{ "type": "stop-music" },
+				{ "type": "get-speaker", "name": "Yuka", "class": "Pokemon-Breeder-Gen7-F" },
+				{ "type": "style-speaker", "speaker": "Yuka", "css": {
+					"filter": "brightness(0.5)"
+				}},
+				{ "type": "text", "speaker": "Yuka", "text": "Ah! Be careful where you step— the mushrooms are watching." },
+				{ "type": "text", "speaker": "Yuka", "text": "Hi there. I’m Yuka. I’m just tending my little fairy ring, here... Isn’t it so pretty how they glow?" },
+				{ "type": "text", "speaker": "Yuka", "text": "Did you know Morelull spores are so light, they can drift for miles on the wind?" },
+				{ "type": "text", "speaker": "Yuka", "text": "My little ones tell me lots about the other parts of Alola..." },
+				{ "type": "load-player-name" },
+				{ "type": "text", "speaker": "Yuka", "text": "You’re $@start-italics|@$%c%$@end-italics|@$, aren’t you? Hehehe, I knew it...", "values": [-1] },
+				{ "type": "text", "speaker": "Yuka", "text": "They say that if you fall asleep near a Morelull, you’ll dream the same dream. That’s what $@start-italics|@$they$@end-italics|@$ tell me, at least." },
+				{ "type": "text", "speaker": "Yuka", "text": "Wanna have a battle? My little ones $@start-italics|@$love$@end-italics|@$ to watch!" }
+			]
+		},
+		"route-4-6-dialogue-won": {
+			"events": [],
+			"callbacks": {},
+			"effects": [
+				{ "type": "get-speaker", "name": "Narrator", "class": "Narrator" },
+				{ "type": "get-speaker", "name": "Yuka", "class": "Pokemon-Breeder-Gen7-F" },
+				{ "type": "text", "speaker": "Yuka", "text": "Oh, the little ones $@start-italics|@$loved$@end-italics|@$ that!" },
+				{ "type": "text", "speaker": "Yuka", "text": "They’re very grateful for the entertainment..." },
+				{ "type": "text", "speaker": "Yuka", "text": "You should come back sometime! They seem to like you a lot!" },
+				{ "type": "text", "speaker": "Yuka", "text": "I’ll let you get on your way, now. Have fun meeting that blond kid!" },
+				{ "type": "change-background-image", "name": "route-bg-forest-path-2" },
+				{ "type": "text", "speaker": "Narrator", "text": "(As you walk back where you came from, you realize you can’t actually remember when you started walking off of the path...)" },
+				{ "type": "text", "speaker": "Narrator", "text": "(In any case, you reach the edge of the forest without incident, though you can definitely feel something watching you as you leave.)" }
 			]
 		}
 	},
@@ -1536,6 +1570,10 @@
 		"Lurantis": {
 			"name": "Lurantis",
 			"pokedex-entry": "The bright colors of Lurantis's body are cultivated over its life. Some trainers dedicate themselves to maintaining this Pokémon's leaves and keeping them happy."
+		},
+		"Morelull": {
+			"name": "Morelull",
+			"pokedex-entry": "Morelull live in deep, secluded parts of the forest. The caps of their mushrooms glow in the dark, attracting curious people and Pokémon away from the path."
 		},
 		"Stufful": {
 			"name": "Stufful"
@@ -2138,6 +2176,11 @@
 			"name": "Mist",
 			"description": "Gives the user the Mist status effect for 10 turns. As long as a Pokémon has Mist, it can't receive debuffs which lower its stats from other Pokémon.",
 			"shortDescription": "Prevents stat reductions"
+		},
+		"Moonlight": {
+			"name": "Moonlight",
+			"description": "For each Water tile on the board, the user heals 5% of their HP. This move's cooldown increases by 2 with each use, and its blue energy cost increases by 4 with each use.",
+			"shortDescription": "Heals based on Water tiles"
 		},
 		"Mud-Slap": {
 			"name": "Mud-Slap",
@@ -2751,6 +2794,11 @@
 			"shortDescription": "Sleep lasts half as long",
 			"longDescription": "Whenever this Pokémon gains the Asleep status, its duration is halved, rounded up."
 		},
+		"Effect Spore": {
+			"name": "Effect Spore",
+			"shortDescription": "Puts a random spore or powder status effect into play when the opponent makes contact",
+			"longDescription": "Whenever another Pokémon deals damage to this Pokémon through a move that makes contact, this ability chooses a random tile status effect from among Stun Spore, Sleep Powder, and Poison Powder. A random tile without the chosen status effect is given the chosen status effect."
+		},
 		"Flare Boost": {
 			"name": "Flare Boost",
 			"shortDescription": "Raises move power while tiles are burned",
@@ -2830,6 +2878,11 @@
 			"name": "Ice Body",
 			"shortDescription": "On a Water-type or Electric-type 4-in-a-row or more, heals 10% of max HP",
 			"longDescription": "When this Pokémon's owner makes a match of 4 or more Water or Electric tiles in a row, this Pokémon heals HP equal to 10% of its max HP."
+		},
+		"Illuminate": {
+			"name": "Illuminate",
+			"shortDescription": "Other Pokémon can't lower this Pokémon's Speed stages",
+			"longDescription": "Other Pokémon can't give this Pokémon status effects which lower its Speed stat by any number of stages."
 		},
 		"Infiltrator": {
 			"name": "Infiltrator",
@@ -3467,8 +3520,12 @@
 			"description": "As you walk into the dusty, sun-soaked streets of Paniola Town, Hau spots you, and runs up to you for a battle."
 		},
 		"Route 4-5": {
-			"name": "Rival Battle 5",
+			"name": "Route 4-5",
 			"description": "On the outskirts of the town is Paniola Ranch, where something's clearly stirred up the Tauros more than usual."
+		},
+		"Route 4-6": {
+			"name": "Route 4-6",
+			"description": "You pass the ranch and continue along the path into the forest as the trees around you grow more dense."
 		}
 	},
 	"route-categories": {

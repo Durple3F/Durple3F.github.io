@@ -2025,9 +2025,9 @@ const pokemonData = {
 		},
 		energyMastery: {
 			red: 1,
-			orange: 4,
-			yellow: 2,
-			green: 3
+			orange: 6,
+			yellow: 1,
+			green: 2
 		},
 		learnset: [
 			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
@@ -6219,6 +6219,58 @@ const pokemonData = {
 			{ name: "Ingrain", unlock: { type: "level", amount: 10 } },
 			{ name: "Razor Leaf", unlock: { type: "level", amount: 15 } },
 			{ name: "Sweet Scent", unlock: { type: "level", amount: 20 } },
+		]
+	},
+	"Morelull": {
+		name: "Morelull",
+		number: "755",
+		weight: {
+			pounds: 3.3,
+			kilograms: 1.5
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0755Morelull.png",
+			"largeShiny": "src/img/shiny-pokemon/755-Morelull.png",
+			"home": "src/img/tiny-pokemon/Morelull.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/morelull.mp3"
+		},
+		tags: [],
+		types: ["Grass", "Fairy"],
+		abilities: ["Illuminate", "Effect Spore"],
+		hiddenAbilities: ["Rain Dish"],
+		stats: {
+			hp: 40,
+			attack: 35,
+			defense: 55,
+			specialAttack: 65,
+			specialDefense: 75,
+			speed: 15
+		},
+		expYield: 57,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 1,
+			speed: 0
+		},
+		energyMastery: {
+			green: 2,
+			yellow: 2,
+			purple: 2
+		},
+		learnset: [
+			{ name: "Absorb", unlock: { type: "level", amount: 1 } },
+			{ name: "Astonish", unlock: { type: "level", amount: 1 } },
+			{ name: "Confuse Ray", unlock: { type: "level", amount: 4 } },
+			{ name: "Ingrain", unlock: { type: "level", amount: 8 } },
+			{ name: "Mega Drain", unlock: { type: "level", amount: 12 } },
+			{ name: "Sleep Powder", unlock: { type: "level", amount: 16 } },
+			{ name: "Moonlight", unlock: { type: "level", amount: 20 } },
 		]
 	},
 	"Stufful": {

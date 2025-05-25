@@ -1817,7 +1817,7 @@ function viewPokemonInfo(pokemon, options = {}) {
 		const changePokeball = type => {
 			pokemon.pokeballType = type
 		}
-		let pokeballSection = $("<div class='pokeball-section d-flex justify-content-around'>")
+		let pokeballSection = $("<div class='pokeball-section d-flex flex-wrap justify-content-around'>")
 		info.append(pokeballSection)
 		for (let pokeballType in pokeballImages){
 			let pokeball = $("<div class='pokeball-option p-2 m-2'>")

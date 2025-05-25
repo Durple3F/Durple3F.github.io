@@ -1,9 +1,14 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
 5/24 (40.5k lines):
+	- Added Morelull
 	- Added Discharge
-	- Added 4-5
+	- Added Effect Spore, Illuminate
+	- Added 4-5, 4-6
+	- Added 2 backgrounds to 4-6
 	- Took a few steps to reduce how big save file sizes were. It won't reduce it by much.
+	- Trainers can now not have a ball-throwing animation if they want.
+	- Added dusk balls
 
 5/23 (40.2k lines):
 	- Added Mareep, Flaaffy, Ampharos

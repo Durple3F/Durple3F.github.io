@@ -2245,13 +2245,13 @@ const levelData = [
 			{ type: "dialogue", source: "route-4-4-dialogue-won", label: "won" },
 		]
 	},
-	//4-5: Tauros, Miltank, Mareep | 
+	//4-5: Tauros, Miltank, Mareep | Wesley
 	{
 		id: "Route 4-5",
 		category: "Route 4",
 		name: "Route 4-5",
 		music: "SM Wild Pokemon Battle",
-		icon: "5	",
+		icon: "5",
 		images: {
 			"route-bg-forest-path": "src/img/bg/forest path.jpg"
 		},
@@ -2368,10 +2368,147 @@ const levelData = [
 			{ type: "jump", jumpTo: "easyMode" },
 			{ type: "fight", trainer: 1, label: "easyMode" },
 			{ type: "jump", jumpTo: "win-check" },
-			{ type: "fight", trainer: 1, label: "hardMode" },
+			{ type: "fight", trainer: 2, label: "hardMode" },
 			{ type: "jump", jumpTo: "win-check" },
 			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
 			{ type: "dialogue", source: "route-4-5-dialogue-won" },
+		]
+	},
+	//4-6: Fomantis | Yuka
+	{
+		id: "Route 4-6",
+		category: "Route 4",
+		name: "Route 4-6",
+		music: "SM Wild Pokemon Battle",
+		icon: "6",
+		images: {
+			"route-bg-forest-path-2": "src/img/bg/forest path 2.jpg",
+			"route-bg-forest-path-2-night": "src/img/bg/forest path 2 night.jpg",
+		},
+		recommendedLevels: {
+			"normal": (pokemonList) => {
+				if (pokemonList.length >= 3) return 18
+				return 21
+			},
+			"hard": (pokemonList) => {
+				if (pokemonList.length >= 3) return 18
+				return 21
+			}
+		},
+		trainers: [
+			{
+				isWild: true,
+				targetPokemon: 4,
+				canPickDuplicates: false,
+				possiblePokemon: [
+					{ id: "Fomantis", levelMin: 13, levelMax: 16, weight: 3 },
+					{ id: "Lillipup", levelMin: 13, levelMax: 16, weight: 1 },
+					{ id: "Pikipek", levelMin: 13, levelMax: 16, weight: 1 },
+					{ id: "Caterpie", levelMin: 13, levelMax: 16, weight: 1 },
+					{ id: "Grubbin", levelMin: 13, levelMax: 16, weight: 1 },
+					{ id: "Crabrawler", levelMin: 13, levelMax: 16, weight: 0.5 },
+					{ id: "Metapod", levelMin: 13, levelMax: 16, weight: 0.5 },
+					{ id: "Butterfree", levelMin: 13, levelMax: 16, weight: 0.2 },
+				]
+			},
+			//Easy
+			{
+				name: "Yuka",
+				class: "Pokemon-Breeder-Gen7-F",
+				pokemon: [
+					{
+						id: "Morelull",
+						name: "Mosscap",
+						ability: "Effect Spore",
+						level: 15,
+						pokeball: "dusk ball",
+						activeMoves: ["Light Screen", "Sleep Powder", "Astonish", "Mega Drain"],
+					},
+					{
+						id: "Ledyba",
+						name: "Gorps",
+						level: 16,
+						pokeball: "great ball",
+						activeMoves: ["Mach Punch", "Reflect", "Swift", "Supersonic"],
+					},
+					{
+						id: "Morelull",
+						name: "Truffle",
+						ability: "Effect Spore",
+						isShiny: true,
+						isAce: true,
+						level: 15,
+						pokeball: "dusk ball",
+						activeMoves: ["Moonlight", "Ingrain", "Astonish", "Mega Drain"],
+					},
+				]
+			},
+			//Hard
+			{
+				name: "Yuka",
+				class: "Pokemon-Breeder-Gen7-F",
+				pokemon: [
+					{
+						id: "Morelull",
+						name: "Chanterelle",
+						ability: "Effect Spore",
+						level: 15,
+						pokeball: "dusk ball",
+						activeMoves: ["Reflect", "Poison Powder", "Astonish", "Mega Drain"],
+					},
+					{
+						id: "Morelull",
+						name: "Mosscap",
+						ability: "Effect Spore",
+						level: 15,
+						pokeball: "dusk ball",
+						activeMoves: ["Light Screen", "Sleep Powder", "Confuse Ray", "Mega Drain"],
+					},
+					{
+						id: "Morelull",
+						name: "Puffball",
+						ability: "Effect Spore",
+						level: 15,
+						pokeball: "dusk ball",
+						activeMoves: ["Draining Kiss", "Stun Spore", "Astonish", "Mega Drain"],
+					},
+					{
+						id: "Ledyba",
+						name: "Gorps",
+						level: 16,
+						pokeball: "great ball",
+						activeMoves: ["Mach Punch", "Reflect", "Swift", "Supersonic"],
+					},
+					{
+						id: "Morelull",
+						name: "Truffle",
+						ability: "Effect Spore",
+						isShiny: true,
+						isAce: true,
+						level: 15,
+						pokeball: "dusk ball",
+						activeMoves: ["Moonlight", "Ingrain", "Astonish", "Mega Drain"],
+					},
+				]
+			},
+		],
+		effects: [
+			{ type: "change-background-image", name: "route-bg-forest-path-2" },
+			{ type: "fight", trainer: 0 },
+			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "change-background-image", name: "route-bg-forest-path-2-night" },
+			{ type: "dialogue", source: "route-4-6-dialogue" },
+			{ type: "change-music", music: "SM Trainer Battle" },
+			{ type: "load-setting", key: "hardMode" },
+			{ type: "load-value", value: true },
+			{ type: "jump-if-equal", jumpTo: "hardMode" },
+			{ type: "jump", jumpTo: "easyMode" },
+			{ type: "fight", trainer: 1, label: "easyMode" },
+			{ type: "jump", jumpTo: "win-check" },
+			{ type: "fight", trainer: 2, label: "hardMode" },
+			{ type: "jump", jumpTo: "win-check" },
+			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
+			{ type: "dialogue", source: "route-4-6-dialogue-won" },
 		]
 	},
 ]
@@ -2494,6 +2631,9 @@ const pokeballImages = {
 	},
 	"luxury ball": {
 		"icon": "src/img/balls/luxury ball.png"
+	},
+	"dusk ball": {
+		"icon": "src/img/balls/dusk ball.png"
 	},
 }
 const pokeballSpriteData = {

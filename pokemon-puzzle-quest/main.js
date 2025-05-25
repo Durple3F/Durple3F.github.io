@@ -1,4 +1,4 @@
-const versionNumber = "v0.16.12"
+const versionNumber = "v0.16.13"
 let lang = "en"
 let playerName
 
@@ -340,45 +340,35 @@ function playSound(name, fadeMusic=true){
 	return promise
 }
 function stopSound(sound, fadeMusic=true){
-	if (typeof sound === "object"){
-		let snd = sound.audio
-		if (snd?.paused === false){
-			snd.pause()
-		}
-		let index = playingSounds.indexOf(sound)
+	const stop = soundObj => {
+		let index = playingSounds.indexOf(soundObj)
 		if (index !== -1){
 			playingSounds.splice(index, 1)
 		}
-		return
+		let snd = soundObj.audio
+		if (soundObj.type === "music" && fadeMusic){
+			let originalVolume = snd.volume
+			fadeSoundVolume(snd, originalVolume, 0)
+			.then(() => {
+				snd.pause()
+				snd.volume = originalVolume
+				snd.currentTime = 0
+			})
+		} else {
+			soundObj.audio.pause()
+		}
 	}
-	let name = sound
 
-	let toCheck = playingSounds.map(p => p)
-	for (let sound of toCheck){
-		let snd = sound.audio
-		if (snd.paused){
-			let index = playingSounds.indexOf(sound)
-			if (index !== -1){
-				playingSounds.splice(index, 1)
-			}
-		}
-		if (sound.name === name){
-			let index = playingSounds.indexOf(sound)
-			if (index !== -1){
-				playingSounds.splice(index, 1)
-			}
-			if (sound.type === "music" && fadeMusic){
-				let originalVolume = snd.volume
-				fadeSoundVolume(snd, originalVolume, 0)
-				.then(() => {
-					snd.pause()
-					snd.volume = originalVolume
-					snd.currentTime = 0
-				})
-			} else {
-				sound.audio.pause()
-			}
-		}
+	if (typeof sound === "object"){
+		let toCheck = playingSounds.filter(soundObj => soundObj.name === sound.name)
+		toCheck.forEach(soundObj => stop(soundObj))
+		return
+	} else if (typeof sound === "string"){
+		let name = sound
+		let toCheck = playingSounds.filter(soundObj => soundObj.name === name)
+		toCheck.forEach(soundObj => stop(soundObj))
+	} else {
+		console.warn("Failed to stop sound", sound)
 	}
 }
 function unloadSound(name){
@@ -464,6 +454,12 @@ function changeMusic(name){
 			delay(500).then(() => playSound(name))
 		})
 	}
+}
+function stopMusic(){
+	let toStop = playingSounds.filter(sound => sound.type === "music")
+	toStop.forEach(sound => {
+		stopSound(sound)
+	})
 }
 
 function getRandomTileType(){

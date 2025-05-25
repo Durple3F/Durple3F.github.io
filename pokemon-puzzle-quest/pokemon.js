@@ -414,12 +414,13 @@ class Pokemon{
 		){
 			prevented = true
 		}
-		//Pokemon with Clear Body can't have their stats lowered by stages
+		//Pokemon with Illuminate can't have their Speed lowered by stages
 		if (
 			status.type === "stat" &&
 			status.sourcePokemon !== this &&
+			status.stat === "speed" &&
 			status.amount < 0 &&
-			this.hasAbility("Clear Body")
+			this.hasAbility("Illuminate")
 		){
 			prevented = true
 		}
@@ -430,6 +431,15 @@ class Pokemon{
 			status.stat === "defense" &&
 			status.amount < 0 &&
 			this.hasAbility("Big Pecks")
+		){
+			prevented = true
+		}
+		//Pokemon with Clear Body can't have their stats lowered by stages
+		if (
+			status.type === "stat" &&
+			status.sourcePokemon !== this &&
+			status.amount < 0 &&
+			this.hasAbility("Clear Body")
 		){
 			prevented = true
 		}
@@ -456,7 +466,8 @@ class Pokemon{
 				prevented = true
 			}
 		}
-		if (status.type === "status" && status.sourcePokemon !== this && this.hasAbility("safeguard")){
+		//Having safeguard prevents receiving status effects
+		if (status.type === "status" && status.sourcePokemon !== this && this.hasStatus("safeguard")){
 			prevented = true
 		}
 

@@ -78,6 +78,10 @@ const abilityData = {
 	"Early Bird": {
 		id: "Early Bird"
 	},
+	//On taking damage from a move that makes contact, place a Spore status on a random tile
+	"Effect Spore": {
+		id: "Effect Spore"
+	},
 	//Power boost while tiles are burned
 	"Flare Boost": {
 		id: "Flare Boost"
@@ -141,6 +145,10 @@ const abilityData = {
 	//On a blue or yellow 4-match, heal 10% max HP
 	"Ice Body": {
 		id: "Ice Body"
+	},
+	//Prevents receiving statuses that lower Speed
+	"Illuminate": {
+		id: "Illuminate"
 	},
 	//Deals damage through Indestructible
 	"Infiltrator": {

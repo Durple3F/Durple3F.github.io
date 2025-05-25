@@ -125,6 +125,7 @@ Missing Evolutions:
 	Brionne
 	Crabrawler
 	Fomantis
+	Morelull
 	Stufful
 
 Missing Abilities:
