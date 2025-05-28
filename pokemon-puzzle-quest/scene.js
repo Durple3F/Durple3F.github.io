@@ -264,39 +264,54 @@ function startScene(name, options={}) {
 				let levelButtons = []
 				levelList.forEach(level => {
 					let btn = getLevelButtonHtml(level)
-					btn.popover({
-						placement: "bottom",
-						trigger: "focus",
-						html: true,
-						content: () => getPopover(level)
-					})
+					btn.data("level", level)
 					levelButtons.push(btn)
 					routeTag.append(btn)
-					btn.on("mouseenter", function () {
-						let popoverId = btn.attr("aria-describedby")
-						if (!popoverId) {
+				})
+				levelButtons.forEach(btn => {
+					let level = btn.data("level")
+					let active = false
+					routeTag.children().not(btn).on("mouseenter", () => {
+						active = false
+						btn.popover("hide")
+					})
+					btn.on("mouseenter", () => {
+						if (!active){
+							btn.popover("dispose").popover({
+								placement: "bottom",
+								trigger: "none",
+								html: true,
+								content: () => getPopover(level)
+							})
 							btn.popover("show")
 						}
 					})
-					function waitBeforeHiding() {
-						let popoverId = btn.attr("aria-describedby")
-						setTimeout(function () {
-							let p = $("#" + popoverId)
-							let onPopover = isMouseSomewhereIn(p)
-							let onBtn = isMouseSomewhereIn(btn)
-							// console.log(currentHoveredElement, onPopover, inPopover, onBtn, inBtn)
-							//If the mouse is NOWHERE RELATED TO THE LEVEL
-							if (!onPopover && !onBtn) {
-								btn?.popover("hide")
-							} else {
-								p.off("mouseleave")
-								p.on("mouseleave", waitBeforeHiding)
+					btn.on("mouseleave", () => {
+						if (!active){
+							const waitBeforeHiding = () => {
+								let popoverId = btn.attr("aria-describedby")
+								if (popoverId){
+									let p = $("#" + popoverId)
+									let onPopover = isMouseSomewhereIn(p)
+									let onBtn = isMouseSomewhereIn(btn)
+									if (!onPopover && !onBtn) {
+										btn.popover("hide")
+									} else {
+										p.on("mouseleave", () => btn.popover("hide"))
+									}
+								}
 							}
-						}, 200)
-					}
-					btn.on("mouseleave", waitBeforeHiding)
-				})
-				levelButtons.forEach(btn => {
+							setTimeout(waitBeforeHiding, 200)
+						}
+					})
+					routeTag.on("click", () => {
+						if (!active){
+							let onBtn = isMouseSomewhereIn(btn)
+							active = onBtn
+						} else {
+							active = false
+						}
+					})
 					$(btn).click(chooseLevel)
 				})
 
@@ -329,6 +344,7 @@ function startScene(name, options={}) {
 				return content
 			}
 			const confirmChoice = level => {
+				routeTag.off("click")
 				let usablePokemon = getUsablePokemon(playerActivePokemon)
 				if (usablePokemon.length) {
 					$(".level-button").popover("hide")
@@ -580,6 +596,7 @@ function startScene(name, options={}) {
 			const openPokemon = pokemon => {
 				let options = {
 					canRename: true,
+					canSwitchActiveMoves: true,
 					pc: true
 				}
 				return viewPokemonInfo(pokemon, options)
@@ -1311,7 +1328,9 @@ function advanceCurrentLevel() {
 			let wait = effect.wait ?? true
 			if (imgName in images){
 				let url = images[imgName]
-				let p = changeBackgroundImage(imgName, url)
+				let combineFades = effect.combineFades ?? false
+				let duration = effect.duration ?? 400
+				let p = changeBackgroundImage(imgName, url, duration, combineFades)
 				if (wait){
 					p.then(() => resolvePromise())
 				} else {
@@ -1478,7 +1497,8 @@ function choosePokemon(message, pokemon, minChooseable = 1, maxChooseable = 1) {
 function viewPokemonInfo(pokemon, options = {}) {
 	let resolvePromise
 	let promise = new Promise(resolve => resolvePromise = resolve)
-	let canSwitchActiveMoves = options.canSwitchActiveMoves ?? true
+	let canSwitchActiveMoves = options.canSwitchActiveMoves ?? false
+	let canSwitchPokeball = options.canSwitchPokeball ?? false
 	console.log(pokemon, options)
 
 	let data = pokemon.data
@@ -1616,9 +1636,10 @@ function viewPokemonInfo(pokemon, options = {}) {
 	}
 	//Pokedex entry if it has one
 	if (true){
-		let entry = getLocaleString("pokedex-entry", lang, ["pokemon", data.id], null)
+		let pokedexKey = pokemon.getPokedexKey()
+		let entry = getLocaleString(pokedexKey, lang, ["pokemon", data.id], null)
 		if (entry){
-			pokemonSection.append(`<span>${entry}</span>`)
+			pokemonSection.append(`<span class='pokedex-entry'>${entry}</span>`)
 		}
 	}
 
@@ -1826,17 +1847,20 @@ function viewPokemonInfo(pokemon, options = {}) {
 			pokeball.append(img)
 			img.attr("src", data.icon)
 			img.css("height", "5em")
-
 			if (pokemon.pokeballType === pokeballType){
 				pokeball.addClass("active")
 			}
-			pokeball.click(() => {
-				pokeballSection.children(".active").removeClass("active")
-				pokeball.addClass("active")
-				changePokeball(pokeballType)
-			})
 
-			pokeballSection.append(pokeball)
+			if (canSwitchPokeball){
+				pokeball.click(() => {
+					pokeballSection.children(".active").removeClass("active")
+					pokeball.addClass("active")
+					changePokeball(pokeballType)
+				})
+				pokeballSection.append(pokeball)
+			} else if (pokemon.pokeballType === pokeballType) {
+				pokeballSection.append(pokeball)
+			}
 		}
 
 		let abilitySection = $("<div class='ability-section'>")
@@ -1978,7 +2002,7 @@ function viewPokemonInfo(pokemon, options = {}) {
 	}
 
 	//DEBUG
-	if (options.pc){
+	if (config['debug']){
 		let info = $(`<div class='info debug-info'>`)
 		sections.append(info)
 		info.hide()

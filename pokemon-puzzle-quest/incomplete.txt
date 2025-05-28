@@ -40,6 +40,7 @@ Incomplete move lists:
 	Espeon (lv 25)
 	Murkrow (lv 35)
 	Misdreavus (lv 28)
+	Houndour (lv 32)
 	Smoochum (lv 20)
 	Miltank (lv 20)
 	Wingull (lv 26)
@@ -65,6 +66,7 @@ Incomplete move lists:
 	Petilil (lv 21)
 	Lilligant (lv 24)
 	Lilligant-Hisui (lv 9)
+	Zorua (lv 20)
 	Rufflet (lv 30)
 	Vullaby (lv 36)
 	Pancham (lv 20)
@@ -101,6 +103,7 @@ Incomplete move lists:
 	Steenee (lv 25)
 	Comfey (lv 21)
 	Passimian (lv 20)
+	Type: Null (lv 20)
 	Komala (lv 31)
 
 Missing Evolutions:
@@ -114,9 +117,12 @@ Missing Evolutions:
 	Haunter
 	Chansey
 	Eevee
+	Houndour
+	Smoochum
 	Bagon
 	Bonsly
 	Boldore
+	Zorua
 	Rufflet
 	Vullaby
 	Stufful
@@ -127,6 +133,7 @@ Missing Evolutions:
 	Fomantis
 	Morelull
 	Stufful
+	Type: Null
 
 Missing Abilities:
 	- Sand Rush

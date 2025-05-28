@@ -13,6 +13,8 @@ const config = {
 	funnyMode: false,
 	//Tiles glow if they can be matched
 	tileHighlightHints: true,
+	//The names shown on the top display the pokemon's level
+	showPokemonLevel: true,
 	cpuSpeed: 2,
 	textSpeed: 40,
 

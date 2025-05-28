@@ -66,6 +66,35 @@ const NPCTrainerData = {
 			namePlateBackground2Color: "rgb(216, 248, 254)",
 		}
 	},
+	"Gladion-stance": {
+		name: "Gladion",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/gladion-stance.png"
+		},
+	},
+	"Gladion": {
+		name: "Gladion",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/gladion.png"
+		},
+		textStyle: {
+			textBoxBackground1: "radial-gradient(ellipse at center,rgb(136, 44, 44) 50%,rgb(179, 74, 74) 100%)",
+			textBoxBackground2: "radial-gradient(at bottom,rgb(20, 20, 20),rgb(39, 39, 39))",
+			textBoxMask: "radial-gradient(ellipse at center, black 68%, transparent 72%)",
+			textBoxFilter: `drop-shadow(0.05em 0em 0.1em rgba(39, 39, 39, 20))
+			drop-shadow(-0.05em 0em 0.1em rgba(39, 39, 39, 20))
+			drop-shadow(0em 0.05em 0.1em rgba(39, 39, 39, 20))
+			drop-shadow(0em -0.05em 0.1em rgba(39, 39, 39, 20))`,
+			textBoxTextBackground: "linear-gradient(0deg, rgb(235, 228, 228), rgb(201, 194, 194),rgb(235, 228, 228))",
+			textBoxTextContinueBackground: "linear-gradient(0deg, rgb(235, 228, 228), rgb(201, 194, 194),rgb(235, 228, 228))",
+			namePlateTextBackground: "linear-gradient(4deg,rgb(235, 228, 228), rgb(201, 194, 194))",
+			namePlateBackgroundColor: "rgb(136, 44, 44)",
+			namePlateBackground2: "repeating-linear-gradient( -0.5deg, transparent, transparent 0.1em, transparent 0.15em, transparent 0.25em )",
+			namePlateBackground2Color: "rgb(92, 25, 25)",
+		}
+	},
 	"Masked-Royal": {
 		name: "The Masked Royal",
 		type: "trainer",
@@ -240,7 +269,17 @@ const NPCTrainerData = {
 			trainer: "src/img/trainers/skullgrunt.png"
 		},
 		textStyle: {
-			textBoxFont: "\"Caveat Brush\"",
+			textBoxFont: "\"Caveat Brush\", inherit",
+		}
+	},
+	"Team-Skull-Grunt-F": {
+		name: "Team Skull Grunt",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/skullgruntf.png"
+		},
+		textStyle: {
+			textBoxFont: "\"Caveat Brush\", inherit",
 		}
 	},
 	"Young-Athlete-F": {

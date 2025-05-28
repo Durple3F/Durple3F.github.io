@@ -278,6 +278,7 @@ body {
 }
 #board.showing-dialogue {
 	filter: opacity(0.2);
+	pointer-events: none;
 }
 #title-screen {
 	flex-direction: column;
@@ -373,7 +374,7 @@ body {
 }
 #loading-bar {
 	position: relative;
-	height: 2em; width: 50%;
+	height: max(2rem, 2em); width: 50%;
 	box-shadow: inset 0px 0px 3px gray;
 	border-radius: 0.3em;
 	margin-top: 1em;
@@ -381,7 +382,7 @@ body {
 }
 #loading-bar.complete {
 	width: 30%;
-	height: calc(2em + 20px);
+	height: calc(max(2rem, 2em) + 0.5em);
 	transition: width 1s, height 1s;
 }
 #loading-bar > .bar {
@@ -406,10 +407,10 @@ body {
 	pointer-events: none;
 }
 #loading-bar > .count {
-	font-size: 1.5em;
+	font-size: max(1.5rem, 1.5em);
 }
 #loading-bar > .start {
-	font-size: 2em;
+	font-size: max(2rem, 2em);
 	font-weight: bold;
 }
 #save-files {
@@ -1313,7 +1314,7 @@ body {
 }
 .move.usable[data-move-type="Rock"] {
 	background-color: var(--type-rock);
-	color: var(--move-text-lighter);
+	color: var(--move-text-dark);
 }
 .move.usable[data-move-type="Rock"]:active {
 	box-shadow: 0 0 var(--move-shadow-size) var(--type-rock);
@@ -1870,6 +1871,9 @@ body {
 	align-items: center;
 }
 
+#modal {
+  user-select: text;
+}
 #modal.summary .pokemon-info {
 	display: flex;
 	justify-content: center;
@@ -1877,7 +1881,7 @@ body {
 	flex-wrap: wrap;
 }
 #modal.summary .pokemon-info > .pokemon-section {
-	width: 35%;
+	width: min(35%, 18em);
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
@@ -2200,6 +2204,14 @@ body {
 }
 
 #background {
+	position: absolute;
+	top: 0; left: 0;
+	width: 100%; height: 100%;
+	background-position: center;
+	background-size: cover;
+	z-index: -100;
+}
+#background div {
 	position: absolute;
 	top: 0; left: 0;
 	width: 100%; height: 100%;

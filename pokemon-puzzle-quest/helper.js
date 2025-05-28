@@ -17,6 +17,7 @@ const tileTypes = [
 	"purple",
 	"black",
 	"pink",
+	"gray",
 	"rainbow"
 ]
 
@@ -240,6 +241,10 @@ function getTileEnergyValue(tile){
 		case "pink":
 			energy.green += 1
 			energy.blue += 1
+		break
+		case "gray":
+			energy.orange += 1
+			energy.yellow += 1
 		break
 		case "rainbow":
 		//Nothing happens

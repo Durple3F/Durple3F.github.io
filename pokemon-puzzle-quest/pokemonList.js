@@ -2839,6 +2839,60 @@ const pokemonData = {
 			{ name: "Drill Peck", unlock: { type: "level", amount: 25 } },
 		]
 	},
+	"Houndour": {
+		name: "Houndour",
+		number: "228",
+		weight: {
+			pounds: 23.8,
+			kilograms: 10.8
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0228Houndour.png",
+			"largeShiny": "src/img/shiny-pokemon/228-Houndour.png",
+			"home": "src/img/tiny-pokemon/Houndour.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/houndour.mp3"
+		},
+		types: ["Dark", "Fire"],
+		tags: [],
+		abilities: ["Early Bird", "Flash Fire"],
+		hiddenAbilities: ["Unnerve"],
+		stats: {
+			hp: 45,
+			attack: 60,
+			defense: 30,
+			specialAttack: 80,
+			specialDefense: 50,
+			speed: 65
+		},
+		expYield: 66,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 1,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			red: 3,
+			purple: 3
+		},
+		learnset: [
+			{ name: "Leer", unlock: { type: "level", amount: 1 } },
+			{ name: "Ember", unlock: { type: "level", amount: 1 } },
+			{ name: "Howl", unlock: { type: "level", amount: 4 } },
+			{ name: "Smog", unlock: { type: "level", amount: 8 } },
+			{ name: "Roar", unlock: { type: "level", amount: 13 } },
+			{ name: "Bite", unlock: { type: "level", amount: 16 } },
+			{ name: "Incinerate", unlock: { type: "level", amount: 20 } },
+			{ name: "Beat Up", unlock: { type: "level", amount: 25 } },
+			{ name: "Fire Fang", unlock: { type: "level", amount: 28 } },
+			{ name: "Torment", unlock: { type: "level", amount: 32 } },
+		]
+	},
 	"Smeargle": {
 		name: "Smeargle",
 		number: "235",
@@ -2996,6 +3050,65 @@ const pokemonData = {
 			{ name: "Stomp", unlock: { type: "level", amount: 15 } },
 			{ name: "Heal Bell", unlock: { type: "level", amount: 20 } },
 			{ name: "Headbutt", unlock: { type: "level", amount: 25 } },
+		]
+	},
+	"Poochyena": {
+		name: "Poochyena",
+		number: "261",
+		weight: {
+			pounds: 30.0,
+			kilograms: 13.6
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0261Poochyena.png",
+			"largeShiny": "src/img/shiny-pokemon/261-Poochyena.png",
+			"home": "src/img/tiny-pokemon/Poochyena.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/poochyena.mp3"
+		},
+		types: ["Dark"],
+		tags: [],
+		abilities: ["Run Away", "Quick Feet"],
+		hiddenAbilities: ["Rattled"],
+		stats: {
+			hp: 35,
+			attack: 55,
+			defense: 35,
+			specialAttack: 30,
+			specialDefense: 30,
+			speed: 35
+		},
+		expYield: 56,
+		evYield: {
+			hp: 0,
+			attack: 1,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 4,
+			purple: 2
+		},
+		learnset: [
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Howl", unlock: { type: "level", amount: 4 } },
+			{ name: "Sand Attack", unlock: { type: "level", amount: 7 } },
+			{ name: "Bite", unlock: { type: "level", amount: 10 } },
+			{ name: "Leer", unlock: { type: "level", amount: 13 } },
+			{ name: "Roar", unlock: { type: "level", amount: 16 } },
+			{ name: "Swagger", unlock: { type: "level", amount: 19 } },
+			{ name: "Assurance", unlock: { type: "level", amount: 22 } },
+			{ name: "Scary Face", unlock: { type: "level", amount: 25 } },
+			{ name: "Taunt", unlock: { type: "level", amount: 28 } },
+			{ name: "Crunch", unlock: { type: "level", amount: 31 } },
+			{ name: "Yawn", unlock: { type: "level", amount: 34 } },
+			{ name: "Take Down", unlock: { type: "level", amount: 36 } },
+			{ name: "Sucker Punch", unlock: { type: "level", amount: 40 } },
+			{ name: "Play Rough", unlock: { type: "level", amount: 44 } },
 		]
 	},
 	"Wingull": {
@@ -4446,6 +4559,63 @@ const pokemonData = {
 			// { name: "Solar Blade", unlock: { type: "level", amount: 60 } },
 		]
 	},
+	"Zorua": {
+		name: "Zorua",
+		number: "570",
+		weight: {
+			pounds: 27.6,
+			kilograms: 12.5
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0570Zorua.png",
+			"largeShiny": "src/img/shiny-pokemon/570-Zorua.png",
+			"home": "src/img/tiny-pokemon/Zorua.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/zorua.mp3"
+		},
+		types: ["Dark"],
+		tags: [],
+		abilities: ["Illusion"],
+		hiddenAbilities: [],
+		stats: {
+			hp: 40,
+			attack: 65,
+			defense: 40,
+			specialAttack: 80,
+			specialDefense: 40,
+			speed: 65
+		},
+		expYield: 66,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 1,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			purple: 3,
+			green: 1,
+			red: 1,
+			orange: 1
+		},
+		learnset: [
+			{ name: "Scratch", unlock: { type: "level", amount: 1 } },
+			{ name: "Leer", unlock: { type: "level", amount: 1 } },
+			{ name: "Torment", unlock: { type: "level", amount: 4 } },
+			{ name: "Hone Claws", unlock: { type: "level", amount: 8 } },
+			{ name: "Fury Swipes", unlock: { type: "level", amount: 12 } },
+			{ name: "Scary Face", unlock: { type: "level", amount: 16 } },
+			{ name: "Taunt", unlock: { type: "level", amount: 20 } },
+			{ name: "Knock Off", unlock: { type: "level", amount: 24 } },
+			{ name: "Fake Tears", unlock: { type: "level", amount: 28 } },
+			{ name: "Agility", unlock: { type: "level", amount: 32 } },
+			{ name: "Imprison", unlock: { type: "level", amount: 36 } },
+		]
+	},
 	"Rufflet": {
 		name: "Rufflet",
 		number: "627",
@@ -5048,7 +5218,7 @@ const pokemonData = {
 			{ name: "Sing", unlock: { type: "level", amount: 18 } },
 			{ name: "Bubble Beam", unlock: { type: "level", amount: 21 } },
 			{ name: "Encore", unlock: { type: "level", amount: 24 } },
-			{ name: "Discharge", unlock: { type: "level", amount: 1 } },
+			{ name: "Torment", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Brionne": {
@@ -5632,6 +5802,7 @@ const pokemonData = {
 				sounds: {
 					"cry": "src/audio/cries/oricorio.mp3"
 				},
+				pokedexKey: "pokedex-entry-baile"
 			},
 			"Pom-Pom": {
 				id: "Pom-Pom",
@@ -5644,6 +5815,7 @@ const pokemonData = {
 				sounds: {
 					"cry": "src/audio/cries/oricorio-pompom.mp3"
 				},
+				pokedexKey: "pokedex-entry-pom-pom"
 			},
 			"Pa'u": {
 				id: "Pa'u",
@@ -5656,6 +5828,7 @@ const pokemonData = {
 				sounds: {
 					"cry": "src/audio/cries/oricorio-pau.mp3"
 				},
+				pokedexKey: "pokedex-entry-pa-u"
 			},
 			"Sensu": {
 				id: "Sensu",
@@ -5668,6 +5841,7 @@ const pokemonData = {
 				sounds: {
 					"cry": "src/audio/cries/oricorio-sensu.mp3"
 				},
+				pokedexKey: "pokedex-entry-sensu"
 			}
 		},
 		types: [],
@@ -6541,6 +6715,60 @@ const pokemonData = {
 			{ name: "Focus Energy", unlock: { type: "level", amount: 10 } },
 			{ name: "Beat Up", unlock: { type: "level", amount: 15 } },
 			{ name: "Scary Face", unlock: { type: "level", amount: 20 } },
+		]
+	},
+	"Type: Null": {
+		name: "Type: Null",
+		number: "772",
+		weight: {
+			pounds: 265.7,
+			kilograms: 120.5
+		},
+		imageFacing: "right",
+		imageSources: {
+			"large": "src/img/pokemon/0772Type_Null.png",
+			"largeShiny": "src/img/shiny-pokemon/772-Type_Null.png",
+			"home": "src/img/tiny-pokemon/Type Null.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/typenull.mp3"
+		},
+		tags: [],
+		types: ["Normal"],
+		abilities: ["Battle Armor"],
+		hiddenAbilities: [],
+		stats: {
+			hp: 95,
+			attack: 95,
+			defense: 95,
+			specialAttack: 95,
+			specialDefense: 95,
+			speed: 59
+		},
+		expYield: 107,
+		evYield: {
+			hp: 2,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			red: 2,
+			orange: 2,
+			yellow: 2,
+			green: 2,
+			blue: 2,
+			purple: 2
+		},
+		learnset: [
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Imprison", unlock: { type: "level", amount: 1 } },
+			{ name: "Aerial Ace", unlock: { type: "level", amount: 5 } },
+			{ name: "Scary Face", unlock: { type: "level", amount: 10 } },
+			{ name: "Double Hit", unlock: { type: "level", amount: 15 } },
+			{ name: "Metal Sound", unlock: { type: "level", amount: 20 } },
 		]
 	},
 	"Komala": {

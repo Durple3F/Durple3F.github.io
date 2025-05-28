@@ -87,8 +87,8 @@ class Pokemon{
 		//Decide which abilities this pokemon has
 		this.hadHiddenAbility = options?.hadHiddenAbility
 		if (options?.ability){
-			if (typeof options.ability === "string" && options.ability in abilityData){
-				this.ability = abilityData[options.ability]
+			if (typeof options.ability === "string" && options.ability in pokemonAbilityData){
+				this.ability = pokemonAbilityData[options.ability]
 			} else {
 				this.ability = options.ability
 			}
@@ -105,14 +105,14 @@ class Pokemon{
 			let possibleAbilities = this.data[which]
 			let abilityId = randomChoice(possibleAbilities)
 			if (abilityId){
-				this.ability = abilityData[abilityId]
+				this.ability = pokemonAbilityData[abilityId]
 			}
 			if (options?.addHiddenAbility){
 				this.hadHiddenAbility = true
 			}
 		}
 		if (!this.ability){
-			this.ability = abilityData["No Ability"]
+			this.ability = pokemonAbilityData["No Ability"]
 		}
 
 		this.energyMasteryUpgrades = {}
@@ -295,6 +295,14 @@ class Pokemon{
 						volatile: true,
 						lostOnSwap: true,
 						turns: 10
+					}
+				} break
+				case "tormented": {
+					status = {
+						name: "tormented",
+						class: "buff",
+						volatile: true,
+						lostOnSwap: true,
 					}
 				} break
 				default:
@@ -684,6 +692,9 @@ class Pokemon{
 		if (stat === "speed" && this.hasStatus("confused") && this.hasAbility("Tangled Feet")){
 			effectiveStat *= 2
 		}
+		if (stat === "speed" && this.getStatusesOfType("status").length > 0 && this.hasAbility("Quick Feet")){
+			effectiveStat *= 1.5
+		}
 
 		return effectiveStat
 	}
@@ -911,7 +922,7 @@ class Pokemon{
 		let toCopy = [
 			"uuid", "owner", "level", "nature",
 			"ivs", "evs", "exp", "friendship",
-			"isShiny",
+			"isShiny", "pokeballType",
 			"hadHiddenAbility"
 		]
 		for (let key of toCopy){
@@ -964,5 +975,14 @@ class Pokemon{
 			}
 		}
 		return this.data.imageFacing
+	}
+	getPokedexKey(){
+		if (this.data.hasForms){
+			let formInfo = this.data.forms[this.form] ?? this.data.forms[this.data.defaultForm]
+			if ("pokedexKey" in formInfo){
+				return formInfo.pokedexKey
+			}
+		}
+		return "pokedex-entry"
 	}
 }

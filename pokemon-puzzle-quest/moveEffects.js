@@ -56,7 +56,7 @@ const pokemonMoveEffects = {
 
 			// moveUseObj.checkBetweenEffects = false
 			game.triggerMoveEffects(
-				trainer, pokemon, move, key
+				trainer, pokemon, move, key, moveUseObj
 			).then(() => resolve())
 			// console.log(game.moveQueue)
 			// resolve()
@@ -1400,8 +1400,8 @@ const pokemonMoveEffects = {
 			if (selection.length && cascade) {
 				game.increaseCascade()
 			}
-			game.applyGravity(false, animationSpeed)
-			.then(() => resolve())
+			let p = game.applyGravity(false, animationSpeed)
+			p.then(() => resolve())
 		}
 	},
 	"get-tile-x": {
@@ -1753,6 +1753,17 @@ const pokemonMoveEffects = {
 			let trainerIndex = game.trainers.indexOf(target)
 			let availableMoves = game.getAvailableMoves(trainerIndex)
 			let result = availableMoves.map(move => move.id)
+			resolve(result)
+		}
+	},
+	"get-active-moves": {
+		update: false,
+		hasTarget: true,
+		targetType: "pokemon",
+		targetDefault: "user",
+		execute: (resolve, effect, params, game, options) => {
+			let target = options.target
+			let result = target.activeMoves
 			resolve(result)
 		}
 	},

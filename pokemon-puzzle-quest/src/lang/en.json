@@ -1098,6 +1098,7 @@
 			"callbacks": {},
 			"effects": [
 				{ "type": "get-speaker", "name": "Hau", "class": "Hau" },
+				{ "type": "update-style", "speaker": "Hau" },
 				{ "type": "come-in-from-offscreen", "speaker": "Hau", "direction": "left", "duration": 700, "waitDuration": 200 },
 				{ "type": "load-player-name" },
 				{ "type": "text", "speaker": "Hau", "text": "Hey %c%! You made it past the first trial!", "values": [-1] },
@@ -1193,6 +1194,73 @@
 				{ "type": "text", "speaker": "Narrator", "text": "(As you walk back where you came from, you realize you can’t actually remember when you started walking off of the path...)" },
 				{ "type": "text", "speaker": "Narrator", "text": "(In any case, you reach the edge of the forest without incident, though you can definitely feel something watching you as you leave.)" }
 			]
+		},
+		"route-4-7-dialogue": {
+			"events": [
+				{ "type": "transform-speaker", "speaker": "Gladion", "transform": "rotate(5deg)", "duration": 600 },
+				{ "type": "transform-speaker", "speaker": "Gladion", "transform": "rotate(0deg)", "duration": 300 },
+				{ "type": "transform-speaker", "speaker": "Gladion", "transform": "rotate(-5deg)", "duration": 200 },
+				{ "type": "transform-speaker", "speaker": "Gladion", "transform": "rotate(0deg)", "duration": 200 },
+				{ "type": "transform-speaker", "speaker": "Hau", "transform": "scaleY(0.9) translateY(5%) rotate(2deg) translateX(-10%)", "duration": 1500 },
+				{ "type": "transform-speaker", "speaker": "Hau", "transform": "translateY(5%) translateX(-10%)", "duration": 600 },
+				{ "type": "transform-speaker", "speaker": "Gladion", "transform": "scale(1.1) translateX(-20%) rotate(-2deg)", "duration": 400 },
+				{ "type": "transform-speaker", "speaker": "Hau", "transform": "translateY(0%) translateX(-10%)", "duration": 300 },
+				{ "type": "transform-speaker", "speaker": "Hau", "transform": "translateY(0%) translateX(-10%) rotate(2deg)", "duration": 300 },
+				{ "type": "transform-speaker", "speaker": "Hau", "transform": "translateY(0%) translateX(-10%)", "duration": 300 }
+			],
+			"callbacks": {},
+			"effects": [
+				{ "type": "get-speaker", "name": "Gladion", "class": "Gladion" },
+				{ "type": "get-speaker", "name": "Hau", "class": "Hau", "position": "left", "facing": "right" },
+				{ "type": "text", "speaker": "Gladion", "text": "Tch. You’re wasting my time. If you’re ^^$@start-italics|@$this$@end-italics|@$ weak, ^^you may as well just quit pretending you’re a ^^trainer^^." },
+				{ "type": "text", "speaker": "Hau", "text": "Hey! I’m $@font-size:1.2|@$NOT$@font-size:1|@$ pretending! I just... ^^forgot to heal my Pokémon before this!" },
+				{ "type": "text", "speaker": "Hau", "text": "I was kinda ^^$@start-italics|@$expecting$@end-italics|@$ to heal them at the Pokémon center just up ahead!" },
+				{ "type": "text", "speaker": "Gladion", "text": "^^$@start-italics|@$Excuses!$@end-italics|@$$@wait-4|@$ Get out of here, kid." },
+				{ "type": "load-player-name" },
+				{ "type": "text", "speaker": "Hau", "text": "Oh, hey, ^^%c%! You’re just in time. This ^^$@start-italics|@$jerk$@end-italics|@$ won’t let^^ me past to Brooklet Hill!", "values": [-1] },
+				{ "type": "text", "speaker": "Gladion", "text": "Team Skull wants no witnesses." },
+				{ "type": "text", "speaker": "Hau", "text": "Exactly, yeah, so you keep saying. What do those losers even matter to you, man?" },
+				{ "type": "text", "speaker": "Gladion", "text": "I don’t have any loyalty to those thugs! Their boss just pays well... to keep weaklings like $@start-italics|@$you$@end-italics|@$ out!" }
+			]
+		},
+		"route-4-7-dialogue-won": {
+			"events": [],
+			"callbacks": {
+				"wait-before-flip": { "type": "wait", "waitDuration": 5600, "then": "flip" },
+				"flip": { "type": "transform-speaker", "speaker": "Team Skull Grunt E", "transform": "scaleX(-1)", "duration": 300 }
+			},
+			"effects": [
+				{ "type": "get-speaker", "name": "Hau", "class": "Hau", "position": "left", "facing": "right" },
+				{ "type": "get-speaker", "name": "Gladion", "class": "Gladion" },
+				{ "type": "text", "speaker": "Gladion", "text": "$@font-size:0.8|@$Hmph... it’s not like me to slip up like that.$@font-size:1|@$" },
+				{ "type": "text", "speaker": "Gladion", "text": "$@font-size:0.8|@$I’ve got to keep fighting stronger opponents... Looks like I'm still not ready...$@font-size:1|@$" },
+				{ "type": "text", "speaker": "Gladion", "text": "See that, kid? $@start-italics|@$Those$@end-italics|@$ are strong Pokémon! $@start-italics|@$That$@end-italics|@$ is how a trainer should act!" },
+				{ "type": "text", "speaker": "Gladion", "text": "You, you’re... not even taking this seriously. It’s fine to enjoy battling, but you..." },
+				{ "type": "text", "speaker": "Gladion", "text": "You’re just using it as an excuse, so you don’t have to try hard! Just because you’re worried you’ll never beat your old man when he’s serious!" },
+				{ "type": "text", "speaker": "Hau", "text": "You know my gramps? Wait, so you think I could beat him? You think I’m strong?" },
+				{ "type": "get-speaker", "name": "Team Skull Grunt E", "class": "Team-Skull-Grunt-F" },
+				{ "type": "style-speaker", "speaker": "Team Skull Grunt E", "css": {
+					"left": "-=12%"
+				}},
+				{ "type": "change-music", "music": "Team Skull Appears!" },
+				{ "type": "come-in-from-offscreen", "speaker": "Team Skull Grunt E", "easing": "linear", "direction": "left", "duration": 6000, "waitDuration": 600, "walkAnimation": "skull", "then": "wait-before-flip" },
+				{ "type": "get-speaker", "name": "Team Skull Grunt F", "class": "Team-Skull-Grunt" },
+				{ "type": "style-speaker", "speaker": "Team Skull Grunt F", "css": {
+					"left": "+=12%"
+				}},
+				{ "type": "come-in-from-offscreen", "speaker": "Team Skull Grunt F", "easing": "linear", "direction": "left", "duration": 6000, "waitDuration": 0, "additionalLeft": 0.24, "walkAnimation": "skull" },
+				{ "type": "text", "speaker": "Team Skull Grunt E", "text": "Awww, look at li’l Gladion! Playing with your $@start-italics|@$friends$@end-italics|@$?" },
+				{ "type": "text", "speaker": "Team Skull Grunt F", "text": "And oh, would you look at what they’re doing? They’re $@start-italics|@$witnessing$@end-italics|@$, Gladion. I guess you didn’t do your job very well, huh?" },
+				{ "type": "text", "speaker": "Team Skull Grunt E", "text": "Lucky for you, it doesn’t matter either way. This place was a $@start-italics|@$bust$@end-italics|@$. Let’s just get outta here and tell the boss it was a waste of time." },
+				{ "type": "transform-speaker", "speaker": "Team Skull Grunt E", "transform": "scaleX(1)", "duration": 300, "waitDuration": 300 },
+				{ "type": "go-out-from-onscreen", "speaker": "Team Skull Grunt E", "easing": "linear", "direction": "left", "walkAnimation": "skull", "additionalLeft": -0.24, "duration": 9000, "waitDuration": 100 },
+				{ "type": "go-out-from-onscreen", "speaker": "Team Skull Grunt F", "easing": "linear", "direction": "left", "walkAnimation": "skull", "additionalLeft": 0, "duration": 9000, "waitDuration": 100 },
+				{ "type": "go-out-from-onscreen", "speaker": "Gladion", "direction": "left", "additionalLeft": -0.12, "duration": 12000, "waitDuration": 9000 },
+				{ "type": "change-music", "music": "Route 201 (Day)" },
+				{ "type": "load-player-name" },
+				{ "type": "text", "speaker": "Hau", "text": "Thanks for the help, %c%! You really saved my bacon, there.", "values": [-1] },
+				{ "type": "text", "speaker": "Hau", "text": "I guess I’ve really gotta work on making my Pokémon stronger. I’ll be training all day for the next trial at Brooklet Hill!" }
+			]
 		}
 	},
 	"pokemon": {
@@ -1281,49 +1349,72 @@
 			"pokedex-entry": "Long ago, a royal family brought Meowth into Alola from far away. It became so accustomed to their luxurious treatment that even now it can’t help but act superior."
 		},
 		"Mankey": {
-			"name": "Mankey"
+			"name": "Mankey",
+			"pokedex-entry": "It’s very risky to bring a Mankey indoors. They will break furniture and appliances without hesitation at the slightest provocation, and they have strong opinions about interior design."
 		},
 		"Growlithe": {
-			"name": "Growlithe"
+			"name": "Growlithe",
+			"pokedex-entry": "An extremely loyal Pokémon. Growlithe will stand guard with its trainer as long as it’s awake. It stands vigilant while its trainer is sleeping, and when they wake up, they often find their Growlithe curled up, fast asleep."
 		},
 		"Arcanine": {
-			"name": "Arcanine"
+			"name": "Arcanine",
+			"pokedex-entry": "Arcanine is prone to bark loudly at anything it thinks might endanger its trainer. It will bark at strangers, leaves on the ground, and especially a full moon. When a trainer gets an Arcanine, they are legally obligated to notify their neighbors."
 		},
 		"Abra": {
-			"name": "Abra"
+			"name": "Abra",
+			"pokedex-entry": "Abra's telepathic powers allow it to read the minds of those around it. As Abra teleports around, popping in and out of houses, its dreams are filled with a chaotic mess of memories from different Pokémon and trainers alike."
 		},
 		"Kadabra": {
-			"name": "Kadabra"
+			"name": "Kadabra",
+			"pokedex-entry": "The energy emitted by Kadabra’s psychic field affects nearby appliances. Trainers of Kadabra are sure to unplug all their devices before going to bed."
+		},
+		"Alakazam": {
+			"name": "Alakazam",
+			"pokedex-entry": "People that Alakazam dislikes become unable to perceive its presence. A frustrated Alakazam may disappear for a few days, only to return with its trainer having never realized it was gone in the first place."
 		},
 		"Machop": {
-			"name": "Machop"
+			"name": "Machop",
+			"pokedex-entry": "Machop loves arm wrestling with its trainer. It wins every time, but still expects its trainer to try their best each time, so that they can get stronger alongside it."
 		},
 		"Machoke": {
-			"name": "Machoke"
+			"name": "Machoke",
+			"pokedex-entry": "Some people claim that the belt it wears suppresses its power. However, these claims are often sourced back to people with names like “Matthew Achoke,” so the veracity of these claims is somewhat disputed in many fields of Pokémon research."
+		},
+		"Machamp": {
+			"name": "Machamp",
+			"pokedex-entry": "Machamp's arms are so powerful that it could use any one of them to open a jar of pickles without even crying very much."
 		},
 		"Slowpoke": {
-			"name": "Slowpoke"
+			"name": "Slowpoke",
+			"pokedex-entry": "Streets have signs marking Slowpoke crossing points. If they see a Slowpoke on the road, drivers are encouraged to pull over and move the Slowpoke to its destination. Otherwise, they’d be waiting all day."
 		},
 		"Magnemite": {
-			"name": "Magnemite"
+			"name": "Magnemite",
+			"pokedex-entry": "Trainers should train Magnemite in pairs. They bond socially with other Magnemite easily, and enjoy sleeping together with their magnets attached to each other. If a trainer can’t get a second Magnemite, they’re encouraged to at least give the Pokémon a magnet about its size to sleep with."
 		},
 		"Grimer-Alola": {
-			"name": "Grimer"
+			"name": "Grimer",
+			"pokedex-entry": "Unlike regular Grimer, this Pokémon stores its food entirely in its body, in the form of crystals of concentrated poison. Because of these crystals, this Pokémon is almost completely odorless."
 		},
 		"Gastly": {
-			"name": "Gastly"
+			"name": "Gastly",
+			"pokedex-entry": "Its body is made almost entirely of poisonous gas. Despite this, some trainers insist that the scent of the gas is, well, to die for."
 		},
 		"Haunter": {
-			"name": "Haunter"
+			"name": "Haunter",
+			"pokedex-entry": "Trainers who specialize in Ghost-type Pokémon find Haunter to be one of the most affectionate. It loves playing with its trainer by popping out of objects it haunts."
 		},
 		"Drowzee": {
-			"name": "Drowzee"
+			"name": "Drowzee",
+			"pokedex-entry": "A well-trained Drowzee is kept in many hospitals. They eat the bad dreams of patients, and are rewarded with the good dreams of anyone willing to donate them while staying at the hospital."
 		},
 		"Hypno": {
-			"name": "Hypno"
+			"name": "Hypno",
+			"pokedex-entry": "It has been 184 days since the last incident involving a Hypno."
 		},
 		"Chansey": {
-			"name": "Chansey"
+			"name": "Chansey",
+			"pokedex-entry": "Its eggs are renowned for their curatiive properties and delicious taste. Although, if its trainer tries to sell its eggs, Chansey usually get agitated and stop letting its trainer take them."
 		},
 		"Tauros": {
 			"name": "Tauros",
@@ -1334,19 +1425,24 @@
 			"pokedex-entry": "Due to its unstable genetic makeup, its preferences change often. Trainers of this fickle Pokémon may need to make Eevee's habitat just as adaptable as Eevee itself to sate its cravings."
 		},
 		"Ledyba": {
-			"name": "Ledyba"
+			"name": "Ledyba",
+			"pokedex-entry": "It’s too timid to explore on its own without a trainer or a swarm of its own kind. One Ledyba was an exception, and became a defense attorney while no one was looking."
 		},
 		"Ledian": {
-			"name": "Ledian"
+			"name": "Ledian",
+			"pokedex-entry": "This Pokémon's spots grow larger or smaller depending on how bright the stars in the sky are. When the weather gets bad, they find shelter with local Ledyba wherever they can and huddle together for warmth."
 		},
 		"Spinarak": {
-			"name": "Spinarak"
+			"name": "Spinarak",
+			"pokedex-entry": "If a Spinarak has begun spinning webs in your house, it’s a mistake to try to remove the webs on your own, even after removing the Spinarak. Not only will you get the web all over you, but the web’s special thread will be ruined. Many businesses actually offer money to remove the webs for you."
 		},
 		"Ariados": {
-			"name": "Ariados"
+			"name": "Ariados",
+			"pokedex-entry": "Its thread is used in weaving especially durable cloth. It’s extremely valuable, leading Ariados to become small in number in some regions."
 		},
 		"Pichu": {
-			"name": "Pichu"
+			"name": "Pichu",
+			"pokedex-entry": "It’s not able to control its electric discharges. When a very young Pichu falls asleep, it’s common for its trainer to swaddle it in an insulating blanket."
 		},
 		"Igglybuff": {
 			"name": "Igglybuff",
@@ -1365,71 +1461,104 @@
 			"pokedex-entry": "When Ampharos sneezes, its body becomes so bright that it looks one of those ridiculously strong flashlights has been pointed at the sky. The beacon of light is fully visible even in broad daylight."
 		},
 		"Espeon": {
-			"name": "Espeon"
+			"name": "Espeon",
+			"pokedex-entry": "Its fur has a soft, velvety texture. Its tail twitches when it senses anything intense in its future, so it knows when its opponent will attack and when it will rain. During the weather section of news broadcasts, the host might have an Espeon sitting on screen ready to twitch its tail if it detects anything the host predicts incorrectly."
 		},
 		"Murkrow": {
-			"name": "Murkrow"
+			"name": "Murkrow",
+			"pokedex-entry": "Its nest is filled with shiny things it’s found. It’s got a reputation for spreading bad luck, which has overtaken their reputation for being mean little thieves."
 		},
 		"Misdreavus": {
-			"name": "Misdreavus"
+			"name": "Misdreavus",
+			"pokedex-entry": "It loves surprising people in any way it can. It appears behind people walking alone at night, just to tap on their shoulder and disappear before they turn around."
 		},
 		"Delibird": {
-			"name": "Delibird"
+			"name": "Delibird",
+			"pokedex-entry": "Delibird carry food with them all day. In areas with a local Delibird population, restaurants will give their unused food to wild Delibird."
+		},
+		"Houndour": {
+			"name": "Houndour",
+			"pokedex-entry": "They travel in suprisingly well-organized packs. The leader, usually a Houndoom, will hold drills each morning with the younger members of the pack."
+		},
+		"Houndoom": {
+			"name": "Houndoom",
+			"pokedex-entry": "Sometimes, a single howl will come crying out of the forest. For hours after the howl is heard, the forest is silent."
 		},
 		"Smeargle": {
-			"name": "Smeargle"
+			"name": "Smeargle",
+			"pokedex-entry": "Some buildings will leave large walls unpainted in a bid to get local Smeargle to paint murals on them. This works every time."
 		},
 		"Smoochum": {
-			"name": "Smoochum"
+			"name": "Smoochum",
+			"pokedex-entry": "Smoochum has opinions on fashion and is not shy about them. Trainers say it will tug on sleeves, help fix their trainer’s hair, and sometimes flat-out refuse to let their trainer go outside in an outfit they don’t approve of."
 		},
 		"Miltank": {
 			"name": "Miltank",
 			"pokedex-entry": "Sometimes in the morning, Pokémon ranch owners will find crop circles have appeared in their fields. Most of the time, it was just a prank orchestrated by Miltank. The rest of the time, it was actually aliens."
 		},
+		"Poochyena": {
+			"name": "Poochyena",
+			"pokedex-entry": "Poochyena is a popular Pokémon online. Its persistent nature means it doesn’t gove up chasing its tail easily, and videos of it growling at its reflection are common. One video of a Poochyena playing a song on a banjo is considered a classic."
+		},
 		"Wingull": {
-			"name": "Wingull"
+			"name": "Wingull",
+			"pokedex-entry": "Wingull have a habit of lifting food and prey off the ground and carrying them great distances to their nests, or to their trainers."
 		},
 		"Pelipper": {
-			"name": "Pelipper"
+			"name": "Pelipper",
+			"pokedex-entry": "pelper Mouth perfec t size for put baby in to n\\ap! inside very Soft and Comfort baby sleep soundly put baby in Pelipper Mouth. no problems ever in pelippper mouth because good Shape and Support for baby neck weak of big baby head. Apeliper Mouth yes a place for a baby put baby in pelipper mouth can trust pelipper for giveing good love to baby. <a href='src/img/misc/pelican.webp'>friend pelipper</a>"
 		},
 		"Makuhita": {
-			"name": "Makuhita"
+			"name": "Makuhita",
+			"pokedex-entry": "When it gets knocked down, it rolls and slams into things like a bowling ball. Then, without fail, it gets back up."
 		},
 		"Hariyama": {
-			"name": "Hariyama"
+			"name": "Hariyama",
+			"pokedex-entry": "Whenever it causes an opponent to faint, it is sure to bow before continuing battle with other Pokémon."
 		},
 		"Sableye": {
-			"name": "Sableye"
+			"name": "Sableye",
+			"pokedex-entry": "In the darkness of a cave, it’s not uncommon to see two glittering eyes staring back at you, and as they get closer, the outline of its pointed smile stands out in the pitch black. Then it usually just checks if you have gems for it to eat."
 		},
 		"Mawile": {
-			"name": "Mawile"
+			"name": "Mawile",
+			"pokedex-entry": "Its larger rear mouth can’t taste anything, so it uses that mouth to eat food that it doesn’t like. Trainers have to take care of its sharp teeth for Mawile. It purrs contentedly while its trainer takes care of them."
 		},
 		"Spinda": {
-			"name": "Spinda"
+			"name": "Spinda",
+			"pokedex-entry": "Some Pokémon researchers have tried to catalog the billions of different patterns Spinda can have. I wouldn’t know. I’ve definitely never tried to do that."
 		},
 		"Bagon": {
-			"name": "Bagon"
+			"name": "Bagon",
+			"pokedex-entry": "Some trainers like to take Bagon paragliding with them to satisfy its desire to be able to fly one day. It helps."
 		},
 		"Drifloon": {
-			"name": "Drifloon"
+			"name": "Drifloon",
+			"pokedex-entry": "Its habits of leading children away from their families are well known. Trainers of this Pokémon often have to say they “just like the design” or “think the Pokémon’s unique typing is cool.”"
 		},
 		"Drifblim": {
-			"name": "Drifblim"
+			"name": "Drifblim",
+			"pokedex-entry": "In one experiment, a flock of wild Drifloom was carefully monitored by a drone that could follow their flight. The moment the last sliver of sunlight disappeared off the horizon, the drone’s camera inexplicably shut down irreperably."
 		},
 		"Mismagius": {
-			"name": "Mismagius"
+			"name": "Mismagius",
+			"pokedex-entry": "It wanders wherever it wants, muttering incantations which cause misfortune and mischief wherever it goes. However, a well-trained Mismagius can be a great partner, warding misfortune away from its trainer."
 		},
 		"Honchkrow": {
-			"name": "Honchkrow"
+			"name": "Honchkrow",
+			"pokedex-entry": "The nest of a Honchkrow is, without fail, littered with shiny objects. Unlike Murkrow, it didn’t collect any itself. Honchkrow will squawk orders at their cronies to collect shiny objects for them."
 		},
 		"Bonsly": {
-			"name": "Bonsly"
+			"name": "Bonsly",
+			"pokedex-entry": "It keeps far away from humid environments and hates getting wet. Its tears are nothing more than excess water. If you rub sandpaper on its body, it will giggle happily."
 		},
 		"Happiny": {
-			"name": "Happiny"
+			"name": "Happiny",
+			"pokedex-entry": "Its egg is really nothing more than a pale rock it found. Something in its genes tells it that it should be carrying something, so it feels uncomfortable whenever it’s without its rock. #myrock"
 		},
 		"Glaceon": {
-			"name": "Glaceon"
+			"name": "Glaceon",
+			"pokedex-entry": "It never rains where Glaceon is standing. During thunderstorms, it leaves a trail of light, fluffy snow created from the frozen water droplets as it walks."
 		},
 		"Lillipup": {
 			"name": "Lillipup",
@@ -1444,56 +1573,84 @@
 			"pokedex-entry": "Rescue teams use this Pokémon to pull hikers out of landslides and avalanches. After a job well done, the team is sure to give Stoutland treats and cuddles."
 		},
 		"Roggenrola": {
-			"name": "Roggenrola"
+			"name": "Roggenrola",
+			"pokedex-entry": "It has no eyes, and only knows where to go by listening with the hexagonal ear in the middle of its body. It panics if sounds suddenly start or stop near it, and curls up pretending to be just a regular rock."
 		},
 		"Boldore": {
-			"name": "Boldore"
+			"name": "Boldore",
+			"pokedex-entry": "The orange crystals growing on its side are a powerful fuel, so cities will pay trainers of Boldore in exchange for any crystals which have grown too big to stay on the Pokémon."
 		},
 		"Cottonee": {
-			"name": "Cottonee"
+			"name": "Cottonee",
+			"pokedex-entry": "Cottonee stick together in flocks as they float across the sky. When enough of them fly together, the flock resembles a passing cloud to people below."
 		},
 		"Whimsicott": {
-			"name": "Whimsicott"
+			"name": "Whimsicott",
+			"pokedex-entry": "It rides the wind, bounding around wherever it leads. It loves slipping into homes through open windows and spreading its cotton all over in a huge mess."
 		},
 		"Petilil": {
-			"name": "Petilil"
+			"name": "Petilil",
+			"pokedex-entry": "Petilil leaves are used frequently in cooking, mostly as a substitute for leaves from the much rarer Bayleef. The leaves grow right back within a day. It’s tradition to give it a bowl of fertilizer as a treat whenever its leaves are removed."
 		},
 		"Lilligant": {
-			"name": "Lilligant"
+			"name": "Lilligant",
+			"pokedex-entry": "The flower on its head is especially difficult to get to bloom, and even harder to maintain. A blooming Lilligant is a symbol of high status, though only a temporary one."
 		},
 		"Lilligant-Hisui": {
-			"name": "Lilligant"
+			"name": "Lilligant",
+			"pokedex-entry": "Trainers of this unusual variant of Lilligant often find themselves changing their whole daily routine around it— taking jogs through forests, ballet classes, or just laying in the grass with their Pokémon."
+		},
+		"Zorua": {
+			"name": "Zorua",
+			"pokedex-entry": "Wild Zorua like to play pretend and disguise as people. Everything else they tried didn’t work, so in towns and cities near forests where Zorua reside, they have “Safe Disguise Zones” where Zorua can play pretend all it wants. Most Zorua respect the boundaries as long as they have people to play with."
 		},
 		"Rufflet": {
-			"name": "Rufflet"
+			"name": "Rufflet",
+			"pokedex-entry": "Rufflet will pick fights with any and every nearby Pokémon. It loses this habit quickly when caught, but some trainers enjoy the way it challenges Pokémon a hundred times its size."
 		},
 		"Vullaby": {
-			"name": "Vullaby"
+			"name": "Vullaby",
+			"pokedex-entry": "The bones worn by Vullaby are the subject of intense research. No known Pokémon has bones of the exact shape worn by Vullaby, and nobody has ever witnessed the moment a Vullaby finds its shell. Some researchers theorize that the shell is actually a sort of exoskeleton, believed to be shed from the Pokémon while it’s still in its egg."
 		},
 		"Pancham": {
-			"name": "Pancham"
+			"name": "Pancham",
+			"pokedex-entry": "It thinks that the leaf in its mouth makes it look cooler and more intimidating. Videos of people pretending to be scared off by Pancham, only to record its happy face at the end, are quite popular online."
 		},
 		"Pangoro": {
-			"name": "Pangoro"
+			"name": "Pangoro",
+			"pokedex-entry": "Pangoro often take Pancham in and train them as students. Pancham trained this way are much less mischievous, and love challenging themselves with more powerful opponents."
 		},
 		"Carbink": {
-			"name": "Carbink"
+			"name": "Carbink",
+			"pokedex-entry": "Carbink are born deep underground in areas with high pressure and even higher temperature. They slowly rise from the soil at a glacially slow pace. For a (comparatively) brief period as they emerge, they look like nothing more than a regular crystal poking from the ground or wall."
 		},
 		"Noibat": {
 			"name": "Noibat",
 			"pokedex-entry": "Many researchers laud this Pokémon's ability to emit 200,000 hertz screeches, which it uses in echolocation and in battle. However, its ears are impressive too! High frequency sounds reflect off of objects more than they pass through, which means even more of that powerful sound gets back to Noibat. So really, the Pokémon that hears Noibat's screeches the most is Noibat itself!"
 		},
 		"Rowlet": {
-			"name": "Rowlet"
+			"name": "Rowlet",
+			"pokedex-entry": "During the day, it likes resting basically anywhere, often using its trainer’s backpack as a makeshift nest. It sleeps with its head facing up at the sun, and gets more active as the sun sets."
 		},
 		"Dartrix": {
-			"name": "Dartrix"
+			"name": "Dartrix",
+			"pokedex-entry": "This Pokémon preens itself frequently, removing anything unsightly from its feathers. When it ambushes its prey, it moves almost completely silently before clutching the prey in its claws."
+		},
+		"Decidueye": {
+			"name": "Decidueye",
+			"pokedex-entry": "Trainers with gardens use Decidueye to stop pests. During the night, no sounds are heard, but the plants never see holes bitten into their leaves again."
 		},
 		"Litten": {
-			"name": "Litten"
+			"name": "Litten",
+			"pokedex-entry": "Litten often sleeps in its trainer’s laundry basket, paws folded beneath its body. If disturbed before it’s ready to wake up, it’ll leave a single paw print-shaped scorch mark on its trainer’s favorite piece of clothing."
 		},
 		"Torracat": {
-			"name": "Torracat"
+			"name": "Torracat",
+			"pokedex-entry": "Despite its usual confident, sneaky attitude is almost completely absent during the colder months. It will cuddle up to its trainer, sleeping on their laps for warmth."
+		},
+		"Incineroar": {
+			"name": "Incineroar",
+			"pokedex-entry": "After a battle, it refuses to share the spotlight with its trainer’s other Pokémon. Trainers will make a big show of applauding Incineroar, and once it’s in its Poké Ball once again, only then do they celebrate the contributions of their other Pokémon."
 		},
 		"Popplio": {
 			"name": "Popplio",
@@ -1508,52 +1665,72 @@
 			"pokedex-entry": "It likes to use its water powers to make waterslides for Popplio and other baby Pokémon to play on."
 		},
 		"Pikipek": {
-			"name": "Pikipek"
+			"name": "Pikipek",
+			"pokedex-entry": "Every morning, they start pecking at trees at <i>exactly</i> 7:24 AM. Every day, regardless of the season. The only exception is a few days in winter, when they take a short vacation."
 		},
 		"Trumbeak": {
-			"name": "Trumbeak"
+			"name": "Trumbeak",
+			"pokedex-entry": "It eats berries and seeds and stores them in their beak. When it wants to get its trainer’s attention, it will fire the seeds at them."
 		},
 		"Toucannon": {
-			"name": "Toucannon"
+			"name": "Toucannon",
+			"pokedex-entry": "It can heat up its beak to extreme temperatures. Some trainers use its beak as a portable stove on long camping trips."
 		},
 		"Yungoos": {
-			"name": "Yungoos"
+			"name": "Yungoos",
+			"pokedex-entry": "Yungoos are actually an invasive species in Alola. They’re omnivorous, constantly eating anything they can find, and they don’t stop eating once they’re full."
 		},
 		"Gumshoos": {
-			"name": "Gumshoos"
+			"name": "Gumshoos",
+			"pokedex-entry": "Gumshoos were originally brought to Alola to deal with another invasive species, Rattata. It has been <i>suggested</i> that Alola import another Pokémon to deal with the Gumshoos population, but... they haven’t just yet."
 		},
 		"Grubbin": {
-			"name": "Grubbin"
+			"name": "Grubbin",
+			"pokedex-entry": "It keeps to shaded areas to avoid bird Pokémon and to suck sweet sap out of trees. Grubbin living with trainers sometimes sleep with their jaws in wall sockets, enjoying the flow of electricity."
 		},
 		"Charjabug": {
-			"name": "Charjabug"
+			"name": "Charjabug",
+			"pokedex-entry": "Shops in Alola sell adapters that let you connect charging cables to Charjabug’s teeth. Especially cheap ones aren’t always able to handle its electricity output and might break your device."
 		},
 		"Vikavolt": {
-			"name": "Vikavolt"
+			"name": "Vikavolt",
+			"pokedex-entry": "It can fire electric blasts from its jaws. When it runs out of energy, wild Vikavolt will take a Charjabug in its jaws and transfer its electricity into it."
 		},
 		"Crabrawler": {
-			"name": "Crabrawler"
+			"name": "Crabrawler",
+			"pokedex-entry": "It punches so much that its two glove-like pincers fall off frequently. New pincers grow back quickly, so discarded ones are a somewhat common ingredient in high-end dishes."
 		},
 		"Cutiefly": {
-			"name": "Cutiefly"
+			"name": "Cutiefly",
+			"pokedex-entry": "It can sense its trainer’s moods through their aura. When its trainer is sad, Cutiefly will gather pollen, and shower its trainer with it. Often, this causes the trainer to stop being sad, but rarely do they start being happy."
 		},
 		"Ribombee": {
-			"name": "Ribombee"
+			"name": "Ribombee",
+			"pokedex-entry": "If its wings get wet, it can’t fly. When it sees clouds in the distance, it will pull its trainer somewhere shaded so they can wait out the storm."
 		},
 		"Oricorio": {
-			"name": "Oricorio"
+			"name": "Oricorio",
+			"pokedex-entry": "This shouldn’t appear onscreen anywhere.",
+			"pokedex-entry-baile": "This style of Oricorio is the most prone to anger when its trainer doesn’t meet their expectations. If it thinks its trainer gave the wrong order, it’s quick to squawk its disapproval.",
+			"pokedex-entry-pom-pom": "This style of Oricorio is the most popular, owing to its unending energy and positivity. No matter what they’re doing, Oricorio is happy to cheer its trainer on.",
+			"pokedex-entry-pa-u": "This style of Oricorio is far more relaxed than the others. Unlike other Oricorio, all kinds of trainers can keep up with this Pokémon’s dances. Dancing with these Oricorio is a ritual in some parts of Akala island.",
+			"pokedex-entry-sensu": "This style of Oricorio is the hardest to train. Their dance is certainly the most elegant of all the styles, but their attitude is more stubborn than any other."
 		},
 		"Rockruff": {
-			"name": "Rockruff"
+			"name": "Rockruff",
+			"pokedex-entry": "Wild Rockruff imitate their guardians, so if a Rockruff grows up with different Lycanroc, it may grow up with a very different disposition than another Rockruff."
 		},
 		"Lycanroc-Midday": {
-			"name": "Lycanroc"
+			"name": "Lycanroc",
+			"pokedex-entry": "Lycanroc’s mane is made of sharp rocks. Great care is required to pet Lycanroc, but don’t let that stop you. Protective gloves are encouraged."
 		},
 		"Lycanroc-Midnight": {
-			"name": "Lycanroc"
+			"name": "Lycanroc",
+			"pokedex-entry": "This Pokémon needs daily sparring provided to it, or it will invent its own. Trainers should have many toys and other enrichment and rotate them often."
 		},
 		"Lycanroc-Dusk": {
-			"name": "Lycanroc"
+			"name": "Lycanroc",
+			"pokedex-entry": "This very rare form has the calmest disposition. The moment the word ‘walk’ is mentioned, though... One trainer had the idea to ride a bike while holding its leash to try and keep up. They couldn’t ride their bike the next day."
 		},
 		"Mudbray": {
 			"name": "Mudbray",
@@ -1576,22 +1753,32 @@
 			"pokedex-entry": "Morelull live in deep, secluded parts of the forest. The caps of their mushrooms glow in the dark, attracting curious people and Pokémon away from the path."
 		},
 		"Stufful": {
-			"name": "Stufful"
+			"name": "Stufful",
+			"pokedex-entry": "It’s common knowledge that belying its appearance is a powerful beast. What’s less commonly discussed is the way it sleeps, its arms and legs flopping limp at its sides as it snores softly. It might sound cute to give it a stuffed animal of its own to sleep with, but trainers who do this invariably wake up to find it destroyed the next morning."
 		},
 		"Bounsweet": {
-			"name": "Bounsweet"
+			"name": "Bounsweet",
+			"pokedex-entry": "Its sweet disposition matches its even sweeter aroma. A very, very watered down mixture made from its juices can be found for sale in parts of Alola."
 		},
 		"Steenee": {
-			"name": "Steenee"
+			"name": "Steenee",
+			"pokedex-entry": "As it dances, its green leaf-like sepals twirl with it. They’re incredibly hard, so you should keep your distance from a dancing Steenee."
 		},
 		"Comfey": {
-			"name": "Comfey"
+			"name": "Comfey",
+			"pokedex-entry": "Comfey gathers its favorite flowers it finds and adorns its body with them. Every Comfey has their own preferences, so each one looks a little different. Comfey love seeing new places looking for new flowers, so their trainers should take regular trips to new places whenever possible."
 		},
 		"Passimian": {
-			"name": "Passimian"
+			"name": "Passimian",
+			"pokedex-entry": "The green marks on its shoulders are actually leaves it has carefully attached to itself. The positions of the leaves marks which troop they belong to. Passimian are best trained as a group, but if a trainer can only train a single Passimian, they should at least have other Pokémon to partner with. A lonely Passimian is very sad."
+		},
+		"Type: Null": {
+			"name": "Type: Null",
+			"pokedex-entry": "This Pokémon was stitched together from the bodies of other Pokémon to create a weapon against something nobody fully understands. The helmet on its head keeps its power in check for its controller’s safety."
 		},
 		"Komala": {
-			"name": "Komala"
+			"name": "Komala",
+			"pokedex-entry": "This Pokémon loves holding onto its trainer’s arm as they walk. When they put Komala down, it’s important to return its log to its paws, or Komala will have bad dreams."
 		}
 	},
 	"moves": {
@@ -1806,6 +1993,11 @@
 			"description": "Deals damage and has a 50% chance to paralyze the opponent. Then, the user loses all yellow energy they have, and for each 5 energy removed this way, a random Electric tile is empowered. When a trainer matches an empowered Electric tile, they gain 10 energy in a random color",
 			"shortDescription": "Paralyzes and spends energy to empower tiles"
 		},
+		"Double Hit": {
+			"name": "Double Hit",
+			"description": "Deals damage. This Pokémon's energy gain is increased by 50% until their next turn. At the end of the turn, this move deals damage a second time.",
+			"shortDescription": "Damages and increases energy gain"
+		},
 		"Double Kick": {
 			"name": "Double Kick",
 			"description": "Deals damage twice. This may trigger effects multiple times.",
@@ -1863,7 +2055,7 @@
 		},
 		"Encore": {
 			"name": "Encore",
-			"description": "Disables all moves but the move used most recently by the opponent for 5 turns.",
+			"description": "Disables all the opponent's moves but the move used most recently by them for 5 turns.",
 			"shortDescription": "Disables all but one move"
 		},
 		"Endure": {
@@ -2061,6 +2253,16 @@
 			"description": "Deals damage and lowers the opponent's Speed stat by a stage.",
 			"shortDescription": "Deals damage and lowers enemy Speed"
 		},
+		"Imprison": {
+			"name": "Imprison",
+			"description": "Disables all the opponent's moves which the user also knows. This effect ends when the opponent swaps Pokémon.",
+			"shortDescription": "Disables shared moves"
+		},
+		"Incinerate": {
+			"name": "Incinerate",
+			"description": "Deals damage. Then, all Grass tiles are removed.",
+			"shortDescription": "Deals damage and removes all Grass tiles"
+		},
 		"Infestation": {
 			"name": "Infestation",
 			"description": "Deals damage. Converts a random tile into a Grass tile and gives it the Infested status. At the start of the opponent's turn, for each Infested tile, that tile drains 1 energy of a random color, and gives it to the user.",
@@ -2161,6 +2363,11 @@
 			"name": "Metal Claw",
 			"description": "Deals damage. Has a 50% chance to raise the user's Attack by a stage.",
 			"shortDescription": "Damages and may raise Attack"
+		},
+		"Metal Sound": {
+			"name": "Metal Sound",
+			"description": "Lowers the opponent's Special Defense stat by 2 stages. Converts 3 random tiles into Steel tiles. Steel tiles are worth 1 orange energy AND 1 yellow energy each.",
+			"shortDescription": "Lowers stats and makes Steel tiles"
 		},
 		"Mimic": {
 			"name": "Mimic",
@@ -2459,6 +2666,11 @@
 			"description": "Deals damage. Then, shifts the entire board downwards by 2 tiles. The opponent becomes vulnerable to Ground-type moves.",
 			"shortDescription": "Lowers entire board"
 		},
+		"Smog": {
+			"name": "Smog",
+			"description": "Deals damage. Then, has a 40% chance to apply Poisoned to the opponent.",
+			"shortDescription": "Deals some damage and might poison"
+		},
 		"Spark": {
 			"name": "Spark",
 			"description": "Deals damage and has a 50% chance to paralyze the target. If the target was already Paralyzed, instead it deals damage with 20 additional power.",
@@ -2630,6 +2842,11 @@
 			"description": "A random column of tiles is given the Static status effect. When the user removes a tile with Static, it explodes orthogonally adjacent tiles as well.",
 			"shortDescription": "Gives a column Static"
 		},
+		"Torment": {
+			"name": "Torment",
+			"description": "Gives the opponent the Tormented status effect until they switch out. A Pokémon can't use the same move twice in a row.",
+			"shortDescription": "Prevents the opponent repeating moves"
+		},
 		"Vine Whip": {
 			"name": "Vine Whip",
 			"description": "Damage-dealing move with no special effects.",
@@ -2728,6 +2945,11 @@
 			"name": "Battery",
 			"shortDescription": "Increases special move power of this trainer's Pokémon by 30%, even while this Pokémon isn't active.",
 			"longDescription": "As long as this Pokémon is in your party and still usable, the power of all special moves its trainer's Pokémon use is increased by 30%."
+		},
+		"Battle Armor": {
+			"name": "Battle Armor",
+			"shortDescription": "Prevents the opponent from getting extra turns from matching 4-in-a-rows.",
+			"longDescription": "When the opponent makes a 4-in-a-row match, they don't get an extra turn."
 		},
 		"Big Pecks": {
 			"name": "Big Pecks",
@@ -2884,6 +3106,11 @@
 			"shortDescription": "Other Pokémon can't lower this Pokémon's Speed stages",
 			"longDescription": "Other Pokémon can't give this Pokémon status effects which lower its Speed stat by any number of stages."
 		},
+		"Illusion": {
+			"name": "Illusion",
+			"shortDescription": "Disguises as another Pokémon in the party when it enters",
+			"longDescription": "As this Pokémon is put into play, it chooses the Pokémon in the user's party that is both non-fainted and closest to the end of their party. This Pokémon enters disguised as the chosen Pokémon, and the opponent will only see the moves of the Pokémon it is disguised as."
+		},
 		"Infiltrator": {
 			"name": "Infiltrator",
 			"shortDescription": "This Pokémon can deal damage through Invulnerable",
@@ -3038,6 +3265,11 @@
 			"name": "Prankster",
 			"shortDescription": "Status moves cost 30% less",
 			"longDescription": "Status moves this Pokémon uses have their energy costs reduced by 30%."
+		},
+		"Quick Feet": {
+			"name": "Quick Feet",
+			"shortDescription": "Speed is increased by 50% while this Pokémon has a status condition.",
+			"longDescription": "As long as this Pokémon has a status condition, its Speed stat is increased by 50%."
 		},
 		"Rain Dish": {
 			"name": "Rain Dish",
@@ -3244,6 +3476,11 @@
 			"shortDescription": "Raises Speed a stage when its owner pays exactly as much energy as they have in a color",
 			"longDescription": "Whenever paying for a move causes at least one of this Pokémon's energy colors to fall to become completely empty, its Speed is increased by 1 stage."
 		},
+		"Unnerve": {
+			"name": "Unnerve",
+			"shortDescription": "The first move the opponent uses each turn costs 1 more energy of each color",
+			"longDescription": "As long as the opponent hasn't used a move this turn, moves they use cost 1 more energy in each nonzero part of their energy cost."
+		},
 		"Vital Spirit": {
 			"name": "Vital Spirit",
 			"shortDescription": "Can't be put to sleep",
@@ -3421,6 +3658,10 @@
 		"mist": {
 			"name": "Mist",
 			"description": "Prevents this Pokémon from receiving stat stage debuffs from other Pokémon."
+		},
+		"tormented": {
+			"name": "Tormented",
+			"description": "This Pokémon can’t use the same move twice in a row."
 		}
 	},
 	"levels": {
@@ -3526,6 +3767,10 @@
 		"Route 4-6": {
 			"name": "Route 4-6",
 			"description": "You pass the ranch and continue along the path into the forest as the trees around you grow more dense."
+		},
+		"Route 4-7": {
+			"name": "Route 4-7",
+			"description": "As you leave the forest, you find Hau being accosted by a stranger."
 		}
 	},
 	"route-categories": {
@@ -3543,7 +3788,7 @@
 		}
 	},
 	"evolution-requirements": {
-		"default": "I don't know why they can't evolve. *shrug*",
+		"default": "I don't know why they can’t evolve. *shrug*",
 		"level": "This Pokémon needs to be at least level %c% to evolve into %c-pname%.",
 		"levelWithPartyMember": "This Pokémon needs to be at least level %c% while another Pokémon in the party is %c%-type to evolve into %c-pname%.",
 		"friendship": "This Pokémon needs to have at least %c% friendship to evolve into %c-pname%.",
@@ -3607,11 +3852,13 @@
 		"toggle-skip-seen-dialogue": "Skip seen dialogue?",
 		"toggle-exp-share": "EXP share? (Exp gained in fights is shared between all active Pokémon)",
 		"toggle-hard-mode": "Hard mode (Rival chooses the more effective Pokémon, etc.)",
-		"toggle-level-lowering": "Lower Pokémon levels to what's recommended when starting a level. Note: Pokémon won't earn EXP while their levels are lowered.",
+		"toggle-level-lowering": "Lower Pokémon levels to what’s recommended when starting a level. Note: Pokémon won’t earn EXP while their levels are lowered.",
 		"toggle-show-level-completion-data": "Display level attempts/completions",
 		"toggle-pixelated-screen": "Antialiasing",
 		"toggle-screen-shake": "Screen shake",
-		"toggle-funny-mode": "Funny mode (please leave this off for now)",
+		"toggle-funny-mode": "All Pokémon have Every Ability",
+		"toggle-tile-highlight-hints": "Show highlights around tiles which can be swapped",
+		"toggle-show-pokemon-level": "Show each Pokémon’s level next to their name",
 
 		"rename-save": "Rename Save",
 		"delete-save": "DELETE SAVE",

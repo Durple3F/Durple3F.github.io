@@ -1,5 +1,33 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
+5/29 (41.8k lines):
+	- Added the remaining pokedex entries.
+	- Added a toggle for showing/hiding the highlights around tiles.
+	- Added a toggle for showing/hiding the level of pokemon next to their names
+	- Fixed a softlock that would occur if your opponent ever used Bulldoze.
+	- Fixed yet another bug regarding moves that end the current turn. This time, pokemon would start attempting to use moves twice, then four times, then (etc) because when each move ended, it would start the next turn, but not stop their logic
+	- Fixed the way that you could still see tooltips on screen while people were talking
+
+5/27 (41.8k lines):
+	- Added lots of pokedex entries.
+	- You can now select text in a popup.
+
+5/26 (41.5k lines):
+	- Added some pokedex entries
+	- Added a new song for Gladion
+	- Finally made the wild pokemon battle music loop properly
+	- Added a background to 4-5 and another to 4-7
+	- Added an image for empowered psychic tiles.
+	- Backgrounds can now smoothly fade into each other without waiting for the previous one to disappear.
+
+5/25 (41.5k lines):
+	- Added Type: Null, Zorua, Houndour, Poochyena
+	- Added Imprison, Double Hit, Metal Sound, Torment, Smog, Incinerate
+	- Added Battle Armor, Unnerve, Quick Feet
+	- Added Illusion. It's not 100% functional but it works.
+	- You can now use struggle if, somehow, all of your active moves have been disabled.
+	- Re-coded how level button tooltips show/hide to hopefully act more intuitively
+
 5/24 (40.5k lines):
 	- Added Morelull
 	- Added Discharge

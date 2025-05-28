@@ -24,6 +24,7 @@ const tileTypeColors = {
 	"purple": "#dd60dd",
 	"black": "#495856",
 	"pink": "#9c0132",
+	"gray": "#bbbda9",
 	"rainbow": "#ffffff",
 }
 
@@ -81,7 +82,7 @@ let tileIconUrls = {
 	},
 	purple: {
 		0: "src/img/tiles/purple.png",
-		1: "src/img/tiles/purple.png"
+		1: "src/img/tiles/purple 2.png"
 	},
 	black: {
 		0: "src/img/tiles/black.png",
@@ -90,6 +91,10 @@ let tileIconUrls = {
 	pink: {
 		0: "src/img/tiles/pink.png",
 		1: "src/img/tiles/pink.png"
+	},
+	gray: {
+		0: "src/img/tiles/gray.png",
+		1: "src/img/tiles/gray.png"
 	},
 	rainbow: {
 		0: "src/img/tiles/rainbow.png",

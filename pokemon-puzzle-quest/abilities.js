@@ -1,4 +1,4 @@
-const abilityData = {
+const pokemonAbilityData = {
 	"No Ability": {
 		id: "No Ability"
 	},
@@ -22,6 +22,14 @@ const abilityData = {
 	"Anticipation": {
 		id: "Anticipation"
 	},
+	//Increases Special power of all your pokemon even while Battry is inactive
+	"Battery": {
+		id: "Battery"
+	},
+	//Prevents getting extra turns via matching 4
+	"Battle Armor": {
+		id: "Battle Armor"
+	},
 	//Prevents receiving statuses that lower Defense
 	"Big Pecks": {
 		id: "Big Pecks"
@@ -29,10 +37,6 @@ const abilityData = {
 	//Increases fire power at low hp
 	"Blaze": {
 		id: "Blaze"
-	},
-	//Increases Special power of all your pokemon even while Battry is inactive
-	"Battery": {
-		id: "Battery"
 	},
 	//Adds green energy if you match things that aren't green
 	"Chlorophyll": {
@@ -149,6 +153,10 @@ const abilityData = {
 	//Prevents receiving statuses that lower Speed
 	"Illuminate": {
 		id: "Illuminate"
+	},
+	//Displays the wrong pokemon when it enters
+	"Illusion": {
+		id: "Illusion"
 	},
 	//Deals damage through Indestructible
 	"Infiltrator": {
@@ -273,6 +281,10 @@ const abilityData = {
 	//Lowers the costs of Status moves
 	"Prankster": {
 		id: "Prankster"
+	},
+	//Speed is higher while you have a status
+	"Quick Feet": {
+		id: "Quick Feet"
 	},
 	//On a blue 4-match, heal 20% max HP
 	"Rain Dish": {
@@ -438,6 +450,10 @@ const abilityData = {
 	"Unburden": {
 		id: "Unburden"
 	},
+	//The first move the opponent uses each turn costs more
+	"Unnerve": {
+		id: "Unnerve"
+	},
 	//You can't be put to sleep
 	"Vital Spirit": {
 		id: "Vital Spirit"
@@ -448,8 +464,8 @@ const abilityData = {
 	},
 }
 
-for (let abilityId in abilityData){
-	let ability = abilityData[abilityId]
+for (let abilityId in pokemonAbilityData){
+	let ability = pokemonAbilityData[abilityId]
 	if (ability.copiable === undefined){
 		ability.copiable = true
 	}
@@ -461,7 +477,7 @@ Object.values(pokemonData).map(pData => {
 .flat()
 .filter((v,i,s) => s.indexOf(v)===i)
 .forEach(abilityName => {
-	if (!abilityData[abilityName]){
+	if (!pokemonAbilityData[abilityName]){
 		console.warn(abilityName,"does nothing")
 	}
 })

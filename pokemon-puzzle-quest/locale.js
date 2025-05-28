@@ -67,7 +67,7 @@ function checkLocale(locale, langName){
 	}
 
 	if (locale["abilities"]){
-		Object.values(abilityData)
+		Object.values(pokemonAbilityData)
 		.forEach(aData => {
 			let abilityId = aData.id
 			let locData = locale["abilities"][abilityId]

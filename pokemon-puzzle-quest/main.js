@@ -1,4 +1,4 @@
-const versionNumber = "v0.16.13"
+const versionNumber = "v0.17.0"
 let lang = "en"
 let playerName
 
@@ -207,20 +207,22 @@ function unloadSprite(name){
 	delete sprites.complete[name]
 }
 
-function changeBackgroundImage(name, url){
+function changeBackgroundImage(name, url, duration=400, combineFades=false){
 	let resolvePromise
 	let promise = new Promise(resolve => resolvePromise = resolve)
 	let background = $("#background")
+	let bg1 = background.children(".bg1")
+	let bg2 = background.children(".bg2")
 	if (name === "none"){
-		let currentBg = background.css("background-image")
+		let currentBg = bg1.css("background-image")
 		let p = Promise.resolve()
 		if (currentBg !== "none"){
-			background.fadeOut(400)
-			p = p.then(() => delay(400))
+			bg1.fadeOut(duration)
+			p = p.then(() => delay(duration))
 		}
 		p.then(() => {
-			background.css("background-image", "none")
-			background.show()
+			bg1.css("background-image", "none")
+			bg1.show()
 			resolvePromise()
 		})
 		return promise
@@ -228,12 +230,14 @@ function changeBackgroundImage(name, url){
 
 	let p1 = loadSprite(name, url)
 	let p2 = Promise.resolve()
-	let currentBg = background.css("background-image")
+	let currentBg = bg1.css("background-image")
 	if (currentBg !== "none"){
-		background.fadeOut(400)
-		p2 = delay(400)
+		bg1.fadeOut(duration)
+		if (!combineFades){
+			p2 = delay(duration)
+		}
 	} else {
-		background.hide()
+		bg1.hide()
 	}
 	Promise.all([p1, p2]).then(() => {
 		let image = sprites.images[name]
@@ -244,8 +248,14 @@ function changeBackgroundImage(name, url){
 		ctx.drawImage(image, 0, 0)
 		let dataURL = canvas.toDataURL()
 		
-		background.css("background-image", `url("${dataURL}")`)
-		background.fadeIn()
+		bg2.css("background-image", `url("${dataURL}")`)
+		bg2.hide()
+		bg2.fadeIn(duration)
+		delay(duration).then(() => {
+			bg2.css("background-image", "none")
+			bg1.css("background-image", `url("${dataURL}")`)
+			bg1.show()
+		})
 		resolvePromise()
 	})
 	return promise
@@ -727,6 +737,7 @@ function loadResources(){
 		{name: "level-up", type: "sound", url: "src/audio/Level Up!.wav"},
 		{name: "healing", type: "sound", url: "src/audio/healing.mp3"},
 		{name: "shiny-appear", type: "sound", url: "src/audio/shiny_appear.mp3"},
+		{name: "woosh", type: "sound", url: "src/audio/woosh.mp3"},
 	]
 	loadedResources[3] = soundsToLoad.length
 
@@ -980,6 +991,14 @@ function openSettings(){
 		{
 			text: "toggle-screen-shake",
 			key: "screenShake"
+		},
+		{
+			text: "toggle-tile-highlight-hints",
+			key: "tileHighlightHints"
+		},
+		{
+			text: "toggle-show-pokemon-level",
+			key: "showPokemonLevel"
 		},
 		{
 			text: "toggle-funny-mode",

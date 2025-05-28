@@ -131,6 +131,7 @@ const dialogueEffects = {
 			let direction = effect.direction
 			let duration = effect.duration ?? 500
 			let wait = effect.waitDuration ?? duration
+			let easing = effect.easing ?? "swing"
 
 			let initialPosition = tag.position()
 			let finalPosition = {}
@@ -149,7 +150,28 @@ const dialogueEffects = {
 				finalPosition["left"] += options.dialogueTag.width() * effect.additionalLeft
 			}
 
-			tag.animate(finalPosition, duration)
+			if (effect.walkAnimation){
+				let stepTime = 800
+				let stepHeight = options.dialogueTag.height() * 0.07
+				let totalSteps = Math.ceil(duration / stepTime)
+				stepTime = duration / totalSteps
+				let totalWalkTime = stepTime * totalSteps
+				$({ val: 0 }).animate({ val: totalSteps }, {
+					duration: totalWalkTime,
+					easing: easing,
+					step: function(){
+						let p = this.val % 1
+						let stepP = (Math.max(p, 1-p) - 0.5)*2
+						let y = (-stepHeight) + (stepP ** 2) * stepHeight
+						tag.css("transform", "translateY("+y+"px)")
+					},
+					complete: function(){
+						
+					}
+				})
+			}
+
+			tag.animate(finalPosition, duration, easing)
 			delay(wait).then(() => resolve())
 		}
 	},

@@ -253,8 +253,9 @@ class Round {
 			let html = getLocaleString("initiative-tutorial", lang) || ""
 			return `<div class='text-center'>${html}</div>`
 		}
-		$(".initiatives").popover("dispose")
-		$(".initiatives").popover({
+		let initiativeBars = $(".initiatives")
+		initiativeBars.popover("dispose")
+		initiativeBars.popover({
 			content: popoverHTML,
 			html: true,
 			trigger: "hover",
@@ -1935,10 +1936,20 @@ class Round {
 		// if (this.currentlyEndingTurn === true){
 		// 	return this.getOtherPlayer(this.activePlayerIndex)
 		// }
+		let activeTrainer = this.trainers[this.activePlayerIndex]
+		let activePokemon = activeTrainer.activePokemon
+		let otherTrainer = this.trainers.find(t => t !== activeTrainer)
+		let otherPokemon = otherTrainer.activePokemon
 
 		//Increase initiative values
 		let initiatives = this.initiativeValues
 		let getExtraTurn = this.matchesInCombo.some(m => m.length >= 4)
+
+		//Battle Armor prevents getting extra turns via matching 4 tiles.
+		if (getExtraTurn && otherPokemon.hasAbility("Battle Armor")){
+			getExtraTurn = false
+		}
+
 		if (getExtraTurn) {
 			let playerIndex = this.activePlayerIndex
 			initiatives[playerIndex] += this.maxInitiative
@@ -2307,7 +2318,7 @@ class Round {
 		promise = promise.then(() => this.computerMakeMoves())
 
 		promise = promise.then(() => {
-			if (this.hasEnded) return Promise.resolve()
+			if (this.hasEnded || this.turn !== turn) return Promise.resolve()
 			return delay(250).then(() => {
 				if (this.turn === turn) {
 					return this.timeStep()
@@ -2322,9 +2333,10 @@ class Round {
 	computerMakeMoves() {
 		let resolvePromise
 		let totalPromise = new Promise(resolve => resolvePromise = resolve)
-		let promise = Promise.resolve()
-			.then(() => delay(250))
+		let promise = delay(250)
 		let trainerIndex = this.activePlayerIndex
+		let turn = this.turn
+		let randomId = window.crypto.randomUUID()
 
 		let movesMade = 0
 		let maxMoves = 20
@@ -2332,8 +2344,16 @@ class Round {
 			if (movesMade >= maxMoves){
 				//We decided that was enough turns to take.
 				resolvePromise()
-				return
+				return Promise.resolve()
 			}
+			if (turn !== this.turn){
+				resolvePromise()
+				return Promise.resolve()
+			}
+			// if (this.moveQueue.length){
+			// 	resolvePromise()
+			// 	return Promise.resolve()
+			// }
 			let trainer = this.trainers[trainerIndex]
 			let pokemon = trainer.activePokemon
 			let pokemonTypes = pokemon.getEffectiveTypes()
@@ -2395,11 +2415,12 @@ class Round {
 				let randomAction = output.item
 				let randomIndex = output.index
 				if (randomAction !== "nothing") {
-					let randomMove = randomAction
-					this.payForMove(trainer, pokemon, randomMove)
+					this.payForMove(trainer, pokemon, randomAction)
 					promise = promise.then(() => {
 						movesMade++
-						return this.beginToUseMove(trainer, pokemon, randomMove)
+						let p = this.beginToUseMove(trainer, pokemon, randomAction)
+						console.log(p)
+						return p
 					})
 					promise = promise.then(() => delay(250))
 					promise = promise.then(() => makeMove())
@@ -3008,6 +3029,18 @@ class Round {
 						)
 					}
 				}
+
+				//If this was direct damage, it drops any disguises the defender has.
+				if (options.directDamage && defender.getStatusesOfType("disguise").length){
+					let disguises = defender.getStatusesOfType("disguise")
+					disguises.forEach(disguise => defender.removeStatus(disguise))
+					playSound("woosh")
+					let trainerIndex = this.trainers.indexOf(defender.trainer)
+					if (trainerIndex !== -1){
+						this.resetDisplayedPokemon(trainerIndex, defender, false)
+						this.resetPokemonMoves(trainerIndex)
+					}
+				}
 			}
 		}
 
@@ -3051,15 +3084,19 @@ class Round {
 			&& !this.currentlyCarryingOutSwap
 			&& this.hasBegun
 	}
-	getAvailableMoves(trainerIndex) {
+	getAvailableMoves(trainerIndex, trainer, pokemon) {
 		let moves = []
+		if (!trainer){
+			trainer = this.trainers[trainerIndex]
+		}
+		if (!pokemon){
+			pokemon = trainer.activePokemon
+		}
 
 		if (this.canUseStruggle(trainerIndex)) {
 			moves.push(pokemonMoveData["Struggle"])
 		}
 
-		let trainer = this.trainers[trainerIndex]
-		let pokemon = trainer.activePokemon
 		pokemon.activeMoves.forEach(m => {
 			moves.push(m)
 		})
@@ -3080,7 +3117,11 @@ class Round {
 	canUseStruggle(trainerIndex) {
 		let trainer = this.trainers[trainerIndex]
 		let allSwaps = this.determineAvailableSwaps(trainer)
-		return allSwaps.length === 0 || this.struggleTest
+		let pokemon = trainer.activePokemon
+		let allDisabled = pokemon.activeMoves.every(move => {
+			return this.getEffectiveMoveDisability(trainer, pokemon, move)
+		})
+		return allSwaps.length === 0 || allDisabled || this.struggleTest
 	}
 	getCurrentlyUsableMoves(trainerIndex) {
 		let trainer = this.trainers[trainerIndex]
@@ -3317,11 +3358,19 @@ class Round {
 				energyCost[color] = energyCost[color] * 0.7
 			}
 		}
+		//Anticipation makes super-effective moves cost more
 		if (move.tags.includes("damage-dealing") && typeMult > 1 && otherPokemon.hasAbility("Anticipation")){
 			let factor = (typeMult - 1) * 0.5
 			factor = factor < 1 ? factor : Math.sqrt(factor)
 			for (let color in energyCost){
 				energyCost[color] += energyCost[color] * factor
+			}
+		}
+		//Unnerve makes the first move used each turn cost more
+		if (pokemon.gameRoundData.movesUsedThisTurn === 0 && otherPokemon.hasAbility("Unnerve")){
+			for (let color in energyCost){
+				if (energyCost[color] <= 0) continue
+				energyCost[color] += 1
 			}
 		}
 
@@ -3602,6 +3651,14 @@ class Round {
 		}
 		return typeMult
 	}
+	getPokemonShownToOpponent(pokemon){
+		let shownPokemon = pokemon
+		let disguises = pokemon.getStatusesOfType("disguise")
+		for (let disguise of disguises){
+			shownPokemon = disguise.pokemon
+		}
+		return shownPokemon
+	}
 
 	doesThisApplyToMove(move, appliesTo, type) {
 		if (!move) return false
@@ -3670,6 +3727,7 @@ class Round {
 			originalTrigger: trigger,
 			//Some triggers require information from the move that triggered them.
 			oldMoveUse: oldMoveUse,
+			childMoveUses: [],
 			completed: false,
 			info: [],
 			variables: {},
@@ -4107,6 +4165,7 @@ class Round {
 			} else {
 				moveUseObj = moveUseObj[0]
 			}
+			console.log(moveUseObj.move.name)
 
 			let trainer = moveUseObj.trainer
 			let pokemon = moveUseObj.pokemon
@@ -4116,6 +4175,20 @@ class Round {
 			let type = this.getEffectiveMoveType(trainer, pokemon, move)
 			let promises = []
 			let endedTurn = false
+
+			if (pokemon.hasStatus("tormented")){
+				pokemon.removeStatusesWithName("torment-disabled")
+				pokemon.addStatusEffect({
+					name: "tormented-disabled",
+					type: "disability",
+					stacks: false,
+					volatile: true,
+					lostOnSwap: true,
+					appliesTo: {
+						name: move.name
+					},
+				})
+			}
 
 			if (pokemon.hasStatus("confused")){
 				//50% chance that the turn ends.
@@ -4142,6 +4215,7 @@ class Round {
 			return promise
 		})
 		
+		//Some moves may have two separate groups of effects in which players may be forced to swap pokemon between them.
 		promise = promise.then(() => {
 			if (moveUseObj && moveUseObj.checkBetweenEffects) {
 				return this.checkForWinner()
@@ -4166,6 +4240,7 @@ class Round {
 			return Promise.all(triggers)
 		})
 
+		//Dancer may trigger
 		promise = promise.then(() => {
 			let trainer = moveUseObj.trainer
 			let pokemon = moveUseObj.pokemon
@@ -4198,6 +4273,7 @@ class Round {
 			}
 		})
 
+		//Final update to UI
 		promise = promise.then(() => {
 			this.updateEverything()
 		})
@@ -4205,6 +4281,9 @@ class Round {
 		//Highlights
 		promise = promise.then(() => this.applySpriteHighlights())
 
+		promise = promise.then(() => {
+			return Promise.resolve()
+		})
 		return promise
 	}
 	waitUntilNoMoveQueue(callback) {
@@ -4221,8 +4300,11 @@ class Round {
 		}
 	}
 
-	triggerMoveEffects(trainer, pokemon, move, trigger) {
+	triggerMoveEffects(trainer, pokemon, move, trigger, oldMoveUseObj) {
 		let moveUseObj = this.newMoveUseObj(trainer, pokemon, move, trigger)
+		if (oldMoveUseObj){
+			oldMoveUseObj.childMoveUses.push(moveUseObj)
+		}
 		let promise = moveUseObj.promise
 		this.advanceCurrentMove(moveUseObj)
 		return promise
@@ -4762,6 +4844,87 @@ class Round {
 		return false
 	}
 
+	resetDisplayedPokemon(trainerIndex, pokemon, doCry=true){
+		let tags = this.trainerTags[trainerIndex]
+		let pokemonToShow = pokemon
+
+		//Disguise-type statuses may change which pokemon is shown.
+		if (trainerIndex !== 0){
+			pokemonToShow = this.getPokemonShownToOpponent(pokemon)
+		}
+
+		let name = pokemonToShow.name
+		let pokemonId = pokemonToShow.pokemonId
+		let src = pokemonToShow.getImage()
+		let facing = pokemonToShow.data.imageFacing
+		let correctFacing = trainerIndex === 0 ? "right" : "left"
+		tags.pokemonImage.attr("src", src)
+		if (config["showPokemonLevel"]){
+			tags.pokemonName.text(`${name} (Lv. ${pokemonToShow.level})`)
+		} else {
+			tags.pokemonName.text(name)
+		}
+		tags.pokemonImage.off("click").on("click", () => {
+			viewPokemonInfo(pokemonToShow, {pc: true})
+		})
+
+		if (facing !== correctFacing) {
+			tags.pokemonImageSection.addClass("flip")
+		} else {
+			tags.pokemonImageSection.removeClass("flip")
+		}
+
+		let sounds = pokemonToShow.getAllSounds()
+		let cryUrl = sounds?.cry
+		if (cryUrl && doCry && !pokemon.gameRoundData.hasCried) {
+			pokemon.gameRoundData.hasCried = true
+			let cryName = `${pokemonId}-cry`
+			loadSound(cryName, "sound", cryUrl)
+				.then(() => playSound(cryName))
+				.then(() => delete pokemon.gameRoundData.hasCried)
+				.then(() => {
+					if (pokemonToShow.isShiny){
+						playSound("shiny-appear")
+					}
+				})
+		}
+
+		colors.forEach(c => {
+			tags.energyBars[c].popover("dispose").popover({
+				content: () => {
+					return pokemon.energy[c] + " / " + pokemon.maxEnergy[c]
+				},
+				html: true,
+				placement: "bottom",
+				trigger: "hover",
+				customClass: "popover-for-energy-bar",
+				offset: () => {
+					let chars = (pokemon.energy[c] + " / " + pokemon.maxEnergy[c]).length
+					if (c === "red" && trainerIndex === 0) {
+						return [chars * 4 - 20, 10]
+					}
+					if (c === "purple" && trainerIndex === 1) {
+						return [-chars * 4 + 20, 10]
+					}
+					return [0, 10]
+				},
+				// boundary: $("#popover-viewport")[0],
+				// container: "#popover-viewport",
+				// viewport: "#popover-viewport"
+			})
+		})
+
+		tags.pokemonImage.popover("dispose")
+		tags.pokemonImage.popover({
+			content: () => {
+				return this.getPokemonPopoverContent(pokemonToShow)
+			},
+			html: true,
+			trigger: "hover",
+			placement: "bottom"
+			// placement: trainerIndex === 0 ? "right" : "left"
+		});
+	}
 	updateStats() {
 		for (let i in this.trainers) {
 			this.updateHealth(i, this.hasBegun)
@@ -4938,6 +5101,12 @@ class Round {
 			pokeballContainers.reverse()
 		}
 		let trainer = this.trainers[trainerIndex]
+
+		let activePokemon = trainer.activePokemon
+		if (trainerIndex !== 0){
+			activePokemon = this.getPokemonShownToOpponent(activePokemon)
+		}
+
 		let pokemonList = trainer.pokemon
 		for (let i = 0; i < 6; i++) {
 			let container = $(pokeballContainers[i])
@@ -4958,7 +5127,7 @@ class Round {
 				pokeball.removeClass("active-pokeball")
 				if (!usable) {
 					pokeball.addClass("unusable")
-				} else if (pokemon === this.trainers[trainerIndex].activePokemon) {
+				} else if (pokemon === activePokemon) {
 					pokeball.addClass("active-pokeball")
 				} else {
 
@@ -5300,13 +5469,6 @@ class Round {
 	}
 	sendOutPokemon(trainerIndex, pokemon, options={}) {
 		this.clearPokemonMoves(trainerIndex)
-		let tags = this.trainerTags[trainerIndex]
-		let name = pokemon.name
-		let pokemonId = pokemon.pokemonId
-		let src = pokemon.getImage()
-		let facing = pokemon.data.imageFacing
-		let correctFacing = trainerIndex === 0 ? "right" : "left"
-		tags.pokemonImage.attr("src", src)
 
 		let trainer = this.trainers[trainerIndex]
 		let otherTrainer = this.trainers.find(t => t !== trainer)
@@ -5436,65 +5598,26 @@ class Round {
 				}
 			}, trainer, pokemon, undefined)
 		}
-
-		let sounds = pokemon.getAllSounds()
-		let cryUrl = sounds?.cry
-		if (cryUrl && !pokemon.gameRoundData.hasCried) {
-			pokemon.gameRoundData.hasCried = true
-			let cryName = `${pokemonId}-cry`
-			loadSound(cryName, "sound", cryUrl)
-				.then(() => playSound(cryName))
-				.then(() => delete pokemon.gameRoundData.hasCried)
-				.then(() => {
-					if (pokemon.isShiny){
-						playSound("shiny-appear")
-					}
-				})
+		
+		let pokemonToShow = pokemon
+		if (pokemon.hasAbility("Illusion")){
+			let usablePokemon = getUsablePokemon(trainer.pokemon)
+			let lastPokemon = usablePokemon[usablePokemon.length - 1]
+			pokemonToShow = lastPokemon
+			if (pokemonToShow !== pokemon){
+				pokemon.addStatusEffect({
+					name: "illusion-disguised",
+					type: "disguise",
+					volatile: true,
+					stacks: false,
+					lostOnSwap: true,
+					lostOnBatonPass: true,
+					pokemon: pokemonToShow
+				}, trainer, pokemon, undefined)
+			}
 		}
 
-		if (facing !== correctFacing) {
-			tags.pokemonImageSection.addClass("flip")
-		} else {
-			tags.pokemonImageSection.removeClass("flip")
-		}
-
-		tags.pokemonImage.popover("dispose")
-		tags.pokemonImage.popover({
-			content: () => {
-				return this.getPokemonPopoverContent(pokemon)
-			},
-			html: true,
-			trigger: "hover",
-			placement: "bottom"
-			// placement: trainerIndex === 0 ? "right" : "left"
-		});
-		tags.pokemonName.text(name)
-
-		colors.forEach(c => {
-			tags.energyBars[c].popover("dispose").popover({
-				content: () => {
-					return pokemon.energy[c] + " / " + pokemon.maxEnergy[c]
-				},
-				html: true,
-				placement: "bottom",
-				trigger: "hover",
-				customClass: "popover-for-energy-bar",
-				offset: () => {
-					let chars = (pokemon.energy[c] + " / " + pokemon.maxEnergy[c]).length
-					if (c === "red" && trainerIndex === 0) {
-						return [chars * 4 - 20, 10]
-					}
-					if (c === "purple" && trainerIndex === 1) {
-						return [-chars * 4 + 20, 10]
-					}
-					return [0, 10]
-				},
-				// boundary: $("#popover-viewport")[0],
-				// container: "#popover-viewport",
-				// viewport: "#popover-viewport"
-			})
-		})
-
+		this.resetDisplayedPokemon(trainerIndex, pokemon)
 		this.resetPokemonMoves(trainerIndex, false)
 		this.resetPokeballs()
 		this.updateEverything()
@@ -5526,6 +5649,11 @@ class Round {
 
 		let mastery = getMasteryHTML(pokemon)
 		html.append(mastery)
+
+		let disguise = this.getPokemonShownToOpponent(pokemon)
+		if (disguise !== pokemon){
+			html.append(`<div>(Disguised as ${disguise.name})</div>`)
+		}
 
 		return html.wrap('<p/>').parent().html()
 	}
@@ -5711,13 +5839,18 @@ class Round {
 		let tags = this.trainerTags[trainerIndex]
 		let moveListTag = tags.moveList
 		if (forceResetIndexes.includes(trainerIndex)) {
+			moveListTag.children().popover("dispose")
 			moveListTag.empty()
 		}
 
 		let pokemon = trainer.activePokemon
+		if (trainerIndex !== 0){
+			pokemon = this.getPokemonShownToOpponent(pokemon)
+		}
+
 		let pokemonTypes = pokemon.getEffectiveTypes()
 		let pokemonIndex = trainer.pokemon.indexOf(pokemon)
-		let availableMoves = this.getAvailableMoves(trainerIndex)
+		let availableMoves = this.getAvailableMoves(trainerIndex, trainer, pokemon)
 
 		let struggle = pokemonMoveData["Struggle"]
 		if (!availableMoves.includes(struggle)) {
@@ -6163,7 +6296,7 @@ class Trainer {
 		$({ val: 0 }).animate({ val: 1 }, {
 			duration: 300,
 			step: () => {
-				tags.zMeter.popover('update')
+				tags.zMeter.popover("update")
 			}
 		})
 
@@ -7038,6 +7171,9 @@ function beginRound(trainerData) {
 		}
 		if (data.nature){
 			options.nature = data.nature
+		}
+		if (data.isAce){
+			options.isAce = data.isAce
 		}
 		let pokemon = new Pokemon(options.name, options.id, options)
 		logPokemonAs("seen", pokemon)

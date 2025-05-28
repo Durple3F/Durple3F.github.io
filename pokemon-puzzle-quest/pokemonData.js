@@ -315,6 +315,13 @@ const pokemonStatusData = {
 		class: "buff",
 		name: "mist"
 	},
+	"tormented": {
+		image: "src/img/icons/circle-claws.png",
+		color: "rgb(131, 10, 10)",
+		stacks: false,
+		class: "debuff",
+		name: "tormented"
+	},
 }
 for (let statusName in pokemonStatusData){
 	let statusType = pokemonStatusData[statusName]
@@ -480,6 +487,7 @@ function getTypeFromTileType(type){
 		case "purple": return "Psychic"
 		case "black": return "Dark"
 		case "pink": return "Fairy"
+		case "gray": return "Steel"
 		default:
 			console.warn("What type is ", type)
 	}

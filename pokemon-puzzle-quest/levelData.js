@@ -4,13 +4,19 @@ const songData = {
 		loops: true,
 	},
 	"SM Trainer Battle": {
+		source: "src/audio/songs/sm trainer battle intro.mp3",
+		loopTransition: true,
+		loopSource: "src/audio/songs/sm trainer battle loop.mp3"
+	},
+	"SM Wild Pokemon Battle": {
 		source: "src/audio/songs/sm wild pokemon battle intro.mp3",
 		loopTransition: true,
 		loopSource: "src/audio/songs/sm wild pokemon battle loop.mp3"
 	},
-	"SM Wild Pokemon Battle": {
-		source: "src/audio/songs/sm wild pokemon battle.mp3",
-		loops: true,
+	"SM Gladion Battle": {
+		source: "src/audio/songs/sm gladion battle intro.mp3",
+		loopTransition: true,
+		loopSource: "src/audio/songs/sm gladion battle loop.mp3"
 	},
 	"SM Trainers' School": {
 		source: "src/audio/songs/trainer school.mp3",
@@ -2253,7 +2259,7 @@ const levelData = [
 		music: "SM Wild Pokemon Battle",
 		icon: "5",
 		images: {
-			"route-bg-forest-path": "src/img/bg/forest path.jpg"
+			"route-bg-ranch": "src/img/bg/ranch.jpg"
 		},
 		recommendedLevels: {
 			"normal": (pokemonList) => {
@@ -2357,7 +2363,7 @@ const levelData = [
 			},
 		],
 		effects: [
-			// { type: "change-background-image", name: "route-bg-forest-path" },
+			{ type: "change-background-image", name: "route-bg-ranch" },
 			{ type: "fight", trainer: 0 },
 			{ type: "jump-if-lost", jumpTo: Infinity },
 			{ type: "dialogue", source: "route-4-5-dialogue" },
@@ -2426,7 +2432,7 @@ const levelData = [
 					},
 					{
 						id: "Ledyba",
-						name: "Gorps",
+						name: "Amanita",
 						level: 16,
 						pokeball: "great ball",
 						activeMoves: ["Mach Punch", "Reflect", "Swift", "Supersonic"],
@@ -2474,7 +2480,7 @@ const levelData = [
 					},
 					{
 						id: "Ledyba",
-						name: "Gorps",
+						name: "Amanita",
 						level: 16,
 						pokeball: "great ball",
 						activeMoves: ["Mach Punch", "Reflect", "Swift", "Supersonic"],
@@ -2496,7 +2502,7 @@ const levelData = [
 			{ type: "change-background-image", name: "route-bg-forest-path-2" },
 			{ type: "fight", trainer: 0 },
 			{ type: "jump-if-lost", jumpTo: Infinity },
-			{ type: "change-background-image", name: "route-bg-forest-path-2-night" },
+			{ type: "change-background-image", name: "route-bg-forest-path-2-night", duration: 5000, combineFades: true },
 			{ type: "dialogue", source: "route-4-6-dialogue" },
 			{ type: "change-music", music: "SM Trainer Battle" },
 			{ type: "load-setting", key: "hardMode" },
@@ -2509,6 +2515,105 @@ const levelData = [
 			{ type: "jump", jumpTo: "win-check" },
 			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
 			{ type: "dialogue", source: "route-4-6-dialogue-won" },
+		]
+	},
+	//4-7: Fight with Gladion
+	{
+		id: "Route 4-7",
+		category: "Route 4",
+		name: "Route 4-7",
+		music: "Route 201 (Day)",
+		icon: "7",
+		images: {
+			"route-bg-route-5": "src/img/bg/route 5.jpg"
+		},
+		recommendedLevels: {
+			"normal": 18,
+			"hard": 18
+		},
+		trainers: [
+			{
+				name: "Gladion-stance",
+				pokemon: [
+					{
+						id: "Zubat",
+						level: 17,
+						ability: "Inner Focus",
+						activeMoves: ["Bite", "Wing Attack", "Poison Fang", "Astonish"],
+					},
+					{
+						id: "Poochyena",
+						level: 17,
+						ability: "Rattled",
+						activeMoves: ["Bite", "Tackle", "Sand Attack", "Howl"],
+					},
+					{
+						id: "Houndour",
+						level: 17,
+						ability: "Unnerve",
+						activeMoves: ["Roar", "Ember", "Smog", "Howl"],
+					},
+					{
+						id: "Zorua",
+						level: 17,
+						ability: "Illusion",
+						activeMoves: ["Fury Swipes", "Torment", "Hone Claws", "Knock Off"],
+					},
+					{
+						id: "Type: Null",
+						name: "Null",
+						isAce: true,
+						level: 18,
+						ability: "Battle Armor",
+						activeMoves: ["Double Hit", "Aerial Ace", "Imprison", "Scary Face"],
+					},
+				]
+			},
+			{
+				name: "Gladion-stance",
+				pokemon: [
+					{
+						id: "Zubat",
+						level: 17,
+						ability: "Inner Focus",
+						activeMoves: ["Bite", "Wing Attack", "Poison Fang", "Astonish"],
+					},
+					{
+						id: "Poochyena",
+						level: 17,
+						ability: "Rattled",
+						activeMoves: ["Bite", "Tackle", "Sand Attack", "Howl"],
+					},
+					{
+						id: "Houndour",
+						level: 17,
+						ability: "Unnerve",
+						activeMoves: ["Roar", "Ember", "Smog", "Howl"],
+					},
+					{
+						id: "Zorua",
+						level: 17,
+						ability: "Illusion",
+						activeMoves: ["Fury Swipes", "Torment", "Hone Claws", "Knock Off"],
+					},
+					{
+						id: "Type: Null",
+						name: "Null",
+						isAce: true,
+						level: 18,
+						ability: "Battle Armor",
+						activeMoves: ["Double Hit", "Aerial Ace", "Imprison", "Scary Face"],
+					},
+				]
+			},
+		],
+		effects: [
+			{ type: "change-background-image", name: "route-bg-route-5" },
+			{ type: "dialogue", source: "route-4-7-dialogue" },
+			{ type: "change-music", music: "SM Gladion Battle" },
+			{ type: "fight", trainer: 0 },
+			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "dialogue", source: "route-4-7-dialogue-won" },
 		]
 	},
 ]

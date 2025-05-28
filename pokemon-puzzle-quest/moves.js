@@ -327,8 +327,8 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 2,
 		energy: {
-			blue: 15,
-			yellow: 5
+			blue: 9,
+			yellow: 3
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Aqua Jet.mp3"
@@ -859,7 +859,7 @@ const pokemonMoveData = {
 				type: "apply-debuff", target: "opponent", debuff: {
 					type: "stat",
 					stat: "speed",
-					class: "buff",
+					class: "debuff",
 					amount: -1
 				}
 			},
@@ -886,8 +886,11 @@ const pokemonMoveData = {
 			{ type: "add-numbers" },
 			{ type: "save-variable", name: "x", save: -1 },
 			{ type: "load-variable", name: "width" },
-			{ type: "jump-if-less-than", jumpTo: "startLoop" },
-			{ type: "jump", jumpTo: Infinity },
+			{ type: "jump-if-greater-than-or-equal-to", jumpTo: Infinity },
+			{ type: "load-variable", name: "x" },
+			{ type: "load-value", name: 0 },
+			{ type: "jump-if-less-than", jumpTo: Infinity },
+			{ type: "jump", jumpTo: "startLoop" },
 		],
 	},
 	//Increases the power of the user's next electric move
@@ -1528,28 +1531,73 @@ const pokemonMoveData = {
 			{ type: "empower-tiles", selection: -1 },
 		]
 	},
-	//Deals huge damage, but has recoil
-	"Double-Edge": {
-		name: "Double-Edge",
+	//Damage once, double energy gain until end of turn, then damage again
+	"Double Hit": {
+		name: "Double Hit",
 		type: "Normal",
 		category: "Physical",
-		strategy: "basic-damage",
+		strategy: "special",
 		tags: ["damage-dealing", "makes-contact"],
-		pp: 15,
-		power: 120,
-		accuracy: 100,
+		pp: 10,
+		power: 35,
+		accuracy: 90,
 		rechargeTurns: 2,
 		energy: {
-			red: 12,
-			yellow: 6
+			orange: 4,
+			yellow: 5
 		},
 		sounds: {
-			"attack": "src/audio/attacks/Double-Edge.mp3"
+			"attack": "src/audio/attacks/Double Hit 1hit.mp3"
 		},
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
-			{ type: "recoil-damage", damageMult: 1/3 },
+		],
+		additionalEffects: [
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "double-hit-used",
+				type: "energy-gain-alteration",
+				stacks: false,
+				volatile: true,
+				turns: 1,
+				appliesTo: {},
+				modification: {
+					change: 1.5,
+					operation: "multiply"
+				}
+			} },
+		],
+		onTurnEnd: [
+			{ type: "get-status-stacks", target: "user", statusName: "double-hit-used" },
+			{ type: "load-value", value: 0 },
+			{ type: "jump-if-equal", jumpTo: Infinity },
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "remove-status-effect", target: "user", statusName: "double-hit-used" },
+		],
+	},
+	//Basic damage but twice
+	"Double Kick": {
+		name: "Double Kick",
+		type: "Fighting",
+		category: "Physical",
+		strategy: "special",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 30,
+		power: 30,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			orange: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Double Kick 1hit.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" }
 		],
 	},
 	//Lowers its own cost this turn
@@ -1592,30 +1640,6 @@ const pokemonMoveData = {
 			{ type: "remove-status-effect", target: "user", statusName: "double-slap-cost-reduction" },
 		]
 	},
-	//Basic damage but twice
-	"Double Kick": {
-		name: "Double Kick",
-		type: "Fighting",
-		category: "Physical",
-		strategy: "special",
-		tags: ["damage-dealing", "makes-contact"],
-		pp: 30,
-		power: 30,
-		accuracy: 100,
-		rechargeTurns: 1,
-		energy: {
-			orange: 6
-		},
-		sounds: {
-			"attack": "src/audio/attacks/Double Kick 1hit.mp3"
-		},
-		effects: [
-			{ type: "play-sound", name: "attack" },
-			{ type: "damage" },
-			{ type: "play-sound", name: "attack" },
-			{ type: "damage" }
-		],
-	},
 	//Raises speed 1 and Makes a match for the user
 	"Double Team": {
 		name: "Double Team",
@@ -1648,6 +1672,30 @@ const pokemonMoveData = {
 			{ type: "jump-if-truthy", jumpTo: "move" },
 			{ type: "jump", jumpTo: Infinity },
 			{ type: "perform-swap", swap: -3, label: "move" }
+		],
+	},
+	//Deals huge damage, but has recoil
+	"Double-Edge": {
+		name: "Double-Edge",
+		type: "Normal",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 15,
+		power: 120,
+		accuracy: 100,
+		rechargeTurns: 2,
+		energy: {
+			red: 12,
+			yellow: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Double-Edge.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "recoil-damage", damageMult: 1/3 },
 		],
 	},
 	//50% chance to paralyze opponent
@@ -1899,7 +1947,7 @@ const pokemonMoveData = {
 		pp: 5,
 		power: null,
 		accuracy: 100,
-		rechargeTurns: 1,
+		rechargeTurns: 3,
 		energy: {
 			yellow: 4,
 			purple: 6
@@ -2906,7 +2954,7 @@ const pokemonMoveData = {
 		rechargeTurns: 1,
 		energy: {
 			yellow: 4,
-			green: 3
+			orange: 3
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Gyro Ball.mp3"
@@ -3417,6 +3465,77 @@ const pokemonMoveData = {
 			}
 		]
 	},
+	//Prevents the opponent from using moves that the user knows
+	"Imprison": {
+		name: "Imprison",
+		type: "Psychic",
+		category: "Status",
+		strategy: "special",
+		pp: 10,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 3,
+		energy: {
+			blue: 2,
+			purple: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Imprison.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "load-value", value: "Struggle" },
+			{ type: "get-active-moves", target: "user" },
+			{ type: "remove-element-from-list", list: -1, element: -2 },
+			{ type: "apply-status-effect", target: "opponent", statusEffect: {
+				name: "disable-disability",
+				type: "disability",
+				stacks: false,
+				volatile: true,
+				lostOnSwap: true,
+				appliesTo: {
+					names: [],
+				},
+			}, statusSettings: [
+				{
+					path: ["appliesTo"],
+					key: "names",
+					value: -1
+				}
+			] },
+		],
+		highlightOnHover: {
+			type: "last-enemy-move"
+		}
+	},
+	//Remove many status effects from yourself and the board
+	"Incinerate": {
+		name: "Incinerate",
+		type: "Fire",
+		category: "Special",
+		strategy: "basic-damage",
+		tags: ["damage-dealing"],
+		pp: 15,
+		power: 60,
+		accuracy: 100,
+		rechargeTurns: 2,
+		energy: {
+			red: 8,
+			green: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Incinerate.mp3",
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "select-all-tiles", targetType: "green" },
+			{ type: "remove-tiles", selection: -1 }
+		],
+	},
 	//Places a status on tiles that steals energy from the opponent each turn
 	"Infestation": {
 		name: "Infestation",
@@ -3507,8 +3626,8 @@ const pokemonMoveData = {
 		accuracy: null,
 		rechargeTurns: 2,
 		energy: {
-			blue: 6,
-			yellow: 4
+			blue: 4,
+			yellow: 6
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Iron Defense.mp3"
@@ -4206,6 +4325,39 @@ const pokemonMoveData = {
 					amount: 1
 				}
 			}
+		],
+	},
+	//Converts random tiles into Steel tiles
+	"Metal Sound": {
+		name: "Metal Sound",
+		type: "Steel",
+		category: "Status",
+		strategy: "debuff-opponent",
+		tags: ["sound-based"],
+		pp: 40,
+		power: null,
+		accuracy: 85,
+		rechargeTurns: 3,
+		energy: {
+			orange: 4,
+			purple: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Metal Sound.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{
+				type: "apply-debuff", target: "opponent", debuff: {
+					type: "stat",
+					stat: "specialDefense",
+					class: "debuff",
+					amount: -2
+				}
+			},
+			{ type: "load-value", value: 3 },
+			{ type: "select-random-tiles", count: -1 },
+			{ type: "change-tile-type", selection: "group", which: -1, targetType: "gray" },
 		],
 	},
 	//Adds the opponent's last used move to your active moves until the fight
@@ -6349,6 +6501,35 @@ const pokemonMoveData = {
 			} },
 		]
 	},
+	//Deals damage and might poison
+	"Smog": {
+		name: "Smog",
+		type: "Poison",
+		category: "Special",
+		strategy: "basic-damage",
+		pp: 20,
+		power: 30,
+		accuracy: 70,
+		rechargeTurns: 1,
+		energy: {
+			purple: 7,
+			blue: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Smog.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "random-number", min: 1, max: 10 },
+			{ type: "load-value", value: 5 },
+			{ type: "jump-if-less-than", jumpTo: Infinity },
+			{ type: "apply-status-effect", statusEffect: "poisoned", target: "opponent" },
+		],
+	},
 	//Paralyzes and deals more damage to paralyzed enemies
 	"Spark": {
 		name: "Spark",
@@ -7456,6 +7637,29 @@ const pokemonMoveData = {
 			}
 		],
 	},
+	//Prevents the opponent using the same move twice in a row
+	"Torment": {
+		name: "Torment",
+		type: "Dark",
+		category: "Status",
+		strategy: "debuff-opponent",
+		tags: [],
+		pp: 15,
+		power: null,
+		accuracy: 100,
+		rechargeTurns: 5,
+		energy: {
+			purple: 3,
+			red: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Torment.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "apply-status-effect", statusEffect: "tormented", target: "opponent" }
+		],
+	},
 	//Basic damage
 	"Vine Whip": {
 		name: "Vine Whip",
@@ -7821,7 +8025,7 @@ const pokemonMoveData = {
 			"Wring Out": 190,
 		},
 		accuracy: null,
-		rechargeTurns: 1,
+		rechargeTurns: 0,
 		energy: {},
 		sounds: {
 			"part1": "src/audio/attacks/Breakneck Blitz part 1.mp3",
@@ -7831,7 +8035,7 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "part1", wait: true },
 			{ type: "play-sound", name: "part3" },
-			{ type: "z-move-animation", animationType: "Normal", resolveOn: "wait", waitBeforeFinishMove: true },
+			{ type: "z-move-animation", animationType: "Normal", resolveOn: "wait" },
 			{ type: "save-variable", name: "animPromise", save: -1 },
 			// { type: "wait", duration: 5000 },
 			{ type: "load-value", value: 5 },
@@ -7861,7 +8065,6 @@ const pokemonMoveData = {
 			{ type: "load-variable", name: "animPromise" },
 			{ type: "promise-wait" },
 			{ type: "damage", delay: 0 },
-			{ type: "end-turn" },
 		],
 	},
 	"All-Out Pummeling": {
@@ -8060,6 +8263,7 @@ const pokemonMoveData = {
 			{ type: "play-sound", name: "part3", waitBeforeFinishMove: true },
 			{ type: "z-move-animation", animationType: "Flying" },
 			
+			{ type: "damage", delay: 0 },
 			{ type: "load-value", value: 45 },
 			{ 
 				type: "select-tiles-with-expression",
