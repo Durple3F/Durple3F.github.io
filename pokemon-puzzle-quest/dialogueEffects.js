@@ -309,7 +309,7 @@ const dialogueEffects = {
 			let wait = effect.wait ?? true
 			if (imgName in images){
 				let url = images[imgName]
-				let p = changeBackgroundImage(imgName, url, false)
+				let p = changeBackgroundImage(imgName, url, undefined, false)
 				if (wait){
 					p.then(() => resolve())
 				} else {

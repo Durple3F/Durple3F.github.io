@@ -42,7 +42,7 @@ class Round {
 		})
 		this.maxInitiative = 100
 		this.struggleTest = false
-		this.zMoveTest = true
+		this.zMoveTest = false
 		if (this.zMoveTest){
 			this.trainers.forEach(trainer => trainer.zMeterFullness = 1)
 		}

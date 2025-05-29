@@ -1186,6 +1186,9 @@
 			"effects": [
 				{ "type": "get-speaker", "name": "Narrator", "class": "Narrator" },
 				{ "type": "get-speaker", "name": "Yuka", "class": "Pokemon-Breeder-Gen7-F" },
+				{ "type": "style-speaker", "speaker": "Yuka", "css": {
+					"filter": "brightness(0.5)"
+				}},
 				{ "type": "text", "speaker": "Yuka", "text": "Oh, the little ones $@start-italics|@$loved$@end-italics|@$ that!" },
 				{ "type": "text", "speaker": "Yuka", "text": "They’re very grateful for the entertainment..." },
 				{ "type": "text", "speaker": "Yuka", "text": "You should come back sometime! They seem to like you a lot!" },

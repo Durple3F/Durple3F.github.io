@@ -1725,8 +1725,8 @@ const levelData = [
 						activeMoves: ["Icy Wind", "Covet", "Double-Edge", "Growl"],
 					},
 					{
-						id: "Snowball",
-						name: "Sandshrew-Alola",
+						id: "Sandshrew-Alola",
+						name: "Snowball",
 						level: 15,
 						pokeball: "ultra ball",
 						activeMoves: ["Fury Cutter", "Rollout", "Powder Snow", "Mist"],
@@ -1788,8 +1788,8 @@ const levelData = [
 						evs: { hp: 15, attack: 40, defense: 15, specialAttack: 25, specialDefense: 10, speed: 5 },
 					},
 					{
-						id: "Snowball",
-						name: "Sandshrew-Alola",
+						id: "Sandshrew-Alola",
+						name: "Snowball",
 						level: 15,
 						pokeball: "ultra ball",
 						activeMoves: ["Fury Cutter", "Rollout", "Powder Snow", "Iron Defense"],
