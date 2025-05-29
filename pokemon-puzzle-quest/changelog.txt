@@ -1,12 +1,16 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-5/29 (41.8k lines):
+5/29 (42.0k lines):
+	- Anniversary! :)
+
+5/28 (42.0k lines):
 	- Added the remaining pokedex entries.
 	- Added a toggle for showing/hiding the highlights around tiles.
 	- Added a toggle for showing/hiding the level of pokemon next to their names
 	- Fixed a softlock that would occur if your opponent ever used Bulldoze.
 	- Fixed yet another bug regarding moves that end the current turn. This time, pokemon would start attempting to use moves twice, then four times, then (etc) because when each move ended, it would start the next turn, but not stop their logic
 	- Fixed the way that you could still see tooltips on screen while people were talking
+	- Added a hard mode to 4-7
 
 5/27 (41.8k lines):
 	- Added lots of pokedex entries.

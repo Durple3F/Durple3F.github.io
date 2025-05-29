@@ -277,7 +277,7 @@ body {
 	display: none;
 }
 #board.showing-dialogue {
-	filter: opacity(0.2);
+	filter: opacity(0);
 	pointer-events: none;
 }
 #title-screen {

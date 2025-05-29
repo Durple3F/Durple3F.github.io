@@ -2163,6 +2163,7 @@ class Round {
 					let options = {
 						message: message,
 						showOnlyActiveMoves: true,
+						canSwitchActiveMoves: true,
 						highlightedMoves: notActive
 					}
 					return viewPokemonInfo(pokemon, options)
@@ -2296,6 +2297,7 @@ class Round {
 						let options = {
 							message: message,
 							showOnlyActiveMoves: true,
+							canSwitchActiveMoves: true,
 							highlightedMoves: notActive
 						}
 						viewPokemonInfo(pokemon, options)
@@ -5327,14 +5329,14 @@ class Round {
 			first = Promise.resolve()
 		}
 
-		if (animName) {
+		if (animName && !trainer.data.bypassTrainerAnimation) {
 			first = first.then(() => trainerAnimations[animName](trainerTag))
 		}
 
-		const trainerMoveToSide = () => {
+		const trainerMoveToSide = dur => {
 			trainerTag.animate({
 				left: "40%"
-			}, 900)
+			}, dur)
 		}
 
 		//If this is a wild pokemon, the pokemon just slides in from the side.
@@ -6232,7 +6234,7 @@ class Round {
 
 				let exp = (base * themLevel * 0.2) * Math.pow((2 * themLevel + 10) / (themLevel + youLevel + 10), 2.5)
 				//I'm reducing the EXP you gain, it's just too much otherwise
-				exp *= 0.6
+				exp *= 0.4
 				totalEXP += exp
 
 				let evYield = p.data.evYield

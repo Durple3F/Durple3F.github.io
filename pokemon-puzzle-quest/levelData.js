@@ -2263,12 +2263,12 @@ const levelData = [
 		},
 		recommendedLevels: {
 			"normal": (pokemonList) => {
-				if (pokemonList.length >= 3) return 17
-				return 20
+				if (pokemonList.length >= 3) return 18
+				return 21
 			},
 			"hard": (pokemonList) => {
-				if (pokemonList.length >= 3) return 17
-				return 20
+				if (pokemonList.length >= 3) return 18
+				return 21
 			}
 		},
 		trainers: [
@@ -2528,8 +2528,8 @@ const levelData = [
 			"route-bg-route-5": "src/img/bg/route 5.jpg"
 		},
 		recommendedLevels: {
-			"normal": 18,
-			"hard": 18
+			"normal": 19,
+			"hard": 19
 		},
 		trainers: [
 			{
@@ -2577,24 +2577,36 @@ const levelData = [
 						level: 17,
 						ability: "Inner Focus",
 						activeMoves: ["Bite", "Wing Attack", "Poison Fang", "Astonish"],
+						nature: "adamant",
+						ivs: { hp: 15, attack: 25, defense: 15, specialAttack: 15, specialDefense: 5, speed: 25 },
+						evs: { hp: 30, attack: 50, defense: 35, specialAttack: 30, specialDefense: 30, speed: 30 },
 					},
 					{
 						id: "Poochyena",
 						level: 17,
 						ability: "Rattled",
 						activeMoves: ["Bite", "Tackle", "Sand Attack", "Howl"],
+						nature: "adamant",
+						ivs: { hp: 15, attack: 30, defense: 20, specialAttack: 10, specialDefense: 5, speed: 25 },
+						evs: { hp: 30, attack: 60, defense: 35, specialAttack: 20, specialDefense: 30, speed: 40 },
 					},
 					{
 						id: "Houndour",
 						level: 17,
 						ability: "Unnerve",
 						activeMoves: ["Roar", "Ember", "Smog", "Howl"],
+						nature: "modest",
+						ivs: { hp: 15, attack: 10, defense: 20, specialAttack: 30, specialDefense: 15, speed: 15 },
+						evs: { hp: 30, attack: 20, defense: 35, specialAttack: 60, specialDefense: 30, speed: 40 },
 					},
 					{
 						id: "Zorua",
 						level: 17,
 						ability: "Illusion",
 						activeMoves: ["Fury Swipes", "Torment", "Hone Claws", "Knock Off"],
+						nature: "hasty",
+						ivs: { hp: 15, attack: 30, defense: 20, specialAttack: 10, specialDefense: 15, speed: 25 },
+						evs: { hp: 30, attack: 60, defense: 35, specialAttack: 20, specialDefense: 30, speed: 40 },
 					},
 					{
 						id: "Type: Null",
@@ -2603,6 +2615,9 @@ const levelData = [
 						level: 18,
 						ability: "Battle Armor",
 						activeMoves: ["Double Hit", "Aerial Ace", "Imprison", "Scary Face"],
+						nature: "adamant",
+						ivs: { hp: 31, attack: 31, defense: 31, specialAttack: 31, specialDefense: 31, speed: 31 },
+						evs: { hp: 50, attack: 50, defense: 50, specialAttack: 50, specialDefense: 50, speed: 50 },
 					},
 				]
 			},
@@ -2611,8 +2626,15 @@ const levelData = [
 			{ type: "change-background-image", name: "route-bg-route-5" },
 			{ type: "dialogue", source: "route-4-7-dialogue" },
 			{ type: "change-music", music: "SM Gladion Battle" },
-			{ type: "fight", trainer: 0 },
-			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "load-setting", key: "hardMode" },
+			{ type: "load-value", value: true },
+			{ type: "jump-if-equal", jumpTo: "hardMode" },
+			{ type: "jump", jumpTo: "easyMode" },
+			{ type: "fight", trainer: 0, label: "easyMode" },
+			{ type: "jump", jumpTo: "win-check" },
+			{ type: "fight", trainer: 1, label: "hardMode" },
+			{ type: "jump", jumpTo: "win-check" },
+			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
 			{ type: "dialogue", source: "route-4-7-dialogue-won" },
 		]
 	},
