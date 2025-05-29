@@ -3503,10 +3503,7 @@ const pokemonMoveData = {
 					value: -1
 				}
 			] },
-		],
-		highlightOnHover: {
-			type: "last-enemy-move"
-		}
+		]
 	},
 	//Remove many status effects from yourself and the board
 	"Incinerate": {
@@ -5976,7 +5973,7 @@ const pokemonMoveData = {
 					names: ["Rollout"]
 				},
 				modification: {
-					change: 2,
+					change: 1.5,
 					operation: "multiply"
 				}
 			} },
@@ -6005,7 +6002,7 @@ const pokemonMoveData = {
 					names: ["Rollout"]
 				},
 				modification: {
-					change: 2,
+					change: 1.5,
 					operation: "multiply"
 				}
 			} },

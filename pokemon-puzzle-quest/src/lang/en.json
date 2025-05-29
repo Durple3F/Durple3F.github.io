@@ -2587,7 +2587,7 @@
 		},
 		"Rollout": {
 			"name": "Rollout",
-			"description": "Deals damage, then disables Rollout and doubles its power for 5 turns before ending the turn. At the start of each turn, if Rollout is still disabled, it deals damage and doubles its power again.",
+			"description": "Deals damage, then disables Rollout for 5 turns and increases its power by 50% before ending the turn. At the start of each turn, if Rollout is still disabled, it deals damage and increases its power again.",
 			"shortDescription": "Deals damage over 5 turns"
 		},
 		"Roost": {

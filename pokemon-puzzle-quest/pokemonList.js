@@ -5007,7 +5007,7 @@ const pokemonData = {
 		sounds: {
 			"cry": "src/audio/cries/dartrix.mp3"
 		},
-		types: ["Grass"],
+		types: ["Grass", "Flying"],
 		tags: [],
 		abilities: ["Overgrow"],
 		hiddenAbilities: ["Long Reach"],
