@@ -1926,6 +1926,9 @@ const pokemonMoveEffects = {
 			if (index !== -1){
 				usage = target.moveUsage[index]
 				usage.recharge += amount
+				if (usage.recharge < 0){
+					usage.recharge = 0
+				}
 			}
 
 			resolve(usage.recharge)
