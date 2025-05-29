@@ -1184,6 +1184,59 @@ const pokemonData = {
 			{ name: "Screech", unlock: { type: "level", amount: 36 } },
 		]
 	},
+	"Psyduck": {
+		name: "Psyduck",
+		number: "54",
+		weight: {
+			pounds: 43.2,
+			kilograms: 19.6
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0054Psyduck.png",
+			"largeShiny": "src/img/shiny-pokemon/054-Psyduck.png",
+			"home": "src/img/tiny-pokemon/Psyduck.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/psyduck.mp3"
+		},
+		types: ["Water"],
+		tags: [],
+		abilities: ["Damp", "Cloud Nine"],
+		hiddenAbilities: ["Swift Swim"],
+		stats: {
+			hp: 50,
+			attack: 52,
+			defense: 48,
+			specialAttack: 65,
+			specialDefense: 50,
+			speed: 55
+		},
+		expYield: 64,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 1,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			blue: 3,
+			purple: 3
+		},
+		learnset: [
+			{ name: "Scratch", unlock: { type: "level", amount: 1 } },
+			{ name: "Tail Whip", unlock: { type: "level", amount: 1 } },
+			{ name: "Water Gun", unlock: { type: "level", amount: 3 } },
+			{ name: "Confusion", unlock: { type: "level", amount: 6 } },
+			{ name: "Fury Swipes", unlock: { type: "level", amount: 9 } },
+			{ name: "Water Pulse", unlock: { type: "level", amount: 12 } },
+			{ name: "Disable", unlock: { type: "level", amount: 15 } },
+			{ name: "Zen Headbutt", unlock: { type: "level", amount: 18 } },
+			{ name: "Screech", unlock: { type: "level", amount: 21 } },
+		]
+	},
 	"Mankey": {
 		name: "Mankey",
 		number: "56",
@@ -5218,7 +5271,6 @@ const pokemonData = {
 			{ name: "Sing", unlock: { type: "level", amount: 18 } },
 			{ name: "Bubble Beam", unlock: { type: "level", amount: 21 } },
 			{ name: "Encore", unlock: { type: "level", amount: 24 } },
-			{ name: "Torment", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Brionne": {
@@ -5275,6 +5327,7 @@ const pokemonData = {
 			{ name: "Sing", unlock: { type: "level", amount: 20 } },
 			{ name: "Bubble Beam", unlock: { type: "level", amount: 25 } },
 			{ name: "Encore", unlock: { type: "level", amount: 30 } },
+			{ name: "Zen Headbutt", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {

@@ -140,7 +140,8 @@ const pokemonAbilityData = {
 	},
 	//On a blue 4-match, cure a random non-volatile status
 	"Hydration": {
-		id: "Hydration"
+		id: "Hydration",
+		tags: ["weather-based"]
 	},
 	//Prevents receiving statuses that lower Attack
 	"Hyper Cutter": {
@@ -148,7 +149,8 @@ const pokemonAbilityData = {
 	},
 	//On a blue or yellow 4-match, heal 10% max HP
 	"Ice Body": {
-		id: "Ice Body"
+		id: "Ice Body",
+		tags: ["weather-based"]
 	},
 	//Prevents receiving statuses that lower Speed
 	"Illuminate": {
@@ -288,7 +290,8 @@ const pokemonAbilityData = {
 	},
 	//On a blue 4-match, heal 20% max HP
 	"Rain Dish": {
-		id: "Rain Dish"
+		id: "Rain Dish",
+		tags: ["weather-based"]
 	},
 	//Raises speed on getting hit with Bug Ghost or Dark moves
 	"Rattled": {
@@ -312,15 +315,18 @@ const pokemonAbilityData = {
 	},
 	//On an orange 4-match, increase next Rock/Ground/Steel move's power
 	"Sand Force": {
-		id: "Sand Force"
+		id: "Sand Force",
+		tags: ["weather-based"]
 	},
 	//On an orange 4-match, double speed for 4 turns
 	"Sand Rush": {
-		id: "Sand Rush"
+		id: "Sand Rush",
+		tags: ["weather-based"]
 	},
 	//On an orange 4-match, increase speed
 	"Sand Veil": {
-		id: "Sand Veil"
+		id: "Sand Veil",
+		tags: ["weather-based"]
 	},
 	//Buffs you when you're hit by a grass move
 	"Sap Sipper": {
@@ -352,7 +358,8 @@ const pokemonAbilityData = {
 	},
 	//On a blue 4-match, double speed for 4 turns
 	"Slush Rush": {
-		id: "Slush Rush"
+		id: "Slush Rush",
+		tags: ["weather-based"]
 	},
 	//Grants a power boost after a 5-match
 	"Sniper": {
@@ -360,7 +367,8 @@ const pokemonAbilityData = {
 	},
 	//On a blue 4-match, the opponent's next damage-dealing move costs 40% more for 3 turns
 	"Snow Cloak": {
-		id: "Snow Cloak"
+		id: "Snow Cloak",
+		tags: ["weather-based"]
 	},
 	//Double power on moves while the opponent switched in <= 2 turns ago
 	"Stakeout": {
@@ -468,6 +476,9 @@ for (let abilityId in pokemonAbilityData){
 	let ability = pokemonAbilityData[abilityId]
 	if (ability.copiable === undefined){
 		ability.copiable = true
+	}
+	if (ability.tags === undefined){
+		ability.tags = []
 	}
 }
 

@@ -679,9 +679,7 @@ const pokemonMoveEffects = {
 		execute: (resolve, effect, params, game, options) => {
 			let target = options.target
 			let targetClass = effect.targetClass
-			let statuses = target.statusEffects.filter(statusEffect => {
-				return statusEffect.type === "status"
-			})
+			let statuses = target.getStatusesOfType("status")
 			if (targetClass){
 				statuses = statuses.filter(statusEffect => {
 					return statusEffect.class === targetClass

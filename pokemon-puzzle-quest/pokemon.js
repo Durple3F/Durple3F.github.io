@@ -157,6 +157,7 @@ class Pokemon{
 		this.everstoneActive = options?.everstoneActive ?? false
 		this.evolutionTriggerData = options?.evolutionTriggerData ?? {}
 		this.statusEffects = []
+		this.statusEffectsMap = {}
 
 		this.data.relevantTriggers.forEach(trigger => {
 			this.evolutionTriggerData[trigger] = this.evolutionTriggerData[trigger] ?? 0
@@ -505,24 +506,18 @@ class Pokemon{
 		}
 
 		if (result.replaced.length){
-			let index = this.statusEffects.indexOf(result.replaced[0])
-			//Put the new statuses in place of the first old one
-			for (let statusEffect of result.added){
-				this.statusEffects.splice(index, 0, statusEffect)
-				index++
-				
-				if (!statusEffect.class){
-					console.warn("No class given for ", statusEffect)
-				}
-			}
 			//Remove the old ones
 			for (let statusEffect of result.replaced){
 				this.removeStatus(statusEffect)
 			}
-		} else {
-			for (let status of result.added){
-				this.statusEffects.push(status)
+		}
+
+		for (let statusEffect of result.added){
+			this.statusEffects.push(statusEffect)
+			if (!this.statusEffectsMap[statusEffect.type]){
+				this.statusEffectsMap[statusEffect.type] = []
 			}
+			this.statusEffectsMap[statusEffect.type].push(statusEffect)
 		}
 		
 		if (this.hasAbility("Defiant")){
@@ -568,9 +563,7 @@ class Pokemon{
 		})
 	}
 	getStatusesOfType(type){
-		return this.statusEffects.filter(s => {
-			return s.type === type
-		})
+		return this.statusEffectsMap[type] ?? []
 	}
 	removeStatus(statusEffect){
 		let index = this.statusEffects.indexOf(statusEffect)

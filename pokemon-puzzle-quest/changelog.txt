@@ -2,6 +2,9 @@
 
 5/29 (42.0k lines):
 	- Anniversary! :)
+	- Added Psyduck
+	- Added Zen Headbutt
+	- Many parts of the game that look for certain kinds of status effects should find them much faster now.
 
 5/28 (42.0k lines):
 	- Added the remaining pokedex entries.

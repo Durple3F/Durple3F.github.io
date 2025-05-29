@@ -7925,6 +7925,45 @@ const pokemonMoveData = {
 			{ type: "apply-status-effect", statusEffect: "drowsy", target: "opponent" }
 		],
 	},
+	//Reduces energy gain until the **user's** next turn
+	"Zen Headbutt": {
+		name: "Zen Headbutt",
+		type: "Psychic",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 15,
+		power: 80,
+		accuracy: 90,
+		rechargeTurns: 2,
+		energy: {
+			red: 3,
+			purple: 7,
+			green: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Zen Headbutt.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "zen-headbutt-disruption",
+				type: "energy-gain-alteration-opponent",
+				stacks: false,
+				volatile: true,
+				turns: 1,
+				appliesTo: {},
+				modification: {
+					change: 0.5,
+					operation: "multiply"
+				}
+			} },
+		]
+	},
 
 	"Breakneck Blitz": {
 		name: "Breakneck Blitz",

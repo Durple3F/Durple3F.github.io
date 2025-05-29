@@ -105,6 +105,12 @@ function dotProduct(u, v) {
 function noDuplicates(arr) {
 	return arr.filter((v, i, s) => s.indexOf(v) === i)
 }
+function removeFromArray(arr, obj){
+	let index = arr.indexOf(obj)
+	if (index !== -1){
+		arr.splice(index, 1)
+	}
+}
 
 function bezierEase(t) {
 	// return [

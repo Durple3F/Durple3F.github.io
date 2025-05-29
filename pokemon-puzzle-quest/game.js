@@ -595,6 +595,7 @@ class Round {
 
 		let madeFourMatch = matches.some(match => doesMatchMeetCriteria(match, null, 4))
 		let madeFiveMatch = matches.some(match => doesMatchMeetCriteria(match, null, 5))
+
 		//On a 5-match:
 		if (madeFiveMatch) {
 			//Anger Point gives benefits when the opponent makes a 5-match
@@ -752,7 +753,7 @@ class Round {
 				})
 			}
 		}
-
+		
 		let energiesToAdd = []
 		let energy = getEmptyEnergy()
 		//It's possible for a pokemon to give its opponent energy
@@ -815,11 +816,6 @@ class Round {
 			energy.green += Math.floor(greatest / 3)
 		}
 
-		//Honey Gather gives you bonus energy for 4-matches
-		if (madeFourMatch && activePokemon.hasAbility("Honey Gather")) {
-			energy = multiplyEnergies(energy, 1.5, "round")
-		}
-
 		//20% of the time, Klutz pokemon add the wrong colors of energy, but it's doubled
 		if (Math.random() < 0.2 && activePokemon.hasAbility("Klutz")){
 			let change = getEmptyEnergy()
@@ -832,6 +828,11 @@ class Round {
 				change[randomColor] += amt * 2
 			}
 			energy = addEnergies(energy, change)
+		}
+
+		//Honey Gather gives you bonus energy for 4-matches
+		if (madeFourMatch && activePokemon.hasAbility("Honey Gather")) {
+			energy = multiplyEnergies(energy, 1.5, "round")
 		}
 
 		//Pickup gives you energy when your opponent makes a 4-match
@@ -979,10 +980,13 @@ class Round {
 	}
 	giveEnergy(energy, trainer, pokemon) {
 		pokemon = pokemon || trainer.activePokemon
+		let otherTrainer = this.trainers.find(t => t !== trainer)
+		let otherPokemon = otherTrainer.activePokemon
 
 		let toAdd = addEnergies(getEmptyEnergy(), energy)
 		//If the pokemon has any effects that alter energy gain, apply those here.
 		let energyStatuses = pokemon.getStatusesOfType("energy-gain-alteration")
+		.concat(otherPokemon.getStatusesOfType("energy-gain-alteration-opponent"))
 		if (energyStatuses.length) {
 			for (let statusEffect of energyStatuses) {
 				let modification = statusEffect.modification
@@ -992,6 +996,8 @@ class Round {
 				}
 			}
 		}
+
+		//Round it down
 		toAdd = multiplyEnergies(toAdd, 1, "down")
 
 		this.eventHistory.push({
@@ -1338,9 +1344,6 @@ class Round {
 
 		//Handle start-of-turn effects
 		let statusEffects = activePokemon.statusEffects
-		for (let status of statusEffects) {
-			if (status.type !== "status") continue
-		}
 		let contents = this.board.tilesOnScreen()
 
 		//Handle start-of-turn status effects but for tiles this time
@@ -5525,9 +5528,7 @@ class Round {
 			}
 			//Natural Cure cures all "status" status effects
 			if (oldActive.hasAbility("Natural Cure")) {
-				let statuses = oldActive.statusEffects.filter(statusEffect => {
-					return statusEffect.type === "status"
-				})
+				let statuses = oldActive.getStatusesOfType("status")
 				statuses.forEach(statusEffect => oldActive.removeStatus(statusEffect))
 			}
 
@@ -7047,10 +7048,8 @@ class Tile {
 		})
 	}
 	removeStatus(statusEffect) {
-		let index = this.statusEffects.indexOf(statusEffect)
-		if (index !== -1) {
-			this.statusEffects.splice(index, 1)
-		}
+		removeFromArray(this.statusEffects, statusEffect)
+		removeFromArray(this.statusEffectsMap[statusEffect.type], statusEffect)
 	}
 	removeStatusesWithName(name) {
 		let shouldRemove = this.statusEffects.some(status => {

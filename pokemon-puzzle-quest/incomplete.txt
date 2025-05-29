@@ -14,6 +14,7 @@ Incomplete move lists:
 	Dugtrio-Alola (lv 0)
 	Meowth-Alola (lv 32)
 	Persian-Alola (lv 36)
+	Psyduck (lv 20)
 	Mankey (lv 26)
 	Growlithe (lv 20)
 	Arcanine (lv 0)
@@ -109,6 +110,7 @@ Incomplete move lists:
 Missing Evolutions:
 	Rattata
 	Golbat
+	Psyduck
 	Mankey
 	Abra
 	Slowpoke
