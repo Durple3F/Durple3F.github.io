@@ -597,6 +597,7 @@ function startScene(name, options={}) {
 				let options = {
 					canRename: true,
 					canSwitchActiveMoves: true,
+					canSwitchPokeball: true,
 					pc: true
 				}
 				return viewPokemonInfo(pokemon, options)
