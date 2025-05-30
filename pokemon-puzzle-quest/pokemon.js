@@ -649,11 +649,12 @@ class Pokemon{
 	}
 	getStatStage(stat){
 		let stage = 0
-		let statusEffects = this.statusEffects.filter(effect => {
-			return effect.type === "stat" && effect.stat === stat
+		let statChanges = this.getStatusesOfType("stat")
+		statChanges = statChanges.filter(statusEffect => {
+			return statusEffect.stat === stat
 		})
 		let contrary = this.hasAbility("Contrary") ? -1 : 1
-		statusEffects.forEach(effect => {
+		statChanges.forEach(effect => {
 			stage += effect.amount * contrary
 		})
 		return Math.max(-6, Math.min(6, stage))
@@ -821,6 +822,17 @@ class Pokemon{
 				}
 			}
 		}
+
+		let suppressions = this.getStatusesOfType("ability-suppression")
+		if (suppressions.length){
+			for (let statusEffect of suppressions){
+				let appliesTo = statusEffect.appliesTo
+				if (appliesTo.tag && ability.tags.includes(appliesTo.tag)){
+					ability = pokemonAbilityData["No Ability"]
+				}
+			}
+		}
+
 		return ability
 	}
 	hasAbility(abilityId){

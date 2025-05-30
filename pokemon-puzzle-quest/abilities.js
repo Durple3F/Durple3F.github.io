@@ -46,6 +46,10 @@ const pokemonAbilityData = {
 	"Clear Body": {
 		id: "Clear Body"
 	},
+	//Suppresses weather-based abilities
+	"Cloud Nine": {
+		id: "Cloud Nine"
+	},
 	//Always counts as being asleep
 	"Comatose": {
 		id: "Comatose"

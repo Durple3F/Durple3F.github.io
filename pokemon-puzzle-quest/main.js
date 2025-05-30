@@ -1,4 +1,4 @@
-const versionNumber = "v0.17.0.1"
+const versionNumber = "v0.17.1"
 let lang = "en"
 let playerName
 
@@ -1143,12 +1143,156 @@ function openChangelog(){
 	modal.find(".modal-footer").append(btn)
 
 	$.ajax({
+		url: "changelog.json",
+		dataType: "json",
+		success: (data) => {
+			let content = $("<div>")
+			body.prepend(content)
+			let versionsData = data.versions
+			for (let versionName in versionsData){
+				let version = versionsData[versionName]
+				version.dateObj = new Date(version.date)
+			}
+			let versions = Object.keys(versionsData).sort((a, b) => {
+				let date1 = versionsData[a].dateObj
+				let date2 = versionsData[b].dateObj
+				return date2 - date1
+			})
+			let accordion = $("<div class='accordion'>")
+			content.append(accordion)
+
+			let now = new Date()
+			let curMonth = now.getMonth()
+			let curYear = now.getFullYear()
+
+			for (let versionName of versions){
+				let version = versionsData[versionName]
+				let date = version.dateObj
+				let section = $(`<div class='accordion-item' data-version="${versionName}">`)
+				section.append(`<h4 class="accordion-header">
+					<button
+						class="accordion-button collapsed"
+						data-bs-toggle="collapse"
+						data-bs-target=".accordion-item[data-version='${versionName}'] .accordion-collapse"
+						aria-expanded="false"
+					>
+						${version.date}
+					</button>
+				</h4>`)
+				let month = date.getMonth()
+				version.month = month
+				section.data("month", month)
+				let year = date.getFullYear()
+				version.year = year
+				section.data("year", year)
+				let collapse = $(`<div class='accordion-collapse collapse'>`)
+				section.append(collapse)
+				let sectionBody = $(`<div class="accordion-body">`)
+				collapse.append(sectionBody)
+				for (let change of version.changes){
+					sectionBody.append(`<div>${change}</div>`)
+				}
+				version.section = section
+			}
+
+			const showVersions = (month, year) => {
+				accordion.empty()
+				for (let versionName in versionsData){
+					let version = versionsData[versionName]
+					if (version.month === month && version.year === year){
+						accordion.append(version.section)
+					}
+				}
+			}
+
+			let buttonSection = $("<div class='d-flex justify-content-center'>")
+			content.prepend(buttonSection)
+			let yearInput = $("<select class='form-select m-3'>")
+			buttonSection.append(yearInput)
+			let availableYears = []
+			let monthInput = $("<select class='form-select m-3'>")
+			buttonSection.append(monthInput)
+			for (let versionName in versionsData){
+				let version = versionsData[versionName]
+				let year = version.year
+				if (!availableYears.includes(year)){
+					availableYears.push(year)
+				}
+			}
+			availableYears.sort((a, b) => a - b)
+			for (let year of availableYears){
+				yearInput.append(`<option value="${year}">${year}</option>`)
+			}
+
+			const changeYear = year => {
+				year = parseInt(year)
+				monthInput.empty()
+				let availableMonths = versions.filter(key => {
+					return versionsData[key].year === year
+				}).map(key => {
+					let version = versionsData[key]
+					return version.month
+				})
+				availableMonths = noDuplicates(availableMonths)
+				availableMonths.sort((a, b) => a - b)
+				availableMonths.forEach(monthNumber => {
+					let monthName = getLocaleString(monthNumber, lang, ["months"], monthNumber)
+					monthInput.append(`<option value="${monthNumber}">${monthName}</option>`)
+				})
+				
+				if (year === curYear && availableMonths.includes(curMonth)){
+					monthInput.val(curMonth)
+				} else {
+					monthInput.val(availableMonths[0])
+				}
+				changeMonth(monthInput.val(), year)
+			}
+			const changeMonth = (month, year) => {
+				month = parseInt(month)
+				year = parseInt(year)
+				showVersions(month, year)
+			}
+
+			if (availableYears.includes(curYear)){
+				yearInput.val(curYear)
+			}
+			yearInput.change(() => {
+				changeYear(yearInput.val())
+			})
+			monthInput.change(() => {
+				changeMonth(monthInput.val(), yearInput.val())
+			})
+			changeYear(yearInput.val())
+		},
+		error: function(){
+			body.html("Error getting changelog :/")
+		}
+	})
+	$.ajax({
 		url: "changelog.txt",
 		success: function(data){
 			let content = $("<div>")
 			content.css("user-select", "text")
 			content.html(data.replaceAll("\n", "<br>"))
-			body.append(content)
+			body.append(`<div class='accordion'>
+				<div class='accordion-item' data-version="old">
+					<div class='accordion-header'>
+						<button
+							class='accordion-button collapsed'
+							data-bs-toggle="collapse"
+							data-bs-target=".accordion-item[data-version='old'] .accordion-collapse"
+							aria-expanded="false"
+						>
+							Old changelog
+						</button>
+					</div>
+					<div class='accordion-collapse collapse'>
+						<div class='accordion-body'>
+							${content.html()}
+						</div>
+					</div>
+				</div>
+			</div>`)
 		},
 		error: function(){
 			body.html("Error getting changelog :/")

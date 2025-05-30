@@ -936,7 +936,7 @@ class Round {
 		//If the match contains an enemy Frozen tile, get Frostbite
 		let freezes = tiles.flatMap(tile => {
 			let freezes = tile.getStatuses("Freeze")
-			return freezes.filter(statusEffect => statusEffect.sourceTrainer !== activeTrainer || true)
+			return freezes.filter(statusEffect => statusEffect.sourceTrainer !== activeTrainer)
 		})
 		if (freezes.length){
 			let first = freezes[0]
@@ -3842,6 +3842,9 @@ class Round {
 			pokemon.removeStatusesWithName("paralyzed")
 			moveUseObj.resolve()
 			moveUseObj.completed = true
+			let announcement = getLocaleString("used-move-while-paralyzed", lang)
+			announcement = applyReplacements(announcement, [pokemon.name])
+			this.createAnnouncement("general", announcement)
 			this.updateEverything()
 		} else {
 			this.moveQueue.push(moveUseObj)
@@ -5601,6 +5604,65 @@ class Round {
 				}
 			}, trainer, pokemon, undefined)
 		}
+
+		//Cloud Nine disables weather-based abilities.
+		if (pokemon.hasAbility("Cloud Nine")){
+			otherPokemon.addStatusEffect({
+				name: "cloud-nine-suppression",
+				type: "ability-suppression",
+				volatile: true,
+				stacks: false,
+				lostOnSwap: true,
+				lostOnOpponentSwap: true,
+				lostOnBatonPass: true,
+				appliesTo: {
+					tag: "weather-based"
+				}
+			}, trainer, pokemon, undefined)
+		}
+		if (otherPokemon.hasAbility("Cloud Nine")){
+			pokemon.addStatusEffect({
+				name: "cloud-nine-suppression",
+				type: "ability-suppression",
+				volatile: true,
+				stacks: false,
+				lostOnSwap: true,
+				lostOnOpponentSwap: true,
+				lostOnBatonPass: true,
+				appliesTo: {
+					tag: "weather-based"
+				}
+			}, otherTrainer, otherPokemon, undefined)
+		}
+
+		if (pokemon.hasAbility("Damp") || true){
+			otherPokemon.addStatusEffect({
+				name: "damp-dampified",
+				type: "disability",
+				stacks: false,
+				volatile: true,
+				lostOnSwap: true,
+				lostOnOpponentSwap: true,
+				lostOnBatonPass: true,
+				appliesTo: {
+					tag: "damage-dealing"
+				},
+			}, trainer, pokemon, undefined)
+		}
+		if (otherPokemon.hasAbility("Damp") || true){
+			pokemon.addStatusEffect({
+				name: "damp-dampified",
+				type: "disability",
+				stacks: false,
+				volatile: true,
+				lostOnSwap: true,
+				lostOnOpponentSwap: true,
+				lostOnBatonPass: true,
+				appliesTo: {
+					tag: "damage-dealing"
+				},
+			}, otherTrainer, otherPokemon, undefined)
+		}
 		
 		let pokemonToShow = pokemon
 		if (pokemon.hasAbility("Illusion")){
@@ -5640,9 +5702,17 @@ class Round {
 		html.append(typesTag)
 		typesTag.append(`<span>${types.join(" / ")}</span>`)
 
-		let abilityTag = $("<div>")
+		let abilityTag = $("<div class='d-flex flex-column'>")
 		html.append(abilityTag)
+		let originalAbility = pokemon.ability
 		let ability = pokemon.getEffectiveAbility()
+
+		if (originalAbility !== ability){
+			let abilityName = getLocaleString("name", lang, ["abilities", originalAbility.id])
+			let abilityDescription = getLocaleString("shortDescription", lang, ["abilities", originalAbility.id])
+			abilityTag.append(`<span class='down text-decoration-line-through'>${abilityName}: ${abilityDescription}</span>`)
+		}
+
 		let abilityName = getLocaleString("name", lang, ["abilities", ability.id])
 		let abilityDescription = getLocaleString("shortDescription", lang, ["abilities", ability.id])
 		abilityTag.append(`<span>${abilityName}: ${abilityDescription}</span>`)
@@ -5734,10 +5804,7 @@ class Round {
 		}
 	}
 	removeStatus(statusEffect) {
-		let index = this.statusEffects.indexOf(statusEffect)
-		if (index !== -1) {
-			this.statusEffects.splice(index, 1)
-		}
+		removeFromArray(this.statusEffects, statusEffect)
 	}
 	determineTileWeights() {
 		let tileWeights = {}
@@ -6261,10 +6328,7 @@ class Round {
 	removeAllStatusEffects() {
 		for (let trainer of this.trainers) {
 			for (let pokemon of trainer.pokemon) {
-				let statusEffects = pokemon.statusEffects
-				let statChanges = statusEffects.filter(s => {
-					return s.type === "stat"
-				})
+				let statChanges = pokemon.getStatusesOfType("stat")
 				statChanges.forEach(statusEffect => {
 					pokemon.removeStatus(statusEffect)
 				})

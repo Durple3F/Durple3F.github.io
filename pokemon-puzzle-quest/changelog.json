@@ -1,0 +1,38 @@
+{
+	"versions": {
+		"20250530": {
+			"date": "May 30, 2025",
+			"line-count": 42300,
+			"changes": [
+				"- Working on making this changelog look nicer."
+			]
+		},
+		"20250529": {
+			"date": "May 29, 2025",
+			"line-count": 42200,
+			"changes": [
+					"- Anniversary! :)",
+					"- Added Psyduck",
+					"- Added Zen Headbutt",
+					"- Added Cloud Nine",
+					"- Added an announcement that shows when you use a move while paralyzed.",
+					"- Many parts of the game that look for certain kinds of status effects should find them much faster now."
+			]
+		},
+		"20250430": {
+			"date": "April 30, 2025",
+			"line-count": 26300,
+			"changes": [
+				"- Using a z-move now correctly removes energy from your meter",
+				"- I can now program special effects into moves for when they're used as a z-move",
+				"- I can now put fun rainbow text into move descriptions that only appears while using a z-move",
+				"- You unlock z-moves from beating level 2-7. Right now Normal ones are all that exist. Oh well.",
+				"- I can now have trainers within a level have pokemon with specific abilities.",
+				"- Custom abilities for all trainers from 1-1 to 1-7",
+				"- Added the Aroma Lady class",
+				"- Working on making levels able to have fun backgrounds.",
+				"- Added dialogue to 3-3"
+			]
+		}
+	}
+}
