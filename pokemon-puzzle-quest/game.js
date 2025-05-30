@@ -595,6 +595,10 @@ class Round {
 
 		let madeFourMatch = matches.some(match => doesMatchMeetCriteria(match, null, 4))
 		let madeFiveMatch = matches.some(match => doesMatchMeetCriteria(match, null, 5))
+		let fourMatchesMade = {}
+		for (let tileType of tileTypes){
+			fourMatchesMade[tileType] = matches.some(match => doesMatchMeetCriteria(match, tileType, 4))
+		}
 
 		//On a 5-match:
 		if (madeFiveMatch) {
@@ -629,7 +633,7 @@ class Round {
 		}
 
 		//On an Orange 4-match:
-		if (matches.some(match => doesMatchMeetCriteria(match, "orange", 4))) {
+		if (fourMatchesMade['orange']) {
 			//Sand Veil speeds you up
 			if (activePokemon.hasAbility("Sand Veil")) {
 				activePokemon.addStatusEffect({
@@ -676,7 +680,7 @@ class Round {
 			}
 		}
 		//On a Blue 4-match:
-		if (matches.some(match => doesMatchMeetCriteria(match, "blue", 4))) {
+		if (fourMatchesMade['blue']) {
 			//Hydration removes a status
 			if (activePokemon.hasAbility("Hydration")) {
 				let canRemove = activePokemon.statusEffects
@@ -737,7 +741,7 @@ class Round {
 			}
 		}
 		//On a Blue or Yellow 4-match:
-		if (matches.some(match => doesMatchMeetCriteria(match, "blue", 4) || doesMatchMeetCriteria(match, "yellow", 4))){
+		if (fourMatchesMade['blue'] || fourMatchesMade['yellow']){
 			//Ice Body heals you less than rain dish does, but also triggers on yellow matches
 			if (activePokemon.hp < activePokemon.maxhp && activePokemon.hasAbility("Ice Body")) {
 				let gain = activePokemon.maxhp * 0.1
@@ -3607,6 +3611,13 @@ class Round {
 			stat *= diff
 		}
 
+		//Swift Swim increases your speed at all times based on the number of water tiles
+		if (statName === "speed" && pokemon.hasAbility("Swift Swim")){
+			let yellows = this.board.tilesOnScreen().filter(tile => tile.type === "blue")
+			diff += yellows.length * 0.01
+			stat *= diff
+		}
+
 		return stat
 	}
 	getMaxInitiativeModifier(trainer, pokemon){
@@ -5104,6 +5115,10 @@ class Round {
 					pokeball.click(() => {
 						this.beginToSwapPokemon(trainerIndex, pokemon)
 					})
+					pokeball.on("contextmenu", event => {
+						event.preventDefault()
+						viewPokemonInfo(pokemon)
+					})
 				}
 
 				pokeball.popover({
@@ -5556,7 +5571,7 @@ class Round {
 		this.initiativeValues[trainerIndex] = 0
 
 		//Intimidate may trigger.
-		if (pokemon.hasAbility("Intimidate") && otherPokemon) {
+		if (otherPokemon && pokemon.hasAbility("Intimidate")) {
 			//Oblivious prevents this
 			let prevented = !otherPokemon.hasAbility("Oblivious")
 			if (!prevented) {

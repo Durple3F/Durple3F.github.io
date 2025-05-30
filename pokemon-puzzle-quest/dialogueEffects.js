@@ -93,7 +93,7 @@ const dialogueEffects = {
 
 			if (effect.walkAnimation){
 				let stepTime = 800
-				let stepHeight = options.dialogueTag.height() * 0.07
+				let stepHeight = options.dialogueTag.height() * 0.035
 				let totalSteps = Math.ceil(duration / stepTime)
 				stepTime = duration / totalSteps
 				let totalWalkTime = stepTime * totalSteps
@@ -152,7 +152,7 @@ const dialogueEffects = {
 
 			if (effect.walkAnimation){
 				let stepTime = 800
-				let stepHeight = options.dialogueTag.height() * 0.07
+				let stepHeight = options.dialogueTag.height() * 0.035
 				let totalSteps = Math.ceil(duration / stepTime)
 				stepTime = duration / totalSteps
 				let totalWalkTime = stepTime * totalSteps

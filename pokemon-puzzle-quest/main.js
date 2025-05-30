@@ -1147,7 +1147,7 @@ function openChangelog(){
 		url: "changelog.json",
 		dataType: "json",
 		success: (data) => {
-			let content = $("<div>")
+			let content = $("<div class='changelog'>")
 			body.prepend(content)
 			let versionsData = data.versions
 			for (let versionName in versionsData){
@@ -1158,6 +1158,9 @@ function openChangelog(){
 				version.year = year
 				let month = date.getMonth()
 				version.month = month
+				if (!version.tags){
+					version.tags = []
+				}
 			}
 			let versions = Object.keys(versionsData)
 			let accordion = $("<div class='accordion'>")
@@ -1169,7 +1172,16 @@ function openChangelog(){
 
 			const generateSection = versionName => {
 				let version = versionsData[versionName]
+				if (version.section) return
 				let section = $(`<div class='accordion-item' data-version="${versionName}">`)
+
+				if (version.tags.includes("major-release")){
+					section.addClass("major-release")
+				}
+				if (version.tags.includes("anniversary")){
+					section.addClass("anniversary")
+				}
+
 				let lineCount = formatNumberWithSuffix(version['line-count'], 1)
 				section.append(`<h4 class="accordion-header">
 					<button
@@ -1218,10 +1230,11 @@ function openChangelog(){
 					}
 				}
 				toShow.sort((a, b) => {
-					let date1 = a.dateObj
-					let date2 = b.dateObj
+					let date1 = versionsData[a].dateObj
+					let date2 = versionsData[b].dateObj
 					return date2 - date1
 				})
+				console.log(toShow[0].dateObj, toShow[1].dateObj, toShow[0].dateObj - toShow[1].dateObj)
 				for (let versionName of toShow){
 					let version = versionsData[versionName]
 					if (!version.section){
