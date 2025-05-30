@@ -1574,9 +1574,11 @@ function viewPokemonInfo(pokemon, options = {}) {
 		let toFadeIn = sections.children(className)
 		shownSection.fadeOut(400, () => {
 			shownSection.appendTo(sections)
-			shownSection = toFadeIn
-			toFadeIn.fadeIn()
+			if (shownSection === toFadeIn){
+				toFadeIn.fadeIn()
+			}
 		})
+		shownSection = toFadeIn
 	}
 	
 	let infoTab = $(`<li class='nav-item' data-target-class='pokemon-info'>
@@ -1667,16 +1669,14 @@ function viewPokemonInfo(pokemon, options = {}) {
 
 	let moveSection = content.children(".move-section")
 
-	for (let move of pokemon.moves) {
-		if (move.name === "Struggle") continue
-		
+	const addMove = move => {
 		let added = false
 		let i = pokemon.moves.indexOf(move)
 		let moveIsUnlocked = pokemon.movesUnlockedMap[i]
 		let requirements = pokemon.data.learnset[i].unlock
 		//If move is not available and the move should be hidden, skip the rest of this
 		if (!moveIsUnlocked && requirements.type === "hidden") {
-			continue
+			return
 		}
 
 		let moveTag = getMoveHTML(move, {
@@ -1696,7 +1696,7 @@ function viewPokemonInfo(pokemon, options = {}) {
 				trigger: "hover",
 				content: getReasonPokemonDoesntMeetRequirements(pokemon, move, options)
 			})
-			continue
+			return
 		}
 
 		if (!moveIsUnlocked) {
@@ -1719,12 +1719,18 @@ function viewPokemonInfo(pokemon, options = {}) {
 			moveTag.addClass('active-move')
 		}
 		if (activeIndex === -1 && options.showOnlyActiveMoves){
-			continue
+			return
 		}
 
 		if (!added){
 			moveSection.append(moveTag)
 		}
+	}
+
+	for (let move of pokemon.moves) {
+		if (move.name === "Struggle") continue
+		let i = pokemon.moves.indexOf(move)
+		delay(i * 10).then(() => addMove(move))
 	}
 	content.append(moveSection)
 

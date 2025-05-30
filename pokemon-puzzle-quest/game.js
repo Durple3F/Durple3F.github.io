@@ -5648,7 +5648,7 @@ class Round {
 			}, otherTrainer, otherPokemon, undefined)
 		}
 
-		if (pokemon.hasAbility("Damp") || true){
+		if (pokemon.hasAbility("Damp")){
 			otherPokemon.addStatusEffect({
 				name: "damp-dampified",
 				type: "disability",
@@ -5658,11 +5658,11 @@ class Round {
 				lostOnOpponentSwap: true,
 				lostOnBatonPass: true,
 				appliesTo: {
-					tag: "damage-dealing"
+					tag: "self-destructive"
 				},
 			}, trainer, pokemon, undefined)
 		}
-		if (otherPokemon.hasAbility("Damp") || true){
+		if (otherPokemon.hasAbility("Damp")){
 			pokemon.addStatusEffect({
 				name: "damp-dampified",
 				type: "disability",
@@ -5672,7 +5672,7 @@ class Round {
 				lostOnOpponentSwap: true,
 				lostOnBatonPass: true,
 				appliesTo: {
-					tag: "damage-dealing"
+					tag: "self-destructive"
 				},
 			}, otherTrainer, otherPokemon, undefined)
 		}

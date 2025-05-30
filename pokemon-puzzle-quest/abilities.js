@@ -70,6 +70,10 @@ const pokemonAbilityData = {
 	"Cute Charm": {
 		id: "Cute Charm"
 	},
+	//Prevents using moves tagged as "self-destructive"
+	"Damp": {
+		id: "Damp"
+	},
 	//Copy "dancing" moves used by either you or the opponent
 	"Dancer": {
 		id: "Dancer"

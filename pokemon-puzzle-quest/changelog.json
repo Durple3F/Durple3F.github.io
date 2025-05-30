@@ -4,19 +4,27 @@
 			"date": "May 30, 2025",
 			"line-count": 42300,
 			"changes": [
-				"- Working on making this changelog look nicer."
+				"- Working on making this changelog look nicer.",
+				"- The main thing is that this changelog's data is now stored in a JSON file instead of regular old, plain text.",
+				"- But also, now there's some code to format the llines of code counter automatically! :)",
+				"- Improved the speed of showing summaries for pokemon with lots of moves.",
+				"- Switching between tabs of pokemon summaries no longer confuses it."
 			]
 		},
 		"20250529": {
 			"date": "May 29, 2025",
 			"line-count": 42200,
 			"changes": [
-					"- Anniversary! :)",
-					"- Added Psyduck",
-					"- Added Zen Headbutt",
-					"- Added Cloud Nine",
-					"- Added an announcement that shows when you use a move while paralyzed.",
-					"- Many parts of the game that look for certain kinds of status effects should find them much faster now."
+				"- Anniversary! :)",
+				"- Oops, 4-1 was broken this whole time.",
+				"- Fixed a problem with effects that change the background during dialogue.",
+				"- Hides the ridiculously long decimals from volume sliders when floating point numbers go stupid.",
+				"- The ace pokemon system broke again fixed it yay",
+				"- Added Psyduck",
+				"- Added Zen Headbutt",
+				"- Added Cloud Nine",
+				"- Added an announcement that shows when you use a move while paralyzed.",
+				"- Many parts of the game that look for certain kinds of status effects should find them much faster now."
 			]
 		},
 		"20250430": {

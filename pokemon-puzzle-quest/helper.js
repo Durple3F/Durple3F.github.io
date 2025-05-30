@@ -47,6 +47,14 @@ function formatNumber(f, digits=2) {
 		return f.toString()
 	}
 }
+function formatNumberWithSuffix(num, digits=2){
+	let suffix = ""
+	if (num >= 1e3){
+		suffix = "k"
+		num /= 1e3
+	}
+	return formatNumber(num, digits) + suffix
+}
 
 function weightedRandom(items, weights) {
 	if (items.length !== weights.length) {

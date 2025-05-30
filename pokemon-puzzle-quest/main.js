@@ -1152,13 +1152,14 @@ function openChangelog(){
 			let versionsData = data.versions
 			for (let versionName in versionsData){
 				let version = versionsData[versionName]
-				version.dateObj = new Date(version.date)
+				let date = new Date(version.date)
+				version.dateObj = date
+				let year = date.getFullYear()
+				version.year = year
+				let month = date.getMonth()
+				version.month = month
 			}
-			let versions = Object.keys(versionsData).sort((a, b) => {
-				let date1 = versionsData[a].dateObj
-				let date2 = versionsData[b].dateObj
-				return date2 - date1
-			})
+			let versions = Object.keys(versionsData)
 			let accordion = $("<div class='accordion'>")
 			content.append(accordion)
 
@@ -1166,10 +1167,10 @@ function openChangelog(){
 			let curMonth = now.getMonth()
 			let curYear = now.getFullYear()
 
-			for (let versionName of versions){
+			const generateSection = versionName => {
 				let version = versionsData[versionName]
-				let date = version.dateObj
 				let section = $(`<div class='accordion-item' data-version="${versionName}">`)
+				let lineCount = formatNumberWithSuffix(version['line-count'], 1)
 				section.append(`<h4 class="accordion-header">
 					<button
 						class="accordion-button collapsed"
@@ -1177,15 +1178,11 @@ function openChangelog(){
 						data-bs-target=".accordion-item[data-version='${versionName}'] .accordion-collapse"
 						aria-expanded="false"
 					>
-						${version.date}
+						${version.date} (${lineCount} lines of code)
 					</button>
 				</h4>`)
-				let month = date.getMonth()
-				version.month = month
-				section.data("month", month)
-				let year = date.getFullYear()
-				version.year = year
-				section.data("year", year)
+				section.data("month", version.month)
+				section.data("year", version.year)
 				let collapse = $(`<div class='accordion-collapse collapse'>`)
 				section.append(collapse)
 				let sectionBody = $(`<div class="accordion-body">`)
@@ -1196,13 +1193,41 @@ function openChangelog(){
 				version.section = section
 			}
 
+			for (let versionName of versions){
+				let version = versionsData[versionName]
+				let wait = 0
+				if (version.year === curYear && version.month === curMonth){
+					wait = 0
+				} else {
+					wait = versions.indexOf(versionName) * 10
+				}
+				if (wait > 0){
+					delay(wait).then(() => generateSection(versionName))
+				} else {
+					generateSection(versionName)
+				}
+			}
+
 			const showVersions = (month, year) => {
 				accordion.empty()
+				let toShow = []
 				for (let versionName in versionsData){
 					let version = versionsData[versionName]
 					if (version.month === month && version.year === year){
-						accordion.append(version.section)
+						toShow.push(versionName)
 					}
+				}
+				toShow.sort((a, b) => {
+					let date1 = a.dateObj
+					let date2 = b.dateObj
+					return date2 - date1
+				})
+				for (let versionName of toShow){
+					let version = versionsData[versionName]
+					if (!version.section){
+						generateSection(versionName)
+					}
+					accordion.append(version.section)
 				}
 			}
 
@@ -1275,7 +1300,8 @@ function openChangelog(){
 			let content = $("<div>")
 			content.css("user-select", "text")
 			content.html(data.replaceAll("\n", "<br>"))
-			body.append(`<div class='accordion'>
+			body.append(`<br>
+			<div class='accordion'>
 				<div class='accordion-item' data-version="old">
 					<div class='accordion-header'>
 						<button
