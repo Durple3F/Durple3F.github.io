@@ -1061,6 +1061,8 @@ body {
 	position: absolute;
   top: 50%;
   left: 50%;
+	/* width: 100%;
+	height: 100%; */
   transform: translate(-50%, -50%);
 	image-rendering: pixelated;
 }
@@ -1572,10 +1574,12 @@ body {
 	margin-left: 0.2em;
 	margin-right: 0.2em;
 }
+.popover .down,
 .pokemon-stats > .stats > .stat > .stat-val.down,
 .move-popover .val.down {
 	color: var(--health-low);
 }
+.popover .up,
 .pokemon-stats > .stats > .stat > .stat-val.up,
 .move-popover .val.up {
 	color: var(--health-high);

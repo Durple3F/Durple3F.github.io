@@ -595,6 +595,7 @@ class Round {
 
 		let madeFourMatch = matches.some(match => doesMatchMeetCriteria(match, null, 4))
 		let madeFiveMatch = matches.some(match => doesMatchMeetCriteria(match, null, 5))
+
 		//On a 5-match:
 		if (madeFiveMatch) {
 			//Anger Point gives benefits when the opponent makes a 5-match
@@ -752,7 +753,7 @@ class Round {
 				})
 			}
 		}
-
+		
 		let energiesToAdd = []
 		let energy = getEmptyEnergy()
 		//It's possible for a pokemon to give its opponent energy
@@ -815,11 +816,6 @@ class Round {
 			energy.green += Math.floor(greatest / 3)
 		}
 
-		//Honey Gather gives you bonus energy for 4-matches
-		if (madeFourMatch && activePokemon.hasAbility("Honey Gather")) {
-			energy = multiplyEnergies(energy, 1.5, "round")
-		}
-
 		//20% of the time, Klutz pokemon add the wrong colors of energy, but it's doubled
 		if (Math.random() < 0.2 && activePokemon.hasAbility("Klutz")){
 			let change = getEmptyEnergy()
@@ -832,6 +828,11 @@ class Round {
 				change[randomColor] += amt * 2
 			}
 			energy = addEnergies(energy, change)
+		}
+
+		//Honey Gather gives you bonus energy for 4-matches
+		if (madeFourMatch && activePokemon.hasAbility("Honey Gather")) {
+			energy = multiplyEnergies(energy, 1.5, "round")
 		}
 
 		//Pickup gives you energy when your opponent makes a 4-match
@@ -935,7 +936,7 @@ class Round {
 		//If the match contains an enemy Frozen tile, get Frostbite
 		let freezes = tiles.flatMap(tile => {
 			let freezes = tile.getStatuses("Freeze")
-			return freezes.filter(statusEffect => statusEffect.sourceTrainer !== activeTrainer || true)
+			return freezes.filter(statusEffect => statusEffect.sourceTrainer !== activeTrainer)
 		})
 		if (freezes.length){
 			let first = freezes[0]
@@ -979,10 +980,13 @@ class Round {
 	}
 	giveEnergy(energy, trainer, pokemon) {
 		pokemon = pokemon || trainer.activePokemon
+		let otherTrainer = this.trainers.find(t => t !== trainer)
+		let otherPokemon = otherTrainer.activePokemon
 
 		let toAdd = addEnergies(getEmptyEnergy(), energy)
 		//If the pokemon has any effects that alter energy gain, apply those here.
 		let energyStatuses = pokemon.getStatusesOfType("energy-gain-alteration")
+		.concat(otherPokemon.getStatusesOfType("energy-gain-alteration-opponent"))
 		if (energyStatuses.length) {
 			for (let statusEffect of energyStatuses) {
 				let modification = statusEffect.modification
@@ -992,6 +996,8 @@ class Round {
 				}
 			}
 		}
+
+		//Round it down
 		toAdd = multiplyEnergies(toAdd, 1, "down")
 
 		this.eventHistory.push({
@@ -1340,9 +1346,6 @@ class Round {
 
 		//Handle start-of-turn effects
 		let statusEffects = activePokemon.statusEffects
-		for (let status of statusEffects) {
-			if (status.type !== "status") continue
-		}
 		let contents = this.board.tilesOnScreen()
 
 		//Handle start-of-turn status effects but for tiles this time
@@ -3852,6 +3855,9 @@ class Round {
 			pokemon.removeStatusesWithName("paralyzed")
 			moveUseObj.resolve()
 			moveUseObj.completed = true
+			let announcement = getLocaleString("used-move-while-paralyzed", lang)
+			announcement = applyReplacements(announcement, [pokemon.name])
+			this.createAnnouncement("general", announcement)
 			this.updateEverything()
 		} else {
 			this.moveQueue.push(moveUseObj)
@@ -5538,9 +5544,7 @@ class Round {
 			}
 			//Natural Cure cures all "status" status effects
 			if (oldActive.hasAbility("Natural Cure")) {
-				let statuses = oldActive.statusEffects.filter(statusEffect => {
-					return statusEffect.type === "status"
-				})
+				let statuses = oldActive.getStatusesOfType("status")
 				statuses.forEach(statusEffect => oldActive.removeStatus(statusEffect))
 			}
 
@@ -5613,6 +5617,65 @@ class Round {
 				}
 			}, trainer, pokemon, undefined)
 		}
+
+		//Cloud Nine disables weather-based abilities.
+		if (pokemon.hasAbility("Cloud Nine")){
+			otherPokemon.addStatusEffect({
+				name: "cloud-nine-suppression",
+				type: "ability-suppression",
+				volatile: true,
+				stacks: false,
+				lostOnSwap: true,
+				lostOnOpponentSwap: true,
+				lostOnBatonPass: true,
+				appliesTo: {
+					tag: "weather-based"
+				}
+			}, trainer, pokemon, undefined)
+		}
+		if (otherPokemon.hasAbility("Cloud Nine")){
+			pokemon.addStatusEffect({
+				name: "cloud-nine-suppression",
+				type: "ability-suppression",
+				volatile: true,
+				stacks: false,
+				lostOnSwap: true,
+				lostOnOpponentSwap: true,
+				lostOnBatonPass: true,
+				appliesTo: {
+					tag: "weather-based"
+				}
+			}, otherTrainer, otherPokemon, undefined)
+		}
+
+		if (pokemon.hasAbility("Damp") || true){
+			otherPokemon.addStatusEffect({
+				name: "damp-dampified",
+				type: "disability",
+				stacks: false,
+				volatile: true,
+				lostOnSwap: true,
+				lostOnOpponentSwap: true,
+				lostOnBatonPass: true,
+				appliesTo: {
+					tag: "damage-dealing"
+				},
+			}, trainer, pokemon, undefined)
+		}
+		if (otherPokemon.hasAbility("Damp") || true){
+			pokemon.addStatusEffect({
+				name: "damp-dampified",
+				type: "disability",
+				stacks: false,
+				volatile: true,
+				lostOnSwap: true,
+				lostOnOpponentSwap: true,
+				lostOnBatonPass: true,
+				appliesTo: {
+					tag: "damage-dealing"
+				},
+			}, otherTrainer, otherPokemon, undefined)
+		}
 		
 		let pokemonToShow = pokemon
 		if (pokemon.hasAbility("Illusion")){
@@ -5652,9 +5715,17 @@ class Round {
 		html.append(typesTag)
 		typesTag.append(`<span>${types.join(" / ")}</span>`)
 
-		let abilityTag = $("<div>")
+		let abilityTag = $("<div class='d-flex flex-column'>")
 		html.append(abilityTag)
+		let originalAbility = pokemon.ability
 		let ability = pokemon.getEffectiveAbility()
+
+		if (originalAbility !== ability){
+			let abilityName = getLocaleString("name", lang, ["abilities", originalAbility.id])
+			let abilityDescription = getLocaleString("shortDescription", lang, ["abilities", originalAbility.id])
+			abilityTag.append(`<span class='down text-decoration-line-through'>${abilityName}: ${abilityDescription}</span>`)
+		}
+
 		let abilityName = getLocaleString("name", lang, ["abilities", ability.id])
 		let abilityDescription = getLocaleString("shortDescription", lang, ["abilities", ability.id])
 		abilityTag.append(`<span>${abilityName}: ${abilityDescription}</span>`)
@@ -5746,10 +5817,7 @@ class Round {
 		}
 	}
 	removeStatus(statusEffect) {
-		let index = this.statusEffects.indexOf(statusEffect)
-		if (index !== -1) {
-			this.statusEffects.splice(index, 1)
-		}
+		removeFromArray(this.statusEffects, statusEffect)
 	}
 	determineTileWeights() {
 		let tileWeights = {}
@@ -6273,10 +6341,7 @@ class Round {
 	removeAllStatusEffects() {
 		for (let trainer of this.trainers) {
 			for (let pokemon of trainer.pokemon) {
-				let statusEffects = pokemon.statusEffects
-				let statChanges = statusEffects.filter(s => {
-					return s.type === "stat"
-				})
+				let statChanges = pokemon.getStatusesOfType("stat")
 				statChanges.forEach(statusEffect => {
 					pokemon.removeStatus(statusEffect)
 				})
@@ -7064,10 +7129,8 @@ class Tile {
 		})
 	}
 	removeStatus(statusEffect) {
-		let index = this.statusEffects.indexOf(statusEffect)
-		if (index !== -1) {
-			this.statusEffects.splice(index, 1)
-		}
+		removeFromArray(this.statusEffects, statusEffect)
+		removeFromArray(this.statusEffectsMap[statusEffect.type], statusEffect)
 	}
 	removeStatusesWithName(name) {
 		let shouldRemove = this.statusEffects.some(status => {

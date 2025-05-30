@@ -1,11 +1,19 @@
 <a href="incomplete.txt">Currently incomplete pokemon list</a>
 
-5/29 (42.0k lines):
+5/30 (42.2k lines)
+	- Working on making this changelog look nicer.
+
+5/29 (42.2k lines):
 	- Anniversary! :)
 	- Oops, 4-1 was broken this whole time.
 	- Fixed a problem with effects that change the background during dialogue.
 	- Hides the ridiculously long decimals from volume sliders when floating point numbers go stupid.
 	- The ace pokemon system broke again fixed it yay
+	- Added Psyduck
+	- Added Zen Headbutt
+	- Added Cloud Nine
+	- Added an announcement that shows when you use a move while paralyzed.
+	- Many parts of the game that look for certain kinds of status effects should find them much faster now.
 
 5/28 (42.0k lines):
 	- Added the remaining pokedex entries.

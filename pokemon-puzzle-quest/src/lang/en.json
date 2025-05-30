@@ -1,5 +1,6 @@
 {
 	"ability-dancer-activate": "%c%'s %c% copies the last move used!",
+	"used-move-while-paralyzed": "%c% stopped being paralyzed!",
 	
 	"initiative-tutorial": "Initiative<br>Each turn, both Pokémon gain Initiative based on their speed stats. When a player matches 4 or more tiles in a row, they get a free turn.",
 	"choose-pokemon": "Choose Pokémon",
@@ -2895,6 +2896,11 @@
 			"description": "Applies Drowsy. When a Drowsy Pokémon ends their turn, they may become Asleep, and lose Drowsy. An Asleep Pokémon gets half as much energy (rounded up) from matches.",
 			"shortDescription": "Applies Drowsy"
 		},
+		"Zen Headbutt": {
+			"name": "Zen Headbutt",
+			"description": "Deals damage. Until the start of the user's next turn, the opponent's energy gain is reduced by 50%.",
+			"shortDescription": "Temporarily halves enemy energy gain"
+		},
 		
 		"Breakneck Blitz": {
 			"name": "Breakneck Blitz",
@@ -2973,6 +2979,11 @@
 			"name": "Clear Body",
 			"shortDescription": "Other Pokémon can't lower this Pokémon's stat stages",
 			"longDescription": "Other Pokémon can't give this Pokémon status effects which lower its stats by any number of stages."
+		},
+		"Cloud Nine": {
+			"name": "Cloud Nine",
+			"shortDescription": "Negates many of the opponent's abilities which trigger based on specific matches",
+			"longDescription": "Many of the opponent's abilities which trigger based on this Pokémon's trainer making matches of specific types of tiles are disabled until they switch out while this Pokémon isn't in play."
 		},
 		"Comatose": {
 			"name": "Comatose",
@@ -3850,6 +3861,20 @@
 		"Dark": "Dark",
 		"Fairy": "Fairy",
 		"Typeless": "Typeless"
+	},
+	"months": {
+		"0": "January",
+		"1": "February",
+		"2": "March",
+		"3": "April",
+		"4": "May",
+		"5": "June",
+		"6": "July",
+		"7": "August",
+		"8": "September",
+		"9": "October",
+		"10": "November",
+		"11": "December"
 	},
 	"settings": {
 		"toggle-skip-seen-dialogue": "Skip seen dialogue?",
