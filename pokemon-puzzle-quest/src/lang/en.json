@@ -1,5 +1,5 @@
 {
-	"ability-dancer-activate": "%c%'s %c% copies the last move used!",
+	"ability-dancer-activate": "%c%’s %c% copies the last move used!",
 	"used-move-while-paralyzed": "%c% stopped being paralyzed!",
 	
 	"initiative-tutorial": "Initiative<br>Each turn, both Pokémon gain Initiative based on their speed stats. When a player matches 4 or more tiles in a row, they get a free turn.",
@@ -7,7 +7,7 @@
 	"error-cant-switch-status": "A status effect prevents this Pokémon from switching out.",
 	"error-cant-switch-fear-frozen": "Your active Pokémon is too frozen in fear to retreat!",
 	"error-cant-switch-magnet-pull": "Your active Pokémon is held in place by magnetic force.",
-	"force-swap-prevented": "The Pokémon can't be forced to switch out.",
+	"force-swap-prevented": "The Pokémon can’t be forced to switch out.",
 	
 	"new-moves-message-plural": "%c% learned new moves!",
 	"new-moves-message-single": "%c% learned a new move!",
@@ -19,8 +19,8 @@
 	"evolve-select-evolution": "What would you like %c% to evolve into?",
 
 	"ask-to-rename-pokemon": "What would you like to name your %c%?",
-	"error-cant-remove-last-pokemon": "You can't put your only Pokémon into the PC.",
-	"error-cant-delete-box-isnt-empty": "You can't delete a non-empty box because, like, I don't know where to put those poor homeless Pokémon.",
+	"error-cant-remove-last-pokemon": "You can’t put your only Pokémon into the PC.",
+	"error-cant-delete-box-isnt-empty": "You can’t delete a non-empty box because, like, I don't know where to put those poor homeless Pokémon.",
 	"error-cant-delete-no-boxes-left": "This is your only box left. Please make a new one first.",
 	"error-no-usable-pokemon": "All your Pokémon are currently fainted.",
 	"select-number-tiles-plural": "Select %c% tiles",
@@ -53,8 +53,8 @@
 		"rival-battle-1-dialogue-lost": {
 			"effects": [
 				{ "type": "get-speaker", "name": "Hau", "class": "Hau" },
-				{ "type": "text", "speaker": "Hau", "text": "Hey, no worries! You can't win them all." },
-				{ "type": "text", "speaker": "Hau", "text": "I heard some Pokémon are better against others, anyway. I can't wait for next time!" }
+				{ "type": "text", "speaker": "Hau", "text": "Hey, no worries! You can’t win them all." },
+				{ "type": "text", "speaker": "Hau", "text": "I heard some Pokémon are better against others, anyway. I can’t wait for next time!" }
 			]
 		},
 		"route-1-2-dialogue": {
@@ -109,7 +109,7 @@
 				}},
 				{ "type": "text", "speaker": "Madison", "text": "Gully here has been single-handedly making people buy a new order of fries for years." },
 				{ "type": "text", "speaker": "Madison", "text": "He's a $@start-italics|@$smart$@end-italics|@$ little kleptomaniac, isn't he?" },
-				{ "type": "text", "speaker": "Madison", "text": "But now you that know my secret... I can't let you go telling people about it!" }
+				{ "type": "text", "speaker": "Madison", "text": "But now you that know my secret... I can’t let you go telling people about it!" }
 			]
 		},
 		"route-1-5-dialogue-2-win": {
@@ -176,7 +176,7 @@
 				{ "type": "get-speaker", "name": "Hiromi", "class": "Young-Athlete-F" },
 				{ "type": "come-in-from-offscreen", "speaker": "Hiromi", "direction": "up", "duration": 400, "waitDuration": 200 },
 				{ "type": "text", "speaker": "Hiromi", "text": "Did I hear that right?! Are you guys part of today's lesson?!" },
-				{ "type": "text", "speaker": "Hiromi", "text": "I^^ can't wait! I've even been^^ working on a cool thing tor me and my Pokémon to say!^^" },
+				{ "type": "text", "speaker": "Hiromi", "text": "I^^ can’t wait! I've even been^^ working on a cool thing tor me and my Pokémon to say!^^" },
 				{ "type": "text", "speaker": "Hiromi", "text": "$@start-italics|@$*ahem*$@end-italics|@$$@wait-10|@$", "auto": true },
 				{ "type": "fade-out-text", "text": "*ahem*" },
 				{ "type": "text", "speaker": "Hiromi", "text": "They say the early bird gets the worm...... but I hope it also wins this battle!" }
@@ -259,7 +259,7 @@
 			"callbacks": {},
 			"effects": [
 				{ "type": "get-speaker", "name": "Joseph", "class": "Rising-Star" },
-				{ "type": "text", "speaker": "Joseph", "text": "$@start-bold|@$What?!$@end-bold|@$ How the heck did— How did I lose?! That— that can't be right!" },
+				{ "type": "text", "speaker": "Joseph", "text": "$@start-bold|@$What?!$@end-bold|@$ How the heck did— How did I lose?! That— that can’t be right!" },
 				{ "type": "text", "speaker": "Joseph", "text": "Grrr... Maybe I need to train more. I'm gonna be the champion one day!" },
 				{ "type": "get-speaker", "name": "Emily", "class": "Teacher-Gen7", "position": "left", "facing": "right" },
 				{ "type": "come-in-from-offscreen", "speaker": "Emily", "direction": "right", "duration": 1500, "waitDuration": 800 },
@@ -735,7 +735,7 @@
 				}},
 				{ "type": "text", "speaker": "Ilima", "text": "Ah, welcome, challenger! You're just in time for the commencement of the Trial of Melemele Island's Verdant Cavern!" },
 				{ "type": "text", "speaker": "Ilima", "text": "Which, yes, may $@start-italics|@$technically$@end-italics|@$ consist of nothing more than a small rodent infestation, but don't let that diminish the gravity of the task!" },
-				{ "type": "text", "speaker": "Hau", "text": "$@start-italics|@$Ooooh,$@end-italics|@$ are we fighting a boss already?! I can't wait!" },
+				{ "type": "text", "speaker": "Hau", "text": "$@start-italics|@$Ooooh,$@end-italics|@$ are we fighting a boss already?! I can’t wait!" },
 				{ "type": "go-out-from-onscreen", "speaker": "Hau", "direction": "right", "duration": 1500, "waitDuration": 600 },
 				{ "type": "transform-speaker", "speaker": "Ilima", "transform": "translateX(20%)", "duration": 300, "waitDuration": 150 },
 				{ "type": "text", "speaker": "Ilima", "text": "No... it's really just a few Yungoos and Rattata...$@wait-20|@$ ^^oh, he's already gone. Look, can I be honest with the two of you?" },
@@ -973,7 +973,7 @@
 				{ "type": "text", "speaker": "Sina", "text": "Ahhh... this hotel is something else, Dex. Can we hang out here a little longer?" },
 				{ "type": "text", "speaker": "Dexio", "text": "$@start-italics|@$sigh$@end-italics|@$$@wait-10|@$ ", "auto": true },
 				{ "type": "fade-out-text", "text": "sigh" },
-				{ "type": "text", "speaker": "Dexio", "text": "You already know we can't, Sina. We need to head out to get some data. There'll be $@start-italics|@$plenty$@end-italics|@$ of time to relax once we're done." },
+				{ "type": "text", "speaker": "Dexio", "text": "You already know we can’t, Sina. We need to head out to get some data. There'll be $@start-italics|@$plenty$@end-italics|@$ of time to relax once we're done." },
 				{ "type": "text", "speaker": "Sina", "text": "Can we at $@start-italics|@$least$@end-italics|@$ get that data on the beach? Think about it, if new trainers show up, that's where they gotta come from, right?" },
 				{ "type": "text", "speaker": "Dexio", "text": "...Not a bad point, actually. Sure, let's go." },
 				{ "type": "animate", "selector": "#dialogue", "css": {
@@ -1857,7 +1857,7 @@
 		},
 		"Bide": {
 			"name": "Bide",
-			"description": "After two turns, this move deals damage equal to the opponent equal to twice the damage received since it was used. The user can't use moves in the meantime.",
+			"description": "After two turns, this move deals damage equal to the opponent equal to twice the damage received since it was used. The user can’t use moves in the meantime.",
 			"shortDescription": "Deals double the damage received"
 		},
 		"Bite": {
@@ -1979,7 +1979,7 @@
 		},
 		"Detect": {
 			"name": "Detect",
-			"description": "Gives the user the Protected status until their next turn. Then ends the turn. A Protected Pokémon can't be dealt damage by other Pokémon, have status conditions applied to it by other Pokémon, or have its stats raised or lowered by other Pokémon. This move's cooldown increases by 1 with each use.",
+			"description": "Gives the user the Protected status until their next turn. Then ends the turn. A Protected Pokémon can’t be dealt damage by other Pokémon, have status conditions applied to it by other Pokémon, or have its stats raised or lowered by other Pokémon. This move's cooldown increases by 1 with each use.",
 			"shortDescription": "Prevents effects from other Pokémon"
 		},
 		"Disable": {
@@ -2034,7 +2034,7 @@
 		},
 		"Drill Peck": {
 			"name": "Drill Peck",
-			"description": "Deals damage. Then a random row of tiles becomes Locked for 10 turns. Other trainers can't swap Locked tiles.",
+			"description": "Deals damage. Then a random row of tiles becomes Locked for 10 turns. Other trainers can’t swap Locked tiles.",
 			"shortDescription": "Damages and locks a random row"
 		},
 		"Drill Run": {
@@ -2064,8 +2064,8 @@
 		},
 		"Endure": {
 			"name": "Endure",
-			"description": "For the next 3 turns, damage that the user takes can't lower its HP below 1. Then this move's cooldown increases by 1.",
-			"shortDescription": "HP can't be lowered below 1"
+			"description": "For the next 3 turns, damage that the user takes can’t lower its HP below 1. Then this move's cooldown increases by 1.",
+			"shortDescription": "HP can’t be lowered below 1"
 		},
 		"Fairy Wind": {
 			"name": "Fairy Wind",
@@ -2184,7 +2184,7 @@
 		},
 		"Harden": {
 			"name": "Harden",
-			"description": "Gives the user the Invulnerable status until their next turn. They can't take damage for as long as they have that status. Then ends the turn.",
+			"description": "Gives the user the Invulnerable status until their next turn. They can’t take damage for as long as they have that status. Then ends the turn.",
 			"shortDescription": "Temporary invulnerability"
 		},
 		"Haze": {
@@ -2249,7 +2249,7 @@
 		},
 		"Ice Shard": {
 			"name": "Ice Shard",
-			"description": "Deals damage. 3 random tiles become Locked for 5 turns. Other trainers can't swap Locked tiles.",
+			"description": "Deals damage. 3 random tiles become Locked for 5 turns. Other trainers can’t swap Locked tiles.",
 			"shortDescription": "Damages and locks tiles"
 		},
 		"Icy Wind": {
@@ -2355,7 +2355,7 @@
 		},
 		"Mean Look": {
 			"name": "Mean Look",
-			"description": "Applies Frozen in Fear. A Frozen in Fear Pokémon can't be switched out by any means.",
+			"description": "Applies Frozen in Fear. A Frozen in Fear Pokémon can’t be switched out by any means.",
 			"shortDescription": "Freezes opponent in fear"
 		},
 		"Mega Drain": {
@@ -2385,7 +2385,7 @@
 		},
 		"Mist": {
 			"name": "Mist",
-			"description": "Gives the user the Mist status effect for 10 turns. As long as a Pokémon has Mist, it can't receive debuffs which lower its stats from other Pokémon.",
+			"description": "Gives the user the Mist status effect for 10 turns. As long as a Pokémon has Mist, it can’t receive debuffs which lower its stats from other Pokémon.",
 			"shortDescription": "Prevents stat reductions"
 		},
 		"Moonlight": {
@@ -2505,7 +2505,7 @@
 		},
 		"Protect": {
 			"name": "Protect",
-			"description": "Gives the user the Protected status until their next turn. Then ends the turn. A Protected Pokémon can't be dealt damage by other Pokémon, have status conditions applied to it by other Pokémon, or have its stats raised or lowered by other Pokémon. This move's cooldown increases by 1 with each use.",
+			"description": "Gives the user the Protected status until their next turn. Then ends the turn. A Protected Pokémon can’t be dealt damage by other Pokémon, have status conditions applied to it by other Pokémon, or have its stats raised or lowered by other Pokémon. This move's cooldown increases by 1 with each use.",
 			"shortDescription": "Prevents effects from other Pokémon"
 		},
 		"Psybeam": {
@@ -2606,7 +2606,7 @@
 		},
 		"Safeguard": {
 			"name": "Safeguard",
-			"description": "Gives the user the Safeguard status for five turns. Pokémon with Safeguard can't receive status effects from other Pokémon.",
+			"description": "Gives the user the Safeguard status for five turns. Pokémon with Safeguard can’t receive status effects from other Pokémon.",
 			"shortDescription": "Prevents receiving status effects from other Pokémon"
 		},
 		"Sand Attack": {
@@ -2848,7 +2848,7 @@
 		},
 		"Torment": {
 			"name": "Torment",
-			"description": "Gives the opponent the Tormented status effect until they switch out. A Pokémon can't use the same move twice in a row.",
+			"description": "Gives the opponent the Tormented status effect until they switch out. A Pokémon can’t use the same move twice in a row.",
 			"shortDescription": "Prevents the opponent repeating moves"
 		},
 		"Vine Whip": {
@@ -2858,7 +2858,7 @@
 		},
 		"Vise Grip": {
 			"name": "Vise Grip",
-			"description": "Deals damage. Then, if the target is still active, the user chooses a tile. That tile becomes Locked for 10 turns. Other trainers can't swap Locked tiles.",
+			"description": "Deals damage. Then, if the target is still active, the user chooses a tile. That tile becomes Locked for 10 turns. Other trainers can’t swap Locked tiles.",
 			"shortDescription": "Damages and locks a tile"
 		},
 		"Water Gun": {
@@ -2962,8 +2962,8 @@
 		},
 		"Big Pecks": {
 			"name": "Big Pecks",
-			"shortDescription": "Other Pokémon can't lower this Pokémon's Defense stages",
-			"longDescription": "Other Pokémon can't give this Pokémon status effects which lower its Defense stat by any number of stages."
+			"shortDescription": "Other Pokémon can’t lower this Pokémon's Defense stages",
+			"longDescription": "Other Pokémon can’t give this Pokémon status effects which lower its Defense stat by any number of stages."
 		},
 		"Blaze": {
 			"name": "Blaze",
@@ -2977,8 +2977,8 @@
 		},
 		"Clear Body": {
 			"name": "Clear Body",
-			"shortDescription": "Other Pokémon can't lower this Pokémon's stat stages",
-			"longDescription": "Other Pokémon can't give this Pokémon status effects which lower its stats by any number of stages."
+			"shortDescription": "Other Pokémon can’t lower this Pokémon's stat stages",
+			"longDescription": "Other Pokémon can’t give this Pokémon status effects which lower its stats by any number of stages."
 		},
 		"Cloud Nine": {
 			"name": "Cloud Nine",
@@ -3048,7 +3048,7 @@
 		"Flower Veil": {
 			"name": "Flower Veil",
 			"shortDescription": "Prevents any stat debuffs being put on this trainer's Grass Pokémon",
-			"longDescription": "As long as this Pokémon is the active Pokémon, Grass Pokémon owned by this Pokémon's trainer can't have their stats lowered by stages."
+			"longDescription": "As long as this Pokémon is the active Pokémon, Grass Pokémon owned by this Pokémon's trainer can’t have their stats lowered by stages."
 		},
 		"Fluffy": {
 			"name": "Fluffy",
@@ -3063,7 +3063,7 @@
 		"Friend Guard": {
 			"name": "Friend Guard",
 			"shortDescription": "Prevents damage to this trainer's other Pokémon while this Pokémon is out",
-			"longDescription": "As long as this Pokémon is the active Pokémon, damage can't be dealt to non-active Pokémon owned by this Pokémon's owner."
+			"longDescription": "As long as this Pokémon is the active Pokémon, damage can’t be dealt to non-active Pokémon owned by this Pokémon's owner."
 		},
 		"Frisk": {
 			"name": "Frisk",
@@ -3107,8 +3107,8 @@
 		},
 		"Hyper Cutter": {
 			"name": "Hyper Cutter",
-			"shortDescription": "Other Pokémon can't lower this Pokémon's Attack stages",
-			"longDescription": "Other Pokémon can't give this Pokémon status effects which lower its Attack stat by any number of stages."
+			"shortDescription": "Other Pokémon can’t lower this Pokémon's Attack stages",
+			"longDescription": "Other Pokémon can’t give this Pokémon status effects which lower its Attack stat by any number of stages."
 		},
 		"Ice Body": {
 			"name": "Ice Body",
@@ -3117,8 +3117,8 @@
 		},
 		"Illuminate": {
 			"name": "Illuminate",
-			"shortDescription": "Other Pokémon can't lower this Pokémon's Speed stages",
-			"longDescription": "Other Pokémon can't give this Pokémon status effects which lower its Speed stat by any number of stages."
+			"shortDescription": "Other Pokémon can’t lower this Pokémon's Speed stages",
+			"longDescription": "Other Pokémon can’t give this Pokémon status effects which lower its Speed stat by any number of stages."
 		},
 		"Illusion": {
 			"name": "Illusion",
@@ -3138,7 +3138,7 @@
 		"Insomnia": {
 			"name": "Insomnia",
 			"shortDescription": "Can't be put to sleep",
-			"longDescription": "This Pokémon can't be put to sleep during battle."
+			"longDescription": "This Pokémon can’t be put to sleep during battle."
 		},
 		"Intimidate": {
 			"name": "Intimidate",
@@ -3203,7 +3203,7 @@
 		"Magnet Pull": {
 			"name": "Magnet Pull",
 			"shortDescription": "Prevents Steel-type opponents retreating",
-			"longDescription": "The opposing Pokémon can't retreat as long as it's Steel-type and this Pokémon is active."
+			"longDescription": "The opposing Pokémon can’t retreat as long as it's Steel-type and this Pokémon is active."
 		},
 		"Minus": {
 			"name": "Minus",
@@ -3212,7 +3212,7 @@
 		},
 		"Mold Breaker": {
 			"name": "Mold Breaker",
-			"shortDescription": "This Pokémon's move power can't be lower than the default value.",
+			"shortDescription": "This Pokémon's move power can’t be lower than the default value.",
 			"longDescription": "As this Pokémon's effective move power is determined, if it is lower than the move's default power, the effective power becomes the default power."
 		},
 		"Moody": {
@@ -3253,7 +3253,7 @@
 		"Own Tempo": {
 			"name": "Own Tempo",
 			"shortDescription": "Can't be confused",
-			"longDescription": "This Pokémon can't be confused during battle."
+			"longDescription": "This Pokémon can’t be confused during battle."
 		},
 		"Pickup": {
 			"name": "Pickup",
@@ -3433,7 +3433,7 @@
 		"Sweet Veil": {
 			"name": "Sweet Veil",
 			"shortDescription": "Prevents sleep. Also, Fairy tiles may spawn. Fairy tiles are worth 1 green AND blue energy.",
-			"longDescription": "This Pokémon can't be put to sleep during battle. As long as this Pokémon is the active Pokémon, the weight of Fairy tiles is increased by 0.5. Fairy tiles are worth 1 green AND 1 blue energy. (The normal weight is 0)"
+			"longDescription": "This Pokémon can’t be put to sleep during battle. As long as this Pokémon is the active Pokémon, the weight of Fairy tiles is increased by 0.5. Fairy tiles are worth 1 green AND 1 blue energy. (The normal weight is 0)"
 		},
 		"Synchronize": {
 			"name": "Synchronize",
@@ -3498,7 +3498,7 @@
 		"Vital Spirit": {
 			"name": "Vital Spirit",
 			"shortDescription": "Can't be put to sleep",
-			"longDescription": "This Pokémon can't be put to sleep during battle."
+			"longDescription": "This Pokémon can’t be put to sleep during battle."
 		},
 		"Weak Armor": {
 			"name": "Weak Armor",
@@ -3623,7 +3623,7 @@
 		},
 		"invulnerable": {
 			"name": "Invulnerable",
-			"description": "This Pokémon can't be dealt damage."
+			"description": "This Pokémon can’t be dealt damage."
 		},
 		"poisoned": {
 			"name": "Poisoned",
@@ -3647,7 +3647,7 @@
 		},
 		"fear-frozen": {
 			"name": "Frozen in Fear",
-			"description": "This Pokémon can't be switched out voluntarily. If its owner matches 5 tiles in a row, it will snap back to reality."
+			"description": "This Pokémon can’t be switched out voluntarily. If its owner matches 5 tiles in a row, it will snap back to reality."
 		},
 		"light-screen": {
 			"name": "Light Screen",
@@ -3659,11 +3659,11 @@
 		},
 		"safeguard": {
 			"name": "Safeguard",
-			"description": "This Pokémon can't receive status effects from other Pokémon."
+			"description": "This Pokémon can’t receive status effects from other Pokémon."
 		},
 		"protect": {
 			"name": "Protected",
-			"description": "This Pokémon can't be dealt damage by other Pokémon, receive status effects from other Pokémon, or have its stat stages modified by other Pokémon."
+			"description": "This Pokémon can’t be dealt damage by other Pokémon, receive status effects from other Pokémon, or have its stat stages modified by other Pokémon."
 		},
 		"seedling": {
 			"name": "Seedling",
