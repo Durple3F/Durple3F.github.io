@@ -269,7 +269,7 @@ const NPCTrainerData = {
 			trainer: "src/img/trainers/skullgrunt.png"
 		},
 		textStyle: {
-			textBoxFont: "\"Caveat Brush\", inherit",
+			textBoxFont: "\"Caveat Brush\"",
 		}
 	},
 	"Team-Skull-Grunt-F": {
@@ -279,7 +279,7 @@ const NPCTrainerData = {
 			trainer: "src/img/trainers/skullgruntf.png"
 		},
 		textStyle: {
-			textBoxFont: "\"Caveat Brush\", inherit",
+			textBoxFont: "\"Caveat Brush\"",
 		}
 	},
 	"Young-Athlete-F": {

@@ -146,6 +146,10 @@ body {
 	max-height: 90vh;
 	overflow: auto;
 }
+.modal > .modal-dialog-centered {
+	--bs-modal-margin: 0 !important;
+	height: 100%;
+}
 .modal > .modal-dialog > .modal-content > .modal-header {
 	border-bottom: 1px solid var(--modal-border-color);
 }
@@ -2069,6 +2073,17 @@ body {
 }
 .evolution-container > div > img {
 	max-height: 100%;
+}
+
+.modal .changelog .major-release .accordion-header button {
+	font-weight: bold;
+}
+.modal .changelog .anniversary {
+	border-left-color: rgb(252, 234, 132);
+	border-right-color: rgb(252, 234, 132);
+}
+.modal .changelog .anniversary .accordion-header button {
+	background-color: rgb(252, 234, 132);
 }
 
 #dialogue-container,

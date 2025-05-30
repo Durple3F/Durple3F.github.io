@@ -1253,10 +1253,13 @@
 					"left": "+=12%"
 				}},
 				{ "type": "come-in-from-offscreen", "speaker": "Team Skull Grunt F", "easing": "linear", "direction": "left", "duration": 6000, "waitDuration": 0, "additionalLeft": 0.24, "walkAnimation": "skull" },
-				{ "type": "text", "speaker": "Team Skull Grunt E", "text": "Awww, look at li’l Gladion! Playing with your $@start-italics|@$friends$@end-italics|@$?" },
+				{ "type": "text", "speaker": "Team Skull Grunt E", "text": "Awww, look at li’l Gladion! Playing with your $@start-italics|@$friends? $@end-italics|@$" },
 				{ "type": "text", "speaker": "Team Skull Grunt F", "text": "And oh, would you look at what they’re doing? They’re $@start-italics|@$witnessing$@end-italics|@$, Gladion. I guess you didn’t do your job very well, huh?" },
-				{ "type": "text", "speaker": "Team Skull Grunt E", "text": "Lucky for you, it doesn’t matter either way. This place was a $@start-italics|@$bust$@end-italics|@$. Let’s just get outta here and tell the boss it was a waste of time." },
-				{ "type": "transform-speaker", "speaker": "Team Skull Grunt E", "transform": "scaleX(1)", "duration": 300, "waitDuration": 300 },
+				{ "type": "text", "speaker": "Team Skull Grunt E", "text": "Lucky for you, it doesn’t matter either way. This place was a $@start-italics|@$bust.$@end-italics|@$ Let’s just get outta here and tell the boss it was a waste of time." },
+				{ "type": "transform-speaker", "speaker": "Team Skull Grunt E", "transform": "scaleX(1)", "duration": 300, "waitDuration": 350 },
+				{ "type": "style-speaker", "speaker": "Team Skull Grunt E", "css": {
+					"transition": ""
+				}},
 				{ "type": "go-out-from-onscreen", "speaker": "Team Skull Grunt E", "easing": "linear", "direction": "left", "walkAnimation": "skull", "additionalLeft": -0.24, "duration": 9000, "waitDuration": 100 },
 				{ "type": "go-out-from-onscreen", "speaker": "Team Skull Grunt F", "easing": "linear", "direction": "left", "walkAnimation": "skull", "additionalLeft": 0, "duration": 9000, "waitDuration": 100 },
 				{ "type": "go-out-from-onscreen", "speaker": "Gladion", "direction": "left", "additionalLeft": -0.12, "duration": 12000, "waitDuration": 9000 },
@@ -1351,6 +1354,10 @@
 		"Persian-Alola": {
 			"name": "Persian",
 			"pokedex-entry": "Long ago, a royal family brought Meowth into Alola from far away. It became so accustomed to their luxurious treatment that even now it can’t help but act superior."
+		},
+		"Psyduck": {
+			"name": "Psyduck",
+			"pokedex-entry": "Every Psyduck trainer should have heavy-duty ice packs to help with its constant migraines whenever they flare up. Many trainers find gel-based compacts effective, mostly because Psyduck love how squishy they are."
 		},
 		"Mankey": {
 			"name": "Mankey",
@@ -3010,6 +3017,11 @@
 			"shortDescription": "On making contact with the opponent, lowers their Special Attack by a stage.",
 			"longDescription": "When this Pokémon deals damage to the opponent, if that move made contact, the opponent's Special Defense is lowered by a stage."
 		},
+		"Damp": {
+			"name": "Damp",
+			"shortDescription": "The opponent can’t self-destruct",
+			"longDescription": "When this Pokémon comes into play, the opponent has their self-destructing moves disabled until they or the opponent switch out."
+		},
 		"Dancer": {
 			"name": "Dancer",
 			"shortDescription": "After a dancing move is used by any Pokémon (including itself), uses that same move",
@@ -3434,6 +3446,11 @@
 			"name": "Sweet Veil",
 			"shortDescription": "Prevents sleep. Also, Fairy tiles may spawn. Fairy tiles are worth 1 green AND blue energy.",
 			"longDescription": "This Pokémon can't be put to sleep during battle. As long as this Pokémon is the active Pokémon, the weight of Fairy tiles is increased by 0.5. Fairy tiles are worth 1 green AND 1 blue energy. (The normal weight is 0)"
+		},
+		"Swift Swim": {
+			"name": "Swift Swim",
+			"shortDescription": "Gain extra speed based on Water tiles",
+			"longDescription": "This Pokémon’s speed increases by 1% per Water tile on the board."
 		},
 		"Synchronize": {
 			"name": "Synchronize",

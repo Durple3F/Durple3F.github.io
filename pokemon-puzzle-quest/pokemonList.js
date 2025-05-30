@@ -1225,11 +1225,68 @@ const pokemonData = {
 			blue: 3,
 			purple: 3
 		},
+		evolutions: [
+			{ name: "Golduck", unlock: { type: "level", amount: 33 } }
+		],
 		learnset: [
 			{ name: "Scratch", unlock: { type: "level", amount: 1 } },
 			{ name: "Tail Whip", unlock: { type: "level", amount: 1 } },
 			{ name: "Water Gun", unlock: { type: "level", amount: 3 } },
 			{ name: "Confusion", unlock: { type: "level", amount: 6 } },
+			{ name: "Fury Swipes", unlock: { type: "level", amount: 9 } },
+			{ name: "Water Pulse", unlock: { type: "level", amount: 12 } },
+			{ name: "Disable", unlock: { type: "level", amount: 15 } },
+			{ name: "Zen Headbutt", unlock: { type: "level", amount: 18 } },
+			{ name: "Screech", unlock: { type: "level", amount: 21 } },
+		]
+	},
+	"Golduck": {
+		name: "Golduck",
+		number: "55",
+		weight: {
+			pounds: 168.9,
+			kilograms: 76.6
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0055Golduck.png",
+			"largeShiny": "src/img/shiny-pokemon/055-Golduck.png",
+			"home": "src/img/tiny-pokemon/Golduck.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/golduck.mp3"
+		},
+		types: ["Water"],
+		tags: [],
+		abilities: ["Damp", "Cloud Nine"],
+		hiddenAbilities: ["Swift Swim"],
+		stats: {
+			hp: 80,
+			attack: 82,
+			defense: 78,
+			specialAttack: 95,
+			specialDefense: 80,
+			speed: 85
+		},
+		expYield: 175,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 2,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			blue: 5,
+			purple: 4
+		},
+		learnset: [
+			{ name: "Aqua Jet", unlock: { type: "level", amount: 1 } },
+			{ name: "Scratch", unlock: { type: "level", amount: 1 } },
+			{ name: "Tail Whip", unlock: { type: "level", amount: 1 } },
+			{ name: "Water Gun", unlock: { type: "level", amount: 1 } },
+			{ name: "Confusion", unlock: { type: "level", amount: 1 } },
 			{ name: "Fury Swipes", unlock: { type: "level", amount: 9 } },
 			{ name: "Water Pulse", unlock: { type: "level", amount: 12 } },
 			{ name: "Disable", unlock: { type: "level", amount: 15 } },
