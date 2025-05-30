@@ -1565,7 +1565,7 @@ const pokemonMoveEffects = {
 			if (chooser === 0) {
 				choosePromise = choosePokemon(message, list, minChooseable, maxChooseable)
 			} else {
-				choosePromise = game.computerChoosePokemon(list, strategy, minChooseable, maxChooseable)
+				choosePromise = game.computerChoosePokemon(1, list, strategy, minChooseable, maxChooseable)
 			}
 
 			choosePromise.then(chosenPokemon => {

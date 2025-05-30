@@ -428,6 +428,7 @@ const pokemonMoveData = {
 		type: "Fighting",
 		category: "Physical",
 		strategy: "special",
+		tags: ["damage-dealing", "makes-contact"],
 		pp: 10,
 		power: 0,
 		accuracy: 100,
@@ -1862,6 +1863,7 @@ const pokemonMoveData = {
 		type: "Electric",
 		category: "Special",
 		strategy: "special",
+		tags: ["damage-dealing"],
 		pp: 10,
 		power: 0,
 		accuracy: 100,
@@ -2947,7 +2949,7 @@ const pokemonMoveData = {
 		type: "Steel",
 		category: "Physical",
 		strategy: "special",
-		tags: ["makes-contact"],
+		tags: ["damage-dealing", "makes-contact"],
 		pp: 5,
 		power: 0,
 		accuracy: 100,
@@ -8385,6 +8387,10 @@ for (let moveName in pokemonMoveData){
 	// if (move.sounds && !Object.values(move.sounds).some(v => v.includes(moveName))){
 	// 	console.warn("Weird sound", moveName)
 	// }
+	
+	if (move.effects.some(effect => effect.type === "damage") && !move.tags.includes("damage-dealing")){
+		console.log("this move doesn't deal damage?", move)
+	}
 }
 for (let name in pokemonData) {
 	pokemonData[name].learnset.splice(0, 0, {

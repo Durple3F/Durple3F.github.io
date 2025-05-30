@@ -399,7 +399,7 @@ class Round {
 			let pokemonCanSwapTo = getUsablePokemon(enemyTrainer.pokemon)
 			if (pokemonCanSwapTo.length > 0) {
 				//If the enemy has pokemon they can swap to, they pick one and swap to it.
-				promise = promise.then(() => this.computerChoosePokemon(pokemonCanSwapTo, "swap"))
+				promise = promise.then(() => this.computerChoosePokemon(1, pokemonCanSwapTo, "swap"))
 					.then(pokemonList => {
 						return this.animateSendOutPokemon(1, pokemonList[0])
 					})
@@ -1286,6 +1286,8 @@ class Round {
 			for (let moveUsage of pokemon.moveUsage) {
 				if (moveUsage.recharge > 0) {
 					moveUsage.recharge -= 1
+				} else if (moveUsage.recharge < 0){
+					moveUsage.recharge = 0
 				}
 			}
 		}
@@ -2622,16 +2624,23 @@ class Round {
 		let animation = this.animateSwitchLocations(bestSwap[0], bestSwap[1])
 		return animation.promise
 	}
-	computerChoosePokemon(pokemonList, reason, minChooseable = 1, maxChooseable = 1) {
+	computerChoosePokemon(trainerIndex, pokemonList, reason, minChooseable = 1, maxChooseable = 1) {
 		//TODO have the logic here be based on which reason they could be choosing stuff
 		//Current reasons are:
 		// - swap (The computer is changing their active pokemon)
 		// - damage (The computer is choosing a pokemon which they would like to have damage dealt to.)
+		
+		//This is the trainer who is MAKING the CHOICE
+		let trainer = this.trainers[trainerIndex]
 		let resolvePromise
 		let promise = new Promise(resolve => resolvePromise = resolve)
 
 		if (reason === "swap"){
-			let nonAces = pokemonList.filter(pokemon => !pokemon.gameRoundData.isAce)
+			let nonAces = pokemonList.filter(pokemon => {
+				let tagData = trainer.pokemonData[pokemon.uuid] || {}
+				return !tagData.isAce
+			})
+			console.log(nonAces, pokemonList)
 			let canPick = nonAces
 			if (!nonAces.length){
 				canPick = pokemonList
@@ -3165,7 +3174,7 @@ class Round {
 			return
 		}
 		let moveUsage = pokemon.moveUsage[moveIndex]
-		if (moveUsage.recharge) {
+		if (moveUsage.recharge > 0) {
 			this.createAnnouncement("general", "That move is recharging.")
 			return
 		}
@@ -3761,7 +3770,11 @@ class Round {
 		}
 		//Put the move on recharge
 		let moveIndex = pokemon.moves.indexOf(move)
-		pokemon.moveUsage[moveIndex].recharge = this.getEffectiveMoveRecharge(trainer, pokemon, move)
+		let newRecharge = this.getEffectiveMoveRecharge(trainer, pokemon, move)
+		if (newRecharge < 0){
+			newRecharge = 0
+		}
+		pokemon.moveUsage[moveIndex].recharge = newRecharge
 		let promise = Promise.resolve()
 
 		let moveUseObj = this.newMoveUseObj(trainer, pokemon, move, "effects")
@@ -6277,8 +6290,12 @@ class Trainer {
 		this.name = name
 		this.pokemon = []
 		this.data = options ?? {}
+		this.pokemonData = {}
 		this.tags = {}
-		pokemon.forEach(p => this.pokemon.push(p))
+		pokemon.forEach(p => {
+			this.pokemon.push(p)
+			this.pokemonData[p.uuid] = {}
+		})
 		let usablePokemon = getUsablePokemon(pokemon)
 		this.activePokemon = usablePokemon[0]
 		if (!this.activePokemon) {
@@ -7129,6 +7146,7 @@ function beginRound(trainerData) {
 	while (targetPokemon < pokemonData.length && pokemonData.length) {
 		pokemonData.splice(pokemonData.length - 1, 1)
 	}
+	let acePokemon = []
 	let enemyPokemon = pokemonData.map(data => {
 		let options = {}
 		options.id = data.id
@@ -7174,10 +7192,10 @@ function beginRound(trainerData) {
 		if (data.nature){
 			options.nature = data.nature
 		}
-		if (data.isAce){
-			options.isAce = data.isAce
-		}
 		let pokemon = new Pokemon(options.name, options.id, options)
+		if (data.isAce){
+			acePokemon.push(pokemon)
+		}
 		logPokemonAs("seen", pokemon)
 		if (pokemon.isShiny) {
 			logPokemonAs("seen-shiny", pokemon)
@@ -7192,6 +7210,7 @@ function beginRound(trainerData) {
 	}
 
 	let enemy = new Trainer("Enemy", enemyPokemon, trainerData)
+	acePokemon.forEach(pokemon => enemy.pokemonData[pokemon.uuid].isAce = true)
 
 	//If there was a previous fight in this level, carry over the board
 	//so that it remains there for this fight.

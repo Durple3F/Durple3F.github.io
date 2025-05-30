@@ -2,6 +2,10 @@
 
 5/29 (42.0k lines):
 	- Anniversary! :)
+	- Oops, 4-1 was broken this whole time.
+	- Fixed a problem with effects that change the background during dialogue.
+	- Hides the ridiculously long decimals from volume sliders when floating point numbers go stupid.
+	- The ace pokemon system broke again fixed it yay
 
 5/28 (42.0k lines):
 	- Added the remaining pokedex entries.

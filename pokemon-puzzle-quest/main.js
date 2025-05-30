@@ -922,7 +922,7 @@ function openSettings(){
 		config.volumes[type] = value
 		changeVolume(type, value)
 		let numInput = body.find(`.form-control[data-type="${type}"]`)
-		numInput.val(value * numSize)
+		numInput.val((value * numSize).toFixed(1))
 	}
 	let changeNumInput = event => {
 		let elem = event.currentTarget
@@ -948,7 +948,8 @@ function openSettings(){
 		range.attr("disabled", config.muted[type])
 		numInput.attr("disabled", config.muted[type])
 		range.val(config.volumes[type] * rangeSize)
-		numInput.val(config.volumes[type] * numSize)
+		let numVal = config.volumes[type] * numSize
+		numInput.val((numVal).toFixed(1))
 		checkbox.on("change", changeMute)
 		range.on("change", changeRange)
 		numInput.on("change", changeNumInput)
