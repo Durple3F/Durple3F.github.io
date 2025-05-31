@@ -1745,7 +1745,7 @@ body {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
-	align-items: center;
+	align-items: start;
 	overflow-y: scroll;
 	-ms-overflow-style: none;
 	scrollbar-width: none;
@@ -1754,10 +1754,12 @@ body {
 #pokedex > #dexWindow::-webkit-scrollbar {
 	display: none;
 }
-#pokedex > #dexWindow > .pokemon-list {
-	width: 100%;
+#pokedex > #dexWindow > div {
 	padding-top: 1em;
 	padding-bottom: 1em;
+}
+#pokedex > #dexWindow > .pokemon-list {
+	width: 100%;
 	position: relative;
 	display: flex;
 	flex-wrap: wrap;

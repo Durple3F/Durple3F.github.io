@@ -878,19 +878,14 @@ function startScene(name, options={}) {
 			let dexWindow = $(`<div id='dexWindow'></div>`)
 			pokedexTag.append(dexWindow)
 
-			let pokemonList = Object.values(pokemonData)
-				.sort((a, b) => {
-					let aId = a.number
-					let bId = b.number
-					if (aId < bId) return -1
-					if (aId > bId) return 1
-					return 0
-				})
+			let inputSection = $(`<div class='d-flex justify-content-center w-100'>`)
+			dexWindow.append(inputSection)
+			let prevBtn = $(`<button class='btn btn-primary m-3 w-25'>Previous Page</button>`)
+			inputSection.append(prevBtn)
+			let nextBtn = $(`<button class='btn btn-primary m-3 w-25'>Next Page</button>`)
+			inputSection.append(nextBtn)
 
-			let pokemonStats = playerSaveInfo["pokemon-caught-stats"]
-			let pokemonListTag = $("<div class='pokemon-list'>")
-			dexWindow.append(pokemonListTag)
-			for (let data of pokemonList) {
+			const generateSection = data => {
 				let pokemonId = data.id
 				let pokemonOptions = {
 					isShiny: false
@@ -937,8 +932,60 @@ function startScene(name, options={}) {
 				}
 
 				section.append(textSection)
-				pokemonListTag.append(section)
+				pokedexSections[pokemonId] = section
 			}
+			let pokedexSections = {}
+
+			let pokemonList = Object.values(pokemonData)
+				.sort((a, b) => {
+					let aId = a.number
+					let bId = b.number
+					if (aId < bId) return -1
+					if (aId > bId) return 1
+					return 0
+				})
+
+			let pokemonStats = playerSaveInfo["pokemon-caught-stats"]
+			let pokemonListTag = $("<div class='pokemon-list'>")
+			dexWindow.append(pokemonListTag)
+			
+			let pageNum = 0
+			let pageSize = 25
+			let pages = []
+			const determinePages = () => {
+				pages = []
+				for (let i = 0; i < pokemonList.length; i++){
+					let pageI = Math.floor(i / pageSize)
+					if (!pages[pageI]){
+						pages[pageI] = []
+					}
+					let page = pages[pageI]
+					let data = pokemonList[i]
+					page.push(data)
+				}
+			}
+
+			const displayPage = pageNum => {
+				pokemonListTag.empty()
+				let page = pages[pageNum]
+				for (let data of page) {
+					generateSection(data)
+					let section = pokedexSections[data.id]
+					pokemonListTag.append(section)
+				}
+				allPokemonSections = pokemonListTag.children(".pokemon-section")
+			}
+
+			nextBtn.click(() => {
+				pageNum += 1
+				pageNum %= pages.length
+				displayPage(pageNum)
+			})
+			prevBtn.click(() => {
+				pageNum += pages.length - 1
+				pageNum %= pages.length
+				displayPage(pageNum)
+			})
 
 			let adminTag = $(`<div id='pokedex-admin'></div>`)
 			pokedexTag.append(adminTag)
@@ -946,9 +993,10 @@ function startScene(name, options={}) {
 			let backButton = $("<button class='btn btn-primary big-btn back-btn'>Back</button>")
 			adminTag.append(backButton)
 
-			let allPokemonSections = pokemonListTag.children(".pokemon-section")
+			let allPokemonSections = $()
 			let bgUpAmt = 0
 			const pcTick = () => {
+				if (!allPokemonSections.length) return
 				let height = $(allPokemonSections[0]).height()
 				bgUpAmt = Date.now() % (height * 100)
 				let amt = bgUpAmt / 100
@@ -961,6 +1009,8 @@ function startScene(name, options={}) {
 				resolvePromise()
 			}
 
+			determinePages()
+			displayPage(pageNum)
 			backButton.click(() => {
 				leaveScene()
 				changeScene("pc")
