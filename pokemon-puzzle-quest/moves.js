@@ -4596,6 +4596,39 @@ const pokemonMoveData = {
 			},
 		],
 	},
+	//Lowers speed 1
+	"Mud Shot": {
+		name: "Mud Shot",
+		type: "Ground",
+		category: "Special",
+		strategy: "basic-damage",
+		pp: 15,
+		power: 55,
+		accuracy: 95,
+		rechargeTurns: 4,
+		energy: {
+			orange: 6,
+			blue: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Mud Shot.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{
+				type: "apply-debuff", target: "opponent", debuff: {
+					type: "stat",
+					stat: "speed",
+					class: "debuff",
+					amount: -1
+				}
+			}
+		]
+	},
 	//Lowers enemy special attack and empowers some red tiles
 	"Mystical Fire": {
 		name: "Mystical Fire",
@@ -5537,6 +5570,41 @@ const pokemonMoveData = {
 				}
 			} },
 		],
+	},
+	//Makes water tiles more likely for a while
+	"Rain Dance": {
+		name: "Rain Dance",
+		type: "Water",
+		category: "Status",
+		strategy: "buff-user",
+		tags: [],
+		pp: 5,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 5,
+		energy: {
+			blue: 5,
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Rain Dance part 2.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "apply-status-effect-to-game", statusEffect: {
+				name: "rain-dance-weights",
+				type: "tile-weight-alteration",
+				stacks: true,
+				volatile: true,
+				turns: 20,
+				weights: {
+					blue: {
+						change: 2,
+						operation: "multiply"
+					}
+				}
+			}},
+			{ type: "determine-tile-weights" },
+		]
 	},
 	//Remove many status effects from yourself and the board
 	"Rapid Spin": {

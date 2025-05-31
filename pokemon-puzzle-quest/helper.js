@@ -456,6 +456,7 @@ function download(url, type="json"){
 function doesMatchMeetCriteria(match, type, minLength=0, maxLength=Infinity){
 	if (minLength && match.length < minLength) return false
 	if (maxLength && match.length > maxLength) return false
+	//If we don't care about the type of match, only the length, then we dont need to worry about type checking.
 	if (!type) return true
 
 	let first = match.find(tile => tile.type === type)

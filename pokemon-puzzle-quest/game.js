@@ -2660,17 +2660,17 @@ class Round {
 		}
 
 		//Pokemon with dry skin take more damage based on how many red tiles exist, and less based on blue tiles
-		if (damage > 0 && defender.hasAbility("Dry Skin")){
-			let mult = 1
-			if (damageType === "Water"){
-				mult = -1
-			} else {
-				let contents = this.board.tilesOnScreen()
-				let redCount = contents.filter(tile => tile.type === "red").length
-				let blueCount = contents.filter(tile => tile.type === "blue").length
-				mult = Math.max(0, 1 + (redCount - blueCount) * 0.10)
-			}
+		if (damage > 0 && damageType !== "Water" && defender.hasAbility("Dry Skin")){
+			let contents = this.board.tilesOnScreen()
+			let redCount = contents.filter(tile => tile.type === "red").length
+			let blueCount = contents.filter(tile => tile.type === "blue").length
+			let mult = Math.max(0, 1 + (redCount - blueCount) * 0.10)
 			damage *= mult
+		}
+		
+		//Pokemon with dry skin or water absorb heal based on water damage
+		if (damage > 0 && damageType === "Water" && (defender.hasAbility("Dry Skin") || defender.hasAbility("Water Absorb"))){
+			damage *= -1
 		}
 
 		//I'm going to reduce how much damage things deal across the board, just a smidge.
@@ -4085,7 +4085,7 @@ class Round {
 			let endedTurn = false
 
 			if (pokemon.hasStatus("tormented")){
-				pokemon.removeStatusesWithName("torment-disabled")
+				pokemon.removeStatusesWithName("tormented-disabled")
 				pokemon.addStatusEffect({
 					name: "tormented-disabled",
 					type: "disability",

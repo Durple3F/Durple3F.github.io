@@ -1570,6 +1570,110 @@ const pokemonData = {
 			// { name: "Flamethrower", unlock: { type: "level", amount: 5 } },
 		]
 	},
+	"Poliwag": {
+		name: "Poliwag",
+		number: "60",
+		weight: {
+			pounds: 27.3,
+			kilograms: 12.4
+		},
+		imageFacing: "right",
+		imageSources: {
+			"large": "src/img/pokemon/0060Poliwag.png",
+			"largeShiny": "src/img/shiny-pokemon/060-Poliwag.png",
+			"home": "src/img/tiny-pokemon/Poliwag.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/poliwag.mp3"
+		},
+		types: ["Water"],
+		tags: [],
+		abilities: ["Water Absorb", "Damp"],
+		hiddenAbilities: ["Swift Swim"],
+		stats: {
+			hp: 40,
+			attack: 50,
+			defense: 40,
+			specialAttack: 40,
+			specialDefense: 40,
+			speed: 90
+		},
+		expYield: 60,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 1
+		},
+		energyMastery: {
+			water: 3,
+			orange: 1
+		},
+		evolutions: [
+			{ name: "Poliwhirl", unlock: { type: "level", amount: 25 } }
+		],
+		learnset: [
+			{ name: "Water Gun", unlock: { type: "level", amount: 1 } },
+			{ name: "Hypnosis", unlock: { type: "level", amount: 1 } },
+			{ name: "Pound", unlock: { type: "level", amount: 6 } },
+			{ name: "Mud Shot", unlock: { type: "level", amount: 12 } },
+			{ name: "Bubble Beam", unlock: { type: "level", amount: 18 } },
+			{ name: "Rain Dance", unlock: { type: "level", amount: 24 } },
+		]
+	},
+	"Poliwhirl": {
+		name: "Poliwhirl",
+		number: "61",
+		weight: {
+			pounds: 44.1,
+			kilograms: 20
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0061Poliwhirl.png",
+			"largeShiny": "src/img/shiny-pokemon/061-Poliwhirl.png",
+			"home": "src/img/tiny-pokemon/Poliwhirl.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/poliwhirl.mp3"
+		},
+		types: ["Water"],
+		tags: [],
+		abilities: ["Water Absorb", "Damp"],
+		hiddenAbilities: ["Swift Swim"],
+		stats: {
+			hp: 65,
+			attack: 65,
+			defense: 65,
+			specialAttack: 50,
+			specialDefense: 50,
+			speed: 90
+		},
+		expYield: 135,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 2
+		},
+		energyMastery: {
+			blue: 4,
+			green: 1,
+			orange: 3
+		},
+		learnset: [
+			{ name: "Water Gun", unlock: { type: "level", amount: 1 } },
+			{ name: "Hypnosis", unlock: { type: "level", amount: 1 } },
+			{ name: "Pound", unlock: { type: "level", amount: 1 } },
+			{ name: "Mud Shot", unlock: { type: "level", amount: 1 } },
+			{ name: "Bubble Beam", unlock: { type: "level", amount: 18 } },
+			{ name: "Rain Dance", unlock: { type: "level", amount: 24 } },
+		]
+	},
 	"Abra": {
 		name: "Abra",
 		number: "63",
@@ -5491,7 +5595,7 @@ const pokemonData = {
 			{ name: "Sing", unlock: { type: "level", amount: 20 } },
 			{ name: "Bubble Beam", unlock: { type: "level", amount: 25 } },
 			{ name: "Encore", unlock: { type: "level", amount: 30 } },
-			{ name: "Cross Poison", unlock: { type: "level", amount: 1 } },
+			{ name: "Rain Dance", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {

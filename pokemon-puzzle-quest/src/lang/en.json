@@ -1075,7 +1075,7 @@
 				{ "type": "text", "speaker": "Scotty", "text": "Hey! Are you a tourist too? There's so many cool Pokémon here!" },
 				{ "type": "text", "speaker": "Scotty", "text": "Earlier I saw a Rattata with a $@start-italics|@$mustache$@end-italics|@$!!! He looks like he runs a little restaurant or something!" },
 				{ "type": "text", "speaker": "Scotty", "text": "Everything is cooler here! The trees are wavier, the food is tastier, the Meowth are meaner..." },
-				{ "type": "text", "speaker": "Scotty", "text": "I could do without that last part! One of them stole my phone! I $@start-italics|@$still$@end-italics|@$ don't have my phone! but this place is still awesome!" },
+				{ "type": "text", "speaker": "Scotty", "text": "I could do without that last part! One of them stole my phone! I $@start-italics|@$still$@end-italics|@$ don't have my phone! This thing in my hand is just a vaguely phone-shaped rock!" },
 				{ "type": "text", "speaker": "Scotty", "text": "C’mon, battle me! I wanna show you all my new Pokémon!" }
 			]
 		},
@@ -1382,6 +1382,14 @@
 		"Arcanine": {
 			"name": "Arcanine",
 			"pokedex-entry": "Arcanine is prone to bark loudly at anything it thinks might endanger its trainer. It will bark at strangers, leaves on the ground, and especially a full moon. When a trainer gets an Arcanine, they are legally obligated to notify their neighbors."
+		},
+		"Poliwag": {
+			"name": "Poliwag",
+			"pokedex-entry": "Poliwag trainers without access to a body of water for Poliwag to play in often turn to their bathtubs. Poliwag isn’t yet able to control its speed very well, so trainers often put lots of towels on the bathroom floor to catch its splashes."
+		},
+		"Poliwhirl": {
+			"name": "Poliwhirl",
+			"pokedex-entry": "This Pokémon’s signature swirl is really just a facade. Its intestines are tightly wound to give the impression of that swirl, and it can flex different muscles to move its intestines around, giving the impression of a hypnotic spiral. Pokémon researchers have this to say: “Please stop talking about the weird frog it’s gross.”"
 		},
 		"Abra": {
 			"name": "Abra",
@@ -2423,6 +2431,11 @@
 			"description": "Deals damage. 2 random tiles are given the Energy Down status. When an opponent removes those tiles, they're worth 1 less energy each.",
 			"shortDescription": "Weakens tiles"
 		},
+		"Mud Shot": {
+			"name": "Mud Shot",
+			"description": "Deals damage and lowers the opponent's Speed stat by a stage.",
+			"shortDescription": "Deals damage and lowers enemy Speed"
+		},
 		"Mystical Fire": {
 			"name": "Mystical Fire",
 			"description": "Deals damage. Then, lowers the opponent's Special Attack a stage and empowers 3 random Fire tiles. Whenever either trainer matches an empowered Fire tile, it provides twice its usual energy, and their active Pokémon deals damage to the opponent with power equal to their level.",
@@ -2557,6 +2570,11 @@
 			"name": "Quick Guard",
 			"description": "Until the start of the user's next turn, moves that the opponent uses with a cooldown time of 1 or less have their power reduced by 75%.",
 			"shortDescription": "Temporarily makes quick attacks against you weaker"
+		},
+		"Rain Dance": {
+			"name": "Rain Dance",
+			"description": "Water tiles become twice as likely for 20 turns shared between both players. This effect stacks multiplicatively.",
+			"shortDescription": "Makes Water tiles more likely"
 		},
 		"Rapid Spin": {
 			"name": "Rapid Spin",
@@ -3544,6 +3562,11 @@
 			"name": "Vital Spirit",
 			"shortDescription": "Can't be put to sleep",
 			"longDescription": "This Pokémon can’t be put to sleep during battle."
+		},
+		"Water Absorb": {
+			"name": "Water Absorb",
+			"shortDescription": "Water-type damage taken heals",
+			"longDescription": "Being dealt Water-type damage heals this Pokémon instead of damaging it."
 		},
 		"Weak Armor": {
 			"name": "Weak Armor",

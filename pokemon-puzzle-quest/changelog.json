@@ -2,9 +2,15 @@
 	"versions": {
 		"20250531": {
 			"date": "May 31, 2025",
-			"line-count": 42900,
+			"line-count": 43400,
 			"changes": [
-				"- Migrated all of the changelog since April 30."
+				"- Added Poliwag, Poliwhirl",
+				"- Added Mud Shot, Rain Dance",
+				"- Added Water Absorb",
+				"- Fixed the tormented status effect (I'm pretty sure)",
+				"- Migrated all of the changelog since April 30.",
+				"- Styled this changelog more. Now anniversary updates have a nice blue color!",
+				"- Changed Scotty's dialogue slightly"
 			]
 		},
 		"20250530": {
@@ -400,6 +406,7 @@
 
 		"20250411": {
 			"date": "April 11, 2025",
+			"tags": ["major-release"],
 			"line-count": 17700,
 			"changes": [
 				"- Added Drowzee, Charjabug, Gastly, Spearow",
@@ -413,6 +420,7 @@
 
 		"20240529": {
 			"date": "May 29, 2024",
+			"tags": ["major-release", "anniversary"],
 			"changes": [
 				"- started. i've never made a match 3 game before.",
 				"- mostly just got the very basic layout working."

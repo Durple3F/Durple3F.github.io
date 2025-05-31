@@ -86,7 +86,7 @@ const pokemonAbilityData = {
 	"Drizzle": {
 		id: "Drizzle"
 	},
-	//Reduces damage based on blue tiles, but increases damage based on red tiles
+	//Reduces damage based on blue tiles, but increases damage based on red tiles. Also heals on being dealt water damage
 	"Dry Skin": {
 		id: "Dry Skin"
 	},
@@ -481,6 +481,10 @@ const pokemonAbilityData = {
 	//You can't be put to sleep
 	"Vital Spirit": {
 		id: "Vital Spirit"
+	},
+	//Heals when dealt water damage
+	"Water Absorb": {
+		id: "Water Absorb"
 	},
 	//Stats change on being hit with Physical moves
 	"Weak Armor": {

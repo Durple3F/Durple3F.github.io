@@ -966,6 +966,13 @@ const pokemonMoveEffects = {
 			resolve()
 		}
 	},
+	"determine-tile-weights": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			game.determineTileWeights()
+			resolve()
+		}
+	},
 	"select-random-tiles": {
 		update: false,
 		execute: (resolve, effect, params, game, options) => {

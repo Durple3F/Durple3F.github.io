@@ -2075,15 +2075,33 @@ body {
 	max-height: 100%;
 }
 
+.modal .changelog .form-select {
+	background-color: rgb(68, 68, 68);
+	color: white;
+	border-color: rgb(73, 73, 73);
+	--bs-form-select-bg-img: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+}
+.modal .changelog .accordion-item {
+	--bs-accordion-border-color: rgb(73, 73, 73);
+	--bs-accordion-bg: rgb(68, 68, 68);
+	--bs-accordion-color: white;
+	--bs-accordion-active-color: rgb(230, 230, 230);
+	--bs-accordion-btn-color: white;
+	--bs-accordion-btn-bg: rgb(63, 63, 63);
+	--anniversary-color: rgb(24, 88, 104);
+}
+.modal .changelog .accordion-button {
+	background-color: var(--bs-accordion-btn-bg);
+}
 .modal .changelog .major-release .accordion-header button {
 	font-weight: bold;
 }
 .modal .changelog .anniversary {
-	border-left-color: rgb(252, 234, 132);
-	border-right-color: rgb(252, 234, 132);
+	--bs-accordion-bg: var(--anniversary-color);
+	--bs-accordion-border-color: var(--anniversary-color);
 }
 .modal .changelog .anniversary .accordion-header button {
-	background-color: rgb(252, 234, 132);
+	background-color: var(--anniversary-color);
 }
 
 #dialogue-container,

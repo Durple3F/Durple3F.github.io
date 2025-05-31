@@ -21,6 +21,8 @@ Incomplete move lists:
 	Mankey (lv 26)
 	Growlithe (lv 20)
 	Arcanine (lv 0)
+	Poliwag (lv 24)
+	Poliwhirl (lv 20)
 	Kadabra (lv 10)
 	Machop (lv 21)
 	Machoke (lv 21)
@@ -114,7 +116,8 @@ Missing Evolutions:
 	Rattata
 	Golbat
 	Mankey
-	Abra
+	Poliwhirl
+	Kadabra
 	Slowpoke
 	Magnemite
 	Grimer-Alola
