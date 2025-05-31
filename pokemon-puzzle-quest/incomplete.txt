@@ -10,11 +10,14 @@ Incomplete move lists:
 	Jigglypuff (lv 28)
 	Zubat (lv 20)
 	Golbat (lv 20)
+	Paras (lv 22)
+	Parasect (lv 22)
 	Diglett-Alola (lv 20)
 	Dugtrio-Alola (lv 0)
 	Meowth-Alola (lv 32)
 	Persian-Alola (lv 36)
-	Psyduck (lv 20)
+	Psyduck (lv 21)
+	Golduck (lv 21)
 	Mankey (lv 26)
 	Growlithe (lv 20)
 	Arcanine (lv 0)
@@ -110,7 +113,6 @@ Incomplete move lists:
 Missing Evolutions:
 	Rattata
 	Golbat
-	Psyduck
 	Mankey
 	Abra
 	Slowpoke

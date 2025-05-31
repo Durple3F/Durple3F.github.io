@@ -1392,144 +1392,7 @@ class Round {
 				fixed: true
 			})
 		}
-		//Deal with Stun Spore, Sleep Powder, and Poison Powder
-		if (true) {
-			let stunSporeTiles = contents.filter(tile => tile.hasStatus("Stun Spore"))
-			if (stunSporeTiles.length >= 20) {
-				let trainers = []
-				let statusInfo = []
-				for (let tile of stunSporeTiles) {
-					let stunSpores = tile.getStatuses("Stun Spore")
-					for (let status of stunSpores) {
-						if (!trainers.includes(status.sourceTrainer)) {
-							trainers.push(status.sourceTrainer)
-							statusInfo.push([
-								status.sourceTrainer, status.sourcePokemon, status.sourceMove
-							])
-						}
-					}
-				}
-				let randomException = randomChoice(stunSporeTiles)
-				let index = stunSporeTiles.indexOf(randomException)
-				stunSporeTiles.splice(index, 1)
-				for (let tile of stunSporeTiles) {
-					tile.removeStatusesWithName("Stun Spore")
-				}
-				for (let index in trainers) {
-					let trainer = trainers[index]
-					let info = statusInfo[index]
-					let otherTrainers = this.trainers.filter(t => {
-						return trainer !== t
-					})
-					for (let otherTrainer of otherTrainers) {
-						let activePokemon = otherTrainer.activePokemon
-						if (!activePokemon.hasAbility("Overcoat")) {
-							activePokemon.addStatusEffect("paralyzed", info[0], info[1], info[2])
-						}
-					}
-				}
-			}
-			let sleepPowderTiles = contents.filter(tile => tile.hasStatus("Sleep Powder"))
-			if (sleepPowderTiles.length >= 20) {
-				let trainers = []
-				let statusInfo = []
-				for (let tile of sleepPowderTiles) {
-					let sleepPowders = tile.getStatuses("Sleep Powder")
-					for (let status of sleepPowders) {
-						if (!trainers.includes(status.sourceTrainer)) {
-							trainers.push(status.sourceTrainer)
-							statusInfo.push([
-								status.sourceTrainer, status.sourcePokemon, status.sourceMove
-							])
-						}
-					}
-				}
-				let randomException = randomChoice(sleepPowderTiles)
-				let index = sleepPowderTiles.indexOf(randomException)
-				sleepPowderTiles.splice(index, 1)
-				for (let tile of sleepPowderTiles) {
-					tile.removeStatusesWithName("Sleep Powder")
-				}
-				for (let index in trainers) {
-					let trainer = trainers[index]
-					let info = statusInfo[index]
-					let otherTrainers = this.trainers.filter(t => {
-						return trainer !== t
-					})
-					for (let otherTrainer of otherTrainers) {
-						let activePokemon = otherTrainer.activePokemon
-						if (!activePokemon.hasAbility("Overcoat")) {
-							activePokemon.addStatusEffect("asleep", info[0], info[1], info[2])
-						}
-					}
-				}
-			}
-			let poisonPowderTiles = contents.filter(tile => tile.hasStatus("Poison Powder"))
-			if (poisonPowderTiles.length >= 20) {
-				let trainers = []
-				let statusInfo = []
-				for (let tile of poisonPowderTiles) {
-					let poisonPowders = tile.getStatuses("Poison Powder")
-					for (let status of poisonPowders) {
-						if (!trainers.includes(status.sourceTrainer)) {
-							trainers.push(status.sourceTrainer)
-							statusInfo.push([
-								status.sourceTrainer, status.sourcePokemon, status.sourceMove
-							])
-						}
-					}
-				}
-				let randomException = randomChoice(poisonPowderTiles)
-				let index = poisonPowderTiles.indexOf(randomException)
-				poisonPowderTiles.splice(index, 1)
-				for (let tile of poisonPowderTiles) {
-					tile.removeStatusesWithName("Poison Powder")
-				}
-				for (let index in trainers) {
-					let trainer = trainers[index]
-					let info = statusInfo[index]
-					let otherTrainers = this.trainers.filter(t => {
-						return trainer !== t
-					})
-					for (let otherTrainer of otherTrainers) {
-						let activePokemon = otherTrainer.activePokemon
-						if (!activePokemon.hasAbility("Overcoat")) {
-							activePokemon.addStatusEffect("poisoned", info[0], info[1], info[2])
-						}
-					}
-				}
-			}
-		}
-		//Get infectious tiles
-		let infectiousTiles = []
-		for (let tile of contents) {
-			let statusEffects = tile.statusEffects
-			for (let status of statusEffects) {
-				let statusName = status.name
-				let data = tileStatusData[statusName]
-				if (data.infectious) {
-					infectiousTiles.push([tile, status])
-				}
-			}
-		}
-		//Infect tiles
-		for (let pair of infectiousTiles) {
-			let tile = pair[0]
-			let status = pair[1]
-			let statusName = status.name
-			let data = tileStatusData[statusName]
-			let adjacent = this.board.getAdjacentTiles(tile)
-			for (let tile2 of adjacent) {
-				let rand = Math.random()
-				if (rand < data.infectious) {
-					tile2.addStatusEffect(
-						status,
-						status.sourceTrainer, status.sourcePokemon, status.sourceMove,
-						status.color
-					)
-				}
-			}
-		}
+		promise = promise.then(() => this.infectTiles())
 
 		//Start-of-turn abilities
 		//Telepathy gives you 1 energy of each type your opponent gained since your last turn
@@ -1613,7 +1476,7 @@ class Round {
 		promise = promise.then(() => this.determineTileWeights())
 		promise = promise.then(() => this.updateEverything())
 		promise = promise.then(() => this.checkForWinner())
-		if (this.activePlayer === "enemy") {
+		if (this.activePlayer !== "player") {
 			promise = promise.then(() => this.computerTakeTurn())
 		}
 
@@ -2794,6 +2657,20 @@ class Round {
 		//Tinted Lens powers up not very effective moves
 		if (typeMult <= 0.5 && attacker.hasAbility("Tinted Lens")) {
 			damage *= 2
+		}
+
+		//Pokemon with dry skin take more damage based on how many red tiles exist, and less based on blue tiles
+		if (damage > 0 && defender.hasAbility("Dry Skin")){
+			let mult = 1
+			if (damageType === "Water"){
+				mult = -1
+			} else {
+				let contents = this.board.tilesOnScreen()
+				let redCount = contents.filter(tile => tile.type === "red").length
+				let blueCount = contents.filter(tile => tile.type === "blue").length
+				mult = Math.max(0, 1 + (redCount - blueCount) * 0.10)
+			}
+			damage *= mult
 		}
 
 		//I'm going to reduce how much damage things deal across the board, just a smidge.
@@ -4197,7 +4074,6 @@ class Round {
 			} else {
 				moveUseObj = moveUseObj[0]
 			}
-			console.log(moveUseObj.move.name)
 
 			let trainer = moveUseObj.trainer
 			let pokemon = moveUseObj.pokemon
@@ -4686,6 +4562,146 @@ class Round {
 	shuffleTiles(tiles, duration = 250) {
 		let newLocationMap = this.board.getShuffleLocationMap(tiles)
 		return this.animateMoveTiles(newLocationMap, duration)
+	}
+	infectTiles(){
+		let contents = this.board.tilesOnScreen()
+		//Deal with Stun Spore, Sleep Powder, and Poison Powder
+		let stunSporeTiles = contents.filter(tile => tile.hasStatus("Stun Spore"))
+		if (stunSporeTiles.length >= 20) {
+			let trainers = []
+			let statusInfo = []
+			for (let tile of stunSporeTiles) {
+				let stunSpores = tile.getStatuses("Stun Spore")
+				for (let status of stunSpores) {
+					if (!trainers.includes(status.sourceTrainer)) {
+						trainers.push(status.sourceTrainer)
+						statusInfo.push([
+							status.sourceTrainer, status.sourcePokemon, status.sourceMove
+						])
+					}
+				}
+			}
+			let randomException = randomChoice(stunSporeTiles)
+			let index = stunSporeTiles.indexOf(randomException)
+			stunSporeTiles.splice(index, 1)
+			for (let tile of stunSporeTiles) {
+				tile.removeStatusesWithName("Stun Spore")
+			}
+			for (let index in trainers) {
+				let trainer = trainers[index]
+				let info = statusInfo[index]
+				let otherTrainers = this.trainers.filter(t => {
+					return trainer !== t
+				})
+				for (let otherTrainer of otherTrainers) {
+					let activePokemon = otherTrainer.activePokemon
+					if (!activePokemon.hasAbility("Overcoat")) {
+						activePokemon.addStatusEffect("paralyzed", info[0], info[1], info[2])
+					}
+				}
+			}
+		}
+		let sleepPowderTiles = contents.filter(tile => tile.hasStatus("Sleep Powder"))
+		if (sleepPowderTiles.length >= 20) {
+			let trainers = []
+			let statusInfo = []
+			for (let tile of sleepPowderTiles) {
+				let sleepPowders = tile.getStatuses("Sleep Powder")
+				for (let status of sleepPowders) {
+					if (!trainers.includes(status.sourceTrainer)) {
+						trainers.push(status.sourceTrainer)
+						statusInfo.push([
+							status.sourceTrainer, status.sourcePokemon, status.sourceMove
+						])
+					}
+				}
+			}
+			let randomException = randomChoice(sleepPowderTiles)
+			let index = sleepPowderTiles.indexOf(randomException)
+			sleepPowderTiles.splice(index, 1)
+			for (let tile of sleepPowderTiles) {
+				tile.removeStatusesWithName("Sleep Powder")
+			}
+			for (let index in trainers) {
+				let trainer = trainers[index]
+				let info = statusInfo[index]
+				let otherTrainers = this.trainers.filter(t => {
+					return trainer !== t
+				})
+				for (let otherTrainer of otherTrainers) {
+					let activePokemon = otherTrainer.activePokemon
+					if (!activePokemon.hasAbility("Overcoat")) {
+						activePokemon.addStatusEffect("asleep", info[0], info[1], info[2])
+					}
+				}
+			}
+		}
+		let poisonPowderTiles = contents.filter(tile => tile.hasStatus("Poison Powder"))
+		if (poisonPowderTiles.length >= 20) {
+			let trainers = []
+			let statusInfo = []
+			for (let tile of poisonPowderTiles) {
+				let poisonPowders = tile.getStatuses("Poison Powder")
+				for (let status of poisonPowders) {
+					if (!trainers.includes(status.sourceTrainer)) {
+						trainers.push(status.sourceTrainer)
+						statusInfo.push([
+							status.sourceTrainer, status.sourcePokemon, status.sourceMove
+						])
+					}
+				}
+			}
+			let randomException = randomChoice(poisonPowderTiles)
+			let index = poisonPowderTiles.indexOf(randomException)
+			poisonPowderTiles.splice(index, 1)
+			for (let tile of poisonPowderTiles) {
+				tile.removeStatusesWithName("Poison Powder")
+			}
+			for (let index in trainers) {
+				let trainer = trainers[index]
+				let info = statusInfo[index]
+				let otherTrainers = this.trainers.filter(t => {
+					return trainer !== t
+				})
+				for (let otherTrainer of otherTrainers) {
+					let activePokemon = otherTrainer.activePokemon
+					if (!activePokemon.hasAbility("Overcoat")) {
+						activePokemon.addStatusEffect("poisoned", info[0], info[1], info[2])
+					}
+				}
+			}
+		}
+		//Get infectious tiles
+		let infectiousTiles = []
+		for (let tile of contents) {
+			let statusEffects = tile.statusEffects
+			for (let status of statusEffects) {
+				let statusName = status.name
+				let data = tileStatusData[statusName]
+				if (data.infectious) {
+					infectiousTiles.push([tile, status])
+				}
+			}
+		}
+		//Infect tiles
+		for (let pair of infectiousTiles) {
+			let tile = pair[0]
+			let status = pair[1]
+			let statusName = status.name
+			let data = tileStatusData[statusName]
+			let adjacent = this.board.getAdjacentTiles(tile)
+			for (let tile2 of adjacent) {
+				let rand = Math.random()
+				if (rand < data.infectious) {
+					tile2.addStatusEffect(
+						status,
+						status.sourceTrainer, status.sourcePokemon, status.sourceMove,
+						status.color
+					)
+				}
+			}
+		}
+		return Promise.resolve()
 	}
 
 	animateSwitchLocations(tile1, tile2, options) {
@@ -6041,7 +6057,8 @@ class Round {
 				if (power) {
 					let powerTag = $(`<span class="move-power">Power: </span>`)
 					statLine.append(powerTag)
-					let powerVal = $(`<span class="val">${power}</span>`)
+					let powerNum = formatNumber(power)
+					let powerVal = $(`<span class="val">${powerNum}</span>`)
 					powerTag.append(powerVal)
 					let movePower = getMovePower(move, parentMove)
 					if (power > movePower) {
@@ -6152,6 +6169,9 @@ class Round {
 
 				if (thisMove.bypassEffectiveness){
 					moveTag.attr("data-effectiveness", "")
+				}
+				if (type === "Water" && otherPokemon.hasAbility("Dry Skin")){
+					moveTag.attr("data-effectiveness", "immune-effective")
 				}
 			} else {
 				moveTag.attr("data-effectiveness", "")
@@ -6316,6 +6336,7 @@ class Round {
 		if (!config.expShare) {
 			yourPokemon = yourPokemon.filter(pokemon => pokemon.turnsParticipated > 0)
 		}
+		let expFactor = 1 / yourPokemon.length
 		let resultMap = {}
 		for (let yours of yourPokemon) {
 			let totalEXP = 0
@@ -6329,8 +6350,7 @@ class Round {
 				let themLevel = p.level
 
 				let exp = (base * themLevel * 0.2) * Math.pow((2 * themLevel + 10) / (themLevel + youLevel + 10), 2.5)
-				//I'm reducing the EXP you gain, it's just too much otherwise
-				exp *= 0.4
+				exp *= expFactor
 				totalEXP += exp
 
 				let evYield = p.data.evYield

@@ -958,6 +958,113 @@ const pokemonData = {
 			{ name: "Quick Guard", unlock: { type: "level", amount: 20 } },
 		]
 	},
+	"Paras": {
+		name: "Paras",
+		number: "46",
+		weight: {
+			pounds: 11.9,
+			kilograms: 5.4
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0046Paras.png",
+			"largeShiny": "src/img/shiny-pokemon/046-Paras.png",
+			"home": "src/img/tiny-pokemon/Paras.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/paras.mp3"
+		},
+		types: ["Bug", "Grass"],
+		tags: [],
+		abilities: ["Effect Spore", "Dry Skin"],
+		hiddenAbilities: ["Damp"],
+		stats: {
+			hp: 35,
+			attack: 70,
+			defense: 55,
+			specialAttack: 45,
+			specialDefense: 55,
+			speed: 25
+		},
+		expYield: 57,
+		evYield: {
+			hp: 0,
+			attack: 1,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			yellow: 2,
+			green: 3,
+			purple: 1
+		},
+		evolutions: [
+			{ name: "Parasect", unlock: { type: "level", amount: 24 } }
+		],
+		learnset: [
+			{ name: "Scratch", unlock: { type: "level", amount: 1 } },
+			{ name: "Stun Spore", unlock: { type: "level", amount: 6 } },
+			{ name: "Poison Powder", unlock: { type: "level", amount: 6 } },
+			{ name: "Absorb", unlock: { type: "level", amount: 11 } },
+			{ name: "Fury Cutter", unlock: { type: "level", amount: 17 } },
+			{ name: "Spore", unlock: { type: "level", amount: 22 } },
+		]
+	},
+	"Parasect": {
+		name: "Parasect",
+		number: "47",
+		weight: {
+			pounds: 65.0,
+			kilograms: 29.5
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0047Parasect.png",
+			"largeShiny": "src/img/shiny-pokemon/047-Parasect.png",
+			"home": "src/img/tiny-pokemon/Parasect.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/parasect.mp3"
+		},
+		types: ["Bug", "Grass"],
+		tags: [],
+		abilities: ["Effect Spore", "Dry Skin"],
+		hiddenAbilities: ["Damp"],
+		stats: {
+			hp: 60,
+			attack: 95,
+			defense: 80,
+			specialAttack: 60,
+			specialDefense: 80,
+			speed: 30
+		},
+		expYield: 142,
+		evYield: {
+			hp: 0,
+			attack: 2,
+			defense: 1,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			yellow: 3,
+			green: 4,
+			blue: 1,
+			purple: 2
+		},
+		learnset: [
+			{ name: "Cross Poison", unlock: { type: "level", amount: 1 } },
+			{ name: "Scratch", unlock: { type: "level", amount: 1 } },
+			{ name: "Stun Spore", unlock: { type: "level", amount: 6 } },
+			{ name: "Poison Powder", unlock: { type: "level", amount: 6 } },
+			{ name: "Absorb", unlock: { type: "level", amount: 11 } },
+			{ name: "Fury Cutter", unlock: { type: "level", amount: 17 } },
+			{ name: "Spore", unlock: { type: "level", amount: 22 } },
+		]
+	},
 	"Diglett-Alola": {
 		name: "Diglett-Alola",
 		number: "50a",
@@ -5384,7 +5491,7 @@ const pokemonData = {
 			{ name: "Sing", unlock: { type: "level", amount: 20 } },
 			{ name: "Bubble Beam", unlock: { type: "level", amount: 25 } },
 			{ name: "Encore", unlock: { type: "level", amount: 30 } },
-			{ name: "Zen Headbutt", unlock: { type: "level", amount: 1 } },
+			{ name: "Cross Poison", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {

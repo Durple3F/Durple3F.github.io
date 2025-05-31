@@ -86,6 +86,10 @@ const pokemonAbilityData = {
 	"Drizzle": {
 		id: "Drizzle"
 	},
+	//Reduces damage based on blue tiles, but increases damage based on red tiles
+	"Dry Skin": {
+		id: "Dry Skin"
+	},
 	//Wake up quicker from sleep
 	"Early Bird": {
 		id: "Early Bird"
@@ -421,6 +425,10 @@ const pokemonAbilityData = {
 	//Makes Pink tiles spawn & prevents sleep
 	"Sweet Veil": {
 		id: "Sweet Veil"
+	},
+	//Gets extra speed based on how many blue tiles exist
+	"Swift Swim": {
+		id: "Swift Swim"
 	},
 	//Clones some statuses for the opponent
 	"Synchronize": {

@@ -240,6 +240,12 @@ const pokemonMoveEffects = {
 			}
 		}
 	},
+	"infect-tiles": {
+		execute: (resolve, effect, params, game, options) => {
+			game.infectTiles()
+			.then(() => resolve())
+		}
+	},
 	"time-step": {
 		execute: (resolve, effect, params, game, options) => {
 			game.timeStep()

@@ -1215,10 +1215,47 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
 			{ type: "load-value", value: 1 },
 			{ type: "choose-tiles", count: -1, target: "user", text: "choose" },
 			{ type: "select-tiles-diagonal-to", selection: -1, maxDistance: 2, includeOriginal: true },
 			{ type: "remove-tiles", selection: -1 },
+		],
+	},
+	//Converts an X-shaped section of tiles into purple tiles.
+	"Cross Poison": {
+		name: "Cross Poison",
+		type: "Poison",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 20,
+		power: 70,
+		accuracy: 100,
+		rechargeTurns: 4,
+		energy: {
+			purple: 12,
+			red: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Cross Poison.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "load-value", value: 1 },
+			{ type: "choose-tiles", count: -1, target: "user", text: "choose" },
+			{ type: "select-tiles-diagonal-to", selection: -1, maxDistance: 2, includeOriginal: true },
+			{ type: "change-tile-type", selection: "group", which: -1, targetType: "purple" },
+			{ type: "random-number", min: 1, max: 10 },
+			{ type: "load-value", value: 5 },
+			{ type: "jump-if-less-than", jumpTo: Infinity },
+			{ type: "apply-status-effect", statusEffect: "poisoned", target: "opponent" },
 		],
 	},
 	//Removes a bigger chunk of the board
@@ -6654,6 +6691,28 @@ const pokemonMoveData = {
 			{ type: "select-random-tiles", count: -1, conditions: { notTypes: ["blue"] } },
 			{ type: "change-tile-type", selection: "group", which: -1, targetType: "blue" },
 		]
+	},
+	//Triggers the spore move infections
+	"Spore": {
+		name: "Spore",
+		type: "Grass",
+		category: "Status",
+		strategy: "special",
+		pp: 15,
+		power: null,
+		accuracy: 100,
+		rechargeTurns: 2,
+		energy: {
+			green: 2,
+			blue: 2
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Spore part 1.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "infect-tiles" },
+		],
 	},
 	//Gives the opponent Splinters
 	"Stealth Rock": {

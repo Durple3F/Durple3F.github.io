@@ -1339,6 +1339,14 @@
 			"name": "Golbat",
 			"pokedex-entry": "Golbat's fangs are hollow and specialized for sucking blood. Swarms of Golbat have been observed phlebotomizing large Pokémon in events that some Pokémon researchers have deemed “not very fun to watch.”"
 		},
+		"Paras": {
+			"name": "Paras",
+			"pokedex-entry": "The mushrooms on its back are not found on newborn Paras. It is unclear whether these mushrooms begin growing as a result of it maturing or as a result of it being infected somehow."
+		},
+		"Parasect": {
+			"name": "Parasect",
+			"pokedex-entry": "The relationship between the creature beneath the mushroom and the mushroom itself is one of the most discussed in the literature of Pokémon research. Researchers have argued whether the parasitic relationship is mutualistic, meaning that both creatures obtain some benefit. A theoretical Parasect that doesn’t have the mushroom infecting it would be unable to perform many Pokémon moves, let alone use its long-since atrophied eye stalks. Until someone discovers a subspecies of Paras or Parasect that have evolved without the mushroom, this topic of endless debate will remain."
+		},
 		"Diglett-Alola": {
 			"name": "Diglett",
 			"pokedex-entry": "The hairs on this Pokémon's head are made of a metallic substance, and are able to receive radio waves. Alolan Diglett appear to be calmed by their favorite music being played from nearby radio stations."
@@ -1358,6 +1366,10 @@
 		"Psyduck": {
 			"name": "Psyduck",
 			"pokedex-entry": "Every Psyduck trainer should have heavy-duty ice packs to help with its constant migraines whenever they flare up. Many trainers find gel-based compacts effective, mostly because Psyduck love how squishy they are."
+		},
+		"Golduck": {
+			"name": "Golduck",
+			"pokedex-entry": "The moment Golduck evolves, it usually looks around, confused. It takes it a while to become used to the feeling of not being constantly in pain. Trainers should just leave it alone for a while if this happens."
 		},
 		"Mankey": {
 			"name": "Mankey",
@@ -1966,7 +1978,13 @@
 		"Cross Chop": {
 			"name": "Cross Chop",
 			"description": "Deals damage. Then, the user chooses a tile. A 5x5 X-shaped area around that tile is removed.",
-			"shortDescription": "Deals some damage and removes tiles",
+			"shortDescription": "Deals a lot of damage and removes tiles",
+			"choose": "Choose a tile."
+		},
+		"Cross Poison": {
+			"name": "Cross Poison",
+			"description": "Deals damage. Then, the user chooses a tile. A 5x5 X-shaped area around that tile is converted into Psychic tiles. Then, this move has a 50% chance to apply Poisoned to the opponent.",
+			"shortDescription": "Deals some damage and may poison",
 			"choose": "Choose a tile."
 		},
 		"Crunch": {
@@ -2702,6 +2720,11 @@
 			"description": "Does nothing 90% of the time. 10% of the time, a random non-Water tile becomes a Water tile.",
 			"shortDescription": "Doesn't do much"
 		},
+		"Spore": {
+			"name": "Spore",
+			"description": "If there are any tiles with infectious status effects on the board, they get a chance to spread.",
+			"shortDescription": "Spreads existing infections"
+		},
 		"Stealth Rock": {
 			"name": "Stealth Rock",
 			"description": "Applies Splinters to the opponent for 4 turns. At the beginning of their turn, they take damage as though they were hit by a 25 power move.",
@@ -3036,6 +3059,11 @@
 			"name": "Drizzle",
 			"shortDescription": "Water tiles are more likely for 20 turns",
 			"longDescription": "When this Pokémon switches in, Water tiles become twice as likely to spawn for 20 turns. (This effect doesn't stack.)"
+		},
+		"Dry Skin": {
+			"name": "Dry Skin",
+			"shortDescription": "Takes 10% more damage for each Fire tile, but 10% less for each Water tile. Water-type damage taken heals it.",
+			"longDescription": "This Pokémon takes 10% more damage for each Fire tile on the board. However, it takes 10% less for each Water tile on the board. Also, taking Water-type damage heals it."
 		},
 		"Early Bird": {
 			"name": "Early Bird",

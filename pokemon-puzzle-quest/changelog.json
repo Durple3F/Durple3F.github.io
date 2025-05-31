@@ -1,17 +1,27 @@
 {
 	"versions": {
+		"20250531": {
+			"date": "May 31, 2025",
+			"line-count": 42900,
+			"changes": [
+				"- Migrated all of the changelog since April 30."
+			]
+		},
 		"20250530": {
 			"date": "May 30, 2025",
-			"line-count": 42500,
+			"line-count": 42900,
 			"changes": [
-				"- Added Golduck",
-				"- Added Damp, Swift Swim",
+				"- Added Golduck, Paras, Parasect",
+				"- Added Spore, Cross Poison",
+				"- Added Damp, Swift Swim, Dry Skin",
 				"- Working on making this changelog look nicer.",
 				"- The main thing is that this changelog's data is now stored in a JSON file instead of regular old, plain text.",
 				"- But also, now there's some code to format the llines of code counter automatically! :)",
 				"- Improved the speed of showing summaries for pokemon with lots of moves.",
 				"- Switching between tabs of pokemon summaries no longer confuses it.",
-				"- You can now right click the inactive members of your party to view their summaries during battle."
+				"- You can now right click the inactive members of your party to view their summaries during battle.",
+				"- The EXP you gain is now reduced by how many pokemon it is distributed to. Effectively, having 6 pokemon in your party (and having EXP share on) multiplies the EXP gain of each by 1/6.",
+				"- Now when the popup window appears it resets its scroll so you don't have to scroll up. That was SO ANNOYING to figure out exactly when to do."
 			]
 		},
 		"20250529": {
@@ -64,6 +74,314 @@
 				"- Backgrounds can now smoothly fade into each other without waiting for the previous one to disappear."
 			]
 		},
+		"20250525": {
+			"date": "May 25, 2025",
+			"line-count": 41500,
+			"changes": [
+				"- Added Type: Null, Zorua, Houndour, Poochyena",
+				"- Added Imprison, Double Hit, Metal Sound, Torment, Smog, Incinerate",
+				"- Added Battle Armor, Unnerve, Quick Feet",
+				"- Added Illusion. It's not 100% functional but it works.",
+				"- You can now use struggle if, somehow, all of your active moves have been disabled.",
+				"- Re-coded how level button tooltips show/hide to hopefully act more intuitively"
+			]
+		},
+		"20250524": {
+			"date": "May 24, 2025",
+			"line-count": 40500,
+			"changes": [
+				"- Added Morelull",
+				"- Added Discharge",
+				"- Added Effect Spore, Illuminate",
+				"- Added 4-5, 4-6",
+				"- Added 2 backgrounds to 4-6",
+				"- Took a few steps to reduce how big save file sizes were. It won't reduce it by much.",
+				"- Trainers can now not have a ball-throwing animation if they want.",
+				"- Added dusk balls"
+			]
+		},
+		"20250523": {
+			"date": "May 23, 2025",
+			"line-count": 40200,
+			"ding": true,
+			"changes": [
+				"- Added Mareep, Flaaffy, Ampharos",
+				"- Added Cotton Spore",
+				"- Added Sap Sipper, Plus, Minus",
+				"- Added some pokedex entries"
+			]
+		},
+		"20250522": {
+			"date": "May 22, 2025",
+			"line-count": 40000,
+			"changes": [
+				"- Added Rattata, Noibat, Tauros, Miltank",
+				"- Added Horn Attack, Heal Bell",
+				"- Added Telepathy",
+				"- Added 4-2, 4-3, 4-4. They were all mostly finished, but now they have dialogue & stuff.",
+				"- You can now choose which pokeball type your pokemon are in.",
+				"- Added luxury balls",
+				"- Added a background for 4-4.",
+				"- The game now remembers which route you were last looking at in most circumstances.",
+				"- You can now quickly go to the levels that a pokemon is obtainable in from the pokedex.",
+				"- Added some more pokedex entries"
+			]
+		},
+		"20250521": {
+			"date": "May 21, 2025",
+			"line-count": 38800,
+			"changes": [
+				"- Added Fomantis",
+				"- Added Ingrain",
+				"- Added Anticipation",
+				"- Added some more pokedex entries",
+				"- The icons of pokeballs shown on the sides of the screen now actually show which type of pokeball they use.",
+				"- Added images for great balls, ultra balls, and premier balls."
+			]
+		},
+		"20250520": {
+			"date": "May 20, 2025",
+			"line-count": 38100,
+			"changes": [
+				"- Added Mudbray, Mudsdale, Igglybuff, Jigglypuff, Wigglytuff, Eevee",
+				"- Added Stomp, Counter, Round, Rest, Hyper Voice, Last Resort",
+				"- Added Competitive, Frisk",
+				"- Added some more pokedex entries",
+				"- Stall has an upside now"
+			]
+		},
+		"20250519": {
+			"date": "May 19, 2025",
+			"line-count": 37300,
+			"changes": [
+				"- Added Lillipup, Herdier, Stoutland",
+				"- Added Retaliate, Play Rough, Reversal, Ice Fang, Thunder Fang",
+				"- Added another background to 4-1",
+				"- Added a hard mode version to 4-1",
+				"- Pokemon can now have pokedex entries if I feel like writing them.",
+				"- Added some entries",
+				"- Wild Pokemon should now almost never be spawned without a damage-dealing move"
+			]
+		},
+		"20250518": {
+			"date": "May 18, 2025",
+			"line-count": 37000,
+			"changes": [
+				"- Added Smoochum, Alolan Sandshrew",
+				"- Added Powder Snow, Mist, Fury Cutter",
+				"- Added Ice Body",
+				"- Added Freeze, Frostbite, Mist",
+				"- Poison and Splinters trigger at the end of the turn now.",
+				"- Added an image for empowered red tiles.",
+				"- Added a background to 4-1"
+			]
+		},
+		"20250517": {
+			"date": "May 17, 2025",
+			"line-count": 36800,
+			"changes": [
+				"- Added Espeon, Glaceon",
+				"- Added Double-Edge, Ice Shard",
+				"- Added Magic Bounce",
+				"- Hopefully fixed that bug where hovering over a z-move meter gave patently incorrect info about how full it was",
+				"- Added Supersonic Skystrike",
+				"- Added a hard mode to 3-7",
+				"- Added an animation to z-moves",
+				"- Now if you're instructed to pick a pokemon, it doesn't let you accidentally make the selection illegal"
+			]
+		},
+		"20250516": {
+			"date": "May 16, 2025",
+			"line-count": 36100,
+			"changes": [
+				"- Added Machop, Machoke, Spinda",
+				"- Added Revenge, Foresight, Teeter Dance, Body Slam",
+				"- Added a background to 3-7",
+				"- Added dialogue to 3-7",
+				"- Redid quite a bit of code regarding super effective-ness, so now it can take abilities into account.",
+				"- Added a system for making pokemon temporarily not immune to certain types.",
+				"- Smack Down does that ^ now"
+			]
+		},
+		"20250515": {
+			"date": "May 15, 2025",
+			"line-count": 35600,
+			"changes": [
+				"- Added Carbink, Sableye, Mawile, Bounsweet, Steenee",
+				"- Added Guard Split, Ancient Power, Splash, Double Slap",
+				"- Added Clear Body, Sand Rush, Tough Claws, No Guard, Stall",
+				"- Added a background to 3-6",
+				"- Added dialogue to 3-6",
+				"- Added an easy and hard version of 3-6"
+			]
+		},
+		"20250514": {
+			"date": "May 14, 2025",
+			"line-count": 34700,
+			"changes": [
+				"- Added Pelipper, Hariyama, Drifblim, Chansey, Boldore, Whimsicott(*), Lilligant(*), Hisuian Lilligant (*), Pangoro, Trumbeak, Toucannon, Vikavolt, Ribombee, All Three Lycanrocs",
+				"- Finally added Dartrix, Torracat, and Brionne!",
+				"- Added Phantom Force, Brine, Strength Sap, Life Dew, Fling",
+				"- Added Drizzle, Healer",
+				"- Added a new type of evolution requirement",
+				"- Fixed the way that hovering over level buttons while the screen was fading out would still show the tooltip",
+				"- Now, if you have a choice between possible evolutions, and you don't choose one, the pokemon no longer picks one at random. It now simply doesn't evolve.",
+				"- Lycanroc is 3 different pokemon I am NOT messing with forms with that."
+			]
+		},
+		"20250513": {
+			"date": "May 13, 2025",
+			"line-count": 33200,
+			"changes": [
+				"- Added Golbat, Alolan Dugtrio, Alolan Persian, Arcanine, Kadabra, Hypno, Ledian, Ariados, Honchkrow, Mismagius",
+				"- Added Screech, Night Slash, Switcheroo, Power Gem, Kinesis, Fell Stinger, Quash, Mystical Fire",
+				"- Added Surge Surfer, Fur Coat, Moxie",
+				"- Moved quite a lot of code regarding how pokemon's stats are decided during a game.",
+				"- Pokemon can now evolve based on friendship",
+				"- You can now see your pokemon's weight and friendship values in the pc",
+				"- Added effects for empowered red, yellow, blue, purple tiles",
+				"- Redid the image for empowered yellow tiles",
+				"- Added an image for empowered blue tiles",
+				"- Redid parts of how those new requirements from yesterday"
+			]
+		},
+		"20250512": {
+			"date": "May 12, 2025",
+			"line-count": 32000,
+			"changes": [
+				"- Added Vine Whip, Rollout, Stockpile, Spit Up, Swallow, Rapid Spin, Slam, Drill Run",
+				"- Added Fearow, Raichu, Alolan Raichu",
+				"- Added some new requirements to how certain pokemon evolve. You'll never guess which",
+				"- Added a system to allow you to disable a certain pokemon being checked for evolvability",
+				"- Added a new screen to the pc window",
+				"- If a pokemon may evolve into multiple different pokemon at the same time, you may choose which one it evolves into"
+			]
+		},
+		"20250511": {
+			"date": "May 11, 2025",
+			"line-count": 31000,
+			"changes": [
+				"- Added Fire Fang, Sing, Icy Wind, Encore, Feather Dance, Sweet Scent, Draining Kiss, Endure, Strength",
+				"- ADDED PROTECT. I am NOT going through every single move to decide which effects are prevented when. It's fine.",
+				"- Added Baton Pass! I was prepared for this one from the start, GOD I hope I didn't mess up anywhere!!!",
+				"- When an effect instructs you to swap pokemon it can now allow that pokemon to retain its energy"
+			]
+		},
+		"20250510": {
+			"date": "May 10, 2025",
+			"line-count": 30400,
+			"changes": [
+				"- Added Tailwind, Low Sweep, Work Up, Synthesis, Double Kick",
+				"- Empowered tiles now all provide double energy in addition to any other effects",
+				"- Added support for status effects which flatly multiply/add to stats",
+				"- Added empowered Fighting tiles",
+				"- Oops, Leafage has been missing a sound since June",
+				"- Moves are now allowed to have effects that trigger whenever you make a certain kind of match"
+			]
+		},
+		"20250509": {
+			"date": "May 09, 2025",
+			"line-count": 30200,
+			"ding": true,
+			"changes": [
+				"- Added Mimic, Rock Tomb, Iron Defense, Giga Drain, Razor Leaf, Magical Leaf",
+				"- Hopefully fixed that bug where music would play multiple times (again)",
+				"- Added a background to 2-6",
+				"- Added some new mechanics regarding making tiles more powerful. Right now only green tiles can be empowered."
+			]
+		},
+		"20250508": {
+			"date": "May 08, 2025",
+			"line-count": 29800,
+			"changes": [
+				"- Added Spite, Light Screen, Reflect, Safeguard, Roost, Struggle Bug, Night Shade, Hex, Drill Peck, Force Palm, Knock Off, Bulk Up, Shadow Ball, Flail",
+				"- Fiddled with some move costs for Focus Energy, Bite"
+			]
+		},
+		"20250507": {
+			"date": "May 07, 2025",
+			"line-count": 29000,
+			"changes": [
+				"- Added Sucker Punch, Swagger, Cross Chop, Flame Wheel, Agility, Water Pulse, Headbutt, Gyro Ball",
+				"- Moves can now do things in reaction to the other pokemon using a move. Sucker Punch does that.",
+				"- Spritesheets can now have space that sticks out of the tile. Acid Spray does that.",
+				"- Added the Acidic status effect, which is pretty cool, if I say so myself."
+			]
+		},
+		"20250506": {
+			"date": "May 06, 2025",
+			"line-count": 28500,
+			"changes": [
+				"- Added Spark, Quick Guard, Bulldoze",
+				"- Added a sound effect when shiny pokemon enter",
+				"- Improved how the PC detects when you're clicking/dragging pokemon",
+				"- Way too much effort was put into making Bulldoze look nice."
+			]
+		},
+		"20250505": {
+			"date": "May 05, 2025",
+			"line-count": 28500,
+			"changes": [
+				"- Moves that fail due to a programming error now just stop, rather than softlock the game",
+				"- Battery stacks now",
+				"- Pokemon now remember how many fights they've won",
+				"- Increased the amount of time before you're considered to be dragging pokemon in the pc",
+				"- I HOPE I've fixed that thing where sometimes clicking the play level button doesn't play it?",
+				"- Rewrote how the page scales to different screen sizes, for freaks with ultrawide monitors.",
+				"- Put a band-aid on pokemon sometimes playing their cries twice. I don't know why that happens sometimes."
+			]
+		},
+		"20250504": {
+			"date": "May 04, 2025",
+			"line-count": 28400,
+			"changes": [
+				"- Added Crunch, Scary Face, Swords Dance, Aerial Ace, Take Down",
+				"- Rewrote how computers choose tiles, again.",
+				"- Backgrounds for 3-1, 3-2"
+			]
+		},
+		"20250503": {
+			"date": "May 03, 2025",
+			"line-count": 28200,
+			"tags": ["major-release"],
+			"changes": [
+				"- Added Passimian, Roggenrola",
+				"- Added Beat Up, which required programming a loop into my move effect format. WHICH I PLANNED FOR!!!! IT WORKS!!! hahahaha",
+				"- Beat Up has special AI btw",
+				"- Added Stealth Rock, Smack Down, Psybeam, Whirlwind",
+				"- Added Receiver",
+				"- Enemy trainers can now have more/less pokemon depending on your party's size",
+				"- Added background(s!) to 2-7",
+				"- Now when tiles are pushed off the board, they have a fade out instead of just popping out of existence.",
+				"- Now levels keep track of how many times you've attempted/completed them.",
+				"- Oops, Roar had an incorrect description."
+			]
+		},
+		"20250502": {
+			"date": "May 02, 2025",
+			"line-count": 27300,
+			"changes": [
+				"- Fleshing out All-Out Pummeling more.",
+				"- NPCs can now use Z-Moves",
+				"- Adding 3-5 dialogue + background",
+				"- Added a new background animation",
+				"- Added some screenshake when damage is dealt",
+				"- That screenshake now scales based on the damage dealt",
+				"- Added Stufful, Pancham",
+				"- Added Brutal Swing, Taunt + AI, Circle Throw",
+				"- Added Fluffy, Klutz, Cute Charm, Mold Breaker, Scrappy"
+			]
+		},
+		"20250501": {
+			"date": "May 01, 2025",
+			"line-count": 26800,
+			"changes": [
+				"- Changed the way opponents decide which swap to make each turn. Previously, they only cared about which swaps would make the energy necessary to use moves. Now, they weight their decisions to make more swaps which makes the moves they *want* to use, which should hopefully make them focus on their actual strategy more.",
+				"- Added Electro Ball + AI, Karate Chop, Arm Thrust",
+				"- Adding 3-4",
+				"- All-Out Pummeling is in a very basic state."
+			]
+		},
 		"20250430": {
 			"date": "April 30, 2025",
 			"line-count": 26300,
@@ -77,6 +395,27 @@
 				"- Added the Aroma Lady class",
 				"- Working on making levels able to have fun backgrounds.",
 				"- Added dialogue to 3-3"
+			]
+		},
+
+		"20250411": {
+			"date": "April 11, 2025",
+			"line-count": 17700,
+			"changes": [
+				"- Added Drowzee, Charjabug, Gastly, Spearow",
+				"- Added Hypnosis, Charge, Confuse Ray, Mean Look, Assurance",
+				"- Ember's burned tiles no longer last forever.",
+				"- Charge was difficult to do. Fun fact about the tooltips I've been using this whole time: For whatever reason, they have to figure out what content they're about to show <i>twice.</i> So that miniscule amount of computation happens twice for no reason.",
+				"- You can now rename your pokemon.",
+				"- Route 2-3 is in a state I'm pretty happy with."
+			]
+		},
+
+		"20240529": {
+			"date": "May 29, 2024",
+			"changes": [
+				"- started. i've never made a match 3 game before.",
+				"- mostly just got the very basic layout working."
 			]
 		}
 	}

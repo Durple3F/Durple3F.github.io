@@ -2042,6 +2042,9 @@ function viewPokemonInfo(pokemon, options = {}) {
 			resolvePromise()
 		}
 	})
+	promise = promise.then(() => {
+		$("#modal").find(".modal-content")[0].scrollTop = 0 
+	})
 	return promise
 }
 

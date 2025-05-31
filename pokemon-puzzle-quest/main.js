@@ -483,15 +483,24 @@ function clearModal(modal){
 	let shown = modal.hasClass("show")
 	modal.removeClass().addClass("modal").addClass("fade")
 	if (shown) modal.addClass("show")
-	modal.find(".modal-header").empty().append("<div class='modal-title'>")
-	modal.find(".modal-header").removeClass().addClass("modal-header")
-	modal.find(".modal-header > .modal-title").empty()
-	modal.find(".modal-header > .modal-title").removeClass().addClass("modal-title")
-	modal.find(".modal-body").empty()
-	modal.find(".modal-body").removeClass().addClass("modal-body")
-	modal.find(".modal-footer").empty()
-	modal.find(".modal-footer").removeClass().addClass("modal-footer")
+
+	modal.empty()
+	let dialog = $(`<div class="modal-dialog modal-dialog-centered">`)
+	modal.append(dialog)
+	let content = $(`<div class="modal-content">`)
+	dialog.append(content)
+	let header = $(`<div class="modal-header">`)
+	header.append("<div class='modal-title'>")
+	content.append(header)
+	let body = $(`<div class="modal-body">`)
+	content.append(body)
+	let footer = $(`<div class="modal-footer">`)
+	content.append(footer)
+	
 	modal.off("hidden.bs.modal")
+	modal.off("shown.bs.modal").on("shown.bs.modal", () => {
+		$("#modal").find(".modal-content")[0].scrollTop = 0
+	})
 }
 
 function createAnnouncement(type, text, duration=1500){
@@ -1182,7 +1191,13 @@ function openChangelog(){
 					section.addClass("anniversary")
 				}
 
-				let lineCount = formatNumberWithSuffix(version['line-count'], 1)
+				let text = `${version.date}`
+				if (version['line-count']){
+					let lineCount = formatNumberWithSuffix(version['line-count'], 1)
+					let suffix = version.ding ? "!!!!!" : ""
+					text += ` (${lineCount} lines of code${suffix})`
+				}
+				
 				section.append(`<h4 class="accordion-header">
 					<button
 						class="accordion-button collapsed"
@@ -1190,7 +1205,7 @@ function openChangelog(){
 						data-bs-target=".accordion-item[data-version='${versionName}'] .accordion-collapse"
 						aria-expanded="false"
 					>
-						${version.date} (${lineCount} lines of code)
+						${text}
 					</button>
 				</h4>`)
 				section.data("month", version.month)
@@ -1203,21 +1218,6 @@ function openChangelog(){
 					sectionBody.append(`<div>${change}</div>`)
 				}
 				version.section = section
-			}
-
-			for (let versionName of versions){
-				let version = versionsData[versionName]
-				let wait = 0
-				if (version.year === curYear && version.month === curMonth){
-					wait = 0
-				} else {
-					wait = versions.indexOf(versionName) * 10
-				}
-				if (wait > 0){
-					delay(wait).then(() => generateSection(versionName))
-				} else {
-					generateSection(versionName)
-				}
 			}
 
 			const showVersions = (month, year) => {
@@ -1234,12 +1234,12 @@ function openChangelog(){
 					let date2 = versionsData[b].dateObj
 					return date2 - date1
 				})
-				console.log(toShow[0].dateObj, toShow[1].dateObj, toShow[0].dateObj - toShow[1].dateObj)
 				for (let versionName of toShow){
 					let version = versionsData[versionName]
 					if (!version.section){
 						generateSection(versionName)
 					}
+					console.log(versionName)
 					accordion.append(version.section)
 				}
 			}
@@ -1414,5 +1414,9 @@ $(canvas).on("mouseenter", () => {
 	$(".popover").fadeOut()
 })
 $("#settings-btn").click(openSettings)
+
+if ('scrollRestoration' in window.history) {
+	window.history.scrollRestoration = 'manual'
+}
 
 loadResources()
