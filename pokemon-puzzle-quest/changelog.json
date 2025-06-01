@@ -4,7 +4,11 @@
 			"date": "June 01, 2025",
 			"line-count": 43700,
 			"changes": [
+				"- Added Surskit, Masquerain",
+				"- Added Soak",
 				"- Added Water Bubble",
+				"- Fixed Helping Hand a couple times.",
+				"- Working on making the way that move cooldowns are stored more efficient. I set it up when I wasn't expecting this game to have 200+ moves.",
 				"- Migrated all of the changelog since April 11."
 			]
 		},

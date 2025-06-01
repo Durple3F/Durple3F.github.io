@@ -316,20 +316,20 @@ const moveUseStrategy = {
 			return weight
 		}
 	},
+	//TODO: This is a little stupid. It just considers moves that are on cooldown instead of just the move with the current longest cooldown.
 	"Helping Hand": {
 		chooseWeight: options => {
 			let pokemon = options.pokemon
 			let cooldowns = pokemon.activeMoves.filter(move => {
-				let index = pokemon.moves.indexOf(move)
-				let usage = pokemon.moveUsage[index]
-				return usage.recharge > 0
+				let cooldown = pokemon.getCurrentCooldown(move)
+				return cooldown > 0
 			})
 			let sum = cooldowns.reduce((acc, move) => {
 				let weight = 10
 				if (options.allowRecursion){
 					weight = getActionWeightSimple(move, options, false)
 				} else {
-					//TODO
+					weight *= pokemon.getCurrentCooldown(move)
 				}
 				return acc + weight
 			}, 0)

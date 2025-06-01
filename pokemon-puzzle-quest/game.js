@@ -912,25 +912,23 @@ class Round {
 			//Purple tiles reduce a cooldown of yours by 1. The cooldown reduction is given to a random one of your greatest move cooldowns among available moves.
 			else if (type === "purple"){
 				let availableMoves = this.getAvailableMoves(this.activePlayerIndex)
-				let moveIndexes = availableMoves.map(move => activePokemon.moves.indexOf(move))
 				if (availableMoves.length){
-					let greatestCooldown = activePokemon.moveUsage[moveIndexes[0]].recharge
-					for (let i = 1; i < availableMoves.length; i++){
-						let cooldown = activePokemon.moveUsage[moveIndexes[i]].recharge
+					let greatestCooldown = activePokemon.getCurrentCooldown(availableMoves[0])
+					for (let move of availableMoves){
+						let cooldown = activePokemon.getCurrentCooldown(move)
 						if (cooldown > greatestCooldown){
 							greatestCooldown = cooldown
 						}
 					}
 					if (greatestCooldown > 0){
 						let movesWithThatCooldown = availableMoves.filter((move, index) => {
-							let moveIndex = moveIndexes[index]
-							let cooldown = activePokemon.moveUsage[moveIndex].recharge
+							let cooldown = activePokemon.getCurrentCooldown(move)
 							return cooldown === greatestCooldown
 						})
 						if (movesWithThatCooldown.length){
 							let randomMove = randomChoice(movesWithThatCooldown)
-							let moveIndex = moveIndexes[availableMoves.indexOf(randomMove)]
-							activePokemon.moveUsage[moveIndex].recharge--
+							let current = activePokemon.getCurrentCooldown(randomMove)
+							activePokemon.setCooldown(randomMove, current - 1)
 						}
 					}
 				}
@@ -1293,11 +1291,10 @@ class Round {
 		//Reduce move cooldowns
 		for (let pokemon of trainer.pokemon) {
 			if (!pokemon) continue
-			for (let moveUsage of pokemon.moveUsage) {
-				if (moveUsage.recharge > 0) {
-					moveUsage.recharge -= 1
-				} else if (moveUsage.recharge < 0){
-					moveUsage.recharge = 0
+			for (let move of pokemon.moves){
+				let current = pokemon.getCurrentCooldown(move)
+				if (current > 0){
+					pokemon.setCooldown(move, current - 1)
 				}
 			}
 		}
@@ -2333,11 +2330,10 @@ class Round {
 		for (let move of moveList) {
 			//TODO watch out for stuff like healing moves, or
 			//moves that only work if the board meets certain conditions
-			let moveIndex = pokemon.moves.indexOf(move)
-			let moveUsage = pokemon.moveUsage[moveIndex]
+			let cooldown = pokemon.getCurrentCooldown(move)
 			let prevented = false
 
-			if (moveUsage.recharge > 0) {
+			if (cooldown > 0) {
 				prevented = true
 			}
 
@@ -3061,8 +3057,8 @@ class Round {
 			this.createAnnouncement("general", "That move has been disabled.")
 			return
 		}
-		let moveUsage = pokemon.moveUsage[moveIndex]
-		if (moveUsage.recharge > 0) {
+		let cooldown = pokemon.getCurrentCooldown(move)
+		if (cooldown > 0) {
 			this.createAnnouncement("general", "That move is recharging.")
 			return
 		}
@@ -3672,11 +3668,8 @@ class Round {
 		}
 		//Put the move on recharge
 		let moveIndex = pokemon.moves.indexOf(move)
-		let newRecharge = this.getEffectiveMoveRecharge(trainer, pokemon, move)
-		if (newRecharge < 0){
-			newRecharge = 0
-		}
-		pokemon.moveUsage[moveIndex].recharge = newRecharge
+		let newCooldown = this.getEffectiveMoveRecharge(trainer, pokemon, move)
+		pokemon.setCooldown(move, newCooldown)
 		let promise = Promise.resolve()
 
 		let moveUseObj = this.newMoveUseObj(trainer, pokemon, move, "effects")
@@ -3773,7 +3766,7 @@ class Round {
 				pokemon.hasAbility("Super Luck")
 			) {
 				pokemon.gameRoundData.superLuckTriggered = true
-				pokemon.moveUsage[moveIndex].recharge = 0
+				pokemon.setCooldown(move, 0)
 				let statusEffect = {
 					name: "super-luck-free",
 					type: "cost-alteration",
@@ -6152,7 +6145,7 @@ class Round {
 			let thisTrainer = this.trainers[userIndex]
 			let thisPokemon = thisTrainer.pokemon[pokemonIndex]
 			let thisMove = thisPokemon.moves[moveIndex]
-			let thisMoveUsage = thisPokemon.moveUsage[moveIndex]
+			let thisMoveCooldown = thisPokemon.getCurrentCooldown(thisMove)
 			let cost = this.getEffectiveCost(thisTrainer, thisPokemon, thisMove)
 			let energyCost = cost.energyCost ?? {}
 			let payability = this.canPayCost(thisMove, trainerIndex, cost)
@@ -6225,7 +6218,7 @@ class Round {
 				}
 			}
 
-			let recharge = thisMoveUsage.recharge
+			let recharge = thisMoveCooldown
 			let rechargeTag = moveTag.find(".move-recharge")
 			rechargeTag.children(".count").text(recharge)
 			if (recharge > 0) {

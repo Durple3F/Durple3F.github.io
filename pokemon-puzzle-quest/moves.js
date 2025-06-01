@@ -3183,10 +3183,13 @@ const pokemonMoveData = {
 			{ type: "play-sound", name: "attack" },
 			{ type: "get-move-list", target: "user", sort: "recharge",
 				direction: "descending", except: ["Helping Hand"] },
+			{ type: "save-variable", name: "moves-sorted", save: -1 },
 			{ type: "get-list-length", list: -1 },
 			{ type: "load-value", value: 1 },
 			{ type: "jump-if-less-than", jumpTo: Infinity },
-			{ type: "random-choice-from-list", list: -4 },
+			{ type: "load-variable", name: "moves-sorted" },
+			{ type: "load-value", value: 0 },
+			{ type: "get-element-from-list", list: -2, index: -1 },
 			{ type: "load-value", value: -5 },
 			{ type: "change-move-cooldown", target: "user", move: -2, amount: -1 },
 		],
@@ -6656,6 +6659,35 @@ const pokemonMoveData = {
 			{ type: "load-value", value: 5 },
 			{ type: "jump-if-less-than", jumpTo: Infinity },
 			{ type: "apply-status-effect", statusEffect: "poisoned", target: "opponent" },
+		],
+	},
+	//Changes the target's types to pure water type
+	"Soak": {
+		name: "Soak",
+		type: "Water",
+		category: "Status",
+		strategy: "special",
+		pp: 20,
+		power: null,
+		accuracy: 100,
+		rechargeTurns: 3,
+		energy: {
+			blue: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Soak.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "apply-status-effect", target: "opponent", statusEffect: {
+				name: "soak-soaked",
+				type: "type-alteration",
+				stacks: false,
+				volatile: true,
+				lostOnSwap: true,
+				replaceTypes: true,
+				types: ["Water"]
+			} },
 		],
 	},
 	//Paralyzes and deals more damage to paralyzed enemies

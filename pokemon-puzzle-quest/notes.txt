@@ -29,3 +29,4 @@ TODO
 - Pokemon breeders keep their pokemon in friend balls
 - If you skip dialogue, it should recognize any changes made to the background
 - Add an indicator in the pokedex for which pokemon you've seen/caught shinies for.
+- Modify the cooldown storage so that it doesn't store 200+ empty objects.

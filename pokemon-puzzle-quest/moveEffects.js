@@ -1903,6 +1903,7 @@ const pokemonMoveEffects = {
 			let moves = target.activeMoves
 			let sort = effect.sort
 			let exceptions = effect.except ?? []
+			let direction = effect.direction ?? "ascending"
 			let result
 
 			for (let exception of exceptions){
@@ -1914,14 +1915,16 @@ const pokemonMoveEffects = {
 
 			if (sort === "recharge"){
 				result = moves.sort((move1, move2) => {
-					let moveIndex1 = target.moves.indexOf(move1)
-					let moveIndex2 = target.moves.indexOf(move2)
-					let moveRecharge1 = target.moveUsage[moveIndex1].recharge
-					let moveRecharge2 = target.moveUsage[moveIndex2].recharge
+					let moveRecharge1 = target.getCurrentCooldown(move1)
+					let moveRecharge2 = target.getCurrentCooldown(move2)
 					return moveRecharge1 - moveRecharge2
 				})
 			} else {
 				console.warn("Never handled", sort)
+			}
+
+			if (direction === "descending"){
+				result.reverse()
 			}
 
 			resolve(result)
@@ -1936,17 +1939,13 @@ const pokemonMoveEffects = {
 			let target = options.target
 			let move = params.move
 			let amount = params.amount ?? 0
-			let index = target.moves.indexOf(move)
-			let usage
-			if (index !== -1){
-				usage = target.moveUsage[index]
-				usage.recharge += amount
-				if (usage.recharge < 0){
-					usage.recharge = 0
-				}
-			}
+			
+			let cooldown = target.getCurrentCooldown(move)
+			target.setCooldown(move, cooldown + amount)
+			let newCooldown = target.getCurrentCooldown(move)
+			console.log(target.getCurrentCooldown(move), move)
 
-			resolve(usage.recharge)
+			resolve(newCooldown)
 		}
 	},
 	"is-z-move": {

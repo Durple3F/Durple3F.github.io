@@ -78,11 +78,7 @@ class Pokemon{
 		this.moves.forEach((move, i) => {
 			this.movesUnlockedMap[i] = movesUnlocked.includes(move.name)
 		})
-		this.moveUsage = this.moves.map(move => {
-			return {
-				recharge: 0
-			}
-		})
+		this.cooldowns = []
 
 		//Decide which abilities this pokemon has
 		this.hadHiddenAbility = options?.hadHiddenAbility
@@ -706,7 +702,17 @@ class Pokemon{
 	}
 
 	getEffectiveTypes(){
-		return this.types
+		let types = []
+		this.types.forEach(type => types.push(type))
+		let typeAlterations = this.getStatusesOfType("type-alteration")
+		for (let statusEffect of typeAlterations){
+			if (statusEffect.replaceTypes){
+				types.length = 0
+			}
+			statusEffect.types.forEach(type => types.push(type))
+		}
+		types = noDuplicates(types)
+		return types
 	}
 
 	unlockMoves(unlockMap, skipActivating){
@@ -792,6 +798,38 @@ class Pokemon{
 			}
 		}
 		adding.forEach(m => this.addActiveMove(m))
+	}
+
+	setCooldown(move, turns){
+		if (typeof move === "string"){
+			move = pokemonMoveData[move]
+		}
+
+		let existingCooldown = this.cooldowns.find(cooldownObj => {
+			return cooldownObj.move === move
+		})
+		if (existingCooldown){
+			existingCooldown.turns = turns
+		} else {
+			let cooldownObj = {
+				move: move,
+				turns: turns
+			}
+			this.cooldowns.push(cooldownObj)
+		}
+	}
+	getCurrentCooldown(move){
+		if (typeof move === "string"){
+			move = pokemonMoveData[move]
+		}
+		let existingCooldown = this.cooldowns.find(cooldownObj => {
+			return cooldownObj.move === move
+		})
+		if (existingCooldown){
+			return existingCooldown.turns
+		} else {
+			return 0
+		}
 	}
 
 	gainEnergy(energy){
@@ -893,7 +931,7 @@ class Pokemon{
 		this.maxhp = this.getStat("hp")
 		this.turnsActive = 0
 		this.turnsParticipated = 0
-		this.moveUsage.forEach(usage => usage.recharge = 0)
+		this.cooldowns = []
 		this.gameRoundData = {}
 
 		this.resetEnergyMastery()

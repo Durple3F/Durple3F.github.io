@@ -1754,10 +1754,10 @@ body {
 #pokedex > #dexWindow::-webkit-scrollbar {
 	display: none;
 }
-#pokedex > #dexWindow > div {
+/* #pokedex > #dexWindow > div {
 	padding-top: 1em;
 	padding-bottom: 1em;
-}
+} */
 #pokedex > #dexWindow > .pokemon-list {
 	width: 100%;
 	position: relative;

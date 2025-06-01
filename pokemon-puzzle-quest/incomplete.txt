@@ -51,6 +51,8 @@ Incomplete move lists:
 	Miltank (lv 20)
 	Wingull (lv 26)
 	Pelipper (lv 0)
+	Surskit (lv 35)
+	Masquerain (lv 26)
 	Makuhita (lv 22)
 	Hariyama (lv 22)
 	Sableye (lv 21)

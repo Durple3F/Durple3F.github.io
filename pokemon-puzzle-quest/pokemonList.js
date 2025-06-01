@@ -3552,6 +3552,117 @@ const pokemonData = {
 			{ name: "Swallow", unlock: { type: "level", amount: 1 } },
 		]
 	},
+	"Surskit": {
+		name: "Surskit",
+		number: "283",
+		weight: {
+			pounds: 3.7,
+			kilograms: 1.7
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0283Surskit.png",
+			"largeShiny": "src/img/shiny-pokemon/283-Surskit.png",
+			"home": "src/img/tiny-pokemon/Surskit.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/surskit.mp3"
+		},
+		tags: [],
+		types: ["Bug", "Water"],
+		abilities: ["Swift Swim"],
+		hiddenAbilities: ["Rain Dish"],
+		stats: {
+			hp: 40,
+			attack: 30,
+			defense: 32,
+			specialAttack: 50,
+			specialDefense: 52,
+			speed: 65
+		},
+		expYield: 54,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 1
+		},
+		energyMastery: {
+			blue: 3,
+			green: 1,
+			yellow: 1,
+		},
+		evolutions: [
+			{ name: "Masquerain", unlock: { type: "level", amount: 22 } }
+		],
+		learnset: [
+			{ name: "Water Gun", unlock: { type: "level", amount: 1 } },
+			{ name: "Quick Attack", unlock: { type: "level", amount: 6 } },
+			{ name: "Sweet Scent", unlock: { type: "level", amount: 9 } },
+			{ name: "Soak", unlock: { type: "level", amount: 14 } },
+			{ name: "Bubble Beam", unlock: { type: "level", amount: 17 } },
+			{ name: "Agility", unlock: { type: "level", amount: 22 } },
+			{ name: "Mist", unlock: { type: "level", amount: 25 } },
+			{ name: "Haze", unlock: { type: "level", amount: 25 } },
+			{ name: "Baton Pass", unlock: { type: "level", amount: 35 } },
+		]
+	},
+	"Masquerain": {
+		name: "Masquerain",
+		number: "284",
+		weight: {
+			pounds: 7.9,
+			kilograms: 3.6
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0284Masquerain.png",
+			"largeShiny": "src/img/shiny-pokemon/284-Masquerain.png",
+			"home": "src/img/tiny-pokemon/Masquerain.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/masquerain.mp3"
+		},
+		tags: [],
+		types: ["Bug", "Flying"],
+		abilities: ["Intimidate"],
+		hiddenAbilities: ["Unnerve"],
+		stats: {
+			hp: 70,
+			attack: 60,
+			defense: 62,
+			specialAttack: 100,
+			specialDefense: 82,
+			speed: 80
+		},
+		expYield: 159,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 1,
+			specialDefense: 1,
+			speed: 0
+		},
+		energyMastery: {
+			yellow: 3,
+			green: 2,
+			blue: 5,
+		},
+		learnset: [
+			{ name: "Whirlwind", unlock: { type: "level", amount: 1 } },
+			{ name: "Water Gun", unlock: { type: "level", amount: 1 } },
+			{ name: "Quick Attack", unlock: { type: "level", amount: 1 } },
+			{ name: "Sweet Scent", unlock: { type: "level", amount: 1 } },
+			{ name: "Soak", unlock: { type: "level", amount: 1 } },
+			{ name: "Gust", unlock: { type: "level", amount: 17 } },
+			{ name: "Scary Face", unlock: { type: "level", amount: 22 } },
+			{ name: "Air Cutter", unlock: { type: "level", amount: 22 } },
+			{ name: "Stun Spore", unlock: { type: "level", amount: 26 } },
+		]
+	},
 	"Makuhita": {
 		name: "Makuhita",
 		number: "296",
@@ -5595,7 +5706,7 @@ const pokemonData = {
 			{ name: "Sing", unlock: { type: "level", amount: 20 } },
 			{ name: "Bubble Beam", unlock: { type: "level", amount: 25 } },
 			{ name: "Encore", unlock: { type: "level", amount: 30 } },
-			{ name: "Wide Guard", unlock: { type: "level", amount: 1 } },
+			{ name: "Helping Hand", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {
