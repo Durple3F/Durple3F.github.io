@@ -393,7 +393,7 @@ const moveUseStrategy = {
 				newOptions[key] = options[key]
 			}
 			//unfortunate terminology.
-			let heaviness = otherPokemon?.data?.weight?.kilograms
+			let heaviness = otherPokemon?.getWeight()?.kilograms ?? 0
 			let power = getMovePower(options.action)
 			if (heaviness < 10) power += 20
 			else if (heaviness < 25) power += 40

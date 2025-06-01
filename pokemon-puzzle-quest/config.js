@@ -6,6 +6,7 @@ const config = {
 	skipSeenDialogue: false,
 	expShare: true,
 	hardMode: false,
+	debug: false,
 	lowerLevelsToRecommendedLevels: true,
 	showLevelCompletionData: false,
 	antialiasing: true,

@@ -1539,6 +1539,14 @@
 			"name": "Pelipper",
 			"pokedex-entry": "pelper Mouth perfec t size for put baby in to n\\ap! inside very Soft and Comfort baby sleep soundly put baby in Pelipper Mouth. no problems ever in pelippper mouth because good Shape and Support for baby neck weak of big baby head. Apeliper Mouth yes a place for a baby put baby in pelipper mouth can trust pelipper for giveing good love to baby. <a href='src/img/misc/pelican.webp'>friend pelipper</a>"
 		},
+		"Surskit": {
+			"name": "Surskit",
+			"pokedex-entry": "Surskit’s body secretes a liquid that enables it to walk on water. If it’s allowed to roam around its trainer’s house, the floor will quickly be left with long, slippery trails. Trainers with tile floors quickly learn to wear shoes around the house."
+		},
+		"Masquerain": {
+			"name": "Masquerain",
+			"pokedex-entry": "It never really stops thinking that its distinctively eye-shaped wings will fool people. Even if it’s surprised by a trainer it’s known for years, it’ll try to seem like a larger predator with its “eyes.”"
+		},
 		"Makuhita": {
 			"name": "Makuhita",
 			"pokedex-entry": "When it gets knocked down, it rolls and slams into things like a bowling ball. Then, without fail, it gets back up."
@@ -1763,6 +1771,10 @@
 			"name": "Lycanroc",
 			"pokedex-entry": "This very rare form has the calmest disposition. The moment the word ‘walk’ is mentioned, though... One trainer had the idea to ride a bike while holding its leash to try and keep up. They couldn’t ride their bike the next day."
 		},
+		"Wishiwashi": {
+			"name": "Wishiwashi",
+			"pokedex-entry": "Aquariums need to store Wishiwashi in separate tanks to stop them schooling together and breaking through the glass. Even separated, they’re infamous for trying to get back together. Wishiwashi will leap out of any tank if they hear another Wishiwashi crying out, even if it means flopping on the floor until someone finds it."
+		},
 		"Mudbray": {
 			"name": "Mudbray",
 			"pokedex-entry": "Mudbray loves being sprayed with mud and eating dirt. If it's not covered in a thick coat of mud, it gets agitated and stops listening to others. Be nice to Mudbray. Throw some mud at that little guy."
@@ -1772,10 +1784,12 @@
 			"pokedex-entry": "Mudsdale's hind legs are strong enough to put a hole into just about anything. A team of criminals once tried to use one to break into a bank vault, but their Mudsdale was too stubborn to carry out the plan."
 		},
 		"Dewpider": {
-			"name": "Dewpider"
+			"name": "Dewpider",
+			"pokedex-entry": "It wears a water bubble around its head so that it can breathe while out of the water. It likes to collect small objects in their bubble, letting them float around their head."
 		},
 		"Araquanid": {
-			"name": "Araquanid"
+			"name": "Araquanid",
+			"pokedex-entry": "Despite its intimidating appearance, Araquanid is a very nurturing Pokémon. It instinctively tries to protect smaller Pokémon that it thinks are in danger by putting them into the bubble on its head. Most non-Dewpider Pokémon would prefer to be put somewhere else, but as long as Araquanid doesn’t deem them prey, it won’t stop the Pokémon leaving its bubble."
 		},
 		"Fomantis": {
 			"name": "Fomantis",
@@ -1783,7 +1797,7 @@
 		},
 		"Lurantis": {
 			"name": "Lurantis",
-			"pokedex-entry": "The bright colors of Lurantis's body are cultivated over its life. Some trainers dedicate themselves to maintaining this Pokémon's leaves and keeping them happy."
+			"pokedex-entry": "The bright colors of Lurantis’s body are cultivated over its life. Some trainers dedicate themselves to maintaining this Pokémon’s leaves and keeping them happy."
 		},
 		"Morelull": {
 			"name": "Morelull",
@@ -2729,6 +2743,11 @@
 			"description": "Deals damage. Then, has a 40% chance to apply Poisoned to the opponent.",
 			"shortDescription": "Deals some damage and might poison"
 		},
+		"Soak": {
+			"name": "Soak",
+			"description": "The opponent becomes pure Water-type and loses any other types it had. This effect ends when e target switches out.",
+			"shortDescription": "Makes the opponent pure Water-type"
+		},
 		"Spark": {
 			"name": "Spark",
 			"description": "Deals damage and has a 50% chance to paralyze the target. If the target was already Paralyzed, instead it deals damage with 20 additional power.",
@@ -3409,6 +3428,11 @@
 			"shortDescription": "Raises Attack a stage when hit with a Grass-type move",
 			"longDescription": "When this Pokémon is dealt damage by a Grass-type move, its Attack is increased by a stage."
 		},
+		"Schooling": {
+			"name": "Schooling",
+			"shortDescription": "While at more than 25% HP and at level 20 or above, change to a more powerful form",
+			"longDescription": "As this Pokémon enters, if its level is at least 20 and it has more than 25% HP remaining, it changes to its more powerful School form."
+		},
 		"Scrappy": {
 			"name": "Scrappy",
 			"shortDescription": "Able to hit Ghost-types",
@@ -3878,6 +3902,10 @@
 		"Route 4-7": {
 			"name": "Route 4-7",
 			"description": "As you leave the forest, you find Hau being accosted by a stranger."
+		},
+		"Route 5-1": {
+			"name": "Testing testing 1 2",
+			"description": "Shoo"
 		}
 	},
 	"route-categories": {
@@ -3892,6 +3920,9 @@
 		},
 		"Route 4": {
 			"name": "Route 4"
+		},
+		"Route 5": {
+			"name": "Test"
 		}
 	},
 	"evolution-requirements": {
@@ -3972,7 +4003,8 @@
 	"settings": {
 		"toggle-skip-seen-dialogue": "Skip seen dialogue?",
 		"toggle-exp-share": "EXP share? (Exp gained in fights is shared between all active Pokémon)",
-		"toggle-hard-mode": "Hard mode (Rival chooses the more effective Pokémon, etc.)",
+		"toggle-hard-mode": "Hard mode",
+		"toggle-debug-mode": "Debug mode",
 		"toggle-level-lowering": "Lower Pokémon levels to what’s recommended when starting a level. Note: Pokémon won’t earn EXP while their levels are lowered.",
 		"toggle-show-level-completion-data": "Display level attempts/completions",
 		"toggle-pixelated-screen": "Antialiasing",

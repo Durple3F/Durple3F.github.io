@@ -6666,6 +6666,112 @@ const pokemonData = {
 			{ name: "Roar", unlock: { type: "level", amount: 30 } },
 		]
 	},
+	"Wishiwashi": {
+		name: "Wishiwashi",
+		number: "746",
+		weight: {
+			pounds: 0.7,
+			kilograms: 0.3
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0746Wishiwashi.png",
+			"largeShiny": "src/img/shiny-pokemon/746-Wishiwashi.png",
+			"home": "src/img/tiny-pokemon/Wishiwashi.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/wishiwashi.mp3"
+		},
+		hasForms: true,
+		formsToLoad: ["Solo", "School"],
+		defaultForm: "Solo",
+		returnToDefaultFormAfterBattle: true,
+		forms: {
+			"Solo": {
+				id: "Solo",
+				imageSources: {
+					"large": "src/img/pokemon/0746Wishiwashi.png",
+					"largeShiny": "src/img/shiny-pokemon/746-Wishiwashi.png",
+					"home": "src/img/tiny-pokemon/Wishiwashi.png"
+				},
+				sounds: {
+					"cry": "src/audio/cries/wishiwashi.mp3"
+				},
+				stats: {
+					hp: 45,
+					attack: 20,
+					defense: 20,
+					specialAttack: 25,
+					specialDefense: 25,
+					speed: 40
+				},
+				weight: {
+					pounds: 0.7,
+					kilograms: 0.3
+				},
+			},
+			"School": {
+				id: "School",
+				imageSources: {
+					"large": "src/img/pokemon/0746Wishiwashi-School.png",
+					"largeShiny": "src/img/shiny-pokemon/746-Wishiwashi-School.png",
+					"home": "src/img/tiny-pokemon/Wishiwashi-School.png"
+				},
+				sounds: {
+					"cry": "src/audio/cries/wishiwashi-school.mp3"
+				},
+				stats: {
+					hp: 45,
+					attack: 140,
+					defense: 130,
+					specialAttack: 140,
+					specialDefense: 135,
+					speed: 30
+				},
+				weight: {
+					pounds: 173.3,
+					kilograms: 78.6
+				},
+			},
+		},
+		types: ["Water"],
+		tags: [],
+		abilities: ["Schooling"],
+		hiddenAbilities: [],
+		stats: {
+			hp: 45,
+			attack: 20,
+			defense: 20,
+			specialAttack: 25,
+			specialDefense: 25,
+			speed: 40
+		},
+		expYield: 61,
+		evYield: {
+			hp: 1,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			red: 1,
+			orange: 1,
+			blue: 5,
+			purple: 1
+		},
+		learnset: [
+			{ name: "Water Gun", unlock: { type: "level", amount: 1 } },
+			{ name: "Growl", unlock: { type: "level", amount: 1 } },
+			{ name: "Helping Hand", unlock: { type: "level", amount: 4 } },
+			{ name: "Beat Up", unlock: { type: "level", amount: 8 } },
+			{ name: "Brine", unlock: { type: "level", amount: 12 } },
+			{ name: "Tearful Look", unlock: { type: "level", amount: 16 } },
+			{ name: "Dive", unlock: { type: "level", amount: 20 } },
+			{ name: "Soak", unlock: { type: "level", amount: 24 } },
+		]
+	},
 	"Mudbray": {
 		name: "Mudbray",
 		number: "749",

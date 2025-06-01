@@ -494,7 +494,11 @@ const pokemonMoveEffects = {
 		targetDefault: "user",
 		execute: (resolve, effect, params, game, options) => {
 			let target = options.target
-			let result = target?.data?.weight?.kilograms ?? 0
+			let result
+			if (target){
+				let weight = target.getWeight()
+				result = weight.kilograms ?? 0
+			}
 			resolve(result)
 		}
 	},

@@ -983,6 +983,10 @@ function openSettings(){
 			key: "hardMode"
 		},
 		{
+			text: "toggle-debug-mode",
+			key: "debug"
+		},
+		{
 			text: "toggle-level-lowering",
 			key: "lowerLevelsToRecommendedLevels"
 		},

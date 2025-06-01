@@ -65,15 +65,13 @@ class Pokemon{
 			return pokemonMoveData[move.name]
 		})
 		this.movesUnlockedMap = []
-		let movesUnlocked
+		let movesUnlocked = []
 		if (options?.movesUnlocked){
 			movesUnlocked = options?.movesUnlocked
 		} else if (options?.movesUnlockedMap){
 			movesUnlocked = options.movesUnlockedMap.map((v, i) => {
 				return v ? this.moves[i].name : null
 			}).filter(v => v)
-		} else {
-			movesUnlocked = []
 		}
 		this.moves.forEach((move, i) => {
 			this.movesUnlockedMap[i] = movesUnlocked.includes(move.name)
@@ -635,11 +633,13 @@ class Pokemon{
 	}
 
 	getBaseStat(stat){
-		let base = this.data.stats[stat]
+		let stats = this.getStats()
+		let base = stats[stat]
 		return base
 	}
 	getStat(stat){
-		let base = this.data.stats[stat]
+		let stats = this.getStats()
+		let base = stats[stat]
 		let iv = this.ivs[stat]
 		let ev = this.evs[stat]
 		let level = this.level
@@ -866,6 +866,7 @@ class Pokemon{
 		let ability = this.ability
 		if (abilityStatuses.length){
 			for (let statusEffect of abilityStatuses){
+				if (!ability.alterable) break
 				let newAbility = statusEffect.ability
 				if (newAbility){
 					ability = newAbility
@@ -939,15 +940,15 @@ class Pokemon{
 		if (this.data.hasForms && this.form){
 			let formData = this.data.forms[this.form]
 			if (formData.types){
-				formData.types.forEach(type => {
-					if (!this.types.includes(type)){
-						this.types.push(type)
-					}
-				})
+				this.types = formData.types.map(type => type)
 			}
 		}
 		if (this.data.hasForms && !this.form){
 			console.error("Somehow",this,"has no form listed for it")
+		}
+
+		if (this.data.returnToDefaultFormAfterBattle){
+			this.form = this.data.defaultForm
 		}
 	}
 
@@ -1021,6 +1022,24 @@ class Pokemon{
 	}
 	getAllSounds(){
 		return getPokemonSounds(this.data, this)
+	}
+	getStats(){
+		if (this.data.hasForms){
+			let formInfo = this.data.forms[this.form] ?? this.data.forms[this.data.defaultForm]
+			if ("stats" in formInfo){
+				return formInfo.stats
+			}
+		}
+		return this.data.stats
+	}
+	getWeight(){
+		if (this.data.hasForms){
+			let formInfo = this.data.forms[this.form] ?? this.data.forms[this.data.defaultForm]
+			if ("weight" in formInfo){
+				return formInfo.weight
+			}
+		}
+		return this.data.weight
 	}
 	getImageFacing(){
 		if (this.data.hasForms){

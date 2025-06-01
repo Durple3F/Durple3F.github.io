@@ -885,8 +885,8 @@ function startScene(name, options={}) {
 			let nextBtn = $(`<button class='btn btn-primary m-3 w-25'>Next Page</button>`)
 			inputSection.append(nextBtn)
 
-			const generateSection = data => {
-				let pokemonId = data.id
+			const generateSection = pData => {
+				let pokemonId = pData.id
 				let pokemonOptions = {
 					isShiny: false
 				}
@@ -912,7 +912,7 @@ function startScene(name, options={}) {
 
 				let textSection = $(`<div class='pokemon-name-section'></div>`)
 				let pokemonNumberTag = $(`<div class='pokemon-number'></div>`)
-				pokemonNumberTag.html(`#${data.number}`)
+				pokemonNumberTag.html(`#${pData.number}`)
 				textSection.append(pokemonNumberTag)
 				let pokemonNameTag = $(`<div class='pokemon-name'></div>`)
 				textSection.append(pokemonNameTag)
@@ -929,6 +929,14 @@ function startScene(name, options={}) {
 					section.addClass("not-caught")
 				} else {
 					section.addClass("caught")
+				}
+
+				let shinyIndicator = $("<div class='shiny-indicator'>")
+				section.append(shinyIndicator)
+				if (stats["caught-shiny"]){
+					shinyIndicator.append(`<img src='src/img/icons/stars-fill.svg'>`)
+				} else if (stats["seen-shiny"]){
+					shinyIndicator.append(`<img src='src/img/icons/stars.svg'>`)
 				}
 
 				section.append(textSection)
@@ -1676,9 +1684,10 @@ function viewPokemonInfo(pokemon, options = {}) {
 	statsSection.append(masteryHTML)
 	//Misc stats like weight, friendship
 	if (true){
+		let weight = pokemon.getWeight()
 		let weightTag = $(`<div class='stat'>
 			<span class='stat-name'>${getLocaleString("weight", lang, ["stats"])}</span>
-			<span class='stat-val'>${data.weight.kilograms}kg</span>
+			<span class='stat-val'>${weight.kilograms}kg</span>
 		</div>`)
 		statsSection.append(weightTag)
 		let friendshipTag = $(`<div class='stat'>
@@ -1745,6 +1754,14 @@ function viewPokemonInfo(pokemon, options = {}) {
 				placement: "left",
 				trigger: "hover",
 				content: getReasonPokemonDoesntMeetRequirements(pokemon, move, options)
+			})
+			moveTag.on("mouseenter", () => {
+				$({ val: 0 }).animate({ val: 1 }, {
+					duration: 300,
+					step: () => {
+						moveTag.popover("update")
+					}
+				})
 			})
 			return
 		}
@@ -2245,20 +2262,22 @@ function getStatsHTML(pokemon, options = {}) {
 	let abbreviate = options.abbreviate ?? true
 	let pure = options.pure ?? false
 	//Stats
-	let stats = $(`<div class='stats'></div>`)
+	let statsTag = $(`<div class='stats'></div>`)
 	if (!abbreviate && !pure) {
 		let statTag = $("<div class='stat'></div>")
 		statTag.append(`<span class='stat-name'>Level</span>`)
 		let statVal = $(`<span class='stat-val'>${pokemon.level}</span>`)
 		statTag.append(statVal)
-		stats.append(statTag)
+		statsTag.append(statTag)
 	}
-
-	for (let stat in pokemon.data.stats) {
+	
+	let stats = pokemon.getStats()
+	for (let stat in stats) {
 		let statName = abbreviate ? getStatAbbr(stat) : getStatName(stat)
 		let val, effectiveVal
 		if (pure) {
-			val = pokemon.data.stats[stat]
+			let stats = pokemon.getStats()
+			val = stats[stat]
 			effectiveVal = val
 		} else {
 			val = pokemon.getStat(stat)
@@ -2269,7 +2288,7 @@ function getStatsHTML(pokemon, options = {}) {
 			}
 		}
 		let statTag = $("<div class='stat'></div>")
-		stats.append(statTag)
+		statsTag.append(statTag)
 		statTag.append(`<span class='stat-name'>${statName}</span>`)
 		let statVal = $("<span class='stat-val'></span>")
 
@@ -2288,7 +2307,7 @@ function getStatsHTML(pokemon, options = {}) {
 		}
 		statTag.append(statVal)
 	}
-	return stats
+	return statsTag
 }
 function getMasteryHTML(pokemon, options = {}) {
 	let abbreviate = options.abbreviate ?? true

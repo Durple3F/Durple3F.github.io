@@ -344,6 +344,12 @@ const pokemonAbilityData = {
 	"Sap Sipper": {
 		id: "Sap Sipper"
 	},
+	//Wishiwashi changes forms on entering
+	"Schooling": {
+		id: "Schooling",
+		copiable: false,
+		alterable: false
+	},
 	//You can deal damage to ghost-type pokemon
 	"Scrappy": {
 		id: "Scrappy"
@@ -500,6 +506,9 @@ for (let abilityId in pokemonAbilityData){
 	let ability = pokemonAbilityData[abilityId]
 	if (ability.copiable === undefined){
 		ability.copiable = true
+	}
+	if (ability.alterable === undefined){
+		ability.alterable = true
 	}
 	if (ability.tags === undefined){
 		ability.tags = []

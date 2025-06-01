@@ -121,6 +121,9 @@ class Round {
 				let cryUrl = sounds?.cry
 				if (cryUrl) {
 					let cryName = `${pokemonId}-cry`
+					if (pokemon.form){
+						cryName += "-"+pokemon.form
+					}
 					loadSound(cryName, "cry", cryUrl)
 					soundsToUnload.push(cryName)
 				}
@@ -1715,6 +1718,22 @@ class Round {
 						this.giveEnergy(energy, trainer, activePokemon)
 					})
 				})
+			}
+		}
+
+		//End-of-turn abilities that for whatever reason should be handled last.
+		for (let trainer of this.trainers){
+			let pokemon = trainer.activePokemon
+			let trainerIndex = this.trainers.indexOf(trainer)
+			//Schooling pokemon return to normal when they fall below 25% HP
+			if (
+				pokemon.data.id === "Wishiwashi" &&
+				pokemon.form === "School" &&
+				pokemon.hp <= pokemon.maxhp * 0.25 &&
+				pokemon.hasAbility("Schooling")
+			){
+				pokemon.form = "Solo"
+				this.resetDisplayedPokemon(trainerIndex, pokemon, false)
 			}
 		}
 
@@ -4931,6 +4950,9 @@ class Round {
 		if (cryUrl && doCry && !pokemon.gameRoundData.hasCried) {
 			pokemon.gameRoundData.hasCried = true
 			let cryName = `${pokemonId}-cry`
+			if (pokemon.form){
+				cryName += "-"+pokemon.form
+			}
 			loadSound(cryName, "sound", cryUrl)
 				.then(() => playSound(cryName))
 				.then(() => delete pokemon.gameRoundData.hasCried)
@@ -5711,7 +5733,17 @@ class Round {
 				},
 			}, otherTrainer, otherPokemon, undefined)
 		}
-		
+
+		//Schooling is an ability that modifies this pokemon's form as it enters.
+		if (
+			pokemon.data.id === "Wishiwashi" &&
+			pokemon.level >= 20 &&
+			pokemon.hp > pokemon.maxhp * 0.25 &&
+			pokemon.hasAbility("Schooling")){
+			pokemon.form = "School"
+		}
+
+		//Illusion modifies which pokemon is displayed.
 		let pokemonToShow = pokemon
 		if (pokemon.hasAbility("Illusion")){
 			let usablePokemon = getUsablePokemon(trainer.pokemon)

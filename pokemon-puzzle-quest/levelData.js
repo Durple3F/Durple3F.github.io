@@ -69,6 +69,15 @@ const levelCategoryData = {
 			]
 		}
 	},
+	"Route 5": {
+		id: "Route 5",
+		startsUnlocked: false,
+		prerequisites: {
+			levelsBeaten: [
+				"Route 4-7"
+			]
+		}
+	},
 }
 
 const levelData = [
@@ -2636,6 +2645,42 @@ const levelData = [
 			{ type: "jump", jumpTo: "win-check" },
 			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
 			{ type: "dialogue", source: "route-4-7-dialogue-won" },
+		]
+	},
+	
+	//5-1: 
+	{
+		id: "Route 5-1",
+		category: "Route 5",
+		name: "Route 5-1",
+		music: "SM Wild Pokemon Battle",
+		icon: "5",
+		images: {
+			"route-bg-forest-path-2": "src/img/bg/forest path 2.jpg",
+		},
+		recommendedLevels: {
+			"normal": (pokemonList) => {
+				if (pokemonList.length >= 3) return 19
+				return 22
+			},
+			"hard": (pokemonList) => {
+				if (pokemonList.length >= 3) return 19
+				return 22
+			}
+		},
+		trainers: [
+			{
+				isWild: true,
+				targetPokemon: 4,
+				canPickDuplicates: true,
+				possiblePokemon: [
+					{ id: "Wishiwashi", levelMin: 20, levelMax: 20, weight: 3 },
+				]
+			},
+		],
+		effects: [
+			// { type: "change-background-image", name: "route-bg-forest-path-2" },
+			{ type: "fight", trainer: 0 },
 		]
 	},
 ]
