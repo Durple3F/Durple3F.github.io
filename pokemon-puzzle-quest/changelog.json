@@ -4,7 +4,8 @@
 			"date": "June 01, 2025",
 			"line-count": 43700,
 			"changes": [
-				"- Added Water Bubble"
+				"- Added Water Bubble",
+				"- Migrated all of the changelog since April 11."
 			]
 		},
 		"20250531": {
@@ -411,7 +412,235 @@
 				"- Added dialogue to 3-3"
 			]
 		},
-
+		"20250429": {
+			"date": "April 29, 2025",
+			"line-count": 25900,
+			"changes": [
+				"- You can now click the little z-meter to turn all your damage-dealing moves into a damaging z-move. It's just the normal one right now. Plus it doesn't work.",
+				"- The game now correctly determines the power & category of a z-move based on the move that is actually in your pokemon's active moves."
+			]
+		},
+		"20250428": {
+			"date": "April 28, 2025",
+			"line-count": 25800,
+			"changes": [
+				"- I'm thinking of making Z-Moves. I'm intending to make the game mechanic work as a meter instead of a 1-per-game thing. Have it start full, then it recharges over time maybe.",
+				"- Lots of work on how the Z-Move meter looks."
+			]
+		},
+		"20250427": {
+			"date": "April 27, 2025",
+			"line-count": 25500,
+			"changes": [
+				"- I can now set recommended levels for each route, so that I can hopefully scale the player's pokemon down to something good-ish for the level...",
+				"- Pokemon changed this way are returned to their normal levels once the level finishes.",
+				"- However, because of this, now you must finish the route (win/lose/flee/whatever) before any of your pokemon have their data saved. If you refresh during fight 2 of 3, any changes to your pokemon from fight 1 are forgotten.",
+				"- Fixed some dialogue errors. Makana's Rockruff is no longer semitransparent.",
+				"- Oops, some debug stuff was still on",
+				"- Infestation would crash the game if it couldn't steal any energy",
+				"- Copycat copied its move wrong. Fixed crash.",
+				"- Speaker nameplates should be visible now by default.",
+				"- Hustle now only taxes Physical moves"
+			]
+		},
+		"20250426": {
+			"date": "April 26, 2025",
+			"line-count": 25300,
+			"changes": [
+				"- Rewrote the code used when having the CPU pick tiles, hopefully it's less prone to error now.",
+				"- Multiple instances of Static now stack",
+				"- You should be able to make a failed swap and then make moves now.",
+				"- When a pokemon learns new moves after a battle, if those moves aren't automatically equipped, the game now shows you that pokemon's profile screen so you can switch the moves on/off. It even puts the new ones at the top! :)",
+				"- Now you can't switch which route is shown if you're already showing that route.",
+				"- Added a type effectiveness indicator for type-based immunity",
+				"- Added Regenerator, Magnet Pull, Sturdy, Poison Touch, Power of Alchemy, Levitate, Forewarn, Swarm, Early Bird, Super Luck, Prankster, Moody, Hydration, Rain Dish, Guts, Aftermath, Unburden, Flare Boost, Natural Cure, Friend Guard, Skill Link, Long Reach, Liquid Voice, Sweet Veil, Flower Veil, Triage, Adaptability, Stakeout, Strong Jaw, Battery, Dancer",
+				"- Power of Alchemy is the first effect that allows you to change what ability a pokemon has! And it was EASY TO ADD because I PLANNED!!!!!!!!!!",
+				"- Dancer is a very strange ability!! But it seems to work!! :))))",
+				"- Raised the durations of Confused & Asleep",
+				"- Added a new kind of tile"
+			]
+		},
+		"20250425": {
+			"date": "April 25, 2025",
+			"line-count": 24400,
+			"changes": [
+				"- Added Sand Veil, Tangling Hair, Sand Force, Gluttony, Thick Fat, Sniper, Static, Lightning Rod, Pickup, Technician, Rattled, Intimidate, Flash Fire, Justified, Synchronize, Magic Guard, Oblivious"
+			]
+		},
+		"20250424": {
+			"date": "April 24, 2025",
+			"line-count": 24000,
+			"changes": [
+				"- Added Bagon, Rockruff, Oricorio, Diglett-Alola",
+				"- Added Pluck, Dragon Breath, Rock Throw, Air Cutter, Metal Claw",
+				"- Added Big Pecks, Overcoat, Weak Armor, Rock Head, Steadfast",
+				"- Recoded how recoil damage is done to be consistent",
+				"- Oops, Haze was missing a name/description!",
+				"- Added a trainer battle to 3-2",
+				"- Added a whole bunch of code to deal with forms. I'm not looking forward to any more forms.",
+				"- Fixed an issue where if a PC box was set to snap to grid, you could place pokemon on grid coordinates outside of the avilable area."
+			]
+		},
+		"20250423": {
+			"date": "April 23, 2025",
+			"line-count": 23000,
+			"changes": [
+				"- Added Rufflet, Vullaby",
+				"- Added Hone Claws, Wing Attack, Flatter",
+				"- Added Own Tempo, Leaf Guard, Keen Eye, Sheer Force",
+				"- Added a trainer battle to 3-1",
+				"- Sheer Force is a really cool ability and now a bunch of moves have their \"additional effects\" stored separately from their standard effects to allow for it."
+			]
+		},
+		"20250422": {
+			"date": "April 22, 2025",
+			"line-count": 22600,
+			"changes": [
+				"- Added Petilil",
+				"- Added Growth, Mega Drain",
+				"- Added Shed Skin, Compound Eyes, Tinted Lens, Chlorophyll",
+				"- Added a rough type effectiveness indicator to moves."
+			]
+		},
+		"20250421": {
+			"date": "April 21, 2025",
+			"line-count": 22400,
+			"changes": [
+				"- Added Delibird, Crabrawler",
+				"- Added Present + AI, Baby-Doll Eyes, Rock Smash, Bubble Beam",
+				"- Added Hustle, Insomnia, Hyper Cutter, Iron Fist, Shield Dust, Run Away"
+			]
+		},
+		"20250420": {
+			"date": "April 20, 2025",
+			"line-count": 21900,
+			"changes": [
+				"- Moves can now add temporary effects that change how often tiles appear.",
+				"- Added Mankey",
+				"- Added Pay Day, Covet, Fury Swipes, Low Kick, Seismic Toss",
+				"- Custom AI for each one of Pay Day, Covet, Fury Swipes, Low Kick, Seismic Toss",
+				"- Why does Fury Swipes even exist?? Fury Attack is right there.",
+				"- I was like, y'know what? Low Kick is a cool move. Every single pokemon has a weight attached to it now.",
+				"- Added Vital Spirit, Anger Point, Defiant",
+				"- One day this will be remembered as Mankey Easter",
+				"- Wild pokemon can now spawn with hidden abilities 1/10 of the time."
+			]
+		},
+		"20250419": {
+			"date": "April 19, 2025",
+			"line-count": 21200,
+			"changes": [
+				"- Added Bide + AI.",
+				"- I really thought there were more moves in pokemon that were just \"deal damage\" but like, looking through the list, they've really hit a lot of the design space that I was hoping they would. Bide is a cool move. Shame they took it out of every game past gen 7. Which seems to have happened more than a few times.",
+				"- Dialogue can now include choices that affect what happens.",
+				"- Added quite a lot of dialogue to 2-7, and wouldn't you know it, it uses that feature I just programmed.",
+				"- Dialogue can now affect its font size.",
+				"- Added Komala"
+			]
+		},
+		"20250418": {
+			"date": "April 18, 2025",
+			"line-count": 20800,
+			"changes": [
+				"- Fixed some bugs with backgrounds. I am not a fan of that code.",
+				"- Added Alolan Raticate and Gumshoos",
+				"- Added AI to Pursuit."
+			]
+		},
+		"20250417": {
+			"date": "April 17, 2025",
+			"line-count": 20700,
+			"changes": [
+				"- Moves can now encode data into status effects they create.",
+				"- Added Disable, which took some doing, lemme tell ya. +AI",
+				"- Disable fixes... it immediately broke... :(",
+				"- Torrent does something now.",
+				"- Added Blaze and Overgrow to the other two starters.",
+				"- EVs work now. I guess past me never actually made those get applied to pokemon. Oops.",
+				"- Added some charts to show the pokemon's IV/EVs.",
+				"- Added tooltips to the energy bars.",
+				"- Route 2-6",
+				"- Added Hyper Fang, Super Fang"
+			]
+		},
+		"20250416": {
+			"date": "April 16, 2025",
+			"line-count": 20000,
+			"changes": [
+				"- Added Murkrow",
+				"- Added Haze + AI",
+				"- Fixed lots of little bugs.",
+				"- Route 2-5",
+				"- Added AI to Copycat",
+				"- Tweaked AI for when it is appropriate to do nothing.",
+				"- Moves can now do something at the end of your turn.",
+				"- Added Fury Attack, a move that does things at the end of your turn."
+			]
+		},
+		"20250415": {
+			"date": "April 15, 2025",
+			"line-count": 19600,
+			"changes": [
+				"- Opponents will avoid using a move if its cost makes it harder to use a move they'd like to use more.",
+				"- Added Cottonee, Misdreavus, Drifloon",
+				"- Added Helping Hand, a move that I added custom AI for! Pretty proud of finally being able to set up some decision-making :). It's still kinda random, but having weights towards using better moves is nice.",
+				"- Added Confusion (the move)",
+				"- Added Minimize, another move that needed custom AI!",
+				"- Added AI to Absorb.",
+				"- Added the rest of 2-4.",
+				"- Fairy Wind now no longer loops the screen.",
+				"- Added Gust, Poison Powder, Sleep Powder",
+				"- Some work on 2-5"
+			]
+		},
+		"20250414": {
+			"date": "April 14, 2025",
+			"line-count": 18700,
+			"changes": [
+				"- Status effects can now have an actual image overlaying the tile instead of just a tiny circle.",
+				"- Added Stun Spore, which needed that.",
+				"- Added Sand Attack",
+				"- Opponents can now use as many moves as they want during their turn, just like you.",
+				"- Opponents no longer just use any random move they can, and I can program some basic strategy in."
+			]
+		},
+		"20250413": {
+			"date": "April 13, 2025",
+			"line-count": 18500,
+			"changes": [
+				"- Moves that let you select tiles can now allow you to select more than one.",
+				"- Added a toggle for the antialiasing. Annoyingly, it looks better without it on my screen.",
+				"- Fixed the PC Box coordinates at weird sizes. Fencepost problem.",
+				"- Added Growlithe, Cutiefly",
+				"- Added Howl, Fairy Wind",
+				"- Started work on making status effects for tiles that show up like, on the tile itself. Having them appear in little circles was always just the easiest option."
+			]
+		},
+		"20250412": {
+			"date": "April 12, 2025",
+			"line-count": 18200,
+			"changes": [
+				"- Turns out I was spelling one function name wrong somewhere so background performance was terrible.",
+				"- Changed the color of Dark moves.",
+				"- Made it easier to say which status effects are removed at the end of a battle.",
+				"- Fixed Vise Grip's duration.",
+				"- You can move your own locked tiles now.",
+				"- Oops, Charge had no cost.",
+				"- The game now skips the end screen if none of your pokemon gained XP in the battle.",
+				"- You can now select text in this changelog.",
+				"- You can now rename your save.",
+				"- You can now see the current hp/level/types of pokemon in the pc.",
+				"- You can now see a pokemon's types during battle.",
+				"- The game now tracks how many of each pokemon you've seen/caught in shiny variations.",
+				"- When you move pokemon in a PC, they now can snap to a grid.",
+				"- When you catch a pokemon, if your last box is set to use that grid, it's placed in the next available slot.",
+				"- Boxes that use the grid allow you to quickly swap two pokemon around.",
+				"- You can now delete boxes.",
+				"- You can now rename boxes.",
+				"- Fixed Struggle not appearing when it should.",
+				"- When you finish a level, it returns you to that level's section of the level select screen."
+			]
+		},
 		"20250411": {
 			"date": "April 11, 2025",
 			"tags": ["major-release"],
