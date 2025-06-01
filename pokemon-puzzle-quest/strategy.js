@@ -74,7 +74,7 @@ const moveUseStrategy = {
 			let atkTypes = pokemon.getEffectiveTypes()
 			// let defTypes = otherPokemon.getEffectiveTypes()
 			let moveType = game.getEffectiveMoveType(trainer, pokemon, move)
-			let typeMult = game.getSuperEffectiveMult(moveType, otherPokemon)
+			let typeMult = game.getSuperEffectiveMult(trainer, pokemon, moveType, otherTrainer, otherPokemon)
 			let stabBonus = atkTypes.includes(moveType) ? 1.5 : 1
 			let power = options.power ?? getMovePower(move)
 
@@ -451,13 +451,13 @@ const moveUseStrategy = {
 		chooseWeight: options => {
 			let game = options.game
 			let trainer = options.trainer
+			let pokemon = trainer.activePokemon
 			let move = options.action
 			let otherTrainer = game.trainers.find(t => t !== trainer)
-			let pokemon = trainer.activePokemon
 			let otherPokemon = otherTrainer.activePokemon
 			// let otherTypes = otherPokemon.getEffectiveTypes()
 			let damageType = game.getEffectiveMoveType(otherTrainer, otherPokemon, move)
-			let isImmune = !game.getSuperEffectiveMult(damageType, otherPokemon)
+			let isImmune = !game.getSuperEffectiveMult(trainer, pokemon, damageType, otherTrainer, otherPokemon)
 			let weight = isImmune ? 0 : pokemon.level * 2
 			
 			return weight

@@ -537,6 +537,10 @@ const pokemonMoveEffects = {
 			let pokemon = moveUseObj.pokemon
 			let move = moveUseObj.move
 
+			if (params.pokemon){
+				target = params.pokemon
+			}
+
 			if (effect.statusSettings){
 				for (let setting of effect.statusSettings){
 					let obj = statusEffect

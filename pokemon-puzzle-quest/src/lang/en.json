@@ -1771,6 +1771,12 @@
 			"name": "Mudsdale",
 			"pokedex-entry": "Mudsdale's hind legs are strong enough to put a hole into just about anything. A team of criminals once tried to use one to break into a bank vault, but their Mudsdale was too stubborn to carry out the plan."
 		},
+		"Dewpider": {
+			"name": "Dewpider"
+		},
+		"Araquanid": {
+			"name": "Araquanid"
+		},
 		"Fomantis": {
 			"name": "Fomantis",
 			"pokedex-entry": "It takes long naps in the forest, and dislikes being woken up by trainers who mistake it for a flower. It waves its claws in the air while making a whining sound in protest."
@@ -1865,6 +1871,11 @@
 			"description": "Deals damage. If the opponent has any benched Pokémon remaining, this move also attacks one of them of your choice, with 20 less power.",
 			"shortDescription": "Damages a benched Pokémon",
 			"choose-pokemon": "Choose a Pokémon for Aqua Jet to deal damage to."
+		},
+		"Aqua Ring": {
+			"name": "Aqua Ring",
+			"description": "Applies the Aqua Ring status to the user for 10 turns. At the end of its turn, a Pokémon with Aqua Ring gains HP equal to 1/20 of its Max HP, rounded down.",
+			"shortDescription": "Heals over time"
 		},
 		"Baby-Doll Eyes": {
 			"name": "Baby-Doll Eyes",
@@ -2344,7 +2355,7 @@
 		"Leech Seed": {
 			"name": "Leech Seed",
 			"description": "Applies the Seedling status to the opponent for 10 turns. At the end of its turn, a Pokémon with Seedling loses HP equal to 1/16 of its Max HP, rounded down, and the opponent is healed the same amount of HP.",
-			"shortDescription": "Lowers enemy defense"
+			"shortDescription": "Drains HP over time"
 		},
 		"Leer": {
 			"name": "Leer",
@@ -2923,6 +2934,11 @@
 			"name": "Whirlwind",
 			"description": "The opponent swaps to a random other Pokémon if possible. Then ends the turn.",
 			"shortDescription": "Forces opponent to switch"
+		},
+		"Wide Guard": {
+			"name": "Wide Guard",
+			"description": "Gives each of the user's Pokémon the Protected status until their next turn. <i>(The nonactive Pokémon don't stop being protected until they come into play.)</i> Then ends the turn. A Protected Pokémon can’t be dealt damage by other Pokémon, have status conditions applied to it by other Pokémon, or have its stats raised or lowered by other Pokémon. This move's cooldown increases by 1 with each use.",
+			"shortDescription": "Protects all Pokémon"
 		},
 		"Wing Attack": {
 			"name": "Wing Attack",
@@ -3568,6 +3584,11 @@
 			"shortDescription": "Water-type damage taken heals",
 			"longDescription": "Being dealt Water-type damage heals this Pokémon instead of damaging it."
 		},
+		"Water Bubble": {
+			"name": "Water Bubble",
+			"shortDescription": "Takes half damage from Fire moves, deals double damage with Water moves, can’t be burned",
+			"longDescription": "Damage that this Pokémon takes from Fire moves is halved and damage it deals with Water moves is doubled. It’s also immune to being burned."
+		},
 		"Weak Armor": {
 			"name": "Weak Armor",
 			"shortDescription": "Getting hit with Physical moves lowers Defense by a stage and raises Speed by two stages",
@@ -3736,6 +3757,10 @@
 		"seedling": {
 			"name": "Seedling",
 			"description": "At the end of this Pokémon's turn, it loses HP equal to 1/16 of its Max HP, and its opponent is healed the same amount of HP."
+		},
+		"aqua-ring": {
+			"name": "Aqua Ring",
+			"description": "At the end of this Pokémon's turn, it gains HP equal to 1/20 of its Max HP."
 		},
 		"mist": {
 			"name": "Mist",

@@ -103,6 +103,8 @@ Incomplete move lists:
 	Lycanroc-Dusk (lv 0)
 	Mudbray (lv 24)
 	Mudsdale (lv 24)
+	Dewpider (lv 24)
+	Araquanid (lv 26)
 	Fomantis (lv 20)
 	Stufful (lv 20)
 	Bounsweet (lv 28)

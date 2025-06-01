@@ -5595,7 +5595,7 @@ const pokemonData = {
 			{ name: "Sing", unlock: { type: "level", amount: 20 } },
 			{ name: "Bubble Beam", unlock: { type: "level", amount: 25 } },
 			{ name: "Encore", unlock: { type: "level", amount: 30 } },
-			{ name: "Rain Dance", unlock: { type: "level", amount: 1 } },
+			{ name: "Wide Guard", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {
@@ -6661,6 +6661,115 @@ const pokemonData = {
 			{ name: "Stomp", unlock: { type: "level", amount: 16 } },
 			{ name: "Strength", unlock: { type: "level", amount: 20 } },
 			{ name: "Counter", unlock: { type: "level", amount: 24 } },
+		]
+	},
+	"Dewpider": {
+		name: "Dewpider",
+		number: "751",
+		weight: {
+			pounds: 8.8,
+			kilograms: 4.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0751Dewpider.png",
+			"largeShiny": "src/img/shiny-pokemon/751-Dewpider.png",
+			"home": "src/img/tiny-pokemon/Dewpider.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/dewpider.mp3"
+		},
+		tags: [],
+		types: ["Water", "Bug"],
+		abilities: ["Water Bubble"],
+		hiddenAbilities: ["Water Absorb"],
+		stats: {
+			hp: 38,
+			attack: 40,
+			defense: 52,
+			specialAttack: 40,
+			specialDefense: 72,
+			speed: 27
+		},
+		expYield: 54,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 1,
+			speed: 0
+		},
+		energyMastery: {
+			blue: 2,
+			green: 2,
+			yellow: 1,
+		},
+		learnset: [
+			{ name: "Water Gun", unlock: { type: "level", amount: 1 } },
+			{ name: "Infestation", unlock: { type: "level", amount: 1 } },
+			{ name: "Bug Bite", unlock: { type: "level", amount: 4 } },
+			{ name: "Bite", unlock: { type: "level", amount: 8 } },
+			{ name: "Bubble Beam", unlock: { type: "level", amount: 12 } },
+			{ name: "Aqua Ring", unlock: { type: "level", amount: 16 } },
+			{ name: "Headbutt", unlock: { type: "level", amount: 20 } },
+			{ name: "Crunch", unlock: { type: "level", amount: 24 } },
+		]
+	},
+	"Araquanid": {
+		name: "Araquanid",
+		number: "752",
+		weight: {
+			pounds: 180.8,
+			kilograms: 82.0
+		},
+		imageFacing: "right",
+		imageSources: {
+			"large": "src/img/pokemon/0752Araquanid.png",
+			"largeShiny": "src/img/shiny-pokemon/752-Araquanid.png",
+			"home": "src/img/tiny-pokemon/Araquanid.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/araquanid.mp3"
+		},
+		tags: [],
+		types: ["Water", "Bug"],
+		abilities: ["Water Bubble"],
+		hiddenAbilities: ["Water Absorb"],
+		stats: {
+			hp: 68,
+			attack: 70,
+			defense: 92,
+			specialAttack: 50,
+			specialDefense: 132,
+			speed: 42
+		},
+		expYield: 159,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 2,
+			speed: 0
+		},
+		energyMastery: {
+			blue: 3,
+			green: 3,
+			yellow: 2,
+			purple: 1,
+			orange: 1
+		},
+		learnset: [
+			{ name: "Wide Guard", unlock: { type: "level", amount: 1 } },
+			{ name: "Water Gun", unlock: { type: "level", amount: 1 } },
+			{ name: "Infestation", unlock: { type: "level", amount: 1 } },
+			{ name: "Bug Bite", unlock: { type: "level", amount: 1 } },
+			{ name: "Bite", unlock: { type: "level", amount: 1 } },
+			{ name: "Bubble Beam", unlock: { type: "level", amount: 12 } },
+			{ name: "Aqua Ring", unlock: { type: "level", amount: 16 } },
+			{ name: "Headbutt", unlock: { type: "level", amount: 20 } },
+			{ name: "Crunch", unlock: { type: "level", amount: 26 } },
 		]
 	},
 	"Fomantis": {

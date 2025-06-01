@@ -308,6 +308,13 @@ const pokemonStatusData = {
 		class: "debuff",
 		name: "seedling"
 	},
+	"aqua-ring": {
+		image: "src/img/icons/glass-ball.png",
+		color: "rgb(0, 134, 175)",
+		stacks: false,
+		class: "buff",
+		name: "aqua-ring"
+	},
 	"mist": {
 		image: "src/img/icons/fog.png",
 		color: "rgb(70, 70, 70)",

@@ -289,6 +289,14 @@ class Pokemon{
 						turns: 10
 					}
 				} break
+				case "aqua-ring": {
+					status = {
+						name: "aqua-ring",
+						class: "buff",
+						volatile: true,
+						turns: 10
+					}
+				} break
 				case "mist": {
 					status = {
 						name: "mist",
@@ -370,6 +378,10 @@ class Pokemon{
 		let types = this.getEffectiveTypes()
 		//Fire pokemon can't be burned
 		if (status.name === "burn" && types.includes("Fire")){
+			prevented = true
+		}
+		//Pokemon with Water Bubble can't be burned
+		if (status.name === "burn" && pokemon.hasAbility("Water Bubble")){
 			prevented = true
 		}
 		//Poison and Steel type pokemon can't be poisoned

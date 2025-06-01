@@ -352,6 +352,29 @@ const pokemonMoveData = {
 			{ type: "damage", toPokemon: -2, additivePower: -1 }
 		]
 	},
+	//Get HP every turn
+	"Aqua Ring": {
+		name: "Aqua Ring",
+		type: "Water",
+		category: "Status",
+		strategy: "buff-self",
+		tags: ["healing"],
+		pp: 20,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 5,
+		energy: {
+			blue: 8,
+			green: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Aqua Ring.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "apply-status-effect", statusEffect: "aqua-ring", target: "user" },
+		],
+	},
 	//Temporarily prevents switching out
 	"Baby-Doll Eyes": {
 		name: "Baby-Doll Eyes",
@@ -5372,7 +5395,7 @@ const pokemonMoveData = {
 		pp: 10,
 		power: null,
 		accuracy: null,
-		rechargeTurns: 7,
+		rechargeTurns: 2,
 		energy: {
 			orange: 2,
 			yellow: 2,
@@ -5398,6 +5421,7 @@ const pokemonMoveData = {
 					operation: "add"
 				}
 			} },
+			{ type: "end-turn" },
 		],
 	},
 	//Choose two tiles, shuffle them and all tiles between them
@@ -7926,6 +7950,69 @@ const pokemonMoveData = {
 			{ type: "random-choice-from-list", list: -4 },
 			{ type: "swap-pokemon", target: "opponent", pokemon: -1 },
 			{ type: "end-turn" }
+		],
+	},
+	//Gives all your pokemon Protected
+	"Wide Guard": {
+		name: "Wide Guard",
+		type: "Rock",
+		category: "Status",
+		strategy: "special",
+		tags: [],
+		pp: 10,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 3,
+		energy: {
+			orange: 6,
+			yellow: 6,
+			blue: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Wide Guard.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-viable-pokemon", target: "user" },
+			{ type: "save-variable", name: "pokemon", save: -1 },
+			{ type: "get-list-length", list: -1 },
+			{ type: "save-variable", name: "length", save: -1 },
+			{ type: "load-value", value: 0 },
+			{ type: "save-variable", name: "counter", save: -1 },
+			
+			{ type: "load-variable", name: "counter" },
+			{ type: "load-variable", name: "length" },
+			{ type: "jump-if-less-than", jumpTo: "startLoop" },
+			{ type: "jump", jumpTo: "endLoop" },
+
+			{ type: "load-variable", name: "pokemon", label: "startLoop" },
+			{ type: "load-variable", name: "counter" },
+			{ type: "get-element-from-list", list: -2, index: -1 },
+			{ type: "apply-status-effect", statusEffect: "protect", pokemon: -1 },
+
+			{ type: "load-variable", name: "counter" },
+			{ type: "load-value", value: 1 },
+			{ type: "add-numbers" },
+			{ type: "save-variable", name: "counter", save: -1 },
+			{ type: "load-variable", name: "length" },
+			{ type: "jump-if-less-than", jumpTo: "startLoop" },
+			{ type: "jump", jumpTo: "endLoop" },
+
+			{ type: "do-nothing", label: "endLoop" },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "protect-cooldown",
+				type: "cooldown-alteration",
+				stacks: true,
+				volatile: true,
+				appliesTo: {
+					name: "Protect"
+				},
+				modification: {
+					change: 1,
+					operation: "add"
+				}
+			} },
+			{ type: "end-turn" },
 		],
 	},
 	//Removes a group of tiles along a diagonal

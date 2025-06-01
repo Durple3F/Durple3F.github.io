@@ -19,6 +19,7 @@ TODO
 - Make Harden's cooldown increase with each use.
 - Add an animation when a shiny pokemon enters
 - Add some kind of filter/search/pages to the pokedex
+  - pages check
 - Add a section in the pokedex where you can see how many you've caught/seen/etc
 - For some reason the loading bar at the beginning gets big long why does it do that why do they always do this to me
 - Add a way to quickly organize/remove boxes

@@ -486,6 +486,10 @@ const pokemonAbilityData = {
 	"Water Absorb": {
 		id: "Water Absorb"
 	},
+	//Halves fire damage taken, doubles water damage dealt, prevents being burned
+	"Water Bubble": {
+		id: "Water Bubble"
+	},
 	//Stats change on being hit with Physical moves
 	"Weak Armor": {
 		id: "Weak Armor"

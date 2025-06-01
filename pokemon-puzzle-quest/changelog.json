@@ -1,11 +1,18 @@
 {
 	"versions": {
+		"20250601": {
+			"date": "June 01, 2025",
+			"line-count": 43700,
+			"changes": [
+				"- Added Water Bubble"
+			]
+		},
 		"20250531": {
 			"date": "May 31, 2025",
 			"line-count": 43400,
 			"changes": [
-				"- Added Poliwag, Poliwhirl",
-				"- Added Mud Shot, Rain Dance",
+				"- Added Poliwag, Poliwhirl, Dewpider, Araquanid",
+				"- Added Mud Shot, Rain Dance, Aqua Ring, Wide Guard",
 				"- Added Water Absorb",
 				"- The pokedex now has pages instead of just being a massive unending scroll.",
 				"- Fixed the tormented status effect (I'm pretty sure)",

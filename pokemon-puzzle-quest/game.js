@@ -1607,7 +1607,7 @@ class Round {
 		if (activePokemon.hasStatus("seedling")){
 			let otherTrainer = this.trainers.find(t => t !== trainer)
 			let otherPokemon = otherTrainer.activePokemon
-			let amt = Math.max(1, Math.floor(activePokemon.maxhp / 16))
+			let amt = Math.max(1, Math.floor(otherPokemon.maxhp / 16))
 			this.dealDamage({
 				from: activePokemon,
 				fromTrainer: trainer,
@@ -1644,6 +1644,18 @@ class Round {
 				to: activePokemon,
 				move: sourceMove,
 				power: 25
+			})
+		}
+		if (activePokemon.hasStatus("aqua-ring")){
+			let amt = Math.max(1, Math.floor(activePokemon.maxhp / 20))
+			this.dealDamage({
+				from: activePokemon,
+				fromTrainer: trainer,
+				to: activePokemon,
+				toTrainer: trainer,
+				damage: -amt,
+				healing: true,
+				fixed: true
 			})
 		}
 
@@ -2638,15 +2650,7 @@ class Round {
 		else if (getsStab) {
 			damage *= 1.5
 		}
-		let typeMult = this.getSuperEffectiveMult(damageType, defender)
-
-		//Scrappy allows your damage to hit Ghosts
-		if (
-			typeMult === 0 && defenderTypes.includes("Ghost") &&
-			attacker.hasAbility("Scrappy")
-		){
-			typeMult = 1
-		}
+		let typeMult = this.getSuperEffectiveMult(attackerTrainer, attacker, damageType, defenderTrainer, defender)
 
 		damage *= typeMult
 
@@ -2950,7 +2954,7 @@ class Round {
 				text = "-" + damage
 			} else {
 				animOptions.color = "#179e08"
-				text = "+" + damage
+				text = "+" + Math.abs(damage)
 			}
 			let isActive = defender === defenderTrainer.activePokemon
 			if (isActive) {
@@ -3172,7 +3176,7 @@ class Round {
 		let energyCost = cost.energyCost
 
 		let type = this.getEffectiveMoveType(trainer, pokemon, move)
-		let typeMult = this.getSuperEffectiveMult(type, otherPokemon)
+		let typeMult = this.getSuperEffectiveMult(trainer, pokemon, type, otherTrainer, otherPokemon)
 		let category = getMoveCategory(move, parentMove)
 
 		//Keen Eye reduces the effects of opponents' cost increases
@@ -3391,11 +3395,18 @@ class Round {
 			}).length
 			power *= Math.pow(1.3, pokemonWithBattery)
 		}
-		//Fluffy halves damage from moves that make contact
+		//Fluffy halves damage from moves that make contact, but doubles damage from fire moves
 		if (makesContact && otherPokemon.hasAbility("Fluffy")){
 			power *= 0.5
 		}
 		if (effectiveType === "Fire" && otherPokemon.hasAbility("Fluffy")){
+			power *= 2
+		}
+		//Water Bubble halves damage from fire moves, and doubles the power of THEIR water moves
+		if (effectiveType === "Fire" && otherPokemon.hasAbility("Water Bubble")){
+			power *= 0.5
+		}
+		if (effectiveType === "Water" && pokemon.hasAbility("Water Bubble")){
 			power *= 2
 		}
 		//Light Screen and Reflect halve power (unless you have infilitrator)
@@ -3520,7 +3531,7 @@ class Round {
 		let mod = max + this.getMaxInitiativeModifier(trainer, pokemon)
 		return mod
 	}
-	getSuperEffectiveMult(type, defender){
+	getSuperEffectiveMult(trainer, attacker, type, defenderTrainer, defender){
 		let vulnerabilities = []
 		let defTypes = defender.getEffectiveTypes()
 		let vulnerabilityStatusEffects = defender.getStatusesOfType("type-vulnerability")
@@ -3544,7 +3555,7 @@ class Round {
 
 			if (
 				mult === 0 && defType === "Ghost" &&
-				defender.hasAbility("Scrappy")
+				attacker.hasAbility("Scrappy")
 			){
 				mult = 1
 			}
@@ -6154,8 +6165,8 @@ class Round {
 			if (thisMove.tags.includes("damage-dealing")) {
 				let otherTrainer = this.trainers.find(t => t !== thisTrainer)
 				let otherPokemon = otherTrainer.activePokemon
-				let defendingTypes = otherPokemon.getEffectiveTypes()
-				let typeMult = this.getSuperEffectiveMult(type, otherPokemon)
+				// let defendingTypes = otherPokemon.getEffectiveTypes()
+				let typeMult = this.getSuperEffectiveMult(thisTrainer, thisPokemon, type, otherTrainer, otherPokemon)
 
 				if (typeMult > 1) {
 					moveTag.attr("data-effectiveness", "super-effective")

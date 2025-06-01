@@ -1314,7 +1314,7 @@ function openChangelog(){
 			content.css("user-select", "text")
 			content.html(data.replaceAll("\n", "<br>"))
 			body.append(`<br>
-			<div class='accordion'>
+			<div class='accordion changelog'>
 				<div class='accordion-item' data-version="old">
 					<div class='accordion-header'>
 						<button
