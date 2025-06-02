@@ -1415,6 +1415,14 @@
 			"name": "Machamp",
 			"pokedex-entry": "Machamp's arms are so powerful that it could use any one of them to open a jar of pickles without even crying very much."
 		},
+		"Tentacool": {
+			"name": "Tentacool",
+			"pokedex-entry": "Floating around in shallow seas, it doesn’t have much control over where it goes. It often washes up onto the shore, and uses its tentacles to pathetically pull itself back into the water."
+		},
+		"Tentacruel": {
+			"name": "Tentacruel",
+			"pokedex-entry": "When a Tentacool evolves, it always has exactly 80 tentacles. Tentacles gradually fall out throughout its life, so it prefers to shrink most of them into its body when not in use."
+		},
 		"Slowpoke": {
 			"name": "Slowpoke",
 			"pokedex-entry": "Streets have signs marking Slowpoke crossing points. If they see a Slowpoke on the road, drivers are encouraged to pull over and move the Slowpoke to its destination. Otherwise, they’d be waiting all day."
@@ -1837,6 +1845,11 @@
 			"name": "Absorb",
 			"description": "Deals damage. Then, heals the user for 50% of the damage dealt.",
 			"shortDescription": "Steals a little HP"
+		},
+		"Acid": {
+			"name": "Acid",
+			"description": "Deals damage. Then, applies the Acidic status effect to a tile of the user's choice. Then this move has a 50% chance to lower the opponent's Special Defense stat by a stage. Tiles with Acidic remove the tile beneath them at the end of each turn, and the trainer who created the status gains energy based on the tiles removed.",
+			"shortDescription": "Deals some damage and removes tiles"
 		},
 		"Acid Spray": {
 			"name": "Acid Spray",
@@ -2621,6 +2634,11 @@
 			"description": "Gives the user the Reflect status for five turns. Physical moves used against a Pokémon with Reflect have their power halved.",
 			"shortDescription": "Reduces Physical damage taken"
 		},
+		"Reflect Type": {
+			"name": "Reflect Type",
+			"description": "The user becomes the same types as their opponent.",
+			"shortDescription": "Changes the user’s types"
+		},
 		"Rest": {
 			"name": "Rest",
 			"description": "The user heals all their HP. Then, they fall asleep. For as long as they're asleep, their moves are disabled.",
@@ -2902,6 +2920,11 @@
 			"name": "Taunt",
 			"description": "Disables all Status moves that the opponent has for 8 turns.",
 			"shortDescription": "Disables opponent's Status moves"
+		},
+		"Tearful Look": {
+			"name": "Tearful Look",
+			"description": "Lowers the opponent's Attack and Special Attack stats a stage.",
+			"shortDescription": "Lowers enemy Attack and Special Attack"
 		},
 		"Teeter Dance": {
 			"name": "Teeter Dance",
@@ -3273,15 +3296,20 @@
 			"shortDescription": "Immune to Ground-type damage",
 			"longDescription": "If this Pokémon would be dealt damage by a Ground-type move, that damage is reduced to 0."
 		},
-		"Liquid Voice": {
-			"name": "Liquid Voice",
-			"shortDescription": "Sound-based moves are Water moves",
-			"longDescription": "Sound-based moves that this Pokémon uses are treated as though they were Water moves."
-		},
 		"Lightning Rod": {
 			"name": "Lightning Rod",
 			"shortDescription": "Electric tiles appear more often",
 			"longDescription": "As long as this Pokémon is the active Pokémon, the weight of Electric tiles is increased by 0.5. (The normal weight is 1)"
+		},
+		"Liquid Ooze": {
+			"name": "Liquid Ooze",
+			"shortDescription": "Draining moves used against this Pokémon damage the user instead of healing",
+			"longDescription": "Effects that drain HP from this Pokémon and give it to a different Pokémon instead damage the Pokémon that would be healed."
+		},
+		"Liquid Voice": {
+			"name": "Liquid Voice",
+			"shortDescription": "Sound-based moves are Water moves",
+			"longDescription": "Sound-based moves that this Pokémon uses are treated as though they were Water moves."
 		},
 		"Long Reach": {
 			"name": "Long Reach",

@@ -1,5 +1,15 @@
 {
 	"versions": {
+		"20250602": {
+			"date": "June 02, 2025",
+			"line-count": 44700,
+			"changes": [
+				"- Added Tentacool, Tentacruel",
+				"- Added Acid, Reflect Type, Tearful Look",
+				"- Added Liquid Ooze",
+				"- The game is now keeping track of how many times you use each move."
+			]
+		},
 		"20250601": {
 			"date": "June 01, 2025",
 			"line-count": 44700,

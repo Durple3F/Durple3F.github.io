@@ -332,6 +332,7 @@ const pokemonMoveEffects = {
 		targetDefault: "user",
 		execute: (resolve, effect, params, game, options) => {
 			let moveUseObj = options.moveUse
+			let move = moveUseObj.move
 			let healer = moveUseObj.pokemon
 			let effectIndex = options.effectIndex
 			let target = options.target
@@ -339,6 +340,8 @@ const pokemonMoveEffects = {
 				target = params.pokemon
 			}
 			let toTrainer = game.getTrainerOfPokemon(target)
+			let otherTrainer = game.trainers.find(t => t !== toTrainer)
+			let otherPokemon = otherTrainer.activePokemon
 
 			let amount = params.amount ?? 0
 			let min = params.min ?? 0
@@ -368,6 +371,16 @@ const pokemonMoveEffects = {
 			damageOptions.damage = -amount
 			damageOptions.fixed = true
 			damageOptions.healing = true
+
+			if (
+				damageOptions.damage < 0 &&
+				move.tags.includes("draining") &&
+				otherPokemon.hasAbility("Liquid Ooze")
+			) {
+				damageOptions.damage *= -1
+				damageOptions.healing = false
+			}
+
 			let result = game.dealDamage(damageOptions)
 			moveUseObj.info[effectIndex] = result.damageDealt
 

@@ -1879,6 +1879,116 @@ const pokemonData = {
 			{ name: "Knock Off", unlock: { type: "level", amount: 21 } },
 		]
 	},
+	"Tentacool": {
+		name: "Tentacool",
+		number: "72",
+		weight: {
+			pounds: 100.3,
+			kilograms: 45.5
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0072Tentacool.png",
+			"largeShiny": "src/img/shiny-pokemon/072-Tentacool.png",
+			"home": "src/img/tiny-pokemon/Tentacool.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/tentacool.mp3"
+		},
+		types: ["Water", "Poison"],
+		tags: [],
+		abilities: ["Clear Body", "Liquid Ooze"],
+		hiddenAbilities: ["Rain Dish"],
+		stats: {
+			hp: 40,
+			attack: 40,
+			defense: 35,
+			specialAttack: 50,
+			specialDefense: 100,
+			speed: 70
+		},
+		expYield: 67,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 1,
+			speed: 0
+		},
+		energyMastery: {
+			blue: 3,
+			purple: 2
+		},
+		evolutions: [
+			{ name: "Tentacruel", unlock: { type: "level", amount: 30 } }
+		],
+		learnset: [
+			{ name: "Poison Sting", unlock: { type: "level", amount: 1 } },
+			{ name: "Water Gun", unlock: { type: "level", amount: 1 } },
+			{ name: "Acid", unlock: { type: "level", amount: 4 } },
+			{ name: "Wrap", unlock: { type: "level", amount: 8 } },
+			{ name: "Supersonic", unlock: { type: "level", amount: 12 } },
+			{ name: "Water Pulse", unlock: { type: "level", amount: 16 } },
+			{ name: "Screech", unlock: { type: "level", amount: 20 } },
+			{ name: "Bubble Beam", unlock: { type: "level", amount: 24 } },
+			{ name: "Hex", unlock: { type: "level", amount: 28 } },
+		]
+	},
+	"Tentacruel": {
+		name: "Tentacruel",
+		number: "73",
+		weight: {
+			pounds: 121.3,
+			kilograms: 55.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0073Tentacruel.png",
+			"largeShiny": "src/img/shiny-pokemon/073-Tentacruel.png",
+			"home": "src/img/tiny-pokemon/Tentacruel.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/tentacruel.mp3"
+		},
+		types: ["Water", "Poison"],
+		tags: [],
+		abilities: ["Clear Body", "Liquid Ooze"],
+		hiddenAbilities: ["Rain Dish"],
+		stats: {
+			hp: 80,
+			attack: 70,
+			defense: 65,
+			specialAttack: 80,
+			specialDefense: 120,
+			speed: 100
+		},
+		expYield: 180,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 2,
+			speed: 0
+		},
+		energyMastery: {
+			blue: 3,
+			purple: 2
+		},
+		learnset: [
+			{ name: "Reflect Type", unlock: { type: "level", amount: 1 } },
+			{ name: "Poison Sting", unlock: { type: "level", amount: 1 } },
+			{ name: "Water Gun", unlock: { type: "level", amount: 1 } },
+			{ name: "Acid", unlock: { type: "level", amount: 4 } },
+			{ name: "Wrap", unlock: { type: "level", amount: 8 } },
+			{ name: "Supersonic", unlock: { type: "level", amount: 12 } },
+			{ name: "Water Pulse", unlock: { type: "level", amount: 16 } },
+			{ name: "Screech", unlock: { type: "level", amount: 20 } },
+			{ name: "Bubble Beam", unlock: { type: "level", amount: 24 } },
+			{ name: "Hex", unlock: { type: "level", amount: 28 } },
+		]
+	},
 	"Slowpoke": {
 		name: "Slowpoke",
 		number: "79",
@@ -1917,9 +2027,9 @@ const pokemonData = {
 			speed: 0
 		},
 		energyMastery: {
-			orange: 3,
-			blue: 3,
-			purple: 3
+			orange: 1,
+			blue: 2,
+			purple: 2
 		},
 		learnset: [
 			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
@@ -5706,7 +5816,7 @@ const pokemonData = {
 			{ name: "Sing", unlock: { type: "level", amount: 20 } },
 			{ name: "Bubble Beam", unlock: { type: "level", amount: 25 } },
 			{ name: "Encore", unlock: { type: "level", amount: 30 } },
-			{ name: "Dive", unlock: { type: "level", amount: 1 } },
+			{ name: "Absorb", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {

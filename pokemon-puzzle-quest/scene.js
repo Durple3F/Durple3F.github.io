@@ -2410,6 +2410,8 @@ function getMoveHTML(move, options={}) {
 	let shortDescription = getLocaleString("shortDescription", lang, ["moves", move.name])
 	let desc = useLongDescription ? longDescription : shortDescription
 	tag.append(`<div class='move-desc'>${desc}</div>`)
+	let zStuff = tag.find(".z-move-description")
+	zStuff.hide()
 
 	let moveCostTag = $("<div class='move-cost'></div>")
 	if (!move.specialCost) {

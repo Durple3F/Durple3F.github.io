@@ -522,6 +522,7 @@ function newPlayerSaveData(){
 	data["total-pokemon-caught"] = 0
 	data["total-shiny-pokemon-caught"] = 0
 	data["pokemon-caught-stats"] = {}
+	data["move-usage-stats"] = {}
 	data["unlocked-pokedex"] = false
 	data["seen-dialogue"] = []
 	data["z-moves-unlocked"] = []
@@ -542,6 +543,15 @@ function normalizeSave(saveInfo){
 		stats["seen"] = oldValue["seen"] ?? 0
 		stats["caught-shiny"] = oldValue["caught-shiny"] ?? 0
 		stats["seen-shiny"] = oldValue["seen-shiny"] ?? 0
+	}
+
+	//Fill move usage stats
+	let moveUsageStats = saveInfo["move-usage-stats"]
+	for (let moveId in pokemonMoveData){
+		let stats = {}
+		let oldValue = moveUsageStats[moveId] ?? {}
+		moveUsageStats[moveId] = stats
+		stats["used"] = oldValue["used"] ?? 0
 	}
 
 	let starter = saveInfo["chosen-starter"]

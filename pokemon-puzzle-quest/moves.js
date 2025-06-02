@@ -5,7 +5,7 @@ const pokemonMoveData = {
 		type: "Grass",
 		category: "Special",
 		strategy: "basic-damage",
-		tags: ["healing"],
+		tags: ["healing", "draining"],
 		pp: 25,
 		power: 20,
 		accuracy: 100,
@@ -25,6 +25,49 @@ const pokemonMoveData = {
 			{ type: "load-value", value: 1 },
 			{ type: "heal", target: "user", amount: -2, min: -1 },
 		],
+	},
+	//Places status effects on a chosen tile
+	"Acid": {
+		name: "Acid",
+		type: "Poison",
+		category: "Special",
+		strategy: "basic-damage",
+		pp: 30,
+		power: 40,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			yellow: 3,
+			purple: 7
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Acid.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "load-value", value: 1 },
+			{ type: "choose-tiles", count: -1, target: "user" },
+			{
+				type: "apply-status-to-tiles", selection: "group", which: -1,
+				status: { name: "Acidic", type: "buff" }
+			},
+
+			{ type: "random-number", min: 1, max: 10 },
+			{ type: "load-value", value: 6 },
+			{ type: "jump-if-less-than", jumpTo: Infinity },
+			{
+				type: "apply-debuff", target: "opponent", debuff: {
+					type: "stat",
+					class: "debuff",
+					stat: "specialDefense",
+					amount: -1
+				}
+			}
+		]
 	},
 	//Places status effects on tiles
 	"Acid Spray": {
@@ -1864,7 +1907,7 @@ const pokemonMoveData = {
 		type: "Fairy",
 		category: "Special",
 		strategy: "basic-damage",
-		tags: ["healing"],
+		tags: ["healing", "draining"],
 		pp: 10,
 		power: 50,
 		accuracy: 100,
@@ -2846,7 +2889,7 @@ const pokemonMoveData = {
 		type: "Grass",
 		category: "Special",
 		strategy: "basic-damage",
-		tags: ["healing"],
+		tags: ["healing", "draining"],
 		pp: 10,
 		power: 75,
 		accuracy: 100,
@@ -4401,7 +4444,7 @@ const pokemonMoveData = {
 		type: "Grass",
 		category: "Special",
 		strategy: "basic-damage",
-		tags: ["healing"],
+		tags: ["healing", "draining"],
 		pp: 15,
 		power: 40,
 		accuracy: 100,
@@ -5775,6 +5818,47 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "apply-status-effect", statusEffect: "reflect", target: "user" },
+		],
+	},
+	//Changes the target's types to match the opponent's types
+	"Reflect Type": {
+		name: "Reflect Type",
+		type: "Normal",
+		category: "Status",
+		strategy: "special",
+		pp: 15,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 3,
+		energy: {
+			red: 1,
+			orange: 1,
+			yellow: 1,
+			green: 1,
+			blue: 1,
+			purple: 1,
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Reflect Type.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-types", target: "opponent" },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "soak-soaked",
+				type: "type-alteration",
+				stacks: false,
+				volatile: true,
+				lostOnSwap: true,
+				replaceTypes: true,
+				types: []
+			}, statusSettings: [
+				{
+					path: [],
+					key: "types",
+					value: -1
+				}
+			] },
 		],
 	},
 	//Heal all your HP back, but all your moves are disabled until the sleep is gone
@@ -7728,6 +7812,43 @@ const pokemonMoveData = {
 					category: "Status"
 				},
 			} },
+		],
+	},
+	//Lowers enemy attack 1 and special attack 1
+	"Tearful Look": {
+		name: "Tearful Look",
+		type: "Normal",
+		category: "Status",
+		strategy: "debuff-opponent",
+		pp: 20,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 4,
+		energy: {
+			orange: 4,
+			blue: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Tearful Look.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{
+				type: "apply-debuff", target: "opponent", debuff: {
+					type: "stat",
+					class: "debuff",
+					stat: "attack",
+					amount: -1
+				}
+			},
+			{
+				type: "apply-debuff", target: "opponent", debuff: {
+					type: "stat",
+					class: "debuff",
+					stat: "specialAttack",
+					amount: -1
+				}
+			},
 		],
 	},
 	//Confuses the opponent and moves their energy around

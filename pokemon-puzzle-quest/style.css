@@ -2108,7 +2108,10 @@ body {
 	--anniversary-color: rgb(24, 88, 104);
 }
 .modal .changelog .accordion-button {
-	background-color: var(--bs-accordion-btn-bg);
+	background-color: var(--bs-accordion-btn-bg);	
+}
+.modal .changelog .accordion-button.collapsed:focus {
+	box-shadow: none;
 }
 .modal .changelog .major-release .accordion-header button {
 	font-weight: bold;

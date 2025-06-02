@@ -1641,13 +1641,24 @@ class Round {
 				damage: amt,
 				fixed: true
 			})
+
+			//Flip the damage so the other player heals
+			amt *= -1
+			if (
+				amt < 0 &&
+				otherPokemon.hasAbility("Liquid Ooze")
+			) {
+				amt *= -1
+			}
+
+			let healing = amt <= 0
 			this.dealDamage({
 				from: activePokemon,
 				fromTrainer: trainer,
 				to: otherPokemon,
 				toTrainer: otherTrainer,
-				damage: -amt,
-				healing: true,
+				damage: amt,
+				healing: healing,
 				fixed: true
 			})
 		}
@@ -3809,6 +3820,12 @@ class Round {
 			this.createAnnouncement("general", announcement)
 			this.updateEverything()
 		} else {
+			if (trainer === this.trainers[0]){
+				let moveId = move.id
+				let moveUsageStats = playerSaveInfo["move-usage-stats"]
+				let stats = moveUsageStats[moveId]
+				stats["used"]++
+			}
 			this.moveQueue.push(moveUseObj)
 			this.moveUseHistory.push(moveUseObj)
 			this.updateEverything()

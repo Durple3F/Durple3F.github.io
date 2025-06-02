@@ -216,6 +216,10 @@ const pokemonAbilityData = {
 	"Lightning Rod": {
 		id: "Lightning Rod"
 	},
+	//Moves tagged "draining" deal damage to the user instead of healing them
+	"Liquid Ooze": {
+		id: "Liquid Ooze"
+	},
 	//Sound-based moves are Water type
 	"Liquid Voice": {
 		id: "Liquid Voice"
