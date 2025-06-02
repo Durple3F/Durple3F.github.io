@@ -1661,22 +1661,6 @@ const pokemonMoveData = {
 			{ type: "play-sound", name: "activate" },
 			{ type: "damage", delay: 0 },
 		]
-		// onTurnStart: [
-		// 	{ type: "get-status-stacks", statusName: "bide-using-bide" },
-		// 	{ type: "jump-if-truthy", jumpTo: "bide-check" },
-		// 	{ type: "jump", jumpTo: Infinity },
-		// 	{ type: "get-status-stacks", statusName: "bide-wait-time", label: "bide-check" },
-		// 	{ type: "jump-if-truthy", jumpTo: Infinity },
-		// 	{ type: "get-status-gamedata", key: "damageReceived", statusName: "bide-using-bide" },
-		// 	{ type: "load-value", value: 1 },
-		// 	{ type: "jump-if-less-than", jumpTo: "remove-status" },
-		// 	{ type: "play-sound", name: "activate" },
-		// 	{ type: "get-status-gamedata", key: "damageReceived", statusName: "bide-using-bide" },
-		// 	{ type: "load-value", value: 2 },
-		// 	{ type: "multiply-numbers" },
-		// 	{ type: "damage", amount: -1 },
-		// 	{ type: "remove-status-effect", target: "user", statusName: "bide-using-bide", label: "remove-status" },
-		// ]
 	},
 	//Damage once, double energy gain until end of turn, then damage again
 	"Double Hit": {

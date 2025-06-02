@@ -2,10 +2,10 @@
 	"versions": {
 		"20250601": {
 			"date": "June 01, 2025",
-			"line-count": 44500,
+			"line-count": 44700,
 			"changes": [
 				"- Added Surskit, Masquerain, Wishiwashi",
-				"- Added Soak",
+				"- Added Soak, Dive",
 				"- Added Water Bubble, Schooling",
 				"- Oh man Schooling was a real. Fun time.",
 				"- Fixed Helping Hand a couple times.",
@@ -13,7 +13,7 @@
 				"- Added an indicator in the pokedex for which pokemon the player has caught/seen shiny pokemon of.",
 				"- Added a toggle for debug mode.",
 				"- Added a search bar to the pokedex.",
-				"- Migrated all of the changelog since March 31.",
+				"- Migrated all of the changelog since March 30.",
 				"- Fixed some bugs where it would accidentally stop audio twice.",
 				"- Oops, for the past few days status effects have been broken."
 			]
@@ -668,77 +668,165 @@
 			"date": "April 10, 2025",
 			"line-count": 17000,
 			"changes": [
-				
+				"- Many improvements to level 2-2.",
+				"- Working on a system to add backgrounds to the game.",
+				"- Like, SO MUCH work. I made it so that the backgrounds can be preloaded, and intelligently speed up/slow down how fast they're working in the background to generate the frames used in the animations. I HOPE that the effect is seamless.",
+				"- Added different types of pokeballs for the little animation where the pokeball is thrown in fights.",
+				"- Dialogue can now refer to the player by name.",
+				"- There was a bug that I encountered where using any move seemed to have no effect on the opponent, while their moves affected you. That bug was very easy to fix, but I swear, that bug was terrifying."
 			]
 		},
 		"20250409": {
 			"date": "April 09, 2025",
 			"line-count": 16500,
 			"changes": [
-				
+				"- Added a way to see what locations a pokemon is available in.",
+				"- Changed the main font to allow for italic text.",
+				"- Wild pokemon can now appear in any order.",
+				"- Hau no longer completely miscounts your pokemon on purpose. What an idiot.",
+				"- Tweaked level 6 dialogue",
+				"- Added Zubat, Smeargle",
+				"- Added Pursuit, Sketch",
+				"- Little note about Sketch: I'm so glad I did Copycat first. I would've coded Sketch in a super stupid way otherwise.",
+				"- Another little note about Sketch: It <i>did</i> force me to rewrite a lot of code for handling what move tags exist.",
+				"- Added support for music which has an intro and then loops a part of the song that is after the intro"
 			]
 		},
 		"20250408": {
 			"date": "April 08, 2025",
 			"line-count": 15700,
 			"changes": [
-				
+				"- Added a setting to allow you to skip dialogue you've already seen.",
+				"- Added a setting to turn EXP share off, which apparently is something that real pokemon, made by real developers, just forgot how to do since 2018.",
+				"- Added a setting to control whether Hau chooses the better or worse starter against you.",
+				"- You now get all your pokemon healed if (a fight ends and all your pokemon are fainted) which is a different condition from (a fight ends and you count as having lost it)",
+				"- Lowered the shiny odds to 1/50.",
+				"- Added buttons for what will hopefully be other level groups.",
+				"- Added a flee button.",
+				"- Double Team used to be SO BROKEN and I think it still is sometimes but GOD i hope I fixed it",
+				"- Struggle was also broken."
 			]
 		},
 		"20250407": {
 			"date": "April 07, 2025",
 			"line-count": 15500,
 			"changes": [
-				
+				"- The selection window now has the right text.",
+				"- A bunch of tweaks to moves & pokemon.",
+				"- I *believe* that the glitch where pokemon health bars would be wonky when you're selecting pokemon should be fixed.",
+				"- Healing pokemon now removes all status effects, not just debuffs.",
+				"- Tweaked level 7 dialogue",
+				"- Pokemon now have a higher max energy in all colors based on their level.",
+				"- Improved the evolution animation."
 			]
 		},
 		"20250406": {
 			"date": "April 06, 2025",
 			"line-count": 15500,
 			"changes": [
-				
+				"- Added Abra, Pikachu, Happiny",
+				"- Added Teleport, Double Team, Defense Curl",
+				"- While dialogue is being shown, you can't make matches.",
+				"- There's now a little tooltip that shows you what tiles you're being asked to choose.",
+				"- Now, wild pokemon don't always have the same moves if they have >4 possible moves to pull from.",
+				"- Added a few new move effects",
+				"- Moves may now affect the power of other moves.",
+				"- Added some css for when that ^^ happens.",
+				"- <b>Added Shiny Pokemon.</b>",
+				"- Non-wild pokemon don't have a chance to be shiny."
 			]
 		},
 		"20250405": {
 			"date": "April 05, 2025",
 			"line-count": 15000,
 			"changes": [
-				
+				"- Added new dialogue effects",
+				"- I'm finally pretty happy with level 1-7. Mostly just adding dialogue."
 			]
 		},
 		"20250404": {
 			"date": "April 04, 2025",
 			"line-count": 14700,
 			"changes": [
-				
+				"- Slowly starting to rework where the dialogue effects are stored.",
+				"- Added some more to the 1-7 cutscenes.",
+				"- Added some new dialogue effects.",
+				"- Fixed a bug where trainers wouldn't throw their pokeball properly on a second fight.",
+				"- Oops, copycat didn't have a cost until now.",
+				"- Added a skip button to dialogue",
+				"- Finally figured out how to make move sides have stuff sticking out of the sides, if I ever want that. Only downside is that now you have to scroll both sides of the play area.",
+				"- Then I figured out how to get rid of that last little issue ^^^",
+				"- I've customized the moves so they show up with their type's color. I'm not big on it right now, but I like it a bit."
 			]
 		},
 		"20250403": {
 			"date": "April 03, 2025",
 			"line-count": 14400,
 			"changes": [
-				
+				"- Added some config on my end for how the fps displays.",
+				"- Levels now remember how many attempts you've made. That doesn't do anything yet, but they remember.",
+				"- Added Bonsly, Fake Tears.",
+				"- Added Copycat, a very unique move. Lucky for me, I already prepared for it! <i>HAHAHA!!!</i> I STILL DON'T HAVE TO REWRITE ANYTHING, <i>EVERYTHING</i> has worked so far!!!",
+				"- Improved evolution animation slightly.",
+				"- When you hover over Copycat, it highlights the move it will copy. That was hard.",
+				"- Added 4 new trainer classes.",
+				"- Making cutscenes is SO MUCH WORK"
 			]
 		},
 		"20250402": {
 			"date": "April 02, 2025",
 			"line-count": 14000,
 			"changes": [
-				
+				"- Clicking pokemon in your pokedex now shows you their full move list and default stats.",
+				"- When you load the game, if you have data from before the pokemon stats were added, it sets some defaults based on what it can tell.",
+				"- Added a lot of style to the pokemon in the pokedex.",
+				"- Added a nice gradient behind each player's side of the board to indicate whose turn it is.",
+				"- Whether the game displays highlights behind tiles is now controlled by a config setting.",
+				"- More render improvements",
+				"- Added Alolan Grimer and Poison Gas",
+				"- Rainbow tiles now have a fun rainbow highlight.",
+				"- Getting past level 6 now unlocks the pokedex.",
+				"- Added some new dialogue effects, and some dialogue with Lillie. I think it's cute.",
+				"- Characters can now have custom nameplates."
 			]
 		},
 		"20250401": {
 			"date": "April 01, 2025",
 			"line-count": 13600,
 			"changes": [
-				
+				"- Added Alolan Meowth",
+				"- Added Fake Out, a move that does something at the start of your turn even when it's not being used.",
+				"- Added Feint",
+				"- Many optimizations to how the computer updates the screen while a move is happening. I've made the effects very granular, but the computer previously naively updated every single thing, every single time anything happened. Like, even when it just picked a random number. This cost ~100ms on my computer every single time a move was used.",
+				"- Lots of other tiny time optimizations. I hope I haven't broken anything, but if I have, the code was teetering and about to fall over anyway.",
+				"- Many changes to how status effects are added/removed.",
+				"- Fixes to several pokemon images",
+				"- The game now keeps track of how many of each kind of pokemon you've caught/seen.",
+				"- Added a new scene for the pokedex, and plenty of work towards making it look nice"
 			]
 		},
 		"20250331": {
 			"date": "March 31, 2025",
 			"line-count": 13100,
 			"changes": [
-				
+				"- You can now use decimal values for the volume settings.",
+				"- Added Thunder Wave, which I feel like I should mention my autocomplete just wanted me to spell as \"Thunder whatever\"",
+				"- Added a fairly robust system for letting effects choose tiles.",
+				"- Re-did about 700 lines of code which defined how each effect of a move would be carried out. It is now more flexible I hope, and allowed me to move that code to a new file. This is GOING to bite me in the ass later.",
+				"- Y'know, actually, now that I did that, I can make effects that trigger off of things <i>OTHER THAN</i> you using the move. I spent some time working on that."
+			]
+		},
+		"20250330": {
+			"date": "March 30, 2025",
+			"line-count": 12700,
+			"changes": [
+				"- Tons of failed work to make the pokemon moves look nicer.",
+				"- Moves may now affect their own costs. They can also affect the costs of other moves, or even the costs of the opponent's moves.",
+				"- Added Echoed Voice",
+				"- Updated credits.",
+				"- Whoops, Slowpoke had the same cry as Butterfree until now.",
+				"- Added Magnemite",
+				"- Ember now has a higher chance to do its additional effect."
 			]
 		},
 

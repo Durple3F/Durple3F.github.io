@@ -31,3 +31,4 @@ TODO
 - If you skip dialogue, it should recognize any changes made to the background
 - Add an indicator in the pokedex for which pokemon you've seen/caught shinies for.
 - Wishiwashi's ability means we need to load both forms as the game begins
+- Add an icon for Dive
