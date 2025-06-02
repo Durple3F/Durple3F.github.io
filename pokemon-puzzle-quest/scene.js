@@ -880,9 +880,13 @@ function startScene(name, options={}) {
 
 			let inputSection = $(`<div class='d-flex justify-content-center w-100'>`)
 			dexWindow.append(inputSection)
-			let prevBtn = $(`<button class='btn btn-primary m-3 w-25'>Previous Page</button>`)
+			let prevBtn = $(`<button class='btn btn-primary m-3'>`)
+			prevBtn.html(`<i class="bi bi-caret-left-fill"></i>`)
 			inputSection.append(prevBtn)
-			let nextBtn = $(`<button class='btn btn-primary m-3 w-25'>Next Page</button>`)
+			let searchBox = $(`<input class='search text-center form-control m-3 w-50'>`)
+			inputSection.append(searchBox)
+			let nextBtn = $(`<button class='btn btn-primary m-3'>`)
+			nextBtn.html(`<i class="bi bi-caret-right-fill"></i>`)
 			inputSection.append(nextBtn)
 
 			const generateSection = pData => {
@@ -960,16 +964,32 @@ function startScene(name, options={}) {
 			let pageNum = 0
 			let pageSize = 25
 			let pages = []
+			let filters = {}
 			const determinePages = () => {
 				pages = []
+				pages.push([])
 				for (let i = 0; i < pokemonList.length; i++){
-					let pageI = Math.floor(i / pageSize)
+					let pageI = pages.length - 1
+					let lastPage = pages[pageI]
+					if (lastPage.length === pageSize){
+						pageI++
+					}
+
+					let pData = pokemonList[i]
+					let fitsFilters = true
+					if (filters.name){
+						let name = getLocaleString("name", lang, ["pokemon", pData.id])
+						if (!name.includes(filters.name)){
+							fitsFilters = false
+						}
+					}
+					if (!fitsFilters) continue
+
 					if (!pages[pageI]){
 						pages[pageI] = []
 					}
 					let page = pages[pageI]
-					let data = pokemonList[i]
-					page.push(data)
+					page.push(pData)
 				}
 			}
 
@@ -992,6 +1012,17 @@ function startScene(name, options={}) {
 			prevBtn.click(() => {
 				pageNum += pages.length - 1
 				pageNum %= pages.length
+				displayPage(pageNum)
+			})
+			searchBox.on("input", () => {
+				let name = searchBox.val()
+				if (!name){
+					delete filters.name
+				} else {
+					filters.name = name
+				}
+				determinePages()
+				pageNum = 0
 				displayPage(pageNum)
 			})
 

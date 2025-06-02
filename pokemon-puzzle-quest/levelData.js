@@ -72,6 +72,7 @@ const levelCategoryData = {
 	"Route 5": {
 		id: "Route 5",
 		startsUnlocked: false,
+		debugOnly: true,
 		prerequisites: {
 			levelsBeaten: [
 				"Route 4-7"
@@ -2767,7 +2768,12 @@ function determineUnlockedLevels() {
 	for (let categoryId in levelCategoryData) {
 		let category = levelCategoryData[categoryId]
 		let unlocked = category.unlocked
-		if (category.prerequisites) {
+
+		let components = []
+		if (!unlocked && category.debugOnly){
+			components.push(config['debug'])
+		}
+		if (!unlocked && category.prerequisites) {
 			let prereq = category.prerequisites
 			let allBeaten = true
 			if (prereq.levelsBeaten) {
@@ -2780,10 +2786,13 @@ function determineUnlockedLevels() {
 				}
 			}
 			let shouldUnlock = allBeaten
-			if (shouldUnlock) {
-				unlocked = true
-			}
+			components.push(shouldUnlock)
 		}
+
+		if (!unlocked && components.length){
+			unlocked = components.every(c => c)
+		}
+
 		category.unlocked = unlocked
 	}
 }

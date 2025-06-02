@@ -12,6 +12,7 @@
 				"- Working on making the way that move cooldowns are stored more efficient. I set it up when I wasn't expecting this game to have 200+ moves.",
 				"- Added an indicator in the pokedex for which pokemon the player has caught/seen shiny pokemon of.",
 				"- Added a toggle for debug mode.",
+				"- Added a search bar to the pokedex.",
 				"- Migrated all of the changelog since March 31."
 			]
 		},
