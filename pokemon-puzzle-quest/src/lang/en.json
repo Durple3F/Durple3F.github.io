@@ -2035,15 +2035,20 @@
 			"description": "Raises the user's defense stat by 1 stage. <span class='z-move-description'>Then the user's speed increases by a stage.</span>",
 			"shortDescription": "Raises defense and buffs other moves"
 		},
+		"Disable": {
+			"name": "Disable",
+			"description": "Disables the move used most recently by the opponent for 10 turns.",
+			"shortDescription": "Disables a move"
+		},
 		"Detect": {
 			"name": "Detect",
 			"description": "Gives the user the Protected status until their next turn. Then ends the turn. A Protected Pokémon can’t be dealt damage by other Pokémon, have status conditions applied to it by other Pokémon, or have its stats raised or lowered by other Pokémon. This move's cooldown increases by 1 with each use.",
 			"shortDescription": "Prevents effects from other Pokémon"
 		},
-		"Disable": {
-			"name": "Disable",
-			"description": "Disables the move used most recently by the opponent for 10 turns.",
-			"shortDescription": "Disables a move"
+		"Dive": {
+			"name": "Dive",
+			"description": "The user submerges underwater. While submerged, they take half as much damage, but can’t gain energy. The next time the user makes a match of blue tiles, this move deals damage, and the user stops being submerged.",
+			"shortDescription": "Take less damage until activating"
 		},
 		"Disarming Voice": {
 			"name": "Disarming Voice",

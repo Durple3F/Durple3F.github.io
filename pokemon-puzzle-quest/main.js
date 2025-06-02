@@ -330,6 +330,7 @@ function playSound(name, fadeMusic=true){
 		resolvePromise()
 		return promise
 	}
+	//Clone it to guarantee that we dont overwrite it later
 	if (snd && !snd.paused){
 		snd = snd.cloneNode()
 		snd.currentTime = 0
@@ -370,9 +371,8 @@ function stopSound(sound, fadeMusic=true){
 	}
 
 	if (typeof sound === "object"){
-		let toCheck = playingSounds.filter(soundObj => soundObj.name === sound.name)
+		let toCheck = playingSounds.filter(soundObj => soundObj === sound)
 		toCheck.forEach(soundObj => stop(soundObj))
-		return
 	} else if (typeof sound === "string"){
 		let name = sound
 		let toCheck = playingSounds.filter(soundObj => soundObj.name === name)

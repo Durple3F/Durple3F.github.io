@@ -13,7 +13,9 @@
 				"- Added an indicator in the pokedex for which pokemon the player has caught/seen shiny pokemon of.",
 				"- Added a toggle for debug mode.",
 				"- Added a search bar to the pokedex.",
-				"- Migrated all of the changelog since March 31."
+				"- Migrated all of the changelog since March 31.",
+				"- Fixed some bugs where it would accidentally stop audio twice.",
+				"- Oops, for the past few days status effects have been broken."
 			]
 		},
 		"20250531": {

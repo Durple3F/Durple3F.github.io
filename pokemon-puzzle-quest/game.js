@@ -90,6 +90,14 @@ class Round {
 		let setting = config["antialiasing"] ? "smooth" : "pixelated"
 		$("#screen").css("image-rendering", setting)
 
+		//Set each pokemon back so they forget anything that shouldn't be there.
+		for (let trainer of this.trainers) {
+			for (let pokemon of trainer.pokemon) {
+				pokemon.resetEverything()
+				pokemon.trainer = trainer
+			}
+		}
+
 		this.determineTileWeights()
 		this.loadResources()
 		let p = this.roundStartAnimation()
@@ -238,14 +246,6 @@ class Round {
 				}
 				return p
 			})
-		}
-
-		//Set each pokemon back so they forget anything that shouldn't be there.
-		for (let trainer of this.trainers) {
-			for (let pokemon of trainer.pokemon) {
-				pokemon.resetEverything()
-				pokemon.trainer = trainer
-			}
 		}
 
 		//Determine who goes first
@@ -541,7 +541,9 @@ class Round {
 	}
 
 	handleEffects(matches, tiles) {
-		let activeTrainer = this.trainers[this.activePlayerIndex]
+		let promise = Promise.resolve()
+		let activeIndex = this.activePlayerIndex
+		let activeTrainer = this.trainers[activeIndex]
 		let activePokemon = activeTrainer.activePokemon
 		let otherTrainer = this.trainers[this.inactivePlayerIndex]
 		let otherPokemon = otherTrainer.activePokemon
@@ -980,8 +982,31 @@ class Round {
 				}
 			}
 		}
+		
+		//Finally, some moves have effects which are triggered on making certain types of match.
+		let activeMoves = this.getAvailableMoves(activeIndex, activeTrainer, activePokemon)
+		let somethingTriggered = false
+		for (let type in matchTotals){
+			let count = matchTotals[type]
+			if (count <= 0) continue
+			let trigger = "onMatch-"+type
+			for (let move of activeMoves){
+				if (move[trigger]){
+					somethingTriggered = true
+					promise = promise.then(() => {
+						return this.triggerMoveEffects(activeTrainer, activePokemon, move, trigger)
+					})
+				}
+			}
+		}
+		if (somethingTriggered){
+			promise = promise.then(() => {
+				this.updateEverything()
+			})
+		}
 
 		this.updateStats()
+		return promise
 	}
 	giveEnergy(energy, trainer, pokemon) {
 		pokemon = pokemon || trainer.activePokemon
@@ -1124,7 +1149,6 @@ class Round {
 				for (let tile of tiles) {
 					this.board.explodeTile(tile)
 				}
-				this.handleEffects(matches, tiles)
 
 				//A pokemon that is frozen in fear snaps out of it if any match made has a length of 5 or more.
 				if (activePokemon.hasStatus("fear-frozen")) {
@@ -1138,7 +1162,8 @@ class Round {
 
 				//Add those matches to the current combo
 				matches.forEach(m => this.matchesInCombo.push(m))
-				resolve()
+				this.handleEffects(matches, tiles)
+				.then(() => resolve())
 			}
 			else {
 				this.applySpriteHighlights()
@@ -2575,19 +2600,23 @@ class Round {
 	dealDamage(options) {
 		let result = {}
 		let attackerTrainer = options.fromTrainer
+		let attacker = options.from
+		let defenderTrainer = options.toTrainer
+		let defender = options.to
 		if (!attackerTrainer) {
 			attackerTrainer = this.trainers[this.activePlayerIndex]
 		}
-		let attacker = options.from
 		if (!attacker) {
 			attacker = attackerTrainer.activePokemon
 		}
-		let defenderTrainer = options.toTrainer
 		if (!defenderTrainer) {
-			let possible = this.trainers.filter(trainer => trainer !== attackerTrainer)
-			defenderTrainer = randomChoice(possible)
+			if (defender){
+				defenderTrainer = defender.trainer
+			} else {
+				let possible = this.trainers.filter(trainer => trainer !== attackerTrainer)
+				defenderTrainer = randomChoice(possible)
+			}
 		}
-		let defender = options.to
 		if (!defender) {
 			defender = defenderTrainer.activePokemon
 		}
@@ -2694,6 +2723,15 @@ class Round {
 
 		//I'm going to reduce how much damage things deal across the board, just a smidge.
 		damage *= 0.8
+
+		//Some status effects modify damage taken
+		let damageTakenStatuses = defender.getStatusesOfType("damage-taken-alteration")
+		for (let statusEffect of damageTakenStatuses) {
+			let modification = statusEffect.modification
+			console.log(damage)
+			damage = applyModification(damage, modification)
+			console.log(damage)
+		}
 
 		//Pokemon with Magic Guard take no indirect damage
 		if (!options.directDamage && damage > 0 && defender.hasAbility("Magic Guard")) {
@@ -3031,11 +3069,11 @@ class Round {
 	canUseStruggle(trainerIndex) {
 		let trainer = this.trainers[trainerIndex]
 		let allSwaps = this.determineAvailableSwaps(trainer)
-		let pokemon = trainer.activePokemon
-		let allDisabled = pokemon.activeMoves.every(move => {
-			return this.getEffectiveMoveDisability(trainer, pokemon, move)
-		})
-		return allSwaps.length === 0 || allDisabled || this.struggleTest
+		// let pokemon = trainer.activePokemon
+		// let allDisabled = pokemon.activeMoves.every(move => {
+		// 	return this.getEffectiveMoveDisability(trainer, pokemon, move)
+		// })
+		return allSwaps.length === 0 || this.struggleTest
 	}
 	getCurrentlyUsableMoves(trainerIndex) {
 		let trainer = this.trainers[trainerIndex]
@@ -5739,7 +5777,8 @@ class Round {
 			pokemon.data.id === "Wishiwashi" &&
 			pokemon.level >= 20 &&
 			pokemon.hp > pokemon.maxhp * 0.25 &&
-			pokemon.hasAbility("Schooling")){
+			pokemon.hasAbility("Schooling")
+		){
 			pokemon.form = "School"
 		}
 
@@ -7201,7 +7240,6 @@ class Tile {
 	}
 	removeStatus(statusEffect) {
 		removeFromArray(this.statusEffects, statusEffect)
-		removeFromArray(this.statusEffectsMap[statusEffect.type], statusEffect)
 	}
 	removeStatusesWithName(name) {
 		let shouldRemove = this.statusEffects.some(status => {

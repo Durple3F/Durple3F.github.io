@@ -1592,6 +1592,92 @@ const pokemonMoveData = {
 			{ type: "empower-tiles", selection: -1 },
 		]
 	},
+	//Deals damage on a delay and provides some protection
+	"Dive": {
+		name: "Dive",
+		type: "Water",
+		category: "Physical",
+		strategy: "special",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 10,
+		power: 80,
+		accuracy: 100,
+		rechargeTurns: 5,
+		energy: {
+			purple: 4,
+			blue: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Dive part 1.mp3",
+			"activate": "src/audio/attacks/Dive part 2.mp3",
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "dive-using-dive",
+				type: "disability",
+				stacks: false,
+				volatile: true,
+				lostOnSwap: true,
+				lostOnBatonPass: true,
+				appliesTo: {
+					name: "Dive"
+				},
+			} },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "dive-submerged-damage",
+				type: "damage-taken-alteration",
+				stacks: false,
+				volatile: true,
+				lostOnSwap: true,
+				lostOnBatonPass: true,
+				appliesTo: {},
+				modification: {
+					change: 0.5,
+					operation: "multiply"
+				}
+			} },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "dive-submerged-energy",
+				type: "energy-gain-alteration",
+				stacks: false,
+				volatile: true,
+				lostOnSwap: true,
+				lostOnBatonPass: true,
+				appliesTo: {},
+				modification: {
+					change: 0,
+					operation: "multiply"
+				}
+			} },
+		],
+		"onMatch-blue": [
+			{ type: "get-status-stacks", statusName: "dive-using-dive" },
+			{ type: "load-value", value: 1 },
+			{ type: "jump-if-less-than", jumpTo: Infinity },
+			{ type: "remove-status-effect", target: "user", statusName: "dive-using-dive" },
+			{ type: "remove-status-effect", target: "user", statusName: "dive-submerged-damage" },
+			{ type: "remove-status-effect", target: "user", statusName: "dive-submerged-energy" },
+			{ type: "play-sound", name: "activate" },
+			{ type: "damage", delay: 0 },
+		]
+		// onTurnStart: [
+		// 	{ type: "get-status-stacks", statusName: "bide-using-bide" },
+		// 	{ type: "jump-if-truthy", jumpTo: "bide-check" },
+		// 	{ type: "jump", jumpTo: Infinity },
+		// 	{ type: "get-status-stacks", statusName: "bide-wait-time", label: "bide-check" },
+		// 	{ type: "jump-if-truthy", jumpTo: Infinity },
+		// 	{ type: "get-status-gamedata", key: "damageReceived", statusName: "bide-using-bide" },
+		// 	{ type: "load-value", value: 1 },
+		// 	{ type: "jump-if-less-than", jumpTo: "remove-status" },
+		// 	{ type: "play-sound", name: "activate" },
+		// 	{ type: "get-status-gamedata", key: "damageReceived", statusName: "bide-using-bide" },
+		// 	{ type: "load-value", value: 2 },
+		// 	{ type: "multiply-numbers" },
+		// 	{ type: "damage", amount: -1 },
+		// 	{ type: "remove-status-effect", target: "user", statusName: "bide-using-bide", label: "remove-status" },
+		// ]
+	},
 	//Damage once, double energy gain until end of turn, then damage again
 	"Double Hit": {
 		name: "Double Hit",

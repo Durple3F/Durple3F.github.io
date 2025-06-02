@@ -20,6 +20,7 @@ TODO
 - Add an animation when a shiny pokemon enters
 - Add some kind of filter/search/pages to the pokedex
   - pages check
+  - search check
 - Add a section in the pokedex where you can see how many you've caught/seen/etc
 - For some reason the loading bar at the beginning gets big long why does it do that why do they always do this to me
 - Add a way to quickly organize/remove boxes
@@ -29,4 +30,4 @@ TODO
 - Pokemon breeders keep their pokemon in friend balls
 - If you skip dialogue, it should recognize any changes made to the background
 - Add an indicator in the pokedex for which pokemon you've seen/caught shinies for.
-- Modify the cooldown storage so that it doesn't store 200+ empty objects.
+- Wishiwashi's ability means we need to load both forms as the game begins

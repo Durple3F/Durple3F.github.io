@@ -520,10 +520,11 @@ class Pokemon{
 
 		for (let statusEffect of result.added){
 			this.statusEffects.push(statusEffect)
-			if (!this.statusEffectsMap[statusEffect.type]){
+			let type = statusEffect.type
+			if (!this.statusEffectsMap[type]){
 				this.statusEffectsMap[statusEffect.type] = []
 			}
-			this.statusEffectsMap[statusEffect.type].push(statusEffect)
+			this.statusEffectsMap[type].push(statusEffect)
 		}
 		
 		if (this.hasAbility("Defiant")){
@@ -572,9 +573,14 @@ class Pokemon{
 		return this.statusEffectsMap[type] ?? []
 	}
 	removeStatus(statusEffect){
-		let index = this.statusEffects.indexOf(statusEffect)
-		if (index !== -1){
-			this.statusEffects.splice(index, 1)
+		removeFromArray(this.statusEffects, statusEffect)
+		let type = statusEffect.type
+		let those = this.statusEffectsMap[type]
+		if (those && those.includes(statusEffect)){
+			removeFromArray(those, statusEffect)
+		} else {
+			console.warn("Somehow we're trying to remove a status effect this pokemon doesnt have???")
+			console.trace()
 		}
 	}
 	removeStatusesWithName(name){

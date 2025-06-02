@@ -2655,7 +2655,7 @@ const levelData = [
 		category: "Route 5",
 		name: "Route 5-1",
 		music: "SM Wild Pokemon Battle",
-		icon: "5",
+		icon: "1",
 		images: {
 			"route-bg-forest-path-2": "src/img/bg/forest path 2.jpg",
 		},
