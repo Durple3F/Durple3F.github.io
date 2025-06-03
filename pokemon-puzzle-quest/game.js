@@ -607,6 +607,7 @@ class Round {
 
 		//On a 5-match:
 		if (madeFiveMatch) {
+			activePokemon.gameRoundData.madeFiveMatch = true
 			//Anger Point gives benefits when the opponent makes a 5-match
 			if (otherPokemon.hasAbility("Anger Point")) {
 				otherPokemon.addStatusEffect({

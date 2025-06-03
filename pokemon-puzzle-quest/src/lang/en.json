@@ -1930,6 +1930,11 @@
 			"description": "For each usable Pokémon remaining in the user's party, deals damage based on that Pokémon's base Attack stat.",
 			"shortDescription": "Deals damage for each of your Pokémon"
 		},
+		"Belch": {
+			"name": "Belch",
+			"description": "Deals damage. If the user has less than 50 total energy after paying this move's cost, this move does 75% less damage.",
+			"shortDescription": "Deals damage based on remaining energy"
+		},
 		"Bide": {
 			"name": "Bide",
 			"description": "After two turns, this move deals damage equal to the opponent equal to twice the damage received since it was used. The user can’t use moves in the meantime.",

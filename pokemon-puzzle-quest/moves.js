@@ -454,6 +454,7 @@ const pokemonMoveData = {
 		type: "Water",
 		category: "Physical",
 		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
 		pp: 10,
 		power: 90,
 		accuracy: 90,
@@ -601,6 +602,34 @@ const pokemonMoveData = {
 			{ type: "jump", jumpTo: "endLoop" },
 
 			{ type: "do-nothing", label: "endLoop" }
+		],
+	},
+	//Does nothing unless its user has matched 5 tiles in a row
+	"Belch": {
+		name: "Belch",
+		type: "Poison",
+		category: "Special",
+		strategy: "special",
+		tags: ["damage-dealing"],
+		pp: 10,
+		power: 90,
+		accuracy: 90,
+		rechargeTurns: 2,
+		energy: {
+			purple: 4,
+			yellow: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Belch.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-total-energy", target: "user" },
+			{ type: "load-value", value: 50 },
+			{ type: "jump-if-less-than", jumpTo: "small-damage" },
+			{ type: "damage" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "damage", damageMult: 0.25, label: "small-damage" },
 		],
 	},
 	//Deals damage on a delay

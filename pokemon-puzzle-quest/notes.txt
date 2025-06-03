@@ -34,3 +34,4 @@ TODO
 - Add an icon for Dive
 - Make sure leech seed + liquid ooze works as intended
 - Add a way to skip the evolution animation that still lets you evolve it
+- Make belch just increase its damage based on energy fullness
