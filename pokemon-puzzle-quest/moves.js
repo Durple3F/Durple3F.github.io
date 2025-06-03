@@ -195,6 +195,36 @@ const pokemonMoveData = {
 			{ type: "remove-tiles", selection: -1 }
 		]
 	},
+	//Raises your special defense 2
+	"Amnesia": {
+		name: "Amnesia",
+		type: "Psychic",
+		category: "Status",
+		strategy: "buff-user",
+		tags: [],
+		pp: 20,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 3,
+		energy: {
+			purple: 6,
+			yellow: 2
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Amnesia part 1.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{
+				type: "apply-debuff", target: "user", debuff: {
+					type: "stat",
+					stat: "specialDefense",
+					class: "buff",
+					amount: 2
+				}
+			}
+		],
+	},
 	//Deals damage with a chance to raise all stats
 	"Ancient Power": {
 		name: "Ancient Power",
@@ -6815,6 +6845,34 @@ const pokemonMoveData = {
 			{ type: "apply-status-effect", statusEffect: "poisoned", target: "opponent" },
 		],
 	},
+	//Deals less damage if the user isn't asleep
+	"Snore": {
+		name: "Snore",
+		type: "Normal",
+		category: "Special",
+		strategy: "special",
+		tags: ["sound-based"],
+		pp: 15,
+		power: 50,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			blue: 2,
+			purple: 2
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Snore.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-status-stacks", statusName: "asleep" },
+			{ type: "load-value", value: 1 },
+			{ type: "jump-if-greater-than-or-equal-to", jumpTo: "big-damage" },
+			{ type: "damage", damageMult: 0.5, label: "small-damage" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "damage", label: "big-damage" },
+		],
+	},
 	//Changes the target's types to pure water type
 	"Soak": {
 		name: "Soak",
@@ -7634,7 +7692,7 @@ const pokemonMoveData = {
 				type: "apply-debuff", target: "user", debuff: {
 					type: "stat",
 					stat: "attack",
-					class: "debuff",
+					class: "buff",
 					amount: 2
 				}
 			}

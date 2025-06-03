@@ -16,13 +16,15 @@ const config = {
 	tileHighlightHints: true,
 	//The names shown on the top display the pokemon's level
 	showPokemonLevel: true,
-	cpuSpeed: 2,
+	//Setting this to 1 makes the CPU wait until there's no announcements before passing the turn.
+	//Setting it to 2 makes the CPU not wait, and there's less delay between turns.
+	cpuSpeed: 1,
 	textSpeed: 40,
 
 	volumes: {
 		"music": 0.02,
-		"sound": 0.4,
-		"cry": 0.4
+		"sound": 0.2,
+		"cry": 0.2
 	},
 	muted: {
 		"music": false,

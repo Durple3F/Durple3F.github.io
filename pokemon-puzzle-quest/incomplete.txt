@@ -60,6 +60,8 @@ Incomplete move lists:
 	Sableye (lv 21)
 	Mawile (lv 32)
 	Spinda (lv 28)
+	Barboach (lv 24)
+	Whiscash (lv 24)
 	Bagon (lv 25)
 	Drifloon (lv 20)
 	Drifblim (lv 24)

@@ -4048,6 +4048,117 @@ const pokemonData = {
 			{ name: "Sucker Punch", unlock: { type: "level", amount: 28 } },
 		]
 	},
+	"Barboach": {
+		name: "Barboach",
+		number: "339",
+		weight: {
+			pounds: 4.2,
+			kilograms: 1.9
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0339Barboach.png",
+			"largeShiny": "src/img/shiny-pokemon/339-Barboach.png",
+			"home": "src/img/tiny-pokemon/Barboach.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/barboach.mp3"
+		},
+		types: ["Water", "Ground"],
+		tags: [],
+		abilities: ["Oblivious", "Anticipation"],
+		hiddenAbilities: ["Hydration"],
+		stats: {
+			hp: 50,
+			attack: 48,
+			defense: 43,
+			specialAttack: 46,
+			specialDefense: 41,
+			speed: 60
+		},
+		expYield: 58,
+		evYield: {
+			hp: 1,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 2,
+			blue: 2,
+			purple: 1
+		},
+		evolutions: [
+			{ name: "Whiscash", unlock: { type: "level", amount: 30 } }
+		],
+		learnset: [
+			{ name: "Mud-Slap", unlock: { type: "level", amount: 1 } },
+			{ name: "Water Gun", unlock: { type: "level", amount: 1 } },
+			{ name: "Rest", unlock: { type: "level", amount: 6 } },
+			{ name: "Snore", unlock: { type: "level", amount: 6 } },
+			{ name: "Water Pulse", unlock: { type: "level", amount: 12 } },
+			{ name: "Amnesia", unlock: { type: "level", amount: 18 } },
+			{ name: "Aqua Tail", unlock: { type: "level", amount: 24 } },
+		]
+	},
+	"Whiscash": {
+		name: "Whiscash",
+		number: "340",
+		weight: {
+			pounds: 52.0,
+			kilograms: 23.6
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0340Whiscash.png",
+			"largeShiny": "src/img/shiny-pokemon/340-Whiscash.png",
+			"home": "src/img/tiny-pokemon/Whiscash.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/whiscash.mp3"
+		},
+		types: ["Water", "Ground"],
+		tags: [],
+		abilities: ["Oblivious", "Anticipation"],
+		hiddenAbilities: ["Hydration"],
+		stats: {
+			hp: 110,
+			attack: 78,
+			defense: 73,
+			specialAttack: 76,
+			specialDefense: 71,
+			speed: 60
+		},
+		expYield: 164,
+		evYield: {
+			hp: 2,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 3,
+			yellow: 1,
+			blue: 3,
+			purple: 2
+		},
+		learnset: [
+			{ name: "Belch", unlock: { type: "level", amount: 1 } },
+			{ name: "Zen Headbutt", unlock: { type: "level", amount: 1 } },
+			{ name: "Tickle", unlock: { type: "level", amount: 1 } },
+			{ name: "Mud-Slap", unlock: { type: "level", amount: 1 } },
+			{ name: "Water Gun", unlock: { type: "level", amount: 1 } },
+			{ name: "Rest", unlock: { type: "level", amount: 1 } },
+			{ name: "Snore", unlock: { type: "level", amount: 1 } },
+			{ name: "Water Pulse", unlock: { type: "level", amount: 12 } },
+			{ name: "Amnesia", unlock: { type: "level", amount: 18 } },
+			{ name: "Aqua Tail", unlock: { type: "level", amount: 24 } },
+		]
+	},
 	"Bagon": {
 		name: "Bagon",
 		number: "371",
@@ -5816,7 +5927,7 @@ const pokemonData = {
 			{ name: "Sing", unlock: { type: "level", amount: 20 } },
 			{ name: "Bubble Beam", unlock: { type: "level", amount: 25 } },
 			{ name: "Encore", unlock: { type: "level", amount: 30 } },
-			{ name: "Absorb", unlock: { type: "level", amount: 1 } },
+			{ name: "Snore", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {

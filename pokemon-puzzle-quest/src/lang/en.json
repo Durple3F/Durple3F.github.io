@@ -1873,6 +1873,11 @@
 			"shortDescription": "Removes a V of tiles.",
 			"choose": "Choose a tile to cut a V-shape around."
 		},
+		"Amnesia": {
+			"name": "Amnesia",
+			"description": "Raises the user's Special Defense stat by 2 stages.",
+			"shortDescription": "Raises user's Special Defense"
+		},
 		"Ancient Power": {
 			"name": "Ancient Power",
 			"description": "Deals damage. Then, 50% of the time, raises the user's Attack, Defense, Special Attack, Special Defense, and Speed stats by 1 stage each.",
@@ -2765,6 +2770,11 @@
 			"name": "Smog",
 			"description": "Deals damage. Then, has a 40% chance to apply Poisoned to the opponent.",
 			"shortDescription": "Deals some damage and might poison"
+		},
+		"Snore": {
+			"name": "Snore",
+			"description": "Deals damage. If the user isn't asleep when they use this move, it deals half as much damage.",
+			"shortDescription": "Deals more damage if asleep"
 		},
 		"Soak": {
 			"name": "Soak",

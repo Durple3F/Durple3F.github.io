@@ -1,13 +1,21 @@
 {
 	"versions": {
+		"20250603": {
+			"date": "June 03, 2025",
+			"line-count": 45100,
+			"changes": [
+				"- Added Snore, Amnesia"
+			]
+		},
 		"20250602": {
 			"date": "June 02, 2025",
-			"line-count": 44700,
+			"line-count": 45100,
 			"changes": [
-				"- Added Tentacool, Tentacruel",
+				"- Added Tentacool, Tentacruel, Barboach, Whiscash",
 				"- Added Acid, Reflect Type, Tearful Look",
 				"- Added Liquid Ooze",
-				"- The game is now keeping track of how many times you use each move."
+				"- The game is now keeping track of how many times you use each move.",
+				"- Migrated all of the changelog from this year."
 			]
 		},
 		"20250601": {
@@ -586,6 +594,7 @@
 		"20250416": {
 			"date": "April 16, 2025",
 			"line-count": 20000,
+			"ding": true,
 			"changes": [
 				"- Added Murkrow",
 				"- Added Haze + AI",
@@ -749,6 +758,7 @@
 		"20250405": {
 			"date": "April 05, 2025",
 			"line-count": 15000,
+			"ding": true,
 			"changes": [
 				"- Added new dialogue effects",
 				"- I'm finally pretty happy with level 1-7. Mostly just adding dialogue."
@@ -837,6 +847,319 @@
 				"- Whoops, Slowpoke had the same cry as Butterfree until now.",
 				"- Added Magnemite",
 				"- Ember now has a higher chance to do its additional effect."
+			]
+		},
+		"20250329": {
+			"date": "March 29, 2025",
+			"line-count": 12500,
+			"changes": [
+				"- Added some buttons in the settings menu for save importing/exporting",
+				"- Reworked how pokeballs are shown onscreen",
+				"- You can now deal damage to non-active pokemon with some moves",
+				"- Added Aqua Jet, a move that deals damage to non-active pokemon",
+				"- The dealDamage function now has neat green text if you ever get healed"
+			]
+		},
+		"20250328": {
+			"date": "March 28, 2025",
+			"line-count": 12100,
+			"changes": [
+				"- Added rainbow tiles, tiles which can match with whatever. This took. SO much work. I'm going to scream.",
+				"- Oops, Grubbin was missing stats!",
+				"- Changed several dialogue box styles.",
+				"- Huge improvements to how fast the computer can generate a board / find moves on the board. This change WILL bite me in the ass one day, but for now the game can handle up to 25x25 boards without much sweat!",
+				"- Fixed a bug where the game wouldn't start if no frames were displayed while the game was loading a board, which comes up a lot when testing it with 50x50 boards.",
+				"- Fixed a bug where the player could <a href='https://www.youtube.com/watch?v=UcZzlPGnKdU'>use moves against the opponent's pokemon even while that pokemon was being swapped out.</a>",
+				"- You can now produce a string that will hopefully eventually be used to transfer your save."
+			]
+		},
+		"20250327": {
+			"date": "March 27, 2025",
+			"line-count": 11800,
+			"changes": [
+				"- Added a neat function that lets me find tiles that surround a given selection of tiles.",
+				"- Added Bite, a move that needs to know what tiles surround a given selection of tiles.",
+				"- Added the framework to make it possible for pokemon to have abilities. No promises I'll get very far with it. I'm telling myself that this is a very \"nice to have\" kind of feature.",
+				"- Fixed a bug where it would forget what you named your save.",
+				"- Re-did the dialogue box CSS. Now it has the same aspect ratio on all screens.",
+				"- Added some new effects for Dialogue",
+				"- Added more stuff to 1-5",
+				"- Fixed a bug where the game would forget how many pokemon you caught.",
+				"- COMPLETELY rewrote the function that fills boards. It now has a much better chance of efficiently finding a board that won't have any matches made immediately for either player."
+			]
+		},
+		"20250326": {
+			"date": "March 26, 2025",
+			"line-count": 11400,
+			"changes": [
+				"- You can now see the version number in game. When I remember to update it.",
+				"- Fixed a bug where the pc wouldn't appear anymore. Worrying.",
+				"- Somehow, I made it this far without having the computer player ever consider whether their moves were recharging.",
+				"- Some status effects can be exclusive to others. I'm making the executive decision that you are totally able to be Shocked <i>while</i> Asleep, but you can't be Drowsy and Asleep at the same time. That's just silly.",
+				"- Some status effects, when added, can replace others. This is mainly so that if you're Drowsy and become Asleep, it looks like the icon stays in the same spot.",
+				"- The function that multiplies energy can now round up/down",
+				"- Added Drowsy and Asleep statuses",
+				"- Added Yawn"
+			]
+		},
+		"20250324": {
+			"date": "March 24, 2025",
+			"line-count": 11200,
+			"changes": [
+				"- Added Slowpoke",
+				"- Added Curse"
+			]
+		},
+		"20250322": {
+			"date": "March 22, 2025",
+			"changes": [
+				"- You can delete save files now"
+			]
+		},
+		"20250321": {
+			"date": "March 21, 2025",
+			"line-count": 11000,
+			"changes": [
+				"- During fights, the dialogue should be easier to read now by lowering the board's opacity.",
+				"- Character dialogue can now override the default colors for special text.",
+				"- Character dialogue can now trigger effects during the text appearing.",
+				"- Character dialogue can now have wait times programmed into the text directly.",
+				"- Added Shadow Sneak",
+				"- Big work on being able to delete save files"
+			]
+		},
+		"20250320": {
+			"date": "March 20, 2025",
+			"line-count": 10800,
+			"changes": [
+				"- Dialogue can now have fancy styled text inside it.",
+				"- Every trainer is now capable of having their own custom text box.",
+				"- It's now possible for dialogue to start in the middle of a level.",
+				"- Fixed yet another bug regarding Confusion.",
+				"- Added Astonish",
+				"- The checkForWinner function sucks less now",
+				"- Pokemon leaving the field no longer weirdly gives their controller an extra turn sometimes"
+			]
+		},
+		"20250319": {
+			"date": "March 19, 2025",
+			"line-count": 10500,
+			"changes": [
+				"- Fixed a bug with initiative values sometimes being teeny tiny decimals",
+				"- The game now preloads trainer sprites",
+				"- The PC now shows pokemon more consistently at different resolutions.",
+				"- Finally fixed the thing where you were allowed to start a level with no active pokemon.",
+				"- Added some more trainers along the path.",
+				"- Working on getting some dialogue working, so that there can be some kind of tutorial hopefully.",
+				"- Fixed a particularly mean bug where if you started a level while the first pokemon in your party had EXACTLY 0 hp, it would crash."
+			]
+		},
+		"20250318": {
+			"date": "March 18, 2025",
+			"line-count": 10100,
+			"changes": [
+				"- Fixed a bug where you could choose a second starter by just refreshing the game",
+				"- Removed another bug where you could put your only pokemon into the PC and then have no pokemon",
+				"- Working on making different kinds of trainers possible"
+			]
+		},
+		"20250317": {
+			"date": "March 17, 2025",
+			"line-count": 10000,
+			"ding": true,
+			"changes": [
+				"- You can now actually see the stats on that system I was programming yesterday",
+				"- Those stats do a little more, now, too. I need to re-re-balance a lot of things.",
+				"- Added Wingull"
+			]
+		},
+		"20250316": {
+			"date": "March 16, 2025",
+			"line-count": 9700,
+			"changes": [
+				"- Improved the system the game uses to determine which tiles spawn.",
+				"- Big work on adding a system that makes some pokemon better at collecting their favorite kinds of energy."
+			]
+		},
+		"20250315": {
+			"date": "March 15, 2025",
+			"line-count": 9600,
+			"changes": [
+				"- Turn order is now based on Speed. Previously, Speed did absolutely nothing.",
+				"- Very rare bugfix with how sounds are played",
+				"- Added Disarming Voice",
+				"- Rebalanced a whole bunch of moves so that the fights swing a bit less",
+				"- When you heal your pokemon, the game saves now"
+			]
+		},
+		"20250314": {
+			"date": "March 14, 2025",
+			"changes": [
+				"- Added Nuzzle, Nasty Plot and Charm",
+				"- Added Paralyze",
+				"- Fixed an annoying issue when starting a round involving your scroll position being saved between rounds.",
+				"- The data describing which moves a pokemon has unlocked is now stored in a more natural way",
+				"- Finally standardized the learnsets",
+				"- Focus Energy works again",
+				"- Added that link at the top of the changelog"
+			]
+		},
+		"20250313": {
+			"date": "March 13, 2025",
+			"changes": [
+				"- Small fix to how saves are stored"
+			]
+		},
+		"20250312": {
+			"date": "March 12, 2025",
+			"line-count": 9200,
+			"changes": [
+				"- Leaving empty slots between pokemon in your party no longer crashes the game",
+				"- Music no longer randomly refuses to obey your sound settings i hope",
+				"- Fixed a crash on Route 1-2 related to me forgetting that Infinity is a big number",
+				"- Now if you lose a fight, the game automatically heals your pokemon",
+				"- If you exit the game before choosing your starter, it will now let you choose your starter when you get back.",
+				"- Fixed a glitch where you were allowed to use moves while they were recharging.",
+				"- Hau no longer stands there, watching you, observing your actions for all eternity.",
+				"- Added the remaining pokemon natures",
+				"- You can now view this very changelog in-game",
+				"- Implimented some work towards moving pokemon names to the locale file.",
+				"- Added Mud-Slap, a move that makes tiles provide less energy."
+			]
+		},
+		"20250311": {
+			"date": "March 11, 2025",
+			"line-count": 8900,
+			"changes": [
+				"- Added Sweet Kiss",
+				"- The computer player is now much smarter about which tiles they swap.",
+				"- Added Grubbin and Vise Grip"
+			]
+		},
+		"20250310": {
+			"date": "March 10, 2025",
+			"line-count": 8700,
+			"changes": [
+				"- Added a bunch of effects to levels involving conditional stuff",
+				"- Now you can have fights where the trainer might have different pokemon sometimes",
+				"- Added Pichu",
+				"- Added Thunder Shock, a move that allows tiles to explode adjacent tiles.",
+				"- Added Play Nice, a move that allows players to select any tiles they want and swap their places.",
+				"- Added the framework for moves to have the non-active player make choices."
+			]
+		},
+		"20250309": {
+			"date": "March 09, 2025",
+			"changes": [
+				"- The game can now set flags for the player which are remembered between page loads."
+			]
+		},
+		"20250308": {
+			"date": "March 08, 2025",
+			"line-count": 8300,
+			"changes": [
+				"- Added an empty husk of Butterfree, but no moves. Just there to experiment with evolutions.",
+				"- ***Pokemon can evolve!***",
+				"- Finally fixed that bug where after the first round, the player's pokemon would linger in the top left.",
+				"- Added a settings menu!",
+				"- Settings are now saved between page loads."
+			]
+		},
+		"20250307": {
+			"date": "March 07, 2025",
+			"changes": [
+				"- Added Metapod",
+				"- Added Harden",
+				"- Added the Invulnerable status",
+				"- Added an animation that plays when a Pokemon evolves. I'm pretty proud of it. I want to add more, but it functions for now."
+			]
+		},
+		"20250306": {
+			"date": "March 06, 2025",
+			"line-count": 7800,
+			"changes": [
+				"- Many improvements to the process of deciding which moves a pokemon has access to at any time.",
+				"- Now Pokemon remember which moves they had selected the last time the game was loaded.",
+				"- You now see an announcement when one of your pokemon learns a new move.",
+				"- Fixed an issue where hovering over status effects while other stuff was happening would cause the tooltip to hang there.",
+				"- Added a move effect for healing.",
+				"- Added Absorb",
+				"- Added Infestation, along with a new status effect which siphons energy from the opponent."
+			]
+		},
+		"20250305": {
+			"date": "March 05, 2025",
+			"changes": [
+				"- It took me SO LONG but I think I FINALLY figured out what was causing the CPU to SOMETIMES take 5 turns in a single turn"
+			]
+		},
+		"20250304": {
+			"date": "March 04, 2025",
+			"line-count": 7300,
+			"changes": [
+				"- FINALLY when a pokemon leaves they move in the RIGHT DIRECTION that was SO ANNOYING to debug",
+				"- Added Yungoos & Alolan Rattata",
+				"- Added Leer, Payback, Tail Whip, Quick Attack, and Focus Energy",
+				"- Added some new move effects",
+				"- Added some sounds to existing moves that didn't have any",
+				"- Pokemon images are stored in a less stupid way",
+				"- Fixed a bug where while choosing a starter you could look at unintended categories.",
+				"- Failing to account for Pokemon with two forms earlier made a headache of the database."
+			]
+		},
+		"20250303": {
+			"date": "March 03, 2025",
+			"line-count": 6900,
+			"changes": [
+				"- I've decided for now that Confused sometimes makes your turn end if you use a move",
+				"- The game now unloads many sound effects when a round ends, for memory purposes later I guess? I doubt anyone's gonna play this long enough for that to matter",
+				"- Hovering over a move now shows you how long it'll take to recharge after use.",
+				"- There's now a button in the level select screen that heals your pokemon.",
+				"- A Pokemon's hp is now saved when you leave the game."
+			]
+		},
+		"20250301": {
+			"date": "March 01, 2025",
+			"changes": [
+				"- Fixed a bug where when you lose a round you're considered to have still won.",
+				"- All text that moves use is now moved to the locale file, so it can change based on language.",
+				"- Adding energy to pokemon is way less cumbersome now",
+				"- Added 3 new move effects",
+				"- Bug Bite now has an additional effect where it steals some energy from the victim.",
+				"- Added Ledyba",
+				"- Added Supersonic",
+				"- Added Confused. I haven't decided what Confused should do."
+			]
+		},
+		"20250228": {
+			"date": "February 28, 2025",
+			"line-count": 6400,
+			"changes": [
+				"- Added Caterpie",
+				"- Added its moves, Tackle, String Shot, and Bug Bite.",
+				"- Levels may now include multiple trainers",
+				"- Fixed a bug where health bars would flicker between colors if you were right on the cusp of changing colors, for example if you were at exactly 1/5 health.",
+				"- Fixed a bug where when pokemon would be swapped out, they might move in the wrong direction.",
+				"- Fixed a bug where when you swapped pokemon, the enemy would take their turn during your swap animation."
+			]
+		},
+		"20250227": {
+			"date": "February 27, 2025",
+			"line-count": 6300,
+			"changes": [
+				"- House almost burned down while I was working on this the first time.",
+				"- So I had a hard time picking this back up again.",
+				"- I always wanted to, but it's just so hard to disconnect things in my head.",
+				"- But let's see how far I can go this time?",
+				"- Re-did the database code used when new data gets added.",
+				"- Put in some framework for moving strings that the player sees to another file. This is good for organization as well as laying the groundwork for using other languages. Not that I plan to.",
+				"- Now when you hover over a level it can show a description.",
+				"- Improved the popups that display when you select/hover over a level. I'm quite happy with them now.",
+				"- Added wild pokemon music.",
+				"- Optimized the loading at the beginning of the game",
+				"- This is more for me and less for you, but I wrote a nice little documentation of all of the different effects moves can do so far.",
+				"- I *believe* I've finally fixed that annoyinng issue where the game would just slowly freeze up if you were tabbed out for too long.",
+				"- I don't remember exactly what rules old me was using when they were writing down lines of code stats, so take that number with a grain of salt here. I *do* remember what the smoke smelled like, though."
 			]
 		},
 

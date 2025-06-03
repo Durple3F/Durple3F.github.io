@@ -33,3 +33,4 @@ TODO
 - Wishiwashi's ability means we need to load both forms as the game begins
 - Add an icon for Dive
 - Make sure leech seed + liquid ooze works as intended
+- Add a way to skip the evolution animation that still lets you evolve it
