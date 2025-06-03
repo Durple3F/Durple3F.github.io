@@ -879,7 +879,7 @@ class Round {
 					energyCost: {
 						greatestColor: -3
 					}
-				})
+				}, activeTrainer, activePokemon, undefined)
 			}
 			//Yellow tiles give you 10 energy of a random color
 			else if (type === "yellow"){
@@ -899,20 +899,22 @@ class Round {
 					healing: true
 				})
 			}
-			//Blue tiles multiply your energy gain by 30% (multiplicative, stacks) for this turn
+			//Blue tiles add 2 energy to your opponent's costs
 			else if (type === "blue"){
-				activePokemon.addStatusEffect({
-					name: "empowered-blue-energy-bonus",
-					type: "energy-gain-alteration",
+				otherPokemon.addStatusEffect({
+					name: "empowered-blue-cost-alteration",
+					type: "cost-alteration",
 					stacks: true,
 					volatile: true,
-					turns: 1,
-					appliesTo: {},
-					modification: {
-						change: 1.3,
-						operation: "multiply"
+					turns: 10,
+					numberOfApplications: 1,
+					appliesTo: {
+						logic: "not"
+					},
+					energyCost: {
+						greatestColor: 2
 					}
-				})
+				}, activeTrainer, activePokemon, undefined)
 			}
 			//Purple tiles reduce a cooldown of yours by 1. The cooldown reduction is given to a random one of your greatest move cooldowns among available moves.
 			else if (type === "purple"){

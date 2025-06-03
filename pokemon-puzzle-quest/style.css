@@ -441,9 +441,13 @@ body {
 	flex-wrap: wrap;
   gap: 0.3em;
 }
+#save-files > .list > .save-file {
+	transition: background-color 0.2s, border-color 0.2s, filter 0.2s;
+}
 #save-files > .list > .save-file.active {
-	background-color: var(--energy-green);
-	border-color: var(--energy-green);
+	background-color: var(--health-high);
+	border-color: var(--health-high);
+	filter: drop-shadow(0px 0px 3px var(--health-high));
 }
 
 #game.choosing-starter {

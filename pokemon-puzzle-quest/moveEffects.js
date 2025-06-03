@@ -1021,6 +1021,15 @@ const pokemonMoveEffects = {
 					return true
 				})
 			}
+			if ("power" in conditions) {
+				let power = conditions.power
+				chooseable = chooseable.filter(t => {
+					if (t.power !== power) {
+						return false
+					}
+					return true
+				})
+			}
 			
 			for (let i = 0; i < count; i++) {
 				let canChoose = chooseable

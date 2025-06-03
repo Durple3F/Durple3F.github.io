@@ -2,9 +2,10 @@
 	"versions": {
 		"20250603": {
 			"date": "June 03, 2025",
-			"line-count": 45100,
+			"line-count": 45600,
 			"changes": [
-				"- Added Snore, Amnesia"
+				"- Added Snore, Amnesia, Aqua Tail",
+				"- Modified the effect of empowered blue tiles"
 			]
 		},
 		"20250602": {

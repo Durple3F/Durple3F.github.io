@@ -1909,6 +1909,11 @@
 			"description": "Applies the Aqua Ring status to the user for 10 turns. At the end of its turn, a Pokémon with Aqua Ring gains HP equal to 1/20 of its Max HP, rounded down.",
 			"shortDescription": "Heals over time"
 		},
+		"Aqua Tail": {
+			"name": "Aqua Tail",
+			"description": "Deals damage. Then, empowers 3 random Water tiles. Whenever either trainer matches an empowered Water tile, it provides twice its usual energy, and the greatest color component(s) of their opponent's active Pokémon's next move's energy cost is increased by 2.",
+			"shortDescription": "Deals damage and empowers Water tiles"
+		},
 		"Baby-Doll Eyes": {
 			"name": "Baby-Doll Eyes",
 			"description": "Lowers the opponent's Attack stat by 1 stage. Then, the opponent becomes unable to switch Pokémon for 4 turns.",

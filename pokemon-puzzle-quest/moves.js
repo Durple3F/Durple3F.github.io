@@ -448,6 +448,38 @@ const pokemonMoveData = {
 			{ type: "apply-status-effect", statusEffect: "aqua-ring", target: "user" },
 		],
 	},
+	//Empowers some blue tiles
+	"Aqua Tail": {
+		name: "Aqua Tail",
+		type: "Water",
+		category: "Physical",
+		strategy: "basic-damage",
+		pp: 10,
+		power: 90,
+		accuracy: 90,
+		rechargeTurns: 2,
+		energy: {
+			blue: 8,
+			yellow: 3,
+			red: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Aqua Tail.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "load-value", value: 3 },
+			{
+				type: "select-random-tiles", count: -1,
+				conditions: { types: ["blue"], power: 0 }
+			},
+			{ type: "empower-tiles", selection: -1 },
+		]
+	},
 	//Temporarily prevents switching out
 	"Baby-Doll Eyes": {
 		name: "Baby-Doll Eyes",
@@ -1661,7 +1693,7 @@ const pokemonMoveData = {
 			{ type: "get-element-from-obj", obj: -2, key: -1 },
 			{ type: "load-value", value: 0.2 },
 			{ type: "multiply-numbers", round: "down" },
-			{ type: "select-random-tiles", count: -1, conditions: { types: ["yellow"] } },
+			{ type: "select-random-tiles", count: -1, conditions: { types: ["yellow"], power: 0 } },
 			{ type: "empower-tiles", selection: -1 },
 		]
 	},
@@ -4830,7 +4862,7 @@ const pokemonMoveData = {
 				}
 			},
 			{ type: "load-value", value: 3 },
-			{ type: "select-random-tiles", count: -1, conditions: { types: ["red"] } },
+			{ type: "select-random-tiles", count: -1, conditions: { types: ["red"], power: 0 } },
 			{ type: "empower-tiles", selection: -1 },
 		],
 	},
@@ -8365,7 +8397,7 @@ const pokemonMoveData = {
 				}
 			},
 			{ type: "load-value", value: 3 },
-			{ type: "select-random-tiles", count: -1, conditions: { types: ["orange"] } },
+			{ type: "select-random-tiles", count: -1, conditions: { types: ["orange"], power: 0 } },
 			{ type: "empower-tiles", selection: -1 },
 		]
 	},
