@@ -1575,6 +1575,14 @@
 			"name": "Spinda",
 			"pokedex-entry": "Some Pokémon researchers have tried to catalog the billions of different patterns Spinda can have. I wouldn’t know. I’ve definitely never tried to do that."
 		},
+		"Barboach": {
+			"name": "Barboach",
+			"pokedex-entry": "It secretes a slimy fluid that makes it almost impossible to hold on to. Some towns hold competitions to see who can hold onto a Barboach the longest as it wriggles out of their hands. Nobody has reached a full minute yet."
+		},
+		"Whiscash": {
+			"name": "Whiscash",
+			"pokedex-entry": "It likes to stay still hidden below a layer of murky swamp water, submerged in the mud as it waits for prey. When it senses people coming, though, it can’t resist coming out of hiding to say hello."
+		},
 		"Bagon": {
 			"name": "Bagon",
 			"pokedex-entry": "Some trainers like to take Bagon paragliding with them to satisfy its desire to be able to fly one day. It helps."
@@ -2971,6 +2979,11 @@
 			"name": "Thunder Wave",
 			"description": "A random column of tiles is given the Static status effect. When the user removes a tile with Static, it explodes orthogonally adjacent tiles as well.",
 			"shortDescription": "Gives a column Static"
+		},
+		"Tickle": {
+			"name": "Tickle",
+			"description": "Lowers the opponent's Attack and Defense stats by 1 stage each.",
+			"shortDescription": "Lowers enemy Attack and Defense"
 		},
 		"Torment": {
 			"name": "Torment",

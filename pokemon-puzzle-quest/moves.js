@@ -8129,6 +8129,43 @@ const pokemonMoveData = {
 			}
 		],
 	},
+	//Lowers enemy attack and defense 1
+	"Tickle": {
+		name: "Tickle",
+		type: "Normal",
+		category: "Status",
+		strategy: "debuff-opponent",
+		pp: 20,
+		power: null,
+		accuracy: 100,
+		rechargeTurns: 3,
+		energy: {
+			purple: 5,
+			green: 2
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Tickle.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{
+				type: "apply-debuff", target: "opponent", debuff: {
+					type: "stat",
+					stat: "attack",
+					class: "debuff",
+					amount: -1
+				}
+			},
+			{
+				type: "apply-debuff", target: "opponent", debuff: {
+					type: "stat",
+					stat: "defense",
+					class: "debuff",
+					amount: -1
+				}
+			},
+		],
+	},
 	//Prevents the opponent using the same move twice in a row
 	"Torment": {
 		name: "Torment",
