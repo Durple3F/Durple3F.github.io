@@ -1,5 +1,14 @@
 {
 	"versions": {
+		"20250604": {
+			"date": "June 04, 2025",
+			"line-count": 46000,
+			"changes": [
+				"- Added Goldeen, Seaking, Fletchling",
+				"- Added Acrobatics",
+				"- Added Water Veil, Gale Wings"
+			]
+		},
 		"20250603": {
 			"date": "June 03, 2025",
 			"line-count": 45600,

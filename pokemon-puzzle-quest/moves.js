@@ -100,6 +100,36 @@ const pokemonMoveData = {
 			}
 		]
 	},
+	//Deals double damage as long as the user has less than 30 energy remaining
+	"Acrobatics": {
+		name: "Acrobatics",
+		type: "Flying",
+		category: "Physical",
+		strategy: "special",
+		tags: ["damage-dealing"],
+		pp: 15,
+		power: 55,
+		accuracy: 100,
+		rechargeTurns: 2,
+		energy: {
+			orange: 1,
+			yellow: 1,
+			green: 1,
+			blue: 3,
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Acrobatics.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-energy-average-fullness", target: "user" },
+			{ type: "load-value", value: 0.1 },
+			{ type: "jump-if-less-than", jumpTo: "big-damage" },
+			{ type: "damage" },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "damage", damageMult: 2, label: "big-damage" },
+		],
+	},
 	//Removes 3 tiles that share a color
 	"Aerial Ace": {
 		name: "Aerial Ace",
@@ -604,7 +634,7 @@ const pokemonMoveData = {
 			{ type: "do-nothing", label: "endLoop" }
 		],
 	},
-	//Does nothing unless its user has matched 5 tiles in a row
+	//Deals double damage as long as the user has 50+ energy remaining
 	"Belch": {
 		name: "Belch",
 		type: "Poison",

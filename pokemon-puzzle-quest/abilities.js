@@ -130,6 +130,10 @@ const pokemonAbilityData = {
 	"Fur Coat": {
 		id: "Fur Coat"
 	},
+	//Triples flying move power but doubles their costs
+	"Gale Wings": {
+		id: "Gale Wings"
+	},
 	//You heal for energy that you don't gain due to being full
 	"Gluttony": {
 		id: "Gluttony"
@@ -499,6 +503,10 @@ const pokemonAbilityData = {
 	//Halves fire damage taken, doubles water damage dealt, prevents being burned
 	"Water Bubble": {
 		id: "Water Bubble"
+	},
+	//Prevents being burned
+	"Water Veil": {
+		id: "Water Veil"
 	},
 	//Stats change on being hit with Physical moves
 	"Weak Armor": {

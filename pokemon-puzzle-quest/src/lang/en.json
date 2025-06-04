@@ -1455,6 +1455,14 @@
 			"name": "Chansey",
 			"pokedex-entry": "Its eggs are renowned for their curatiive properties and delicious taste. Although, if its trainer tries to sell its eggs, Chansey usually get agitated and stop letting its trainer take them."
 		},
+		"Goldeen": {
+			"name": "Goldeen",
+			"pokedex-entry": "Hold on, I need to point something out: Moon’s Pokédex entry for Goldeen calls trainers who train Goldeen and nothing but Goldeen ‘strange.’ No! They have a little guy they like and they’re sticking with it! Those guys are playing Pokémon better than the rest of us."
+		},
+		"Seaking": {
+			"name": "Seaking",
+			"pokedex-entry": "Seaking trainers build ponds for them to swim around in, but wild Seaking make their homes in rivers, and swim upstream very quickly. It’s not unheard of for people on a boat to hear a loud bump and suddenly have a Seaking horn-shaped hole in it."
+		},
 		"Tauros": {
 			"name": "Tauros",
 			"pokedex-entry": "Pokémon ranch owners will tell you that Tauros is a “perfectly kind and polite” Pokémon once it's well trained. They’ll say that other trainers just “don’t understand” how to take proper care of a Tauros. Maybe they’re right. I still don’t believe them."
@@ -1667,6 +1675,10 @@
 			"name": "Vullaby",
 			"pokedex-entry": "The bones worn by Vullaby are the subject of intense research. No known Pokémon has bones of the exact shape worn by Vullaby, and nobody has ever witnessed the moment a Vullaby finds its shell. Some researchers theorize that the shell is actually a sort of exoskeleton, believed to be shed from the Pokémon while it’s still in its egg."
 		},
+		"Fletchling": {
+			"name": "Fletchling",
+			"pokedex-entry": "When it’s very happy, the markings on its eyes glow as the heat of its body rises. This behavior is often observed the day it learns to fly."
+		},
 		"Pancham": {
 			"name": "Pancham",
 			"pokedex-entry": "It thinks that the leaf in its mouth makes it look cooler and more intimidating. Videos of people pretending to be scared off by Pancham, only to record its happy face at the end, are quite popular online."
@@ -1863,6 +1875,11 @@
 			"name": "Acid Spray",
 			"description": "Deals damage. Then, applies the Acidic status effect to 3 random tiles. Tiles with Acidic remove the tile beneath them at the end of each turn, and the trainer who created the status gains energy based on the tiles removed.",
 			"shortDescription": "Deals light damage and corrodes tiles"
+		},
+		"Acrobatics": {
+			"name": "Acrobatics",
+			"description": "Deals damage. If the average fullness of the user's energy bars is less than 10%, this move deals double damage. An energy bar's fullness is the ratio of how much energy is in the bar to how much it can hold.",
+			"shortDescription": "Deals double damage at low energy"
 		},
 		"Aerial Ace": {
 			"name": "Aerial Ace",
@@ -3229,6 +3246,11 @@
 			"shortDescription": "Doubles Defense at all times",
 			"longDescription": "This Pokémon's Defense stat is doubled."
 		},
+		"Gale Wings": {
+			"name": "Gale Wings",
+			"shortDescription": "Flying moves have triple the power but double the cost",
+			"longDescription": "Flying-type moves that this Pokémon uses have their power tripled, but their costs are doubled."
+		},
 		"Gluttony": {
 			"name": "Gluttony",
 			"shortDescription": "Heals when it's too full to gain energy",
@@ -3678,6 +3700,11 @@
 			"name": "Water Bubble",
 			"shortDescription": "Takes half damage from Fire moves, deals double damage with Water moves, can’t be burned",
 			"longDescription": "Damage that this Pokémon takes from Fire moves is halved and damage it deals with Water moves is doubled. It’s also immune to being burned."
+		},
+		"Water Veil": {
+			"name": "Water Veil",
+			"shortDescription": "The opponent’s moves can’t burn tiles",
+			"longDescription": "Effects of moves the opponent uses which give the Burned status to tiles are prevented."
 		},
 		"Weak Armor": {
 			"name": "Weak Armor",

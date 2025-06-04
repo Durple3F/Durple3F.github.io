@@ -2417,6 +2417,111 @@ const pokemonData = {
 			{ name: "Fling", unlock: { type: "level", amount: 20 } },
 		]
 	},
+	"Goldeen": {
+		name: "Goldeen",
+		number: "118",
+		weight: {
+			pounds: 33.1,
+			kilograms: 15.0
+		},
+		imageFacing: "right",
+		imageSources: {
+			"large": "src/img/pokemon/0118Goldeen.png",
+			"largeShiny": "src/img/shiny-pokemon/118-Goldeen.png",
+			"home": "src/img/tiny-pokemon/Goldeen.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/goldeen.mp3"
+		},
+		types: ["Water"],
+		tags: [],
+		abilities: ["Swift Swim", "Water Veil"],
+		hiddenAbilities: ["Lightning Rod"],
+		stats: {
+			hp: 45,
+			attack: 67,
+			defense: 60,
+			specialAttack: 35,
+			specialDefense: 50,
+			speed: 63
+		},
+		expYield: 64,
+		evYield: {
+			hp: 0,
+			attack: 1,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			blue: 5
+		},
+		evolutions: [
+			{ name: "Seaking", unlock: { type: "level", amount: 33 } }
+		],
+		learnset: [
+			{ name: "Peck", unlock: { type: "level", amount: 1 } },
+			{ name: "Tail Whip", unlock: { type: "level", amount: 1 } },
+			{ name: "Supersonic", unlock: { type: "level", amount: 5 } },
+			{ name: "Water Pulse", unlock: { type: "level", amount: 10 } },
+			{ name: "Horn Attack", unlock: { type: "level", amount: 15 } },
+			{ name: "Agility", unlock: { type: "level", amount: 20 } },
+			{ name: "Aqua Ring", unlock: { type: "level", amount: 25 } },
+			{ name: "Flail", unlock: { type: "level", amount: 30 } },
+		]
+	},
+	"Seaking": {
+		name: "Seaking",
+		number: "119",
+		weight: {
+			pounds: 86.0,
+			kilograms: 39.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0119Seaking.png",
+			"largeShiny": "src/img/shiny-pokemon/119-Seaking.png",
+			"home": "src/img/tiny-pokemon/Seaking.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/seaking.mp3"
+		},
+		types: ["Water"],
+		tags: [],
+		abilities: ["Swift Swim", "Water Veil"],
+		hiddenAbilities: ["Lightning Rod"],
+		stats: {
+			hp: 80,
+			attack: 92,
+			defense: 65,
+			specialAttack: 65,
+			specialDefense: 80,
+			speed: 68
+		},
+		expYield: 158,
+		evYield: {
+			hp: 0,
+			attack: 2,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			blue: 9
+		},
+		learnset: [
+			{ name: "Peck", unlock: { type: "level", amount: 1 } },
+			{ name: "Tail Whip", unlock: { type: "level", amount: 1 } },
+			{ name: "Supersonic", unlock: { type: "level", amount: 1 } },
+			{ name: "Water Pulse", unlock: { type: "level", amount: 1 } },
+			{ name: "Horn Attack", unlock: { type: "level", amount: 15 } },
+			{ name: "Agility", unlock: { type: "level", amount: 20 } },
+			{ name: "Aqua Ring", unlock: { type: "level", amount: 25 } },
+			{ name: "Flail", unlock: { type: "level", amount: 30 } },
+		]
+	},
 	"Tauros": {
 		name: "Tauros",
 		number: "128",
@@ -5373,6 +5478,60 @@ const pokemonData = {
 			{ name: "Whirlwind", unlock: { type: "level", amount: 36 } },
 		]
 	},
+	"Fletchling": {
+		name: "Fletchling",
+		number: "661",
+		weight: {
+			pounds: 3.7,
+			kilograms: 1.7
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0661Fletchling.png",
+			"largeShiny": "src/img/shiny-pokemon/661-Fletchling.png",
+			"home": "src/img/tiny-pokemon/Fletchling.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/seaking.mp3"
+		},
+		types: ["Normal", "Flying"],
+		tags: [],
+		abilities: ["Big Pecks"],
+		hiddenAbilities: ["Gale Wings"],
+		stats: {
+			hp: 45,
+			attack: 50,
+			defense: 43,
+			specialAttack: 40,
+			specialDefense: 38,
+			speed: 62
+		},
+		expYield: 56,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 1
+		},
+		energyMastery: {
+			red: 2,
+			yellow: 1,
+			blue: 2,
+		},
+		learnset: [
+			{ name: "Peck", unlock: { type: "level", amount: 1 } },
+			{ name: "Growl", unlock: { type: "level", amount: 1 } },
+			{ name: "Quick Attack", unlock: { type: "level", amount: 5 } },
+			{ name: "Ember", unlock: { type: "level", amount: 10 } },
+			{ name: "Flail", unlock: { type: "level", amount: 15 } },
+			{ name: "Acrobatics", unlock: { type: "level", amount: 20 } },
+			{ name: "Agility", unlock: { type: "level", amount: 25 } },
+			{ name: "Aerial Ace", unlock: { type: "level", amount: 30 } },
+			{ name: "Tailwind", unlock: { type: "level", amount: 35 } },
+		]
+	},
 	"Pancham": {
 		name: "Pancham",
 		number: "674",
@@ -5927,7 +6086,7 @@ const pokemonData = {
 			{ name: "Sing", unlock: { type: "level", amount: 20 } },
 			{ name: "Bubble Beam", unlock: { type: "level", amount: 25 } },
 			{ name: "Encore", unlock: { type: "level", amount: 30 } },
-			{ name: "Belch", unlock: { type: "level", amount: 1 } },
+			{ name: "Acrobatics", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {

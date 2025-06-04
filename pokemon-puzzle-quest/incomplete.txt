@@ -36,6 +36,8 @@ Incomplete move lists:
 	Drowzee (lv 21)
 	Hypno (lv 21)
 	Chansey (lv 20)
+	Goldeen (lv 30)
+	Seaking (lv 30)
 	Tauros (lv 20)
 	Ledyba (lv 22)
 	Ledian (lv 33)
@@ -81,6 +83,7 @@ Incomplete move lists:
 	Zorua (lv 20)
 	Rufflet (lv 30)
 	Vullaby (lv 36)
+	Fletchling (lv 20)
 	Pancham (lv 20)
 	Pangoro (lv 0)
 	Carbink (lv 20)
@@ -141,6 +144,7 @@ Missing Evolutions:
 	Zorua
 	Rufflet
 	Vullaby
+	Fletchling
 	Stufful
 	Dartrix
 	Torracat

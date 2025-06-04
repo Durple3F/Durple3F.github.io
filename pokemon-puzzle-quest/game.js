@@ -1707,16 +1707,22 @@ class Round {
 				let isEnemy = status.sourceTrainer !== trainer
 				let statusName = status.name
 				if (isEnemy && statusName === "Burn") {
-					let damage = Math.ceil(activePokemon.maxhp / 32)
-					this.dealDamage({
-						from: status.sourcePokemon,
-						fromTrainer: status.sourceTrainer,
-						move: status.sourceMove,
-						to: activePokemon,
-						toTrainer: trainer,
-						damage: damage,
-						fixed: true
-					})
+					let prevented = false
+					if (activePokemon.hasAbility("Water Bubble") || activePokemon.hasAbility("Water Veil")){
+						prevented = true
+					}
+					if (!prevented){
+						let damage = Math.ceil(activePokemon.maxhp / 32)
+						this.dealDamage({
+							from: status.sourcePokemon,
+							fromTrainer: status.sourceTrainer,
+							move: status.sourceMove,
+							to: activePokemon,
+							toTrainer: trainer,
+							damage: damage,
+							fixed: true
+						})
+					}
 				} else if (statusName === "Acidic"){
 					acidTiles.push(tile)
 				}
@@ -3339,6 +3345,12 @@ class Round {
 				energyCost[color] += 1
 			}
 		}
+		//Gale Wings doubles Flying moves' costs, but also triples their power
+		if (type === "Flying" && pokemon.hasAbility("Gale Wings")) {
+			for (let color in energyCost) {
+				energyCost[color] = energyCost[color] * 2
+			}
+		}
 
 		//No part of the energy cost may be below zero.
 		//And they must all be whole numbers.
@@ -3482,6 +3494,10 @@ class Round {
 		}
 		if (category === "Physical" && otherPokemon.hasStatus("reflect") && !pokemon.hasAbility("Infiltrator")){
 			power *= 0.5
+		}
+		//Gale Wings increases the power of Flying moves, but also their costs
+		if (effectiveType === "Flying" && pokemon.hasAbility("Gale Wings")){
+			power *= 3
 		}
 		//There's a bunch that are only active at low HP
 		if (pokemon.hp / pokemon.maxhp <= 1 / 3) {

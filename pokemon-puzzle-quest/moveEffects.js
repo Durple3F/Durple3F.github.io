@@ -921,6 +921,21 @@ const pokemonMoveEffects = {
 			resolve(result)
 		}
 	},
+	"get-energy-average-fullness": {
+		update: false,
+		hasTarget: true,
+		targetType: "pokemon",
+		targetDefault: "user",
+		execute: (resolve, effect, params, game, options) => {
+			let target = options.target
+			let result = 0
+
+			let fullnesses = colors.map(color => target.energy[color] / target.maxEnergy[color])
+			result = fullnesses.reduce((acc, v) => v + acc, 0) / fullnesses.length
+			console.log(result)
+			resolve(result)
+		}
+	},
 	"multiply-energy": {
 		update: false,
 		execute: (resolve, effect, params, game, options) => {
@@ -1343,12 +1358,28 @@ const pokemonMoveEffects = {
 			} else {
 				console.warn("You never handled", selection)
 			}
+			let pokemon = moveUseObj.pokemon
+			let trainer = moveUseObj.trainer
+			let otherTrainer = game.trainers.find(t => t !== trainer)
+			let otherPokemon = otherTrainer.activePokemon
 			chosenTiles.forEach(tile => {
 				let color = moveUseObj.trainer === game.trainers[0] ? "friendly" : "enemy"
 				let trainer = moveUseObj.trainer
 				let pokemon = moveUseObj.pokemon
 				let move = moveUseObj.move
-				tile.addStatusEffect(status, trainer, pokemon, move, color)
+
+				let prevented = false
+				//Pokemon with Water Bubble or Water Veil can't be burned
+				if (
+					status.name === "Burn" &&
+					(otherPokemon.hasAbility("Water Bubble") || otherPokemon.hasAbility("Water Veil"))
+				){
+					prevented = true
+				}
+
+				if (!prevented){
+					tile.addStatusEffect(status, trainer, pokemon, move, color)
+				}
 			})
 			resolve()
 		}

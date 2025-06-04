@@ -375,7 +375,7 @@ class Pokemon{
 			prevented = true
 		}
 		//Pokemon with Water Bubble can't be burned
-		if (status.name === "burn" && pokemon.hasAbility("Water Bubble")){
+		if (status.name === "burn" && (pokemon.hasAbility("Water Bubble") || pokemon.hasAbility("Water Veil"))){
 			prevented = true
 		}
 		//Poison and Steel type pokemon can't be poisoned
