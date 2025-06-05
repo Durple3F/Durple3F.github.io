@@ -133,6 +133,14 @@ const NPCTrainerData = {
 		},
 		textStyle: {}
 	},
+	"Lana": {
+		name: "Lana",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/lana.png"
+		},
+		textStyle: {}
+	},
 	"Kahili": {
 		name: "Kahili",
 		type: "trainer",
@@ -197,6 +205,13 @@ const NPCTrainerData = {
 		type: "trainer",
 		imageSources: {
 			trainer: "src/img/trainers/bellhop.png"
+		}
+	},
+	"Fisherman-Gen7": {
+		name: "Fisherman",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/fisherman-gen7.png"
 		}
 	},
 	"Gentleman-Gen7": {

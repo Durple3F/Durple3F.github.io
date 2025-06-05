@@ -84,6 +84,7 @@ Incomplete move lists:
 	Rufflet (lv 30)
 	Vullaby (lv 36)
 	Fletchling (lv 20)
+	Litleo (lv 23)
 	Pancham (lv 20)
 	Pangoro (lv 0)
 	Carbink (lv 20)
@@ -145,6 +146,7 @@ Missing Evolutions:
 	Rufflet
 	Vullaby
 	Fletchling
+	Litleo
 	Stufful
 	Dartrix
 	Torracat

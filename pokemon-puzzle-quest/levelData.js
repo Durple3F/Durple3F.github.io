@@ -2649,7 +2649,7 @@ const levelData = [
 		]
 	},
 	
-	//5-1: 
+	//5-1: Psyduck, Paras, Morelull, Poliwag, Dewpider, Surskit | Mikiko
 	{
 		id: "Route 5-1",
 		category: "Route 5",
@@ -2657,7 +2657,7 @@ const levelData = [
 		music: "SM Wild Pokemon Battle",
 		icon: "1",
 		images: {
-			"route-bg-forest-path-2": "src/img/bg/forest path 2.jpg",
+			"route-bg-brooklet-hill-1": "src/img/bg/brooklet hill 1.jpg",
 		},
 		recommendedLevels: {
 			"normal": (pokemonList) => {
@@ -2675,13 +2675,21 @@ const levelData = [
 				targetPokemon: 4,
 				canPickDuplicates: true,
 				possiblePokemon: [
-					{ id: "Wishiwashi", levelMin: 20, levelMax: 20, weight: 3 },
+					{ id: "Psyduck", levelMin: 14, levelMax: 17, weight: 3 },
+					{ id: "Paras", levelMin: 14, levelMax: 17, weight: 3 },
+					{ id: "Morelull", levelMin: 14, levelMax: 17, weight: 3 },
+					{ id: "Poliwag", levelMin: 14, levelMax: 17, weight: 3 },
+					{ id: "Dewpider", levelMin: 14, levelMax: 17, weight: 3 },
+					{ id: "Surskit", levelMin: 14, levelMax: 17, weight: 3 },
+					{ id: "Wingull", levelMin: 14, levelMax: 17, weight: 1 },
+					{ id: "Lillipup", levelMin: 14, levelMax: 17, weight: 1 },
 				]
 			},
 		],
 		effects: [
-			// { type: "change-background-image", name: "route-bg-forest-path-2" },
-			{ type: "fight", trainer: 0 },
+			// { type: "change-background-image", name: "route-bg-brooklet-hill-1" },
+			// { type: "fight", trainer: 0 },
+			{ type: "dialogue", source: "route-5-1-dialogue" },
 		]
 	},
 ]

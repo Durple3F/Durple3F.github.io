@@ -193,6 +193,7 @@ function getPokemonSaveObj(pokemon){
 	//This object contains only the important stuff
 	let obj = {}
 	obj.uuid = pokemon.uuid
+	obj.creationTime = pokemon.creationTime
 	obj.owner = pokemon.owner
 	if (pokemon.owner !== pokemon.originalOwner){
 		obj.originalOwner = pokemon.originalOwner

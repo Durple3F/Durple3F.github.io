@@ -1,6 +1,7 @@
 class Pokemon{
 	constructor(name, pokemonName, options={}){
 		this.uuid = options?.uuid ?? window.crypto.randomUUID()
+		this.creationTime = options?.creationTime ?? Date.now()
 		this.owner = options?.owner ?? playerSaveId
 		this.originalOwner = options?.originalOwner ?? this.owner
 		this.pokemonId = pokemonName ?? options.id
@@ -15,7 +16,7 @@ class Pokemon{
 		let defaultName = getLocaleString("name", lang, ["pokemon", this.pokemonId])
 		this.name = name ?? defaultName ?? this.data.name
 		this.pokemonName = this.data.name
-		this.form = options?.form ?? this.data.defaultForm ?? null
+		this.form = options?.form ?? getDefaultFormData(this.data) ?? null
 		this.types = []
 		this.data.types.forEach(type => this.types.push(type))
 		this.level = options?.level ?? 1
@@ -954,7 +955,7 @@ class Pokemon{
 		}
 
 		if (this.data.returnToDefaultFormAfterBattle){
-			this.form = this.data.defaultForm
+			this.form = getDefaultFormData(this.data)
 		}
 	}
 
@@ -1031,7 +1032,7 @@ class Pokemon{
 	}
 	getStats(){
 		if (this.data.hasForms){
-			let formInfo = this.data.forms[this.form] ?? this.data.forms[this.data.defaultForm]
+			let formInfo = this.data.forms[this.form] ?? getDefaultFormData(this.data)
 			if ("stats" in formInfo){
 				return formInfo.stats
 			}
@@ -1040,7 +1041,7 @@ class Pokemon{
 	}
 	getWeight(){
 		if (this.data.hasForms){
-			let formInfo = this.data.forms[this.form] ?? this.data.forms[this.data.defaultForm]
+			let formInfo = this.data.forms[this.form] ?? getDefaultFormData(this.data)
 			if ("weight" in formInfo){
 				return formInfo.weight
 			}
@@ -1049,7 +1050,7 @@ class Pokemon{
 	}
 	getImageFacing(){
 		if (this.data.hasForms){
-			let formInfo = this.data.forms[this.form] ?? this.data.forms[this.data.defaultForm]
+			let formInfo = this.data.forms[this.form] ?? getDefaultFormData(this.data)
 			if ("imageFacing" in formInfo){
 				return formInfo.imageFacing
 			}
@@ -1058,7 +1059,7 @@ class Pokemon{
 	}
 	getPokedexKey(){
 		if (this.data.hasForms){
-			let formInfo = this.data.forms[this.form] ?? this.data.forms[this.data.defaultForm]
+			let formInfo = this.data.forms[this.form] ?? getDefaultFormData(this.data)
 			if ("pokedexKey" in formInfo){
 				return formInfo.pokedexKey
 			}

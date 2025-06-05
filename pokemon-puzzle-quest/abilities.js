@@ -325,6 +325,10 @@ const pokemonAbilityData = {
 	"Regenerator": {
 		id: "Regenerator"
 	},
+	//Increases move power while both pokemon are > 75% hp
+	"Rivalry": {
+		id: "Rivalry"
+	},
 	//Prevents recoil damage
 	"Rock Head": {
 		id: "Rock Head"

@@ -5532,6 +5532,59 @@ const pokemonData = {
 			{ name: "Tailwind", unlock: { type: "level", amount: 35 } },
 		]
 	},
+	"Litleo": {
+		name: "Litleo",
+		number: "667",
+		weight: {
+			pounds: 29.8,
+			kilograms: 13.5
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0667Litleo.png",
+			"largeShiny": "src/img/shiny-pokemon/667-Litleo.png",
+			"home": "src/img/tiny-pokemon/Litleo.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/litleo.mp3"
+		},
+		types: ["Fire", "Normal"],
+		tags: [],
+		abilities: ["Rivalry", "Unnerve"],
+		hiddenAbilities: ["Moxie"],
+		stats: {
+			hp: 62,
+			attack: 50,
+			defense: 58,
+			specialAttack: 73,
+			specialDefense: 54,
+			speed: 72
+		},
+		expYield: 74,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 1,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			red: 3,
+			orange: 1,
+			yellow: 1,
+		},
+		learnset: [
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Leer", unlock: { type: "level", amount: 1 } },
+			{ name: "Ember", unlock: { type: "level", amount: 5 } },
+			{ name: "Work Up", unlock: { type: "level", amount: 8 } },
+			{ name: "Headbutt", unlock: { type: "level", amount: 11 } },
+			{ name: "Noble Roar", unlock: { type: "level", amount: 15 } },
+			{ name: "Take Down", unlock: { type: "level", amount: 20 } },
+			{ name: "Fire Fang", unlock: { type: "level", amount: 23 } },
+		]
+	},
 	"Pancham": {
 		name: "Pancham",
 		number: "674",
@@ -7952,4 +8005,8 @@ for (let name in pokemonData) {
 	if (same.length !== 1){
 		console.warn("These pokemon share a number", same, pokemon)
 	}
+}
+
+function getDefaultFormData(pData){
+	return pData.forms[pData.defaultForm]
 }

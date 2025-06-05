@@ -3499,6 +3499,10 @@ class Round {
 		if (effectiveType === "Flying" && pokemon.hasAbility("Gale Wings")){
 			power *= 3
 		}
+		//Rivalry increases power while both pokemon are near full health
+		if (pokemon.hp / pokemon.maxhp > 0.75 && otherPokemon.hp / otherPokemon.maxhp > 0.75 && pokemon.hasAbility("Rivalry")){
+			power *= 1.5
+		}
 		//There's a bunch that are only active at low HP
 		if (pokemon.hp / pokemon.maxhp <= 1 / 3) {
 			if (effectiveType === "Fire" && pokemon.hasAbility("Blaze")) {

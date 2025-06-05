@@ -978,8 +978,8 @@ function startScene(name, options={}) {
 					let pData = pokemonList[i]
 					let fitsFilters = true
 					if (filters.name){
-						let name = getLocaleString("name", lang, ["pokemon", pData.id])
-						if (!name.includes(filters.name)){
+						let name = getLocaleString("name", lang, ["pokemon", pData.id]).toLowerCase()
+						if (!name.includes(filters.name.toLowerCase())){
 							fitsFilters = false
 						}
 					}

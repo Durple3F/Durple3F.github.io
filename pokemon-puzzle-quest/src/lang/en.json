@@ -1218,7 +1218,7 @@
 				{ "type": "get-speaker", "name": "Hau", "class": "Hau", "position": "left", "facing": "right" },
 				{ "type": "text", "speaker": "Gladion", "text": "Tch. You’re wasting my time. If you’re ^^$@start-italics|@$this$@end-italics|@$ weak, ^^you may as well just quit pretending you’re a ^^trainer^^." },
 				{ "type": "text", "speaker": "Hau", "text": "Hey! I’m $@font-size:1.2|@$NOT$@font-size:1|@$ pretending! I just... ^^forgot to heal my Pokémon before this!" },
-				{ "type": "text", "speaker": "Hau", "text": "I was kinda ^^$@start-italics|@$expecting$@end-italics|@$ to heal them at the Pokémon center just up ahead!" },
+				{ "type": "text", "speaker": "Hau", "text": "I was kinda ^^$@start-italics|@$expecting$@end-italics|@$ to heal them at the Pokémon Center just up ahead!" },
 				{ "type": "text", "speaker": "Gladion", "text": "^^$@start-italics|@$Excuses!$@end-italics|@$$@wait-4|@$ Get out of here, kid." },
 				{ "type": "load-player-name" },
 				{ "type": "text", "speaker": "Hau", "text": "Oh, hey, ^^%c%! You’re just in time. This ^^$@start-italics|@$jerk$@end-italics|@$ won’t let^^ me past to Brooklet Hill!", "values": [-1] },
@@ -1262,11 +1262,50 @@
 				}},
 				{ "type": "go-out-from-onscreen", "speaker": "Team Skull Grunt E", "easing": "linear", "direction": "left", "walkAnimation": "skull", "additionalLeft": -0.24, "duration": 9000, "waitDuration": 100 },
 				{ "type": "go-out-from-onscreen", "speaker": "Team Skull Grunt F", "easing": "linear", "direction": "left", "walkAnimation": "skull", "additionalLeft": 0, "duration": 9000, "waitDuration": 100 },
-				{ "type": "go-out-from-onscreen", "speaker": "Gladion", "direction": "left", "additionalLeft": -0.12, "duration": 12000, "waitDuration": 9000 },
+				{ "type": "go-out-from-onscreen", "speaker": "Gladion", "direction": "left", "additionalLeft": 0.2, "duration": 7000, "waitDuration": 7000 },
+				{ "type": "transform-speaker", "speaker": "Gladion", "transform": "rotate(-6deg)", "duration": 600, "waitDuration": 1000 },
+				{ "type": "transform-speaker", "speaker": "Gladion", "transform": "rotate(0deg)", "duration": 400, "waitDuration": 400 },
+				{ "type": "go-out-from-onscreen", "speaker": "Gladion", "direction": "left", "additionalLeft": -0.12, "duration": 2000, "waitDuration": 2000 },
 				{ "type": "change-music", "music": "Route 201 (Day)" },
 				{ "type": "load-player-name" },
 				{ "type": "text", "speaker": "Hau", "text": "Thanks for the help, %c%! You really saved my bacon, there.", "values": [-1] },
 				{ "type": "text", "speaker": "Hau", "text": "I guess I’ve really gotta work on making my Pokémon stronger. I’ll be training all day for the next trial at Brooklet Hill!" }
+			]
+		},
+		"route-5-1-dialogue": {
+			"events": [
+				{ "type": "transform-speaker", "speaker": "Lana", "transform": "rotate(5deg)", "duration": 600, "waitDuration": 600, "then": "wait-before-lower" },
+				{ "type": "transform-speaker", "speaker": "Lana", "transform": "translateY(-2em) rotate(4deg)", "duration": 500, "waitDuration": 500, "then": "lower" },
+				{ "type": "transform-speaker", "speaker": "Mikiko", "transform": "rotate(-5deg)", "duration": 300, "waitDuration": 500, "then": "mikiko-reset" },
+				{ "type": "transform-speaker", "speaker": "Lana", "transform": "rotate(-4deg)", "duration": 500, "waitDuration": 500 },
+				{ "type": "transform-speaker", "speaker": "Lana", "transform": "", "duration": 500, "waitDuration": 500 },
+				{ "type": "go-out-from-onscreen", "speaker": "Lana", "direction": "left", "duration": 7000, "waitDuration": 0 }
+			],
+			"callbacks": {
+				"lower": { "type": "transform-speaker", "speaker": "Lana", "transform": "", "duration": 500 },
+				"wait-before-lower": { "type": "wait", "waitDuration": 300, "then": "lower" },
+				"mikiko-reset": { "type": "transform-speaker", "speaker": "Mikiko", "transform": "", "duration": 300 }
+			},
+			"effects": [
+				{ "type": "get-speaker", "name": "Lana", "class": "Lana" },
+				{ "type": "get-speaker", "name": "Mikiko", "class": "Backpacker-Gen7-F", "position": "left" },
+				{ "type": "style-speaker", "speaker": "Mikiko", "css": {
+					"opacity": "0"
+				}},
+				{ "type": "text", "speaker": "Lana", "text": "^^Hi! Welcome to Brooklet Hill, home of the finest fishing spots in Alola!" },
+				{ "type": "text", "speaker": "Lana", "text": "I’m Lana, a trial captain! That $@blue|little bracelet@$ tells me you might be interested in that, right?" },
+				{ "type": "text", "speaker": "Lana", "text": "Oh, ^^yay! You actually came at a great time, we’re having a bit of an issue with—" },
+				{ "type": "style-speaker", "speaker": "Mikiko", "css": {
+					"opacity": "1"
+				}},
+				{ "type": "come-in-from-offscreen", "speaker": "Mikiko", "direction": "right", "duration": 800, "waitDuration": 600 },
+				{ "type": "text", "speaker": "Mikiko", "text": "Hey guys, I just came from up ^^that way, there’s some weirdos acting pretty... I dunno, defensive?" },
+				{ "type": "text", "speaker": "Lana", "text": "$@font-size:0.9|@$Oh, uh... how so?$@font-size:1|@$" },
+				{ "type": "text", "speaker": "Mikiko", "text": "Like, they’re $@start-italics|@$intense$@end-italics|@$. Just wanted to warn you if you’re headed up there." },
+				{ "type": "text", "speaker": "Lana", "text": "$@font-size:0.9|@$Oh,^^ those guys are back again...$@font-size:1|@$^^" },
+				{ "type": "text", "speaker": "Mikiko", "text": "So yeah, I’m totally headed to the Pokémon Center to fix up my Pokémon." },
+				{ "type": "text", "speaker": "Mikiko", "text": "Before I go though, wanna have a... $@start-italics|@$friendlier$@end-italics|@$ battle? My Pokémon could use a confidence boost." },
+				{ "type": "text", "speaker": "Lana", "text": "$@font-size:0.9|@$I’ll go^^$@wait-5|@$ try and deal with those guys. Uh, consider this part of your trial, I guess!$@font-size:1|@$" }
 			]
 		}
 	},
@@ -1678,6 +1717,10 @@
 		"Fletchling": {
 			"name": "Fletchling",
 			"pokedex-entry": "When it’s very happy, the markings on its eyes glow as the heat of its body rises. This behavior is often observed the day it learns to fly."
+		},
+		"Litleo": {
+			"name": "Litleo",
+			"pokedex-entry": "It loves swinging its paws at anything dangling in front of it. Sometimes, that’s a Pyroar’s tail, and it gets burned. Litleo trainers wanting to play with their Pokémon use something durable, like a metal chain."
 		},
 		"Pancham": {
 			"name": "Pancham",
@@ -2538,6 +2581,11 @@
 			"name": "Night Slash",
 			"description": "Deals damage. Then, all tiles along the diagonal line from the top of the user's side of the board to the bottom of the other side are converted into Dark tiles. Dark tiles are worth 1 purple energy AND 1 red energy each.",
 			"shortDescription": "Turns a diagonal into Dark tiles"
+		},
+		"Noble Roar": {
+			"name": "Noble Roar",
+			"description": "Lowers the opponent's Attack stat by 1 stage and its Special Attack stat by 1 stage.",
+			"shortDescription": "Lowers enemy Attack and Defense"
 		},
 		"Nuzzle": {
 			"name": "Nuzzle",
@@ -3486,6 +3534,11 @@
 			"shortDescription": "On switching out, heal based on how long it was active",
 			"longDescription": "Whenever this Pokémon's user switches it out, it heals HP based on how many turns it was active."
 		},
+		"Rivalry": {
+			"name": "Rivalry",
+			"shortDescription": "Increases move power by 50% while both Pokémon are above 75% HP.",
+			"longDescription": "As long as both Pokémon are both above 75% HP, this Pokémon’s moves have their power increased by 50%."
+		},
 		"Rock Head": {
 			"name": "Rock Head",
 			"shortDescription": "This Pokémon doesn't take recoil",
@@ -3997,8 +4050,8 @@
 			"description": "As you leave the forest, you find Hau being accosted by a stranger."
 		},
 		"Route 5-1": {
-			"name": "Testing testing 1 2",
-			"description": "Shoo"
+			"name": "Route 5-1",
+			"description": "As you step into Brooklet Hill, you start looking for the next trial captain, as well as some new Pokémon."
 		}
 	},
 	"route-categories": {
@@ -4015,7 +4068,7 @@
 			"name": "Route 4"
 		},
 		"Route 5": {
-			"name": "Test"
+			"name": "Route 5"
 		}
 	},
 	"evolution-requirements": {

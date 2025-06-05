@@ -5043,6 +5043,43 @@ const pokemonMoveData = {
 			{ type: "change-tile-type", selection: "group", which: -1, targetType: "black" },
 		],
 	},
+	//Lowers enemy attack 1 and special attack 1
+	"Noble Roar": {
+		name: "Noble Roar",
+		type: "Normal",
+		category: "Status",
+		strategy: "buff-user",
+		pp: 30,
+		power: null,
+		accuracy: 100,
+		rechargeTurns: 4,
+		energy: {
+			purple: 4,
+			blue: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Noble Roar.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{
+				type: "apply-debuff", target: "opponent", debuff: {
+					type: "stat",
+					stat: "attack",
+					class: "debuff",
+					amount: 1
+				}
+			},
+			{
+				type: "apply-debuff", target: "opponent", debuff: {
+					type: "stat",
+					stat: "specialAttack",
+					class: "debuff",
+					amount: -1
+				}
+			},
+		],
+	},
 	//Paralyzes the opponent
 	"Nuzzle": {
 		name: "Nuzzle",
