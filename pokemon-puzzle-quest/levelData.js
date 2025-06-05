@@ -2673,7 +2673,7 @@ const levelData = [
 			{
 				isWild: true,
 				targetPokemon: 4,
-				canPickDuplicates: true,
+				canPickDuplicates: false,
 				possiblePokemon: [
 					{ id: "Psyduck", levelMin: 14, levelMax: 17, weight: 3 },
 					{ id: "Paras", levelMin: 14, levelMax: 17, weight: 3 },
@@ -2685,11 +2685,88 @@ const levelData = [
 					{ id: "Lillipup", levelMin: 14, levelMax: 17, weight: 1 },
 				]
 			},
+			//Easy
+			{
+				name: "Mikiko",
+				class: "Backpacker-Gen7-F",
+				pokemon: [
+					{
+						id: "Fletchling",
+						name: "Chitter",
+						level: 17,
+						ability: "Gale Wings",
+						activeMoves: ["Acrobatics", "Flail", "Growl", "Ember"],
+						evs: { hp: 30, attack: 35, defense: 15, specialAttack: 15, specialDefense: 30, speed: 15 },
+					},
+					{
+						id: "Litleo",
+						name: "Pepper",
+						level: 17,
+						ability: "Rattled",
+						activeMoves: ["Noble Roar", "Headbutt", "Work Up", "Tackle"],
+						evs: { hp: 30, attack: 35, defense: 25, specialAttack: 15, specialDefense: 15, speed: 20 },
+					},
+					{
+						id: "Espurr",
+						level: 17,
+						ability: "Keen Eye",
+						activeMoves: ["Confusion", "Disarming Voice", "Reflect", "Fake Tears"],
+						evs: { hp: 30, attack: 15, defense: 15, specialAttack: 35, specialDefense: 30, speed: 20 },
+					},
+				]
+			},
+			//Hard
+			{
+				name: "Mikiko",
+				class: "Backpacker-Gen7-F",
+				pokemon: [
+					{
+						id: "Fletchling",
+						name: "Chitter",
+						level: 17,
+						ability: "Gale Wings",
+						activeMoves: ["Acrobatics", "Flail", "Growl", "Ember"],
+						nature: "adamant",
+						ivs: { hp: 15, attack: 30, defense: 20, specialAttack: 15, specialDefense: 10, speed: 25 },
+						evs: { hp: 60, attack: 70, defense: 35, specialAttack: 30, specialDefense: 60, speed: 30 },
+					},
+					{
+						id: "Litleo",
+						name: "Pepper",
+						level: 17,
+						ability: "Rattled",
+						activeMoves: ["Noble Roar", "Headbutt", "Work Up", "Tackle"],
+						nature: "adamant",
+						ivs: { hp: 15, attack: 30, defense: 20, specialAttack: 15, specialDefense: 10, speed: 25 },
+						evs: { hp: 60, attack: 70, defense: 50, specialAttack: 30, specialDefense: 35, speed: 40 },
+					},
+					{
+						id: "Espurr",
+						level: 17,
+						ability: "Keen Eye",
+						activeMoves: ["Confusion", "Disarming Voice", "Reflect", "Fake Tears"],
+						nature: "modest",
+						ivs: { hp: 20, attack: 10, defense: 25, specialAttack: 30, specialDefense: 15, speed: 15 },
+						evs: { hp: 60, attack: 30, defense: 35, specialAttack: 70, specialDefense: 60, speed: 40 },
+					},
+				]
+			},
 		],
 		effects: [
-			// { type: "change-background-image", name: "route-bg-brooklet-hill-1" },
-			// { type: "fight", trainer: 0 },
+			{ type: "change-background-image", name: "route-bg-brooklet-hill-1" },
+			{ type: "fight", trainer: 0 },
 			{ type: "dialogue", source: "route-5-1-dialogue" },
+			{ type: "change-music", music: "SM Trainer Battle" },
+			{ type: "load-setting", key: "hardMode" },
+			{ type: "load-value", value: true },
+			{ type: "jump-if-equal", jumpTo: "hardMode" },
+			{ type: "jump", jumpTo: "easyMode" },
+			{ type: "fight", trainer: 1, label: "easyMode" },
+			{ type: "jump", jumpTo: "win-check" },
+			{ type: "fight", trainer: 2, label: "hardMode" },
+			{ type: "jump", jumpTo: "win-check" },
+			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
+			// { type: "dialogue", source: "route-5-1-dialogue-won" },
 		]
 	},
 ]

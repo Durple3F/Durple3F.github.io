@@ -5695,6 +5695,59 @@ const pokemonData = {
 			{ name: "Work Up", unlock: { type: "level", amount: 20 } },
 		]
 	},
+	"Espurr": {
+		name: "Espurr",
+		number: "677",
+		weight: {
+			pounds: 7.7,
+			kilograms: 3.5
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0677Espurr.png",
+			"largeShiny": "src/img/shiny-pokemon/677-Espurr.png",
+			"home": "src/img/tiny-pokemon/Espurr.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/espurr.mp3"
+		},
+		types: ["Psychic"],
+		tags: [],
+		abilities: ["Keen Eye", "Infiltrator"],
+		hiddenAbilities: ["Own Tempo"],
+		stats: {
+			hp: 62,
+			attack: 48,
+			defense: 54,
+			specialAttack: 63,
+			specialDefense: 60,
+			speed: 68
+		},
+		expYield: 71,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 1
+		},
+		energyMastery: {
+			purple: 4,
+			green: 1
+		},
+		learnset: [
+			{ name: "Scratch", unlock: { type: "level", amount: 1 } },
+			{ name: "Leer", unlock: { type: "level", amount: 1 } },
+			{ name: "Fake Out", unlock: { type: "level", amount: 3 } },
+			{ name: "Disarming Voice", unlock: { type: "level", amount: 6 } },
+			{ name: "Confusion", unlock: { type: "level", amount: 9 } },
+			{ name: "Covet", unlock: { type: "level", amount: 18 } },
+			{ name: "Psybeam", unlock: { type: "level", amount: 21 } },
+			{ name: "Light Screen", unlock: { type: "level", amount: 30 } },
+			{ name: "Reflect", unlock: { type: "level", amount: 30 } },
+		]
+	},
 	"Carbink": {
 		name: "Carbink",
 		number: "703",
@@ -8008,5 +8061,8 @@ for (let name in pokemonData) {
 }
 
 function getDefaultFormData(pData){
-	return pData.forms[pData.defaultForm]
+	if (pData.hasForms){
+		return pData.forms[pData.defaultForm]
+	}
+	return undefined
 }

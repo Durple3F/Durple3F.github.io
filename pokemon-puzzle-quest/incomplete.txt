@@ -87,6 +87,7 @@ Incomplete move lists:
 	Litleo (lv 23)
 	Pancham (lv 20)
 	Pangoro (lv 0)
+	Espurr (lv 30)
 	Carbink (lv 20)
 	Noibat (lv 20)
 	Rowlet (lv 27)
@@ -147,6 +148,7 @@ Missing Evolutions:
 	Vullaby
 	Fletchling
 	Litleo
+	Espurr
 	Stufful
 	Dartrix
 	Torracat
