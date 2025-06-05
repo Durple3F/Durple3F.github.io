@@ -1721,6 +1721,8 @@ function viewPokemonInfo(pokemon, options = {}) {
 			<span class='stat-val'>${weight.kilograms}kg</span>
 		</div>`)
 		statsSection.append(weightTag)
+	}
+	if (!options.pure){
 		let friendshipTag = $(`<div class='stat'>
 			<span class='stat-name'>${getLocaleString("friendship", lang, ["stats"])}</span>
 			<span class='stat-val'>${pokemon.friendship}</span>
@@ -1931,7 +1933,7 @@ function viewPokemonInfo(pokemon, options = {}) {
 	}
 
 	//NATURES & OTHER INFO
-	if (options.pc) {
+	if (options.pc || options.dex) {
 		let info = $(`<div class='info advanced-info'>`)
 		sections.append(info)
 		info.hide()
@@ -1946,6 +1948,7 @@ function viewPokemonInfo(pokemon, options = {}) {
 		let pokeballSection = $("<div class='pokeball-section d-flex flex-wrap justify-content-around'>")
 		info.append(pokeballSection)
 		for (let pokeballType in pokeballImages){
+			if (options.pure) break
 			let pokeball = $("<div class='pokeball-option p-2 m-2'>")
 			let data = pokeballImages[pokeballType]
 			let img = $("<img>")
@@ -1970,140 +1973,156 @@ function viewPokemonInfo(pokemon, options = {}) {
 
 		let abilitySection = $("<div class='ability-section'>")
 		info.append(abilitySection)
-		let ability = pokemon.getEffectiveAbility()
-		let abilityName = getLocaleString("name", lang, ["abilities", ability.id])
-		abilitySection.append(`<h4>Ability: ${abilityName}</h4>`)
-		let abilityDescription = getLocaleString("longDescription", lang, ["abilities", ability.id])
-		abilitySection.append(`<p>${abilityDescription}</p>`)
-		let natureName = getLocaleString("name", lang, ["natures", pokemon.nature.name])
-		abilitySection.append(`<h4>Nature: ${natureName}</h4>`)
-		let natureDesc = getLocaleString("description", lang, ["natures", pokemon.nature.name])
-		abilitySection.append(`<p>${natureDesc}</p>`)
+		const addAbility = ability => {
+			if (typeof ability === "string"){
+				ability = pokemonAbilityData[ability]
+			}
+			let abilityName = getLocaleString("name", lang, ["abilities", ability.id])
+			abilitySection.append(`<h4>Ability: ${abilityName}</h4>`)
+			let abilityDescription = getLocaleString("longDescription", lang, ["abilities", ability.id])
+			abilitySection.append(`<p>${abilityDescription}</p>`)
+		}
+		if (options.pure){
+			let abilities = data.abilities.concat(data.hiddenAbilities)
+			abilities.forEach(ability => addAbility(ability))
+		} else {
+			let ability = pokemon.getEffectiveAbility()
+			addAbility(ability)
+		}
+		
+		if (!options.pure){
+			let natureName = getLocaleString("name", lang, ["natures", pokemon.nature.name])
+			abilitySection.append(`<h4>Nature: ${natureName}</h4>`)
+			let natureDesc = getLocaleString("description", lang, ["natures", pokemon.nature.name])
+			abilitySection.append(`<p>${natureDesc}</p>`)
+		}
 
-		let chartSection = $("<div class='charts'>")
-		info.append(chartSection)
-		let ivCanvas = $("<canvas>")
-		chartSection.append(ivCanvas)
-		let evCanvas = $("<canvas>")
-		chartSection.append(evCanvas)
+		if (!options.pure){
+			let chartSection = $("<div class='charts'>")
+			info.append(chartSection)
+			let ivCanvas = $("<canvas>")
+			chartSection.append(ivCanvas)
+			let evCanvas = $("<canvas>")
+			chartSection.append(evCanvas)
 
-		const ivData = {
-			labels: [
-				'HP',
-				'Attack',
-				'Defense',
-				'Special Attack',
-				'Special Defense',
-				'Speed'
-			],
-			datasets: [{
-				label: 'Individual Values',
-				data: statNames.map(statName => pokemon.ivs[statName]),
-				fill: true,
-				backgroundColor: 'rgba(255, 99, 132, 0.2)',
-				borderColor: 'rgb(255, 99, 132)',
-				pointBackgroundColor: 'rgb(255, 99, 132)',
-				pointBorderColor: '#fff',
-				pointHoverBackgroundColor: '#fff',
-				pointHoverBorderColor: 'rgb(255, 99, 132)'
-			}]
-		};
-		const evData = {
-			labels: [
-				'HP',
-				'Attack',
-				'Defense',
-				'Special Attack',
-				'Special Defense',
-				'Speed'
-			],
-			datasets: [{
-				label: 'Effort Values',
-				data: statNames.map(statName => pokemon.evs[statName]),
-				fill: true,
-				backgroundColor: 'rgba(54, 162, 235, 0.2)',
-				borderColor: 'rgb(54, 162, 235)',
-				pointBackgroundColor: 'rgb(54, 162, 235)',
-				pointBorderColor: '#fff',
-				pointHoverBackgroundColor: '#fff',
-				pointHoverBorderColor: 'rgb(54, 162, 235)'
-			}]
-		};
-		new Chart(evCanvas, {
-			type: 'radar',
-			data: evData,
-			options: {
-				responsive: false,
-				elements: {
-					line: {
-						borderWidth: 3
-					}
-				},
-				scales: {
-					r: {
-						angleLines: {
-							display: false
-						},
-						grid: {
-							display: false,
-							drawOnChartArea: false,
-							drawTicks: false,
-						},
-						pointLabels: {
-							backdropColor: "rgba(0, 0, 0, 0)",
-							color: "white"
-						},
-						ticks: {
-							backdropColor: "rgba(0, 0, 0, 0)",
-							color: "white",
-							beginAtZero: true,
-							callback: function (value, index, values) {
-								if (Math.floor(value) === value) {
-									return value;
+			const ivData = {
+				labels: [
+					'HP',
+					'Attack',
+					'Defense',
+					'Special Attack',
+					'Special Defense',
+					'Speed'
+				],
+				datasets: [{
+					label: 'Individual Values',
+					data: statNames.map(statName => pokemon.ivs[statName]),
+					fill: true,
+					backgroundColor: 'rgba(255, 99, 132, 0.2)',
+					borderColor: 'rgb(255, 99, 132)',
+					pointBackgroundColor: 'rgb(255, 99, 132)',
+					pointBorderColor: '#fff',
+					pointHoverBackgroundColor: '#fff',
+					pointHoverBorderColor: 'rgb(255, 99, 132)'
+				}]
+			};
+			const evData = {
+				labels: [
+					'HP',
+					'Attack',
+					'Defense',
+					'Special Attack',
+					'Special Defense',
+					'Speed'
+				],
+				datasets: [{
+					label: 'Effort Values',
+					data: statNames.map(statName => pokemon.evs[statName]),
+					fill: true,
+					backgroundColor: 'rgba(54, 162, 235, 0.2)',
+					borderColor: 'rgb(54, 162, 235)',
+					pointBackgroundColor: 'rgb(54, 162, 235)',
+					pointBorderColor: '#fff',
+					pointHoverBackgroundColor: '#fff',
+					pointHoverBorderColor: 'rgb(54, 162, 235)'
+				}]
+			};
+			new Chart(evCanvas, {
+				type: 'radar',
+				data: evData,
+				options: {
+					responsive: false,
+					elements: {
+						line: {
+							borderWidth: 3
+						}
+					},
+					scales: {
+						r: {
+							angleLines: {
+								display: false
+							},
+							grid: {
+								display: false,
+								drawOnChartArea: false,
+								drawTicks: false,
+							},
+							pointLabels: {
+								backdropColor: "rgba(0, 0, 0, 0)",
+								color: "white"
+							},
+							ticks: {
+								backdropColor: "rgba(0, 0, 0, 0)",
+								color: "white",
+								beginAtZero: true,
+								callback: function (value, index, values) {
+									if (Math.floor(value) === value) {
+										return value;
+									}
 								}
-							}
-						},
-						min: 0
-					}
-				}
-			},
-		})
-		new Chart(ivCanvas, {
-			type: 'radar',
-			data: ivData,
-			options: {
-				responsive: false,
-				elements: {
-					line: {
-						borderWidth: 3
+							},
+							min: 0
+						}
 					}
 				},
-				scales: {
-					r: {
-						angleLines: {
-							display: false
-						},
-						grid: {
-							display: false,
-							drawOnChartArea: false,
-							drawTicks: false,
-						},
-						pointLabels: {
-							backdropColor: "rgba(0, 0, 0, 0)",
-							color: "white"
-						},
-						ticks: {
-							backdropColor: "rgba(0, 0, 0, 0)",
-							color: "white",
-							beginAtZero: true,
-							maxTicksLimit: 2
-						},
-						min: 0,
-						max: 32
+			})
+			new Chart(ivCanvas, {
+				type: 'radar',
+				data: ivData,
+				options: {
+					responsive: false,
+					elements: {
+						line: {
+							borderWidth: 3
+						}
+					},
+					scales: {
+						r: {
+							angleLines: {
+								display: false
+							},
+							grid: {
+								display: false,
+								drawOnChartArea: false,
+								drawTicks: false,
+							},
+							pointLabels: {
+								backdropColor: "rgba(0, 0, 0, 0)",
+								color: "white"
+							},
+							ticks: {
+								backdropColor: "rgba(0, 0, 0, 0)",
+								color: "white",
+								beginAtZero: true,
+								maxTicksLimit: 2
+							},
+							min: 0,
+							max: 32
+						}
 					}
-				}
-			},
-		})
+				},
+			})
+		}
 	}
 
 	//DEBUG

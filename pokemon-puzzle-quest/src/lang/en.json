@@ -1307,6 +1307,57 @@
 				{ "type": "text", "speaker": "Mikiko", "text": "Before I go though, wanna have a... $@start-italics|@$friendlier$@end-italics|@$ battle? My Pokémon could use a confidence boost." },
 				{ "type": "text", "speaker": "Lana", "text": "$@font-size:0.9|@$I’ll go^^$@wait-5|@$ try and deal with those guys. Uh, consider this part of your trial, I guess!$@font-size:1|@$" }
 			]
+		},
+		"route-5-2-dialogue": {
+			"events": [],
+			"callbacks": {},
+			"effects": [
+				{ "type": "get-speaker", "name": "Lana", "class": "Lana" },
+				{ "type": "get-speaker", "name": "Hal", "class": "Fisherman-Gen7", "position": "left", "facing": "right" },
+				{ "type": "get-speaker", "name": "Ernest", "class": "Fisherman-Gen7", "position": "left", "facing": "right" },
+				{ "type": "get-speaker", "name": "Herbert", "class": "Fisherman-Gen7", "position": "left", "facing": "right" },
+				{ "type": "get-speaker", "name": "Carl", "class": "Fisherman-Gen7", "position": "left", "facing": "right" },
+				{ "type": "style-speaker", "speaker": "Hal", "css": {
+					"left": "+=15%"
+				}},
+				{ "type": "style-speaker", "speaker": "Ernest", "css": {
+					"left": "+=5%"
+				}},
+				{ "type": "style-speaker", "speaker": "Herbert", "css": {
+					"left": "-=5%"
+				}},
+				{ "type": "style-speaker", "speaker": "Carl", "css": {
+					"left": "-=15%"
+				}},
+				{ "type": "text", "speaker": "Lana", "text": "$@font-size:0.9|@$Guys, can you please... I uh, need this lake for a bit, we’re doing, uh... well, we’re trying to do the trial and—$@font-size:1|@$" },
+				{ "type": "bounce", "speaker": "Hal", "duration": 200, "waitDuration": 0 },
+				{ "type": "text", "speaker": "Hal", "text": "Oh, what’s this? You’re bringing more land walkers to $@start-italics|@$our$@end-italics|@$ waters, $@start-italics|@$captain?$@end-italics|@$" },
+				{ "type": "text", "speaker": "Lana", "text": "$@font-size:0.9|@$Well, yes, and I know you guys like this spot, but... well, we just need you to make some room for—$@font-size:1|@$" },
+				{ "type": "bounce", "speaker": "Ernest", "duration": 300, "waitDuration": 0 },
+				{ "type": "text", "speaker": "Ernest", "text": "Make some room? This is our $@start-bold|@$prime fishing spot!$@end-bold|@$" },
+				{ "type": "bounce", "speaker": "Herbert", "duration": 300, "waitDuration": 0 },
+				{ "type": "text", "speaker": "Herbert", "text": "It’s been in the family for three generations!" },
+				{ "type": "bounce", "speaker": "Ernest", "duration": 300, "waitDuration": 0 },
+				{ "type": "text", "speaker": "Ernest", "text": "You think we’re just gonna $@start-italics|@$reel in our lines$@end-italics|@$ ‘cause some trial-goer just $@start-italics|@$decides$@end-italics|@$ to come by?" },
+				{ "type": "bounce", "speaker": "Carl", "duration": 300, "waitDuration": 0 },
+				{ "type": "text", "speaker": "Carl", "text": "And who even is this? Yet another wide-eyed $@start-italics|@$tourist?$@end-italics|@$ That thinks they can just walk in and scare off all the fish?" },
+				{ "type": "bounce", "speaker": "Hal", "duration": 300, "waitDuration": 0 },
+				{ "type": "text", "speaker": "Hal", "text": "There’s only $@start-bold|@$one$@end-bold|@$ way to settle this!" },
+				{ "type": "bounce", "speaker": "Ernest", "duration": 300, "waitDuration": 0 },
+				{ "type": "text", "speaker": "Ernest", "text": "Yeah! Let’s make ‘em prove they belong!" },
+				{ "type": "bounce", "speaker": "Herbert", "duration": 300, "waitDuration": 0 },
+				{ "type": "text", "speaker": "Herbert", "text": "Battle us, you piece of chum!" },
+				{ "type": "transform-speaker", "speaker": "Ernest", "transform": "translateX(25%) scaleX(-1)", "duration": 300 },
+				{ "type": "text", "speaker": "Ernest", "text": "Hey, man, that’s too far. C’mon, Herbert." },
+				{ "type": "transform-speaker", "speaker": "Herbert", "transform": "rotate(7deg)", "duration": 300 },
+				{ "type": "text", "speaker": "Herbert", "text": "You’re right, sorry." },
+				{ "type": "transform-speaker", "speaker": "Ernest", "transform": "", "duration": 300 },
+				{ "type": "text", "speaker": "Ernest", "text": "We’re still battling, though!" },
+				{ "type": "transform-speaker", "speaker": "Lana", "transform": "rotate(-7deg)", "duration": 1000 },
+				{ "type": "text", "speaker": "Lana", "text": "$@font-size:0.9|@$...I think you’re just gonna have to indulge these guys.$@font-size:1|@$ " },
+				{ "type": "transform-speaker", "speaker": "Lana", "transform": "", "duration": 1000 },
+				{ "type": "text", "speaker": "Lana", "text": "$@font-size:0.9|@$I’m sorry. I promise the real trial will be more structured than this.$@font-size:1|@$ " }
+			]
 		}
 	},
 	"pokemon": {
@@ -4056,6 +4107,10 @@
 		"Route 5-1": {
 			"name": "Route 5-1",
 			"description": "As you step into Brooklet Hill, you start looking for the next trial captain, as well as some new Pokémon."
+		},
+		"Route 5-2": {
+			"name": "Route 5-2",
+			"description": "You follow where you saw Lana go, further along the path."
 		}
 	},
 	"route-categories": {

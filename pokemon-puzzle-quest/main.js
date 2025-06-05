@@ -1342,6 +1342,10 @@ function openChangelog(){
 			body.html("Error getting changelog :/")
 		}
 	})
+	btn.click(() => {
+		modal.modal("hide")
+	})
+	modal.modal("show")
 	modal.on("hidden.bs.modal", () => {
 		resolvePromise()
 	})

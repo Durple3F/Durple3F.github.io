@@ -7,6 +7,7 @@ const textCharacterDurationMap = {
 	"?": 10,
 	"?!": 10,
 	"?”": 10,
+	"?’": 10,
 	"...": 20,
 	"—": 10,
 	"^^": 0, //This one's for events

@@ -16,7 +16,7 @@ class Pokemon{
 		let defaultName = getLocaleString("name", lang, ["pokemon", this.pokemonId])
 		this.name = name ?? defaultName ?? this.data.name
 		this.pokemonName = this.data.name
-		this.form = options?.form ?? getDefaultFormData(this.data) ?? null
+		this.form = options?.form ?? getDefaultFormData(this.data)?.id ?? null
 		this.types = []
 		this.data.types.forEach(type => this.types.push(type))
 		this.level = options?.level ?? 1
@@ -955,7 +955,7 @@ class Pokemon{
 		}
 
 		if (this.data.returnToDefaultFormAfterBattle){
-			this.form = getDefaultFormData(this.data)
+			this.form = getDefaultFormData(this.data)?.id ?? null
 		}
 	}
 
@@ -1066,4 +1066,11 @@ class Pokemon{
 		}
 		return "pokedex-entry"
 	}
+}
+
+function getDefaultFormData(pData){
+	if (pData.hasForms){
+		return pData.forms[pData.defaultForm]
+	}
+	return undefined
 }

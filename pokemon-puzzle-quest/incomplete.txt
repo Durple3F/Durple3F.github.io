@@ -137,6 +137,7 @@ Missing Evolutions:
 	Grimer-Alola
 	Haunter
 	Chansey
+	Magikarp
 	Eevee
 	Houndour
 	Smoochum

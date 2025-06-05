@@ -2649,7 +2649,7 @@ const levelData = [
 		]
 	},
 	
-	//5-1: Psyduck, Paras, Morelull, Poliwag, Dewpider, Surskit | Mikiko
+	//5-1: Paras, Morelull, Dewpider, Surskit | Mikiko
 	{
 		id: "Route 5-1",
 		category: "Route 5",
@@ -2675,10 +2675,8 @@ const levelData = [
 				targetPokemon: 4,
 				canPickDuplicates: false,
 				possiblePokemon: [
-					{ id: "Psyduck", levelMin: 14, levelMax: 17, weight: 3 },
 					{ id: "Paras", levelMin: 14, levelMax: 17, weight: 3 },
 					{ id: "Morelull", levelMin: 14, levelMax: 17, weight: 3 },
-					{ id: "Poliwag", levelMin: 14, levelMax: 17, weight: 3 },
 					{ id: "Dewpider", levelMin: 14, levelMax: 17, weight: 3 },
 					{ id: "Surskit", levelMin: 14, levelMax: 17, weight: 3 },
 					{ id: "Wingull", levelMin: 14, levelMax: 17, weight: 1 },
@@ -2755,6 +2753,7 @@ const levelData = [
 		effects: [
 			{ type: "change-background-image", name: "route-bg-brooklet-hill-1" },
 			{ type: "fight", trainer: 0 },
+			{ type: "jump-if-lost", jumpTo: Infinity },
 			{ type: "dialogue", source: "route-5-1-dialogue" },
 			{ type: "change-music", music: "SM Trainer Battle" },
 			{ type: "load-setting", key: "hardMode" },
@@ -2767,6 +2766,235 @@ const levelData = [
 			{ type: "jump", jumpTo: "win-check" },
 			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
 			// { type: "dialogue", source: "route-5-1-dialogue-won" },
+		]
+	},
+	//5-2: Psyduck, Poliwag, Surskit | Hal, Ernest, Herbert, Carl
+	{
+		id: "Route 5-2",
+		category: "Route 5",
+		name: "Route 5-2",
+		music: "SM Wild Pokemon Battle",
+		icon: "2",
+		images: {
+			"route-bg-brooklet-hill-1": "src/img/bg/brooklet hill 1.jpg",
+		},
+		recommendedLevels: {
+			"normal": (pokemonList) => {
+				if (pokemonList.length >= 3) return 19
+				return 22
+			},
+			"hard": (pokemonList) => {
+				if (pokemonList.length >= 3) return 19
+				return 22
+			}
+		},
+		trainers: [
+			{
+				isWild: true,
+				targetPokemon: 2,
+				canPickDuplicates: false,
+				possiblePokemon: [
+					{ id: "Psyduck", levelMin: 14, levelMax: 17, weight: 3 },
+					{ id: "Poliwag", levelMin: 14, levelMax: 17, weight: 3 },
+					{ id: "Surskit", levelMin: 14, levelMax: 17, weight: 3 },
+					{ id: "Wingull", levelMin: 14, levelMax: 17, weight: 1 },
+					{ id: "Lillipup", levelMin: 14, levelMax: 17, weight: 1 },
+				]
+			},
+			
+			//Easy 1
+			{
+				name: "Hal",
+				class: "Fisherman-Gen7",
+				pokemon: [
+					{
+						id: "Tentacool",
+						level: 17,
+						ability: "Gale Wings",
+						activeMoves: ["Acrobatics", "Flail", "Growl", "Ember"],
+						evs: { hp: 30, attack: 35, defense: 15, specialAttack: 15, specialDefense: 30, speed: 15 },
+					},
+				]
+			},
+			//Hard 1
+			{
+				name: "Hal",
+				class: "Fisherman-Gen7",
+				pokemon: [
+					{
+						id: "Tentacool",
+						level: 17,
+						ability: "Gale Wings",
+						activeMoves: ["Acrobatics", "Flail", "Growl", "Ember"],
+						evs: { hp: 30, attack: 35, defense: 15, specialAttack: 15, specialDefense: 30, speed: 15 },
+					},
+				]
+			},
+			
+			//Easy 2
+			{
+				name: "Ernest",
+				class: "Fisherman-Gen7",
+				pokemon: [
+					{
+						id: "Barboach",
+						level: 16,
+						ability: "Oblivious",
+						activeMoves: ["Water Gun", "Mud-Slap", "Rest", "Water Pulse"],
+						evs: { hp: 30, attack: 35, defense: 15, specialAttack: 15, specialDefense: 30, speed: 15 },
+					},
+					{
+						id: "Goldeen",
+						level: 17,
+						ability: "Swift Swim",
+						activeMoves: ["Horn Attack", "Supersonic", "Peck", "Tail Whip"],
+						evs: { hp: 30, attack: 35, defense: 15, specialAttack: 15, specialDefense: 30, speed: 15 },
+					},
+				]
+			},
+			//Hard 2
+			{
+				name: "Ernest",
+				class: "Fisherman-Gen7",
+				pokemon: [
+					{
+						id: "Barboach",
+						level: 16,
+						ability: "Oblivious",
+						activeMoves: ["Water Gun", "Mud-Slap", "Rest", "Water Pulse"],
+						evs: { hp: 30, attack: 35, defense: 15, specialAttack: 15, specialDefense: 30, speed: 15 },
+					},
+					{
+						id: "Goldeen",
+						level: 17,
+						ability: "Swift Swim",
+						activeMoves: ["Horn Attack", "Supersonic", "Peck", "Tail Whip"],
+						evs: { hp: 30, attack: 35, defense: 15, specialAttack: 15, specialDefense: 30, speed: 15 },
+					},
+				]
+			},
+			
+			//Easy 3
+			{
+				name: "Herbert",
+				class: "Fisherman-Gen7",
+				pokemon: [
+					{
+						id: "Poliwag",
+						level: 17,
+						ability: "Water Absorb",
+						activeMoves: ["Bubble Beam", "Mud Shot", "Water Gun", "Rain Dance"],
+						evs: { hp: 30, attack: 35, defense: 15, specialAttack: 15, specialDefense: 30, speed: 15 },
+					},
+				]
+			},
+			//Hard 3
+			{
+				name: "Herbert",
+				class: "Fisherman-Gen7",
+				pokemon: [
+					{
+						id: "Poliwag",
+						level: 17,
+						ability: "Water Absorb",
+						activeMoves: ["Bubble Beam", "Mud Shot", "Water Gun", "Rain Dance"],
+						evs: { hp: 30, attack: 35, defense: 15, specialAttack: 15, specialDefense: 30, speed: 15 },
+					},
+				]
+			},
+			
+			//Easy 4
+			{
+				name: "Carl",
+				class: "Fisherman-Gen7",
+				pokemon: [
+					{
+						id: "Psyduck",
+						level: 17,
+						ability: "Cloud Nine",
+						activeMoves: ["Zen Headbutt", "Disable", "Water Gun", "Confusion"],
+						evs: { hp: 30, attack: 35, defense: 15, specialAttack: 15, specialDefense: 30, speed: 15 },
+					},
+					{
+						id: "Magikarp",
+						level: 17,
+						ability: "Swift Swim",
+						activeMoves: ["Splash", "Tackle"],
+						evs: { hp: 30, attack: 35, defense: 15, specialAttack: 15, specialDefense: 30, speed: 15 },
+					},
+				]
+			},
+			//Hard 4
+			{
+				name: "Carl",
+				class: "Fisherman-Gen7",
+				pokemon: [
+					{
+						id: "Psyduck",
+						level: 17,
+						ability: "Cloud Nine",
+						activeMoves: ["Zen Headbutt", "Disable", "Water Gun", "Confusion"],
+						evs: { hp: 30, attack: 35, defense: 15, specialAttack: 15, specialDefense: 30, speed: 15 },
+					},
+					{
+						id: "Magikarp",
+						level: 17,
+						ability: "Swift Swim",
+						activeMoves: ["Splash", "Tackle"],
+						evs: { hp: 30, attack: 35, defense: 15, specialAttack: 15, specialDefense: 30, speed: 15 },
+					},
+				]
+			},
+		],
+		effects: [
+			{ type: "change-background-image", name: "route-bg-brooklet-hill-1" },
+			// { type: "fight", trainer: 0 },
+			// { type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "dialogue", source: "route-5-2-dialogue" },
+			{ type: "change-music", music: "SM Trainer Battle" },
+			{ type: "load-setting", key: "hardMode" },
+			{ type: "load-value", value: true },
+			{ type: "jump-if-equal", jumpTo: "hardMode-1" },
+			{ type: "jump", jumpTo: "easyMode-1" },
+			{ type: "fight", trainer: 1, label: "easyMode-1" },
+			{ type: "jump", jumpTo: "win-check-1" },
+			{ type: "fight", trainer: 2, label: "hardMode-1" },
+			{ type: "jump", jumpTo: "win-check-1" },
+			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check-1" },
+			// { type: "dialogue", source: "route-5-2-dialogue-won-1" },
+
+			{ type: "load-setting", key: "hardMode" },
+			{ type: "load-value", value: true },
+			{ type: "jump-if-equal", jumpTo: "hardMode-2" },
+			{ type: "jump", jumpTo: "easyMode-2" },
+			{ type: "fight", trainer: 3, label: "easyMode-2" },
+			{ type: "jump", jumpTo: "win-check-2" },
+			{ type: "fight", trainer: 4, label: "hardMode-2" },
+			{ type: "jump", jumpTo: "win-check-2" },
+			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check-2" },
+			// { type: "dialogue", source: "route-5-2-dialogue-won-2" },
+
+			{ type: "load-setting", key: "hardMode" },
+			{ type: "load-value", value: true },
+			{ type: "jump-if-equal", jumpTo: "hardMode-3" },
+			{ type: "jump", jumpTo: "easyMode-3" },
+			{ type: "fight", trainer: 5, label: "easyMode-3" },
+			{ type: "jump", jumpTo: "win-check-3" },
+			{ type: "fight", trainer: 6, label: "hardMode-3" },
+			{ type: "jump", jumpTo: "win-check-3" },
+			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check-3" },
+			// { type: "dialogue", source: "route-5-2-dialogue-won-3" },
+
+			{ type: "load-setting", key: "hardMode" },
+			{ type: "load-value", value: true },
+			{ type: "jump-if-equal", jumpTo: "hardMode-4" },
+			{ type: "jump", jumpTo: "easyMode-4" },
+			{ type: "fight", trainer: 7, label: "easyMode-4" },
+			{ type: "jump", jumpTo: "win-check-4" },
+			{ type: "fight", trainer: 8, label: "hardMode-4" },
+			{ type: "jump", jumpTo: "win-check-4" },
+			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check-4" },
+			// { type: "dialogue", source: "route-5-2-dialogue-won-4" },
 		]
 	},
 ]

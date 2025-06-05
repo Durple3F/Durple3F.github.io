@@ -1608,7 +1608,7 @@ const pokemonData = {
 			speed: 1
 		},
 		energyMastery: {
-			water: 3,
+			blue: 3,
 			orange: 1
 		},
 		evolutions: [
@@ -2573,6 +2573,52 @@ const pokemonData = {
 			{ name: "Assurance", unlock: { type: "level", amount: 15 } },
 			{ name: "Horn Attack", unlock: { type: "level", amount: 20 } },
 			{ name: "Scary Face", unlock: { type: "level", amount: 25 } },
+		]
+	},
+	"Magikarp": {
+		name: "Magikarp",
+		number: "129",
+		weight: {
+			pounds: 22.0,
+			kilograms: 10.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0129Magikarp.png",
+			"largeShiny": "src/img/shiny-pokemon/129-Magikarp.png",
+			"home": "src/img/tiny-pokemon/Magikarp.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/magikarp.mp3"
+		},
+		types: ["Water"],
+		tags: [],
+		abilities: ["Swift Swim"],
+		hiddenAbilities: ["Rattled"],
+		stats: {
+			hp: 20,
+			attack: 10,
+			defense: 55,
+			specialAttack: 15,
+			specialDefense: 20,
+			speed: 80
+		},
+		expYield: 40,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 1
+		},
+		energyMastery: {
+			blue: 3
+		},
+		learnset: [
+			{ name: "Splash", unlock: { type: "level", amount: 1 } },
+			{ name: "Tackle", unlock: { type: "level", amount: 15 } },
+			{ name: "Flail", unlock: { type: "level", amount: 25 } },
 		]
 	},
 	"Eevee": {
@@ -8058,11 +8104,4 @@ for (let name in pokemonData) {
 	if (same.length !== 1){
 		console.warn("These pokemon share a number", same, pokemon)
 	}
-}
-
-function getDefaultFormData(pData){
-	if (pData.hasForms){
-		return pData.forms[pData.defaultForm]
-	}
-	return undefined
 }
