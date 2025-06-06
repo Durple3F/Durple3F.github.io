@@ -2022,6 +2022,31 @@ const pokemonMoveData = {
 			{ type: "apply-status-effect", statusEffect: "paralyzed", target: "opponent" }
 		]
 	},
+	//Deals exactly 40 damage
+	"Night Shade": {
+		name: "Night Shade",
+		type: "Ghost",
+		category: "Special",
+		strategy: "special",
+		tags: ["damage-dealing"],
+		pp: 15,
+		power: null,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			red: 3,
+			yellow: 3,
+			green: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Dragon Rage.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "load-value", value: 40 },
+			{ type: "damage", amount: -1, fixed: true, finalImmunityCheck: true },
+		],
+	},
 	//Steals HP
 	"Draining Kiss": {
 		name: "Draining Kiss",

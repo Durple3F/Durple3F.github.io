@@ -2,14 +2,14 @@
 	"versions": {
 		"20250605": {
 			"date": "June 05, 2025",
-			"line-count": 46600,
+			"line-count": 46800,
 			"changes": [
 				"- Added Litleo, Espurr, Magikarp",
-				"- Added Noble Roar",
+				"- Added Noble Roar, Dragon Rage",
 				"- Added Rivalry",
-				"- Oops, Poliwag had broken stats..",
+				"- Oops, Poliwag had broken stats.",
 				"- Added some dialogue to 5-2.",
-				"- Added the easy mode fights to 5-2.",
+				"- Added the easy mode and hard mode fights to 5-2.",
 				"- You can now see a pokemon's possible abilities in the pokedex."
 			]
 		},
