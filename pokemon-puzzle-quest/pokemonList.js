@@ -6291,7 +6291,7 @@ const pokemonData = {
 			{ name: "Sing", unlock: { type: "level", amount: 20 } },
 			{ name: "Bubble Beam", unlock: { type: "level", amount: 25 } },
 			{ name: "Encore", unlock: { type: "level", amount: 30 } },
-			{ name: "Feint Attack", unlock: { type: "level", amount: 1 } },
+			{ name: "Heal Pulse", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {

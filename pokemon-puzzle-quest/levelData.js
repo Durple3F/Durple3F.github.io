@@ -3069,17 +3069,17 @@ const levelData = [
 						evs: { hp: 30, attack: 30, defense: 25, specialAttack: 20, specialDefense: 30, speed: 20 },
 					},
 					{
-						id: "Alomomola",
-						level: 18,
-						activeMoves: ["Helping Hand", "Double Slap", "Heal Pulse", "Water Gun"],
-						evs: { hp: 30, attack: 25, defense: 25, specialAttack: 25, specialDefense: 30, speed: 20 },
-					},
-					{
 						id: "Wishiwashi",
 						level: 20,
-						isAce: true,
 						activeMoves: ["Water Gun", "Growl", "Rain Dance", "Soak"],
 						evs: { hp: 100, attack: 50, defense: 50, specialAttack: 120, specialDefense: 200, speed: 30 },
+					},
+					{
+						id: "Alomomola",
+						level: 18,
+						isAce: true,
+						activeMoves: ["Helping Hand", "Double Slap", "Heal Pulse", "Water Gun"],
+						evs: { hp: 30, attack: 25, defense: 25, specialAttack: 25, specialDefense: 30, speed: 20 },
 					},
 				]
 			},

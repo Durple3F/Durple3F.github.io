@@ -3444,6 +3444,39 @@ const pokemonMoveData = {
 			{ type: "do-nothing", label: "endLoop" }
 		],
 	},
+	//Heals any of your pokemon
+	"Heal Pulse": {
+		name: "Heal Pulse",
+		type: "Psychic",
+		category: "Status",
+		strategy: "special",
+		tags: ["healing", "heal-inactive-ally"],
+		pp: 10,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 3,
+		energy: {
+			blue: 9,
+			purple: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Heal Pulse part 1.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-viable-pokemon", target: "user" },
+			{ type: "get-list-length", list: -1 },
+			{ type: "load-value", value: 1 },
+			{ type: "jump-if-less-than", jumpTo: Infinity },
+			{ type: "choose-pokemon", target: "user", message: "choose-pokemon", pokemon: -4, strategy: "heal" },
+			{ type: "load-value", value: 0 },
+			{ type: "get-element-from-list", list: -2, index: -1 },
+			{ type: "get-max-hp", targetPokemon: -1 },
+			{ type: "load-value", value: 0.5 },
+			{ type: "multiply-numbers", round: "up" },
+			{ type: "heal", amount: -1, targetPokemon: -4 },
+		]
+	},
 	//Reduces move cooldown
 	"Helping Hand": {
 		name: "Helping Hand",

@@ -2571,6 +2571,7 @@ class Round {
 		//Current reasons are:
 		// - swap (The computer is changing their active pokemon)
 		// - damage (The computer is choosing a pokemon which they would like to have damage dealt to.)
+		// - heal (The computer is choosing a pokemon which they would like to be healed.)
 		
 		//This is the trainer who is MAKING the CHOICE
 		let trainer = this.trainers[trainerIndex]
@@ -4044,6 +4045,10 @@ class Round {
 				target = undefined
 			} else if (targetName) {
 				console.warn("You never handled", targetName)
+			}
+
+			if (effectData.targetType === "pokemon" && params.targetPokemon){
+				target = params.targetPokemon
 			}
 		}
 
