@@ -2848,6 +2848,10 @@ class Round {
 
 				let stillUsable = isPokemonUsable(defender)
 				let madeContact = this.shouldMoveHaveTag("makes-contact", attackerTrainer, attacker, move)
+				//Some moves, such as Feint Attack, override making contact for the purposes of triggering effects.
+				if (madeContact && move.tags.includes("contact-doesnt-trigger")){
+					madeContact = false
+				}
 				
 				//Stamina raises the defender's defense
 				if (defender.hasAbility("Stamina")) {

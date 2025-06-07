@@ -3037,6 +3037,71 @@ const levelData = [
 			// { type: "dialogue", source: "route-5-2-dialogue-won-4" },
 		]
 	},
+	//5-3: Trial against the big Wishiwashi & Araquanid
+	{
+		id: "Route 5-3",
+		category: "Route 5",
+		name: "Route 5-3",
+		music: "SM Wild Pokemon Battle",
+		icon: "3",
+		images: {
+			"route-bg-brooklet-hill-1": "src/img/bg/brooklet hill 1.jpg",
+		},
+		recommendedLevels: {
+			"normal": (pokemonList) => {
+				if (pokemonList.length >= 3) return 20
+				return 22
+			},
+			"hard": (pokemonList) => {
+				if (pokemonList.length >= 3) return 20
+				return 22
+			}
+		},
+		trainers: [
+			{
+				isWild: true,
+				shuffle: false,
+				pokemon: [
+					{
+						id: "Wishiwashi",
+						level: 18,
+						activeMoves: ["Helping Hand", "Feint Attack", "Brine", "Aqua Ring"],
+						evs: { hp: 30, attack: 30, defense: 25, specialAttack: 20, specialDefense: 30, speed: 20 },
+					},
+					{
+						id: "Alomomola",
+						level: 18,
+						activeMoves: ["Helping Hand", "Double Slap", "Heal Pulse", "Water Gun"],
+						evs: { hp: 30, attack: 25, defense: 25, specialAttack: 25, specialDefense: 30, speed: 20 },
+					},
+					{
+						id: "Wishiwashi",
+						level: 20,
+						isAce: true,
+						activeMoves: ["Water Gun", "Growl", "Rain Dance", "Soak"],
+						evs: { hp: 100, attack: 50, defense: 50, specialAttack: 120, specialDefense: 200, speed: 30 },
+					},
+				]
+			},
+		],
+		effects: [
+			{ type: "change-background-image", name: "route-bg-brooklet-hill-1" },
+			{ type: "fight", trainer: 0 },
+			// { type: "jump-if-lost", jumpTo: Infinity },
+			// { type: "dialogue", source: "route-5-1-dialogue" },
+			// { type: "change-music", music: "SM Trainer Battle" },
+			// { type: "load-setting", key: "hardMode" },
+			// { type: "load-value", value: true },
+			// { type: "jump-if-equal", jumpTo: "hardMode" },
+			// { type: "jump", jumpTo: "easyMode" },
+			// { type: "fight", trainer: 1, label: "easyMode" },
+			// { type: "jump", jumpTo: "win-check" },
+			// { type: "fight", trainer: 2, label: "hardMode" },
+			// { type: "jump", jumpTo: "win-check" },
+			// { type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
+			// { type: "dialogue", source: "route-5-1-dialogue-won" },
+		]
+	},
 ]
 
 for (let categoryId in levelCategoryData) {
@@ -3053,16 +3118,32 @@ for (let level of levelData) {
 		for (let trainerData of level.trainers) {
 			trainerData.isWild = trainerData.isWild ?? false
 			trainerData.pokemon = trainerData.pokemon ?? []
+			
+			let pokemonList = trainerData.pokemon
+			if (trainerData.possiblePokemon) {
+				pokemonList = pokemonList.concat(trainerData.possiblePokemon)
+			}
 
 			if (trainerData.isWild) {
-				let pokemonList = trainerData.pokemon
-				if (trainerData.possiblePokemon) {
-					pokemonList = pokemonList.concat(trainerData.possiblePokemon)
-				}
 				for (let pokemonData of pokemonList) {
 					let id = pokemonData.id
 					if (!level.obtainablePokemon.includes(id)) {
 						level.obtainablePokemon.push(id)
+					}
+				}
+			}
+
+			for (let pData of pokemonList){
+				let data = pokemonData[pData.id]
+				if (!data){
+					console.warn(pData.id,"is not defined for level",level.id)
+				}
+				if (pData.activeMoves){
+					for (let moveId of pData.activeMoves){
+						let move = pokemonMoveData[moveId]
+						if (!move){
+							console.warn("A pokemon in level", level.id, "wants to learn",moveId,"but that move doesn't exist.")
+						}
 					}
 				}
 			}

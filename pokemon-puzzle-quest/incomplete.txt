@@ -81,6 +81,7 @@ Incomplete move lists:
 	Lilligant (lv 24)
 	Lilligant-Hisui (lv 9)
 	Zorua (lv 20)
+	Alomomola (lv 25)
 	Rufflet (lv 30)
 	Vullaby (lv 36)
 	Fletchling (lv 20)

@@ -5420,6 +5420,59 @@ const pokemonData = {
 			{ name: "Imprison", unlock: { type: "level", amount: 36 } },
 		]
 	},
+	"Alomomola": {
+		name: "Alomomola",
+		number: "594",
+		weight: {
+			pounds: 69.7,
+			kilograms: 31.6
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0594Alomomola.png",
+			"largeShiny": "src/img/shiny-pokemon/594-Alomomola.png",
+			"home": "src/img/tiny-pokemon/Alomomola.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/alomomola.mp3"
+		},
+		types: ["Water"],
+		tags: [],
+		abilities: ["Healer", "Hydration"],
+		hiddenAbilities: ["Regenerator"],
+		stats: {
+			hp: 165,
+			attack: 75,
+			defense: 80,
+			specialAttack: 40,
+			specialDefense: 45,
+			speed: 65
+		},
+		expYield: 165,
+		evYield: {
+			hp: 2,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			blue: 3,
+			orange: 1,
+			purple: 1
+		},
+		learnset: [
+			{ name: "Play Nice", unlock: { type: "level", amount: 1 } },
+			{ name: "Pound", unlock: { type: "level", amount: 1 } },
+			{ name: "Aqua Ring", unlock: { type: "level", amount: 5 } },
+			{ name: "Aqua Jet", unlock: { type: "level", amount: 9 } },
+			{ name: "Helping Hand", unlock: { type: "level", amount: 13 } },
+			{ name: "Wide Guard", unlock: { type: "level", amount: 13 } },
+			{ name: "Protect", unlock: { type: "level", amount: 21 } },
+			{ name: "Water Pulse", unlock: { type: "level", amount: 25 } },
+		]
+	},
 	"Rufflet": {
 		name: "Rufflet",
 		number: "627",
@@ -6238,7 +6291,7 @@ const pokemonData = {
 			{ name: "Sing", unlock: { type: "level", amount: 20 } },
 			{ name: "Bubble Beam", unlock: { type: "level", amount: 25 } },
 			{ name: "Encore", unlock: { type: "level", amount: 30 } },
-			{ name: "Acrobatics", unlock: { type: "level", amount: 1 } },
+			{ name: "Feint Attack", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {

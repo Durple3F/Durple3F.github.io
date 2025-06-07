@@ -1761,6 +1761,10 @@
 			"name": "Zorua",
 			"pokedex-entry": "Wild Zorua like to play pretend and disguise as people. Everything else they tried didn’t work, so in towns and cities near forests where Zorua reside, they have “Safe Disguise Zones” where Zorua can play pretend all it wants. Most Zorua respect the boundaries as long as they have people to play with."
 		},
+		"Alomomola": {
+			"name": "Alomomola",
+			"pokedex-entry": "Lifeguards on busy beaches often rely on Alomomola patrolling the deeper waters far from the shore, where even strong swimmers can get into trouble. Alomomola have a strong sense of danger, and can carry people and Pokémon back to shore."
+		},
 		"Rufflet": {
 			"name": "Rufflet",
 			"pokedex-entry": "Rufflet will pick fights with any and every nearby Pokémon. It loses this habit quickly when caught, but some trainers enjoy the way it challenges Pokémon a hundred times its size."
@@ -2314,6 +2318,11 @@
 			"name": "Feint",
 			"description": "Removes the Invulnerable and Protected status effects from the opponent. Then, deals damage.",
 			"shortDescription": "Deals damage through invulnerability"
+		},
+		"Feint Attack": {
+			"name": "Feint Attack",
+			"description": "Deals damage. Damage dealt this way doesn't count as having made contact with the opponent.",
+			"shortDescription": "Deals some damage"
 		},
 		"Fell Stinger": {
 			"name": "Fell Stinger",

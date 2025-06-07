@@ -2,8 +2,10 @@
 	"versions": {
 		"20250606": {
 			"date": "June 06, 2025",
-			"line-count": 46900,
+			"line-count": 47000,
 			"changes": [
+				"- Added Alomomola",
+				"- Added Feint Attack",
 				"- Added Dive Balls, Net Balls",
 				"- Improvements to level button tooltips again.",
 				"- Moved where the names that trainers give their pokemon are stored."

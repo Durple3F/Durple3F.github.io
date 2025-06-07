@@ -2518,6 +2518,29 @@ const pokemonMoveData = {
 			{ type: "damage" }
 		]
 	},
+	//Makes contact, but doesn't trigger effects after it hits
+	"Feint Attack": {
+		name: "Feint Attack",
+		type: "Dark",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["makes-contact", "contact-doesnt-trigger"],
+		pp: 20,
+		power: 60,
+		accuracy: null,
+		rechargeTurns: 1,
+		energy: {
+			orange: 5,
+			purple: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Feint Attack.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" }
+		]
+	},
 	//Gives you a bonus if it defeats the enemy
 	"Fell Stinger": {
 		name: "Fell Stinger",
