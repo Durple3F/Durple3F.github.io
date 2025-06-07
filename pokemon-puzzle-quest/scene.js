@@ -181,11 +181,12 @@ function startScene(name, options={}) {
 
 			let listTag = $(`<div class='route-list'></div>`)
 			let routeTag = $(`<div class='route-screen'></div>`)
+			let levelButtons = []
 
 			let pcBtn = $(`<button class='btn btn-primary' id='pc-button'></button>`)
 			pcBtn.append(`<div class='route-button-text'>My PC</div>`)
 			pcBtn.click(() => {
-				routeTag.children(".level-button").popover("dispose")
+				levelButtons.forEach(btn => btn.popover("dispose"))
 				changeScene("pc")
 			})
 			listTag.append(pcBtn)
@@ -261,7 +262,7 @@ function startScene(name, options={}) {
 			const displayLevels = levelList => {
 				routeTag.children().popover("dispose")
 				routeTag.empty()
-				let levelButtons = []
+				levelButtons = []
 				levelList.forEach(level => {
 					let btn = getLevelButtonHtml(level)
 					btn.data("level", level)

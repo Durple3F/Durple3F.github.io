@@ -107,7 +107,7 @@ body {
 
 	--won-color: gold;
 	--dialogue-font-size: min(5vh, 3vw);
-	--large-button-font-size: calc(var(--dialogue-font-size) * 0.7);
+	--large-button-font-size: 1.3em; /*calc(var(--dialogue-font-size) * 0.7);*/
 	--active-pokemon-box-size: min(5vw, 10vh);
 	--ui-primary-bg: rgb(75, 117, 232);
 }
@@ -321,13 +321,13 @@ body {
 	width: 25%;
 	height: 100%;
 	border-right: 1px solid #333;
-	padding: 3vh;
+	padding: 1em;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 }
 .route-list .btn {
-  height: 12vh;
+  height: calc(var(--large-button-font-size) + 2em); /*12vh;*/
 	width: 100%;
   display: flex;
   justify-content: center;

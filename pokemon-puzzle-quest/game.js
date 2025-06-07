@@ -7384,7 +7384,7 @@ function beginRound(trainerData) {
 			options.activeMoves = data.activeMoves
 		}
 		if (data.name) {
-			options.name = data.name
+			options.name = getLocaleString(data.name, lang, ["pokemon-names"], null) || data.name
 		}
 		if (data.form) {
 			options.form = data.form

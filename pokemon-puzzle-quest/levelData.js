@@ -2690,7 +2690,7 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Fletchling",
-						name: "Chitter",
+						name: "5-1-mikiko-fletchling",
 						level: 17,
 						ability: "Gale Wings",
 						activeMoves: ["Acrobatics", "Flail", "Growl", "Ember"],
@@ -2698,7 +2698,8 @@ const levelData = [
 					},
 					{
 						id: "Litleo",
-						name: "Pepper",
+						name: "5-1-mikiko-litleo",
+						pokeball: "great ball",
 						level: 17,
 						ability: "Rattled",
 						activeMoves: ["Noble Roar", "Headbutt", "Work Up", "Tackle"],
@@ -2706,7 +2707,7 @@ const levelData = [
 					},
 					{
 						id: "Espurr",
-						name: "Mimi",
+						name: "5-1-mikiko-espurr",
 						level: 17,
 						ability: "Keen Eye",
 						activeMoves: ["Confusion", "Disarming Voice", "Reflect", "Fake Tears"],
@@ -2721,7 +2722,7 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Fletchling",
-						name: "Chitter",
+						name: "5-1-mikiko-fletchling",
 						level: 17,
 						ability: "Gale Wings",
 						activeMoves: ["Acrobatics", "Flail", "Growl", "Ember"],
@@ -2731,7 +2732,8 @@ const levelData = [
 					},
 					{
 						id: "Litleo",
-						name: "Pepper",
+						name: "5-1-mikiko-litleo",
+						pokeball: "great ball",
 						level: 17,
 						ability: "Rattled",
 						activeMoves: ["Noble Roar", "Headbutt", "Work Up", "Tackle"],
@@ -2741,7 +2743,7 @@ const levelData = [
 					},
 					{
 						id: "Espurr",
-						name: "Mimi",
+						name: "5-1-mikiko-espurr",
 						level: 17,
 						ability: "Keen Eye",
 						activeMoves: ["Confusion", "Disarming Voice", "Reflect", "Fake Tears"],
@@ -2811,6 +2813,8 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Tentacool",
+						name: "5-2-hal-tentacool",
+						pokeball: "net ball",
 						level: 17,
 						ability: "Liquid Ooze",
 						activeMoves: ["Wrap", "Acid", "Poison Sting", "Water Gun"],
@@ -2825,6 +2829,8 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Tentacool",
+						name: "5-2-hal-tentacool",
+						pokeball: "net ball",
 						level: 17,
 						ability: "Liquid Ooze",
 						activeMoves: ["Wrap", "Acid", "Poison Sting", "Water Gun"],
@@ -2842,6 +2848,8 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Barboach",
+						name: "5-2-ernest-barboach",
+						pokeball: "dive ball",
 						level: 16,
 						ability: "Oblivious",
 						activeMoves: ["Water Gun", "Mud-Slap", "Rest", "Water Pulse"],
@@ -2849,6 +2857,8 @@ const levelData = [
 					},
 					{
 						id: "Goldeen",
+						name: "5-2-ernest-goldeen",
+						pokeball: "net ball",
 						level: 17,
 						ability: "Swift Swim",
 						activeMoves: ["Horn Attack", "Supersonic", "Peck", "Tail Whip"],
@@ -2863,7 +2873,9 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Barboach",
-						level: 16,
+						name: "5-2-ernest-barboach",
+						pokeball: "dive ball",
+						level: 17,
 						ability: "Oblivious",
 						activeMoves: ["Water Gun", "Mud-Slap", "Rest", "Water Pulse"],
 						nature: "timid",
@@ -2872,6 +2884,8 @@ const levelData = [
 					},
 					{
 						id: "Goldeen",
+						name: "5-2-ernest-goldeen",
+						pokeball: "net ball",
 						level: 17,
 						ability: "Swift Swim",
 						activeMoves: ["Horn Attack", "Supersonic", "Peck", "Tail Whip"],
@@ -2889,6 +2903,8 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Poliwag",
+						name: "5-2-herbert-poliwag",
+						pokeball: "net ball",
 						level: 17,
 						ability: "Water Absorb",
 						activeMoves: ["Bubble Beam", "Mud Shot", "Water Gun", "Rain Dance"],
@@ -2903,6 +2919,8 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Poliwag",
+						name: "5-2-herbert-poliwag",
+						pokeball: "net ball",
 						level: 17,
 						ability: "Water Absorb",
 						activeMoves: ["Bubble Beam", "Mud Shot", "Water Gun", "Rain Dance"],
@@ -2920,6 +2938,8 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Psyduck",
+						name: "5-2-carl-psyduck",
+						pokeball: "dive ball",
 						level: 17,
 						ability: "Cloud Nine",
 						activeMoves: ["Zen Headbutt", "Disable", "Water Gun", "Confusion"],
@@ -2927,6 +2947,8 @@ const levelData = [
 					},
 					{
 						id: "Magikarp",
+						name: "5-2-carl-magikarp",
+						pokeball: "net ball",
 						level: 17,
 						ability: "Swift Swim",
 						activeMoves: ["Splash", "Tackle"],
@@ -2941,6 +2963,8 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Psyduck",
+						name: "5-2-carl-psyduck",
+						pokeball: "dive ball",
 						level: 17,
 						ability: "Cloud Nine",
 						activeMoves: ["Zen Headbutt", "Disable", "Water Gun", "Confusion"],
@@ -2950,6 +2974,8 @@ const levelData = [
 					},
 					{
 						id: "Magikarp",
+						name: "5-2-carl-magikarp",
+						pokeball: "net ball",
 						level: 17,
 						ability: "Swift Swim",
 						activeMoves: ["Splash", "Tackle", "Flail", "Dragon Rage"],
@@ -2962,8 +2988,8 @@ const levelData = [
 		],
 		effects: [
 			{ type: "change-background-image", name: "route-bg-brooklet-hill-1" },
-			// { type: "fight", trainer: 0 },
-			// { type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "fight", trainer: 0 },
+			{ type: "jump-if-lost", jumpTo: Infinity },
 			{ type: "dialogue", source: "route-5-2-dialogue" },
 			{ type: "change-music", music: "SM Trainer Battle" },
 			{ type: "load-setting", key: "hardMode" },
@@ -3139,6 +3165,12 @@ const pokeballImages = {
 	},
 	"luxury ball": {
 		"icon": "src/img/balls/luxury ball.png"
+	},
+	"net ball": {
+		"icon": "src/img/balls/net ball.png"
+	},
+	"dive ball": {
+		"icon": "src/img/balls/dive ball.png"
 	},
 	"dusk ball": {
 		"icon": "src/img/balls/dusk ball.png"

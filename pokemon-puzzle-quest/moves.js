@@ -2023,13 +2023,13 @@ const pokemonMoveData = {
 		]
 	},
 	//Deals exactly 40 damage
-	"Night Shade": {
-		name: "Night Shade",
-		type: "Ghost",
+	"Dragon Rage": {
+		name: "Dragon Rage",
+		type: "Dragon",
 		category: "Special",
 		strategy: "special",
 		tags: ["damage-dealing"],
-		pp: 15,
+		pp: 10,
 		power: null,
 		accuracy: 100,
 		rechargeTurns: 1,

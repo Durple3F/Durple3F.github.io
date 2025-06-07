@@ -2245,6 +2245,11 @@
 			"description": "Deals damage. Then, 50% of the time, applies Paralyzed.",
 			"shortDescription": "Deals some damage and paralyzes"
 		},
+		"Dragon Rage": {
+			"name": "Dragon Rage",
+			"description": "Deals exactly 40 damage.",
+			"shortDescription": "Deals exactly 40 damage."
+		},
 		"Draining Kiss": {
 			"name": "Draining Kiss",
 			"description": "Deals damage. Then, heals the user for 75% of the damage dealt.",
@@ -3925,6 +3930,17 @@
 			"name": "Quirky",
 			"description": "Increases this Pokémon's Special Defense and lowers its Special Defense."
 		}
+	},
+	"pokemon-names": {
+		"5-1-mikiko-fletchling": "Chitter",
+		"5-1-mikiko-litleo": "Pepper",
+		"5-1-mikiko-espurr": "Mimi",
+		"5-2-hal-tentacool": "Jeoffrey",
+		"5-2-ernest-barboach": "Whiskers",
+		"5-2-ernest-goldeen": "Coral",
+		"5-2-herbert-poliwag": "Gilly",
+		"5-2-carl-psyduck": "Quackity",
+		"5-2-carl-magikarp": "Ol’ Reliable"
 	},
 	"status-effects": {
 		"burn": {

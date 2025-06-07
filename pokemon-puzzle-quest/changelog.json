@@ -1,8 +1,17 @@
 {
 	"versions": {
+		"20250606": {
+			"date": "June 06, 2025",
+			"line-count": 46900,
+			"changes": [
+				"- Added Dive Balls, Net Balls",
+				"- Improvements to level button tooltips again.",
+				"- Moved where the names that trainers give their pokemon are stored."
+			]
+		},
 		"20250605": {
 			"date": "June 05, 2025",
-			"line-count": 46800,
+			"line-count": 46900,
 			"changes": [
 				"- Added Litleo, Espurr, Magikarp",
 				"- Added Noble Roar, Dragon Rage",
