@@ -604,7 +604,11 @@ const trainerStrategy = {
 				if (!allYours){
 					return trainerStrategy["default"].choosePokemon(options)
 				}
-				let priorities = pokemonList.map(pokemon => trainer.pokemon.length - trainer.pokemon.indexOf(pokemon))
+				let priorities = pokemonList.map(pokemon => {
+					let priority = trainer.pokemon.length - trainer.pokemon.indexOf(pokemon)
+					priority *= pokemon.hp / pokemon.maxhp
+					return priority
+				})
 				let maxPriority = priorities.reduce((acc, v) => {
 					return acc > v ? acc : v
 				}, priorities[0])

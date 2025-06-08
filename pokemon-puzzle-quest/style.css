@@ -309,7 +309,7 @@ body {
 	background-color: var(--move-focus);
 	border: 0.2em solid rgb(50, 50, 50);
 	padding: 0.35em 0.5em;
-	font-size: 3vh;
+	font-size: 1.5em;
 	border-top-left-radius: 25%;
 	transition: background-color 0.25s;
 }

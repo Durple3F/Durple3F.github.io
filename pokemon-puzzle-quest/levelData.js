@@ -3084,7 +3084,57 @@ const levelData = [
 						id: "Alomomola",
 						level: 18,
 						isAce: true,
-						activeMoves: ["Helping Hand", "Double Slap", "Heal Pulse", "Water Gun"],
+						activeMoves: ["Helping Hand", "Double Slap", "Heal Pulse", "Rain Dance"],
+						evs: { hp: 30, attack: 25, defense: 25, specialAttack: 25, specialDefense: 30, speed: 20 },
+					},
+				]
+			},
+			{
+				isWild: true,
+				shuffle: false,
+				strategies: [
+					{
+						name: "5-3-trial"
+					}
+				],
+				pokemon: [
+					{
+						id: "Wishiwashi",
+						level: 18,
+						activeMoves: ["Helping Hand", "Feint Attack", "Brine", "Aqua Ring"],
+						evs: { hp: 30, attack: 30, defense: 25, specialAttack: 20, specialDefense: 30, speed: 20 },
+					},
+					{
+						id: "Dewpider",
+						level: 18,
+						activeMoves: ["Water Pulse", "Rain Dance", "Bug Bite", "Bubble"],
+						evs: { hp: 30, attack: 25, defense: 25, specialAttack: 25, specialDefense: 30, speed: 20 },
+					},
+					{
+						id: "Masquerain",
+						level: 18,
+						activeMoves: ["Scary Face", "Stun Spore", "Tailwind", "Bug Bite"],
+						evs: { hp: 30, attack: 25, defense: 25, specialAttack: 25, specialDefense: 30, speed: 20 },
+					},
+					{
+						id: "Wishiwashi",
+						level: 20,
+						tags: ["totem"],
+						activeMoves: ["Water Gun", "Growl", "Rain Dance", "Soak"],
+						evs: { hp: 100, attack: 50, defense: 50, specialAttack: 120, specialDefense: 200, speed: 30 },
+					},
+					{
+						id: "Araquanid",
+						level: 20,
+						tags: ["totem"],
+						activeMoves: ["Leech Life", "Bubble", "Bite", "Aurora Beam"],
+						evs: { hp: 100, attack: 50, defense: 50, specialAttack: 120, specialDefense: 200, speed: 30 },
+					},
+					{
+						id: "Alomomola",
+						level: 18,
+						isAce: true,
+						activeMoves: ["Helping Hand", "Double Slap", "Heal Pulse", "Rain Dance"],
 						evs: { hp: 30, attack: 25, defense: 25, specialAttack: 25, specialDefense: 30, speed: 20 },
 					},
 				]
@@ -3092,19 +3142,17 @@ const levelData = [
 		],
 		effects: [
 			{ type: "change-background-image", name: "route-bg-brooklet-hill-1" },
-			{ type: "fight", trainer: 0 },
-			// { type: "jump-if-lost", jumpTo: Infinity },
-			// { type: "dialogue", source: "route-5-1-dialogue" },
+			// { type: "dialogue", source: "route-5-3-dialogue" },
 			// { type: "change-music", music: "SM Trainer Battle" },
-			// { type: "load-setting", key: "hardMode" },
-			// { type: "load-value", value: true },
-			// { type: "jump-if-equal", jumpTo: "hardMode" },
-			// { type: "jump", jumpTo: "easyMode" },
-			// { type: "fight", trainer: 1, label: "easyMode" },
-			// { type: "jump", jumpTo: "win-check" },
-			// { type: "fight", trainer: 2, label: "hardMode" },
-			// { type: "jump", jumpTo: "win-check" },
-			// { type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
+			{ type: "load-setting", key: "hardMode" },
+			{ type: "load-value", value: true },
+			{ type: "jump-if-equal", jumpTo: "hardMode" },
+			{ type: "jump", jumpTo: "easyMode" },
+			{ type: "fight", trainer: 0, label: "easyMode" },
+			{ type: "jump", jumpTo: "win-check" },
+			{ type: "fight", trainer: 1, label: "hardMode" },
+			{ type: "jump", jumpTo: "win-check" },
+			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
 			// { type: "dialogue", source: "route-5-1-dialogue-won" },
 		]
 	},

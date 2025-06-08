@@ -2029,6 +2029,11 @@
 			"description": "Deals damage. Then, removes half of the target's initiative.",
 			"shortDescription": "Deals light damage and slows opponent"
 		},
+		"Aurora Beam": {
+			"name": "Aurora Beam",
+			"description": "Deals damage. There's a 50% chance for this move to lower the opponent's Speed stat by a stage.",
+			"shortDescription": "Damages and may lower enemy speed"
+		},
 		"Aqua Jet": {
 			"name": "Aqua Jet",
 			"description": "Deals damage. If the opponent has any benched Pokémon remaining, this move also attacks one of them of your choice, with 20 less power.",
@@ -2102,9 +2107,14 @@
 			"description": "Deals damage. The user takes recoil damage equal to 1/4 of the damage dealt. Converts half of all Grass and Psychic tiles, rounded up, into Dark tiles. Dark tiles are worth 1 purple energy AND 1 red energy each.",
 			"shortDescription": "Turns tiles into Dark tiles"
 		},
+		"Bubble": {
+			"name": "Bubble",
+			"description": "Deals damage. There's a 50% chance for this move to apply the Bubbly status effect to 3 random tiles. Otherwise, it lowers the opponent's Speed stat by a stage. Bubbly tiles are worth 1 more blue energy for the trainer that applied the status to them.",
+			"shortDescription": "Damages and may lower enemy speed"
+		},
 		"Bubble Beam": {
 			"name": "Bubble Beam",
-			"description": "Deals damage. Gives 8 random non-Water tiles the Bubbly status effect. Being Bubbly adds 1 blue energy to the tile's energy value.",
+			"description": "Deals damage. Gives 8 random non-Water tiles the Bubbly status effect. Bubbly tiles are worth 1 more blue energy for the trainer that applied the status to them.",
 			"shortDescription": "Gives tiles Bubbly"
 		},
 		"Bug Bite": {
@@ -2544,6 +2554,11 @@
 			"name": "Leafage",
 			"description": "Deals damage. 3 random tiles are transformed into Grass tiles.",
 			"shortDescription": "Damages and turns tiles into Grass tiles"
+		},
+		"Leech Life": {
+			"name": "Leech Life",
+			"description": "Deals damage. Then, heals the user for 50% of the damage dealt.",
+			"shortDescription": "Steals HP"
 		},
 		"Leech Seed": {
 			"name": "Leech Seed",

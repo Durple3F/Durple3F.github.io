@@ -419,6 +419,43 @@ const pokemonMoveData = {
 			{ type: "set-initiative", target: "opponent", initiative: -1 },
 		]
 	},
+	//Damages and may lower enemy speed 1
+	"Aurora Beam": {
+		name: "Aurora Beam",
+		type: "Ice",
+		category: "Special",
+		strategy: "basic-damage",
+		pp: 20,
+		power: 65,
+		accuracy: 100,
+		rechargeTurns: 2,
+		energy: {
+			blue: 6,
+			red: 4,
+			green: 2
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Aurora Beam.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "random-number", min: 1, max: 10 },
+			{ type: "load-value", value: 6 },
+			{ type: "jump-if-less-than", jumpTo: Infinity },
+			{
+				type: "apply-debuff", target: "opponent", label: "lower-speed", debuff: {
+					type: "stat",
+					stat: "speed",
+					class: "debuff",
+					amount: -1
+				}
+			},
+		]
+	},
 	//Damages a non-active pokemon
 	"Aqua Jet": {
 		name: "Aqua Jet",
@@ -913,6 +950,48 @@ const pokemonMoveData = {
 				conditions: { types: ["purple"] }
 			},
 			{ type: "change-tile-type", selection: "group", which: -1, targetType: "black" },
+		]
+	},
+	//Damages and may lower enemy speed 1 or make some tiles Bubbly
+	"Bubble": {
+		name: "Bubble",
+		type: "Water",
+		category: "Special",
+		strategy: "basic-damage",
+		pp: 30,
+		power: 40,
+		accuracy: 100,
+		rechargeTurns: 3,
+		energy: {
+			blue: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Bubble.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "random-number", min: 1, max: 10 },
+			{ type: "load-value", value: 6 },
+			{ type: "jump-if-less-than", jumpTo: "lower-speed" },
+			{ type: "load-value", value: 3 },
+			{ type: "select-random-tiles", count: -1 },
+			{
+				type: "apply-status-to-tiles", selection: "group", which: -1,
+				status: { name: "Bubbly", type: "buff", duration: null }
+			},
+			{ type: "jump", jumpTo: Infinity },
+			{
+				type: "apply-debuff", target: "opponent", label: "lower-speed", debuff: {
+					type: "stat",
+					stat: "speed",
+					class: "debuff",
+					amount: -1
+				}
+			},
 		]
 	},
 	//Makes tiles give extra blue energy
@@ -4317,6 +4396,34 @@ const pokemonMoveData = {
 			{ type: "select-random-tiles", count: -1 },
 			{ type: "change-tile-type", selection: "group", which: -1, targetType: "green" },
 		]
+	},
+	//Steals HP
+	"Leech Life": {
+		name: "Leech Life",
+		type: "Bug",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["healing", "draining"],
+		pp: 10,
+		power: 80,
+		accuracy: 100,
+		rechargeTurns: 3,
+		energy: {
+			green: 6,
+			red: 4,
+			yellow: 6
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Leech Life.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "load-value", value: 0.5 },
+			{ type: "multiply-numbers" },
+			{ type: "load-value", value: 1 },
+			{ type: "heal", target: "user", amount: -2, min: -1 },
+		],
 	},
 	//Every turn the defender has hp drained
 	"Leech Seed": {
