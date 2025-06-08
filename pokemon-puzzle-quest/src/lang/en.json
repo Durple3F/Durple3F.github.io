@@ -2434,6 +2434,11 @@
 			"description": "For each usable Pokémon remaining in the user's party, that Pokémon has all their negative status conditions removed.",
 			"shortDescription": "Removes statuses from each of your Pokémon"
 		},
+		"Heal Pulse": {
+			"name": "Heal Pulse",
+			"description": "The user chooses one of their Pokémon. That Pokémon heals HP equal to ahlf of their max HP, rounded up.",
+			"shortDescription": "Heals one of the user's Pokémon"
+		},
 		"Helping Hand": {
 			"name": "Helping Hand",
 			"description": "Reduces the cooldown of the move with the user's highest cooldown by 5.",

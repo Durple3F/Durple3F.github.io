@@ -402,10 +402,7 @@ class Round {
 			let pokemonCanSwapTo = getUsablePokemon(enemyTrainer.pokemon)
 			if (pokemonCanSwapTo.length > 0) {
 				//If the enemy has pokemon they can swap to, they pick one and swap to it.
-				promise = promise.then(() => this.computerChoosePokemon(1, pokemonCanSwapTo, "swap"))
-					.then(pokemonList => {
-						return this.animateSendOutPokemon(1, pokemonList[0])
-					})
+				promise = promise.then(() => this.computerSwapOutActivePokemon(1))
 			} else {
 				//If the enemy has no pokemon they can swap to, you win.
 				promise = promise.then(() => this.end("win"))
@@ -2258,23 +2255,72 @@ class Round {
 		return promise
 	}
 
-	computerTakeTurn() {
+	async computerTakeTurn() {
 		let promise = Promise.resolve()
 		let turn = this.turn
 
-		promise = promise.then(() => this.computerMakeMoves())
-
-		promise = promise.then(() => {
+		let alreadyMadeMoves = false
+		const advanceTurn = async () => {
 			if (this.hasEnded || this.turn !== turn) return Promise.resolve()
-			return delay(250).then(() => {
-				if (this.turn === turn) {
-					return this.timeStep()
-						.then(() => {
-							return this.computerMakeSwap()
-						})
+			await delay(250)
+			if (this.turn !== turn) {
+				return Promise.resolve()
+			}
+			await this.timeStep()
+			if (this.turn !== turn) {
+				return Promise.resolve()
+			}
+			let trainer = this.trainers[this.activePlayerIndex]
+			let strategies = trainer?.data?.strategies ?? []
+			let options = {
+				game: this,
+				trainer: trainer,
+				areMovesAllowed: !alreadyMadeMoves,
+				isWild: trainer.data.isWild
+			}
+			let actionWeights = strategies.map(strategyInfo => {
+				let strategyName = strategyInfo.name
+				let strategyWeight = strategyInfo.weight ?? 1
+				let weights = trainerStrategy[strategyName].chooseActions(options)
+				for (let key in weights){
+					weights[key] *= strategyWeight
 				}
+				return weights
 			})
-		})
+			let totalWeights = actionWeights.reduce((acc, v) => {
+				for (let key in v){
+					if (!(key in acc)){
+						acc[key] = 0
+					}
+					acc[key] += v[key]
+				}
+				return acc
+			}, {})
+			let possibleChoices = Object.keys(totalWeights)
+
+			if (alreadyMadeMoves){
+				removeFromArray(possibleChoices, "makeMoves")
+			}
+
+			let weights = possibleChoices.map(key => totalWeights[key])
+			let choice = weightedRandom(possibleChoices, weights).item || "swap"
+			console.log(possibleChoices, weights)
+			if (choice === "switch"){
+				await this.computerSwapOutActivePokemon(this.activePlayerIndex)
+				.then(() => this.checkForWinner())
+				.then(() => this.turnEnd(turn))
+			} else if (choice === "makeMoves"){
+				alreadyMadeMoves = true
+				await this.computerMakeMoves()
+			} else {
+				await this.computerMakeSwap()
+			}
+
+			await advanceTurn()
+			return Promise.resolve()
+		}
+
+		await advanceTurn()
 		return promise
 	}
 	computerMakeMoves() {
@@ -2283,7 +2329,6 @@ class Round {
 		let promise = delay(250)
 		let trainerIndex = this.activePlayerIndex
 		let turn = this.turn
-		let randomId = window.crypto.randomUUID()
 
 		let movesMade = 0
 		let maxMoves = 20
@@ -2297,10 +2342,6 @@ class Round {
 				resolvePromise()
 				return Promise.resolve()
 			}
-			// if (this.moveQueue.length){
-			// 	resolvePromise()
-			// 	return Promise.resolve()
-			// }
 			let trainer = this.trainers[trainerIndex]
 			let pokemon = trainer.activePokemon
 			let pokemonTypes = pokemon.getEffectiveTypes()
@@ -2578,23 +2619,33 @@ class Round {
 		let resolvePromise
 		let promise = new Promise(resolve => resolvePromise = resolve)
 
-		if (reason === "swap"){
-			let nonAces = pokemonList.filter(pokemon => {
-				let tagData = trainer.pokemonData[pokemon.uuid] || {}
-				return !tagData.isAce
-			})
-			console.log(nonAces, pokemonList)
-			let canPick = nonAces
-			if (!nonAces.length){
-				canPick = pokemonList
-			}
-			let chosen = randomChoice(canPick)
-			resolvePromise([chosen])
-		} else {
-			let chosen = randomChoice(pokemonList)
-			resolvePromise([chosen])
+		let options = {
+			reason: reason,
+			trainer: trainer,
+			pokemonList: pokemonList,
+			trainer: trainer
 		}
+		let strategy = trainer.data.strategies[0].name
+		let system = trainerStrategy[strategy]
+		if (!("choosePokemon" in system)){
+			system = trainerStrategy["default"]
+		}
+		let result = system.choosePokemon(options)
+		resolvePromise(result)
 
+		return promise
+	}
+	computerSwapOutActivePokemon(trainerIndex){
+		let promise = Promise.resolve()
+		let trainer = this.trainers[trainerIndex]
+		let pokemonCanSwapTo = getUsablePokemon(trainer.pokemon)
+		pokemonCanSwapTo = pokemonCanSwapTo.filter(pokemon => {
+			return pokemon !== trainer.activePokemon
+		})
+		promise = promise.then(() => this.computerChoosePokemon(1, pokemonCanSwapTo, "swap"))
+		.then(pokemonList => {
+			return this.animateSendOutPokemon(1, pokemonList[0])
+		})
 		return promise
 	}
 	getActionWeight(options) {
@@ -2602,6 +2653,7 @@ class Round {
 		//Doing nothing is technically an action you can take.
 		let strategyData = getStrategyData(options.action)
 		let weight = strategyData.chooseWeight(options)
+		console.log(weight, options.action)
 		return weight
 	}
 	getActionWeightOptions(trainer, pokemon, action, payableMoves, unpayableMoves) {
@@ -6510,10 +6562,10 @@ class Round {
 }
 
 class Trainer {
-	constructor(name, pokemon, options) {
+	constructor(name, pokemon, options={}) {
 		this.name = name
 		this.pokemon = []
-		this.data = options ?? {}
+		this.data = window.structuredClone(options) ?? {}
 		this.pokemonData = {}
 		this.tags = {}
 		pokemon.forEach(p => {
@@ -6525,6 +6577,15 @@ class Trainer {
 		if (!this.activePokemon) {
 			console.warn("WEE OO WEE OO")
 			console.trace()
+		}
+		
+		//Used for CPU players
+		if (!this.data.strategies){
+			this.data.strategies = []
+			this.data.strategies.push({
+				name: "default",
+				weight: 1
+			})
 		}
 
 		this.canUseZMoves = !!this.data.canUseZMoves
@@ -7368,6 +7429,7 @@ function beginRound(trainerData) {
 		pokemonData.splice(pokemonData.length - 1, 1)
 	}
 	let acePokemon = []
+	let pokemonWithTags = []
 	let enemyPokemon = pokemonData.map(data => {
 		let options = {}
 		options.id = data.id
@@ -7417,6 +7479,9 @@ function beginRound(trainerData) {
 		if (data.isAce){
 			acePokemon.push(pokemon)
 		}
+		if (data.tags){
+			pokemonWithTags.push([pokemon, data.tags])
+		}
 		logPokemonAs("seen", pokemon)
 		if (pokemon.isShiny) {
 			logPokemonAs("seen-shiny", pokemon)
@@ -7432,6 +7497,10 @@ function beginRound(trainerData) {
 
 	let enemy = new Trainer("Enemy", enemyPokemon, trainerData)
 	acePokemon.forEach(pokemon => enemy.pokemonData[pokemon.uuid].isAce = true)
+	pokemonWithTags.forEach(pair => {
+		let pokemon = pair[0]
+		enemy.pokemonData[pokemon.uuid].tags = pair[1]
+	})
 
 	//If there was a previous fight in this level, carry over the board
 	//so that it remains there for this fight.

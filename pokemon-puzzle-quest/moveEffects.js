@@ -1957,7 +1957,7 @@ const pokemonMoveEffects = {
 		targetDefault: "user",
 		execute: (resolve, effect, params, game, options) => {
 			let target = options.target
-			let moves = target.activeMoves
+			let moves = target.activeMoves.map(move => move)
 			let sort = effect.sort
 			let exceptions = effect.except ?? []
 			let direction = effect.direction ?? "ascending"

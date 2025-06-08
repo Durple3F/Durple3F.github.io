@@ -13,15 +13,13 @@ const moveUseStrategy = {
 				if (options.allowRecursion){
 					weight = getActionWeightSimple(action, options, false)
 				} else {
-
+					//This gets infinitely recursive fast
 				}
 
 				if (favoriteMoveWeight < weight){
 					favoriteMove = action
 					favoriteMoveWeight = weight
 				}
-
-				return weight
 			})
 
 			//If our favorite move is one of the payable ones,
@@ -316,6 +314,18 @@ const moveUseStrategy = {
 			return weight
 		}
 	},
+	"Heal Pulse": {
+		chooseWeight: options => {
+			let pokemonList = getUsablePokemon(options.trainer.pokemon)
+			let weight = 0
+			let missingP = 0
+			for (let pokemon of pokemonList){
+				missingP += 1 - (pokemon.hp / pokemon.maxhp)
+			}
+			weight += missingP * 100
+			return weight
+		}
+	},
 	//TODO: This is a little stupid. It just considers moves that are on cooldown instead of just the move with the current longest cooldown.
 	"Helping Hand": {
 		chooseWeight: options => {
@@ -505,6 +515,106 @@ const moveUseStrategy = {
 			return weight
 		}
 	},
+}
+
+const trainerStrategy = {
+	"default": {
+		chooseActions: options => {
+			let game = options.game
+			let trainer = options.trainer
+			let activePokemon = trainer.activePokemon
+			let isWild = options.isWild
+			let result = {
+				swap: 0,
+				makeMoves: 0,
+				switch: 0
+			}
+			let areMovesAllowed = options.areMovesAllowed
+			if (areMovesAllowed){
+				result.makeMoves = 1000
+			} else {
+				result.swap = 1
+			}
+			let switchAllowed = !isWild || options.switchAllowed
+			if (switchAllowed && activePokemon.hp < 0.4 * activePokemon.maxhp){
+				let goodSwaps = trainer.pokemon.filter(pokemon => {
+					if (activePokemon === pokemon) return false
+					return pokemon.hp > 0.5 * pokemon.maxhp
+				})
+				if (goodSwaps.length){
+					result = {}
+					result.switch = 1
+				}
+			}
+			return result
+		},
+		choosePokemon: options => {
+			let reason = options.reason
+			let pokemonList = options.pokemonList
+			let trainer = options.trainer
+			if (reason === "swap"){
+				let nonAces = pokemonList.filter(pokemon => {
+					let tagData = trainer.pokemonData[pokemon.uuid] || {}
+					return !tagData.isAce
+				})
+				let canPick = nonAces
+				if (!nonAces.length){
+					canPick = pokemonList
+				}
+				let chosen = randomChoice(canPick)
+				return [chosen]
+			} else if (reason === "heal"){
+				let lowestHp = pokemonList.reduce((lowest, pokemon) => {
+					let p1 = lowest.hp / lowest.maxhp
+					let p2 = pokemon.hp / pokemon.maxhp
+					return p1 < p2 ? lowest : p1 > p2 ? pokemon : lowest
+				}, pokemonList[0])
+				return [lowestHp]
+			} else {
+				let chosen = randomChoice(pokemonList)
+				return [chosen]
+			}
+		}
+	},
+	"5-3-trial": {
+		chooseActions: options => {
+			let trainer = options.trainer
+			let activePokemon = trainer.activePokemon
+			options.switchAllowed = true
+			let result = trainerStrategy["default"].chooseActions(options)
+			if (activePokemon.pokemonId === "Alomomola"){
+				let totemPokemonToHeal = trainer.pokemon.filter(pokemon => {
+					let data = trainer.pokemonData[pokemon.uuid]
+					let tags = data.tags
+					return tags?.includes("totem") && isPokemonUsable(pokemon) && pokemon.hp < 0.7 * pokemon.maxhp
+				})
+				if (!totemPokemonToHeal.length){
+					result = {}
+					result.switch = 1
+				}
+			}
+			return result
+		},
+		choosePokemon: options => {
+			let reason = options.reason
+			let pokemonList = options.pokemonList
+			let trainer = options.trainer
+			if (reason === "swap"){
+				let allYours = pokemonList.every(pokemon => trainer.pokemon.includes(pokemon))
+				if (!allYours){
+					return trainerStrategy["default"].choosePokemon(options)
+				}
+				let priorities = pokemonList.map(pokemon => trainer.pokemon.length - trainer.pokemon.indexOf(pokemon))
+				let maxPriority = priorities.reduce((acc, v) => {
+					return acc > v ? acc : v
+				}, priorities[0])
+				let index = priorities.indexOf(maxPriority)
+				return [pokemonList[index]]
+			} else {
+				return trainerStrategy["default"].choosePokemon(options)
+			}
+		}
+	}
 }
 
 function getActionWeightSimple(action, options, allowRecursion=false){

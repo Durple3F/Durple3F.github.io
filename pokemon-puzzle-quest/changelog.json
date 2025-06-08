@@ -1,5 +1,14 @@
 {
 	"versions": {
+		"20250607": {
+			"date": "June 07, 2025",
+			"line-count": 47300,
+			"changes": [
+				"- Working to make some levels have trainers with special playstyles.",
+				"\t- Now levels can have custom decision-making for when to use moves or which pokemon to swap to in what order.",
+				"- FINALLY found that bug that was making Helping Hand spontaneously remove itself from your pokemon."
+			]
+		},
 		"20250606": {
 			"date": "June 06, 2025",
 			"line-count": 47100,

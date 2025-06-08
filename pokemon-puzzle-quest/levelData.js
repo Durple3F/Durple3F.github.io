@@ -3061,6 +3061,11 @@ const levelData = [
 			{
 				isWild: true,
 				shuffle: false,
+				strategies: [
+					{
+						name: "5-3-trial"
+					}
+				],
 				pokemon: [
 					{
 						id: "Wishiwashi",
@@ -3071,6 +3076,7 @@ const levelData = [
 					{
 						id: "Wishiwashi",
 						level: 20,
+						tags: ["totem"],
 						activeMoves: ["Water Gun", "Growl", "Rain Dance", "Soak"],
 						evs: { hp: 100, attack: 50, defense: 50, specialAttack: 120, specialDefense: 200, speed: 30 },
 					},
