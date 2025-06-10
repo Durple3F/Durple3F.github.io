@@ -207,7 +207,7 @@ function unloadSprite(name){
 	delete sprites.complete[name]
 }
 
-function changeBackgroundImage(name, url, duration=400, combineFades=false){
+function changeBackgroundImage(name, url, duration=800, combineFades=false){
 	let resolvePromise
 	let promise = new Promise(resolve => resolvePromise = resolve)
 	let background = $("#background")
@@ -216,7 +216,7 @@ function changeBackgroundImage(name, url, duration=400, combineFades=false){
 	if (name === "none"){
 		let currentBg = bg1.css("background-image")
 		let p = Promise.resolve()
-		if (currentBg !== "none"){
+		if (currentBg !== "none" && !combineFades){
 			bg1.fadeOut(duration)
 			p = p.then(() => delay(duration))
 		}
@@ -232,13 +232,16 @@ function changeBackgroundImage(name, url, duration=400, combineFades=false){
 	let p2 = Promise.resolve()
 	let currentBg = bg1.css("background-image")
 	if (currentBg !== "none"){
-		bg1.fadeOut(duration)
+		// bg1.fadeOut(duration)
 		if (!combineFades){
 			p2 = delay(duration)
 		}
 	} else {
 		bg1.hide()
 	}
+
+	//As soon as we both have the image loaded and the previous image hidden,
+	//bg1 slowly fades in. Once it reaches 100% opacity, it is moved to bg2.
 	Promise.all([p1, p2]).then(() => {
 		let image = sprites.images[name]
 		let canvas = document.createElement("canvas")

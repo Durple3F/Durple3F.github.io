@@ -39,6 +39,11 @@ const dialogueEffects = {
 			let waitDuration = effect.waitDuration ?? duration
 			let stepHeight = options.dialogueTag.height() * 0.035
 
+			let transition = tag.css("transition")
+			if (transition.includes("transform")){
+				tag.css("transition", "")
+			}
+			
 			$({ val: 0 }).animate({ val: 1 }, {
 				duration: duration,
 				easing: "linear",
@@ -488,6 +493,12 @@ const dialogueEffects = {
 			if (test === against) {
 				progress.nextEffectIndex = options.index
 			}
+			resolve()
+		}
+	},
+	"jump": {
+		execute: (resolve, effect, progress, options) => {
+			progress.nextEffectIndex = options.index
 			resolve()
 		}
 	},

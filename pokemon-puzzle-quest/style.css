@@ -201,7 +201,7 @@ body {
 }
 .popover .z-move-description {
 	/* display: inline-block; */
-	background-image: radial-gradient(
+	/* background-image: radial-gradient(
 		circle,
 		rgba(255, 0, 0, 1) 0%,
 		rgba(255, 154, 0, 1) 10%,
@@ -214,6 +214,20 @@ body {
 		rgba(186, 12, 248, 1) 80%,
 		rgba(251, 7, 217, 1) 90%,
 		rgba(255, 0, 0, 1) 100%
+	); */
+	background-image: radial-gradient(
+		circle,
+		rgb(255, 86, 86) 0%,
+		rgb(255, 187, 86) 10%,
+		rgb(228, 238, 93) 20%,
+		rgb(121, 240, 117) 30%,
+		rgb(117, 236, 234) 40%,
+		rgb(90, 220, 240) 50%,
+		rgb(72, 147, 233) 60%,
+		rgb(135, 80, 247) 70%,
+		rgb(204, 70, 253) 80%,
+		rgb(253, 73, 229) 90%,
+		rgb(255, 86, 86) 100%
 	);
 	background-size: 80%;
 	background-position-x: 0%;

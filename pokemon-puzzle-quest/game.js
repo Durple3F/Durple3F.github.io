@@ -3645,6 +3645,7 @@ class Round {
 
 		//Swift Swim increases your speed at all times based on the number of water tiles
 		if (statName === "speed" && pokemon.hasAbility("Swift Swim")){
+			let diff = 1
 			let yellows = this.board.tilesOnScreen().filter(tile => tile.type === "blue")
 			diff += yellows.length * 0.01
 			stat *= diff
@@ -7753,5 +7754,7 @@ function getZMove(trainer, pokemon, move, type){
 		return pokemonMoveData["All-Out Pummeling"]
 	} else if (type === "Flying" && unlocked.includes("Flying")){
 		return pokemonMoveData["Supersonic Skystrike"]
+	} else if (type === "Water" && unlocked.includes("Water")){
+		return pokemonMoveData["Hydro Vortex"]
 	}
 }

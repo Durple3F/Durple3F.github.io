@@ -3046,6 +3046,7 @@ const levelData = [
 		icon: "3",
 		images: {
 			"route-bg-brooklet-hill-1": "src/img/bg/brooklet hill 1.jpg",
+			"route-bg-brooklet-hill-2": "src/img/bg/brooklet hill 2.jpg",
 		},
 		recommendedLevels: {
 			"normal": (pokemonList) => {
@@ -3142,8 +3143,9 @@ const levelData = [
 		],
 		effects: [
 			{ type: "change-background-image", name: "route-bg-brooklet-hill-1" },
-			// { type: "dialogue", source: "route-5-3-dialogue" },
-			// { type: "change-music", music: "SM Trainer Battle" },
+			{ type: "dialogue", source: "route-5-3-dialogue" },
+			{ type: "change-music", music: "SM Trainer Battle" },
+			{ type: "change-background-image", name: "route-bg-brooklet-hill-2", duration: 30000, combineFades: true },
 			{ type: "load-setting", key: "hardMode" },
 			{ type: "load-value", value: true },
 			{ type: "jump-if-equal", jumpTo: "hardMode" },
@@ -3153,7 +3155,9 @@ const levelData = [
 			{ type: "fight", trainer: 1, label: "hardMode" },
 			{ type: "jump", jumpTo: "win-check" },
 			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
-			// { type: "dialogue", source: "route-5-1-dialogue-won" },
+			{ type: "change-background-image", name: "route-bg-brooklet-hill-1", duration: 5000, combineFades: true },
+			{ type: "dialogue", source: "route-5-3-dialogue-won" },
+			{ type: "unlock-z-move-type", unlockedType: "Water" },
 		]
 	},
 ]

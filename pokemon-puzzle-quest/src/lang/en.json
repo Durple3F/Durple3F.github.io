@@ -1358,6 +1358,67 @@
 				{ "type": "transform-speaker", "speaker": "Lana", "transform": "", "duration": 1000 },
 				{ "type": "text", "speaker": "Lana", "text": "$@font-size:0.9|@$I’m sorry. I promise the real trial will be more structured than this.$@font-size:1|@$ " }
 			]
+		},
+		"route-5-3-dialogue": {
+			"events": [],
+			"callbacks": {},
+			"effects": [
+				{ "type": "get-speaker", "name": "Lana", "class": "Lana" },
+				{ "type": "text", "speaker": "Lana", "text": "Finally! I’m so sorry for all that... Hopefully we can start the trial now?" },
+				{ "type": "text", "speaker": "Lana", "text": "Those fishermen did have a good reason to want to fish here. This spot is different from everywhere else here." },
+				{ "type": "text", "speaker": "Lana", "text": "No one’s sure of why exactly this is true, but some Water Pokémon get a power boost here!" },
+				{ "type": "text", "speaker": "Lana", "text": "So that’s your trial. If you win, I’ll teach you and your Pokémon how to use $@blue|Water-type Z-moves@$." },
+				{ "type": "text", "speaker": "Lana", "text": "Good luck! Head into the center of the lake when you’re ready." }
+			]
+		},
+		"route-5-3-dialogue-won": {
+			"events": [
+				{ "type": "transform-speaker", "speaker": "Lana", "transform": "rotate(-6deg) translateY(5%)", "duration": 1000, "waitDuration": 1000 },
+				{ "type": "transform-speaker", "speaker": "Lana", "transform": "", "duration": 600, "waitDuration": 0 },
+				{ "type": "transform-speaker", "speaker": "Lana", "transform": "rotate(-3deg)", "duration": 300, "waitDuration": 0 },
+				{ "type": "transform-speaker", "speaker": "Lana", "transform": "", "duration": 300, "waitDuration": 0 },
+				{ "type": "bounce", "speaker": "Lana", "duration": 600, "waitDuration": 0 },
+				{ "type": "transform-speaker", "speaker": "Lana", "transform": "rotate(-6deg) translateY(-10%)", "duration": 1000, "waitDuration": 1000 }
+			],
+			"callbacks": {
+				"lower": { "type": "transform-speaker", "speaker": "Lana", "transform": "", "duration": 600 },
+				"wait-before-lower": { "type": "wait", "waitDuration": 700, "then": "lower" }
+			},
+			"effects": [
+				{ "type": "get-speaker", "name": "Lana", "class": "Lana" },
+				{ "type": "get-speaker", "name": "Narrator", "class": "Narrator" },
+				{ "type": "transform-speaker", "speaker": "Lana", "transform": "rotate(3deg) translateY(-20%)", "duration": 600, "waitDuration": 0, "then": "wait-before-lower" },
+				{ "type": "text", "speaker": "Lana", "text": "Very well done! Clear skies once again." },
+				{ "type": "text", "speaker": "Lana", "text": "I apologize, ^^again,$@wait-20|@$^^ for how bumpy this whole thing started." },
+				{ "type": "text", "speaker": "Lana", "text": "And I have to say, I’m a bit conflicted about how ^^$@start-italics|@$easy$@end-italics|@$$@wait-10|@$^^ you made that look..." },
+				{ "type": "text", "speaker": "Lana", "text": "I spent a long time training those Pokémon, and not once but ^^$@start-italics|@$twice$@end-italics|@$ today, they’re defeated." },
+				{ "type": "text", "speaker": "Lana", "text": "Oh well. Would you say I made it challenging enough?" },
+				{ "type": "choice", "speaker": "Lana", "choices": [
+					{ "text": "Yes", "value": true, "default": true },
+					{ "text": "No", "value": false }
+				] },
+				{ "type": "set-variable", "name": "agree" },
+				{ "type": "load-value", "value": false },
+				{ "type": "jump-if-equal", "jumpTo": "skipTo" },
+				{ "type": "text", "speaker": "Lana", "text": "Why thank you. I do try to make it at least a bit challenging, so that’s really nice to hear." },
+				{ "type": "text", "speaker": "Lana", "text": "Though... maybe next time I’ll throw my Gyarados into the mix, too. Just to keep people honest. Hehe." },
+				{ "type": "text", "speaker": "Lana", "text": "I suppose it’s time for your reward. Here, take this Z-crystal." },
+				{ "type": "jump", "jumpTo": "merge" },
+				{ "type": "text", "speaker": "Lana", "label": "skipTo", "text": "Oh. Well, I’m sorry to hear that." },
+				{ "type": "text", "speaker": "Lana", "text": "I did train those Pokémon myself. Maybe I pushed them a bit too far..." },
+				{ "type": "text", "speaker": "Lana", "text": "Well, the important thing is that you passed. Here, take this Z-crystal." },
+				{ "type": "jump", "jumpTo": "merge" },
+				{ "type": "text", "speaker": "Lana", "label": "merge", "text": "From now on, your $@blue|Water-type@$ Pokémon can power up their Water-type moves." },
+				{ "type": "text", "speaker": "Lana", "text": "Y’know, it’s interesting that trainers $@start-italics|@$always$@end-italics|@$ come here for Water Z-moves before Fire or Grass ones, right?" },
+				{ "type": "text", "speaker": "Lana", "text": "Like, they know that there doesn’t really have to be a specific order to this whole island challenge thing, right?" },
+				{ "type": "text", "speaker": "Lana", "text": "I guess everyone thinks that, given a choice, they should pick the cute little Water guy and nobody else." },
+				{ "type": "text", "speaker": "Lana", "text": "And they’re right, but I just think that’s interesting." },
+				{ "type": "text", "speaker": "Lana", "text": "Anyway, if you wanna follow The Order™, my buddy Kiawe is probably somewhere ^^up there right now." },
+				{ "type": "text", "speaker": "Narrator", "text": "(She points at the peak of the island’s tallest mountain, looking at you for a reaction.)" },
+				{ "type": "transform-speaker", "speaker": "Lana", "transform": "", "duration": 1000, "waitDuration": 0 },
+				{ "type": "text", "speaker": "Lana", "text": "Between you and me, I think his Pokémon are kinda pushovers, but don’t tell him that." },
+				{ "type": "text", "speaker": "Lana", "text": "See you later!" }
+			]
 		}
 	},
 	"pokemon": {
@@ -3207,17 +3268,22 @@
 		"Breakneck Blitz": {
 			"name": "Breakneck Blitz",
 			"description": "<span class='z-move-description'>Randomly chooses 5 tiles, then removes them. Then does that again, seven more times. Deals damage with power based on the move it's replacing.</span>",
-			"shortDescription": "Deals huge damage and clears tiles randomly"
+			"shortDescription": "Deals high damage and clears tiles randomly"
 		},
 		"All-Out Pummeling": {
 			"name": "All-Out Pummeling",
 			"description": "<span class='z-move-description'>Punches a circular hole into a random spot on the board. Then does that again, five more times. Deals damage with power based on the move it's replacing.</span>",
-			"shortDescription": "Deals huge damage and removes chunks of tiles"
+			"shortDescription": "Deals high damage and removes chunks of tiles"
 		},
 		"Supersonic Skystrike": {
 			"name": "Supersonic Skystrike",
 			"description": "<span class='z-move-description'>Slices through the board twice removing all tiles along both diagonals. Then, deals damage with power based on the move it's replacing.</span>",
-			"shortDescription": "Deals huge damage and slices through the board"
+			"shortDescription": "Deals high damage and slices through the board"
+		},
+		"Hydro Vortex": {
+			"name": "Hydro Vortex",
+			"description": "<span class='z-move-description'>Waves pull the board back and forth, bringing new tiles onto the board over and over, and dealing more damage each time.</span>",
+			"shortDescription": "Deals high damage and shifts the board"
 		}
 	},
 	"abilities": {
@@ -4160,6 +4226,10 @@
 		"Route 5-2": {
 			"name": "Route 5-2",
 			"description": "You follow where you saw Lana go, further along the path."
+		},
+		"Route 5-3": {
+			"name": "Route 5-3",
+			"description": "Once the lake is cleared out, you and Lana are finally able to start your trial at Brooklet Hill"
 		}
 	},
 	"route-categories": {

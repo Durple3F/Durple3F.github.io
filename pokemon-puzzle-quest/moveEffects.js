@@ -164,6 +164,7 @@ const pokemonMoveEffects = {
 			let width = board.width
 			let height = board.height
 			let tilesMovedOffscreen = []
+			let duration = effect.duration ?? 250
 			let locationMap = new Map()
 			for (let tile of selection){
 				// let x = (tile.x + xOffset) % game.board.width
@@ -202,10 +203,15 @@ const pokemonMoveEffects = {
 				locationMap.set(tile, coord)
 			})
 
-			tilesMovedOffscreen.forEach(tile => {
-				board.removeFade(tile, 250)
+			delay(duration / 2).then(() => {
+				tilesMovedOffscreen.forEach(tile => {
+					if (board.contents.includes(tile)){
+						board.removeFade(tile, duration)
+					}
+				})
 			})
-			game.animateMoveTiles(locationMap, 250)
+			
+			game.animateMoveTiles(locationMap, duration)
 			.then(() => game.timeStep())
 			.then(() => resolve())
 		}

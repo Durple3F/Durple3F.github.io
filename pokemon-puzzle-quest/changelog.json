@@ -1,5 +1,22 @@
 {
 	"versions": {
+		"20250609": {
+			"date": "June 09, 2025",
+			"line-count": 47700,
+			"changes": [
+				"- Not feeling very good today :(",
+				"- Working on the water-type z-move"
+			]
+		},
+		"20250608": {
+			"date": "June 08, 2025",
+			"line-count": 47500,
+			"changes": [
+				"- Added dialogue to 5-3.",
+				"- Added a background for 5-3.",
+				"- Improved the way backgrounds can fade into each other."
+			]
+		},
 		"20250607": {
 			"date": "June 07, 2025",
 			"line-count": 47300,
