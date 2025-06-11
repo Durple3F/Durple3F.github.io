@@ -1,5 +1,24 @@
 {
 	"versions": {
+		"20250611": {
+			"date": "June 11, 2025",
+			"line-count": 48100,
+			"changes": [
+				"- Still working on 5-4 animations",
+				"- Finally animated all these birds"
+			]
+		},
+		"20250610": {
+			"date": "June 10, 2025",
+			"line-count": 47800,
+			"changes": [
+				"- Adding 5-4",
+				"- Added a background for 5-4.",
+				"- Trainer sprites are now pixel perfect.",
+				"- Added the dancer trainer class.",
+				"- Did you know: animation is painful?"
+			]
+		},
 		"20250609": {
 			"date": "June 09, 2025",
 			"line-count": 47700,

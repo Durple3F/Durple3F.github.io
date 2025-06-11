@@ -1419,6 +1419,244 @@
 				{ "type": "text", "speaker": "Lana", "text": "Between you and me, I think his Pokémon are kinda pushovers, but don’t tell him that." },
 				{ "type": "text", "speaker": "Lana", "text": "See you later!" }
 			]
+		},
+		"route-5-4-dialogue": {
+			"events": [],
+			"callbacks": {},
+			"effects": [
+				{ "type": "get-speaker", "name": "Maika", "class": "Dancer-Gen7" },
+				{ "type": "display-image", "src": "src/img/pokemon/0741Oricorio.png", "name": "Baile", "position": {
+					"type": "relative",
+					"relative": "Maika",
+					"widthFactor": 0.7,
+					"heightFactor": 0.7
+				}},
+				{ "type": "remove-speaker", "speaker": "Maika" },
+				{ "type": "get-speaker", "name": "Maika", "class": "Dancer-Gen7" },
+				{ "type": "display-image", "src": "src/img/pokemon/0741Oricorio-Sensu.png", "name": "Sensu", "position": {
+					"type": "relative",
+					"relative": "Maika",
+					"widthFactor": 0.7,
+					"heightFactor": 0.7
+				}},
+				{ "type": "display-image", "src": "src/img/pokemon/0741Oricorio-Pom-Pom.png", "name": "Pom-Pom", "position": {
+					"type": "relative",
+					"relative": "Maika",
+					"widthFactor": 0.7,
+					"heightFactor": 0.7
+				}},
+				{ "type": "display-image", "src": "src/img/pokemon/0741Oricorio-Pa'u.png", "name": "Pau", "position": {
+					"type": "relative",
+					"relative": "Maika",
+					"widthFactor": 0.7,
+					"heightFactor": 0.7
+				}},
+				{ "type": "style-speaker", "speaker": "Maika", "css": {
+					"rotate": "-2deg",
+					"left": "-=5%"
+				}},
+				{ "type": "style-image", "image": "Baile", "css": {
+					"left": "+=8%",
+					"top": "+=28%"
+				}},
+				{ "type": "style-image", "image": "Pau", "css": {
+					"left": "-=8%",
+					"top": "+=30%"
+				}},
+				{ "type": "style-image", "image": "Pom-Pom", "css": {
+					"left": "-=18%",
+					"top": "+=26%"
+				}},
+				{ "type": "style-image", "image": "Sensu", "css": {
+					"left": "-=30%",
+					"top": "+=26%"
+				}},
+				{ "type": "looping-animation", "name": "Dance-Maika", "targetType": "speaker", "speaker": "Maika", "states": [
+					{
+						"duration": 1000,
+						"css": {
+							"rotate": "2deg",
+							"left": "+=5%"
+						}
+					},
+					{
+						"duration": 1000,
+						"css": {
+							"rotate": "-2deg",
+							"left": "-=5%"
+						}
+					}
+				]},
+				{ "type": "looping-animation", "name": "Dance-Pau", "targetType": "image", "image": "Pau", "delay": 50, "states": [
+					{
+						"duration": 1000,
+						"css": {
+							"rotate": "2deg",
+							"left": "+=5%"
+						}
+					},
+					{
+						"duration": 1000,
+						"css": {
+							"rotate": "-2deg",
+							"left": "-=5%"
+						}
+					}
+				]},
+				{ "type": "looping-animation-v2",
+					"targetType": "image", "image": "Pom-Pom",
+					"keyframe": {
+						"name": "Pom-Pom-Dance",
+						"0%": {
+							"top": "+=0%"
+						},
+						"50%": {
+							"top": "-=20%"
+						},
+						"100%": {
+							"top": "+=0%"
+						}
+					}
+				},
+				{ "type": "play-keyframe-animation", "animationName": "Pom-Pom-Dance", "targetType": "image", "image": "Pom-Pom", "duration": 1200, "iterationCount": "infinite" },
+				{ "type": "looping-animation", "name": "Dance-Pom-Pom", "targetType": "image", "image": "Pom-Pom", "states": [
+					{
+						"instant": true,
+						"duration": 1200,
+						"css": {
+							"transform": "scaleX(-1)"
+						}
+					},
+					{
+						"instant": true,
+						"duration": 1200,
+						"css": {
+							"transform": "scaleX(1)"
+						}
+					}
+				]},
+				{ "type": "looping-animation-v2",
+					"targetType": "image", "image": "Sensu",
+					"keyframe": {
+						"name": "Sensu-Dance",
+						"0%": {
+							"rotate": "5deg",
+							"left": "-=13%"
+						},
+						"20%": {
+							"rotate": "5deg",
+							"left": "-=13%"
+						},
+						"80%": {
+							"rotate": "-5deg",
+							"left": "+=7%"
+						},
+						"100%": {
+							"rotate": "-5deg",
+							"left": "+=7%"
+						}
+					}
+				},
+				{ "type": "play-keyframe-animation", "animationName": "Sensu-Dance", "targetType": "image", "image": "Sensu", "duration": 2300, "iterationCount": "infinite", "direction": "alternate", "easing": "ease-in-out" },
+				{ "type": "looping-animation-v2",
+					"targetType": "image", "image": "Baile",
+					"keyframe": {
+						"name": "Baile-Dance",
+						"0%": {
+							"left": "+=0%",
+							"top": "+=0%"
+						},
+						"10%": {
+							"top": "+=0%"
+						},
+						"12%": {
+							"top": "-=2%"
+						},
+						"14%": {
+							"left": "+=0%",
+							"top": "+=0%"
+						},
+						"50%": {
+							"left": "+=10%"
+						},
+						"60%": {
+							"top": "+=0%"
+						},
+						"62%": {
+							"top": "-=2%"
+						},
+						"64%": {
+							"left": "+=10%",
+							"top": "+=0%"
+						},
+						"100%": {
+							"left": "+=0%",
+							"top": "+=0%"
+						}
+					}
+				},
+				{ "type": "play-keyframe-animation", "animationName": "Baile-Dance", "targetType": "image", "image": "Baile", "duration": 4300, "iterationCount": "infinite", "easing": "ease-in-out" },
+				{ "type": "looping-animation", "name": "Dance-Baile", "targetType": "image", "image": "Baile", "states": [
+					{
+						"instant": true,
+						"duration": 2150,
+						"css": {
+							"transform": "scaleX(1)"
+						}
+					},
+					{
+						"instant": true,
+						"duration": 2150,
+						"css": {
+							"transform": "scaleX(-1)"
+						}
+					}
+				]},
+				{ "type": "text", "speaker": "Maika", "text": "Hiii! My little dancers and I were just about to finish practice for the day." },
+				{ "type": "text", "speaker": "Maika", "text": "As you... can probably tell, we’ve given up on trying to match each other’s styles." },
+				{ "type": "stop-animation", "animationName": "Dance-Maika" },
+				{ "type": "animate-speaker", "speaker": "Maika",
+				  "duration": 500, "waitDuration": 0, "css": {
+					"rotate": "0deg"
+				}},
+				{ "type": "text", "speaker": "Maika", "text": "Nanea here is the only one who I can even keep up with..." },
+				{ "type": "animate-speaker", "speaker": "Maika",
+				  "duration": 900, "waitDuration": 0, "css": {
+					"left": "-=36%"
+				}},
+				{ "type": "text", "speaker": "Maika", "text": "They all have these whole vibes that are just, different, right? I’m not even completely sure what a “sensu” dance is." },
+				{ "type": "animate-speaker", "speaker": "Maika",
+				  "duration": 700, "waitDuration": 0, "css": {
+					"left": "+=18%"
+				}},
+				{ "type": "text", "speaker": "Maika", "text": "This little ball of energy is $@start-italics|@$incapable$@end-italics|@$ of being still for even a moment. I’ve tried to calm her down. I $@start-italics|@$think$@end-italics|@$ she’s tried, too. (Like 60% sure.)" },
+				{ "type": "style-speaker", "speaker": "Maika", "css": {
+					"transform": "scaleX(-1)"
+				}},
+				{ "type": "animate-speaker", "speaker": "Maika",
+				  "duration": 900, "waitDuration": 0, "css": {
+					"left": "+=30%"
+				}},
+				{ "type": "style-image", "image": "Pau", "css": {
+					"z-index": 2
+				}},
+				{ "type": "style-image", "image": "Baile", "css": {
+					"z-index": 2
+				}},
+				{ "type": "text", "speaker": "Maika", "text": "When I caught this one, and tried to get her to dance with me, she just bit me. I still have the mark on my finger!" },
+				{ "type": "text", "speaker": "Maika", "text": "I don’t really understand why they’re so... so set in their favorite style, but, well, I guess I’m stuck in mine too..." },
+				{ "type": "style-speaker", "speaker": "Maika", "css": {
+					"transform": "scaleX(-1)"
+				}},
+				{ "type": "animate-speaker", "speaker": "Maika",
+				  "duration": 500, "waitDuration": 0, "css": {
+					"left": "-=10%"
+				}},
+				{ "type": "text", "speaker": "Maika", "text": "But that’s the beauty of them, don’t you think? Oricorio is one of the only Pokémon I know of that act so differently..." },
+				{ "type": "text", "speaker": "Maika", "text": "All moving to the beat of their own drum, living entirely at their own tempo and so unafraid to show it..." },
+				{ "type": "text", "speaker": "Maika", "text": "Now that I’ve told you all about us, I’d love to see your style too!" },
+				{ "type": "text", "speaker": "Maika", "text": "Ready for a battle?" }
+			]
 		}
 	},
 	"pokemon": {
@@ -4035,7 +4273,11 @@
 		"5-2-ernest-goldeen": "Coral",
 		"5-2-herbert-poliwag": "Gilly",
 		"5-2-carl-psyduck": "Quackity",
-		"5-2-carl-magikarp": "Ol’ Reliable"
+		"5-2-carl-magikarp": "Ol’ Reliable",
+		"5-4-maika-oricorio-1": "Nanea",
+		"5-4-maika-oricorio-2": "Huro",
+		"5-4-maika-oricorio-3": "Akua",
+		"5-4-maika-oricorio-4": "Uahi"
 	},
 	"status-effects": {
 		"burn": {
@@ -4229,7 +4471,11 @@
 		},
 		"Route 5-3": {
 			"name": "Route 5-3",
-			"description": "Once the lake is cleared out, you and Lana are finally able to start your trial at Brooklet Hill"
+			"description": "Once the lake is cleared out, you and Lana are finally able to start your trial at Brooklet Hill."
+		},
+		"Route 5-4": {
+			"name": "Route 5-4",
+			"description": "You climb down from Brooklet Hill and come across a path connecting Paniola Town to the next leg of the journey."
 		}
 	},
 	"route-categories": {

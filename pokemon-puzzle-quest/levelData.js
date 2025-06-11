@@ -3038,6 +3038,7 @@ const levelData = [
 		]
 	},
 	//5-3: Trial against the big Wishiwashi & Araquanid
+	//UNLOCK WATER Z
 	{
 		id: "Route 5-3",
 		category: "Route 5",
@@ -3158,6 +3159,86 @@ const levelData = [
 			{ type: "change-background-image", name: "route-bg-brooklet-hill-1", duration: 5000, combineFades: true },
 			{ type: "dialogue", source: "route-5-3-dialogue-won" },
 			{ type: "unlock-z-move-type", unlockedType: "Water" },
+		]
+	},
+	//5-4: Oricorio (Pa'u) | 
+	{
+		id: "Route 5-4",
+		category: "Route 5",
+		name: "Route 5-4",
+		music: "SM Wild Pokemon Battle",
+		icon: "4",
+		images: {
+			"route-bg-route-6": "src/img/bg/route 6.jpg"
+		},
+		recommendedLevels: {
+			"normal": (pokemonList) => {
+				if (pokemonList.length >= 3) return 20
+				return 22
+			},
+			"hard": (pokemonList) => {
+				if (pokemonList.length >= 3) return 20
+				return 22
+			}
+		},
+		trainers: [
+			{
+				isWild: true,
+				targetPokemon: 4,
+				canPickDuplicates: false,
+				possiblePokemon: [
+					{ id: "Oricorio", form: "Pa'u", levelMin: 14, levelMax: 17, weight: 5 },
+					{ id: "Lillipup", levelMin: 14, levelMax: 17, weight: 1 },
+					{ id: "Pikipek", levelMin: 14, levelMax: 17, weight: 1 },
+					{ id: "Grubbin", levelMin: 14, levelMax: 17, weight: 1 },
+					{ id: "Yungoos", levelMin: 14, levelMax: 17, weight: 1 },
+					{ id: "Rattata-Alola", levelMin: 14, levelMax: 17, weight: 1 },
+					{ id: "Igglybuff", levelMin: 14, levelMax: 17, weight: 1 },
+					{ id: "Eevee", levelMin: 14, levelMax: 17, weight: 1 },
+				]
+			},
+			{
+				name: "Maika",
+				class: "Dancer-Gen7",
+				pokemon: [
+					{
+						id: "Oricorio",
+						form: "Pa'u",
+						pokeballType: "great ball",
+						name: "5-4-maika-oricorio-1",
+						level: 17
+					},
+					{
+						id: "Oricorio",
+						form: "Pom-Pom",
+						pokeballType: "great ball",
+						name: "5-4-maika-oricorio-2",
+						level: 17
+					},
+					{
+						id: "Oricorio",
+						form: "Sensu",
+						pokeballType: "great ball",
+						name: "5-4-maika-oricorio-3",
+						level: 17
+					},
+					{
+						id: "Oricorio",
+						form: "Baile",
+						pokeballType: "great ball",
+						name: "5-4-maika-oricorio-4",
+						level: 17
+					},
+				]
+			},
+		],
+		effects: [
+			{ type: "change-background-image", name: "route-bg-route-6" },
+			// { type: "fight", trainer: 0 },
+			// { type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "dialogue", source: "route-5-4-dialogue" },
+			{ type: "change-music", music: "SM Trainer Battle" },
+			{ type: "fight", trainer: 1 },
 		]
 	},
 ]

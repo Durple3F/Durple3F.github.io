@@ -1031,7 +1031,7 @@ body {
 
 .avatar-pokemon-section {
 	position: relative;
-	height: 8em;
+	height: 10em;
 }
 .avatar-pokemon-name {
 	margin: auto;
@@ -1070,7 +1070,7 @@ body {
 }
 .avatar-trainer-image-section > .trainer-image {
 	position: absolute;
-	height: 70%;
+	height: max(40%, round(down, 70%, 80px));
 	top: 50%; left: 50%;
 	transform: translate(-50%, -50%);
 	image-rendering: pixelated;
@@ -2271,10 +2271,11 @@ body {
 	color: transparent;
 	font-weight: bolder;
 }
-#dialogue > .speakers {
+/* #dialogue > .speakers {
 	image-rendering: pixelated;
-}
+} */
 #dialogue > .speakers > .speaker {
+	image-rendering: pixelated;
 	position: absolute;
 	height: 70%;
 	bottom: 30%; left: 50%;

@@ -215,6 +215,7 @@ const dialogueEffects = {
 			let tag = options.target
 			let states = effect.states
 			let name = effect.name
+			let delayTime = effect.delay ?? 0
 			let index = 0
 			const animateNext = () => {
 				let state = states[index]
@@ -229,7 +230,112 @@ const dialogueEffects = {
 				progress.intervals[name] = setTimeout(animateNext, duration)
 				index = (index + 1) % states.length
 			}
-			animateNext()
+			if (delayTime){
+				delay(delayTime).then(() => animateNext())
+			} else {
+				animateNext()
+			}
+			
+			resolve()
+		}
+	},
+	"stop-animation": {
+		execute: (resolve, effect, progress, options) => {
+			let animationName = effect.animationName
+			clearInterval(dialogueProgress.intervals[animationName])
+
+			resolve()
+		}
+	},
+	"looping-animation-v2": {
+		hasTarget: true,
+		execute: (resolve, effect, progress, options) => {
+			let tag = options.target
+
+			let speakersTag = options.speakersTag
+			let speakersTagW = speakersTag.width()
+			let speakersTagH = speakersTag.height()
+			let position = tag.position()
+
+			let keyframes = effect.keyframes ?? []
+			if (effect.keyframe){
+				keyframes.push(effect.keyframe)
+			}
+			keyframes = window.structuredClone(keyframes)
+
+			const rectifyProperty = (obj, property) => {
+				let value = obj[property]
+				let direction = value.substring(0, 2)
+				if (direction !== "+=" && direction !== "-="){
+					return
+				}
+				direction = direction === "+=" ? 1 : -1
+
+				let parentUnit
+				let childUnit
+				if (property === "top"){
+					parentUnit = speakersTagH
+					childUnit = position.top
+				} else if (property === "left"){
+					parentUnit = speakersTagW
+					childUnit = position.left
+				}
+
+				let remainder = value.substring(2)
+				if (remainder[remainder.length - 1] === "%"){
+					let amount = remainder.substring(0, remainder.length - 1)
+					amount = Number(amount) || 0
+					let pixels = amount * 0.01 * parentUnit * direction
+					pixels += childUnit
+					obj[property] = pixels.toString() + "px"
+				} else {
+					console.warn("You never handled non-percent units")
+				}
+			}
+
+			for (let keyframe of keyframes){
+				for (let key in keyframe){
+					if (key !== "from" && key !== "to" && !key.includes("%")) continue
+					let state = keyframe[key]
+					for (let property in state){
+						rectifyProperty(state, property)
+					}
+				}
+			}
+
+			$.keyframe.define(keyframes)
+			
+			resolve()
+		}
+	},
+	"play-keyframe-animation": {
+		hasTarget: true,
+		execute: (resolve, effect, progress, options) => {
+			let tag = options.target
+			let animationName = effect.animationName
+			let duration = effect.duration ?? 1000
+			let iterationCount = effect.iterationCount ?? "infinite"
+			let direction = effect.direction ?? "normal"
+			let easing = effect.easing ?? "ease"
+			
+			$(tag).playKeyframe({
+				name: animationName,
+				duration: duration + "ms",
+				iterationCount: iterationCount,
+				direction: direction,
+				timingFunction: easing
+			})
+
+			resolve()
+		}
+	},
+	"stop-keyframe-animation": {
+		hasTarget: true,
+		execute: (resolve, effect, progress, options) => {
+			let tag = options.target
+			console.log(tag)
+			$(tag).pauseKeyframe();
+
 			resolve()
 		}
 	},
