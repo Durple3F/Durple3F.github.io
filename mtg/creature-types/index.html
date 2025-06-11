@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>MTG Creature type stats</title>
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script defer>
+		$.ajax({
+			url: "https://mtgjson.com/api/v5/AtomicCards.json",
+			dataType: "json"
+		}).then(response => {
+			let data = response.data
+			let creatures = []
+
+			for (let cardName in data){
+				let card = data[cardName]
+				if (card.some(face => face.types.includes("Creature"))){
+					creatures.push(card)
+				}
+			}
+			let creatureTypes = creatures.flatMap(card => {
+				return card.flatMap(face => face.subtypes)
+			})
+			let typeFrequencies = {}
+			for (let type of creatureTypes){
+				typeFrequencies[type] = (typeFrequencies[type] ?? 0) + 1
+			}
+			creatureTypes = creatureTypes.filter((v,i,s) => s.indexOf(v)===i)
+			creatureTypes.sort((a,b) => typeFrequencies[b] - typeFrequencies[a])
+			let dropdown = $("#header > select")
+			dropdown.empty()
+			creatureTypes.forEach(type => {
+				let option = $("<option>")
+				option.val(type).text(type)
+				dropdown.append(option)
+			})
+			console.log(creatures)
+			console.log(creatureTypes)
+
+			const chartData = {
+				labels: [
+					"White",
+					"Blue",
+					"Black",
+					"Red",
+					"Green",
+				],
+				datasets: [{
+					label: 'Color Symbol Frequency',
+					data: [0,0,0,0,0],
+					fill: true,
+				}]
+			};
+			let chart = new Chart($("canvas")[0], {
+				type: 'radar',
+				data: chartData,
+				options: {
+					responsive: false,
+					elements: {
+						line: {
+							borderWidth: 3
+						}
+					},
+				},
+			})
+
+			const changeCategory = category => {
+				let matching = creatures.filter(card => {
+					return card.some(face => face?.subtypes.includes(category))
+				})
+				let data = []
+				let colorSymbols = {
+					"{W}": 0,
+					"{U}": 1,
+					"{B}": 2,
+					"{R}": 3,
+					"{G}": 4,
+				}
+				for (let card of matching){
+					for (let face of card){
+						let manaCost = face.manaCost || ""
+						for (let symbol in colorSymbols){
+							let regex = new RegExp(symbol, "g")
+							let count = (manaCost.match(regex) || []).length
+							let index = colorSymbols[symbol]
+							data[index] = (data[index] ?? 0) + count
+						}
+					}
+				}
+				const chartData = {
+					label: 'Color Symbol Frequency',
+					data: data,
+					fill: true,
+				}
+				chart.data.datasets[0] = chartData
+				chart.update()
+			}
+			changeCategory("Human")
+			$("#header > select").change(() => {
+				let value = $("#header > select").val()
+				changeCategory(value)
+			})
+		})
+	</script>
+</head>
+<body>
+	<div id="header">
+		<select>
+			<option>Loading...</option>
+		</select>
+	</div>
+	<div id="content">
+		<canvas></canvas>
+	</div>
+</body>
+</html>
