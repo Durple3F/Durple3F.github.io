@@ -2656,6 +2656,44 @@ const pokemonMoveData = {
 			}
 		]
 	},
+	//Damage + 50% chance of raising special attack 1
+	"Fiery Dance": {
+		name: "Fiery Dance",
+		type: "Fire",
+		category: "Special",
+		strategy: "basic-damage",
+		tags: ["damage-dealing", "dancing"],
+		pp: 10,
+		power: 80,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			red: 8,
+			orange: 3,
+			yellow: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Fiery Dance.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "random-number", min: 1, max: 10 },
+			{ type: "load-value", value: 6 },
+			{ type: "jump-if-less-than", jumpTo: Infinity },
+			{
+				type: "apply-debuff", target: "user", debuff: {
+					type: "stat",
+					stat: "specialAttack",
+					class: "buff",
+					amount: 1
+				}
+			}
+		],
+	},
 	//Deals extra damage if tiles are already burning
 	"Fire Fang": {
 		name: "Fire Fang",
@@ -6057,6 +6095,52 @@ const pokemonMoveData = {
 			} },
 		],
 	},
+	//Raises Special Attack, Special Defense, and Speed 1
+	"Quiver Dance": {
+		name: "Quiver Dance",
+		type: "Bug",
+		category: "Status",
+		strategy: "buff-user",
+		tags: ["dancing"],
+		pp: 20,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 5,
+		energy: {
+			yellow: 4,
+			purple: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Quiver Dance.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{
+				type: "apply-debuff", target: "user", debuff: {
+					type: "stat",
+					stat: "specialDefense",
+					class: "buff",
+					amount: 1
+				}
+			},
+			{
+				type: "apply-debuff", target: "user", debuff: {
+					type: "stat",
+					stat: "specialAttack",
+					class: "buff",
+					amount: 1
+				}
+			},
+			{
+				type: "apply-debuff", target: "user", debuff: {
+					type: "stat",
+					stat: "speed",
+					class: "buff",
+					amount: 1
+				}
+			},
+		]
+	},
 	//Makes water tiles more likely for a while
 	"Rain Dance": {
 		name: "Rain Dance",
@@ -6342,6 +6426,33 @@ const pokemonMoveData = {
 				}
 			] },
 		]
+	},
+	//Basic damage, but its type is based on the user's type
+	"Revelation Dance": {
+		name: "Revelation Dance",
+		type: "Normal",
+		category: "Special",
+		strategy: "basic-damage",
+		tags: ["damage-dealing", "dancing", "copy-user-primary-type"],
+		pp: 15,
+		power: 90,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			red: 3,
+			orange: 3,
+			yellow: 3,
+			green: 3,
+			blue: 3,
+			purple: 3,
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Revelation Dance.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+		],
 	},
 	//Deals more damage if you took damage since your last turn ended
 	"Revenge": {

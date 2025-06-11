@@ -2392,7 +2392,9 @@ class Round {
 						trainer, pokemon, action,
 						payableMoves, unpayableMoves
 					)
-					return this.getActionWeight(options)
+					let weight = this.getActionWeight(options)
+
+					return weight
 				})
 				// actionWeights = actionWeights.map((weight, index) => {
 				// 	if (index === 0) return weight
@@ -2653,6 +2655,18 @@ class Round {
 		//Doing nothing is technically an action you can take.
 		let strategyData = getStrategyData(options.action)
 		let weight = strategyData.chooseWeight(options)
+		
+		let trainer = options.trainer
+		let pokemon = options.pokemon
+		let action = options.action
+		if (
+			pokemonMoveData[action] &&
+			this.shouldMoveHaveTag("dancing", trainer, pokemon, action) &&
+			pokemon.hasAbility("Dancer")
+		) {
+			weight *= 10
+		}
+
 		console.log(weight, options.action)
 		return weight
 	}
@@ -3600,6 +3614,16 @@ class Round {
 	}
 	getEffectiveMoveType(trainer, pokemon, move) {
 		if (!move) return "Typeless"
+
+		if (move.tags.includes("copy-user-primary-type")){
+			let userTypes = pokemon?.getEffectiveTypes() || []
+			if (userTypes.length){
+				return userTypes[0]
+			} else {
+				return "Typeless"
+			}
+		}
+
 		return move.type
 	}
 	getEffectiveMoveDisability(trainer, pokemon, move) {
@@ -6180,7 +6204,8 @@ class Round {
 			}
 
 			let tag = getMoveHTML(move, {
-				parentMove: parentMove
+				parentMove: parentMove,
+				type: type
 			})
 
 			tag.attr("data-trainer", trainerIndex)

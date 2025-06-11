@@ -2,8 +2,9 @@
 	"versions": {
 		"20250611": {
 			"date": "June 11, 2025",
-			"line-count": 48100,
+			"line-count": 48400,
 			"changes": [
+				"- Added Quiver Dance, Revelation Dance, Fiery Dance",
 				"- Still working on 5-4 animations",
 				"- Finally animated all these birds"
 			]

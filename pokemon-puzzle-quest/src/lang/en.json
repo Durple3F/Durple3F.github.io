@@ -1424,6 +1424,11 @@
 			"events": [],
 			"callbacks": {},
 			"effects": [
+				{ "type": "get-speaker", "name": "Narrator", "class": "Narrator" },
+				{ "type": "text", "speaker": "Narrator", "text": "As you make it back to dry land, you approach a woman dancing alongside several Oricorio." },
+				{ "type": "animate", "selector": "#dialogue .speakers", "css": {
+					"opacity": 0
+				}, "duration": 0, "waitDuration": 0 },
 				{ "type": "get-speaker", "name": "Maika", "class": "Dancer-Gen7" },
 				{ "type": "display-image", "src": "src/img/pokemon/0741Oricorio.png", "name": "Baile", "position": {
 					"type": "relative",
@@ -1612,6 +1617,9 @@
 						}
 					}
 				]},
+				{ "type": "animate", "selector": "#dialogue .speakers", "css": {
+					"opacity": 1
+				}, "duration": 1000, "waitDuration": 600 },
 				{ "type": "text", "speaker": "Maika", "text": "Hiii! My little dancers and I were just about to finish practice for the day." },
 				{ "type": "text", "speaker": "Maika", "text": "As you... can probably tell, we’ve given up on trying to match each other’s styles." },
 				{ "type": "stop-animation", "animationName": "Dance-Maika" },
@@ -2638,6 +2646,11 @@
 			"description": "Deals damage. Then, if the target is fainted, the user's Attack is raised by 2 stages.",
 			"shortDescription": "Deals damage through invulnerability"
 		},
+		"Fiery Dance": {
+			"name": "Fiery Dance",
+			"description": "Deals damage. Has a 50% chance to raise the user's Special Attack by a stage.",
+			"shortDescription": "Damages and may raise Special Attack"
+		},
 		"Fire Fang": {
 			"name": "Fire Fang",
 			"description": "Deals damage and has a 50% chance to Burn 3 random tiles for 3 turns. If any tiles were already Burned by the user, instead it deals damage with 30 additional power and doesn't Burn tiles. At the end of their turn, the opponent takes damage equal to 1/32 of their max HP for each of your Burn statuses on the board.",
@@ -3094,6 +3107,11 @@
 			"description": "Until the start of the user's next turn, moves that the opponent uses with a cooldown time of 1 or less have their power reduced by 75%.",
 			"shortDescription": "Temporarily makes quick attacks against you weaker"
 		},
+		"Quiver Dance": {
+			"name": "Quiver Dance",
+			"description": "Raises the user's Special Attack, Special Defense, and Speed by 1 stage each.",
+			"shortDescription": "Raises Special and Speed stats"
+		},
 		"Rain Dance": {
 			"name": "Rain Dance",
 			"description": "Water tiles become twice as likely for 20 turns shared between both players. This effect stacks multiplicatively.",
@@ -3128,6 +3146,11 @@
 			"name": "Retaliate",
 			"description": "Deals damage. At the beginning of the user's turn, if another of its trainer's Pokémon fainted since their last turn, this move's power doubles. It then gains 10 additional power for each turn since their last turn.",
 			"shortDescription": "Deals huge damage when allies faint"
+		},
+		"Revelation Dance": {
+			"name": "Revelation Dance",
+			"description": "Deals damage. This move's type is always the same as its user's primary type.",
+			"shortDescription": "Deals damage that matches its user's type"
 		},
 		"Revenge": {
 			"name": "Revenge",
@@ -3623,7 +3646,7 @@
 		},
 		"Dancer": {
 			"name": "Dancer",
-			"shortDescription": "After a dancing move is used by any Pokémon (including itself), uses that same move",
+			"shortDescription": "After a dancing move is used by any Pokémon (including itself), copies the move they used",
 			"longDescription": "Whenever a dancing move is used by any Pokémon, including itself, this Pokémon uses that move, regardless of whether it's this Pokémon's turn."
 		},
 		"Defiant": {

@@ -2408,22 +2408,23 @@ function getMoveHTML(move, options={}) {
 	let moveTop = $("<div class='move-top'></div>")
 	let moveName = getLocaleString("name", lang, ["moves", move.name])
 	moveTop.append(`<div class='move-name'>${moveName}</div>`)
-	let moveType = $(`<div class='move-type'></div>`)
+	let moveTypeTag = $(`<div class='move-type'></div>`)
 	let moveRecharge = $(`<div class='move-recharge'></div>`)
 	moveRecharge.append(`<img src='src/img/recharge.png'>`)
 	moveRecharge.append(`<div class='count'>0</div>`)
 	moveRecharge.hide()
-	let typeIcon = getTypeIcon(move.type)
+	let moveType = options.type ?? move.type
+	let typeIcon = getTypeIcon(moveType)
 	let moveCategory = getMoveCategory(move, options.parentMove)
+	moveTypeTag.append(moveRecharge)
 	if (move.power && !move.tags.includes("z-move")){
-		moveType.append(`<div>${move.power}</div>`)
+		moveTypeTag.append(`<div>${move.power}</div>`)
 	}
-	moveType.append(moveRecharge)
-	moveType.append(`<img src='${getTypeIcon(moveCategory)}'>`)
+	moveTypeTag.append(`<img src='${getTypeIcon(moveCategory)}'>`)
 	if (typeIcon) {
-		moveType.append(`<img src='${typeIcon}'>`)
+		moveTypeTag.append(`<img src='${typeIcon}'>`)
 	}
-	moveTop.append(moveType)
+	moveTop.append(moveTypeTag)
 	tag.append(moveTop)
 
 	let longDescription = getLocaleString("description", lang, ["moves", move.name])

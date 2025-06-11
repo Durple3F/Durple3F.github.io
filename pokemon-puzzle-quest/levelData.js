@@ -3203,31 +3203,85 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Oricorio",
-						form: "Pa'u",
-						pokeballType: "great ball",
-						name: "5-4-maika-oricorio-1",
-						level: 17
-					},
-					{
-						id: "Oricorio",
 						form: "Pom-Pom",
 						pokeballType: "great ball",
 						name: "5-4-maika-oricorio-2",
-						level: 17
+						level: 17,
+						activeMoves: ["Feather Dance", "Agility", "Acrobatics", "Spark"]
+					},
+					{
+						id: "Oricorio",
+						form: "Pa'u",
+						pokeballType: "great ball",
+						name: "5-4-maika-oricorio-1",
+						level: 17,
+						activeMoves: ["Quiver Dance", "Rest", "Teeter Dance", "Psybeam"]
 					},
 					{
 						id: "Oricorio",
 						form: "Sensu",
 						pokeballType: "great ball",
 						name: "5-4-maika-oricorio-3",
-						level: 17
+						level: 17,
+						activeMoves: ["Revelation Dance", "Spite", "Peck", "Mean Look"]
 					},
 					{
 						id: "Oricorio",
 						form: "Baile",
 						pokeballType: "great ball",
 						name: "5-4-maika-oricorio-4",
-						level: 17
+						level: 17,
+						activeMoves: ["Fiery Dance", "Mystical Fire", "Work Up", "Gust"]
+					},
+				]
+			},
+			{
+				name: "Maika",
+				class: "Dancer-Gen7",
+				pokemon: [
+					{
+						id: "Oricorio",
+						form: "Pom-Pom",
+						pokeballType: "great ball",
+						name: "5-4-maika-oricorio-2",
+						level: 17,
+						activeMoves: ["Feather Dance", "Agility", "Acrobatics", "Spark"],
+						nature: "jolly",
+						ivs: { hp: 15, attack: 30, defense: 20, specialAttack: 15, specialDefense: 15, speed: 25 },
+						evs: { hp: 60, attack: 70, defense: 35, specialAttack: 30, specialDefense: 60, speed: 30 },
+					},
+					{
+						id: "Oricorio",
+						form: "Pa'u",
+						pokeballType: "great ball",
+						name: "5-4-maika-oricorio-1",
+						level: 17,
+						activeMoves: ["Quiver Dance", "Rest", "Teeter Dance", "Psybeam"],
+						nature: "modest",
+						ivs: { hp: 30, attack: 5, defense: 20, specialAttack: 25, specialDefense: 15, speed: 25 },
+						evs: { hp: 60, attack: 30, defense: 35, specialAttack: 70, specialDefense: 60, speed: 30 },
+					},
+					{
+						id: "Oricorio",
+						form: "Sensu",
+						pokeballType: "great ball",
+						name: "5-4-maika-oricorio-3",
+						level: 17,
+						activeMoves: ["Revelation Dance", "Spite", "Peck", "Mean Look"],
+						nature: "serious",
+						ivs: { hp: 30, attack: 15, defense: 10, specialAttack: 25, specialDefense: 15, speed: 25 },
+						evs: { hp: 80, attack: 60, defense: 35, specialAttack: 60, specialDefense: 60, speed: 30 },
+					},
+					{
+						id: "Oricorio",
+						form: "Baile",
+						pokeballType: "great ball",
+						name: "5-4-maika-oricorio-4",
+						level: 17,
+						activeMoves: ["Fiery Dance", "Mystical Fire", "Work Up", "Gust"],
+						nature: "rash",
+						ivs: { hp: 30, attack: 5, defense: 20, specialAttack: 25, specialDefense: 15, speed: 25 },
+						evs: { hp: 60, attack: 30, defense: 60, specialAttack: 70, specialDefense: 30, speed: 30 },
 					},
 				]
 			},
@@ -3235,10 +3289,19 @@ const levelData = [
 		effects: [
 			{ type: "change-background-image", name: "route-bg-route-6" },
 			// { type: "fight", trainer: 0 },
-			// { type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "jump-if-lost", jumpTo: Infinity },
 			{ type: "dialogue", source: "route-5-4-dialogue" },
 			{ type: "change-music", music: "SM Trainer Battle" },
-			{ type: "fight", trainer: 1 },
+			{ type: "load-setting", key: "hardMode" },
+			{ type: "load-value", value: true },
+			{ type: "jump-if-equal", jumpTo: "hardMode" },
+			{ type: "jump", jumpTo: "easyMode" },
+			{ type: "fight", trainer: 1, label: "easyMode" },
+			{ type: "jump", jumpTo: "win-check" },
+			{ type: "fight", trainer: 2, label: "hardMode" },
+			{ type: "jump", jumpTo: "win-check" },
+			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
+			// { type: "dialogue", source: "route-5-1-dialogue-won" },
 		]
 	},
 ]

@@ -28,6 +28,7 @@ const moveUseStrategy = {
 				return 0
 			}
 
+			console.log("Favorite move:", favoriteMove, favoriteMoveWeight)
 			//Although, if there are moves we can use right now,
 			//that wouldn't prevent us from using other moves,
 			//we can use those.
@@ -261,6 +262,25 @@ const moveUseStrategy = {
 			newOptions.power = power
 			let strategy = moveUseStrategy["basic-damage"]
 			let weight = strategy.chooseWeight(newOptions)
+			return weight
+		}
+	},
+	"Feather Dance": {
+		chooseWeight: options => {
+			let game = options.game
+			let trainer = options.trainer
+			let pokemon = trainer.activePokemon
+			let move = options.action
+			let strategy = moveUseStrategy["basic-damage"]
+			let weight = strategy.chooseWeight(options)
+
+			if (
+				game.shouldMoveHaveTag("dancing", trainer, pokemon, move) &&
+				pokemon.hasAbility("Dancer")
+			) {
+				weight *= Infinity
+			}
+			
 			return weight
 		}
 	},
