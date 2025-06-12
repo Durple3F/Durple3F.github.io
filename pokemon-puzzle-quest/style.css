@@ -363,6 +363,17 @@ body {
 .route-screen {
 	width: 75%;
 	height: 100%;
+	position: relative;
+}
+.route-screen .route-bg {
+	max-height: 100%;
+	max-width: 100%;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 1;
+	object-fit: cover;
 }
 
 .level-button {
@@ -371,7 +382,14 @@ body {
 	padding: 0;
 	border-radius: 50%;
 	margin: 0.5em;
-	font-size: var(--large-button-font-size)
+	font-size: var(--large-button-font-size);
+	z-index: 5;
+	position: relative;
+}
+.level-button.absolute {
+	position: absolute;
+	transform: translate(-50%, -50%);
+	margin: 0;
 }
 .level-button.won {
 	background-color: var(--won-color);

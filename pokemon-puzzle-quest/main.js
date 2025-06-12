@@ -736,6 +736,13 @@ function loadResources(){
 			})
 		})
 	)
+	sprites = sprites.concat(
+		Object.values(levelCategoryData)
+		.filter(routeData => routeData?.style?.backgroundImage)
+		.map(routeData => {
+			return {name: `route-bg-${routeData.id}-bg`, url: routeData.style.backgroundImage}
+		})
+	)
 	// sprites = sprites.concat(getAllStatusSprites())
 	loadedResources[1] = sprites.length
 

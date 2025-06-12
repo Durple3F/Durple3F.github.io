@@ -181,6 +181,8 @@ function startScene(name, options={}) {
 
 			let listTag = $(`<div class='route-list'></div>`)
 			let routeTag = $(`<div class='route-screen'></div>`)
+			gameTag.append(listTag)
+			gameTag.append(routeTag)
 			let levelButtons = []
 
 			let pcBtn = $(`<button class='btn btn-primary' id='pc-button'></button>`)
@@ -218,8 +220,9 @@ function startScene(name, options={}) {
 				}
 				const change = () => {
 					if (shownCategory === routeName) return
-					let routeLevels = getLevelsInCategory(routeName)
-					displayLevels(routeLevels)
+					let routeData = levelCategoryData[routeName]
+
+					displayLevels(routeData)
 					shownCategory = routeName
 					playerSaveInfo["last-route"] = routeName
 				}
@@ -259,15 +262,71 @@ function startScene(name, options={}) {
 					}
 				}
 			}
-			const displayLevels = levelList => {
+			const displayLevels = routeData => {
 				routeTag.children().popover("dispose")
 				routeTag.empty()
+				let routeName = routeData.id
+				let levelList = getLevelsInCategory(routeName)
+
+				console.log(routeData)
+				let style = routeData?.style ?? {}
+				if (style.backgroundColor){
+					routeTag.css("background-color", style.backgroundColor)
+				} else {
+					routeTag.css("background-color", "")
+				}
+				let routeHeight = routeTag.height()
+				let routeWidth = routeTag.width()
+				let routeRatio = routeWidth / routeHeight
+				let backgroundRatio = 1
+				let backgroundImage
+				if (style.backgroundImage){
+					let src = style.backgroundImage
+					let spriteName = `route-bg-${routeName}-bg`
+					let sprite = sprites.images[spriteName]
+					let img = $(sprite.cloneNode())
+					img.addClass("route-bg")
+					img.attr("src", src)
+					routeTag.append(img)
+					backgroundRatio = img[0].width / img[0].height
+					backgroundImage = img
+
+					let xOffset = 0
+					let yOffset = 0
+					console.log(routeRatio, backgroundRatio)
+					if (routeRatio > backgroundRatio){
+						xOffset = (routeRatio - backgroundRatio) * routeHeight * 0.5
+					} else if (routeRatio < backgroundRatio){
+						yOffset = ((1/routeRatio) - (1/backgroundRatio)) * routeWidth * 0.5
+					}
+					backgroundImage.css("width", routeWidth - xOffset * 2)
+					backgroundImage.css("height", routeHeight - yOffset * 2)
+				}
+
 				levelButtons = []
 				levelList.forEach(level => {
 					let btn = getLevelButtonHtml(level)
 					btn.data("level", level)
 					levelButtons.push(btn)
 					routeTag.append(btn)
+
+					if (style.positionLevels === "absolute" && backgroundImage){
+						let xOffset = 0
+						let yOffset = 0
+						
+						if (routeRatio > backgroundRatio){
+							xOffset = (routeRatio - backgroundRatio) * routeHeight * 0.5
+						} else if (routeRatio < backgroundRatio){
+							yOffset = ((1/routeRatio) - (1/backgroundRatio)) * routeWidth * 0.5
+						}
+						let imgHeight = routeHeight - yOffset * 2
+						let imgWidth = routeWidth - xOffset * 2
+						if (level.position){
+							btn.addClass("absolute")
+							btn.css("left", xOffset + imgWidth * level.position.left)
+							btn.css("top", yOffset + imgHeight * level.position.top)
+						}
+					}
 				})
 				levelButtons.forEach(btn => {
 					let level = btn.data("level")
@@ -374,9 +433,6 @@ function startScene(name, options={}) {
 			NPCDatas.forEach(data => {
 				loadTrainerClassSprites(data)
 			})
-
-			gameTag.append(listTag)
-			gameTag.append(routeTag)
 		} break
 		case "pc": {
 			fadeInGame()

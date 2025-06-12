@@ -67,6 +67,11 @@ const levelCategoryData = {
 			levelsBeaten: [
 				"Route 3-5"
 			]
+		},
+		style: {
+			backgroundColor: "#0e499e",
+			backgroundImage: "src/img/bg/Akala_Island.png",
+			positionLevels: "absolute"
 		}
 	},
 	"Route 5": {
@@ -77,6 +82,11 @@ const levelCategoryData = {
 			levelsBeaten: [
 				"Route 4-7"
 			]
+		},
+		style: {
+			backgroundColor: "#0e499e",
+			backgroundImage: "src/img/bg/Akala_Island.png",
+			positionLevels: "absolute"
 		}
 	},
 }
@@ -1675,6 +1685,10 @@ const levelData = [
 		name: "Route 4-1",
 		music: "SM Trainer Battle",
 		icon: "1",
+		position: {
+			left: 0.205,
+			top: 0.54
+		},
 		images: {
 			"route-bg-tide-song-interior": "src/img/bg/tide song interior.jpg",
 			"route-bg-tide-song-exterior": "src/img/bg/tide song exterior.jpg"
@@ -1839,6 +1853,10 @@ const levelData = [
 		name: "Route 4-2",
 		music: "SM Wild Pokemon Battle",
 		icon: "2",
+		position: {
+			left: 0.295,
+			top: 0.515
+		},
 		images: {
 			"route-bg-forest-path": "src/img/bg/forest path.jpg"
 		},
@@ -1958,6 +1976,10 @@ const levelData = [
 		name: "Route 4-3",
 		music: "SM Wild Pokemon Battle",
 		icon: "3",
+		position: {
+			left: 0.24,
+			top: 0.44
+		},
 		images: {
 			"route-bg-forest-path": "src/img/bg/forest path.jpg"
 		},
@@ -2078,6 +2100,10 @@ const levelData = [
 		category: "Route 4",
 		name: "Rival Battle 4",
 		icon: "4",
+		position: {
+			left: 0.34,
+			top: 0.40
+		},
 		images: {
 			"route-bg-paniola-town": "src/img/bg/paniola town.jpg"
 		},
@@ -2268,6 +2294,10 @@ const levelData = [
 		name: "Route 4-5",
 		music: "SM Wild Pokemon Battle",
 		icon: "5",
+		position: {
+			left: 0.32,
+			top: 0.30
+		},
 		images: {
 			"route-bg-ranch": "src/img/bg/ranch.jpg"
 		},
@@ -2397,6 +2427,10 @@ const levelData = [
 		name: "Route 4-6",
 		music: "SM Wild Pokemon Battle",
 		icon: "6",
+		position: {
+			left: 0.25,
+			top: 0.245
+		},
 		images: {
 			"route-bg-forest-path-2": "src/img/bg/forest path 2.jpg",
 			"route-bg-forest-path-2-night": "src/img/bg/forest path 2 night.jpg",
@@ -2534,6 +2568,10 @@ const levelData = [
 		name: "Route 4-7",
 		music: "Route 201 (Day)",
 		icon: "7",
+		position: {
+			left: 0.30,
+			top: 0.17
+		},
 		images: {
 			"route-bg-route-5": "src/img/bg/route 5.jpg"
 		},
@@ -2656,6 +2694,10 @@ const levelData = [
 		name: "Route 5-1",
 		music: "SM Wild Pokemon Battle",
 		icon: "1",
+		position: {
+			left: 0.24,
+			top: 0.16
+		},
 		images: {
 			"route-bg-brooklet-hill-1": "src/img/bg/brooklet hill 1.jpg",
 		},
@@ -2779,6 +2821,10 @@ const levelData = [
 		name: "Route 5-2",
 		music: "SM Wild Pokemon Battle",
 		icon: "2",
+		position: {
+			left: 0.16,
+			top: 0.20
+		},
 		images: {
 			"route-bg-brooklet-hill-1": "src/img/bg/brooklet hill 1.jpg",
 		},
@@ -3045,6 +3091,10 @@ const levelData = [
 		name: "Route 5-3",
 		music: "SM Wild Pokemon Battle",
 		icon: "3",
+		position: {
+			left: 0.09,
+			top: 0.13
+		},
 		images: {
 			"route-bg-brooklet-hill-1": "src/img/bg/brooklet hill 1.jpg",
 			"route-bg-brooklet-hill-2": "src/img/bg/brooklet hill 2.jpg",
@@ -3161,13 +3211,17 @@ const levelData = [
 			{ type: "unlock-z-move-type", unlockedType: "Water" },
 		]
 	},
-	//5-4: Oricorio (Pa'u) | 
+	//5-4: Oricorio (Pa'u) | Maika
 	{
 		id: "Route 5-4",
 		category: "Route 5",
 		name: "Route 5-4",
 		music: "SM Wild Pokemon Battle",
 		icon: "4",
+		position: {
+			left: 0.37,
+			top: 0.23
+		},
 		images: {
 			"route-bg-route-6": "src/img/bg/route 6.jpg"
 		},

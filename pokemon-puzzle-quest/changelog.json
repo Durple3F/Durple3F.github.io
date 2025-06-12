@@ -1,5 +1,13 @@
 {
 	"versions": {
+		"20250612": {
+			"date": "June 12, 2025",
+			"line-count": 48500,
+			"changes": [
+				"- Added the ability for routes to have background images on the level select screen",
+				"- I can now position levels wherever I want on the level select screen"
+			]
+		},
 		"20250611": {
 			"date": "June 11, 2025",
 			"line-count": 48400,
