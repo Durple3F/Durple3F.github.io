@@ -40,7 +40,12 @@ const boxThemeData = {
 const levelCategoryData = {
 	"Route 1": {
 		id: "Route 1",
-		startsUnlocked: true
+		startsUnlocked: true,
+		style: {
+			backgroundColor: "#0e499e",
+			backgroundImage: "src/img/bg/Melemele_Island.png",
+			positionLevels: "absolute"
+		}
 	},
 	"Route 2": {
 		id: "Route 2",
@@ -49,6 +54,11 @@ const levelCategoryData = {
 			levelsBeaten: [
 				"Route 1-7"
 			]
+		},
+		style: {
+			backgroundColor: "#0e499e",
+			backgroundImage: "src/img/bg/Melemele_Island.png",
+			positionLevels: "absolute"
 		}
 	},
 	"Route 3": {
@@ -58,6 +68,11 @@ const levelCategoryData = {
 			levelsBeaten: [
 				"Route 2-7"
 			]
+		},
+		style: {
+			backgroundColor: "#0e499e",
+			backgroundImage: "src/img/bg/Melemele_Island.png",
+			positionLevels: "absolute"
 		}
 	},
 	"Route 4": {
@@ -96,9 +111,13 @@ const levelData = [
 	{
 		id: "Route 1-1",
 		category: "Route 1",
-		name: "Rival Battle 1",
+		name: "Route 1-1",
 		forgiving: true,
 		icon: "1",
+		position: {
+			left: 0.325,
+			top: 0.27
+		},
 		recommendedLevels: {
 			"normal": 5,
 			"hard": 5
@@ -182,6 +201,10 @@ const levelData = [
 		name: "Route 1-2",
 		icon: "2",
 		music: "SM Wild Pokemon Battle",
+		position: {
+			left: 0.37,
+			top: 0.36
+		},
 		recommendedLevels: {
 			"normal": 5,
 			"hard": 5
@@ -253,6 +276,10 @@ const levelData = [
 		name: "Route 1-3",
 		icon: "3",
 		music: "SM Wild Pokemon Battle",
+		position: {
+			left: 0.435,
+			top: 0.33
+		},
 		recommendedLevels: {
 			"normal": 6,
 			"hard": 6
@@ -323,6 +350,10 @@ const levelData = [
 		category: "Route 1",
 		name: "Rival Battle 2",
 		icon: "4",
+		position: {
+			left: 0.45,
+			top: 0.21
+		},
 		recommendedLevels: {
 			"normal": (pokemonList) => {
 				if (pokemonList.length >= 3) return 6
@@ -431,6 +462,10 @@ const levelData = [
 		name: "Route 1-5",
 		icon: "5",
 		music: "SM Wild Pokemon Battle",
+		position: {
+			left: 0.51,
+			top: 0.27
+		},
 		recommendedLevels: {
 			"normal": (pokemonList) => {
 				if (pokemonList.length >= 3) return 7
@@ -536,6 +571,10 @@ const levelData = [
 		category: "Route 1",
 		name: "Route 1-6",
 		icon: "6",
+		position: {
+			left: 0.58,
+			top: 0.28
+		},
 		recommendedLevels: {
 			"normal": (pokemonList) => {
 				if (pokemonList.length >= 3) return 8
@@ -576,6 +615,10 @@ const levelData = [
 		name: "Route 1-7",
 		icon: "7",
 		music: "SM Trainers' School",
+		position: {
+			left: 0.57,
+			top: 0.41
+		},
 		recommendedLevels: {
 			"normal": (pokemonList) => {
 				if (pokemonList.length >= 3) return 8
@@ -652,6 +695,10 @@ const levelData = [
 		name: "Route 2-1",
 		music: "SM Wild Pokemon Battle",
 		icon: "1",
+		position: {
+			left: 0.50,
+			top: 0.58
+		},
 		recommendedLevels: {
 			"normal": (pokemonList) => {
 				if (pokemonList.length >= 3) return 9
@@ -692,6 +739,10 @@ const levelData = [
 		category: "Route 2",
 		name: "Route 2-2",
 		icon: "2",
+		position: {
+			left: 0.41,
+			top: 0.84
+		},
 		recommendedLevels: {
 			"normal": (pokemonList) => {
 				if (pokemonList.length >= 3) return 10
@@ -777,6 +828,10 @@ const levelData = [
 		name: "Route 2-3",
 		music: "SM Wild Pokemon Battle",
 		icon: "3",
+		position: {
+			left: 0.15,
+			top: 0.60
+		},
 		recommendedLevels: {
 			"normal": (pokemonList) => {
 				if (pokemonList.length >= 3) return 10
@@ -826,6 +881,10 @@ const levelData = [
 		name: "Route 2-4",
 		music: "SM Wild Pokemon Battle",
 		icon: "4",
+		position: {
+			left: 0.11,
+			top: 0.50
+		},
 		recommendedLevels: {
 			"normal": (pokemonList) => {
 				if (pokemonList.length >= 3) return 11
@@ -876,6 +935,10 @@ const levelData = [
 		name: "Route 2-5",
 		music: "SM Wild Pokemon Battle",
 		icon: "5",
+		position: {
+			left: 0.215,
+			top: 0.50
+		},
 		recommendedLevels: {
 			"normal": (pokemonList) => {
 				if (pokemonList.length >= 3) return 12
@@ -912,6 +975,10 @@ const levelData = [
 		category: "Route 2",
 		name: "Route 2-6",
 		icon: "6",
+		position: {
+			left: 0.11,
+			top: 0.36
+		},
 		images: {
 			"route-bg-berry-farm": "src/img/bg/berry farm.jpg"
 		},
@@ -959,6 +1026,10 @@ const levelData = [
 		category: "Route 2",
 		name: "Route 2-7",
 		icon: "7",
+		position: {
+			left: 0.16,
+			top: 0.23
+		},
 		images: {
 			"route-bg-verdant-cavern-entrance": "src/img/bg/cave entrance.jpg",
 			"route-bg-verdant-cavern": "src/img/bg/verdant cavern.jpg",
@@ -1061,6 +1132,10 @@ const levelData = [
 		name: "Route 3-1",
 		music: "SM Wild Pokemon Battle",
 		icon: "1",
+		position: {
+			left: 0.21,
+			top: 0.19
+		},
 		images: {
 			"route-bg-cliff-path": "src/img/bg/cliff path.jpg"
 		},
@@ -1113,6 +1188,10 @@ const levelData = [
 		name: "Route 3-2",
 		music: "SM Wild Pokemon Battle",
 		icon: "2",
+		position: {
+			left: 0.28,
+			top: 0.15
+		},
 		images: {
 			"route-bg-cliff-path": "src/img/bg/cliff path.jpg"
 		},
@@ -1176,6 +1255,10 @@ const levelData = [
 		name: "Route 3-3",
 		music: "SM Wild Pokemon Battle",
 		icon: "3",
+		position: {
+			left: 0.36,
+			top: 0.11
+		},
 		images: {
 			"route-bg-melemele-meadow": "src/img/bg/melemele meadow.jpg"
 		},
@@ -1228,6 +1311,10 @@ const levelData = [
 		category: "Route 3",
 		name: "Rival Battle 3",
 		icon: "4",
+		position: {
+			left: 0.45,
+			top: 0.24
+		},
 		images: {
 			"route-bg-forest-path": "src/img/bg/forest path.jpg"
 		},
@@ -1354,6 +1441,10 @@ const levelData = [
 		name: "Route 3-5",
 		music: "SM Trainer Battle",
 		icon: "5",
+		position: {
+			left: 0.33,
+			top: 0.27
+		},
 		images: {
 			"route-bg-iki-town": "src/img/bg/iki town.jpg"
 		},
@@ -1448,6 +1539,10 @@ const levelData = [
 		name: "Route 3-6",
 		music: "SM Wild Pokemon Battle",
 		icon: "6",
+		position: {
+			left: 0.56,
+			top: 0.56
+		},
 		images: {
 			"route-bg-cave-inside": "src/img/bg/cave inside.jpg"
 		},
@@ -1558,6 +1653,10 @@ const levelData = [
 		name: "Route 3-7",
 		music: "SM Wild Pokemon Battle",
 		icon: "7",
+		position: {
+			left: 0.65,
+			top: 0.45
+		},
 		images: {
 			"route-bg-farthest-hollow": "src/img/bg/farthest hollow.jpg"
 		},

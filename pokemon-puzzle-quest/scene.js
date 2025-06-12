@@ -290,6 +290,7 @@ function startScene(name, options={}) {
 					routeTag.append(img)
 					backgroundRatio = img[0].width / img[0].height
 					backgroundImage = img
+					backgroundImage.css("--ratio", backgroundRatio)
 
 					let xOffset = 0
 					let yOffset = 0

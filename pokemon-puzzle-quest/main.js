@@ -179,16 +179,26 @@ function loadSprite(name, url){
 			return Promise.resolve()
 		}
 	}
-	let img = new Image()
-	img.src = url
+	let img
+	for (let spriteName in sprites.images){
+		let otherImg = sprites.images[spriteName]
+		let otherSrc = otherImg.src
+		if (otherSrc === url){
+			img = otherImg.cloneNode()
+		}
+	}
+	if (!img){
+		img = new Image()
+		img.src = url
+	}
 	sprites.images[name] = img
 	sprites.complete[name] = false
 	let promise = new Promise((resolve, reject) => {
-		img.onload = function(){
+		$(img).on("load", () => {
 			handleSpriteLoad()
 			sprites.complete[name] = true
 			resolve()
-		}
+		})
 		img.onerror = reject
 	})
 	return promise

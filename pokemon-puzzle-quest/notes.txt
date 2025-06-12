@@ -37,3 +37,4 @@ TODO
 - Make Unburdened increase speed while colors are empty
 - Absolutely give Lana a red Gyarados next time
 - Ensure Revelation Dance properly changes its shown type if its user's type changes
+- The level select screen needs to handle resizing better

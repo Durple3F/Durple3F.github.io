@@ -2,10 +2,13 @@
 	"versions": {
 		"20250612": {
 			"date": "June 12, 2025",
-			"line-count": 48500,
+			"line-count": 48600,
 			"changes": [
 				"- Added the ability for routes to have background images on the level select screen",
-				"- I can now position levels wherever I want on the level select screen"
+				"- I can now position levels wherever I want on the level select screen",
+				"- Repositioned every single level on Melemele and Akala islands.",
+				"- Added a nice fade effect around the edges of the level select backgrounds. That took so much math! That took so much math! That took so much math!",
+				"- If an image is loaded multiple times, the game will now notice and not load the image twice."
 			]
 		},
 		"20250611": {

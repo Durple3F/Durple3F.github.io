@@ -366,6 +366,7 @@ body {
 	position: relative;
 }
 .route-screen .route-bg {
+	--ratio: 1;
 	max-height: 100%;
 	max-width: 100%;
 	position: absolute;
@@ -374,11 +375,40 @@ body {
 	transform: translate(-50%, -50%);
 	z-index: 1;
 	object-fit: cover;
+
+	mask-image: linear-gradient(90deg, black 0%, black 100%),
+	linear-gradient(90deg, transparent 0%, black 100%),
+	linear-gradient(180deg, transparent 0%, black 100%),
+	linear-gradient(270deg, transparent 0%, black 100%),
+	linear-gradient(0deg, transparent 0%, black 100%),
+	linear-gradient(calc(atan(var(--ratio)) + 90deg), transparent 0%, transparent 50%, black 100%),
+	linear-gradient(calc(atan(var(--ratio)) * -1 + 90deg), transparent 0%, transparent 50%, black 100%),
+	linear-gradient(calc(atan(var(--ratio)) - 90deg), transparent 0%, transparent 50%, black 100%),
+	linear-gradient(calc(atan(var(--ratio)) * -1 - 90deg), transparent 0%, transparent 50%, black 100%);
+	mask-size: 96% 96%,
+	2% 96%,
+	96% 2%,
+	2% 96%,
+	96% 2%,
+	2% 2%,
+	2% 2%,
+	2% 2%,
+	2% 2%;
+	mask-position: top 50% left 50%,
+	top 50% left 0%,
+	top 0% left 50%,
+	top 50% right 0%,
+	bottom 0% left 50%,
+	top 0% left 0%,
+	bottom 0% left 0%,
+	bottom 0% right 0%,
+	top 0% right 0%;
+	mask-repeat: no-repeat;
 }
 
 .level-button {
-	height: 3em;
-	width: 3em;
+	height: min(3em, 5vw, 8vh);
+	width: min(3em, 5vw, 8vh);
 	padding: 0;
 	border-radius: 50%;
 	margin: 0.5em;
