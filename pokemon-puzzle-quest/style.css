@@ -2339,6 +2339,11 @@ body {
 	z-index: 100;
 }
 
+.dialogue-choice-container .dialogue-choice {
+	font-size: 150%;
+	margin: 0.2em;
+}
+
 #background {
 	position: absolute;
 	top: 0; left: 0;

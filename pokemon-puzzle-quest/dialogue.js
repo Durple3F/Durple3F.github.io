@@ -2,6 +2,7 @@ const textCharacterDurationMap = {
 	"&nbsp;": 0.7,
 	".": 5,
 	".)": 2,
+	".”": 5,
 	",": 3,
 	"!": 7,
 	"?": 10,
@@ -64,23 +65,39 @@ function beginDialogue(dialogueData) {
 	promises.push(promise)
 	dialogueData.promise = promise
 
+	const skipRemainingDialogue = async () => {
+		let effectIndex = dialogueProgress.effectIndex
+		let info = dialogueProgress.info
+		let effects = dialogueProgress.dialogue.effects
+		let remainingEffects = effects.slice(effectIndex)
+		for (let effect of remainingEffects){
+			let effectIndex = effects.indexOf(effect)
+			if (effect.type === "choice"){
+				let choices = effect.choices
+				let defaultChoice = choices.find(choice => choice.default)
+				if (defaultChoice){
+					info[effectIndex] = defaultChoice.value
+				}
+			}
+			else if (effect.type === "set-variable"){
+				let prev = info[effectIndex - 1]
+				dialogueProgress.variables[effect.name] = prev
+			}
+		}
+	}
+
 	let skipPromise = new Promise(res => {
 		$("#dialogueSkipBtn").off("click")
 		$("#dialogueSkipBtn").on("click", () => {
-			res()
+			skipRemainingDialogue()
+			.then(() => res())
 		})
 	})
 	promises.push(skipPromise)
 
 	let totalPromise = Promise.any(promises)
 
-	totalPromise = totalPromise
-	.then(() => new Promise(resolve => {
-		resolve(dialogueProgress)
-	}))
-
-	totalPromise
-	.then(() => {
+	totalPromise = totalPromise.then(() => {
 		$("#dialogue-container").fadeOut()
 		if (boardIsVisible) {
 			delay(400).then(() => {
@@ -92,12 +109,45 @@ function beginDialogue(dialogueData) {
 		}
 		return delay(400)
 	})
+
+	totalPromise = totalPromise
+	.then(() => new Promise(resolve => {
+		resolve(dialogueProgress)
+	}))
 	// .then(() => {
 	// 	$(".nameplate").css("opacity", "unset")
 	// 	$(".nameplate").css("filter", "unset")
 	// })
 
 	return totalPromise
+}
+function tryToBeginDialogue(source){
+	let resolvePromise
+	let promise = new Promise(resolve => resolvePromise = resolve)
+	let dialogueName = source
+	let seenDialogue = playerSaveInfo["seen-dialogue"]
+	let shouldSkip = config.skipSeenDialogue && seenDialogue.includes(dialogueName)
+	if (shouldSkip) {
+		//TODO: Skipping in this way doesn't provide the correct default values for choices and stuff
+		let data = newDialogueProgressData()
+		resolvePromise(data)
+	} else {
+		let dialogue = getLocaleString(dialogueName, lang, ["dialogue"], null)
+		if (dialogue){
+			beginDialogue(dialogue)
+				.then(data => {
+					if (!seenDialogue.includes(dialogueName)) {
+						seenDialogue.push(dialogueName)
+					}
+					resolvePromise(data)
+				})
+		} else {
+			console.warn("Tried to play dialogue that doesn't exist", dialogueName)
+			let data = newDialogueProgressData()
+			resolvePromise(data)
+		}
+	}
+	return promise
 }
 function advanceCurrentDialogue() {
 	let resolvePromise

@@ -1632,7 +1632,7 @@
 				  "duration": 900, "waitDuration": 0, "css": {
 					"left": "-=36%"
 				}},
-				{ "type": "text", "speaker": "Maika", "text": "They all have these whole vibes that are just, different, right? I’m not even completely sure what a “sensu” dance is." },
+				{ "type": "text", "speaker": "Maika", "text": "They all have these whole vibes that are just, $@start-italics|@$different,$@end-italics|@$ right? I’m not even completely sure what a “sensu” dance is." },
 				{ "type": "animate-speaker", "speaker": "Maika",
 				  "duration": 700, "waitDuration": 0, "css": {
 					"left": "+=18%"
@@ -1664,6 +1664,83 @@
 				{ "type": "text", "speaker": "Maika", "text": "All moving to the beat of their own drum, living entirely at their own tempo and so unafraid to show it..." },
 				{ "type": "text", "speaker": "Maika", "text": "Now that I’ve told you all about us, I’d love to see your style too!" },
 				{ "type": "text", "speaker": "Maika", "text": "Ready for a battle?" }
+			]
+		},
+		"route-5-5-dialogue": {
+			"events": [],
+			"callbacks": {},
+			"effects": [
+				{ "type": "get-speaker", "name": "Lillie", "class": "Lillie", "position": "left", "facing": "right" },
+				{ "type": "get-speaker", "name": "Narrator", "class": "Narrator" },
+				{ "type": "load-player-name" },
+				{ "type": "text", "speaker": "Lillie", "text": "Oh, %c%! There you are! Were you and Hau able to finish your trials?", "values": [-1] },
+				{ "type": "text", "speaker": "Lillie", "text": "Oh, me? Sorry, at some point in the forest, we got separated... so I just headed back here to the city." },
+				{ "type": "text", "speaker": "Lillie", "text": "I’m really glad you’re back, though... sorry, but being alone so far from home really shook me up." },
+				{ "type": "text", "speaker": "Lillie", "text": "There were a lot of signs talking about this big building here. They call it the “Battle Royal Dome.”" },
+				{ "type": "text", "speaker": "Lillie", "text": "Oh, wait, sorry, it’s “Royale,” not “Royal.” It says on this map that they “just liked it better that way.” They just haven’t changed all the signs yet." },
+				{ "type": "text", "speaker": "Lillie", "text": "Anyway, from what I saw, apparently this is some kind of tournament." },
+				{ "type": "text", "speaker": "Lillie", "text": "They’ll randomly place contestants against other trainers until only one is left undefeated." },
+				{ "type": "load-player-name" },
+				{ "type": "text", "speaker": "Lillie", "text": "That does sound interesting, I guess. %c%, would you like to watch one before continuing on?", "values": [-1] },
+				{ "type": "choice", "speaker": "Lillie", "choices": [
+					{ "text": "I’d like to try participating!", "value": 0, "default": true },
+					{ "text": "Sure, let’s watch one!", "value": 1 },
+					{ "text": "No", "value": 2 }
+				] },
+				{ "type": "set-variable", "name": "participate" },
+
+				{ "type": "load-variable", "name": "participate" },
+				{ "type": "load-value", "value": 0 },
+				{ "type": "jump-if-equal", "jumpTo": "participate" },
+				{ "type": "load-variable", "name": "participate" },
+				{ "type": "load-value", "value": 1 },
+				{ "type": "jump-if-equal", "jumpTo": "watch" },
+				{ "type": "load-variable", "name": "participate" },
+				{ "type": "load-value", "value": 2 },
+				{ "type": "jump-if-equal", "jumpTo": "no" },
+				
+				{ "type": "text", "speaker": "Lillie", "label": "participate", "text": "Oh! A-alright, I guess! It looks like registration is right over there, I’ll... cheer you on from the audience, I suppose." },
+				{ "type": "jump", "jumpTo": "end" },
+				{ "type": "text", "speaker": "Lillie", "label": "watch", "text": "Great! I’ll go get us tickets." },
+				{ "type": "text", "speaker": "Narrator", "text": "(You have a nice time watching the competition alongside Lillie.)" },
+				{ "type": "jump", "jumpTo": "end" },
+				{ "type": "load-player-name", "label": "no" },
+				{ "type": "text", "speaker": "Lillie", "text": "Oh... well, that’s fine. I think I’ll just... watch it myself, then. Have fun with whatever trial is next, %c%.", "values": [-1] },
+				{ "type": "jump", "jumpTo": "end" }
+			]
+		},
+		"route-5-5-dialogue-2": {
+			"events": [],
+			"callbacks": {},
+			"effects": [
+				{ "type": "get-speaker", "name": "Announcer", "class": "Reporter", "position": "left", "facing": "right" },
+				{ "type": "text", "speaker": "Announcer", "text": "Welcome, welcome, trainers of all ages! To Akala’s Battle Royale!" },
+				{ "type": "text", "speaker": "Announcer", "text": "Sixteen trainers from all four islands and beyond have gathered to give our audience the best show on Alola!" },
+				{ "type": "text", "speaker": "Announcer", "text": "Getting defeated even once will knock any trainer out for the rest of the tournament— so keep those Pokémon sharp!" },
+				{ "type": "load-player-name" },
+				{ "type": "text", "speaker": "Announcer", "text": "I won’t keep you waiting any longer! Our first battle begins now!" },
+				{ "type": "load-player-name" },
+				{ "type": "text", "speaker": "Announcer", "text": "In this corner... %c%! And in this corner...", "values": [-1] }
+			]
+		},
+		"route-5-5-hana-intro": {
+			"events": [],
+			"callbacks": {},
+			"effects": [
+				{ "type": "get-speaker", "name": "Announcer", "class": "Reporter", "position": "left", "facing": "right" },
+				{ "type": "get-speaker", "name": "Hana", "class": "Beauty-Gen6" },
+				{ "type": "text", "speaker": "Announcer", "text": "...Hana, the Glittering Queen!" },
+				{ "type": "text", "speaker": "Hana", "text": "Every battle is a runway. I only use Pokémon that $@start-italics|@$sparkle!$@end-italics|@$" }
+			]
+		},
+		"route-5-5-mr-fix-intro": {
+			"events": [],
+			"callbacks": {},
+			"effects": [
+				{ "type": "get-speaker", "name": "Announcer", "class": "Reporter", "position": "left", "facing": "right" },
+				{ "type": "get-speaker", "name": "Mr. Fix", "class": "Engineer-Gen3" },
+				{ "type": "text", "speaker": "Announcer", "text": "...Mr. Fix, Akala’s resident gear-grinding genius!!" },
+				{ "type": "text", "speaker": "Mr. Fix", "text": "My team runs smoother than a freshly-oiled engine!" }
 			]
 		}
 	},
@@ -4300,7 +4377,11 @@
 		"5-4-maika-oricorio-1": "Nanea",
 		"5-4-maika-oricorio-2": "Huro",
 		"5-4-maika-oricorio-3": "Akua",
-		"5-4-maika-oricorio-4": "Uahi"
+		"5-4-maika-oricorio-4": "Uahi",
+		"5-5-hana-furfrou": "Prada",
+		"5-5-hana-minccino": "Dazzle",
+		"5-5-hana-oricorio": "Spirit",
+		"5-5-mr-fix-magnemite": "Sparkplug"
 	},
 	"status-effects": {
 		"burn": {
@@ -4501,6 +4582,10 @@
 		"Route 5-4": {
 			"name": "Route 5-4",
 			"description": "You climb down from Brooklet Hill and come across a path connecting Paniola Town to the next leg of the journey."
+		},
+		"Route 5-5": {
+			"name": "Route 5-5",
+			"description": "The path leads through Royal Avenue, a long street overlooked by a towering dome with neon lights shining above its entrance."
 		}
 	},
 	"route-categories": {

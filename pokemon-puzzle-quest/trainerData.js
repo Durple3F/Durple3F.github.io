@@ -193,6 +193,13 @@ const NPCTrainerData = {
 			trainer: "src/img/trainers/backpackerf.png"
 		}
 	},
+	"Beauty-Gen6": {
+		name: "Beauty",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/beauty-gen6.png"
+		}
+	},
 	"Beauty-Gen7": {
 		name: "Beauty",
 		type: "trainer",
@@ -212,6 +219,13 @@ const NPCTrainerData = {
 		type: "trainer",
 		imageSources: {
 			trainer: "src/img/trainers/dancer-gen7.png"
+		}
+	},
+	"Engineer-Gen3": {
+		name: "Engineer",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/engineer-gen3.png"
 		}
 	},
 	"Fisherman-Gen7": {
@@ -268,6 +282,13 @@ const NPCTrainerData = {
 		type: "trainer",
 		imageSources: {
 			trainer: "src/img/trainers/risingstarf.png"
+		}
+	},
+	"Reporter": {
+		name: "Reporter",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/reporter.png"
 		}
 	},
 	"Sightseer": {

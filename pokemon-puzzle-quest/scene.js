@@ -278,6 +278,9 @@ function startScene(name, options={}) {
 				let routeHeight = routeTag.height()
 				let routeWidth = routeTag.width()
 				let routeRatio = routeWidth / routeHeight
+				if (!routeRatio){
+					routeRatio = ($(window).width() * 0.75) / $(window).height()
+				}
 				let backgroundRatio = 1
 				let backgroundImage
 				if (style.backgroundImage){
@@ -294,7 +297,6 @@ function startScene(name, options={}) {
 
 					let xOffset = 0
 					let yOffset = 0
-					console.log(routeRatio, backgroundRatio)
 					if (routeRatio > backgroundRatio){
 						xOffset = (routeRatio - backgroundRatio) * routeHeight * 0.5
 					} else if (routeRatio < backgroundRatio){
@@ -329,10 +331,11 @@ function startScene(name, options={}) {
 						}
 					}
 				})
+				let levelButtonsSelection = levelButtons.reduce((acc, v) => (acc.add(v)), $())
 				levelButtons.forEach(btn => {
 					let level = btn.data("level")
 					let active = false
-					routeTag.children().not(btn).on("mouseenter", () => {
+					levelButtonsSelection.not(btn).on("mouseenter", () => {
 						active = false
 						btn.popover("hide")
 					})
@@ -340,7 +343,7 @@ function startScene(name, options={}) {
 						if (!active){
 							btn.popover("dispose").popover({
 								placement: "bottom",
-								trigger: "none",
+								trigger: "manual",
 								html: true,
 								content: () => getPopover(level)
 							})
@@ -1239,6 +1242,8 @@ function beginLevel(levelID) {
 		level: level,
 		effects: level.effects,
 		info: [],
+		variables: {},
+		winningAllowed: true,
 		effectIndex: -1,
 		nextEffectIndex: 0
 	}
@@ -1292,13 +1297,19 @@ function beginLevel(levelID) {
 			//TODO Maybe one day, add an extra challenge to go back and finish the level without losing once
 			levelResult = "win"
 		} else {
+			//You lost no fights on a normal level
 			levelResult = "win"
+		}
+
+		//Some effects can prevent you from winning even if you didn't lose
+		if (levelResult === "win" && !currentLevelProgress.winningAllowed){
+			levelResult = "lose"
 		}
 
 		//Losing does nothing to the database, but winning does.
 		if (levelResult === "lose") {
 			console.log("You lose :(")
-		} else {
+		} else if (levelResult === "win") {
 			level.status = "won"
 			level.completions++
 			promise = promise.then(() => saveLevelStatus(level, "won"))
@@ -1380,60 +1391,62 @@ function advanceCurrentLevel() {
 		} break
 		case "fight": {
 			changeScene("fight")
-			let displayed = $("#board").css("display") !== "none"
-			if (!displayed) {
-				$("#game").fadeOut()
-				$("#board").fadeIn()
-			}
 
 			let trainerIndex = effect.trainer ?? 0
 			let trainerData = level.trainers[trainerIndex]
 			beginRound(trainerData)
 				.then(val => new Promise(res => {
 					currentLevelProgress.info[effectIndex] = val
-					if (val === "lose") {
-						currentLevelProgress.endEarly = true
-					} else if (val === "win") {
-						//Cool you win nothing special happens
-					} else {
-						console.warn("Fight ended with unexpected result", val)
-					}
 					res(val)
 				}))
-				.then(resolvePromise)
+				.then(outcome => resolvePromise(outcome))
+		} break
+		case "tournament": {
+			changeScene("fight")
 
-			let NPCData = NPCTrainerData[trainerData.name] ?? {}
-			//If the opponent is wild
-			if (!NPCData.type) {
+			let wins = 0
+			let neededWins = 4
+			let trainerIndexes = level.trainers.map((_, i) => i)
+			let foughtTrainers = []
+			const advance = () => {
+				let availableTrainerIndexes = trainerIndexes.filter(index => {
+					return !foughtTrainers.includes(index)
+				})
+				if (!availableTrainerIndexes.length){
+					finish("win")
+					return
+				}
 
+				let index = randomChoice(availableTrainerIndexes)
+				let trainerData = level.trainers[index]
+				beginRound(trainerData)
+				.then(val => {
+					foughtTrainers.push(index)
+					if (val === "win"){
+						wins++
+						if (wins >= neededWins){
+							finish("win")
+						} else {
+							advance()
+						}
+					} else {
+						console.warn("You never said what happens when you lose...")
+					}
+				})
 			}
+			const finish = outcome => {
+				resolvePromise(outcome)
+			}
+
+			advance()
 		} break
 		case "dialogue": {
 			$("#game").fadeOut()
-			let dialogueName = effect.source
-			let seenDialogue = playerSaveInfo["seen-dialogue"]
-			let shouldSkip = config.skipSeenDialogue && seenDialogue.includes(dialogueName)
-			if (shouldSkip) {
-				let data = newDialogueProgressData()
-				currentLevelProgress.info[effectIndex] = data.variables
-				resolvePromise()
-			} else {
-				let dialogue = getLocaleString(dialogueName, lang, ["dialogue"], null)
-				if (dialogue){
-					beginDialogue(dialogue)
-						.then(val => {
-							currentLevelProgress.info[effectIndex] = val.variables
-						})
-						.then(() => {
-							if (!seenDialogue.includes(dialogueName)) {
-								seenDialogue.push(dialogueName)
-							}
-							resolvePromise()
-						})
-				} else {
-					resolvePromise()
-				}
-			}
+			tryToBeginDialogue(effect.source)
+			.then(dialogueData => {
+				currentLevelProgress.info[effectIndex] = dialogueData.variables
+			})
+			.then(() => resolvePromise())
 		} break
 		case "random-number": {
 			let min = effect.min ?? 0
@@ -1490,6 +1503,25 @@ function advanceCurrentLevel() {
 			currentLevelProgress.info[effectIndex] = effect.value
 			resolvePromise()
 		} break
+		case "set-variable": {
+			let variables = currentLevelProgress.variables
+			let effectIndex = currentLevelProgress.effectIndex
+			let info = currentLevelProgress.info
+			let name = effect.name
+			variables[name] = info[effectIndex - 1]
+			info[effectIndex] = info[effectIndex - 1]
+			resolvePromise()
+		} break
+		case "load-variable": {
+			let variables = currentLevelProgress.variables
+			let name = effect.name
+			info[effectIndex] = variables[name]
+			resolvePromise()
+		} break
+		case "mark-as-lost": {
+			currentLevelProgress.winningAllowed = false
+			resolvePromise()
+		} break
 		case "jump-if-lost": {
 			let info = currentLevelProgress.info
 			//If you're marked as losing a "fight" effect, then you lose the whole level.
@@ -1516,6 +1548,19 @@ function advanceCurrentLevel() {
 			}
 			resolvePromise()
 		} break
+		case "jump-if-truthy": {
+			let test = currentLevelProgress.info[effectIndex - 1]
+			let index
+			if (typeof effect.jumpTo === "string") {
+				index = effects.findIndex(e => e.label === effect.jumpTo)
+			} else {
+				index = effect.jumpTo
+			}
+			if (test) {
+				currentLevelProgress.nextEffectIndex = index
+			}
+			resolvePromise()
+		} break
 		case "jump-if-less-than": {
 			let test = currentLevelProgress.info[effectIndex - 2]
 			let against = currentLevelProgress.info[effectIndex - 1]
@@ -1534,7 +1579,6 @@ function advanceCurrentLevel() {
 	}
 
 	promise = promise.then(val => {
-		// if (currentLevelProgress.endEarly) return Promise.resolve(val)
 
 		if (effects[currentLevelProgress.nextEffectIndex]) {
 			return advanceCurrentLevel()

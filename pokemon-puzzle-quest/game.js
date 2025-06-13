@@ -7415,8 +7415,13 @@ class TileStatus {
 }
 
 function beginRound(trainerData) {
-	let resolvePromise
-	let promise = new Promise(resolve => resolvePromise = resolve)
+	let promise = Promise.resolve()
+
+	let displayed = $("#board").css("display") !== "none"
+	if (!displayed) {
+		$("#game").fadeOut()
+	}
+	
 	let playerOptions = {
 		canUseZMoves: true,
 		zMoveUsableTypes: playerSaveInfo["z-moves-unlocked"]
@@ -7535,8 +7540,20 @@ function beginRound(trainerData) {
 		oldBoard = gameRound.board
 	}
 
-	gameRound = new Round(player, enemy, resolvePromise, oldBoard)
-	gameBoard = gameRound.board
+	if (trainerData.introDialogue){
+		promise = promise.then(() => {
+			return tryToBeginDialogue(trainerData.introDialogue)
+		})
+	}
+
+	promise = promise.then(() => new Promise(resolvePromise => {
+		if (!displayed){
+			$("#board").fadeIn()
+		}
+
+		gameRound = new Round(player, enemy, resolvePromise, oldBoard)
+		gameBoard = gameRound.board
+	}))
 
 	return promise
 }

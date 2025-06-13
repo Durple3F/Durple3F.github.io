@@ -530,13 +530,15 @@ const dialogueEffects = {
 	},
 	"choice": {
 		execute: (resolve, effect, progress, options) => {
+			let effectIndex = progress.effectIndex
+			let info = progress.info
 			let choices = effect.choices
 			let modal = $("#modal")
 			clearModal(modal)
 			modal.modal("show")
 			let result
 			let body = modal.find(".modal-body")
-			let container = $(`<div class='container d-flex justify-content-around'>`)
+			let container = $(`<div class='container d-flex justify-content-around flex-column dialogue-choice-container'>`)
 			body.append(container)
 			let buttons = $()
 
@@ -570,6 +572,7 @@ const dialogueEffects = {
 			})
 
 			modal.on("hidden.bs.modal", () => {
+				info[effectIndex] = result
 				resolve(result)
 			})
 		}
@@ -582,6 +585,13 @@ const dialogueEffects = {
 			let name = effect.name
 			variables[name] = info[effectIndex - 1]
 			resolve(info[effectIndex - 1])
+		}
+	},
+	"load-variable": {
+		execute: (resolve, effect, progress, options) => {
+			let variables = progress.variables
+			let name = effect.name
+			resolve(variables[name])
 		}
 	},
 	"load-value": {

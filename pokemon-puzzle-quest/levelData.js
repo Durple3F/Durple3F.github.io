@@ -3457,6 +3457,74 @@ const levelData = [
 			// { type: "dialogue", source: "route-5-1-dialogue-won" },
 		]
 	},
+	//5-5: Battle Royale
+	{
+		id: "Route 5-5",
+		category: "Route 5",
+		name: "Route 5-5",
+		icon: "5",
+		position: {
+			left: 0.57,
+			top: 0.31
+		},
+		images: {
+			"route-bg-route-6": "src/img/bg/route 6.jpg"
+		},
+		recommendedLevels: {
+			"normal": (pokemonList) => {
+				if (pokemonList.length >= 3) return 21
+				return 25
+			},
+			"hard": (pokemonList) => {
+				if (pokemonList.length >= 3) return 21
+				return 25
+			}
+		},
+		trainers: [
+			{
+				name: "Hana",
+				class: "Beauty-Gen6",
+				introDialogue: "route-5-5-hana-intro",
+				pokemon: [
+					{
+						id: "Oricorio",
+						form: "Pom-Pom",
+						pokeballType: "luxury ball",
+						name: "5-5-hana-oricorio",
+						level: 17
+					},
+				]
+			},
+			{
+				name: "Mr. Fix",
+				class: "Engineer-Gen3",
+				introDialogue: "route-5-5-mr-fix-intro",
+				pokemon: [
+					{
+						id: "Magnemite",
+						pokeballType: "great ball",
+						name: "5-5-mr-fix-magnemite",
+						level: 17
+					},
+				]
+			},
+		],
+		effects: [
+			// { type: "change-background-image", name: "route-bg-route-6" },
+			{ type: "dialogue", source: "route-5-5-dialogue" },
+			{ type: "get-val-from-obj", key: "participate", obj: -1 },
+			{ type: "set-variable", name: "skipping" },
+			{ type: "load-value", value: 0 },
+			{ type: "jump-if-truthy", jumpTo: "skip" },
+			{ type: "jump", jumpTo: "enter" },
+
+			{ type: "dialogue", label: "enter", source: "route-5-5-dialogue-2" },
+			{ type: "tournament" },
+			{ type: "jump-if-lost", jumpTo: Infinity },
+			
+			{ type: "mark-as-lost", label: "skip" },
+		]
+	},
 ]
 
 for (let categoryId in levelCategoryData) {
