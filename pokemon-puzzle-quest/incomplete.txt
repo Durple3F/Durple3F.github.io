@@ -81,6 +81,7 @@ Incomplete move lists:
 	Lilligant (lv 24)
 	Lilligant-Hisui (lv 9)
 	Zorua (lv 20)
+	Minccino (lv 24)
 	Alomomola (lv 25)
 	Rufflet (lv 30)
 	Vullaby (lv 36)
@@ -88,6 +89,7 @@ Incomplete move lists:
 	Litleo (lv 23)
 	Pancham (lv 20)
 	Pangoro (lv 0)
+	Furfrou (lv 22)
 	Espurr (lv 30)
 	Carbink (lv 20)
 	Noibat (lv 20)
@@ -146,6 +148,7 @@ Missing Evolutions:
 	Bonsly
 	Boldore
 	Zorua
+	Minccino
 	Rufflet
 	Vullaby
 	Fletchling
@@ -173,3 +176,5 @@ Incomplete Z-Moves:
 Incomplete Z-ified moves:
 	- Everything except Growl, Defense Curl, and Copycat
 
+Misc:
+	- Furfrou only has 4 forms and no shinies except the regular one. whatever :/

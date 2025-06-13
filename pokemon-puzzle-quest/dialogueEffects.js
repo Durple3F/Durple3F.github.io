@@ -61,6 +61,30 @@ const dialogueEffects = {
 			delay(waitDuration).then(() => resolve())
 		}
 	},
+	"fade-in": {
+		hasTarget: true,
+		execute: (resolve, effect, progress, options) => {
+			let tag = options.target
+			let duration = effect.duration ?? 400
+			let waitDuration = effect.waitDuration ?? duration
+
+			tag.fadeIn(duration)
+			
+			delay(waitDuration).then(() => resolve())
+		}
+	},
+	"fade-out": {
+		hasTarget: true,
+		execute: (resolve, effect, progress, options) => {
+			let tag = options.target
+			let duration = effect.duration ?? 400
+			let waitDuration = effect.waitDuration ?? duration
+
+			tag.fadeOut(duration)
+			
+			delay(waitDuration).then(() => resolve())
+		}
+	},
 	"wait": {
 		execute: (resolve, effect, progress, options) => {
 			let wait = effect.waitDuration

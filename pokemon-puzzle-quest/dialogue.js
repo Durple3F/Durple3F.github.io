@@ -45,7 +45,7 @@ function newDialogueProgressData(dialogueData){
 		variables: {}
 	}
 }
-function beginDialogue(dialogueData) {
+function beginDialogue(dialogueData, options={}) {
 	$("#dialogue-container").fadeIn()
 	dialogueProgress = newDialogueProgressData(dialogueData)
 
@@ -98,16 +98,11 @@ function beginDialogue(dialogueData) {
 	let totalPromise = Promise.any(promises)
 
 	totalPromise = totalPromise.then(() => {
-		$("#dialogue-container").fadeOut()
-		if (boardIsVisible) {
-			delay(400).then(() => {
-				$("#board").removeClass("showing-dialogue")
-			})
-		}
+		let fadePromise = Promise.resolve()
 		for (let interval in dialogueProgress.intervals) {
 			clearInterval(dialogueProgress.intervals[interval])
 		}
-		return delay(400)
+		return fadePromise
 	})
 
 	totalPromise = totalPromise
@@ -121,7 +116,7 @@ function beginDialogue(dialogueData) {
 
 	return totalPromise
 }
-function tryToBeginDialogue(source){
+function tryToBeginDialogue(source, options={}){
 	let resolvePromise
 	let promise = new Promise(resolve => resolvePromise = resolve)
 	let dialogueName = source
@@ -134,7 +129,7 @@ function tryToBeginDialogue(source){
 	} else {
 		let dialogue = getLocaleString(dialogueName, lang, ["dialogue"], null)
 		if (dialogue){
-			beginDialogue(dialogue)
+			beginDialogue(dialogue, options)
 				.then(data => {
 					if (!seenDialogue.includes(dialogueName)) {
 						seenDialogue.push(dialogueName)
@@ -147,6 +142,25 @@ function tryToBeginDialogue(source){
 			resolvePromise(data)
 		}
 	}
+
+	promise = promise.then(data => new Promise(resolve => {
+		let fadePromise = Promise.resolve()
+		let boardIsVisible = $("#board").css("display") !== "none"
+		let thenFadeOut = options.fadeOut ?? true
+		if (thenFadeOut){
+			$("#dialogue-container").fadeOut()
+			if (boardIsVisible) {
+				delay(400).then(() => {
+					$("#board").removeClass("showing-dialogue")
+				})
+			}
+			fadePromise = delay(400)
+		}
+		fadePromise = fadePromise.then(() => {
+			resolve(data)
+		})
+	}))
+
 	return promise
 }
 function advanceCurrentDialogue() {

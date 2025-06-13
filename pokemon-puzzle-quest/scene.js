@@ -291,7 +291,7 @@ function startScene(name, options={}) {
 					img.addClass("route-bg")
 					img.attr("src", src)
 					routeTag.append(img)
-					backgroundRatio = img[0].width / img[0].height
+					backgroundRatio = sprite.width / sprite.height
 					backgroundImage = img
 					backgroundImage.css("--ratio", backgroundRatio)
 
@@ -325,6 +325,7 @@ function startScene(name, options={}) {
 						let imgHeight = routeHeight - yOffset * 2
 						let imgWidth = routeWidth - xOffset * 2
 						if (level.position){
+							console.log(routeRatio, backgroundRatio)
 							btn.addClass("absolute")
 							btn.css("left", xOffset + imgWidth * level.position.left)
 							btn.css("top", yOffset + imgHeight * level.position.top)
@@ -1224,6 +1225,39 @@ function askToRenamePokemon(pokemon) {
 	return promise
 }
 
+class LevelProgress {
+	constructor(levelId, level){
+		this.id = levelId
+		this.level = level
+		this.effects = level.effects
+		this.info = []
+		this.variables = {}
+		this.winningAllowed = true
+		this.effectIndex = -1
+		this.nextEffectIndex = 0
+
+		this.promise = new Promise(res => {
+			this.resolve = res
+		})
+	}
+
+	hasLost(){
+		let lostFights = this.effects.some((effect, i) => {
+			return this.info[i] === "lose" && effect.type === "fight"
+		})
+		let lostTournaments = this.effects.some((effect, i) => {
+			return this.info[i] === "lose" && effect.type === "tournament"
+		})
+		let lostStuff = lostFights || lostTournaments
+		let forgiving = this.level.forgiving
+		if (lostStuff && forgiving){
+			lostStuff = false
+		}
+		let canWin = this.winningAllowed
+		return lostStuff || !canWin
+	}
+}
+
 let currentLevelProgress
 function beginLevel(levelID) {
 	let level = getLevelDataById(levelID)
@@ -1237,20 +1271,7 @@ function beginLevel(levelID) {
 	gameRound = undefined
 	gameBoard = undefined
 
-	currentLevelProgress = {
-		id: levelID,
-		level: level,
-		effects: level.effects,
-		info: [],
-		variables: {},
-		winningAllowed: true,
-		effectIndex: -1,
-		nextEffectIndex: 0
-	}
-	let levelPromise = new Promise(resolve => {
-		currentLevelProgress.resolve = resolve
-	})
-	currentLevelProgress.promise = levelPromise
+	currentLevelProgress = new LevelProgress(levelID, level)
 
 	let levelChangesMap = new Map()
 	if (level.recommendedLevels && config["lowerLevelsToRecommendedLevels"]){
@@ -1281,29 +1302,12 @@ function beginLevel(levelID) {
 	.then(val => {
 		currentLevelProgress.resolve()
 		let promise = Promise.resolve()
-		let info = currentLevelProgress.info
-		//If you're marked as losing a "fight" effect, then you lose the whole level.
-		let effects = currentLevelProgress.effects
-		let lostFights = effects.filter((effect, i) => {
-			return info[i] === "lose" && effect.type === "fight"
-		})
-
-		//If the level is forgiving, then you don't lose for
-		//having lost a fight
-		let forgiving = currentLevelProgress.level.forgiving
-		if (lostFights.length && !forgiving) {
+		let lost = currentLevelProgress.hasLost()
+		
+		if (lost) {
 			levelResult = "lose"
-		} else if (lostFights.length && forgiving) {
-			//TODO Maybe one day, add an extra challenge to go back and finish the level without losing once
-			levelResult = "win"
 		} else {
-			//You lost no fights on a normal level
 			levelResult = "win"
-		}
-
-		//Some effects can prevent you from winning even if you didn't lose
-		if (levelResult === "win" && !currentLevelProgress.winningAllowed){
-			levelResult = "lose"
 		}
 
 		//Losing does nothing to the database, but winning does.
@@ -1406,9 +1410,11 @@ function advanceCurrentLevel() {
 
 			let wins = 0
 			let neededWins = 4
+			let dialogueSources = effect.dialogues || []
 			let trainerIndexes = level.trainers.map((_, i) => i)
 			let foughtTrainers = []
 			const advance = () => {
+				let p = Promise.resolve()
 				let availableTrainerIndexes = trainerIndexes.filter(index => {
 					return !foughtTrainers.includes(index)
 				})
@@ -1417,9 +1423,22 @@ function advanceCurrentLevel() {
 					return
 				}
 
+				if (dialogueSources[wins]){
+					let source = dialogueSources[wins]
+					let dialogueOptions = {
+						fadeOut: false
+					}
+					p = p.then(() => tryToBeginDialogue(source, dialogueOptions))
+				}
+
 				let index = randomChoice(availableTrainerIndexes)
 				let trainerData = level.trainers[index]
-				beginRound(trainerData)
+
+				let roundOptions = {
+					fadeOutAfterOutro: false
+				}
+
+				p = p.then(() => beginRound(trainerData, roundOptions))
 				.then(val => {
 					foughtTrainers.push(index)
 					if (val === "win"){
@@ -1430,7 +1449,11 @@ function advanceCurrentLevel() {
 							advance()
 						}
 					} else {
-						console.warn("You never said what happens when you lose...")
+						if (effect.lossDialogue){
+							let lossDialogue = effect.lossDialogue
+							tryToBeginDialogue(lossDialogue)
+							.then(() => finish("lose"))
+						}
 					}
 				})
 			}
@@ -1442,7 +1465,13 @@ function advanceCurrentLevel() {
 		} break
 		case "dialogue": {
 			$("#game").fadeOut()
-			tryToBeginDialogue(effect.source)
+
+			let dialogueOptions = {}
+			if ("fadeOut" in effect){
+				dialogueOptions.fadeOut = effect.fadeOut
+			}
+
+			tryToBeginDialogue(effect.source, dialogueOptions)
 			.then(dialogueData => {
 				currentLevelProgress.info[effectIndex] = dialogueData.variables
 			})
@@ -1523,13 +1552,8 @@ function advanceCurrentLevel() {
 			resolvePromise()
 		} break
 		case "jump-if-lost": {
-			let info = currentLevelProgress.info
-			//If you're marked as losing a "fight" effect, then you lose the whole level.
-			let effects = currentLevelProgress.effects
-			let lostFights = effects.filter((effect, i) => {
-				return info[i] === "lose" && effect.type === "fight"
-			})
-			if (lostFights.length) {
+			let lost = currentLevelProgress.hasLost()
+			if (lost) {
 				currentLevelProgress.nextEffectIndex = index
 			}
 			resolvePromise()
@@ -2043,6 +2067,37 @@ function viewPokemonInfo(pokemon, options = {}) {
 			<a class="nav-link" href="#">Misc</a>
 		</li>`)
 		tabs.append(tab)
+
+		//Furfrou
+		if (canSwitchPokeball && data.id === "Furfrou"){
+			let furfrouSection = $("<div class='pokeball-section d-flex flex-wrap justify-content-around'>")
+			info.append(furfrouSection)
+
+			const changeCoat = type => {
+				pokemon.form = type
+			}
+			let forms = data.forms ?? {}
+			for (let formId in forms){
+				let formData = forms[formId]
+				let button = $("<div class='pokeball-option p-2 m-2'>")
+				furfrouSection.append(button)
+
+				if (pokemon.form === formId){
+					button.addClass("active")
+				}
+
+				let img = $("<img>")
+				button.append(img)
+				let src = formData.imageSources.home
+				img.attr("src", src)
+				img.css("height", "5em")
+				button.click(() => {
+					furfrouSection.children(".active").removeClass("active")
+					button.addClass("active")
+					changeCoat(formId)
+				})
+			}
+		}
 
 		const changePokeball = type => {
 			pokemon.pokeballType = type

@@ -39,3 +39,4 @@ TODO
 - Ensure Revelation Dance properly changes its shown type if its user's type changes
 - The level select screen needs to handle resizing better
 - 5-5 needs animation and 2 backgrounds
+- Furfrou is missing forms and changing the forms is a bit wonky

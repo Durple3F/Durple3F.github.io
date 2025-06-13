@@ -1425,7 +1425,7 @@
 			"callbacks": {},
 			"effects": [
 				{ "type": "get-speaker", "name": "Narrator", "class": "Narrator" },
-				{ "type": "text", "speaker": "Narrator", "text": "As you make it back to dry land, you approach a woman dancing alongside several Oricorio." },
+				{ "type": "text", "speaker": "Narrator", "text": "As you walk along the dirt path, you approach a woman dancing alongside several Oricorio." },
 				{ "type": "animate", "selector": "#dialogue .speakers", "css": {
 					"opacity": 0
 				}, "duration": 0, "waitDuration": 0 },
@@ -1723,24 +1723,67 @@
 				{ "type": "text", "speaker": "Announcer", "text": "In this corner... %c%! And in this corner...", "values": [-1] }
 			]
 		},
-		"route-5-5-hana-intro": {
+		"route-5-5-dialogue-3": {
 			"events": [],
 			"callbacks": {},
 			"effects": [
 				{ "type": "get-speaker", "name": "Announcer", "class": "Reporter", "position": "left", "facing": "right" },
-				{ "type": "get-speaker", "name": "Hana", "class": "Beauty-Gen6" },
+				{ "type": "text", "speaker": "Announcer", "text": "Our next contestant is..." }
+			]
+		},
+		"route-5-5-win": {
+			"events": [],
+			"callbacks": {},
+			"effects": [
+				{ "type": "get-speaker", "name": "Announcer", "class": "Reporter", "position": "left", "facing": "right" },
+				{ "type": "text", "speaker": "Announcer", "text": "What a battle, folks! With that, the tournament comes to an end!" },
+				{ "type": "text", "speaker": "Announcer", "text": "$@font-size:0.96|@$I sincerely hope that everyone in the audience, and especially each of our wonderful contestants, enjoyed their time at the Battle Royale Dome!$@font-size:1|@$" },
+				{ "type": "load-player-name" },
+				{ "type": "text", "speaker": "Announcer", "text": "Today’s Battle Royale champion is... %c%!", "values": [-1] }
+			]
+		},
+		"route-5-5-lose": {
+			"events": [],
+			"callbacks": {},
+			"effects": [
+				{ "type": "get-speaker", "name": "Announcer", "class": "Reporter", "position": "left", "facing": "right" },
+				{ "type": "load-player-name" },
+				{ "type": "text", "speaker": "Announcer", "text": "Ooh, tough luck, folks! That’s curtains for %c%!", "values": [-1] },
+				{ "type": "text", "speaker": "Announcer", "text": "Feel free to sign up again any time! We're always looking for new trainers!" }
+			]
+		},
+		"route-5-5-hana-intro": {
+			"effects": [
+				{ "type": "get-speaker", "name": "Announcer", "class": "Reporter", "position": "left", "facing": "right" },
+				{ "type": "get-speaker", "name": "Hana", "class": "Beauty-Gen6", "fadeIn": true },
 				{ "type": "text", "speaker": "Announcer", "text": "...Hana, the Glittering Queen!" },
 				{ "type": "text", "speaker": "Hana", "text": "Every battle is a runway. I only use Pokémon that $@start-italics|@$sparkle!$@end-italics|@$" }
 			]
 		},
+		"route-5-5-hana-win": {
+			"effects": [
+				{ "type": "get-speaker", "name": "Announcer", "class": "Reporter", "position": "left", "facing": "right" },
+				{ "type": "get-speaker", "name": "Hana", "class": "Beauty-Gen6" },
+				{ "type": "text", "speaker": "Hana", "text": "Ugh... you ruined my baby’s beautiful fur..." },
+				{ "type": "text", "speaker": "Announcer", "text": "Oof! The runway lights go dim for Hana!" },
+				{ "type": "fade-out", "speaker": "Hana" }
+			]
+		},
 		"route-5-5-mr-fix-intro": {
-			"events": [],
-			"callbacks": {},
+			"effects": [
+				{ "type": "get-speaker", "name": "Announcer", "class": "Reporter", "position": "left", "facing": "right" },
+				{ "type": "get-speaker", "name": "Mr. Fix", "class": "Engineer-Gen3", "fadeIn": true },
+				{ "type": "text", "speaker": "Announcer", "text": "...Mr. Fix, Akala’s resident gear-grinding genius!" },
+				{ "type": "text", "speaker": "Mr. Fix", "text": "My team runs smoother than a freshly-oiled engine!" }
+			]
+		},
+		"route-5-5-mr-fix-win": {
 			"effects": [
 				{ "type": "get-speaker", "name": "Announcer", "class": "Reporter", "position": "left", "facing": "right" },
 				{ "type": "get-speaker", "name": "Mr. Fix", "class": "Engineer-Gen3" },
-				{ "type": "text", "speaker": "Announcer", "text": "...Mr. Fix, Akala’s resident gear-grinding genius!!" },
-				{ "type": "text", "speaker": "Mr. Fix", "text": "My team runs smoother than a freshly-oiled engine!" }
+				{ "type": "text", "speaker": "Mr. Fix", "text": "Aw, nuts... now I gotta oil ‘em again." },
+				{ "type": "text", "speaker": "Announcer", "text": "Better tighten those bults, Mr. Fix!" },
+				{ "type": "fade-out", "speaker": "Mr. Fix" }
 			]
 		}
 	},
@@ -2145,6 +2188,10 @@
 			"name": "Zorua",
 			"pokedex-entry": "Wild Zorua like to play pretend and disguise as people. Everything else they tried didn’t work, so in towns and cities near forests where Zorua reside, they have “Safe Disguise Zones” where Zorua can play pretend all it wants. Most Zorua respect the boundaries as long as they have people to play with."
 		},
+		"Minccino": {
+			"name": "Minccino",
+			"pokedex-entry": "When these Pokémon see something they like, they bounce happily and start brushing it with their tails. Sttaching one to the end of a stick and using them like a feather duster is considered somewhat rude, but a totally valid form of enrichment for Minccino. Some of them really like it."
+		},
 		"Alomomola": {
 			"name": "Alomomola",
 			"pokedex-entry": "Lifeguards on busy beaches often rely on Alomomola patrolling the deeper waters far from the shore, where even strong swimmers can get into trouble. Alomomola have a strong sense of danger, and can carry people and Pokémon back to shore."
@@ -2172,6 +2219,10 @@
 		"Pangoro": {
 			"name": "Pangoro",
 			"pokedex-entry": "Pangoro often take Pancham in and train them as students. Pancham trained this way are much less mischievous, and love challenging themselves with more powerful opponents."
+		},
+		"Furfrou": {
+			"name": "Furfrou",
+			"pokedex-entry": "Furfrou is a famously fashionable Pokémon that sports many different styles. Or at least 3 different styles. Pokémon researchers are “pretty sure” that there “were” “more” styles that “Furfrou” could wear, but the other ones were unfortunately lost in “an” explosion accident."
 		},
 		"Espurr": {
 			"name": "Espurr",

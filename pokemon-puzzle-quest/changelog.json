@@ -1,5 +1,16 @@
 {
 	"versions": {
+		"20250613": {
+			"date": "June 13, 2025",
+			"line-count": 49300,
+			"changes": [
+				"- Added Furfrou, Minccino",
+				"- Reworked how the game keeps track of whether you have lost the level you're in",
+				"- Tournaments can now have dialogue between rounds",
+				"- Trainers can implicitly be told to give dialogue before they're fought",
+				"- Trainers can now have win dialogue programmed into them, too."
+			]
+		},
 		"20250612": {
 			"date": "June 12, 2025",
 			"line-count": 48900,

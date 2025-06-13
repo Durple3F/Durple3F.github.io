@@ -7414,7 +7414,7 @@ class TileStatus {
 	}
 }
 
-function beginRound(trainerData) {
+function beginRound(trainerData, options={}) {
 	let promise = Promise.resolve()
 
 	let displayed = $("#board").css("display") !== "none"
@@ -7553,6 +7553,17 @@ function beginRound(trainerData) {
 
 		gameRound = new Round(player, enemy, resolvePromise, oldBoard)
 		gameBoard = gameRound.board
+	}))
+
+	promise = promise.then(outcome => new Promise(resolve => {
+		if (outcome === "win" && trainerData.winDialogue){
+			let dialogueOptions = {}
+			dialogueOptions.fadeOut = options.fadeOutAfterOutro ?? true
+
+			return tryToBeginDialogue(trainerData.winDialogue, dialogueOptions)
+			.then(() => resolve(outcome))
+		}
+		return resolve(outcome)
 	}))
 
 	return promise

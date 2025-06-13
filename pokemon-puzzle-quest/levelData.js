@@ -3357,7 +3357,7 @@ const levelData = [
 					{
 						id: "Oricorio",
 						form: "Pom-Pom",
-						pokeballType: "great ball",
+						pokeball: "great ball",
 						name: "5-4-maika-oricorio-2",
 						level: 17,
 						activeMoves: ["Feather Dance", "Agility", "Acrobatics", "Spark"]
@@ -3365,7 +3365,7 @@ const levelData = [
 					{
 						id: "Oricorio",
 						form: "Pa'u",
-						pokeballType: "great ball",
+						pokeball: "great ball",
 						name: "5-4-maika-oricorio-1",
 						level: 17,
 						activeMoves: ["Quiver Dance", "Rest", "Teeter Dance", "Psybeam"]
@@ -3373,7 +3373,7 @@ const levelData = [
 					{
 						id: "Oricorio",
 						form: "Sensu",
-						pokeballType: "great ball",
+						pokeball: "great ball",
 						name: "5-4-maika-oricorio-3",
 						level: 17,
 						activeMoves: ["Revelation Dance", "Spite", "Peck", "Mean Look"]
@@ -3381,7 +3381,7 @@ const levelData = [
 					{
 						id: "Oricorio",
 						form: "Baile",
-						pokeballType: "great ball",
+						pokeball: "great ball",
 						name: "5-4-maika-oricorio-4",
 						level: 17,
 						activeMoves: ["Fiery Dance", "Mystical Fire", "Work Up", "Gust"]
@@ -3395,7 +3395,7 @@ const levelData = [
 					{
 						id: "Oricorio",
 						form: "Pom-Pom",
-						pokeballType: "great ball",
+						pokeball: "great ball",
 						name: "5-4-maika-oricorio-2",
 						level: 17,
 						activeMoves: ["Feather Dance", "Agility", "Acrobatics", "Spark"],
@@ -3406,7 +3406,7 @@ const levelData = [
 					{
 						id: "Oricorio",
 						form: "Pa'u",
-						pokeballType: "great ball",
+						pokeball: "great ball",
 						name: "5-4-maika-oricorio-1",
 						level: 17,
 						activeMoves: ["Quiver Dance", "Rest", "Teeter Dance", "Psybeam"],
@@ -3417,7 +3417,7 @@ const levelData = [
 					{
 						id: "Oricorio",
 						form: "Sensu",
-						pokeballType: "great ball",
+						pokeball: "great ball",
 						name: "5-4-maika-oricorio-3",
 						level: 17,
 						activeMoves: ["Revelation Dance", "Spite", "Peck", "Mean Look"],
@@ -3428,7 +3428,7 @@ const levelData = [
 					{
 						id: "Oricorio",
 						form: "Baile",
-						pokeballType: "great ball",
+						pokeball: "great ball",
 						name: "5-4-maika-oricorio-4",
 						level: 17,
 						activeMoves: ["Fiery Dance", "Mystical Fire", "Work Up", "Gust"],
@@ -3441,7 +3441,7 @@ const levelData = [
 		],
 		effects: [
 			{ type: "change-background-image", name: "route-bg-route-6" },
-			// { type: "fight", trainer: 0 },
+			{ type: "fight", trainer: 0 },
 			{ type: "jump-if-lost", jumpTo: Infinity },
 			{ type: "dialogue", source: "route-5-4-dialogue" },
 			{ type: "change-music", music: "SM Trainer Battle" },
@@ -3454,7 +3454,6 @@ const levelData = [
 			{ type: "fight", trainer: 2, label: "hardMode" },
 			{ type: "jump", jumpTo: "win-check" },
 			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
-			// { type: "dialogue", source: "route-5-1-dialogue-won" },
 		]
 	},
 	//5-5: Battle Royale
@@ -3485,11 +3484,25 @@ const levelData = [
 				name: "Hana",
 				class: "Beauty-Gen6",
 				introDialogue: "route-5-5-hana-intro",
+				winDialogue: "route-5-5-hana-win",
 				pokemon: [
+					{
+						id: "Furfrou",
+						form: "Diamond",
+						pokeball: "luxury ball",
+						name: "5-5-hana-furfrou",
+						level: 17
+					},
+					{
+						id: "Minccino",
+						pokeball: "luxury ball",
+						name: "5-5-hana-minccino",
+						level: 17
+					},
 					{
 						id: "Oricorio",
 						form: "Pom-Pom",
-						pokeballType: "luxury ball",
+						pokeball: "luxury ball",
 						name: "5-5-hana-oricorio",
 						level: 17
 					},
@@ -3499,11 +3512,24 @@ const levelData = [
 				name: "Mr. Fix",
 				class: "Engineer-Gen3",
 				introDialogue: "route-5-5-mr-fix-intro",
+				winDialogue: "route-5-5-mr-fix-win",
 				pokemon: [
 					{
 						id: "Magnemite",
-						pokeballType: "great ball",
+						pokeball: "great ball",
 						name: "5-5-mr-fix-magnemite",
+						level: 17
+					},
+					{
+						id: "Togedemaru",
+						pokeball: "great ball",
+						name: "5-5-mr-fix-togedemaru",
+						level: 17
+					},
+					{
+						id: "Klink",
+						pokeball: "great ball",
+						name: "5-5-mr-fix-klink",
 						level: 17
 					},
 				]
@@ -3518,9 +3544,13 @@ const levelData = [
 			{ type: "jump-if-truthy", jumpTo: "skip" },
 			{ type: "jump", jumpTo: "enter" },
 
-			{ type: "dialogue", label: "enter", source: "route-5-5-dialogue-2" },
-			{ type: "tournament" },
+			{ type: "tournament", label: "enter", dialogues: [
+				"route-5-5-dialogue-2",
+				"route-5-5-dialogue-3"
+			], lossDialogue: "route-5-5-lose" },
 			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "dialogue", source: "route-5-5-win" },
+			{ type: "jump", jumpTo: Infinity },
 			
 			{ type: "mark-as-lost", label: "skip" },
 		]

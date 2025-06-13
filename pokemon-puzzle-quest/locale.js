@@ -78,6 +78,28 @@ function checkLocale(locale, langName){
 	} else {
 		console.warn("Locale data is missing ability data", langName)
 	}
+
+	if (locale["pokemon-names"]){
+		let missingNames = []
+		Object.values(levelData)
+		.forEach(lData => {
+			let trainers = lData.trainers ?? []
+			trainers.forEach(tData => {
+				let pokemonList = (tData.pokemon ?? []).concat(tData.possiblePokemon ?? [])
+				pokemonList.forEach(pData => {
+					let name = pData.name
+					if (!name) return
+					let nameData = locale["pokemon-names"][name]
+					if (!nameData){
+						missingNames.push(lData.id + name)
+					}
+				})
+			})
+		})
+		if (missingNames.length){
+			console.log(missingNames)
+		}
+	}
 }
 
 function getLocaleString(id, lang, path, defaultResult=`% STRING MISSING %`){

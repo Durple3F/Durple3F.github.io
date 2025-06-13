@@ -5420,6 +5420,58 @@ const pokemonData = {
 			{ name: "Imprison", unlock: { type: "level", amount: 36 } },
 		]
 	},
+	"Minccino": {
+		name: "Minccino",
+		number: "572",
+		weight: {
+			pounds: 12.8,
+			kilograms: 5.8
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0572Minccino.png",
+			"largeShiny": "src/img/shiny-pokemon/572-Minccino.png",
+			"home": "src/img/tiny-pokemon/Minccino.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/minccino.mp3"
+		},
+		types: ["Normal"],
+		tags: [],
+		abilities: ["Cute Charm", "Technician"],
+		hiddenAbilities: ["Skill Link"],
+		stats: {
+			hp: 55,
+			attack: 50,
+			defense: 40,
+			specialAttack: 40,
+			specialDefense: 40,
+			speed: 75
+		},
+		expYield: 60,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 1
+		},
+		energyMastery: {
+			green: 2,
+			purple: 3,
+		},
+		learnset: [
+			{ name: "Pound", unlock: { type: "level", amount: 1 } },
+			{ name: "Baby-Doll Eyes", unlock: { type: "level", amount: 1 } },
+			{ name: "Helping Hand", unlock: { type: "level", amount: 4 } },
+			{ name: "Echoed Voice", unlock: { type: "level", amount: 18 } },
+			{ name: "Sing", unlock: { type: "level", amount: 12 } },
+			{ name: "Charm", unlock: { type: "level", amount: 16 } },
+			{ name: "Swift", unlock: { type: "level", amount: 20 } },
+			{ name: "Encore", unlock: { type: "level", amount: 24 } },
+		]
+	},
 	"Alomomola": {
 		name: "Alomomola",
 		number: "594",
@@ -5792,6 +5844,96 @@ const pokemonData = {
 			{ name: "Circle Throw", unlock: { type: "level", amount: 12 } },
 			{ name: "Low Sweep", unlock: { type: "level", amount: 16 } },
 			{ name: "Work Up", unlock: { type: "level", amount: 20 } },
+		]
+	},
+	"Furfrou": {
+		name: "Furfrou",
+		number: "676",
+		weight: {
+			pounds: 61.5,
+			kilograms: 28.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0676Furfrou.png",
+			"largeShiny": "src/img/shiny-pokemon/676-Furfrou.png",
+			"home": "src/img/tiny-pokemon/Furfrou.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/furfrou.mp3"
+		},
+		hasForms: true,
+		defaultForm: "Natural",
+		forms: {
+			"Natural": {
+				id: "Natural",
+				imageSources: {
+					"large": "src/img/pokemon/0676Furfrou.png",
+					"largeShiny": "src/img/shiny-pokemon/676-Furfrou.png",
+					"home": "src/img/tiny-pokemon/Furfrou.png"
+				},
+			},
+			"Diamond": {
+				id: "Diamond",
+				imageSources: {
+					"large": "src/img/pokemon/0676Furfrou-Diamond.png",
+					"largeShiny": "src/img/shiny-pokemon/676-Furfrou.png",
+					"home": "src/img/tiny-pokemon/Furfrou-Diamond.png"
+				},
+			},
+			"Heart": {
+				id: "Heart",
+				imageSources: {
+					"large": "src/img/pokemon/0676Furfrou-Heart.png",
+					"largeShiny": "src/img/shiny-pokemon/676-Furfrou.png",
+					"home": "src/img/tiny-pokemon/Furfrou-Heart.png"
+				},
+			},
+			"Star": {
+				id: "Star",
+				imageSources: {
+					"large": "src/img/pokemon/0676Furfrou-Star.png",
+					"largeShiny": "src/img/shiny-pokemon/676-Furfrou.png",
+					"home": "src/img/tiny-pokemon/Furfrou-Star.png"
+				},
+			},
+		},
+		types: [],
+		tags: [],
+		abilities: ["Fur Coat"],
+		hiddenAbilities: [],
+		stats: {
+			hp: 75,
+			attack: 80,
+			defense: 60,
+			specialAttack: 65,
+			specialDefense: 90,
+			speed: 102
+		},
+		expYield: 165,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 1
+		},
+		energyMastery: {
+			red: 1,
+			orange: 2,
+			yellow: 1,
+			green: 1,
+			blue: 1
+		},
+		learnset: [
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Growl", unlock: { type: "level", amount: 1 } },
+			{ name: "Sand Attack", unlock: { type: "level", amount: 5 } },
+			{ name: "Baby-Doll Eyes", unlock: { type: "level", amount: 9 } },
+			{ name: "Headbutt", unlock: { type: "level", amount: 12 } },
+			{ name: "Tail Whip", unlock: { type: "level", amount: 15 } },
+			{ name: "Bite", unlock: { type: "level", amount: 22 } },
 		]
 	},
 	"Espurr": {
