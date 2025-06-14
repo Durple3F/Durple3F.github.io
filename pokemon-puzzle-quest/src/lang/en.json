@@ -1829,6 +1829,23 @@
 				{ "type": "text", "speaker": "Announcer", "text": "Looks like the tide has turned for Keola!" },
 				{ "type": "fade-out", "speaker": "Keola" }
 			]
+		},
+		"route-5-5-elizabeth-intro": {
+			"effects": [
+				{ "type": "get-speaker", "name": "Announcer", "class": "Reporter", "position": "left", "facing": "right" },
+				{ "type": "get-speaker", "name": "Elizabeth", "class": "Aroma-Lady", "fadeIn": true },
+				{ "type": "text", "speaker": "Announcer", "text": "...The Blossoming Battler, Elizabeth!" },
+				{ "type": "text", "speaker": "Elizabeth", "text": "My garden blooms brighter than any other!" }
+			]
+		},
+		"route-5-5-elizabeth-win": {
+			"effects": [
+				{ "type": "get-speaker", "name": "Announcer", "class": "Reporter", "position": "left", "facing": "right" },
+				{ "type": "get-speaker", "name": "Elizabeth", "class": "Aroma-Lady" },
+				{ "type": "text", "speaker": "Elizabeth", "text": "Oh, dear... I suppose my garden needs pruning." },
+				{ "type": "text", "speaker": "Announcer", "text": "Looks like Elizabeth has wilted under the pressure!" },
+				{ "type": "fade-out", "speaker": "Elizabeth" }
+			]
 		}
 	},
 	"pokemon": {
@@ -2144,6 +2161,10 @@
 			"name": "Mawile",
 			"pokedex-entry": "Its larger rear mouth can’t taste anything, so it uses that mouth to eat food that it doesn’t like. Trainers have to take care of its sharp teeth for Mawile. It purrs contentedly while its trainer takes care of them."
 		},
+		"Roselia": {
+			"name": "Roselia",
+			"pokedex-entry": "Roselia loves to be the center of attention in any garden or greenhouse. If it notices its trainer giving more attention to other plants or Pokémon, it's prone to jealousy. On a related note, the flowers on its arms secrete a poisonous nectar."
+		},
 		"Spinda": {
 			"name": "Spinda",
 			"pokedex-entry": "Some Pokémon researchers have tried to catalog the billions of different patterns Spinda can have. I wouldn’t know. I’ve definitely never tried to do that."
@@ -2159,6 +2180,14 @@
 		"Bagon": {
 			"name": "Bagon",
 			"pokedex-entry": "Some trainers like to take Bagon paragliding with them to satisfy its desire to be able to fly one day. It helps."
+		},
+		"Budew": {
+			"name": "Budew",
+			"pokedex-entry": "As each and every winter comes to a close, Budew become more active, and their buds open up to spray pollen into the air. The pollen <i>is</i> moderately poisonous, but only in high doses, so anyone planning on training many Budew should be very careful during February."
+		},
+		"Roserade": {
+			"name": "Roserade",
+			"pokedex-entry": "A highly dramatic Pokémon, it loves to give performative dances. When its audience applauds, instead of throwing flowers at the performer, Roserade will toss flowers from the bouquets on its arms to its audience."
 		},
 		"Cherrim": {
 			"name": "Cherrim",
@@ -4108,10 +4137,15 @@
 			"shortDescription": "Raises Special Attack by 50% when it enters if another Pokémon has Plus or Minus",
 			"longDescription": "When this Pokémon is put into play, if its user has another Pokémon with Plus or Minus, this Pokémon's Special Attack is increased by 50%."
 		},
-		"Poison Touch": {
-			"name": "Poison Touch",
+		"Poison Point": {
+			"name": "Poison Point",
 			"shortDescription": "Poisons the attacker when they make contact 30% of the time",
 			"longDescription": "Whenever another Pokémon deals damage to this Pokémon through a move that makes contact, this ability has a 30% chance to apply Poisoned to the attacker."
+		},
+		"Poison Touch": {
+			"name": "Poison Touch",
+			"shortDescription": "Poisons the defender upon making contact 30% of the time",
+			"longDescription": "Whenever this Pokémon deals damage to another Pokémon through a move that makes contact, this ability has a 30% chance to apply Poisoned to the defender."
 		},
 		"Power of Alchemy": {
 			"name": "Power of Alchemy",

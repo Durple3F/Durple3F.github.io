@@ -3574,12 +3574,12 @@ const levelData = [
 						name: "5-5-elizabeth-cherrim",
 						level: 17
 					},
-					// {
-					// 	id: "Roserade",
-					// 	pokeball: "friend ball",
-					// 	name: "5-5-elizabeth-roserade",
-					// 	level: 17
-					// },
+					{
+						id: "Roselia",
+						// pokeball: "friend ball",
+						name: "5-5-elizabeth-roserade",
+						level: 17
+					},
 				]
 			},
 		],

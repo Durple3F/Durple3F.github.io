@@ -2,11 +2,11 @@
 	"versions": {
 		"20250614": {
 			"date": "June 14, 2025",
-			"line-count": 49500,
+			"line-count": 49900,
 			"changes": [
-				"- Added Togedemaru, Klink, Cherrim",
-				"- Added Iron Barbs, Flower Gift",
-				"- Added a new trainer to 5-5",
+				"- Added Togedemaru, Klink, Cherrim, Budew, Roselia, Roserade",
+				"- Added Iron Barbs, Flower Gift, Poison Point",
+				"- Added 2 new trainers to 5-5",
 				"- Moved all of the pokemon names up to 2-3 to another file for organization.",
 				"- Levels with more than one fight in them no longer retain the same board throughout the whole level."
 			]

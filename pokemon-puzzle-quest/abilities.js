@@ -302,6 +302,10 @@ const pokemonAbilityData = {
 		id: "Plus"
 	},
 	//Poisons the opponent sometimes when they make contact
+	"Poison Point": {
+		id: "Poison Point"
+	},
+	//Poisons the opponent sometimes when you make contact
 	"Poison Touch": {
 		id: "Poison Touch"
 	},

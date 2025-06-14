@@ -2983,8 +2983,17 @@ class Round {
 						attacker.addStatusEffect("paralyzed", attackerTrainer, attacker, undefined)
 					}
 				}
-				//Poison Touch poisons the attacker sometimes
-				if (madeContact && attacker !== defender && defender.hasAbility("Poison Touch")) {
+				//Poison Touch poisons the defender sometimes
+				if (madeContact && attacker !== defender && attacker.hasAbility("Poison Touch")) {
+					if (
+						attacker !== defender &&
+						Math.random() < 0.3
+					) {
+						defender.addStatusEffect("poisoned", attackerTrainer, attacker, undefined)
+					}
+				}
+				//Poison Point poisons the attacker sometimes
+				if (madeContact && attacker !== defender && defender.hasAbility("Poison Point")) {
 					if (
 						attacker !== defender &&
 						Math.random() < 0.3

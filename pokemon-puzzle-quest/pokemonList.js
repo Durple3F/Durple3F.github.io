@@ -4144,6 +4144,70 @@ const pokemonData = {
 			{ name: "Sweet Scent", unlock: { type: "level", amount: 32 } },
 		]
 	},
+	"Roselia": {
+		name: "Roselia",
+		number: "315",
+		weight: {
+			pounds: 4.4,
+			kilograms: 2.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0315Roselia.png",
+			"largeShiny": "src/img/shiny-pokemon/315-Roselia.png",
+			"home": "src/img/tiny-pokemon/Roselia.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/roselia.mp3"
+		},
+		types: ["Grass", "Poison"],
+		tags: [],
+		abilities: ["Natural Cure", "Poison Point"],
+		hiddenAbilities: ["Leaf Guard"],
+		stats: {
+			hp: 50,
+			attack: 60,
+			defense: 45,
+			specialAttack: 100,
+			specialDefense: 80,
+			speed: 65
+		},
+		expYield: 140,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 2,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			green: 4,
+			purple: 3
+		},
+		evolutions: [
+			{ name: "Roserade", unlock: { type: "fiveMatchPurple", amount: 10 } }
+		],
+		learnset: [
+			{ name: "Poison Sting", unlock: { type: "level", amount: 1 } },
+			{ name: "Absorb", unlock: { type: "level", amount: 1 } },
+			{ name: "Growth", unlock: { type: "level", amount: 1 } },
+			{ name: "Stun Spore", unlock: { type: "level", amount: 1 } },
+			// { name: "Worry Seed", unlock: { type: "level", amount: 1 } },
+			{ name: "Mega Drain", unlock: { type: "level", amount: 5 } },
+			{ name: "Leech Seed", unlock: { type: "level", amount: 10 } },
+			{ name: "Magical Leaf", unlock: { type: "level", amount: 15 } },
+			// { name: "Toxic Spikes", unlock: { type: "level", amount: 20 } },
+			{ name: "Sweet Scent", unlock: { type: "level", amount: 25 } },
+			{ name: "Giga Drain", unlock: { type: "level", amount: 30 } },
+			{ name: "Synthesis", unlock: { type: "level", amount: 35 } },
+			// { name: "Toxic", unlock: { type: "level", amount: 40 } },
+			// { name: "Petal Blizzard", unlock: { type: "level", amount: 45 } },
+			// { name: "Aromatherapy", unlock: { type: "level", amount: 50 } },
+			{ name: "Ingrain", unlock: { type: "level", amount: 55 } },
+			// { name: "Petal Dance", unlock: { type: "level", amount: 60 } },
+		]
+	},
 	"Spinda": {
 		name: "Spinda",
 		number: "327",
@@ -4361,6 +4425,121 @@ const pokemonData = {
 			{ name: "Headbutt", unlock: { type: "level", amount: 15 } },
 			{ name: "Scary Face", unlock: { type: "level", amount: 20 } },
 			{ name: "Crunch", unlock: { type: "level", amount: 25 } },
+		]
+	},
+	"Budew": {
+		name: "Budew",
+		number: "406",
+		weight: {
+			pounds: 2.6,
+			kilograms: 1.2
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0406Budew.png",
+			"largeShiny": "src/img/shiny-pokemon/406-Budew.png",
+			"home": "src/img/tiny-pokemon/Budew.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/budew.mp3"
+		},
+		types: ["Grass", "Poison"],
+		tags: [],
+		abilities: ["Natural Cure", "Poison Point"],
+		hiddenAbilities: ["Leaf Guard"],
+		stats: {
+			hp: 40,
+			attack: 30,
+			defense: 35,
+			specialAttack: 50,
+			specialDefense: 70,
+			speed: 55
+		},
+		expYield: 56,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 1,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			green: 4,
+		},
+		evolutions: [
+			{ name: "Roselia", unlock: { type: "friendship", amount: 50 } }
+		],
+		learnset: [
+			{ name: "Absorb", unlock: { type: "level", amount: 1 } },
+			{ name: "Growth", unlock: { type: "level", amount: 1 } },
+			{ name: "Stun Spore", unlock: { type: "level", amount: 1 } },
+			// { name: "Worry Seed", unlock: { type: "level", amount: 1 } },
+		]
+	},
+	"Roserade": {
+		name: "Roserade",
+		number: "407",
+		weight: {
+			pounds: 32.0,
+			kilograms: 14.5
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0407Roserade.png",
+			"largeShiny": "src/img/shiny-pokemon/407-Roserade.png",
+			"home": "src/img/tiny-pokemon/Roserade.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/roserade.mp3"
+		},
+		types: ["Grass", "Poison"],
+		tags: [],
+		abilities: ["Natural Cure", "Poison Point"],
+		hiddenAbilities: ["Technician"],
+		stats: {
+			hp: 60,
+			attack: 70,
+			defense: 65,
+			specialAttack: 125,
+			specialDefense: 105,
+			speed: 90
+		},
+		expYield: 232,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 3,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			yellow: 1,
+			green: 4,
+			blue: 2,
+			purple: 3,
+		},
+		learnset: [
+			// { name: "Grassy Terrain", unlock: { type: "level", amount: 1 } },
+			{ name: "Poison Sting", unlock: { type: "level", amount: 1 } },
+			// { name: "Venom Drench", unlock: { type: "level", amount: 1 } },
+			{ name: "Mega Drain", unlock: { type: "level", amount: 1 } },
+			{ name: "Leech Seed", unlock: { type: "level", amount: 1 } },
+			{ name: "Magical Leaf", unlock: { type: "level", amount: 1 } },
+			// { name: "Toxic Spikes", unlock: { type: "level", amount: 1 } },
+			{ name: "Sweet Scent", unlock: { type: "level", amount: 1 } },
+			{ name: "Giga Drain", unlock: { type: "level", amount: 1 } },
+			{ name: "Synthesis", unlock: { type: "level", amount: 1 } },
+			// { name: "Toxic", unlock: { type: "level", amount: 1 } },
+			// { name: "Petal Blizzard", unlock: { type: "level", amount: 1 } },
+			// { name: "Aromatherapy", unlock: { type: "level", amount: 1 } },
+			{ name: "Ingrain", unlock: { type: "level", amount: 1 } },
+			// { name: "Petal Dance", unlock: { type: "level", amount: 1 } },
+			{ name: "Absorb", unlock: { type: "level", amount: 1 } },
+			{ name: "Growth", unlock: { type: "level", amount: 1 } },
+			{ name: "Stun Spore", unlock: { type: "level", amount: 1 } },
+			// { name: "Worry Seed", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Cherrim": {
