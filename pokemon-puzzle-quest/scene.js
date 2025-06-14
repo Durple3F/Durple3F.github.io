@@ -1437,6 +1437,12 @@ function advanceCurrentLevel() {
 				let roundOptions = {
 					fadeOutAfterOutro: false
 				}
+				if (wins > 0){
+					let percent = wins / neededWins
+					let remainingHP = 1 - percent
+					remainingHP = Math.min(remainingHP + 0.1, 1)
+					roundOptions.remainingHP = remainingHP
+				}
 
 				p = p.then(() => beginRound(trainerData, roundOptions))
 				.then(val => {

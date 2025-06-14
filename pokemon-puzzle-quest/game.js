@@ -7581,6 +7581,30 @@ function beginRound(trainerData, options={}) {
 		shuffleArray(enemyPokemon)
 	}
 
+	//Certain battles will have the trainer start with reduced HP
+	if ("remainingHP" in options){
+		//This is a percentage
+		let remainingHP = options.remainingHP
+		let perPokemonTotal = remainingHP * enemyPokemon.length
+		let remainingPokemon = Math.ceil(perPokemonTotal / enemyPokemon.length)
+		let toFaint = enemyPokemon.length - remainingPokemon
+		if (toFaint >= enemyPokemon.length) {
+			toFaint = enemyPokemon.length - 1
+		}
+		for (let i = 0; i < toFaint; i++){
+			let canFaint = enemyPokemon.filter(p => isPokemonUsable(p))
+			if (!canFaint.length) break
+			let pokemon = randomChoice(canFaint)
+			pokemon.fainted = true
+			pokemon.hp = 0
+		}
+		let remainder = perPokemonTotal % 1
+		if (remainder){
+			let firstPokemon = enemyPokemon.find(p => isPokemonUsable(p))
+			firstPokemon.hp = Math.ceil(firstPokemon.maxhp * remainder)
+		}
+	}
+
 	let enemy = new Trainer("Enemy", enemyPokemon, trainerData)
 	acePokemon.forEach(pokemon => enemy.pokemonData[pokemon.uuid].isAce = true)
 	pokemonWithTags.forEach(pair => {

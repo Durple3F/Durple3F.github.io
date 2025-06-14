@@ -3577,7 +3577,7 @@ const levelData = [
 					{
 						id: "Roselia",
 						// pokeball: "friend ball",
-						name: "5-5-elizabeth-roserade",
+						name: "5-5-elizabeth-roselia",
 						level: 17
 					},
 				]
