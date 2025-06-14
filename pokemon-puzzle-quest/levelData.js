@@ -128,7 +128,7 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Popplio",
-						name: "Bubble",
+						name: "hau-popplio",
 						level: 5,
 						ability: "Torrent"
 					}
@@ -139,7 +139,7 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Rowlet",
-						name: "Bonsai",
+						name: "hau-rowlet",
 						level: 5,
 						ability: "Overgrow"
 					}
@@ -150,7 +150,7 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Litten",
-						name: "Blaze",
+						name: "hau-litten",
 						level: 5,
 						ability: "Blaze"
 					}
@@ -370,14 +370,14 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Popplio",
-						name: "Bubble",
+						name: "hau-popplio",
 						level: 7,
 						ability: "Torrent",
 						activeMoves: ["Pound", "Water Gun", "Growl"]
 					},
 					{
 						id: "Pichu",
-						name: "Kiki",
+						name: "hau-pichu",
 						level: 6,
 						ability: "Static",
 						activeMoves: ["Thunder Shock", "Tail Whip", "Charm"]
@@ -389,14 +389,14 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Rowlet",
-						name: "Bonsai",
+						name: "hau-rowlet",
 						level: 7,
 						ability: "Overgrow",
 						activeMoves: ["Tackle", "Growl", "Leafage"]
 					},
 					{
 						id: "Pichu",
-						name: "Kiki",
+						name: "hau-pichu",
 						level: 6,
 						ability: "Static",
 						activeMoves: ["Thunder Shock", "Tail Whip", "Charm"]
@@ -408,14 +408,14 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Litten",
-						name: "Blaze",
+						name: "hau-litten",
 						level: 7,
 						ability: "Blaze",
 						activeMoves: ["Scratch", "Growl", "Ember"]
 					},
 					{
 						id: "Pichu",
-						name: "Kiki",
+						name: "hau-pichu",
 						level: 6,
 						ability: "Static",
 						activeMoves: ["Thunder Shock", "Tail Whip", "Charm"]
@@ -1334,7 +1334,7 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Popplio",
-						name: "Bubble",
+						name: "hau-popplio",
 						level: 14,
 						ability: "Torrent",
 						activeMoves: ["Water Gun", "Growl", "Disarming Voice", "Baby-Doll Eyes"],
@@ -1343,7 +1343,7 @@ const levelData = [
 					},
 					{
 						id: "Pikachu",
-						name: "Kiki",
+						name: "hau-pichu",
 						level: 14,
 						ability: "Static",
 						activeMoves: ["Growl", "Play Nice", "Quick Attack", "Electro Ball"],
@@ -1357,7 +1357,7 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Rowlet",
-						name: "Bonsai",
+						name: "hau-rowlet",
 						level: 14,
 						ability: "Overgrow",
 						activeMoves: ["Leafage", "Growl", "Peck", "Astonish"],
@@ -1366,7 +1366,7 @@ const levelData = [
 					},
 					{
 						id: "Pikachu",
-						name: "Kiki",
+						name: "hau-pichu",
 						level: 14,
 						ability: "Static",
 						activeMoves: ["Growl", "Play Nice", "Quick Attack", "Electro Ball"],
@@ -1380,7 +1380,7 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Litten",
-						name: "Blaze",
+						name: "hau-litten",
 						level: 14,
 						ability: "Blaze",
 						activeMoves: ["Ember", "Growl", "Lick", "Leer"],
@@ -1389,7 +1389,7 @@ const levelData = [
 					},
 					{
 						id: "Pikachu",
-						name: "Kiki",
+						name: "hau-pichu",
 						level: 14,
 						ability: "Static",
 						activeMoves: ["Growl", "Play Nice", "Quick Attack", "Electro Ball"],
@@ -2224,7 +2224,7 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Brionne",
-						name: "Bubble",
+						name: "hau-popplio",
 						level: 16,
 						ability: "Torrent",
 						activeMoves: ["Water Gun", "Growl", "Pound", "Aqua Jet"],
@@ -2233,7 +2233,7 @@ const levelData = [
 					},
 					{
 						id: "Pikachu",
-						name: "Kiki",
+						name: "hau-pichu",
 						level: 15,
 						ability: "Static",
 						activeMoves: ["Growl", "Play Nice", "Quick Attack", "Electro Ball"],
@@ -2242,7 +2242,7 @@ const levelData = [
 					},
 					{
 						id: "Noibat",
-						name: "Echo",
+						name: "hau-noibat",
 						level: 14,
 						ability: "Infiltrator",
 						activeMoves: ["Tackle", "Bite", "Double Team", "Supersonic"],
@@ -2251,7 +2251,7 @@ const levelData = [
 					},
 					{
 						id: "Eevee",
-						name: "Scout",
+						name: "hau-eevee",
 						level: 14,
 						ability: "Adaptability",
 						activeMoves: ["Baby-Doll Eyes", "Play Nice", "Swift", "Copycat"],
@@ -2267,7 +2267,7 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Dartrix",
-						name: "Bonsai",
+						name: "hau-rowlet",
 						level: 17,
 						ability: "Overgrow",
 						activeMoves: ["Leafage", "Growl", "Peck", "Astonish"],
@@ -2276,7 +2276,7 @@ const levelData = [
 					},
 					{
 						id: "Pikachu",
-						name: "Kiki",
+						name: "hau-pichu",
 						level: 16,
 						ability: "Static",
 						activeMoves: ["Growl", "Play Nice", "Quick Attack", "Electro Ball"],
@@ -2285,7 +2285,7 @@ const levelData = [
 					},
 					{
 						id: "Noibat",
-						name: "Echo",
+						name: "hau-noibat",
 						level: 14,
 						ability: "Infiltrator",
 						activeMoves: ["Tackle", "Bite", "Double Team", "Supersonic"],
@@ -2294,7 +2294,7 @@ const levelData = [
 					},
 					{
 						id: "Eevee",
-						name: "Scout",
+						name: "hau-eevee",
 						level: 14,
 						ability: "Adaptability",
 						activeMoves: ["Baby-Doll Eyes", "Play Nice", "Swift", "Copycat"],
@@ -2310,7 +2310,7 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Torracat",
-						name: "Blaze",
+						name: "hau-litten",
 						level: 17,
 						ability: "Blaze",
 						activeMoves: ["Ember", "Growl", "Scratch", "Lick"],
@@ -2319,7 +2319,7 @@ const levelData = [
 					},
 					{
 						id: "Pikachu",
-						name: "Kiki",
+						name: "hau-pichu",
 						level: 16,
 						ability: "Static",
 						activeMoves: ["Growl", "Play Nice", "Quick Attack", "Electro Ball"],
@@ -2328,7 +2328,7 @@ const levelData = [
 					},
 					{
 						id: "Noibat",
-						name: "Echo",
+						name: "hau-noibat",
 						level: 14,
 						ability: "Infiltrator",
 						activeMoves: ["Tackle", "Bite", "Double Team", "Supersonic"],
@@ -2337,7 +2337,7 @@ const levelData = [
 					},
 					{
 						id: "Eevee",
-						name: "Scout",
+						name: "hau-eevee",
 						level: 14,
 						ability: "Adaptability",
 						activeMoves: ["Baby-Doll Eyes", "Play Nice", "Swift", "Copycat"],

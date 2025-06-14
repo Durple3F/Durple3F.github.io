@@ -4416,6 +4416,12 @@
 		}
 	},
 	"pokemon-names": {
+		"hau-popplio": "Bubble",
+		"hau-rowlet": "Bonsai",
+		"hau-litten": "Blaze",
+		"hau-pichu": "Kiki",
+		"hau-noibat": "Echo",
+		"hau-eevee": "Scout",
 		"5-1-mikiko-fletchling": "Chitter",
 		"5-1-mikiko-litleo": "Pepper",
 		"5-1-mikiko-espurr": "Mimi",
@@ -4432,7 +4438,9 @@
 		"5-5-hana-furfrou": "Prada",
 		"5-5-hana-minccino": "Dazzle",
 		"5-5-hana-oricorio": "Spirit",
-		"5-5-mr-fix-magnemite": "Sparkplug"
+		"5-5-mr-fix-magnemite": "Polaris",
+		"5-5-mr-fix-togedemaru": "Sparkplug",
+		"5-5-mr-fix-klink": "Axle"
 	},
 	"status-effects": {
 		"burn": {

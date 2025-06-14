@@ -8091,6 +8091,58 @@ const pokemonData = {
 			{ name: "Scary Face", unlock: { type: "level", amount: 20 } },
 		]
 	},
+	"Togedemaru": {
+		name: "Togedemaru",
+		number: "777",
+		weight: {
+			pounds: 7.3,
+			kilograms: 3.3
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0777Togedemaru.png",
+			"largeShiny": "src/img/shiny-pokemon/777-Togedemaru.png",
+			"home": "src/img/tiny-pokemon/Togedemaru.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/togedemaru.mp3"
+		},
+		tags: [],
+		types: ["Electric", "Steel"],
+		abilities: ["Iron Barbs", "Lightning Rod"],
+		hiddenAbilities: ["Sturdy"],
+		stats: {
+			hp: 65,
+			attack: 98,
+			defense: 63,
+			specialAttack: 40,
+			specialDefense: 73,
+			speed: 96
+		},
+		expYield: 152,
+		evYield: {
+			hp: 0,
+			attack: 2,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			yellow: 6,
+			green: 2,
+			orange: 1
+		},
+		learnset: [
+			{ name: "Nuzzle", unlock: { type: "level", amount: 1 } },
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Defense Curl", unlock: { type: "level", amount: 5 } },
+			{ name: "Charge", unlock: { type: "level", amount: 10 } },
+			{ name: "Thunder Shock", unlock: { type: "level", amount: 15 } },
+			{ name: "Fell Stinger", unlock: { type: "level", amount: 20 } },
+			{ name: "Spark", unlock: { type: "level", amount: 25 } },
+		]
+	},
 	"Type: Null": {
 		name: "Type: Null",
 		number: "772",
