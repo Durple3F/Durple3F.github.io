@@ -5525,6 +5525,59 @@ const pokemonData = {
 			{ name: "Water Pulse", unlock: { type: "level", amount: 25 } },
 		]
 	},
+	"Klink": {
+		name: "Klink",
+		number: "599",
+		weight: {
+			pounds: 46.3,
+			kilograms: 21.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0777Togedemaru.png",
+			"largeShiny": "src/img/shiny-pokemon/599-Klink.png",
+			"home": "src/img/tiny-pokemon/Klink.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/klink.mp3"
+		},
+		tags: [],
+		types: ["Steel"],
+		abilities: ["Plus", "Minus"],
+		hiddenAbilities: ["Clear Body"],
+		stats: {
+			hp: 40,
+			attack: 55,
+			defense: 70,
+			specialAttack: 45,
+			specialDefense: 60,
+			speed: 30
+		},
+		expYield: 60,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 1,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			yellow: 2,
+			blue: 2
+		},
+		learnset: [
+			{ name: "Thunder Shock", unlock: { type: "level", amount: 1 } },
+			{ name: "Vise Grip", unlock: { type: "level", amount: 1 } },
+			// { name: "Bind", unlock: { type: "level", amount: 4 } },
+			{ name: "Charge", unlock: { type: "level", amount: 8 } },
+			// { name: "Charge Beam", unlock: { type: "level", amount: 12 } },
+			{ name: "Metal Sound", unlock: { type: "level", amount: 16 } },
+			// { name: "Automotize", unlock: { type: "level", amount: 20 } },
+			{ name: "Discharge", unlock: { type: "level", amount: 24 } },
+			{ name: "Screech", unlock: { type: "level", amount: 28 } },
+		]
+	},
 	"Rufflet": {
 		name: "Rufflet",
 		number: "627",

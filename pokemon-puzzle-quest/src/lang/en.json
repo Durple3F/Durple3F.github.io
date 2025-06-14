@@ -1782,8 +1782,25 @@
 				{ "type": "get-speaker", "name": "Announcer", "class": "Reporter", "position": "left", "facing": "right" },
 				{ "type": "get-speaker", "name": "Mr. Fix", "class": "Engineer-Gen3" },
 				{ "type": "text", "speaker": "Mr. Fix", "text": "Aw, nuts... now I gotta oil ‘em again." },
-				{ "type": "text", "speaker": "Announcer", "text": "Better tighten those bults, Mr. Fix!" },
+				{ "type": "text", "speaker": "Announcer", "text": "Better tighten those bolts, Mr. Fix!" },
 				{ "type": "fade-out", "speaker": "Mr. Fix" }
+			]
+		},
+		"route-5-5-keola-intro": {
+			"effects": [
+				{ "type": "get-speaker", "name": "Announcer", "class": "Reporter", "position": "left", "facing": "right" },
+				{ "type": "get-speaker", "name": "Keola", "class": "Surfer", "fadeIn": true },
+				{ "type": "text", "speaker": "Announcer", "text": "...Keola, the Storm Surfer!" },
+				{ "type": "text", "speaker": "Keola", "text": "The storm’s rolling in!" }
+			]
+		},
+		"route-5-5-keola-win": {
+			"effects": [
+				{ "type": "get-speaker", "name": "Announcer", "class": "Reporter", "position": "left", "facing": "right" },
+				{ "type": "get-speaker", "name": "Keola", "class": "Surfer" },
+				{ "type": "text", "speaker": "Keola", "text": "Agh, wipeout! Guess I didn’t read the clouds right..." },
+				{ "type": "text", "speaker": "Announcer", "text": "Looks like the tide has turned for Keola!" },
+				{ "type": "fade-out", "speaker": "Keola" }
 			]
 		}
 	},
@@ -2196,6 +2213,10 @@
 			"name": "Alomomola",
 			"pokedex-entry": "Lifeguards on busy beaches often rely on Alomomola patrolling the deeper waters far from the shore, where even strong swimmers can get into trouble. Alomomola have a strong sense of danger, and can carry people and Pokémon back to shore."
 		},
+		"Klink": {
+			"name": "Klink",
+			"pokedex-entry": "Klink love to sleep where they're most comfortable, surrounded by whirring machinery. They are known to form strong bonds with anything in the house that spins regularly, and will quickly grow attached to fans or washing machines. If they suddenly stop spinning, Klink grows distressed."
+		},
 		"Rufflet": {
 			"name": "Rufflet",
 			"pokedex-entry": "Rufflet will pick fights with any and every nearby Pokémon. It loses this habit quickly when caught, but some trainers enjoy the way it challenges Pokémon a hundred times its size."
@@ -2391,6 +2412,10 @@
 		"Passimian": {
 			"name": "Passimian",
 			"pokedex-entry": "The green marks on its shoulders are actually leaves it has carefully attached to itself. The positions of the leaves marks which troop they belong to. Passimian are best trained as a group, but if a trainer can only train a single Passimian, they should at least have other Pokémon to partner with. A lonely Passimian is very sad."
+		},
+		"Togedemaru": {
+			"name": "Togedemaru",
+			"pokedex-entry": "When it gets scared, the spikes on its back extend and it rolls into a ball. Anyone who touches it while it's curled up gets a nasty shock."
 		},
 		"Type: Null": {
 			"name": "Type: Null",
@@ -3917,6 +3942,11 @@
 			"shortDescription": "Lowers the enemy's Attack a stage when it enters.",
 			"longDescription": "When this Pokémon is put into play, it lowers the opponent's Attack by a stage."
 		},
+		"Iron Barbs": {
+			"name": "Iron Barbs",
+			"shortDescription": "Attackers that make contact take 1/8 their HP in damage",
+			"longDescription": "Whenever another Pokémon makes contact with this Pokémon, the attacker takes damage equal to 1/8 of their max HP."
+		},
 		"Iron Fist": {
 			"name": "Iron Fist",
 			"shortDescription": "This Pokémon's punching moves get +20% power",
@@ -4422,6 +4452,15 @@
 		"hau-pichu": "Kiki",
 		"hau-noibat": "Echo",
 		"hau-eevee": "Scout",
+		"ilima-yungoos": "Reginald",
+		"ilima-smeargle": "Inkwell",
+		"1-5-madison-wingull": "Gully",
+		"1-7-hiromi-pikipek": "Chirpo",
+		"1-7-mia-bonsly": "Mister Wobbles",
+		"1-7-joey-metapod": "Podzilla",
+		"1-7-emily-magnemite": "Tesla",
+		"1-7-emily-meowth": "Cleo",
+		"2-3-krystal-gastly": "Gastlé No. 3 by Krystal",
 		"5-1-mikiko-fletchling": "Chitter",
 		"5-1-mikiko-litleo": "Pepper",
 		"5-1-mikiko-espurr": "Mimi",
@@ -4440,7 +4479,10 @@
 		"5-5-hana-oricorio": "Spirit",
 		"5-5-mr-fix-magnemite": "Polaris",
 		"5-5-mr-fix-togedemaru": "Sparkplug",
-		"5-5-mr-fix-klink": "Axle"
+		"5-5-mr-fix-klink": "Axle",
+		"5-5-keola-wingull": "Squall",
+		"5-5-keola-raichu": "Surge",
+		"5-5-keola-poliwhirl": "Ripple"
 	},
 	"status-effects": {
 		"burn": {

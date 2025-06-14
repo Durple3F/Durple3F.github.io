@@ -40,3 +40,4 @@ TODO
 - The level select screen needs to handle resizing better
 - 5-5 needs animation and 2 backgrounds
 - Furfrou is missing forms and changing the forms is a bit wonky
+- Sometimes clicking on the last bit of dialogue doesn't continue it. Is it failing to finish?

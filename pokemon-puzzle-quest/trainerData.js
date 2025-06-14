@@ -298,6 +298,13 @@ const NPCTrainerData = {
 			trainer: "src/img/trainers/sightseer.png"
 		}
 	},
+	"Surfer": {
+		name: "Surfer",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/surfer.png"
+		}
+	},
 	"Teacher-Gen7": {
 		name: "Teacher",
 		type: "trainer",

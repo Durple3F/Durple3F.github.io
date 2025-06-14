@@ -2980,6 +2980,19 @@ class Round {
 						attacker.addStatusEffect("poisoned", attackerTrainer, attacker, undefined)
 					}
 				}
+				//Iron Barbs deals damage to the attacker
+				if (madeContact && attacker !== defender && defender.hasAbility("Iron Barbs")) {
+					let revengeDamage = Math.ceil(attacker.maxhp * 0.125)
+					this.dealDamage({
+						from: defender,
+						fromTrainer: defenderTrainer,
+						move: undefined,
+						to: attacker,
+						toTrainer: attackerTrainer,
+						damage: revengeDamage,
+						fixed: true
+					})
+				}
 				//Cute Charm lowers the defender's Special Attack
 				if (madeContact && attacker !== defender && attacker.hasAbility("Cute Charm")) {
 					if (attacker !== defender) {

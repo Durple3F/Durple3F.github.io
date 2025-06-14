@@ -83,6 +83,7 @@ Incomplete move lists:
 	Zorua (lv 20)
 	Minccino (lv 24)
 	Alomomola (lv 25)
+	Klink (lv 1)
 	Rufflet (lv 30)
 	Vullaby (lv 36)
 	Fletchling (lv 20)

@@ -100,6 +100,43 @@ function checkLocale(locale, langName){
 			console.log(missingNames)
 		}
 	}
+
+	if (locale["dialogue"]){
+		let missingDialogue = []
+
+		const check = source => {
+			if (!locale["dialogue"][source]){
+				missingDialogue.push(source)
+			}
+		}
+
+		Object.values(levelData).forEach(lData => {
+			let effects = lData.effects
+			let dialogues = effects.filter(e => e.type === "dialogue")
+			dialogues.forEach(e => check(e.source))
+
+			let tournaments = effects.filter(e => e.type === "tournament")
+			tournaments.forEach(e => {
+				let dialogues = e.dialogues ?? []
+				dialogues.forEach(source => check(source))
+
+				let lossDialogue = e.lossDialogue
+				if (lossDialogue){
+					check(lossDialogue)
+				}
+			})
+
+			let trainers = lData.trainers ?? []
+			trainers.forEach(tData => {
+				if (tData.introDialogue) check(tData.introDialogue)
+				if (tData.winDialogue) check(tData.winDialogue)
+			})
+		})
+
+		if (missingDialogue.length){
+			console.warn("Missing dialogue", missingDialogue)
+		}
+	}
 }
 
 function getLocaleString(id, lang, path, defaultResult=`% STRING MISSING %`){

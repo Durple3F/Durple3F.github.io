@@ -532,7 +532,7 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Wingull",
-						name: "Gully",
+						name: "1-5-madison-wingull",
 						level: 6,
 						ability: "Hydration"
 					}
@@ -593,10 +593,6 @@ const levelData = [
 					{ id: "Meowth-Alola", levelMin: 6, levelMax: 8 },
 					{ id: "Grimer-Alola", levelMin: 6, levelMax: 8 },
 				]
-			},
-			{
-				name: "Lillie",
-				pokemon: []
 			}
 		],
 		effects: [
@@ -634,21 +630,21 @@ const levelData = [
 				name: "Hiromi",
 				class: "Young-Athlete-F",
 				pokemon: [
-					{ id: "Pikipek", name: "Chirpo", level: 8, ability: "Skill Link" }
+					{ id: "Pikipek", name: "1-7-hiromi-pikipek", level: 8, ability: "Skill Link" }
 				]
 			},
 			{
 				name: "Mia",
 				class: "Preschooler-F-Gen7",
 				pokemon: [
-					{ id: "Bonsly", name: "Mister Wobbles", level: 7, ability: "Sturdy" }
+					{ id: "Bonsly", name: "1-7-mia-bonsly", level: 7, ability: "Sturdy" }
 				]
 			},
 			{
 				name: "Joey",
 				class: "Youngster-Gen7",
 				pokemon: [
-					{ id: "Metapod", name: "Podzilla", level: 7, ability: "Shed Skin" }
+					{ id: "Metapod", name: "1-7-joey-metapod", level: 7, ability: "Shed Skin" }
 				]
 			},
 			{
@@ -662,8 +658,8 @@ const levelData = [
 				name: "Emily",
 				class: "Teacher-Gen7",
 				pokemon: [
-					{ id: "Magnemite", name: "Tesla", level: 8, ability: "Analytic" },
-					{ id: "Meowth-Alola", name: "Cleo", level: 9, ability: "Technician" }
+					{ id: "Magnemite", name: "1-7-emily-magnemite", level: 8, ability: "Analytic" },
+					{ id: "Meowth-Alola", name: "1-7-emily-meowth", level: 9, ability: "Technician" }
 				]
 			},
 		],
@@ -773,22 +769,22 @@ const levelData = [
 			{
 				name: "Ilima",
 				pokemon: [
-					{ id: "Yungoos", level: 9, name: "Reginald", pokeball: "ultra ball", activeMoves: ["Tackle", "Pursuit", "Leer"] },
-					{ id: "Smeargle", level: 10, name: "Inkwell", pokeball: "ultra ball", activeMoves: ["Ember", "Tackle"] },
+					{ id: "Yungoos", level: 9, name: "ilima-yungoos", pokeball: "ultra ball", activeMoves: ["Tackle", "Pursuit", "Leer"] },
+					{ id: "Smeargle", level: 10, name: "ilima-smeargle", pokeball: "ultra ball", activeMoves: ["Ember", "Tackle"] },
 				]
 			},
 			{
 				name: "Ilima",
 				pokemon: [
-					{ id: "Yungoos", level: 9, name: "Reginald", pokeball: "ultra ball", activeMoves: ["Tackle", "Pursuit", "Leer"] },
-					{ id: "Smeargle", level: 10, name: "Inkwell", pokeball: "ultra ball", activeMoves: ["Water Gun", "Tackle"] },
+					{ id: "Yungoos", level: 9, name: "ilima-yungoos", pokeball: "ultra ball", activeMoves: ["Tackle", "Pursuit", "Leer"] },
+					{ id: "Smeargle", level: 10, name: "ilima-smeargle", pokeball: "ultra ball", activeMoves: ["Water Gun", "Tackle"] },
 				]
 			},
 			{
 				name: "Ilima",
 				pokemon: [
-					{ id: "Yungoos", level: 9, name: "Reginald", pokeball: "ultra ball", activeMoves: ["Tackle", "Pursuit", "Leer"] },
-					{ id: "Smeargle", level: 10, name: "Inkwell", pokeball: "ultra ball", activeMoves: ["Leafage", "Tackle"] },
+					{ id: "Yungoos", level: 9, name: "ilima-yungoos", pokeball: "ultra ball", activeMoves: ["Tackle", "Pursuit", "Leer"] },
+					{ id: "Smeargle", level: 10, name: "ilima-smeargle", pokeball: "ultra ball", activeMoves: ["Leafage", "Tackle"] },
 				]
 			},
 		],
@@ -860,7 +856,7 @@ const levelData = [
 				name: "Krystal",
 				class: "Beauty-Gen7",
 				pokemon: [
-					{ id: "Gastly", level: 9, name: "Gastlé No. 3 by Krystal" }
+					{ id: "Gastly", level: 9, name: "2-3-krystal-gastly" }
 				]
 			},
 		],
@@ -3530,6 +3526,32 @@ const levelData = [
 						id: "Klink",
 						pokeball: "great ball",
 						name: "5-5-mr-fix-klink",
+						level: 17
+					},
+				]
+			},
+			{
+				name: "Keola",
+				class: "Surfer",
+				introDialogue: "route-5-5-keola-intro",
+				winDialogue: "route-5-5-keola-win",
+				pokemon: [
+					{
+						id: "Wingull",
+						pokeball: "dive ball",
+						name: "5-5-keola-wingull",
+						level: 17
+					},
+					{
+						id: "Raichu-Alola",
+						pokeball: "dive ball",
+						name: "5-5-keola-raichu",
+						level: 17
+					},
+					{
+						id: "Poliwhirl",
+						pokeball: "dive ball",
+						name: "5-5-keola-poliwhirl",
 						level: 17
 					},
 				]

@@ -192,6 +192,10 @@ const pokemonAbilityData = {
 	"Insomnia": {
 		id: "Insomnia"
 	},
+	//Deals damage to the attacker when they make contact with you
+	"Iron Barbs": {
+		id: "Iron Barbs"
+	},
 	//Gives a bonus to specifically moves tagged with "punching"
 	"Iron Fist": {
 		id: "Iron Fist"

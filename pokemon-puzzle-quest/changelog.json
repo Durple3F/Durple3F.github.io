@@ -1,5 +1,15 @@
 {
 	"versions": {
+		"20250614": {
+			"date": "June 14, 2025",
+			"line-count": 49500,
+			"changes": [
+				"- Added Togedemaru, Klink",
+				"- Added Iron Barbs",
+				"- Added a new trainer to 5-5",
+				"- Moved all of the pokemon names up to 2-3 to another file for organization."
+			]
+		},
 		"20250613": {
 			"date": "June 13, 2025",
 			"line-count": 49300,
