@@ -1777,6 +1777,18 @@ class Round {
 				pokemon.form = "Solo"
 				this.resetDisplayedPokemon(trainerIndex, pokemon, false)
 			}
+
+			//Flower Gift transforms Cherrim
+			if (pokemon.data.id === "Cherrim" && pokemon.hasAbility("Flower Gift")){
+				let metCondition = metFlowerGiftCondition(this.board.tilesOnScreen())
+				if (metCondition && pokemon.form === "Overcast"){
+					pokemon.form = "Sunshine"
+					this.resetDisplayedPokemon(trainerIndex, pokemon, false)
+				} else if (!metCondition && pokemon.form === "Sunshine"){
+					pokemon.form = "Overcast"
+					this.resetDisplayedPokemon(trainerIndex, pokemon, false)
+				}
+			}
 		}
 
 		//Reduce initiative
@@ -3686,6 +3698,18 @@ class Round {
 			let yellows = this.board.tilesOnScreen().filter(tile => tile.type === "blue")
 			diff += yellows.length * 0.01
 			stat *= diff
+		}
+
+		//Flower Gift increases Attack & Special Attack 50% for all party members if there's a lot of Fire tiles
+		if (statName === "attack" || statName === "specialAttack"){
+			let hasFlowerGift = trainer.pokemon.filter(p => isPokemonUsable(p) && p.hasAbility("Flower Gift"))
+			if (hasFlowerGift.length){
+				let contents = this.board.tilesOnScreen()
+				let metCondition = metFlowerGiftCondition(contents)
+				if (metCondition){
+					stat *= Math.pow(1.5, hasFlowerGift.length)
+				}
+			}
 		}
 
 		return stat
@@ -5920,6 +5944,15 @@ class Round {
 		){
 			pokemon.form = "School"
 		}
+		//Flower Gift transforms Cherrim
+		if (pokemon.data.id === "Cherrim" && pokemon.hasAbility("Flower Gift")){
+			let metCondition = metFlowerGiftCondition(this.board.tilesOnScreen())
+			if (metCondition && pokemon.form === "Overcast"){
+				pokemon.form = "Sunshine"
+			} else if (!metCondition && pokemon.form === "Sunshine"){
+				pokemon.form = "Overcast"
+			}
+		}
 
 		//Illusion modifies which pokemon is displayed.
 		let pokemonToShow = pokemon
@@ -7546,13 +7579,6 @@ function beginRound(trainerData, options={}) {
 		enemy.pokemonData[pokemon.uuid].tags = pair[1]
 	})
 
-	//If there was a previous fight in this level, carry over the board
-	//so that it remains there for this fight.
-	let oldBoard
-	if (gameRound) {
-		oldBoard = gameRound.board
-	}
-
 	if (trainerData.introDialogue){
 		promise = promise.then(() => {
 			return tryToBeginDialogue(trainerData.introDialogue)
@@ -7564,7 +7590,14 @@ function beginRound(trainerData, options={}) {
 			$("#board").fadeIn()
 		}
 
-		gameRound = new Round(player, enemy, resolvePromise, oldBoard)
+		//If there was a previous fight in this level, carry over the board
+		//so that it remains there for this fight.
+		// let oldBoard
+		// if (gameRound) {
+		// 	oldBoard = gameRound.board
+		// }
+
+		gameRound = new Round(player, enemy, resolvePromise)
 		gameBoard = gameRound.board
 	}))
 
@@ -7823,4 +7856,12 @@ function getZMove(trainer, pokemon, move, type){
 	} else if (type === "Water" && unlocked.includes("Water")){
 		return pokemonMoveData["Hydro Vortex"]
 	}
+}
+
+function metFlowerGiftCondition(contents){
+	let redTiles = contents.filter(t => t.type === "red").length
+	let others = colors.filter(c => c !== "red").map(c => contents.filter(t => t.type === c).length)
+	let biggerCounts = others.filter(count => count > redTiles)
+	let metCondition = biggerCounts.length <= 0
+	return metCondition
 }

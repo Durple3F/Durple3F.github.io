@@ -1731,6 +1731,33 @@
 				{ "type": "text", "speaker": "Announcer", "text": "Our next contestant is..." }
 			]
 		},
+		"route-5-5-dialogue-4": {
+			"events": [],
+			"callbacks": {},
+			"effects": [
+				{ "type": "get-speaker", "name": "Announcer", "class": "Reporter", "position": "left", "facing": "right" },
+				{ "type": "text", "speaker": "Announcer", "text": "The tournament is heating up, folks! We’re down to the semifinals!" },
+				{ "type": "text", "speaker": "Announcer", "text": "Only two rounds remain until we see who comes out on top!" },
+				{ "type": "load-player-name" },
+				{ "type": "text", "speaker": "Announcer", "text": "For our next battle, %c% will be facing...", "values": [-1] }
+			]
+		},
+		"route-5-5-dialogue-5": {
+			"events": [],
+			"callbacks": {},
+			"effects": [
+				{ "type": "get-speaker", "name": "Announcer", "class": "Reporter", "position": "left", "facing": "right" },
+				{ "type": "text", "speaker": "Announcer", "text": "There’s just one match left, folks! Thirty-two trainers entered the tournament... but only two are left standing!" },
+				{ "type": "text", "speaker": "Announcer", "text": "This is it! The final round to determine who shall be crowned as today’s Battle Royale Champion!!" },
+				{ "type": "transform-speaker", "speaker": "Announcer", "transform": "scaleX(-1)", "duration": 300, "waitDuration": 150 },
+				{ "type": "load-player-name" },
+				{ "type": "text", "speaker": "Announcer", "text": "I must say, you’ve made quite a first impression, %c%!", "values": [-1] },
+				{ "type": "text", "speaker": "Announcer", "text": "Not everyone has what it takes to get this far!" },
+				{ "type": "transform-speaker", "speaker": "Announcer", "transform": "", "duration": 300, "waitDuration": 150 },
+				{ "type": "load-player-name" },
+				{ "type": "text", "speaker": "Announcer", "text": "The final showdown, the main event! The dark horse, %c%, will be facing...", "values": [-1] }
+			]
+		},
 		"route-5-5-win": {
 			"events": [],
 			"callbacks": {},
@@ -1739,7 +1766,7 @@
 				{ "type": "text", "speaker": "Announcer", "text": "What a battle, folks! With that, the tournament comes to an end!" },
 				{ "type": "text", "speaker": "Announcer", "text": "$@font-size:0.96|@$I sincerely hope that everyone in the audience, and especially each of our wonderful contestants, enjoyed their time at the Battle Royale Dome!$@font-size:1|@$" },
 				{ "type": "load-player-name" },
-				{ "type": "text", "speaker": "Announcer", "text": "Today’s Battle Royale champion is... %c%!", "values": [-1] }
+				{ "type": "text", "speaker": "Announcer", "text": "Today’s Battle Royale Champion is... %c%!", "values": [-1] }
 			]
 		},
 		"route-5-5-lose": {
@@ -1791,7 +1818,7 @@
 				{ "type": "get-speaker", "name": "Announcer", "class": "Reporter", "position": "left", "facing": "right" },
 				{ "type": "get-speaker", "name": "Keola", "class": "Surfer", "fadeIn": true },
 				{ "type": "text", "speaker": "Announcer", "text": "...Keola, the Storm Surfer!" },
-				{ "type": "text", "speaker": "Keola", "text": "The storm’s rolling in!" }
+				{ "type": "text", "speaker": "Keola", "text": "The storm’s rolling in! Just try to stay on your board, huh?" }
 			]
 		},
 		"route-5-5-keola-win": {
@@ -2133,6 +2160,10 @@
 			"name": "Bagon",
 			"pokedex-entry": "Some trainers like to take Bagon paragliding with them to satisfy its desire to be able to fly one day. It helps."
 		},
+		"Cherrim": {
+			"name": "Cherrim",
+			"pokedex-entry": "When this Pokémon senses a lot of heat, its petals open up to reveal the smiling flower underneath."
+		},
 		"Drifloon": {
 			"name": "Drifloon",
 			"pokedex-entry": "Its habits of leading children away from their families are well known. Trainers of this Pokémon often have to say they “just like the design” or “think the Pokémon’s unique typing is cool.”"
@@ -2423,7 +2454,7 @@
 		},
 		"Komala": {
 			"name": "Komala",
-			"pokedex-entry": "This Pokémon loves holding onto its trainer’s arm as they walk. When they put Komala down, it’s important to return its log to its paws, or Komala will have bad dreams."
+			"pokedex-entry": "This Pokémon loves hanging onto its trainer’s arm as they walk. When they put Komala down, it’s important to return its log to its paws, or Komala will have bad dreams."
 		}
 	},
 	"moves": {
@@ -3836,6 +3867,11 @@
 			"name": "Flash Fire",
 			"shortDescription": "Raises Fire move power when hit with a Fire move",
 			"longDescription": "When this Pokémon is dealt damage by a Fire-type move, the power of Fire-type moves it uses is raised by 50%."
+		},
+		"Flower Gift": {
+			"name": "Flower Gift",
+			"shortDescription": "While Fire tiles are the most common, increases the Attack and Special Attack of all this trainer's Pokémon by 50%, even while this Pokémon isn't active.",
+			"longDescription": "As long as Fire tiles are the most common color on the board or tied for being the most common color on the board, each of its trainer's Pokémon have their Attack and Special Attack stats raised by 50%, even while this Pokémon isn't active."
 		},
 		"Flower Veil": {
 			"name": "Flower Veil",

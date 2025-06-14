@@ -106,6 +106,11 @@ const pokemonAbilityData = {
 	"Flash Fire": {
 		id: "Flash Fire"
 	},
+	//Raises Attack & Special Attack for all party members
+	"Flower Gift": {
+		id: "Flower Gift",
+		copiable: false
+	},
 	//Your grass pokemon are immune to stat debuffs
 	"Flower Veil": {
 		id: "Flower Veil"

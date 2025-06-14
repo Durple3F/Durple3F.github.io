@@ -460,9 +460,10 @@ const dialogueEffects = {
 			let css = effect.css
 			let duration = effect.duration ?? 0
 			let wait = effect.waitDuration ?? duration
-			if (duration || true) {
-				console.log(css, duration)
+			if (duration) {
 				tag.animate(css, duration)
+			} else {
+				tag.css(css)
 			}
 	
 			if (wait) {

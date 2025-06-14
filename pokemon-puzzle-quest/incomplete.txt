@@ -65,6 +65,7 @@ Incomplete move lists:
 	Barboach (lv 24)
 	Whiscash (lv 24)
 	Bagon (lv 25)
+	Cherrim (lv 0)
 	Drifloon (lv 20)
 	Drifblim (lv 24)
 	Honchkrow (lv 35)
@@ -147,6 +148,7 @@ Missing Evolutions:
 	Houndour
 	Smoochum
 	Bagon
+	Cherrim
 	Bonsly
 	Boldore
 	Zorua

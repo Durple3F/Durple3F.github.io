@@ -4363,6 +4363,81 @@ const pokemonData = {
 			{ name: "Crunch", unlock: { type: "level", amount: 25 } },
 		]
 	},
+	"Cherrim": {
+		name: "Cherrim",
+		number: "421",
+		weight: {
+			pounds: 20.5,
+			kilograms: 9.3
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0421Cherrim.png",
+			"largeShiny": "src/img/shiny-pokemon/421-Cherrim-Overcast.png",
+			"home": "src/img/tiny-pokemon/Drifloon.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/cherrim.mp3"
+		},
+		hasForms: true,
+		defaultForm: "Overcast",
+		forms: {
+			"Overcast": {
+				id: "Overcast",
+				imageSources: {
+					"large": "src/img/pokemon/0421Cherrim.png",
+					"largeShiny": "src/img/shiny-pokemon/421-Cherrim-Overcast.png",
+					"home": "src/img/tiny-pokemon/Cherrim-Overcast.png"
+				},
+			},
+			"Sunshine": {
+				id: "Sunshine",
+				imageSources: {
+					"large": "src/img/pokemon/0421Cherrim-Sunshine.png",
+					"largeShiny": "src/img/shiny-pokemon/421-Cherrim-Sunny.png",
+					"home": "src/img/tiny-pokemon/Cherrim-Sunshine.png"
+				},
+			},
+		},
+		types: ["Grass"],
+		tags: [],
+		abilities: ["Flower Gift"],
+		hiddenAbilities: [],
+		stats: {
+			hp: 70,
+			attack: 60,
+			defense: 70,
+			specialAttack: 87,
+			specialDefense: 78,
+			speed: 85
+		},
+		expYield: 158,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 2,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			red: 4,
+			yellow: 1,
+			green: 5,
+		},
+		learnset: [
+			// { name: "Sunny Day", unlock: { type: "level", amount: 1 } },
+			// { name: "Flower Shield", unlock: { type: "level", amount: 1 } },
+			// { name: "Morning Sun", unlock: { type: "level", amount: 1 } },
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Leafage", unlock: { type: "level", amount: 1 } },
+			{ name: "Growth", unlock: { type: "level", amount: 1 } },
+			{ name: "Helping Hand", unlock: { type: "level", amount: 15 } },
+			{ name: "Magical Leaf", unlock: { type: "level", amount: 20 } },
+			{ name: "Leech Seed", unlock: { type: "level", amount: 28 } },
+			{ name: "Take Down", unlock: { type: "level", amount: 34 } },
+		]
+	},
 	"Drifloon": {
 		name: "Drifloon",
 		number: "425",

@@ -3556,6 +3556,32 @@ const levelData = [
 					},
 				]
 			},
+			{
+				name: "Elizabeth",
+				class: "Aroma-Lady",
+				introDialogue: "route-5-5-elizabeth-intro",
+				winDialogue: "route-5-5-elizabeth-win",
+				pokemon: [
+					{
+						id: "Comfey",
+						// pokeball: "friend ball",
+						name: "5-5-elizabeth-comfey",
+						level: 17
+					},
+					{
+						id: "Cherrim",
+						// pokeball: "friend ball",
+						name: "5-5-elizabeth-cherrim",
+						level: 17
+					},
+					// {
+					// 	id: "Roserade",
+					// 	pokeball: "friend ball",
+					// 	name: "5-5-elizabeth-roserade",
+					// 	level: 17
+					// },
+				]
+			},
 		],
 		effects: [
 			// { type: "change-background-image", name: "route-bg-route-6" },
@@ -3568,7 +3594,9 @@ const levelData = [
 
 			{ type: "tournament", label: "enter", dialogues: [
 				"route-5-5-dialogue-2",
-				"route-5-5-dialogue-3"
+				"route-5-5-dialogue-3",
+				"route-5-5-dialogue-4",
+				"route-5-5-dialogue-5",
 			], lossDialogue: "route-5-5-lose" },
 			{ type: "jump-if-lost", jumpTo: Infinity },
 			{ type: "dialogue", source: "route-5-5-win" },

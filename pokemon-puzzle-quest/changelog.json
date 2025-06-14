@@ -4,10 +4,11 @@
 			"date": "June 14, 2025",
 			"line-count": 49500,
 			"changes": [
-				"- Added Togedemaru, Klink",
-				"- Added Iron Barbs",
+				"- Added Togedemaru, Klink, Cherrim",
+				"- Added Iron Barbs, Flower Gift",
 				"- Added a new trainer to 5-5",
-				"- Moved all of the pokemon names up to 2-3 to another file for organization."
+				"- Moved all of the pokemon names up to 2-3 to another file for organization.",
+				"- Levels with more than one fight in them no longer retain the same board throughout the whole level."
 			]
 		},
 		"20250613": {
