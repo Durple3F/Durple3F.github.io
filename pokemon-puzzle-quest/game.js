@@ -7586,11 +7586,12 @@ function beginRound(trainerData, options={}) {
 		//This is a percentage
 		let remainingHP = options.remainingHP
 		let perPokemonTotal = remainingHP * enemyPokemon.length
-		let remainingPokemon = Math.ceil(perPokemonTotal / enemyPokemon.length)
+		let remainingPokemon = Math.ceil(perPokemonTotal)
 		let toFaint = enemyPokemon.length - remainingPokemon
 		if (toFaint >= enemyPokemon.length) {
 			toFaint = enemyPokemon.length - 1
 		}
+		
 		for (let i = 0; i < toFaint; i++){
 			let canFaint = enemyPokemon.filter(p => isPokemonUsable(p))
 			if (!canFaint.length) break
