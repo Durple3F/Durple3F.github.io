@@ -1,6 +1,7 @@
 {
 	"ability-dancer-activate": "%c%’s %c% copies the last move used!",
 	"used-move-while-paralyzed": "%c% stopped being paralyzed!",
+	"used-move-while-soundproof": "%c% has Soundproof!",
 	
 	"initiative-tutorial": "Initiative<br>Each turn, both Pokémon gain Initiative based on their speed stats. When a player matches 4 or more tiles in a row, they get a free turn.",
 	"choose-pokemon": "Choose Pokémon",
@@ -2046,6 +2047,10 @@
 			"name": "Hypno",
 			"pokedex-entry": "It has been 184 days since the last incident involving a Hypno."
 		},
+		"Voltorb": {
+			"name": "Voltorb",
+			"pokedex-entry": "Certain kinds of generators work by having Voltorb and Electrode placed in a large enclosed ring, and spinning that ring very fast. The energy produced this way is surprisingly efficient, and they usually think it’s fun. After all, if they didn’t approve, they would just explode."
+		},
 		"Hitmonlee": {
 			"name": "Hitmonlee",
 			"pokedex-entry": "Its legs stretch outward as it kicks. Its body has layers upon layers of muscle coiled up into the shape of a string all along its legs, meaning it has to constantly tense its legs to keep them short. Top-level Pokémon researchers call this phenomenon “not how legs work.”"
@@ -4068,6 +4073,11 @@
 			"shortDescription": "Electric tiles appear more often",
 			"longDescription": "As long as this Pokémon is the active Pokémon, the weight of Electric tiles is increased by 0.5. (The normal weight is 1)"
 		},
+		"Limber": {
+			"name": "Limber",
+			"shortDescription": "Prevents being paralyzed",
+			"longDescription": "This Pokémon can’t become paralyzed."
+		},
 		"Liquid Ooze": {
 			"name": "Liquid Ooze",
 			"shortDescription": "Draining moves used against this Pokémon damage the user instead of healing",
@@ -4198,6 +4208,11 @@
 			"shortDescription": "Copies the ability of the most recently fainted Pokémon.",
 			"longDescription": "Whenever another Pokémon owned by this Pokémon's trainer faints, this Pokémon gains that fainted Pokémon's ability."
 		},
+		"Reckless": {
+			"name": "Reckless",
+			"shortDescription": "Moves with recoil have 20% more power",
+			"longDescription": "Moves which this Pokémon uses which deal recoil damage to their user have their power increased by 20%."
+		},
 		"Regenerator": {
 			"name": "Regenerator",
 			"shortDescription": "On switching out, heal based on how long it was active",
@@ -4288,6 +4303,11 @@
 			"shortDescription": "On a Water-type 4-in-a-row or more, enemy damage-dealing moves cost 40% more for 3 turns.",
 			"longDescription": "When this Pokémon's owner makes a match of 4 or more Water tiles in a row, the next time that the opponent uses a damage-dealing move, it costs 40% more."
 		},
+		"Soundproof": {
+			"name": "Soundproof",
+			"shortDescription": "The opponent’s sound-based moves are prevented.",
+			"longDescription": "Sound-based moves that the opponent uses have their effects prevented completely."
+		},
 		"Stakeout": {
 			"name": "Stakeout",
 			"shortDescription": "Doubles move power against Pokémon that just switched in",
@@ -4341,7 +4361,7 @@
 		"Sweet Veil": {
 			"name": "Sweet Veil",
 			"shortDescription": "Prevents sleep. Also, Fairy tiles may spawn. Fairy tiles are worth 1 green AND blue energy.",
-			"longDescription": "This Pokémon can’t be put to sleep during battle. As long as this Pokémon is the active Pokémon, the weight of Fairy tiles is increased by 0.5. Fairy tiles are worth 1 green AND 1 blue energy. (The normal weight is 0)"
+			"longDescription": "This Pokémon can’t be put to sleep. As long as this Pokémon is the active Pokémon, the weight of Fairy tiles is increased by 0.5. (The normal weight is 0.) Fairy tiles are worth 1 green AND 1 blue energy."
 		},
 		"Swift Swim": {
 			"name": "Swift Swim",

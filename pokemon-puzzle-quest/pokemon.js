@@ -397,23 +397,18 @@ class Pokemon{
 		){
 			prevented = true
 		}
-		//Pokemon with Vital Spirit, Insomnia, or Comatose can't become asleep
+		//Pokemon with Vital Spirit, Insomnia, Comatose, or Sweet Veil can't become asleep
 		if (
 			(status.name === "asleep" || status.name === "drowsy") && 
-			(this.hasAbility("Insomnia") || this.hasAbility("Vital Spirit") || this.hasAbility("Comatose"))
+			["Insomnia", "Vital Spirit", "Comatose", "Sweet Veil"].some(abilityId => this.hasAbility(abilityId))
 		){
 			prevented = true
 		}
-		//Sweet Veil prevents all of your Pokemon being put to sleep
+		//Pokemon with Limber can't become paralyzed
 		if (
-			(status.name === "asleep" || status.name === "drowsy") &&
-			this.trainer?.activePokemon?.hasAbility("Sweet Veil")
+			status.name === "paralyzed" && 
+			["Limber"].some(abilityId => this.hasAbility(abilityId))
 		){
-			prevented = true
-		}
-		//Pokemon with Vital Spirit can't become asleep
-		if ((status.name === "asleep" || status.name === "drowsy") && 
-		(this.hasAbility("Vital Spirit") || this.hasAbility("Insomnia"))){
 			prevented = true
 		}
 		//Pokemon with Own Tempo can't become confused

@@ -9462,6 +9462,9 @@ for (let moveName in pokemonMoveData){
 	if (move.power && !move.tags.includes("damage-dealing")){
 		move.tags.push("damage-dealing")
 	}
+	if (move.effects.some(effect => effect.type === "recoil-damage") && !move.tags.includes("has-recoil")){
+		move.tags.push("has-recoil")
+	}
 	if (move.additionalEffects &&
 		move.additionalEffects.length &&
 		!move.tags.includes("has-additional-effects")

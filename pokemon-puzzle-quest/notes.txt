@@ -43,3 +43,4 @@ TODO
 - Sometimes clicking on the last bit of dialogue doesn't continue it. Is it failing to finish?
 - Weird incident where tiles remained above the top of the screen
 - We need an image for timer balls...
+- Make poison trigger upon using moves

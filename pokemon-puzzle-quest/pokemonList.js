@@ -2360,6 +2360,61 @@ const pokemonData = {
 			{ name: "Psybeam", unlock: { type: "level", amount: 21 } },
 		]
 	},
+	"Voltorb": {
+		name: "Voltorb",
+		number: "100",
+		weight: {
+			pounds: 22.9,
+			kilograms: 10.4
+		},
+		imageFacing: "right",
+		imageSources: {
+			"large": "src/img/pokemon/0100Voltorb.png",
+			"largeShiny": "src/img/shiny-pokemon/100-Voltorb.png",
+			"home": "src/img/tiny-pokemon/Voltorb.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/voltorb.mp3"
+		},
+		types: ["Electric"],
+		tags: [],
+		abilities: ["Soundproof", "Static"],
+		hiddenAbilities: ["Aftermath"],
+		stats: {
+			hp: 40,
+			attack: 30,
+			defense: 50,
+			specialAttack: 55,
+			specialDefense: 55,
+			speed: 100
+		},
+		expYield: 66,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 1
+		},
+		energyMastery: {
+			orange: 8
+		},
+		learnset: [
+			{ name: "Charge", unlock: { type: "level", amount: 1 } },
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Thunder Shock", unlock: { type: "level", amount: 4 } },
+			// { name: "Eerie Impulse", unlock: { type: "level", amount: 6 } },
+			{ name: "Spark", unlock: { type: "level", amount: 9 } },
+			{ name: "Rollout", unlock: { type: "level", amount: 11 } },
+			{ name: "Screech", unlock: { type: "level", amount: 13 } },
+			// { name: "Charge Beam", unlock: { type: "level", amount: 16 } },
+			{ name: "Swift", unlock: { type: "level", amount: 20 } },
+			{ name: "Electro Ball", unlock: { type: "level", amount: 22 } },
+			// { name: "Self-Destruct", unlock: { type: "level", amount: 26 } },
+			{ name: "Light Screen", unlock: { type: "level", amount: 29 } },
+		]
+	},
 	"Hitmonlee": {
 		name: "Hitmonlee",
 		number: "106",
@@ -2407,11 +2462,11 @@ const pokemonData = {
 			{ name: "Fake Out", unlock: { type: "level", amount: 1 } },
 			{ name: "Focus Energy", unlock: { type: "level", amount: 1 } },
 			{ name: "Brick Break", unlock: { type: "level", amount: 1 } },
-			{ name: "Double Kick", unlock: { type: "level", amount: 1 } },
-			{ name: "Low Kick", unlock: { type: "level", amount: 1 } },
-			{ name: "Endure", unlock: { type: "level", amount: 1 } },
-			{ name: "Sucker Punch", unlock: { type: "level", amount: 1 } },
-			{ name: "Wide Guard", unlock: { type: "level", amount: 1 } },
+			{ name: "Double Kick", unlock: { type: "level", amount: 4 } },
+			{ name: "Low Kick", unlock: { type: "level", amount: 8 } },
+			{ name: "Endure", unlock: { type: "level", amount: 12 } },
+			{ name: "Sucker Punch", unlock: { type: "level", amount: 16 } },
+			{ name: "Wide Guard", unlock: { type: "level", amount: 21 } },
 		]
 	},
 	"Chansey": {

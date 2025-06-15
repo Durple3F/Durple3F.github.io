@@ -33,6 +33,7 @@ Incomplete move lists:
 	Grimer-Alola (lv 21)
 	Gastly (lv 20)
 	Haunter (lv 0)
+	Voltorb (lv 0)
 	Drowzee (lv 21)
 	Hypno (lv 21)
 	Hitmonlee (lv 0)
@@ -145,7 +146,9 @@ Missing Evolutions:
 	Slowpoke
 	Magnemite
 	Grimer-Alola
+	Voltorb
 	Haunter
+	Hitmonlee
 	Chansey
 	Magikarp
 	Eevee

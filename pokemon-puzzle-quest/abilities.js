@@ -229,6 +229,10 @@ const pokemonAbilityData = {
 	"Lightning Rod": {
 		id: "Lightning Rod"
 	},
+	//Can't be poisoned
+	"Limber": {
+		id: "Limber"
+	},
 	//Moves tagged "draining" deal damage to the user instead of healing them
 	"Liquid Ooze": {
 		id: "Liquid Ooze"
@@ -334,6 +338,10 @@ const pokemonAbilityData = {
 	"Receiver": {
 		id: "Receiver"
 	},
+	//Moves with recoil have 20% more power
+	"Reckless": {
+		id: "Reckless"
+	},
 	//Heal 20% hp on switching out
 	"Regenerator": {
 		id: "Regenerator"
@@ -412,6 +420,10 @@ const pokemonAbilityData = {
 	"Snow Cloak": {
 		id: "Snow Cloak",
 		tags: ["weather-based"]
+	},
+	//The opponent's sound-based moves are prevented
+	"Soundproof": {
+		id: "Soundproof"
 	},
 	//Double power on moves while the opponent switched in <= 2 turns ago
 	"Stakeout": {

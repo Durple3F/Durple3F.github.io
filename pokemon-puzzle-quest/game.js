@@ -3551,6 +3551,10 @@ class Round {
 		if (move?.tags.includes("has-additional-effects") && pokemon.hasAbility("Sheer Force")) {
 			power *= 1.3
 		}
+		//Reckless makes moves with recoil stronger
+		if (move?.tags.includes("has-recoil") && pokemon.hasAbility("Reckless")) {
+			power *= 1.2
+		}
 		//Guts applies while the pokemon has a non-volatile status
 		if (
 			pokemon.statusEffects.some(statusEffect => !statusEffect.volatile).length &&
@@ -3970,7 +3974,16 @@ class Round {
 			announcement = applyReplacements(announcement, [pokemon.name])
 			this.createAnnouncement("general", announcement)
 			this.updateEverything()
-		} else {
+		}
+		else if (this.shouldMoveHaveTag("sound-based", trainer, pokemon, move) && otherPokemon.hasAbility("Soundproof")){
+			moveUseObj.resolve()
+			moveUseObj.completed = true
+			let announcement = getLocaleString("used-move-while-soundproof", lang)
+			announcement = applyReplacements(announcement, [otherPokemon.name])
+			this.createAnnouncement("general", announcement)
+			this.updateEverything()
+		}
+		else {
 			if (trainer === this.trainers[0]){
 				let moveId = move.id
 				let moveUsageStats = playerSaveInfo["move-usage-stats"]

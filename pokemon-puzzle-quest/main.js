@@ -1263,7 +1263,6 @@ function openChangelog(){
 					if (!version.section){
 						generateSection(versionName)
 					}
-					console.log(versionName)
 					accordion.append(version.section)
 				}
 			}
