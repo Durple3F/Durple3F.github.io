@@ -35,6 +35,7 @@ Incomplete move lists:
 	Haunter (lv 0)
 	Drowzee (lv 21)
 	Hypno (lv 21)
+	Hitmonlee (lv 0)
 	Chansey (lv 20)
 	Goldeen (lv 30)
 	Seaking (lv 30)

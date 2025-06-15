@@ -1437,7 +1437,7 @@ function advanceCurrentLevel() {
 				let roundOptions = {
 					fadeOutAfterOutro: false
 				}
-				if (wins > 0){
+				if (wins > 0 && effect.waningHP){
 					let percent = wins / neededWins
 					let remainingHP = 1 - percent
 					remainingHP = Math.min(remainingHP + 0.1, 1)

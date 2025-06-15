@@ -4,11 +4,13 @@
 			"date": "June 14, 2025",
 			"line-count": 49900,
 			"changes": [
-				"- Added Togedemaru, Klink, Cherrim, Budew, Roselia, Roserade",
+				"- Added Togedemaru, Klink, Cherrim, Budew, Roselia, Roserade, Hitmonlee",
 				"- Added Iron Barbs, Flower Gift, Poison Point",
 				"- Added 2 new trainers to 5-5",
 				"- Moved all of the pokemon names up to 2-3 to another file for organization.",
-				"- Levels with more than one fight in them no longer retain the same board throughout the whole level."
+				"- Levels with more than one fight in them no longer retain the same board throughout the whole level.",
+				"- Pressing skip while people are talking doesn't count as pressing through their dialogue, now it just skips the rest of the dialogue.",
+				"- Fights in tournaments have gradually waning HP for the enemies."
 			]
 		},
 		"20250613": {

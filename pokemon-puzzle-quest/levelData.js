@@ -3476,108 +3476,139 @@ const levelData = [
 			}
 		},
 		trainers: [
+			// Beauty Hana
+			// {
+			// 	name: "Hana",
+			// 	class: "Beauty-Gen6",
+			// 	introDialogue: "route-5-5-hana-intro",
+			// 	winDialogue: "route-5-5-hana-win",
+			// 	pokemon: [
+			// 		{
+			// 			id: "Furfrou",
+			// 			form: "Diamond",
+			// 			pokeball: "luxury ball",
+			// 			name: "5-5-hana-furfrou",
+			// 			level: 17
+			// 		},
+			// 		{
+			// 			id: "Minccino",
+			// 			pokeball: "luxury ball",
+			// 			name: "5-5-hana-minccino",
+			// 			level: 17
+			// 		},
+			// 		{
+			// 			id: "Oricorio",
+			// 			form: "Pom-Pom",
+			// 			pokeball: "luxury ball",
+			// 			name: "5-5-hana-oricorio",
+			// 			level: 17
+			// 		},
+			// 	]
+			// },
+			// Engineer Mr Fix
+			// {
+			// 	name: "Mr. Fix",
+			// 	class: "Engineer-Gen3",
+			// 	introDialogue: "route-5-5-mr-fix-intro",
+			// 	winDialogue: "route-5-5-mr-fix-win",
+			// 	pokemon: [
+			// 		{
+			// 			id: "Magnemite",
+			// 			pokeball: "great ball",
+			// 			name: "5-5-mr-fix-magnemite",
+			// 			level: 17
+			// 		},
+			// 		{
+			// 			id: "Togedemaru",
+			// 			pokeball: "great ball",
+			// 			name: "5-5-mr-fix-togedemaru",
+			// 			level: 17
+			// 		},
+			// 		{
+			// 			id: "Klink",
+			// 			pokeball: "great ball",
+			// 			name: "5-5-mr-fix-klink",
+			// 			level: 17
+			// 		},
+			// 	]
+			// },
+			// Surfer Keola
+			// {
+			// 	name: "Keola",
+			// 	class: "Surfer",
+			// 	introDialogue: "route-5-5-keola-intro",
+			// 	winDialogue: "route-5-5-keola-win",
+			// 	pokemon: [
+			// 		{
+			// 			id: "Wingull",
+			// 			pokeball: "dive ball",
+			// 			name: "5-5-keola-wingull",
+			// 			level: 17
+			// 		},
+			// 		{
+			// 			id: "Raichu-Alola",
+			// 			pokeball: "dive ball",
+			// 			name: "5-5-keola-raichu",
+			// 			level: 17
+			// 		},
+			// 		{
+			// 			id: "Poliwhirl",
+			// 			pokeball: "dive ball",
+			// 			name: "5-5-keola-poliwhirl",
+			// 			level: 17
+			// 		},
+			// 	]
+			// },
+			// Aroma Lady Elizabeth
+			// {
+			// 	name: "Elizabeth",
+			// 	class: "Aroma-Lady",
+			// 	introDialogue: "route-5-5-elizabeth-intro",
+			// 	winDialogue: "route-5-5-elizabeth-win",
+			// 	pokemon: [
+			// 		{
+			// 			id: "Comfey",
+			// 			// pokeball: "friend ball",
+			// 			name: "5-5-elizabeth-comfey",
+			// 			level: 17
+			// 		},
+			// 		{
+			// 			id: "Cherrim",
+			// 			// pokeball: "friend ball",
+			// 			name: "5-5-elizabeth-cherrim",
+			// 			level: 17
+			// 		},
+			// 		{
+			// 			id: "Roselia",
+			// 			// pokeball: "friend ball",
+			// 			name: "5-5-elizabeth-roselia",
+			// 			level: 17
+			// 		},
+			// 	]
+			// },
+			// Striker Johnathan
 			{
-				name: "Hana",
-				class: "Beauty-Gen6",
-				introDialogue: "route-5-5-hana-intro",
-				winDialogue: "route-5-5-hana-win",
+				name: "Johnathan",
+				class: "Striker",
+				introDialogue: "route-5-5-johnathan-intro",
+				winDialogue: "route-5-5-johnathan-win",
 				pokemon: [
 					{
-						id: "Furfrou",
-						form: "Diamond",
-						pokeball: "luxury ball",
-						name: "5-5-hana-furfrou",
+						id: "Hitmonlee",
+						pokeball: "timer ball",
+						name: "5-5-johnathan-hitmonlee",
 						level: 17
 					},
 					{
-						id: "Minccino",
-						pokeball: "luxury ball",
-						name: "5-5-hana-minccino",
+						id: "Passimian",
+						pokeball: "timer ball",
+						name: "5-5-johnathan-passimian",
 						level: 17
 					},
 					{
-						id: "Oricorio",
-						form: "Pom-Pom",
-						pokeball: "luxury ball",
-						name: "5-5-hana-oricorio",
-						level: 17
-					},
-				]
-			},
-			{
-				name: "Mr. Fix",
-				class: "Engineer-Gen3",
-				introDialogue: "route-5-5-mr-fix-intro",
-				winDialogue: "route-5-5-mr-fix-win",
-				pokemon: [
-					{
-						id: "Magnemite",
-						pokeball: "great ball",
-						name: "5-5-mr-fix-magnemite",
-						level: 17
-					},
-					{
-						id: "Togedemaru",
-						pokeball: "great ball",
-						name: "5-5-mr-fix-togedemaru",
-						level: 17
-					},
-					{
-						id: "Klink",
-						pokeball: "great ball",
-						name: "5-5-mr-fix-klink",
-						level: 17
-					},
-				]
-			},
-			{
-				name: "Keola",
-				class: "Surfer",
-				introDialogue: "route-5-5-keola-intro",
-				winDialogue: "route-5-5-keola-win",
-				pokemon: [
-					{
-						id: "Wingull",
-						pokeball: "dive ball",
-						name: "5-5-keola-wingull",
-						level: 17
-					},
-					{
-						id: "Raichu-Alola",
-						pokeball: "dive ball",
-						name: "5-5-keola-raichu",
-						level: 17
-					},
-					{
-						id: "Poliwhirl",
-						pokeball: "dive ball",
-						name: "5-5-keola-poliwhirl",
-						level: 17
-					},
-				]
-			},
-			{
-				name: "Elizabeth",
-				class: "Aroma-Lady",
-				introDialogue: "route-5-5-elizabeth-intro",
-				winDialogue: "route-5-5-elizabeth-win",
-				pokemon: [
-					{
-						id: "Comfey",
-						// pokeball: "friend ball",
-						name: "5-5-elizabeth-comfey",
-						level: 17
-					},
-					{
-						id: "Cherrim",
-						// pokeball: "friend ball",
-						name: "5-5-elizabeth-cherrim",
-						level: 17
-					},
-					{
-						id: "Roselia",
-						// pokeball: "friend ball",
-						name: "5-5-elizabeth-roselia",
+						id: "Voltorb",
+						pokeball: "timer ball",
+						name: "5-5-johnathan-voltorb",
 						level: 17
 					},
 				]
@@ -3597,7 +3628,7 @@ const levelData = [
 				"route-5-5-dialogue-3",
 				"route-5-5-dialogue-4",
 				"route-5-5-dialogue-5",
-			], lossDialogue: "route-5-5-lose" },
+			], lossDialogue: "route-5-5-lose", waningHP: true },
 			{ type: "jump-if-lost", jumpTo: Infinity },
 			{ type: "dialogue", source: "route-5-5-win" },
 			{ type: "jump", jumpTo: Infinity },

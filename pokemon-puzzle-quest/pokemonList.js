@@ -2360,6 +2360,60 @@ const pokemonData = {
 			{ name: "Psybeam", unlock: { type: "level", amount: 21 } },
 		]
 	},
+	"Hitmonlee": {
+		name: "Hitmonlee",
+		number: "106",
+		weight: {
+			pounds: 109.8,
+			kilograms: 49.8
+		},
+		imageFacing: "right",
+		imageSources: {
+			"large": "src/img/pokemon/0106Hitmonlee.png",
+			"largeShiny": "src/img/shiny-pokemon/106-Hitmonlee.png",
+			"home": "src/img/tiny-pokemon/Hitmonlee.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/hitmonlee.mp3"
+		},
+		types: ["Fighting"],
+		tags: [],
+		abilities: ["Limber", "Reckless"],
+		hiddenAbilities: ["Unburden"],
+		stats: {
+			hp: 50,
+			attack: 120,
+			defense: 53,
+			specialAttack: 35,
+			specialDefense: 110,
+			speed: 87
+		},
+		expYield: 159,
+		evYield: {
+			hp: 0,
+			attack: 2,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 8
+		},
+		learnset: [
+			{ name: "Low Sweep", unlock: { type: "level", amount: 1 } },
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Helping Hand", unlock: { type: "level", amount: 1 } },
+			{ name: "Fake Out", unlock: { type: "level", amount: 1 } },
+			{ name: "Focus Energy", unlock: { type: "level", amount: 1 } },
+			{ name: "Brick Break", unlock: { type: "level", amount: 1 } },
+			{ name: "Double Kick", unlock: { type: "level", amount: 1 } },
+			{ name: "Low Kick", unlock: { type: "level", amount: 1 } },
+			{ name: "Endure", unlock: { type: "level", amount: 1 } },
+			{ name: "Sucker Punch", unlock: { type: "level", amount: 1 } },
+			{ name: "Wide Guard", unlock: { type: "level", amount: 1 } },
+		]
+	},
 	"Chansey": {
 		name: "Chansey",
 		number: "113",

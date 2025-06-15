@@ -655,7 +655,10 @@ function carryOutDialogueEvent(effect, dialogueProgress) {
 					}
 				})
 
-				const skipDialogue = () => {
+				const skipDialogue = event => {
+					let clickedOn = event.target
+					if (clickedOn === $("#dialogueSkipBtn")[0]) return
+
 					skippedDialogue = true
 					textTag.find(".letter").animate({ "opacity": 1 }, textSpeed * 2.5)
 
@@ -670,7 +673,10 @@ function carryOutDialogueEvent(effect, dialogueProgress) {
 
 					skipResolve()
 				}
-				const continueDialogue = () => {
+				const continueDialogue = event => {
+					let clickedOn = event.target
+					if (clickedOn === $("#dialogueSkipBtn")[0]) return
+					
 					dialogueTag.off("click")
 					textBox.css("cursor", "")
 					textBox.children(".text-continue").fadeOut(textSpeed * 2.5)

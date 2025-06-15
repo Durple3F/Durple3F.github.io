@@ -1846,6 +1846,23 @@
 				{ "type": "text", "speaker": "Announcer", "text": "Looks like Elizabeth has wilted under the pressure!" },
 				{ "type": "fade-out", "speaker": "Elizabeth" }
 			]
+		},
+		"route-5-5-johnathan-intro": {
+			"effects": [
+				{ "type": "get-speaker", "name": "Announcer", "class": "Reporter", "position": "left", "facing": "right" },
+				{ "type": "get-speaker", "name": "Johnathan", "class": "Striker", "fadeIn": true },
+				{ "type": "text", "speaker": "Announcer", "text": "...Johnathan, the Stadium Striker, charging in!" },
+				{ "type": "text", "speaker": "Johnathan", "text": "Hope you’re quick — I play to win!" }
+			]
+		},
+		"route-5-5-johnathan-win": {
+			"effects": [
+				{ "type": "get-speaker", "name": "Announcer", "class": "Reporter", "position": "left", "facing": "right" },
+				{ "type": "get-speaker", "name": "Johnathan", "class": "Striker" },
+				{ "type": "text", "speaker": "Johnathan", "text": "What? How could I— red card, red card!" },
+				{ "type": "text", "speaker": "Announcer", "text": "Not what that means! Sorry, you’re out of bounds!" },
+				{ "type": "fade-out", "speaker": "Johnathan" }
+			]
 		}
 	},
 	"pokemon": {
@@ -2028,6 +2045,10 @@
 		"Hypno": {
 			"name": "Hypno",
 			"pokedex-entry": "It has been 184 days since the last incident involving a Hypno."
+		},
+		"Hitmonlee": {
+			"name": "Hitmonlee",
+			"pokedex-entry": "Its legs stretch outward as it kicks. Its body has layers upon layers of muscle coiled up into the shape of a string all along its legs, meaning it has to constantly tense its legs to keep them short. Top-level Pokémon researchers call this phenomenon “not how legs work.”"
 		},
 		"Chansey": {
 			"name": "Chansey",
@@ -4555,7 +4576,10 @@
 		"5-5-keola-poliwhirl": "Ripple",
 		"5-5-elizabeth-comfey": "Jasmine",
 		"5-5-elizabeth-cherrim": "Sakura",
-		"5-5-elizabeth-roselia": "Briar"
+		"5-5-elizabeth-roselia": "Briar",
+		"5-5-johnathan-hitmonlee": "Kixx",
+		"5-5-johnathan-passimian": "Goalie",
+		"5-5-johnathan-voltorb": "Pele"
 	},
 	"status-effects": {
 		"burn": {
