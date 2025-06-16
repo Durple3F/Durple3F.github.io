@@ -318,11 +318,9 @@ function advanceCurrentDialogue() {
 	}
 
 	promise = promise.then(() => {
+		// console.log(effects[dialogueProgress.nextEffectIndex])
 		if (effects[dialogueProgress.nextEffectIndex]) {
 			return advanceCurrentDialogue()
-			.then(() => {
-				Promise.resolve()
-			})
 		}
 
 		return Promise.resolve()
@@ -676,7 +674,6 @@ function carryOutDialogueEvent(effect, dialogueProgress) {
 				const continueDialogue = event => {
 					let clickedOn = event.target
 					if (clickedOn === $("#dialogueSkipBtn")[0]) return
-					
 					dialogueTag.off("click")
 					textBox.css("cursor", "")
 					textBox.children(".text-continue").fadeOut(textSpeed * 2.5)

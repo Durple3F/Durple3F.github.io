@@ -910,7 +910,7 @@ const levelData = [
 				name: "Ashley",
 				class: "Backpacker-Gen7-F",
 				pokemon: [
-					{ id: "Cottonee", level: 10, name: "Soozle" }
+					{ id: "Cottonee", level: 10, name: "2-4-ashley-cottonee" }
 				]
 			},
 		],
@@ -1074,9 +1074,9 @@ const levelData = [
 			{
 				name: "Ilima",
 				pokemon: [
-					{ id: "Gumshoos", level: 15, name: "Reginald", pokeball: "ultra ball", activeMoves: ["Bite", "Hyper Fang", "Super Fang", "Leer"] },
-					{ id: "Smeargle", level: 15, name: "Inkwell", pokeball: "ultra ball", activeMoves: ["Tackle", "Ember", "Leafage", "Water Gun"] },
-					{ id: "Komala", level: 15, name: "Nibsby", pokeball: "ultra ball", activeMoves: ["Yawn", "Bite", "Pound", "Focus Energy"] },
+					{ id: "Gumshoos", level: 15, name: "ilima-yungoos", pokeball: "ultra ball", activeMoves: ["Bite", "Hyper Fang", "Super Fang", "Leer"] },
+					{ id: "Smeargle", level: 15, name: "ilima-smeargle", pokeball: "ultra ball", activeMoves: ["Tackle", "Ember", "Leafage", "Water Gun"] },
+					{ id: "Komala", level: 15, name: "ilima-komala", pokeball: "ultra ball", activeMoves: ["Yawn", "Bite", "Pound", "Focus Energy"] },
 				]
 			},
 		],
@@ -1164,7 +1164,7 @@ const levelData = [
 				name: "Tatiana",
 				class: "Rising-Star-F",
 				pokemon: [
-					{ id: "Petilil", level: 13, pokeball: "great ball", name: "Direvine the Destroyer" }
+					{ id: "Petilil", level: 13, pokeball: "great ball", name: "3-1-tatiana-petilil" }
 				]
 			},
 		],
@@ -1287,8 +1287,8 @@ const levelData = [
 				name: "Thistle",
 				class: "Aroma-Lady",
 				pokemon: [
-					{ id: "Cottonee", name: "Juniper", level: 13 },
-					{ id: "Cutiefly", name: "Mote", level: 14 },
+					{ id: "Cottonee", name: "3-3-thistle-cottonee", level: 13 },
+					{ id: "Cutiefly", name: "3-3-thistle-cutiefly", level: 14 },
 				]
 			},
 		],
@@ -1464,7 +1464,7 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Mankey",
-						name: "Howler",
+						name: "hala-mankey",
 						level: 15,
 						ability: "Anger Point",
 						activeMoves: ["Karate Chop", "Focus Energy", "Pursuit"],
@@ -1473,7 +1473,7 @@ const levelData = [
 					},
 					{
 						id: "Makuhita",
-						name: "Tuffle",
+						name: "hala-makuhita",
 						level: 15,
 						ability: "Thick Fat",
 						activeMoves: ["Fake Out", "Sand Attack", "Arm Thrust"],
@@ -1482,7 +1482,7 @@ const levelData = [
 					},
 					{
 						id: "Crabrawler",
-						name: "Knuckles",
+						name: "hala-crabrawler",
 						level: 15,
 						ability: "Iron Fist",
 						activeMoves: ["Power-Up Punch", "Pursuit", "Leer"],
@@ -1491,7 +1491,7 @@ const levelData = [
 					},
 					{
 						id: "Stufful",
-						name: "Mr. Gumpy",
+						name: "hala-stufful",
 						level: 15,
 						ability: "Fluffy",
 						activeMoves: ["Brutal Swing", "Payback", "Leer", "Tackle"],
@@ -1500,7 +1500,7 @@ const levelData = [
 					},
 					{
 						id: "Pancham",
-						name: "Jabjab",
+						name: "hala-pancham",
 						level: 15,
 						ability: "Scrappy",
 						activeMoves: ["Circle Throw", "Taunt", "Leer", "Arm Thrust"],
@@ -1509,7 +1509,7 @@ const levelData = [
 					},
 					{
 						id: "Passimian",
-						name: "Coach",
+						name: "hala-passimian",
 						level: 15,
 						ability: "Receiver",
 						activeMoves: ["Beat Up", "Low Kick", "Focus Energy", "Leer"],
@@ -3463,7 +3463,8 @@ const levelData = [
 			top: 0.31
 		},
 		images: {
-			"route-bg-route-6": "src/img/bg/route 6.jpg"
+			"battle-royale-dome-exterior": "src/img/bg/battle royale dome exterior.jpg",
+			"battle-royale-dome-interior": "src/img/bg/battle royale dome interior.jpg",
 		},
 		recommendedLevels: {
 			"normal": (pokemonList) => {
@@ -3476,120 +3477,120 @@ const levelData = [
 			}
 		},
 		trainers: [
-			// Beauty Hana
-			// {
-			// 	name: "Hana",
-			// 	class: "Beauty-Gen6",
-			// 	introDialogue: "route-5-5-hana-intro",
-			// 	winDialogue: "route-5-5-hana-win",
-			// 	pokemon: [
-			// 		{
-			// 			id: "Furfrou",
-			// 			form: "Diamond",
-			// 			pokeball: "luxury ball",
-			// 			name: "5-5-hana-furfrou",
-			// 			level: 17
-			// 		},
-			// 		{
-			// 			id: "Minccino",
-			// 			pokeball: "luxury ball",
-			// 			name: "5-5-hana-minccino",
-			// 			level: 17
-			// 		},
-			// 		{
-			// 			id: "Oricorio",
-			// 			form: "Pom-Pom",
-			// 			pokeball: "luxury ball",
-			// 			name: "5-5-hana-oricorio",
-			// 			level: 17
-			// 		},
-			// 	]
-			// },
-			// Engineer Mr Fix
-			// {
-			// 	name: "Mr. Fix",
-			// 	class: "Engineer-Gen3",
-			// 	introDialogue: "route-5-5-mr-fix-intro",
-			// 	winDialogue: "route-5-5-mr-fix-win",
-			// 	pokemon: [
-			// 		{
-			// 			id: "Magnemite",
-			// 			pokeball: "great ball",
-			// 			name: "5-5-mr-fix-magnemite",
-			// 			level: 17
-			// 		},
-			// 		{
-			// 			id: "Togedemaru",
-			// 			pokeball: "great ball",
-			// 			name: "5-5-mr-fix-togedemaru",
-			// 			level: 17
-			// 		},
-			// 		{
-			// 			id: "Klink",
-			// 			pokeball: "great ball",
-			// 			name: "5-5-mr-fix-klink",
-			// 			level: 17
-			// 		},
-			// 	]
-			// },
-			// Surfer Keola
-			// {
-			// 	name: "Keola",
-			// 	class: "Surfer",
-			// 	introDialogue: "route-5-5-keola-intro",
-			// 	winDialogue: "route-5-5-keola-win",
-			// 	pokemon: [
-			// 		{
-			// 			id: "Wingull",
-			// 			pokeball: "dive ball",
-			// 			name: "5-5-keola-wingull",
-			// 			level: 17
-			// 		},
-			// 		{
-			// 			id: "Raichu-Alola",
-			// 			pokeball: "dive ball",
-			// 			name: "5-5-keola-raichu",
-			// 			level: 17
-			// 		},
-			// 		{
-			// 			id: "Poliwhirl",
-			// 			pokeball: "dive ball",
-			// 			name: "5-5-keola-poliwhirl",
-			// 			level: 17
-			// 		},
-			// 	]
-			// },
-			// Aroma Lady Elizabeth
-			// {
-			// 	name: "Elizabeth",
-			// 	class: "Aroma-Lady",
-			// 	introDialogue: "route-5-5-elizabeth-intro",
-			// 	winDialogue: "route-5-5-elizabeth-win",
-			// 	pokemon: [
-			// 		{
-			// 			id: "Comfey",
-			// 			// pokeball: "friend ball",
-			// 			name: "5-5-elizabeth-comfey",
-			// 			level: 17
-			// 		},
-			// 		{
-			// 			id: "Cherrim",
-			// 			// pokeball: "friend ball",
-			// 			name: "5-5-elizabeth-cherrim",
-			// 			level: 17
-			// 		},
-			// 		{
-			// 			id: "Roselia",
-			// 			// pokeball: "friend ball",
-			// 			name: "5-5-elizabeth-roselia",
-			// 			level: 17
-			// 		},
-			// 	]
-			// },
-			// Striker Johnathan
-			{
+			{ // Beauty Hana
+				name: "Hana",
+				class: "Beauty-Gen6",
+				tags: ["contestant"],
+				introDialogue: "route-5-5-hana-intro",
+				winDialogue: "route-5-5-hana-win",
+				pokemon: [
+					{
+						id: "Furfrou",
+						form: "Diamond",
+						pokeball: "luxury ball",
+						name: "5-5-hana-furfrou",
+						level: 17
+					},
+					{
+						id: "Minccino",
+						pokeball: "luxury ball",
+						name: "5-5-hana-minccino",
+						level: 17
+					},
+					{
+						id: "Oricorio",
+						form: "Pom-Pom",
+						pokeball: "luxury ball",
+						name: "5-5-hana-oricorio",
+						level: 17
+					},
+				]
+			},
+			{ // Engineer Mr Fix
+				name: "Mr. Fix",
+				class: "Engineer-Gen3",
+				tags: ["contestant"],
+				introDialogue: "route-5-5-mr-fix-intro",
+				winDialogue: "route-5-5-mr-fix-win",
+				pokemon: [
+					{
+						id: "Magnemite",
+						pokeball: "great ball",
+						name: "5-5-mr-fix-magnemite",
+						level: 17
+					},
+					{
+						id: "Togedemaru",
+						pokeball: "great ball",
+						name: "5-5-mr-fix-togedemaru",
+						level: 17
+					},
+					{
+						id: "Klink",
+						pokeball: "great ball",
+						name: "5-5-mr-fix-klink",
+						level: 17
+					},
+				]
+			},
+			{ // Surfer Keola
+				name: "Keola",
+				class: "Surfer",
+				tags: ["contestant"],
+				introDialogue: "route-5-5-keola-intro",
+				winDialogue: "route-5-5-keola-win",
+				pokemon: [
+					{
+						id: "Wingull",
+						pokeball: "dive ball",
+						name: "5-5-keola-wingull",
+						level: 17
+					},
+					{
+						id: "Raichu-Alola",
+						pokeball: "dive ball",
+						name: "5-5-keola-raichu",
+						level: 17
+					},
+					{
+						id: "Poliwhirl",
+						pokeball: "dive ball",
+						name: "5-5-keola-poliwhirl",
+						level: 17
+					},
+				]
+			},
+			{ // Aroma Lady Elizabeth
+				name: "Elizabeth",
+				class: "Aroma-Lady",
+				tags: ["contestant"],
+				introDialogue: "route-5-5-elizabeth-intro",
+				winDialogue: "route-5-5-elizabeth-win",
+				pokemon: [
+					{
+						id: "Comfey",
+						// pokeball: "friend ball",
+						name: "5-5-elizabeth-comfey",
+						level: 17
+					},
+					{
+						id: "Cherrim",
+						// pokeball: "friend ball",
+						name: "5-5-elizabeth-cherrim",
+						level: 17
+					},
+					{
+						id: "Roselia",
+						// pokeball: "friend ball",
+						name: "5-5-elizabeth-roselia",
+						level: 17
+					},
+				]
+			},
+			{ // Striker Johnathan
 				name: "Johnathan",
 				class: "Striker",
+				tags: ["contestant"],
 				introDialogue: "route-5-5-johnathan-intro",
 				winDialogue: "route-5-5-johnathan-win",
 				pokemon: [
@@ -3615,7 +3616,7 @@ const levelData = [
 			},
 		],
 		effects: [
-			// { type: "change-background-image", name: "route-bg-route-6" },
+			{ type: "change-background-image", name: "battle-royale-dome-exterior" },
 			{ type: "dialogue", source: "route-5-5-dialogue" },
 			{ type: "get-val-from-obj", key: "participate", obj: -1 },
 			{ type: "set-variable", name: "skipping" },
@@ -3623,17 +3624,178 @@ const levelData = [
 			{ type: "jump-if-truthy", jumpTo: "skip" },
 			{ type: "jump", jumpTo: "enter" },
 
-			{ type: "tournament", label: "enter", dialogues: [
+			{ type: "load-setting", key: "hardMode", label: "enter" },
+			{ type: "change-background-image", name: "battle-royale-dome-interior" },
+			{ type: "load-value", value: true },
+			{ type: "jump-if-equal", jumpTo: "hardMode" },
+			{ type: "jump", jumpTo: "easyMode" },
+			{ type: "tournament", label: "easyMode", contestantTag: "contestant", dialogues: [
 				"route-5-5-dialogue-2",
 				"route-5-5-dialogue-3",
 				"route-5-5-dialogue-4",
 				"route-5-5-dialogue-5",
 			], lossDialogue: "route-5-5-lose", waningHP: true },
-			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "jump", jumpTo: "win-check" },
+			{ type: "tournament", label: "hardMode", contestantTag: "contestant", dialogues: [
+				"route-5-5-dialogue-2",
+				"route-5-5-dialogue-3",
+				"route-5-5-dialogue-4",
+				"route-5-5-dialogue-5",
+			], lossDialogue: "route-5-5-lose", waningHP: false },
+			{ type: "jump", jumpTo: "win-check" },
+			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
 			{ type: "dialogue", source: "route-5-5-win" },
+			{ type: "change-background-image", name: "battle-royale-dome-exterior" },
+			{ type: "dialogue", source: "route-5-5-win-2" },
 			{ type: "jump", jumpTo: Infinity },
 			
 			{ type: "mark-as-lost", label: "skip" },
+		]
+	},
+	//5-6: 
+	{
+		id: "Route 5-6",
+		category: "Route 5",
+		name: "Route 5-6",
+		music: "SM Wild Pokemon Battle",
+		icon: "6",
+		position: {
+			left: 0.67,
+			top: 0.18
+		},
+		images: {
+			"route-bg-route-6": "src/img/bg/route 6.jpg"
+		},
+		recommendedLevels: {
+			"normal": (pokemonList) => {
+				if (pokemonList.length >= 3) return 20
+				return 22
+			},
+			"hard": (pokemonList) => {
+				if (pokemonList.length >= 3) return 20
+				return 22
+			}
+		},
+		trainers: [
+			{
+				isWild: true,
+				targetPokemon: 4,
+				canPickDuplicates: false,
+				possiblePokemon: [
+					{ id: "Finneon", levelMin: 14, levelMax: 17, weight: 5 },
+					{ id: "Pyukumuku", levelMin: 14, levelMax: 17, weight: 5 },
+					{ id: "Magikarp", levelMin: 14, levelMax: 17, weight: 5 },
+					{ id: "Wishiwashi", levelMin: 14, levelMax: 17, weight: 3 },
+					{ id: "Staryu", levelMin: 14, levelMax: 17, weight: 3 },
+					{ id: "Tentacool", levelMin: 14, levelMax: 17, weight: 3 },
+					{ id: "Wingull", levelMin: 14, levelMax: 17, weight: 1 },
+					{ id: "Diglett-Alola", levelMin: 14, levelMax: 17, weight: 1 },
+				]
+			},
+			// {
+			// 	name: "Maika",
+			// 	class: "Dancer-Gen7",
+			// 	pokemon: [
+			// 		{
+			// 			id: "Oricorio",
+			// 			form: "Pom-Pom",
+			// 			pokeball: "great ball",
+			// 			name: "5-4-maika-oricorio-2",
+			// 			level: 17,
+			// 			activeMoves: ["Feather Dance", "Agility", "Acrobatics", "Spark"]
+			// 		},
+			// 		{
+			// 			id: "Oricorio",
+			// 			form: "Pa'u",
+			// 			pokeball: "great ball",
+			// 			name: "5-4-maika-oricorio-1",
+			// 			level: 17,
+			// 			activeMoves: ["Quiver Dance", "Rest", "Teeter Dance", "Psybeam"]
+			// 		},
+			// 		{
+			// 			id: "Oricorio",
+			// 			form: "Sensu",
+			// 			pokeball: "great ball",
+			// 			name: "5-4-maika-oricorio-3",
+			// 			level: 17,
+			// 			activeMoves: ["Revelation Dance", "Spite", "Peck", "Mean Look"]
+			// 		},
+			// 		{
+			// 			id: "Oricorio",
+			// 			form: "Baile",
+			// 			pokeball: "great ball",
+			// 			name: "5-4-maika-oricorio-4",
+			// 			level: 17,
+			// 			activeMoves: ["Fiery Dance", "Mystical Fire", "Work Up", "Gust"]
+			// 		},
+			// 	]
+			// },
+			// {
+			// 	name: "Maika",
+			// 	class: "Dancer-Gen7",
+			// 	pokemon: [
+			// 		{
+			// 			id: "Oricorio",
+			// 			form: "Pom-Pom",
+			// 			pokeball: "great ball",
+			// 			name: "5-4-maika-oricorio-2",
+			// 			level: 17,
+			// 			activeMoves: ["Feather Dance", "Agility", "Acrobatics", "Spark"],
+			// 			nature: "jolly",
+			// 			ivs: { hp: 15, attack: 30, defense: 20, specialAttack: 15, specialDefense: 15, speed: 25 },
+			// 			evs: { hp: 60, attack: 70, defense: 35, specialAttack: 30, specialDefense: 60, speed: 30 },
+			// 		},
+			// 		{
+			// 			id: "Oricorio",
+			// 			form: "Pa'u",
+			// 			pokeball: "great ball",
+			// 			name: "5-4-maika-oricorio-1",
+			// 			level: 17,
+			// 			activeMoves: ["Quiver Dance", "Rest", "Teeter Dance", "Psybeam"],
+			// 			nature: "modest",
+			// 			ivs: { hp: 30, attack: 5, defense: 20, specialAttack: 25, specialDefense: 15, speed: 25 },
+			// 			evs: { hp: 60, attack: 30, defense: 35, specialAttack: 70, specialDefense: 60, speed: 30 },
+			// 		},
+			// 		{
+			// 			id: "Oricorio",
+			// 			form: "Sensu",
+			// 			pokeball: "great ball",
+			// 			name: "5-4-maika-oricorio-3",
+			// 			level: 17,
+			// 			activeMoves: ["Revelation Dance", "Spite", "Peck", "Mean Look"],
+			// 			nature: "serious",
+			// 			ivs: { hp: 30, attack: 15, defense: 10, specialAttack: 25, specialDefense: 15, speed: 25 },
+			// 			evs: { hp: 80, attack: 60, defense: 35, specialAttack: 60, specialDefense: 60, speed: 30 },
+			// 		},
+			// 		{
+			// 			id: "Oricorio",
+			// 			form: "Baile",
+			// 			pokeball: "great ball",
+			// 			name: "5-4-maika-oricorio-4",
+			// 			level: 17,
+			// 			activeMoves: ["Fiery Dance", "Mystical Fire", "Work Up", "Gust"],
+			// 			nature: "rash",
+			// 			ivs: { hp: 30, attack: 5, defense: 20, specialAttack: 25, specialDefense: 15, speed: 25 },
+			// 			evs: { hp: 60, attack: 30, defense: 60, specialAttack: 70, specialDefense: 30, speed: 30 },
+			// 		},
+			// 	]
+			// },
+		],
+		effects: [
+			{ type: "change-background-image", name: "route-bg-route-6" },
+			{ type: "fight", trainer: 0 },
+			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "dialogue", source: "route-5-4-dialogue" },
+			{ type: "change-music", music: "SM Trainer Battle" },
+			{ type: "load-setting", key: "hardMode" },
+			{ type: "load-value", value: true },
+			{ type: "jump-if-equal", jumpTo: "hardMode" },
+			{ type: "jump", jumpTo: "easyMode" },
+			{ type: "fight", trainer: 1, label: "easyMode" },
+			{ type: "jump", jumpTo: "win-check" },
+			{ type: "fight", trainer: 2, label: "hardMode" },
+			{ type: "jump", jumpTo: "win-check" },
+			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
 		]
 	},
 ]

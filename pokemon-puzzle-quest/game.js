@@ -842,12 +842,6 @@ class Round {
 			energy = multiplyEnergies(energy, 1.5, "round")
 		}
 
-		//Pickup gives you energy when your opponent makes a 4-match
-		if (madeFourMatch && otherPokemon.hasAbility("Pickup")) {
-			let toAdd = multiplyEnergies(energy, 0.5, "up")
-			energyToOpponent = addEnergies(energyToOpponent, toAdd)
-		}
-
 		//Empowered tiles do stuff when you match them
 		for (let tile of tiles){
 			if (tile.power === 0) continue
@@ -938,6 +932,19 @@ class Round {
 					}
 				}
 			}
+		}
+
+		//Pickup gives you energy when your opponent makes a 4-match
+		if (madeFourMatch && otherPokemon.hasAbility("Pickup")) {
+			let toAdd = multiplyEnergies(energy, 0.5, "up")
+			energyToOpponent = addEnergies(energyToOpponent, toAdd)
+		}
+
+		//Storm Drain gives you blue energy when your opponent gets blue energy
+		if (energy["blue"] > 0 && otherPokemon.hasAbility("Storm Drain")) {
+			let toAdd = getEmptyEnergy()
+			toAdd["blue"] = Math.ceil(energy["blue"] * 0.5)
+			energyToOpponent = addEnergies(energyToOpponent, toAdd)
 		}
 
 		//If the match contains an enemy Frozen tile, get Frostbite

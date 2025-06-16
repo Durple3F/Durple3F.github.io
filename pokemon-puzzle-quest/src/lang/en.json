@@ -1770,6 +1770,16 @@
 				{ "type": "text", "speaker": "Announcer", "text": "Today’s Battle Royale Champion is... %c%!", "values": [-1] }
 			]
 		},
+		"route-5-5-win-2": {
+			"events": [],
+			"callbacks": {},
+			"effects": [
+				{ "type": "get-speaker", "name": "Lillie", "class": "Lillie", "position": "left", "facing": "right" },
+				{ "type": "text", "speaker": "Lillie", "text": "Wow! I can’t believe you actually won!" },
+				{ "type": "text", "speaker": "Lillie", "text": "I’ll be honest, I was doubting you!" },
+				{ "type": "text", "speaker": "Lillie", "text": "In any case, that was certainly enjoyable to watch. Should we go on to the next trial? I believe it’s up the volcano, right?" }
+			]
+		},
 		"route-5-5-lose": {
 			"events": [],
 			"callbacks": {},
@@ -2242,6 +2252,10 @@
 		"Happiny": {
 			"name": "Happiny",
 			"pokedex-entry": "Its egg is really nothing more than a pale rock it found. Something in its genes tells it that it should be carrying something, so it feels uncomfortable whenever it’s without its rock. #myrock"
+		},
+		"Finneon": {
+			"name": "Finneon",
+			"pokedex-entry": "During the day, they swim near the surface of the water, soaking up sunlight with the photosensitive pink parts of their bodies. At night, they release the stored energy, and their tails light up the deeper parts of the water."
 		},
 		"Glaceon": {
 			"name": "Glaceon",
@@ -4333,6 +4347,11 @@
 			"shortDescription": "Raises Speed a stage when its initiative is lowered",
 			"longDescription": "When this Pokémon's initiative is lowered, its Speed is increased by a stage."
 		},
+		"Storm Drain": {
+			"name": "Storm Drain",
+			"shortDescription": "Gains 50% of the blue energy opponents gain through matches",
+			"longDescription": "Whenever the opponent gains blue energy through a match, this Pokémon gains 50% of that blue energy as well, rounded up."
+		},
 		"Strong Jaw": {
 			"name": "Strong Jaw",
 			"shortDescription": "This Pokémon's biting moves get +50% power",
@@ -4565,6 +4584,13 @@
 		"hau-eevee": "Scout",
 		"ilima-yungoos": "Reginald",
 		"ilima-smeargle": "Inkwell",
+		"ilima-komala": "Nibsby",
+		"hala-mankey": "Howler",
+		"hala-makuhita": "Tuffle",
+		"hala-crabrawler": "Knuckles",
+		"hala-stufful": "Mr. Gumpy",
+		"hala-pancham": "Jabjab",
+		"hala-passimian": "Coach",
 		"1-5-madison-wingull": "Gully",
 		"1-7-hiromi-pikipek": "Chirpo",
 		"1-7-mia-bonsly": "Mister Wobbles",
@@ -4572,6 +4598,10 @@
 		"1-7-emily-magnemite": "Tesla",
 		"1-7-emily-meowth": "Cleo",
 		"2-3-krystal-gastly": "Gastlé No. 3 by Krystal",
+		"2-4-ashley-cottonee": "Soozle",
+		"3-1-tatiana-petilil": "Direvine the Destroyer",
+		"3-3-thistle-cottonee": "Juniper",
+		"3-3-thistle-cutiefly": "Mote",
 		"5-1-mikiko-fletchling": "Chitter",
 		"5-1-mikiko-litleo": "Pepper",
 		"5-1-mikiko-espurr": "Mimi",

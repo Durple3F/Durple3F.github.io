@@ -445,6 +445,10 @@ const pokemonAbilityData = {
 	"Steadfast": {
 		id: "Steadfast"
 	},
+	//When the opponent gets blue energy through a match, you get 50% of that blue energy too
+	"Storm Drain": {
+		id: "Storm Drain"
+	},
 	//Makes moves with "biting" power x1.5
 	"Strong Jaw": {
 		id: "Strong Jaw"

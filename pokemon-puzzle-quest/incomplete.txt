@@ -75,6 +75,7 @@ Incomplete move lists:
 	Drifblim (lv 24)
 	Honchkrow (lv 35)
 	Bonsly (lv 20)
+	Finneon (lv 22)
 	Glaceon (lv 25)
 	Lillipup (lv 40)
 	Herdier (lv 54)
@@ -157,6 +158,7 @@ Missing Evolutions:
 	Bagon
 	Cherrim
 	Bonsly
+	Finneon
 	Boldore
 	Zorua
 	Minccino

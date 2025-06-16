@@ -1,12 +1,22 @@
 {
 	"versions": {
+		"20250616": {
+			"date": "June 16, 2025",
+			"line-count": 50000,
+			"changes": [
+				"- "
+			]
+		},
 		"20250615": {
 			"date": "June 15, 2025",
 			"line-count": 50000,
 			"ding": true,
 			"changes": [
 				"- Added Voltorb",
-				"- Added Soundproof, Limber, Reckless"
+				"- Added Soundproof, Limber, Reckless",
+				"- Added 2 backgrounds to 5-5",
+				"- Added a bit more dialogue for winning 5-5",
+				"- Moved all of the pokemon names up to 3-5 to another file for organization."
 			]
 		},
 		"20250614": {

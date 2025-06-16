@@ -10,6 +10,8 @@ HOPEFULLY fixed
 - Sometimes the opponent swaps tiles and the animation looks like it goes offscreen???
 - Sometimes cries play twice
   - Maybe due to end of turn start of turn?
+- Sometimes clicking on the last bit of dialogue doesn't continue it. Is it failing to finish?
+- Weird incident where tiles remained above the top of the screen
 
 TODO
 - Add tooltips over tiles
@@ -29,8 +31,7 @@ TODO
 - Make Revenge use status effects
 - Pokemon breeders keep their pokemon in friend balls. Give Elizabeth friend balls too!
 - If you skip dialogue, it should recognize any changes made to the background
-- Add an indicator in the pokedex for which pokemon you've seen/caught shinies for.
-- Wishiwashi's ability means we need to load both forms as the game begins
+- Wishiwashi's and Cherrim's ability means we need to load both forms as the game begins
 - Add an icon for Dive
 - Make sure leech seed + liquid ooze works as intended
 - Add a way to skip the evolution animation that still lets you evolve it
@@ -40,7 +41,5 @@ TODO
 - The level select screen needs to handle resizing better
 - 5-5 needs animation and 2 backgrounds
 - Furfrou is missing forms and changing the forms is a bit wonky
-- Sometimes clicking on the last bit of dialogue doesn't continue it. Is it failing to finish?
-- Weird incident where tiles remained above the top of the screen
 - We need an image for timer balls...
 - Make poison trigger upon using moves

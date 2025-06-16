@@ -1409,9 +1409,14 @@ function advanceCurrentLevel() {
 			changeScene("fight")
 
 			let wins = 0
-			let neededWins = 4
+			let neededWins = effect.neededWins ?? 4
 			let dialogueSources = effect.dialogues || []
-			let trainerIndexes = level.trainers.map((_, i) => i)
+			let contestantTag = effect.contestantTag ?? "contestant"
+			let trainers = level.trainers.filter(tData => {
+				let tags = tData.tags ?? []
+				return tags.includes(contestantTag)
+			})
+			let trainerIndexes = trainers.map(tData => level.trainers.indexOf(tData))
 			let foughtTrainers = []
 			const advance = () => {
 				let p = Promise.resolve()
@@ -1439,7 +1444,7 @@ function advanceCurrentLevel() {
 				}
 				if (wins > 0 && effect.waningHP){
 					let percent = wins / neededWins
-					let remainingHP = 1 - percent
+					let remainingHP = Math.pow(0.6, wins)
 					remainingHP = Math.min(remainingHP + 0.1, 1)
 					roundOptions.remainingHP = remainingHP
 				}

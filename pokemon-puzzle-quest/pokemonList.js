@@ -4668,6 +4668,7 @@ const pokemonData = {
 			"cry": "src/audio/cries/cherrim.mp3"
 		},
 		hasForms: true,
+		formsToLoad: ["Overcast", "Sunshine"],
 		defaultForm: "Overcast",
 		forms: {
 			"Overcast": {
@@ -5046,6 +5047,56 @@ const pokemonData = {
 			{ name: "Disarming Voice", unlock: { type: "level", amount: 12 } },
 			{ name: "Covet", unlock: { type: "level", amount: 16 } },
 			{ name: "Charm", unlock: { type: "level", amount: 20 } },
+		]
+	},
+	"Finneon": {
+		name: "Finneon",
+		number: "456",
+		weight: {
+			pounds: 15.4,
+			kilograms: 7.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0456Finneon.png",
+			"largeShiny": "src/img/shiny-pokemon/456-Finneon.png",
+			"home": "src/img/tiny-pokemon/Finneon.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/finneon.mp3"
+		},
+		types: ["Water"],
+		tags: [],
+		abilities: ["Swift Swim", "Storm Drain"],
+		hiddenAbilities: ["Water Veil"],
+		stats: {
+			hp: 49,
+			attack: 49,
+			defense: 56,
+			specialAttack: 49,
+			specialDefense: 61,
+			speed: 66
+		},
+		expYield: 66,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 1
+		},
+		energyMastery: {
+			yellow: 1,
+			green: 1,
+			blue: 3
+		},
+		learnset: [
+			{ name: "Pound", unlock: { type: "level", amount: 1 } },
+			{ name: "Water Gun", unlock: { type: "level", amount: 6 } },
+			{ name: "Rain Dance", unlock: { type: "level", amount: 13 } },
+			{ name: "Gust", unlock: { type: "level", amount: 17 } },
+			{ name: "Water Pulse", unlock: { type: "level", amount: 22 } },
 		]
 	},
 	"Glaceon": {
