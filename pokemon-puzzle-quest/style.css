@@ -106,6 +106,7 @@ body {
 	--type-bug: #91a110;
 
 	--won-color: gold;
+	--shiny-color: rgb(255, 239, 96);
 	--dialogue-font-size: min(5vh, 3vw);
 	--large-button-font-size: 1.3em; /*calc(var(--dialogue-font-size) * 0.7);*/
 	--active-pokemon-box-size: min(5vw, 10vh);
@@ -1840,10 +1841,6 @@ body {
 	padding: 0.5em;
 	position: relative;
 	text-align: center;
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-end;
-	align-items: center;
 	font-family: Kode_Mono;
 	font-weight: bold;
 	border-radius: 1em;
@@ -1865,6 +1862,41 @@ body {
 }
 #pokedex > #dexWindow > .pokemon-list > .pokemon-section:hover {
 	background-color: rgba(45, 48, 236);
+}
+#pokedex > #dexWindow > .pokemon-list > .pokemon-section .main-section {
+	position: absolute;
+	top: 0; left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	align-items: center;
+}
+#pokedex > #dexWindow > .pokemon-list > .pokemon-section .stats {
+	position: absolute;
+	top: 0; left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	align-items: center;
+	z-index: 10;
+}
+#pokedex > #dexWindow > .pokemon-list > .pokemon-section .stats span {
+	font-size: 0.9em;
+	text-shadow: 0 0 0.5em black;
+}
+#pokedex > #dexWindow > .pokemon-list > .pokemon-section .shiny-stats-section span {
+	color: var(--shiny-color);
+}
+#pokedex > #dexWindow > .pokemon-list:not([data-showing="stats"]) > .pokemon-section .stats-section,
+#pokedex > #dexWindow > .pokemon-list:not([data-showing="shiny-stats"]) > .pokemon-section .shiny-stats-section,
+#pokedex > #dexWindow > .pokemon-list:not([data-showing="main"]) > .pokemon-section .pokemon-name-section,
+#pokedex > #dexWindow > .pokemon-list:not([data-showing="main"]) > .pokemon-section .pokemon-number {
+	opacity: 0;
+	transition: opacity 0.2s;
 }
 #pokedex > #dexWindow > .pokemon-list > .pokemon-section .pokemon-image-section {
 	position: relative;
@@ -1956,7 +1988,7 @@ body {
 	position: absolute;
 	top: 0.55em;
 	left: 0.5em;
-	color: rgb(255, 239, 96);
+	color: var(--shiny-color);
 	filter: drop-shadow(0 0 0.2em rgba(255, 240, 155, 0.5));
 }
 #pokedex > #dexWindow > .pokemon-list > .pokemon-section .shiny-indicator img {

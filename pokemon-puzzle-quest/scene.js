@@ -942,6 +942,9 @@ function startScene(name, options={}) {
 
 			let inputSection = $(`<div class='d-flex justify-content-center w-100'>`)
 			dexWindow.append(inputSection)
+			let settingsBtn = $(`<button class='btn btn-primary m-3'>`)
+			settingsBtn.html(`<i class="bi bi-gear-fill"></i>`)
+			inputSection.append(settingsBtn)
 			let prevBtn = $(`<button class='btn btn-primary m-3'>`)
 			prevBtn.html(`<i class="bi bi-caret-left-fill"></i>`)
 			inputSection.append(prevBtn)
@@ -950,6 +953,73 @@ function startScene(name, options={}) {
 			let nextBtn = $(`<button class='btn btn-primary m-3'>`)
 			nextBtn.html(`<i class="bi bi-caret-right-fill"></i>`)
 			inputSection.append(nextBtn)
+			let statsBtn = $(`<button class='btn btn-primary m-3'>`)
+			statsBtn.html(`<i class="bi bi-bar-chart-line-fill"></i>`)
+			inputSection.append(statsBtn)
+
+			const openSettings = () => {
+				let modal = $("#modal")
+				clearModal(modal)
+				modal.addClass("show")
+				let changedSomething = true
+				let body = modal.find(".modal-body")
+
+				const makeChange = () => {
+					determinePages()
+					pageNum = 0
+					displayPage(pageNum)
+				}
+
+				modal.find(".modal-header").addClass("justify-content-center")
+				modal.find(".modal-title").html(`<h6 class='display-6 text-center'>Options</h6>`)
+				let form = $(`<div class='mx-auto'>`)
+				body.append(form)
+				let pageSizeInput = $(`<input class='form-control w-50' type='number'>`)
+				pageSizeInput.val(pageSize)
+				let pageSizeSection = $(`<div class='d-flex justify-content-between align-items-center'>`)
+				pageSizeSection.append(`<label>Items per page:</label>`)
+				pageSizeSection.append(pageSizeInput)
+				pageSizeInput.on("input", () => {
+					let newVal = Number(pageSizeInput.val()) || 25
+					changedSomething = changedSomething || newVal !== pageSize
+					pageSize = newVal
+					if (changedSomething){
+						makeChange()
+					}
+				})
+				form.append(pageSizeSection)
+
+				modal.modal("show")
+				modal.on("hidden.bs.modal", () => {
+					
+				})
+			}
+			settingsBtn.click(openSettings)
+
+			let showingStats = 0
+			const toggleStats = () => {
+				showingStats += 1
+				showingStats %= 3
+				if (showingStats === 0){
+					pokemonListTag.attr("data-showing", "main")
+					statsBtn.css("background-color", "")
+					statsBtn.css("border-color", "")
+					statsBtn.css("color", "")
+				}
+				else if (showingStats === 1) {
+					pokemonListTag.attr("data-showing", "stats")
+					statsBtn.css("background-color", "var(--health-high)")
+					statsBtn.css("border-color", "var(--health-high)")
+					statsBtn.css("color", "")
+				}
+				else if (showingStats === 2) {
+					pokemonListTag.attr("data-showing", "shiny-stats")
+					statsBtn.css("background-color", "var(--shiny-color)")
+					statsBtn.css("border-color", "var(--shiny-color)")
+					statsBtn.css("color", "black")
+				}
+			}
+			statsBtn.click(toggleStats)
 
 			const generateSection = pData => {
 				let pokemonId = pData.id
@@ -964,8 +1034,11 @@ function startScene(name, options={}) {
 					viewPokemonInfo(pokemon, { pure: true, dex: true, canSwitchActiveMoves: false })
 				})
 
+				let mainSection = $(`<div class='main-section'>`)
+				section.append(mainSection)
+
 				let imageSection = $(`<div class='pokemon-image-section'>`)
-				section.append(imageSection)
+				mainSection.append(imageSection)
 
 				let url = pokemon.getImage()
 				let pokemonImgBg = $(`<div class='pokemon-image-bg'>`)
@@ -977,6 +1050,7 @@ function startScene(name, options={}) {
 				imageSection.append(pokemonImg)
 
 				let textSection = $(`<div class='pokemon-name-section'></div>`)
+				mainSection.append(textSection)
 				let pokemonNumberTag = $(`<div class='pokemon-number'></div>`)
 				pokemonNumberTag.html(`#${pData.number}`)
 				textSection.append(pokemonNumberTag)
@@ -998,14 +1072,23 @@ function startScene(name, options={}) {
 				}
 
 				let shinyIndicator = $("<div class='shiny-indicator'>")
-				section.append(shinyIndicator)
+				mainSection.append(shinyIndicator)
 				if (stats["caught-shiny"]){
 					shinyIndicator.append(`<img src='src/img/icons/stars-fill.svg'>`)
 				} else if (stats["seen-shiny"]){
 					shinyIndicator.append(`<img src='src/img/icons/stars.svg'>`)
 				}
+				
+				let statsSection = $(`<div class='stats stats-section'>`)
+				section.append(statsSection)
+				let shinyStatsSection = $(`<div class='stats shiny-stats-section'>`)
+				section.append(shinyStatsSection)
 
-				section.append(textSection)
+				statsSection.append(`<span>Seen: ${stats["seen"]}</span>`)
+				statsSection.append(`<span>Caught: ${stats["caught"]}</span>`)
+				shinyStatsSection.append(`<span>Seen: ${stats["seen-shiny"]}</span>`)
+				shinyStatsSection.append(`<span>Caught: ${stats["seen-shiny"]}</span>`)
+
 				pokedexSections[pokemonId] = section
 			}
 			let pokedexSections = {}
@@ -1021,6 +1104,7 @@ function startScene(name, options={}) {
 
 			let pokemonStats = playerSaveInfo["pokemon-caught-stats"]
 			let pokemonListTag = $("<div class='pokemon-list'>")
+			pokemonListTag.attr("data-showing", "main")
 			dexWindow.append(pokemonListTag)
 			
 			let pageNum = 0

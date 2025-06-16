@@ -4,7 +4,9 @@
 			"date": "June 16, 2025",
 			"line-count": 50000,
 			"changes": [
-				"- "
+				"- Added Finneon",
+				"- You can now change the number of pokemon per page of the pokedex.",
+				"- You can now view how many of each pokemon you've seen/caught in the pokedex."
 			]
 		},
 		"20250615": {
