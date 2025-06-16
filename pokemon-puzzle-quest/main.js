@@ -732,6 +732,7 @@ function resetEntirePage(){
 
 let loadedResources = [0, 0, 0, 0]
 function loadResources(){
+	loadedResources = [0, 0, 0, 0]
 	resetEntirePage()
 	renderHelperSprites()
 
@@ -798,20 +799,23 @@ function loadResources(){
 	}
 	update()
 
-	let promises = [
-		loadSprites(sprites),
-		loadSounds(soundsToLoad),
-		downloadLocale(lang).then(() => new Promise(resolve => {
-			localeFinished++
-			resolve()
-		}))
-	]
+	let promises = []
 	sprites.forEach(sprite => {
 		let p = loadSprite(sprite.name, sprite.url)
 		.then(() => loadedResources[0]++)
 
 		promises.push(p)
 	})
+	soundsToLoad.forEach(sound => {
+		let p = loadSound(sound.name, sound.type, sound.url)
+		.then(() => loadedResources[2]++)
+
+		promises.push(p)
+	})
+	promises.push(downloadLocale(lang).then(() => new Promise(resolve => {
+		localeFinished++
+		resolve()
+	})))
 	for (let tileStatusName in tileStatusData){
 		let data = tileStatusData[tileStatusName]
 		loadedResources[1]++

@@ -1575,19 +1575,19 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Rockruff",
-						name: "Roxie",
+						name: "3-6-sheri-rockruff",
 						level: 14,
 						activeMoves: ["Howl", "Rock Throw", "Bite", "Double Team"],
 					},
 					{
 						id: "Pikachu",
-						name: "Nyoom",
+						name: "3-6-sheri-pikachu",
 						level: 13,
 						activeMoves: ["Thunder Shock", "Double Team", "Agility", "Feint"],
 					},
 					{
 						id: "Bounsweet",
-						name: "Fresa",
+						name: "3-6-sheri-bounsweet",
 						level: 15,
 						activeMoves: ["Razor Leaf", "Play Nice", "Magical Leaf", "Flail"],
 					},
@@ -1600,7 +1600,7 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Pikachu",
-						name: "Nyoom",
+						name: "3-6-sheri-pikachu",
 						level: 13,
 						activeMoves: ["Electro Ball", "Double Team", "Agility", "Feint"],
 						ivs: { hp: 15, attack: 5, defense: 15, specialAttack: 25, specialDefense: 0, speed: 25 },
@@ -1608,7 +1608,7 @@ const levelData = [
 					},
 					{
 						id: "Rockruff",
-						name: "Roxie",
+						name: "3-6-sheri-rockruff",
 						level: 14,
 						activeMoves: ["Howl", "Rock Throw", "Bite", "Double Team"],
 						ivs: { hp: 25, attack: 25, defense: 15, specialAttack: 5, specialDefense: 5, speed: 15 },
@@ -1616,7 +1616,7 @@ const levelData = [
 					},
 					{
 						id: "Steenee",
-						name: "Fresa",
+						name: "3-6-sheri-bounsweet",
 						level: 15,
 						activeMoves: ["Razor Leaf", "Play Nice", "Magical Leaf", "Flail"],
 						ivs: { hp: 25, attack: 25, defense: 15, specialAttack: 5, specialDefense: 5, speed: 15 },
@@ -1680,9 +1680,6 @@ const levelData = [
 				]
 			},
 			//Easy
-			//Mandibuzz: Sandtrap
-			//Hawlucha: Topspin
-			//Skarmory: Nine Iron
 			{
 				name: "Kahili",
 				canUseZMoves: true,
@@ -1690,7 +1687,7 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Zubat",
-						name: "Slice",
+						name: "kahili-zubat",
 						level: 14,
 						pokeball: "ultra ball",
 						activeMoves: ["Mean Look", "Aerial Ace", "Supersonic", "Absorb"],
@@ -1699,7 +1696,7 @@ const levelData = [
 					{
 						id: "Oricorio",
 						form: "Baile",
-						name: "Fairway",
+						name: "kahili-oricorio",
 						level: 15,
 						pokeball: "ultra ball",
 						activeMoves: ["Air Cutter", "Helping Hand", "Growl", "Peck"],
@@ -1707,7 +1704,7 @@ const levelData = [
 					//Canonically named Touckey
 					{
 						id: "Trumbeak",
-						name: "Caddy",
+						name: "kahili-toucannon",
 						level: 16,
 						pokeball: "ultra ball",
 						activeMoves: ["Pluck", "Supersonic", "Growl", "Echoed Voice"],
@@ -1722,7 +1719,7 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Zubat",
-						name: "Slice",
+						name: "kahili-zubat",
 						level: 14,
 						pokeball: "ultra ball",
 						activeMoves: ["Mean Look", "Aerial Ace", "Absorb", "Poison Fang"],
@@ -1733,17 +1730,16 @@ const levelData = [
 					{
 						id: "Oricorio",
 						form: "Baile",
-						name: "Fairway",
+						name: "kahili-oricorio",
 						level: 15,
 						pokeball: "ultra ball",
 						activeMoves: ["Air Cutter", "Helping Hand", "Growl", "Peck"],
 						ivs: { hp: 15, attack: 5, defense: 15, specialAttack: 25, specialDefense: 0, speed: 25 },
 						evs: { hp: 15, attack: 10, defense: 15, specialAttack: 25, specialDefense: 0, speed: 20 },
 					},
-					//Canonically named Touckey
 					{
 						id: "Trumbeak",
-						name: "Caddy",
+						name: "kahili-toucannon",
 						level: 16,
 						pokeball: "ultra ball",
 						activeMoves: ["Pluck", "Supersonic", "Growl", "Echoed Voice"],

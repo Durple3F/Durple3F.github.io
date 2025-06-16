@@ -23,7 +23,6 @@ TODO
 - Add some kind of filter/search/pages to the pokedex
   - pages check
   - search check
-- Add a section in the pokedex where you can see how many you've caught/seen/etc
 - For some reason the loading bar at the beginning gets big long why does it do that why do they always do this to me
 - Add a way to quickly organize/remove boxes
 - Add a button that lets you swap which side the selection window is on
