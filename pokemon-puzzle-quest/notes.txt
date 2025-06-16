@@ -1,4 +1,5 @@
 SOMETIMES status effects don't have moves attaches to them BE AWARE
+- Innards Out may trigger when being forcibly fainted, like with one-hit ko moves
 
 ([^\t]+)(?!\t) \t(\d+).+
 "$1": $2,
@@ -14,6 +15,7 @@ HOPEFULLY fixed
 - Weird incident where tiles remained above the top of the screen
 
 TODO
+- Maybe add accurate health bars to the PC
 - Add tooltips over tiles
 - Hau should ask at the beginning whether to pick the better or worse starter
 - Hau and Team Skull should get special battle themes
@@ -38,7 +40,7 @@ TODO
 - Absolutely give Lana a red Gyarados next time
 - Ensure Revelation Dance properly changes its shown type if its user's type changes
 - The level select screen needs to handle resizing better
-- 5-5 needs animation and 2 backgrounds
+- 5-5 needs animation
 - Furfrou is missing forms and changing the forms is a bit wonky
 - We need an image for timer balls...
 - Make poison trigger upon using moves

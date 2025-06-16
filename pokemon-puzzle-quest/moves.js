@@ -8634,7 +8634,8 @@ const pokemonMoveData = {
 			{ type: "count-tiles", options: { type: "blue" } },
 			{ type: "load-value", value: 2 },
 			{ type: "multiply-numbers" },
-			{ type: "damage", additivePower: -1 }
+			{ type: "damage", additivePower: -1 },
+			{ type: "apply-status-effect", statusEffect: "poisoned", target: "opponent" },
 		],
 	},
 	//Deals damage and confuses with a chance based on Water tile count

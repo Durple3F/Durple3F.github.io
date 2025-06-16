@@ -8610,6 +8610,57 @@ const pokemonData = {
 			{ name: "Spark", unlock: { type: "level", amount: 25 } },
 		]
 	},
+	"Pyukumuku": {
+		name: "Pyukumuku",
+		number: "771",
+		weight: {
+			pounds: 2.6,
+			kilograms: 1.2
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0771Pyukumuku.png",
+			"largeShiny": "src/img/shiny-pokemon/771-Pyukumuku.png",
+			"home": "src/img/tiny-pokemon/Pyukumuku.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/pyukumuku.mp3"
+		},
+		tags: [],
+		types: ["Water"],
+		abilities: ["Innards Out"],
+		hiddenAbilities: ["Unaware"],
+		stats: {
+			hp: 55,
+			attack: 60,
+			defense: 130,
+			specialAttack: 30,
+			specialDefense: 130,
+			speed: 5
+		},
+		expYield: 144,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 2,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 2,
+			blue: 3,
+			purple: 4
+		},
+		learnset: [
+			{ name: "Baton Pass", unlock: { type: "level", amount: 1 } },
+			{ name: "Harden", unlock: { type: "level", amount: 1 } },
+			{ name: "Helping Hand", unlock: { type: "level", amount: 5 } },
+			{ name: "Taunt", unlock: { type: "level", amount: 10 } },
+			{ name: "Safeguard", unlock: { type: "level", amount: 15 } },
+			{ name: "Counter", unlock: { type: "level", amount: 20 } },
+		]
+	},
 	"Type: Null": {
 		name: "Type: Null",
 		number: "772",

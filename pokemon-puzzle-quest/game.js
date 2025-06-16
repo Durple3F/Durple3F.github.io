@@ -1670,10 +1670,26 @@ class Round {
 			})
 		}
 		if (activePokemon.hasStatus("poisoned")) {
-			activePokemon.hp -= Math.ceil(activePokemon.maxhp / 32)
+			this.dealDamage({
+				fromTrainer: trainer,
+				from: activePokemon,
+				toTrainer: trainer,
+				to: activePokemon,
+				move: undefined,
+				damage: Math.ceil(activePokemon.maxhp / 32),
+				fixed: true
+			})
 		}
 		if (activePokemon.hasStatus("frostbite")) {
-			activePokemon.hp -= Math.ceil(activePokemon.maxhp / 32)
+			this.dealDamage({
+				fromTrainer: trainer,
+				from: activePokemon,
+				toTrainer: trainer,
+				to: activePokemon,
+				move: undefined,
+				damage: Math.ceil(activePokemon.maxhp / 32),
+				fixed: true
+			})
 		}
 		if (activePokemon.hasStatus("splinters")) {
 			let splinters = activePokemon.getStatuses("splinters")[0]
@@ -2728,6 +2744,7 @@ class Round {
 		}
 
 		let wasUsable = isPokemonUsable(defender)
+		let hpBeforeDamage = defender.hp
 		let move = options.move
 		let damage = options.damage
 		let power = 0
@@ -2760,21 +2777,32 @@ class Round {
 
 		//Note: this doesn't mean the attack stat specifically.
 		//If the pokemon uses a special move, this represents the special attack stat.
+		let relevantAttackStat = "attack"
+		let relevantDefenseStat = "defense"
 		let atk, def
 		if (category === "Physical") {
-			atk = this.getEffectiveStat("attack", attackerTrainer, attacker)
-			def = this.getEffectiveStat("defense", defenderTrainer, defender)
+			relevantAttackStat = "attack"
+			relevantDefenseStat = "defense"
 		} else if (category === "Special") {
-			atk = this.getEffectiveStat("specialAttack", attackerTrainer, attacker)
-			def = this.getEffectiveStat("specialDefense", defenderTrainer, defender)
+			relevantAttackStat = "specialAttack"
+			relevantDefenseStat = "specialDefense"
 		} else if (category === "Status") {
 			//This should never run
-			atk = this.getEffectiveStat("attack", attackerTrainer, attacker)
-			def = this.getEffectiveStat("defense", defenderTrainer, defender)
+			relevantAttackStat = "attack"
+			relevantDefenseStat = "defense"
 		} else {
-			atk = this.getEffectiveStat("attack", attackerTrainer, attacker)
-			def = this.getEffectiveStat("defense", defenderTrainer, defender)
 			console.warn("UNKNOWN CATEGORY", category)
+		}
+		atk = this.getEffectiveStat(relevantAttackStat, attackerTrainer, attacker)
+		def = this.getEffectiveStat(relevantDefenseStat, defenderTrainer, defender)
+
+		//Unaware attackers ignore changes made to the defenders's defense
+		if (options.directDamage && attacker !== defender && attacker.hasAbility("Unaware")){
+			def = defender.getStat(relevantDefenseStat)
+		}
+		//Unaware defenders ignore changes made to the attacker's attack
+		if (options.directDamage && attacker !== defender && defender.hasAbility("Unaware")){
+			atk = attacker.getStat(relevantAttackStat)
 		}
 
 		//Thick Fat reduces Fire & Ice atk
@@ -3075,18 +3103,29 @@ class Round {
 				}
 				//Aftermath deals damage to the attacker
 				if (madeContact && attacker !== defender && wasUsable && !stillUsable && defender.hasAbility("Aftermath")) {
-					if (defender !== attacker) {
-						let revengeDamage = Math.ceil(attacker.maxhp * 0.25)
-						this.dealDamage({
-							from: defender,
-							fromTrainer: defenderTrainer,
-							move: undefined,
-							to: attacker,
-							toTrainer: attackerTrainer,
-							damage: revengeDamage,
-							fixed: true
-						})
-					}
+					let revengeDamage = Math.ceil(attacker.maxhp * 0.25)
+					this.dealDamage({
+						from: defender,
+						fromTrainer: defenderTrainer,
+						move: undefined,
+						to: attacker,
+						toTrainer: attackerTrainer,
+						damage: revengeDamage,
+						fixed: true
+					})
+				}
+				//Innards Out deals damage to the attacker based on how much HP it had before fainting
+				if (attacker !== defender && wasUsable && !stillUsable && defender.hasAbility("Innards Out")) {
+					let revengeDamage = hpBeforeDamage
+					this.dealDamage({
+						from: defender,
+						fromTrainer: defenderTrainer,
+						move: undefined,
+						to: attacker,
+						toTrainer: attackerTrainer,
+						damage: revengeDamage,
+						fixed: true
+					})
 				}
 				//Sap Sipper gives you an attack boost
 				if (damageType === "Grass" && defender.hasAbility("Sap Sipper")){

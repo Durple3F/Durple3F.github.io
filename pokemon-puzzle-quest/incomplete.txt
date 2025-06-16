@@ -135,6 +135,7 @@ Incomplete move lists:
 	Comfey (lv 21)
 	Passimian (lv 20)
 	Togedemaru (lv 25)
+	Pyukumuku (lv 20)
 	Type: Null (lv 20)
 	Komala (lv 31)
 

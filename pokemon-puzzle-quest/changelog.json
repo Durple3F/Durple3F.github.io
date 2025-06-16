@@ -4,7 +4,9 @@
 			"date": "June 16, 2025",
 			"line-count": 50400,
 			"changes": [
-				"- Added Finneon",
+				"- Added Finneon, Pyukumuku",
+				"- Added Unaware, Innards Out",
+				"- Adding 5-6",
 				"- You can now change the number of pokemon per page of the pokedex.",
 				"- You can now view how many of each pokemon you've seen/caught in the pokedex.",
 				"- Moved all of the pokemon names up to 4-1 to another file for organization."

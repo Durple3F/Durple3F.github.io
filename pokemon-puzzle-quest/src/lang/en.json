@@ -2517,6 +2517,10 @@
 			"name": "Togedemaru",
 			"pokedex-entry": "When it gets scared, the spikes on its back extend and it rolls into a ball. Anyone who touches it while it's curled up gets a nasty shock."
 		},
+		"Pyukumuku": {
+			"name": "Pyukumuku",
+			"pokedex-entry": "Fun Fact: Its name is a portmanteau of ‘puke’ and ‘mucus’ because it attacks by spitting out its internal organs and smacking its opponents with them. They have a reputation for being very temperamental, possibly because fending off attackers by expelling one’s own stomach is uncomfortable."
+		},
 		"Type: Null": {
 			"name": "Type: Null",
 			"pokedex-entry": "This Pokémon was stitched together from the bodies of other Pokémon to create a weapon against something nobody fully understands. The helmet on its head keeps its power in check for its controller’s safety."
@@ -3814,7 +3818,7 @@
 		},
 		"Aftermath": {
 			"name": "Aftermath",
-			"shortDescription": "On fainting from a move that makes contact, damage the attacker for 1/4 their max HP",
+			"shortDescription": "On fainting from a move that makes contact, damages the attacker for 1/4 their max HP",
 			"longDescription": "When this Pokémon faints from damage caused by a move that makes contact, it deals damage to the attacker equal to 1/4 the attacker's HP."
 		},
 		"Analytic": {
@@ -4031,6 +4035,11 @@
 			"name": "Infiltrator",
 			"shortDescription": "This Pokémon can deal damage through Invulnerable",
 			"longDescription": "Damage from this Pokémon is able to pass through the Invulnerable status effect."
+		},
+		"Innards Out": {
+			"name": "Innards Out",
+			"shortDescription": "On fainting, deals damage to the attacker equal to the HP it had.",
+			"longDescription": "When this Pokémon faints, it deals damage to the attacker equal to the HP it had before fainting."
 		},
 		"Inner Focus": {
 			"name": "Inner Focus",
@@ -4436,6 +4445,11 @@
 			"name": "Triage",
 			"shortDescription": "Healing moves cost 30% less",
 			"longDescription": "Healing moves this Pokémon uses have their energy costs reduced by 30%."
+		},
+		"Unaware": {
+			"name": "Unaware",
+			"shortDescription": "Ignores the opponent's stats while dealing or receiving damage from them.",
+			"longDescription": "Whenever damage is dealt by a move from another Pokémon, any changes made to the opponent's stats are ignored."
 		},
 		"Unburden": {
 			"name": "Unburden",

@@ -185,9 +185,9 @@ const pokemonAbilityData = {
 	"Infiltrator": {
 		id: "Infiltrator"
 	},
-	//Lower opponent attack on swap in
-	"Intimidate": {
-		id: "Intimidate"
+	//Deals damage equal to the HP it had before fainting when it faints
+	"Innards Out": {
+		id: "Innards Out"
 	},
 	//Can't have its initiative lowered
 	"Inner Focus": {
@@ -196,6 +196,10 @@ const pokemonAbilityData = {
 	//Literally just Vital Spirit again
 	"Insomnia": {
 		id: "Insomnia"
+	},
+	//Lower opponent attack on swap in
+	"Intimidate": {
+		id: "Intimidate"
 	},
 	//Deals damage to the attacker when they make contact with you
 	"Iron Barbs": {
@@ -516,6 +520,10 @@ const pokemonAbilityData = {
 	//Healing moves cost less
 	"Triage": {
 		id: "Triage"
+	},
+	//During damage calculation, ignore any changes to the opponent's offensive/defensive stats.
+	"Unaware": {
+		id: "Unaware"
 	},
 	//Speed boost on paying exactly as much as you had of a color
 	"Unburden": {
