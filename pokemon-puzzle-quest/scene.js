@@ -325,7 +325,6 @@ function startScene(name, options={}) {
 						let imgHeight = routeHeight - yOffset * 2
 						let imgWidth = routeWidth - xOffset * 2
 						if (level.position){
-							console.log(routeRatio, backgroundRatio)
 							btn.addClass("absolute")
 							btn.css("left", xOffset + imgWidth * level.position.left)
 							btn.css("top", yOffset + imgHeight * level.position.top)
@@ -960,7 +959,7 @@ function startScene(name, options={}) {
 			const openSettings = () => {
 				let modal = $("#modal")
 				clearModal(modal)
-				modal.addClass("show")
+				modal.addClass("fade")
 				let changedSomething = true
 				let body = modal.find(".modal-body")
 
@@ -974,10 +973,11 @@ function startScene(name, options={}) {
 				modal.find(".modal-title").html(`<h6 class='display-6 text-center'>Options</h6>`)
 				let form = $(`<div class='mx-auto'>`)
 				body.append(form)
+				let pageSizeSection = $(`<div class='d-flex justify-content-between align-items-center'>`)
+				form.append(pageSizeSection)
+				pageSizeSection.append(`<label>Items per page:</label>`)
 				let pageSizeInput = $(`<input class='form-control w-50' type='number'>`)
 				pageSizeInput.val(pageSize)
-				let pageSizeSection = $(`<div class='d-flex justify-content-between align-items-center'>`)
-				pageSizeSection.append(`<label>Items per page:</label>`)
 				pageSizeSection.append(pageSizeInput)
 				pageSizeInput.on("input", () => {
 					let newVal = Number(pageSizeInput.val()) || 25
@@ -987,7 +987,34 @@ function startScene(name, options={}) {
 						makeChange()
 					}
 				})
-				form.append(pageSizeSection)
+
+				let obtainableSection = $(`<div class='d-flex justify-content-between align-items-center'>`)
+				form.append(obtainableSection)
+				let obtainableInput = $(`<select class='form-select mx-1 w-50'></select>`)
+				obtainableInput.append(`<option value="" selected>`)
+				obtainableInput.append(`<option value="obtainable">Obtainable</option>`)
+				obtainableInput.append(`<option value="unobtainable">Unobtainable</option>`)
+				if (filters.obtainable === true){
+					obtainableInput.val("obtainable")
+				} else if (filters.obtainable === false){
+					obtainableInput.val("unobtainable")
+				}
+				obtainableSection.append(`<label>Obtainable:</label>`)
+				obtainableSection.append(obtainableInput)
+				obtainableInput.change(() => {
+					let oldVal = filters.obtainable
+					let val = obtainableInput.val()
+					if (val === "obtainable"){
+						filters.obtainable = true
+					} else if (val === "unobtainable"){
+						filters.obtainable = false
+					} else {
+						delete filters.obtainable
+					}
+					if (oldVal !== filters.obtainable){
+						makeChange()
+					}
+				})
 
 				modal.modal("show")
 				modal.on("hidden.bs.modal", () => {
@@ -1129,6 +1156,14 @@ function startScene(name, options={}) {
 							fitsFilters = false
 						}
 					}
+
+					if ("obtainable" in filters){
+						let obtainMethods = findPokemonLocations(pData)
+						if (!!obtainMethods.length !== filters.obtainable){
+							fitsFilters = false
+						}
+					}
+
 					if (!fitsFilters) continue
 
 					if (!pages[pageI]){
@@ -2131,10 +2166,11 @@ function viewPokemonInfo(pokemon, options = {}) {
 		let locationsTag = $("<div class='d-flex justify-content-center'>")
 		info.append(locationsTag)
 
-		let shouldAdd = false
-		for (let level of levelData) {
-			if (level.obtainablePokemon.includes(pokemon.data.id)) {
-				shouldAdd = true
+		let obtainMethods = findPokemonLocations(pokemon.data)
+
+		for (let obtainMethod of obtainMethods){
+			if (obtainMethod.type === "level"){
+				let level = obtainMethod.level
 				let name = getLocaleString("name", lang, ["levels", level.id])
 				let button = $("<div class='btn btn-primary m-2'>")
 				button.html(name)
@@ -2146,7 +2182,7 @@ function viewPokemonInfo(pokemon, options = {}) {
 			}
 		}
 
-		if (shouldAdd){
+		if (obtainMethods.length){
 			tabs.append(findingTab)
 			sections.append(info)
 			info.hide()
@@ -2415,6 +2451,29 @@ function viewPokemonInfo(pokemon, options = {}) {
 		$("#modal").find(".modal-content")[0].scrollTop = 0 
 	})
 	return promise
+}
+function findPokemonLocations(pokemonData){
+	let results = []
+	if (pokemonData.tags.includes("Starter")){
+		results.push({
+			type: "starter"
+		})
+	}
+	for (let preFormId of pokemonData.preEvolutions){
+		results.push({
+			type: "evolve",
+			pokemonId: preFormId
+		})
+	}
+	for (let level of levelData) {
+		if (level.obtainablePokemon.includes(pokemonData.id)) {
+			results.push({
+				type: "level",
+				level: level
+			})
+		}
+	}
+	return results
 }
 
 function viewBoxInfo(box) {

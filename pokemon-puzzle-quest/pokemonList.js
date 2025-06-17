@@ -8224,9 +8224,9 @@ const pokemonData = {
 			orange: 4,
 			green: 3
 		},
-		evolutions: [
-			{ name: "Lurantis", unlock: { type: "level", amount: 34 } }
-		],
+		// evolutions: [
+		// 	{ name: "Lurantis", unlock: { type: "level", amount: 34 } }
+		// ],
 		learnset: [
 			{ name: "Leafage", unlock: { type: "level", amount: 1 } },
 			{ name: "Fury Cutter", unlock: { type: "level", amount: 1 } },
@@ -8827,6 +8827,9 @@ for (let name in pokemonData) {
 	if (!pokemon.evolutions) {
 		pokemon.evolutions = []
 	}
+	if (!pokemon.preEvolutions) {
+		pokemon.preEvolutions = []
+	}
 	if (!pokemon.energyMastery) {
 		console.warn(pokemon, "is missing energy affinity!")
 		pokemon.energyMastery = {}
@@ -8868,5 +8871,19 @@ for (let name in pokemonData) {
 	let same = Object.values(pokemonData).filter(p => p.number === pokemon.number)
 	if (same.length !== 1){
 		console.warn("These pokemon share a number", same, pokemon)
+	}
+}
+for (let name in pokemonData){
+	let pData = pokemonData[name]
+	for (let eData of pData.evolutions){
+		let toPId = eData.name
+		let toPData = pokemonData[toPId]
+		if (!toPData){
+			console.error(pData,"has an evolution that doesn't exist")
+		}
+		let preEvolutions = toPData.preEvolutions
+		if (!(preEvolutions.includes(name))){
+			preEvolutions.push(name)
+		}
 	}
 }
