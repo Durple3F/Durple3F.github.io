@@ -2631,6 +2631,62 @@ const pokemonData = {
 			{ name: "Flail", unlock: { type: "level", amount: 30 } },
 		]
 	},
+	"Staryu": {
+		name: "Staryu",
+		number: "120",
+		weight: {
+			pounds: 76.1,
+			kilograms: 34.5
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0120Staryu.png",
+			"largeShiny": "src/img/shiny-pokemon/120-Staryu.png",
+			"home": "src/img/tiny-pokemon/Staryu.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/staryu.mp3"
+		},
+		types: ["Water"],
+		tags: [],
+		abilities: ["Illuminate", "Natural Cure"],
+		hiddenAbilities: ["Analytic"],
+		stats: {
+			hp: 30,
+			attack: 45,
+			defense: 55,
+			specialAttack: 70,
+			specialDefense: 55,
+			speed: 85
+		},
+		expYield: 68,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 1
+		},
+		energyMastery: {
+			red: 1,
+			blue: 3,
+			purple: 2
+		},
+		learnset: [
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Harden", unlock: { type: "level", amount: 1 } },
+			{ name: "Water Gun", unlock: { type: "level", amount: 4 } },
+			{ name: "Confuse Ray", unlock: { type: "level", amount: 8 } },
+			{ name: "Rapid Spin", unlock: { type: "level", amount: 12 } },
+			{ name: "Minimize", unlock: { type: "level", amount: 16 } },
+			{ name: "Swift", unlock: { type: "level", amount: 20 } },
+			{ name: "Psybeam", unlock: { type: "level", amount: 24 } },
+			{ name: "Brine", unlock: { type: "level", amount: 28 } },
+			{ name: "Light Screen", unlock: { type: "level", amount: 32 } },
+			{ name: "Power Gem", unlock: { type: "level", amount: 36 } },
+		]
+	},
 	"Tauros": {
 		name: "Tauros",
 		number: "128",

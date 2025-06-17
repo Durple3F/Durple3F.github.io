@@ -40,6 +40,7 @@ Incomplete move lists:
 	Chansey (lv 20)
 	Goldeen (lv 30)
 	Seaking (lv 30)
+	Staryu (lv 36)
 	Tauros (lv 20)
 	Ledyba (lv 22)
 	Ledian (lv 33)
@@ -152,6 +153,7 @@ Missing Evolutions:
 	Haunter
 	Hitmonlee
 	Chansey
+	Staryu
 	Magikarp
 	Eevee
 	Houndour

@@ -1,5 +1,12 @@
 {
 	"versions": {
+		"20250617": {
+			"date": "June 17, 2025",
+			"line-count": 50700,
+			"changes": [
+				"- Added Staryu"
+			]
+		},
 		"20250616": {
 			"date": "June 16, 2025",
 			"line-count": 50600,

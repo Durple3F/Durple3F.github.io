@@ -2077,9 +2077,13 @@
 			"name": "Seaking",
 			"pokedex-entry": "Seaking trainers build ponds for them to swim around in, but wild Seaking make their homes in rivers, and swim upstream very quickly. It’s not unheard of for people on a boat to hear a loud bump and suddenly have a Seaking horn-shaped hole in it."
 		},
+		"Staryu": {
+			"name": "Staryu",
+			"pokedex-entry": "At night, the red organ at the center of its body pulses in rhythm close to a human’s heartbeat. While its trainer is asleep, the rhythm somehow matches its trainer’s heart perfectly."
+		},
 		"Tauros": {
 			"name": "Tauros",
-			"pokedex-entry": "Pokémon ranch owners will tell you that Tauros is a “perfectly kind and polite” Pokémon once it's well trained. They’ll say that other trainers just “don’t understand” how to take proper care of a Tauros. Maybe they’re right. I still don’t believe them."
+			"pokedex-entry": "Pokémon ranch owners will tell you that Tauros is a “perfectly kind and polite” Pokémon once it’s well trained. They’ll say that other trainers just “don’t understand” how to take proper care of a Tauros. Maybe they’re right. I still don’t believe them."
 		},
 		"Magikarp": {
 			"name": "Magikarp",
@@ -4857,6 +4861,10 @@
 		"Route 5-5": {
 			"name": "Route 5-5",
 			"description": "The path leads through Royal Avenue, a long street overlooked by a towering dome with neon lights shining above its entrance."
+		},
+		"Route 5-6": {
+			"name": "Route 5-6",
+			"description": "Forging ahead, at the base of Akala's massive volcano, the rocky path curves through a body of water heated by the magma underground."
 		}
 	},
 	"route-categories": {
