@@ -55,6 +55,7 @@ Incomplete move lists:
 	Misdreavus (lv 28)
 	Houndour (lv 32)
 	Smoochum (lv 20)
+	Magby (lv 0)
 	Miltank (lv 20)
 	Wingull (lv 26)
 	Pelipper (lv 0)
@@ -158,6 +159,7 @@ Missing Evolutions:
 	Eevee
 	Houndour
 	Smoochum
+	Magby
 	Bagon
 	Cherrim
 	Bonsly

@@ -3746,6 +3746,58 @@ const pokemonData = {
 			{ name: "Sing", unlock: { type: "level", amount: 20 } },
 		]
 	},
+	"Magby": {
+		name: "Magby",
+		number: "240",
+		weight: {
+			pounds: 47.2,
+			kilograms: 21.4
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0240Magby.png",
+			"largeShiny": "src/img/shiny-pokemon/240-Magby.png",
+			"home": "src/img/tiny-pokemon/Magby.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/magby.mp3"
+		},
+		types: ["Fire"],
+		tags: [],
+		abilities: ["Flame Body"],
+		hiddenAbilities: ["Vital Spirit"],
+		stats: {
+			hp: 45,
+			attack: 75,
+			defense: 37,
+			specialAttack: 70,
+			specialDefense: 55,
+			speed: 83
+		},
+		expYield: 73,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 1
+		},
+		energyMastery: {
+			red: 3,
+			orange: 1
+		},
+		learnset: [
+			{ name: "Smog", unlock: { type: "level", amount: 1 } },
+			{ name: "Leer", unlock: { type: "level", amount: 1 } },
+			{ name: "Ember", unlock: { type: "level", amount: 4 } },
+			// { name: "Smokescreen", unlock: { type: "level", amount: 8 } },
+			// { name: "Clear Smog", unlock: { type: "level", amount: 12 } },
+			{ name: "Flame Wheel", unlock: { type: "level", amount: 16 } },
+			{ name: "Confuse Ray", unlock: { type: "level", amount: 20 } },
+			{ name: "Scary Face", unlock: { type: "level", amount: 24 } },
+		]
+	},
 	"Miltank": {
 		name: "Miltank",
 		number: "241",

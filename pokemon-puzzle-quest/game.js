@@ -3029,12 +3029,18 @@ class Round {
 				}
 				//Poison Point poisons the attacker sometimes
 				if (madeContact && attacker !== defender && defender.hasAbility("Poison Point")) {
-					if (
-						attacker !== defender &&
-						Math.random() < 0.3
-					) {
+					if (Math.random() < 0.3) {
 						attacker.addStatusEffect("poisoned", attackerTrainer, attacker, undefined)
 					}
+				}
+				//Flame Body burns the attacker sometimes
+				if (madeContact && attacker !== defender && defender.hasAbility("Flame Body")) {
+					let contents = this.board.tilesOnScreen()
+					let randomTile = randomChoice(contents)
+					this.addStatusToTiles(randomTile,
+						{ name: "Burn", type: "debuff", duration: 5 },
+						defenderTrainer, defender, undefined
+					)
 				}
 				//Iron Barbs deals damage to the attacker
 				if (madeContact && attacker !== defender && defender.hasAbility("Iron Barbs")) {
@@ -3145,10 +3151,10 @@ class Round {
 					let tilesWithout = this.board.tilesOnScreen().filter(tile => !tile.hasStatus(statusName))
 					if (tilesWithout.length){
 						let randomTile = randomChoice(tilesWithout)
-						let color = defenderTrainer === this.trainers[0] ? "friendly" : "enemy"
-						randomTile.addStatusEffect(
-							{ name: "Stun Spore", type: "debuff", duration: 5 },
-							defenderTrainer, defender, undefined, color
+						this.addStatusToTiles(
+							randomTile,
+							{ name: statusName, type: "debuff", duration: 5 },
+							defenderTrainer, defender, undefined
 						)
 					}
 				}
@@ -4994,6 +5000,29 @@ class Round {
 			}
 		}
 		return Promise.resolve()
+	}
+	addStatusToTiles(tiles, status, trainer, pokemon, move){
+		if (tiles instanceof Tile){
+			tiles = [tiles]
+		}
+		let color = trainer === this.trainers[0] ? "friendly" : "enemy"
+		let otherTrainer = this.trainers.find(t => t !== trainer)
+		let otherPokemon = otherTrainer.activePokemon
+
+		let prevented = false
+		//Pokemon with Water Bubble or Water Veil can't be burned
+		if (
+			status.name === "Burn" &&
+			(otherPokemon.hasAbility("Water Bubble") || otherPokemon.hasAbility("Water Veil"))
+		){
+			prevented = true
+		}
+
+		tiles.forEach(tile => {
+			if (!prevented){
+				tile.addStatusEffect(status, trainer, pokemon, move, color)
+			}
+		})
 	}
 
 	animateSwitchLocations(tile1, tile2, options) {

@@ -2161,6 +2161,10 @@
 			"name": "Smoochum",
 			"pokedex-entry": "Smoochum has opinions on fashion and is not shy about them. Trainers say it will tug on sleeves, help fix their trainer’s hair, and sometimes flat-out refuse to let their trainer go outside in an outfit they don’t approve of."
 		},
+		"Magby": {
+			"name": "Magby",
+			"pokedex-entry": "A famous potter lives with a Magby to help fire their works. The works they create are very highly regarded in the art world. Their Magby doesn’t get as much recognition as the artist themself, sadly. Its name is Hinoko."
+		},
 		"Miltank": {
 			"name": "Miltank",
 			"pokedex-entry": "Sometimes in the morning, Pokémon ranch owners will find crop circles have appeared in their fields. Most of the time, it was just a prank orchestrated by Miltank. The rest of the time, it was actually aliens."
@@ -3935,6 +3939,11 @@
 			"shortDescription": "Puts a random spore or powder status effect into play when the opponent makes contact",
 			"longDescription": "Whenever another Pokémon deals damage to this Pokémon through a move that makes contact, this ability chooses a random tile status effect from among Stun Spore, Sleep Powder, and Poison Powder. A random tile without the chosen status effect is given the chosen status effect."
 		},
+		"Flame Body": {
+			"name": "Flame Body",
+			"shortDescription": "Burns a tile for 5 turns when the attacker makes contact",
+			"longDescription": "Whenever another Pokémon deals damage to this Pokémon through a move that makes contact, this ability applies the Burned status effect to a random tile for 5 turns."
+		},
 		"Flare Boost": {
 			"name": "Flare Boost",
 			"shortDescription": "Raises move power while tiles are burned",
@@ -4863,7 +4872,7 @@
 			"description": "The path leads through Royal Avenue, a long street overlooked by a towering dome with neon lights shining above its entrance."
 		},
 		"Route 5-6": {
-			"name": "Route 5-6",
+			"name": "Route 5-6 (Unfinished)",
 			"description": "Forging ahead, at the base of Akala's massive volcano, the rocky path curves through a body of water heated by the magma underground."
 		}
 	},

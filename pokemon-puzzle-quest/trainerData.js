@@ -339,6 +339,13 @@ const NPCTrainerData = {
 			textBoxFont: "\"Caveat Brush\"",
 		}
 	},
+	"Firebreather": {
+		name: "Firebreather",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/firebreather.png"
+		}
+	},
 	"Young-Athlete-F": {
 		name: "Youth Athlete",
 		type: "trainer",

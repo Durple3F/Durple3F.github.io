@@ -1369,22 +1369,10 @@ const pokemonMoveEffects = {
 			let otherTrainer = game.trainers.find(t => t !== trainer)
 			let otherPokemon = otherTrainer.activePokemon
 			chosenTiles.forEach(tile => {
-				let color = moveUseObj.trainer === game.trainers[0] ? "friendly" : "enemy"
-				let trainer = moveUseObj.trainer
-				let pokemon = moveUseObj.pokemon
 				let move = moveUseObj.move
 
-				let prevented = false
-				//Pokemon with Water Bubble or Water Veil can't be burned
-				if (
-					status.name === "Burn" &&
-					(otherPokemon.hasAbility("Water Bubble") || otherPokemon.hasAbility("Water Veil"))
-				){
-					prevented = true
-				}
-
 				if (!prevented){
-					tile.addStatusEffect(status, trainer, pokemon, move, color)
+					game.addStatusToTiles(tile, status, trainer, pokemon, move)
 				}
 			})
 			resolve()

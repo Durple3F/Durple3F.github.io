@@ -188,7 +188,8 @@ function startScene(name, options={}) {
 			let pcBtn = $(`<button class='btn btn-primary' id='pc-button'></button>`)
 			pcBtn.append(`<div class='route-button-text'>My PC</div>`)
 			pcBtn.click(() => {
-				levelButtons.forEach(btn => btn.popover("dispose"))
+				console.log(levelButtons)
+				levelButtons.forEach(btn => btn.off("mouseenter"))
 				changeScene("pc")
 			})
 			listTag.append(pcBtn)

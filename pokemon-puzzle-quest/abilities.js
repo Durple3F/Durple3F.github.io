@@ -98,6 +98,10 @@ const pokemonAbilityData = {
 	"Effect Spore": {
 		id: "Effect Spore"
 	},
+	//Burns the opponent sometimes when they make contact
+	"Flame Body": {
+		id: "Flame Body"
+	},
 	//Power boost while tiles are burned
 	"Flare Boost": {
 		id: "Flare Boost"
