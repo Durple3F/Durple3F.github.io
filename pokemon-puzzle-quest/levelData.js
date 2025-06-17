@@ -188,9 +188,9 @@ const levelData = [
 			{ type: "jump", jumpTo: "Win Check" },
 
 			{ type: "jump-if-lost", jumpTo: "lost", label: "Win Check" },
-			{ type: "dialogue", source: "rival-battle-1-dialogue-won" },
+			{ type: "dialogue", source: "rival-battle-1-dialogue-won", fadeOut: false },
 			{ type: "jump", jumpTo: Infinity },
-			{ type: "dialogue", source: "rival-battle-1-dialogue-lost", label: "lost" },
+			{ type: "dialogue", source: "rival-battle-1-dialogue-lost", label: "lost", fadeOut: false },
 		]
 	},
 	//1-2: Caterpie, Pikipek, Pichu? | Jimmy
@@ -560,7 +560,7 @@ const levelData = [
 			{ type: "dialogue", source: "route-1-5-dialogue-2", label: "Madison" },
 			{ type: "fight", trainer: 3 },
 			{ type: "jump-if-lost", jumpTo: Infinity },
-			{ type: "dialogue", source: "route-1-5-dialogue-2-win" },
+			{ type: "dialogue", source: "route-1-5-dialogue-2-win", fadeOut: false },
 			{ type: "jump", jumpTo: Infinity },
 		]
 	},
@@ -679,7 +679,7 @@ const levelData = [
 			{ type: "dialogue", source: "route-1-7-dialogue-5" },
 			{ type: "fight", trainer: 4 },
 			{ type: "jump-if-lost", jumpTo: Infinity },
-			{ type: "dialogue", source: "route-1-7-dialogue-6" },
+			{ type: "dialogue", source: "route-1-7-dialogue-6", fadeOut: false },
 		]
 	},
 
@@ -813,7 +813,7 @@ const levelData = [
 			{ type: "jump", jumpTo: "Win Check" },
 
 			{ type: "jump-if-lost", jumpTo: Infinity, label: "Win Check" },
-			{ type: "dialogue", source: "route-2-2-dialogue-won" },
+			{ type: "dialogue", source: "route-2-2-dialogue-won", fadeOut: false },
 		]
 	},
 	//2-3: Smeargle, Drowzee, Abra, + others | Krystal
@@ -866,7 +866,7 @@ const levelData = [
 			{ type: "change-music", music: "SM Trainer Battle" },
 			{ type: "fight", trainer: 1 },
 			{ type: "jump-if-lost", jumpTo: Infinity },
-			{ type: "dialogue", source: "route-2-3-dialogue-won" },
+			{ type: "dialogue", source: "route-2-3-dialogue-won", fadeOut: false },
 		]
 	},
 	//2-4: Spearow, Growlithe, Cutiefly, Makuhita + others | Ashley
@@ -920,7 +920,7 @@ const levelData = [
 			{ type: "change-music", music: "SM Trainer Battle" },
 			{ type: "fight", trainer: 1 },
 			{ type: "jump-if-lost", jumpTo: Infinity },
-			{ type: "dialogue", source: "route-2-4-dialogue-won" },
+			{ type: "dialogue", source: "route-2-4-dialogue-won", fadeOut: false },
 		]
 	},
 	//2-5: Zubat, Gastly, Misdreavus, Drifloon, Murkrow
@@ -961,7 +961,7 @@ const levelData = [
 		effects: [
 			{ type: "fight", trainer: 0 },
 			{ type: "jump-if-lost", jumpTo: Infinity },
-			{ type: "dialogue", source: "route-2-5-dialogue" },
+			{ type: "dialogue", source: "route-2-5-dialogue", fadeOut: false },
 		]
 	},
 	//2-6: Battle with Team Skull Grunts + Ikue
@@ -1011,7 +1011,7 @@ const levelData = [
 			{ type: "change-music", music: "SM Trainer Battle" },
 			{ type: "fight", trainer: 1 },
 			{ type: "jump-if-lost", jumpTo: Infinity },
-			{ type: "dialogue", source: "route-2-6-dialogue-won" },
+			{ type: "dialogue", source: "route-2-6-dialogue-won", fadeOut: false },
 		]
 	},
 	//2-7: Trial 1
@@ -1115,7 +1115,7 @@ const levelData = [
 			{ type: "jump", jumpTo: "win-check" },
 
 			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
-			{ type: "dialogue", source: "route-2-7-dialogue-won-1" },
+			{ type: "dialogue", source: "route-2-7-dialogue-won-1", fadeOut: false },
 			{ type: "unlock-z-move-type", unlockedType: "Normal" },
 		]
 	},
@@ -1523,7 +1523,7 @@ const levelData = [
 			{ type: "dialogue", source: "route-3-5-dialogue" },
 			{ type: "fight", trainer: 0 },
 			{ type: "jump-if-lost", jumpTo: Infinity },
-			{ type: "dialogue", source: "route-3-5-dialogue-won" },
+			{ type: "dialogue", source: "route-3-5-dialogue-won", fadeOut: false },
 			{ type: "unlock-z-move-type", unlockedType: "Fighting" },
 		]
 	},
@@ -1763,7 +1763,7 @@ const levelData = [
 			{ type: "fight", trainer: 2, label: "hardMode" },
 			{ type: "jump", jumpTo: "win-check" },
 			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
-			{ type: "dialogue", source: "route-3-7-dialogue-won" },
+			{ type: "dialogue", source: "route-3-7-dialogue-won", fadeOut: false },
 			{ type: "unlock-z-move-type", unlockedType: "Flying" },
 		]
 	},
@@ -1933,7 +1933,7 @@ const levelData = [
 			{ type: "jump-if-lost", jumpTo: Infinity },
 			{ type: "jump", jumpTo: "end" },
 
-			{ type: "dialogue", source: "route-4-1-dialogue-won", label: "end" },
+			{ type: "dialogue", source: "route-4-1-dialogue-won", label: "end", fadeOut: false },
 		]
 	},
 	//4-2: Mudbray, Lillipup + others | Jody
@@ -2056,7 +2056,7 @@ const levelData = [
 			{ type: "fight", trainer: 2, label: "hardMode" },
 			{ type: "jump", jumpTo: "win-check" },
 			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
-			{ type: "dialogue", source: "route-4-2-dialogue-won" },
+			{ type: "dialogue", source: "route-4-2-dialogue-won", fadeOut: false },
 		]
 	},
 	//4-3: Igglybuff, Eevee | Scotty
@@ -2181,7 +2181,7 @@ const levelData = [
 			{ type: "fight", trainer: 2, label: "hardMode" },
 			{ type: "jump", jumpTo: "win-check" },
 			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
-			{ type: "dialogue", source: "route-4-3-dialogue-won" },
+			{ type: "dialogue", source: "route-4-3-dialogue-won", fadeOut: false },
 		]
 	},
 	//4-4: Rival Battle 4
@@ -2374,7 +2374,7 @@ const levelData = [
 			{ type: "jump-if-lost", jumpTo: Infinity },
 			{ type: "jump", jumpTo: "won" },
 			
-			{ type: "dialogue", source: "route-4-4-dialogue-won", label: "won" },
+			{ type: "dialogue", source: "route-4-4-dialogue-won", label: "won", fadeOut: false },
 		]
 	},
 	//4-5: Tauros, Miltank, Mareep | Wesley
@@ -2507,7 +2507,7 @@ const levelData = [
 			{ type: "fight", trainer: 2, label: "hardMode" },
 			{ type: "jump", jumpTo: "win-check" },
 			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
-			{ type: "dialogue", source: "route-4-5-dialogue-won" },
+			{ type: "dialogue", source: "route-4-5-dialogue-won", fadeOut: false },
 		]
 	},
 	//4-6: Fomantis | Yuka
@@ -2648,7 +2648,7 @@ const levelData = [
 			{ type: "fight", trainer: 2, label: "hardMode" },
 			{ type: "jump", jumpTo: "win-check" },
 			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
-			{ type: "dialogue", source: "route-4-6-dialogue-won" },
+			{ type: "dialogue", source: "route-4-6-dialogue-won", fadeOut: false },
 		]
 	},
 	//4-7: Fight with Gladion
@@ -2773,7 +2773,7 @@ const levelData = [
 			{ type: "fight", trainer: 1, label: "hardMode" },
 			{ type: "jump", jumpTo: "win-check" },
 			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
-			{ type: "dialogue", source: "route-4-7-dialogue-won" },
+			{ type: "dialogue", source: "route-4-7-dialogue-won", fadeOut: false },
 		]
 	},
 	
@@ -3297,7 +3297,7 @@ const levelData = [
 			{ type: "jump", jumpTo: "win-check" },
 			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
 			{ type: "change-background-image", name: "route-bg-brooklet-hill-1", duration: 5000, combineFades: true },
-			{ type: "dialogue", source: "route-5-3-dialogue-won" },
+			{ type: "dialogue", source: "route-5-3-dialogue-won", fadeOut: false },
 			{ type: "unlock-z-move-type", unlockedType: "Water" },
 		]
 	},
@@ -3646,7 +3646,8 @@ const levelData = [
 			{ type: "jump-if-truthy", jumpTo: "skip" },
 			{ type: "jump", jumpTo: "enter" },
 
-			{ type: "load-setting", key: "hardMode", label: "enter" },
+			{ type: "change-music", music: "SM Trainer Battle", label: "enter" },
+			{ type: "load-setting", key: "hardMode" },
 			{ type: "change-background-image", name: "battle-royale-dome-interior" },
 			{ type: "load-value", value: true },
 			{ type: "jump-if-equal", jumpTo: "hardMode" },
@@ -3666,9 +3667,10 @@ const levelData = [
 			], lossDialogue: "route-5-5-lose", waningHP: false },
 			{ type: "jump", jumpTo: "win-check" },
 			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
-			{ type: "dialogue", source: "route-5-5-win" },
+			{ type: "dialogue", source: "route-5-5-win", fadeOut: false },
+			{ type: "change-music", music: "Route 201 (Day)" },
 			{ type: "change-background-image", name: "battle-royale-dome-exterior" },
-			{ type: "dialogue", source: "route-5-5-win-2" },
+			{ type: "dialogue", source: "route-5-5-win-2", fadeOut: false },
 			{ type: "jump", jumpTo: Infinity },
 			
 			{ type: "mark-as-lost", label: "skip" },
@@ -3806,18 +3808,18 @@ const levelData = [
 		effects: [
 			{ type: "change-background-image", name: "route-bg-route-6" },
 			{ type: "fight", trainer: 0 },
-			{ type: "jump-if-lost", jumpTo: Infinity },
-			{ type: "dialogue", source: "route-5-4-dialogue" },
-			{ type: "change-music", music: "SM Trainer Battle" },
-			{ type: "load-setting", key: "hardMode" },
-			{ type: "load-value", value: true },
-			{ type: "jump-if-equal", jumpTo: "hardMode" },
-			{ type: "jump", jumpTo: "easyMode" },
-			{ type: "fight", trainer: 1, label: "easyMode" },
-			{ type: "jump", jumpTo: "win-check" },
-			{ type: "fight", trainer: 2, label: "hardMode" },
-			{ type: "jump", jumpTo: "win-check" },
-			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
+			// { type: "jump-if-lost", jumpTo: Infinity },
+			// { type: "dialogue", source: "route-5-6-dialogue" },
+			// { type: "change-music", music: "SM Trainer Battle" },
+			// { type: "load-setting", key: "hardMode" },
+			// { type: "load-value", value: true },
+			// { type: "jump-if-equal", jumpTo: "hardMode" },
+			// { type: "jump", jumpTo: "easyMode" },
+			// { type: "fight", trainer: 1, label: "easyMode" },
+			// { type: "jump", jumpTo: "win-check" },
+			// { type: "fight", trainer: 2, label: "hardMode" },
+			// { type: "jump", jumpTo: "win-check" },
+			// { type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
 		]
 	},
 ]

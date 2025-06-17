@@ -227,8 +227,10 @@ function changeBackgroundImage(name, url, duration=800, combineFades=false){
 		let currentBg = bg1.css("background-image")
 		let p = Promise.resolve()
 		if (currentBg !== "none" && !combineFades){
-			bg1.fadeOut(duration)
-			p = p.then(() => delay(duration))
+			let fadeResolve
+			let fadePromise = new Promise(res => fadeResolve = res)
+			p = p.then(() => fadePromise)
+			bg1.stop().fadeOut(duration, fadeResolve)
 		}
 		p.then(() => {
 			bg1.css("background-image", "none")
@@ -262,9 +264,9 @@ function changeBackgroundImage(name, url, duration=800, combineFades=false){
 		let dataURL = canvas.toDataURL()
 		
 		bg2.css("background-image", `url("${dataURL}")`)
+		bg2.stop()
 		bg2.hide()
-		bg2.fadeIn(duration)
-		delay(duration).then(() => {
+		bg2.fadeIn(duration, () => {
 			bg2.css("background-image", "none")
 			bg1.css("background-image", `url("${dataURL}")`)
 			bg1.show()

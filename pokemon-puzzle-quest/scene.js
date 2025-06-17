@@ -1254,6 +1254,11 @@ function changeScene(name, options) {
 	let gameTag = $("#game")
 	$(".popover").fadeOut().queue(function () { $(this).remove() })
 
+	let dialogueIsVisible = $("#dialogue-container").css("display") !== "none"
+	if (dialogueIsVisible){
+		$("#dialogue-container").fadeOut()
+	}
+
 	if (name !== currentSceneInfo.name) {
 		let toHide = gameTag.css("display") === "none" ? $("#board") : gameTag
 		toHide.fadeOut(() => {
@@ -1529,7 +1534,7 @@ function advanceCurrentLevel() {
 			changeScene("fight")
 
 			let wins = 0
-			let neededWins = effect.neededWins ?? 4
+			let neededWins = effect.neededWins ?? 0
 			let dialogueSources = effect.dialogues || []
 			let contestantTag = effect.contestantTag ?? "contestant"
 			let trainers = level.trainers.filter(tData => {
@@ -1806,7 +1811,7 @@ function choosePokemon(message, pokemon, minChooseable = 1, maxChooseable = 1) {
 					<p>${p.name}</p>
 				</div>
 				<div class='col text-end'>
-					<img class='pokemon-image' src='${image}'>
+					<img class='pokemon-image'>
 				</div>
 			</div>
 			<div class='health-bar'>
@@ -1814,6 +1819,7 @@ function choosePokemon(message, pokemon, minChooseable = 1, maxChooseable = 1) {
 				<span>${p.hp} / ${p.maxhp}</span>
 			</div>
 		`)
+		chooseable.find(".pokemon-image").attr("src", image)
 		let barContainer = chooseable.children(".health-bar")
 		let bar = barContainer.children(".bar")
 		let healthP = p.hp / p.maxhp

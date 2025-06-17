@@ -1748,7 +1748,7 @@
 			"callbacks": {},
 			"effects": [
 				{ "type": "get-speaker", "name": "Announcer", "class": "Reporter", "position": "left", "facing": "right" },
-				{ "type": "text", "speaker": "Announcer", "text": "There’s just one match left, folks! Thirty-two trainers entered the tournament... but only two are left standing!" },
+				{ "type": "text", "speaker": "Announcer", "text": "There’s just one match left, folks! Sixteen trainers entered the tournament... but only two are left standing!" },
 				{ "type": "text", "speaker": "Announcer", "text": "This is it! The final round to determine who shall be crowned as today’s Battle Royale Champion!!" },
 				{ "type": "transform-speaker", "speaker": "Announcer", "transform": "scaleX(-1)", "duration": 300, "waitDuration": 150 },
 				{ "type": "load-player-name" },
@@ -1879,8 +1879,8 @@
 			"effects": [
 				{ "type": "get-speaker", "name": "Announcer", "class": "Reporter", "position": "left", "facing": "right" },
 				{ "type": "get-speaker", "name": "Keahi", "class": "Firebreather", "fadeIn": true },
-				{ "type": "text", "speaker": "Announcer", "text": "The Blazing Beat, Keahi!" },
-				{ "type": "text", "speaker": "Keahi", "text": " Things are about to heat up!" }
+				{ "type": "text", "speaker": "Announcer", "text": "The Blazing Breath, Keahi!" },
+				{ "type": "text", "speaker": "Keahi", "text": "Things are about to heat up!" }
 			]
 		},
 		"route-5-5-keahi-win": {

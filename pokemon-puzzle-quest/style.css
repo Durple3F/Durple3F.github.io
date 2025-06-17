@@ -340,6 +340,7 @@ body {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	background-color: rgb(7, 22, 49);
 }
 .route-list .btn {
   height: calc(var(--large-button-font-size) + 2em); /*12vh;*/
