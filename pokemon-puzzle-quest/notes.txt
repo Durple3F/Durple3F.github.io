@@ -25,9 +25,9 @@ TODO
 - Add some kind of filter/search/pages to the pokedex
   - pages check
   - search check
+  - filters kinda
 - For some reason the loading bar at the beginning gets big long why does it do that why do they always do this to me
 - Add a way to quickly organize/remove boxes
-- Add a button that lets you swap which side the selection window is on
 - Make All pokemon All abilities mode have some funny way to show
 - Make Revenge use status effects
 - Pokemon breeders keep their pokemon in friend balls. Give Elizabeth friend balls too!

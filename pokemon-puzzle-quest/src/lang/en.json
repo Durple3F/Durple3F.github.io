@@ -1874,6 +1874,23 @@
 				{ "type": "text", "speaker": "Announcer", "text": "Not what that means! Sorry, you’re out of bounds!" },
 				{ "type": "fade-out", "speaker": "Johnathan" }
 			]
+		},
+		"route-5-5-keahi-intro": {
+			"effects": [
+				{ "type": "get-speaker", "name": "Announcer", "class": "Reporter", "position": "left", "facing": "right" },
+				{ "type": "get-speaker", "name": "Keahi", "class": "Firebreather", "fadeIn": true },
+				{ "type": "text", "speaker": "Announcer", "text": "The Blazing Beat, Keahi!" },
+				{ "type": "text", "speaker": "Keahi", "text": " Things are about to heat up!" }
+			]
+		},
+		"route-5-5-keahi-win": {
+			"effects": [
+				{ "type": "get-speaker", "name": "Announcer", "class": "Reporter", "position": "left", "facing": "right" },
+				{ "type": "get-speaker", "name": "Keahi", "class": "Firebreather" },
+				{ "type": "text", "speaker": "Keahi", "text": "Woah, you beat me! That’s some real fire in your eyes!" },
+				{ "type": "text", "speaker": "Announcer", "text": "Looks like Keahi burnt up!" },
+				{ "type": "fade-out", "speaker": "Keahi" }
+			]
 		}
 	},
 	"pokemon": {
@@ -4665,7 +4682,10 @@
 		"5-5-elizabeth-roselia": "Briar",
 		"5-5-johnathan-hitmonlee": "Kixx",
 		"5-5-johnathan-passimian": "Goalie",
-		"5-5-johnathan-voltorb": "Pele"
+		"5-5-johnathan-voltorb": "Pele",
+		"5-5-keahi-magby": "Singe",
+		"5-5-keahi-houndour": "Soot",
+		"5-5-keahi-growlithe": "Ember"
 	},
 	"status-effects": {
 		"burn": {

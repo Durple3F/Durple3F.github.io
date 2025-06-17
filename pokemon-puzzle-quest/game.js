@@ -83,6 +83,9 @@ class Round {
 		this.confirmButton.click(() => {
 			this.confirm()
 		})
+		this.selectionWindow.find(".swap").click(() => {
+			this.selectionWindow.toggleClass("left")
+		})
 
 		$("#flee-btn").off("click").on("click", () => this.fleeBattle())
 

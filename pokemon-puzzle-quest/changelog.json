@@ -5,7 +5,9 @@
 			"line-count": 50700,
 			"changes": [
 				"- Added Staryu, Magby",
-				"- Added Flame Body"
+				"- Added Flame Body",
+				"- Added a trainer to 5-5",
+				"- You can now swap which side the tile selection window is on."
 			]
 		},
 		"20250616": {
