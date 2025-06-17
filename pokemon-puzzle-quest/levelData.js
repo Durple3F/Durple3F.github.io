@@ -3472,143 +3472,143 @@ const levelData = [
 			}
 		},
 		trainers: [
-			// { // Beauty Hana
-			// 	name: "Hana",
-			// 	class: "Beauty-Gen6",
-			// 	tags: ["contestant"],
-			// 	introDialogue: "route-5-5-hana-intro",
-			// 	winDialogue: "route-5-5-hana-win",
-			// 	pokemon: [
-			// 		{
-			// 			id: "Furfrou",
-			// 			form: "Diamond",
-			// 			pokeball: "luxury ball",
-			// 			name: "5-5-hana-furfrou",
-			// 			level: 17
-			// 		},
-			// 		{
-			// 			id: "Minccino",
-			// 			pokeball: "luxury ball",
-			// 			name: "5-5-hana-minccino",
-			// 			level: 17
-			// 		},
-			// 		{
-			// 			id: "Oricorio",
-			// 			form: "Pom-Pom",
-			// 			pokeball: "luxury ball",
-			// 			name: "5-5-hana-oricorio",
-			// 			level: 17
-			// 		},
-			// 	]
-			// },
-			// { // Engineer Mr Fix
-			// 	name: "Mr. Fix",
-			// 	class: "Engineer-Gen3",
-			// 	tags: ["contestant"],
-			// 	introDialogue: "route-5-5-mr-fix-intro",
-			// 	winDialogue: "route-5-5-mr-fix-win",
-			// 	pokemon: [
-			// 		{
-			// 			id: "Magnemite",
-			// 			pokeball: "great ball",
-			// 			name: "5-5-mr-fix-magnemite",
-			// 			level: 17
-			// 		},
-			// 		{
-			// 			id: "Togedemaru",
-			// 			pokeball: "great ball",
-			// 			name: "5-5-mr-fix-togedemaru",
-			// 			level: 17
-			// 		},
-			// 		{
-			// 			id: "Klink",
-			// 			pokeball: "great ball",
-			// 			name: "5-5-mr-fix-klink",
-			// 			level: 17
-			// 		},
-			// 	]
-			// },
-			// { // Surfer Keola
-			// 	name: "Keola",
-			// 	class: "Surfer",
-			// 	tags: ["contestant"],
-			// 	introDialogue: "route-5-5-keola-intro",
-			// 	winDialogue: "route-5-5-keola-win",
-			// 	pokemon: [
-			// 		{
-			// 			id: "Wingull",
-			// 			pokeball: "dive ball",
-			// 			name: "5-5-keola-wingull",
-			// 			level: 17
-			// 		},
-			// 		{
-			// 			id: "Raichu-Alola",
-			// 			pokeball: "dive ball",
-			// 			name: "5-5-keola-raichu",
-			// 			level: 17
-			// 		},
-			// 		{
-			// 			id: "Poliwhirl",
-			// 			pokeball: "dive ball",
-			// 			name: "5-5-keola-poliwhirl",
-			// 			level: 17
-			// 		},
-			// 	]
-			// },
-			// { // Aroma Lady Elizabeth
-			// 	name: "Elizabeth",
-			// 	class: "Aroma-Lady",
-			// 	tags: ["contestant"],
-			// 	introDialogue: "route-5-5-elizabeth-intro",
-			// 	winDialogue: "route-5-5-elizabeth-win",
-			// 	pokemon: [
-			// 		{
-			// 			id: "Comfey",
-			// 			// pokeball: "friend ball",
-			// 			name: "5-5-elizabeth-comfey",
-			// 			level: 17
-			// 		},
-			// 		{
-			// 			id: "Cherrim",
-			// 			// pokeball: "friend ball",
-			// 			name: "5-5-elizabeth-cherrim",
-			// 			level: 17
-			// 		},
-			// 		{
-			// 			id: "Roselia",
-			// 			// pokeball: "friend ball",
-			// 			name: "5-5-elizabeth-roselia",
-			// 			level: 17
-			// 		},
-			// 	]
-			// },
-			// { // Striker Johnathan
-			// 	name: "Johnathan",
-			// 	class: "Striker",
-			// 	tags: ["contestant"],
-			// 	introDialogue: "route-5-5-johnathan-intro",
-			// 	winDialogue: "route-5-5-johnathan-win",
-			// 	pokemon: [
-			// 		{
-			// 			id: "Hitmonlee",
-			// 			pokeball: "timer ball",
-			// 			name: "5-5-johnathan-hitmonlee",
-			// 			level: 17
-			// 		},
-			// 		{
-			// 			id: "Passimian",
-			// 			pokeball: "timer ball",
-			// 			name: "5-5-johnathan-passimian",
-			// 			level: 17
-			// 		},
-			// 		{
-			// 			id: "Voltorb",
-			// 			pokeball: "timer ball",
-			// 			name: "5-5-johnathan-voltorb",
-			// 			level: 17
-			// 		},
-			// 	]
-			// },
+			{ // Beauty Hana
+				name: "Hana",
+				class: "Beauty-Gen6",
+				tags: ["contestant"],
+				introDialogue: "route-5-5-hana-intro",
+				winDialogue: "route-5-5-hana-win",
+				pokemon: [
+					{
+						id: "Furfrou",
+						form: "Diamond",
+						pokeball: "luxury ball",
+						name: "5-5-hana-furfrou",
+						level: 17
+					},
+					{
+						id: "Minccino",
+						pokeball: "luxury ball",
+						name: "5-5-hana-minccino",
+						level: 17
+					},
+					{
+						id: "Oricorio",
+						form: "Pom-Pom",
+						pokeball: "luxury ball",
+						name: "5-5-hana-oricorio",
+						level: 17
+					},
+				]
+			},
+			{ // Engineer Mr Fix
+				name: "Mr. Fix",
+				class: "Engineer-Gen3",
+				tags: ["contestant"],
+				introDialogue: "route-5-5-mr-fix-intro",
+				winDialogue: "route-5-5-mr-fix-win",
+				pokemon: [
+					{
+						id: "Magnemite",
+						pokeball: "great ball",
+						name: "5-5-mr-fix-magnemite",
+						level: 17
+					},
+					{
+						id: "Togedemaru",
+						pokeball: "great ball",
+						name: "5-5-mr-fix-togedemaru",
+						level: 17
+					},
+					{
+						id: "Klink",
+						pokeball: "great ball",
+						name: "5-5-mr-fix-klink",
+						level: 17
+					},
+				]
+			},
+			{ // Surfer Keola
+				name: "Keola",
+				class: "Surfer",
+				tags: ["contestant"],
+				introDialogue: "route-5-5-keola-intro",
+				winDialogue: "route-5-5-keola-win",
+				pokemon: [
+					{
+						id: "Wingull",
+						pokeball: "dive ball",
+						name: "5-5-keola-wingull",
+						level: 17
+					},
+					{
+						id: "Raichu-Alola",
+						pokeball: "dive ball",
+						name: "5-5-keola-raichu",
+						level: 17
+					},
+					{
+						id: "Poliwhirl",
+						pokeball: "dive ball",
+						name: "5-5-keola-poliwhirl",
+						level: 17
+					},
+				]
+			},
+			{ // Aroma Lady Elizabeth
+				name: "Elizabeth",
+				class: "Aroma-Lady",
+				tags: ["contestant"],
+				introDialogue: "route-5-5-elizabeth-intro",
+				winDialogue: "route-5-5-elizabeth-win",
+				pokemon: [
+					{
+						id: "Comfey",
+						// pokeball: "friend ball",
+						name: "5-5-elizabeth-comfey",
+						level: 17
+					},
+					{
+						id: "Cherrim",
+						// pokeball: "friend ball",
+						name: "5-5-elizabeth-cherrim",
+						level: 17
+					},
+					{
+						id: "Roselia",
+						// pokeball: "friend ball",
+						name: "5-5-elizabeth-roselia",
+						level: 17
+					},
+				]
+			},
+			{ // Striker Johnathan
+				name: "Johnathan",
+				class: "Striker",
+				tags: ["contestant"],
+				introDialogue: "route-5-5-johnathan-intro",
+				winDialogue: "route-5-5-johnathan-win",
+				pokemon: [
+					{
+						id: "Hitmonlee",
+						pokeball: "timer ball",
+						name: "5-5-johnathan-hitmonlee",
+						level: 17
+					},
+					{
+						id: "Passimian",
+						pokeball: "timer ball",
+						name: "5-5-johnathan-passimian",
+						level: 17
+					},
+					{
+						id: "Voltorb",
+						pokeball: "timer ball",
+						name: "5-5-johnathan-voltorb",
+						level: 17
+					},
+				]
+			},
 			{ // Striker Johnathan
 				name: "Keahi",
 				class: "Firebreather",

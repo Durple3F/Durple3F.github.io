@@ -1589,6 +1589,7 @@ function advanceCurrentLevel() {
 				})
 			}
 			const finish = outcome => {
+				currentLevelProgress.info[effectIndex] = outcome
 				resolvePromise(outcome)
 			}
 
