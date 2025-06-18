@@ -228,6 +228,13 @@ const NPCTrainerData = {
 			trainer: "src/img/trainers/engineer-gen3.png"
 		}
 	},
+	"Firebreather": {
+		name: "Firebreather",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/firebreather.png"
+		}
+	},
 	"Fisherman-Gen7": {
 		name: "Fisherman",
 		type: "trainer",
@@ -312,6 +319,13 @@ const NPCTrainerData = {
 			trainer: "src/img/trainers/surfer.png"
 		}
 	},
+	"Swimmer-Gen7": {
+		name: "Swimmer-Gen7",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/swimmer-gen7.png"
+		}
+	},
 	"Teacher-Gen7": {
 		name: "Teacher",
 		type: "trainer",
@@ -337,13 +351,6 @@ const NPCTrainerData = {
 		},
 		textStyle: {
 			textBoxFont: "\"Caveat Brush\"",
-		}
-	},
-	"Firebreather": {
-		name: "Firebreather",
-		type: "trainer",
-		imageSources: {
-			trainer: "src/img/trainers/firebreather.png"
 		}
 	},
 	"Young-Athlete-F": {

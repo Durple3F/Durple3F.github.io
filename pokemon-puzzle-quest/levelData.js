@@ -1800,21 +1800,21 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Slowpoke",
-						name: "Slouch",
+						name: "dexio-slowpoke",
 						level: 15,
 						pokeball: "ultra ball",
 						activeMoves: ["Disable", "Confusion", "Yawn", "Water Gun"],
 					},
 					{
 						id: "Espeon",
-						name: "Epsilon",
+						name: "dexio-espeon",
 						level: 15,
 						pokeball: "ultra ball",
 						activeMoves: ["Confusion", "Psybeam", "Sand Attack", "Quick Attack"],
 					},
 					{
 						id: "Raichu-Alola",
-						name: "Indra",
+						name: "dexio-raichu",
 						level: 15,
 						pokeball: "ultra ball",
 						activeMoves: ["Light Screen", "Agility", "Thunder Shock", "Quick Attack"],
@@ -1826,21 +1826,21 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Smoochum",
-						name: "Mwah",
+						name: "sina-smoochum",
 						level: 15,
 						pokeball: "ultra ball",
 						activeMoves: ["Confusion", "Covet", "Sing", "Powder Snow"],
 					},
 					{
 						id: "Glaceon",
-						name: "Glimmer",
+						name: "sina-glaceon",
 						level: 15,
 						pokeball: "ultra ball",
 						activeMoves: ["Icy Wind", "Covet", "Double-Edge", "Growl"],
 					},
 					{
 						id: "Sandshrew-Alola",
-						name: "Snowball",
+						name: "sina-sandshrew",
 						level: 15,
 						pokeball: "ultra ball",
 						activeMoves: ["Fury Cutter", "Rollout", "Powder Snow", "Mist"],
@@ -1853,7 +1853,7 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Slowpoke",
-						name: "Slouch",
+						name: "dexio-slowpoke",
 						level: 15,
 						pokeball: "ultra ball",
 						activeMoves: ["Disable", "Confusion", "Yawn", "Water Gun"],
@@ -1862,7 +1862,7 @@ const levelData = [
 					},
 					{
 						id: "Espeon",
-						name: "Epsilon",
+						name: "dexio-espeon",
 						level: 15,
 						pokeball: "ultra ball",
 						activeMoves: ["Confusion", "Psybeam", "Sand Attack", "Quick Attack"],
@@ -1871,7 +1871,7 @@ const levelData = [
 					},
 					{
 						id: "Raichu-Alola",
-						name: "Indra",
+						name: "dexio-raichu",
 						level: 15,
 						pokeball: "ultra ball",
 						activeMoves: ["Light Screen", "Agility", "Thunder Shock", "Quick Attack"],
@@ -1885,7 +1885,7 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Smoochum",
-						name: "Mwah",
+						name: "sina-smoochum",
 						level: 15,
 						pokeball: "ultra ball",
 						activeMoves: ["Confusion", "Covet", "Sing", "Powder Snow"],
@@ -1894,7 +1894,7 @@ const levelData = [
 					},
 					{
 						id: "Glaceon",
-						name: "Glimmer",
+						name: "sina-glaceon",
 						level: 15,
 						pokeball: "ultra ball",
 						activeMoves: ["Icy Wind", "Covet", "Double-Edge", "Growl"],
@@ -1903,7 +1903,7 @@ const levelData = [
 					},
 					{
 						id: "Sandshrew-Alola",
-						name: "Snowball",
+						name: "sina-sandshrew",
 						level: 15,
 						pokeball: "ultra ball",
 						activeMoves: ["Fury Cutter", "Rollout", "Powder Snow", "Iron Defense"],
@@ -1983,21 +1983,21 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Drifloon",
-						name: "Porter",
+						name: "4-2-jody-drifloon",
 						level: 14,
 						pokeball: "luxury ball",
 						activeMoves: ["Minimize", "Astonish", "Focus Energy", "Payback"],
 					},
 					{
 						id: "Fomantis",
-						name: "Snippy",
+						name: "4-2-jody-fomantis",
 						level: 14,
 						pokeball: "luxury ball",
 						activeMoves: ["Razor Leaf", "Growth", "Fury Cutter", "Leafage"],
 					},
 					{
 						id: "Lillipup",
-						name: "Baxter",
+						name: "4-2-jody-lillipup",
 						isAce: true,
 						level: 15,
 						pokeball: "premier ball",
@@ -2012,7 +2012,7 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Drifloon",
-						name: "Porter",
+						name: "4-2-jody-drifloon",
 						level: 14,
 						pokeball: "luxury ball",
 						activeMoves: ["Minimize", "Astonish", "Focus Energy", "Payback"],
@@ -2021,7 +2021,7 @@ const levelData = [
 					},
 					{
 						id: "Fomantis",
-						name: "Snippy",
+						name: "4-2-jody-fomantis",
 						level: 14,
 						pokeball: "luxury ball",
 						activeMoves: ["Razor Leaf", "Growth", "Ingrain", "Leafage"],
@@ -2030,7 +2030,7 @@ const levelData = [
 					},
 					{
 						id: "Lillipup",
-						name: "Baxter",
+						name: "4-2-jody-lillipup",
 						isAce: true,
 						level: 15,
 						pokeball: "premier ball",
@@ -2106,14 +2106,14 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Sableye",
-						name: "Ruby",
+						name: "4-3-scotty-sableye",
 						level: 15,
 						pokeball: "pokeball",
 						activeMoves: ["Fake Out", "Astonish", "Shadow Sneak", "Disable"],
 					},
 					{
 						id: "Rattata",
-						name: "Reggie",
+						name: "4-3-scotty-rattata",
 						level: 15,
 						pokeball: "great ball",
 						activeMoves: ["Hyper Fang", "Focus Energy", "Quick Attack", "Bite"],
@@ -2122,7 +2122,7 @@ const levelData = [
 					},
 					{
 						id: "Rattata-Alola",
-						name: "Reggie II",
+						name: "4-3-scotty-rattata-alola",
 						isAce: true,
 						level: 13,
 						pokeball: "pokeball",
@@ -2137,7 +2137,7 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Sableye",
-						name: "Ruby",
+						name: "4-3-scotty-sableye",
 						level: 15,
 						pokeball: "pokeball",
 						activeMoves: ["Fake Out", "Astonish", "Shadow Sneak", "Disable"],
@@ -2146,7 +2146,7 @@ const levelData = [
 					},
 					{
 						id: "Rattata",
-						name: "Reggie",
+						name: "4-3-scotty-rattata",
 						level: 15,
 						pokeball: "great ball",
 						activeMoves: ["Hyper Fang", "Focus Energy", "Quick Attack", "Bite"],
@@ -2155,7 +2155,7 @@ const levelData = [
 					},
 					{
 						id: "Rattata-Alola",
-						name: "Reggie II",
+						name: "4-3-scotty-rattata-alola",
 						isAce: true,
 						level: 15,
 						pokeball: "pokeball",
@@ -2440,7 +2440,7 @@ const levelData = [
 					},
 					{
 						id: "Mareep",
-						name: "The Troublemaker",
+						name: "4-5-wesley-mareep",
 						isAce: true,
 						level: 5,
 						pokeball: "pokeball",
@@ -2480,7 +2480,7 @@ const levelData = [
 					},
 					{
 						id: "Mareep",
-						name: "The Troublemaker",
+						name: "4-5-wesley-mareep",
 						isAce: true,
 						level: 13,
 						pokeball: "pokeball",
@@ -2558,7 +2558,7 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Morelull",
-						name: "Mosscap",
+						name: "4-6-yuka-morelull-2",
 						ability: "Effect Spore",
 						level: 15,
 						pokeball: "dusk ball",
@@ -2566,14 +2566,14 @@ const levelData = [
 					},
 					{
 						id: "Ledyba",
-						name: "Amanita",
+						name: "4-6-yuka-ledyba",
 						level: 16,
 						pokeball: "great ball",
 						activeMoves: ["Mach Punch", "Reflect", "Swift", "Supersonic"],
 					},
 					{
 						id: "Morelull",
-						name: "Truffle",
+						name: "4-6-yuka-morelull-shiny",
 						ability: "Effect Spore",
 						isShiny: true,
 						isAce: true,
@@ -2590,7 +2590,7 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Morelull",
-						name: "Chanterelle",
+						name: "4-6-yuka-morelull-1",
 						ability: "Effect Spore",
 						level: 15,
 						pokeball: "dusk ball",
@@ -2598,7 +2598,7 @@ const levelData = [
 					},
 					{
 						id: "Morelull",
-						name: "Mosscap",
+						name: "4-6-yuka-morelull-2",
 						ability: "Effect Spore",
 						level: 15,
 						pokeball: "dusk ball",
@@ -2606,7 +2606,7 @@ const levelData = [
 					},
 					{
 						id: "Morelull",
-						name: "Puffball",
+						name: "4-6-yuka-morelull-3",
 						ability: "Effect Spore",
 						level: 15,
 						pokeball: "dusk ball",
@@ -2614,14 +2614,14 @@ const levelData = [
 					},
 					{
 						id: "Ledyba",
-						name: "Amanita",
+						name: "4-6-yuka-ledyba",
 						level: 16,
 						pokeball: "great ball",
 						activeMoves: ["Mach Punch", "Reflect", "Swift", "Supersonic"],
 					},
 					{
 						id: "Morelull",
-						name: "Truffle",
+						name: "4-6-yuka-morelull-shiny",
 						ability: "Effect Spore",
 						isShiny: true,
 						isAce: true,
@@ -2699,7 +2699,7 @@ const levelData = [
 					},
 					{
 						id: "Type: Null",
-						name: "Null",
+						name: "gladion-type-null",
 						isAce: true,
 						level: 18,
 						ability: "Battle Armor",
@@ -2748,7 +2748,7 @@ const levelData = [
 					},
 					{
 						id: "Type: Null",
-						name: "Null",
+						name: "gladion-type-null",
 						isAce: true,
 						level: 18,
 						ability: "Battle Armor",
@@ -3676,7 +3676,7 @@ const levelData = [
 			{ type: "mark-as-lost", label: "skip" },
 		]
 	},
-	//5-6: 
+	//5-6: Finneon, Pyukumuku, Wishiwashi, Staryu | Dakota
 	{
 		id: "Route 5-6",
 		category: "Route 5",
@@ -3688,7 +3688,7 @@ const levelData = [
 			top: 0.18
 		},
 		images: {
-			"route-bg-route-6": "src/img/bg/route 6.jpg"
+			"wela-volcano-park-lower-level": "src/img/bg/wela volcano park lower level.jpg"
 		},
 		recommendedLevels: {
 			"normal": (pokemonList) => {
@@ -3716,44 +3716,68 @@ const levelData = [
 					{ id: "Diglett-Alola", levelMin: 14, levelMax: 17, weight: 1 },
 				]
 			},
-			// {
-			// 	name: "Maika",
-			// 	class: "Dancer-Gen7",
-			// 	pokemon: [
-			// 		{
-			// 			id: "Oricorio",
-			// 			form: "Pom-Pom",
-			// 			pokeball: "great ball",
-			// 			name: "5-4-maika-oricorio-2",
-			// 			level: 17,
-			// 			activeMoves: ["Feather Dance", "Agility", "Acrobatics", "Spark"]
-			// 		},
-			// 		{
-			// 			id: "Oricorio",
-			// 			form: "Pa'u",
-			// 			pokeball: "great ball",
-			// 			name: "5-4-maika-oricorio-1",
-			// 			level: 17,
-			// 			activeMoves: ["Quiver Dance", "Rest", "Teeter Dance", "Psybeam"]
-			// 		},
-			// 		{
-			// 			id: "Oricorio",
-			// 			form: "Sensu",
-			// 			pokeball: "great ball",
-			// 			name: "5-4-maika-oricorio-3",
-			// 			level: 17,
-			// 			activeMoves: ["Revelation Dance", "Spite", "Peck", "Mean Look"]
-			// 		},
-			// 		{
-			// 			id: "Oricorio",
-			// 			form: "Baile",
-			// 			pokeball: "great ball",
-			// 			name: "5-4-maika-oricorio-4",
-			// 			level: 17,
-			// 			activeMoves: ["Fiery Dance", "Mystical Fire", "Work Up", "Gust"]
-			// 		},
-			// 	]
-			// },
+			// Easy
+			{
+				name: "Dakota",
+				class: "Swimmer-Gen7",
+				pokemon: [
+					{
+						id: "Surskit",
+						pokeball: "great ball",
+						name: "5-6-dakota-surskit",
+						level: 19
+					},
+					{
+						id: "Dewpider",
+						pokeball: "great ball",
+						name: "5-6-dakota-dewpider",
+						level: 19
+					},
+					{
+						id: "Mareanie",
+						pokeball: "dive ball",
+						name: "5-6-dakota-mareanie",
+						level: 19
+					},
+				]
+			},
+			// Hard
+			{
+				name: "Dakota",
+				class: "Swimmer-Gen7",
+				pokemon: [
+					{
+						id: "Surskit",
+						pokeball: "great ball",
+						name: "5-6-dakota-surskit",
+						level: 19,
+						activeMoves: ["Water Gun", "Agility", "Leech Life", "Quick Attack"],
+						nature: "rash",
+						ivs: { hp: 15, attack: 20, defense: 20, specialAttack: 25, specialDefense: 20, speed: 25 },
+						evs: { hp: 60, attack: 70, defense: 35, specialAttack: 50, specialDefense: 20, speed: 70 },
+					},
+					{
+						id: "Dewpider",
+						pokeball: "great ball",
+						name: "5-6-dakota-dewpider",
+						level: 19,
+						activeMoves: ["Headbutt", "Crunch", "Bug Bite", "Aqua Ring"],
+						nature: "adamant",
+						ivs: { hp: 30, attack: 30, defense: 20, specialAttack: 15, specialDefense: 15, speed: 15 },
+						evs: { hp: 70, attack: 70, defense: 50, specialAttack: 30, specialDefense: 50, speed: 30 },
+					},
+					{
+						id: "Mareanie",
+						pokeball: "dive ball",
+						name: "5-6-dakota-mareanie",
+						level: 19,
+						activeMoves: ["Venoshock", "Recover", "Poison Sting", "Bite"],
+						nature: "jolly",
+						ivs: { hp: 30, attack: 20, defense: 30, specialAttack: 15, specialDefense: 15, speed: 25 },
+						evs: { hp: 100, attack: 30, defense: 80, specialAttack: 30, specialDefense: 60, speed: 30 },
+					},
+				]
+			},
 			// {
 			// 	name: "Maika",
 			// 	class: "Dancer-Gen7",
@@ -3806,20 +3830,20 @@ const levelData = [
 			// },
 		],
 		effects: [
-			{ type: "change-background-image", name: "route-bg-route-6" },
-			{ type: "fight", trainer: 0 },
-			// { type: "jump-if-lost", jumpTo: Infinity },
-			// { type: "dialogue", source: "route-5-6-dialogue" },
-			// { type: "change-music", music: "SM Trainer Battle" },
-			// { type: "load-setting", key: "hardMode" },
-			// { type: "load-value", value: true },
-			// { type: "jump-if-equal", jumpTo: "hardMode" },
-			// { type: "jump", jumpTo: "easyMode" },
-			// { type: "fight", trainer: 1, label: "easyMode" },
-			// { type: "jump", jumpTo: "win-check" },
-			// { type: "fight", trainer: 2, label: "hardMode" },
-			// { type: "jump", jumpTo: "win-check" },
-			// { type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
+			{ type: "change-background-image", name: "wela-volcano-park-lower-level" },
+			// { type: "fight", trainer: 0 },
+			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "dialogue", source: "route-5-6-dialogue" },
+			{ type: "change-music", music: "SM Trainer Battle" },
+			{ type: "load-setting", key: "hardMode" },
+			{ type: "load-value", value: true },
+			{ type: "jump-if-equal", jumpTo: "hardMode" },
+			{ type: "jump", jumpTo: "easyMode" },
+			{ type: "fight", trainer: 1, label: "easyMode" },
+			{ type: "jump", jumpTo: "win-check" },
+			{ type: "fight", trainer: 2, label: "hardMode" },
+			{ type: "jump", jumpTo: "win-check" },
+			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
 		]
 	},
 ]

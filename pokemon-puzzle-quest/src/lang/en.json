@@ -1891,6 +1891,17 @@
 				{ "type": "text", "speaker": "Announcer", "text": "Looks like Keahi burnt up!" },
 				{ "type": "fade-out", "speaker": "Keahi" }
 			]
+		},
+		"route-5-6-dialogue": {
+			"events": [],
+			"callbacks": {},
+			"effects": [
+				{ "type": "get-speaker", "name": "Dakota", "class": "Swimmer-Gen7" },
+				{ "type": "text", "speaker": "Dakota", "text": "‘Sup, dude! Feelin’ the heat out here?" },
+				{ "type": "text", "speaker": "Dakota", "text": "This coast is heated by the volcano, so it’s like a permanent hot tub!" },
+				{ "type": "text", "speaker": "Dakota", "text": "I always come out here to do a few laps as my warm-up for the day. And boy does it warm me up! Ha!" },
+				{ "type": "text", "speaker": "Dakota", "text": "I feel like takin’ a break though! Wanna have a quick battle?" }
+			]
 		}
 	},
 	"pokemon": {
@@ -3325,7 +3336,7 @@
 		},
 		"Poison Gas": {
 			"name": "Poison Gas",
-			"description": "Has a 90% chance to apply Poisoned to the opponent.",
+			"description": "Has a 90% chance to apply Poisoned to the opponent. Whenever a poisoned Pokémon uses a move, it takes damage equal to 1/16 of its max HP.",
 			"shortDescription": "Applies Poisoned"
 		},
 		"Poison Powder": {
@@ -3335,7 +3346,7 @@
 		},
 		"Poison Sting": {
 			"name": "Poison Sting",
-			"description": "Deals damage. Then, has a 30% chance to apply Poisoned to the opponent.",
+			"description": "Deals damage. Then, has a 30% chance to apply Poisoned to the opponent. Whenever a poisoned Pokémon uses a move, it takes damage equal to 1/16 of its max HP.",
 			"shortDescription": "Deals small damage and might poison"
 		},
 		"Pound": {
@@ -3557,7 +3568,7 @@
 		},
 		"Smog": {
 			"name": "Smog",
-			"description": "Deals damage. Then, has a 40% chance to apply Poisoned to the opponent.",
+			"description": "Deals damage. Then, has a 40% chance to apply Poisoned to the opponent. Whenever a poisoned Pokémon uses a move, it takes damage equal to 1/16 of its max HP.",
 			"shortDescription": "Deals some damage and might poison"
 		},
 		"Snore": {
@@ -4243,12 +4254,12 @@
 		"Poison Point": {
 			"name": "Poison Point",
 			"shortDescription": "Poisons the attacker when they make contact 30% of the time",
-			"longDescription": "Whenever another Pokémon deals damage to this Pokémon through a move that makes contact, this ability has a 30% chance to apply Poisoned to the attacker."
+			"longDescription": "Whenever another Pokémon deals damage to this Pokémon through a move that makes contact, this ability has a 30% chance to apply Poisoned to the attacker. Whenever a poisoned Pokémon uses a move, it takes damage equal to 1/16 of its max HP."
 		},
 		"Poison Touch": {
 			"name": "Poison Touch",
 			"shortDescription": "Poisons the defender upon making contact 30% of the time",
-			"longDescription": "Whenever this Pokémon deals damage to another Pokémon through a move that makes contact, this ability has a 30% chance to apply Poisoned to the defender."
+			"longDescription": "Whenever this Pokémon deals damage to another Pokémon through a move that makes contact, this ability has a 30% chance to apply Poisoned to the defender. Whenever a poisoned Pokémon uses a move, it takes damage equal to 1/16 of its max HP."
 		},
 		"Power of Alchemy": {
 			"name": "Power of Alchemy",
@@ -4645,6 +4656,13 @@
 		"hau-pichu": "Kiki",
 		"hau-noibat": "Echo",
 		"hau-eevee": "Scout",
+		"gladion-type-null": "Null",
+		"dexio-slowpoke": "Slouch",
+		"dexio-espeon": "Epsilon",
+		"dexio-raichu": "Indra",
+		"sina-smoochum": "Mwah",
+		"sina-glaceon": "Glimmer",
+		"sina-sandshrew": "Snowball",
 		"ilima-yungoos": "Reginald",
 		"ilima-smeargle": "Inkwell",
 		"ilima-komala": "Nibsby",
@@ -4674,6 +4692,18 @@
 		"3-6-sheri-rockruff": "Roxie",
 		"3-6-sheri-pikachu": "Nyoom",
 		"3-6-sheri-bounsweet": "Fresa",
+		"4-2-jody-drifloon": "Porter",
+		"4-2-jody-fomantis": "Snippy",
+		"4-2-jody-lillipup": "Baxter",
+		"4-3-scotty-sableye": "Ruby",
+		"4-3-scotty-rattata": "Reggie",
+		"4-3-scotty-rattata-alola": "Reggie II",
+		"4-5-wesley-mareep": "The Troublemaker",
+		"4-6-yuka-morelull-1": "Chanterelle",
+		"4-6-yuka-morelull-2": "Mosscap",
+		"4-6-yuka-morelull-3": "Puffball",
+		"4-6-yuka-ledyba": "Amanita",
+		"4-6-yuka-morelull-shiny": "Truffle",
 		"5-1-mikiko-fletchling": "Chitter",
 		"5-1-mikiko-litleo": "Pepper",
 		"5-1-mikiko-espurr": "Mimi",
@@ -4704,7 +4734,10 @@
 		"5-5-johnathan-voltorb": "Pele",
 		"5-5-keahi-magby": "Singe",
 		"5-5-keahi-houndour": "Soot",
-		"5-5-keahi-growlithe": "Ember"
+		"5-5-keahi-growlithe": "Ember",
+		"5-6-dakota-surskit": "Skitter",
+		"5-6-dakota-dewpider": "Bubble",
+		"5-6-dakota-mareanie": "Ursula"
 	},
 	"status-effects": {
 		"burn": {
@@ -4725,7 +4758,7 @@
 		},
 		"poisoned": {
 			"name": "Poisoned",
-			"description": "At the end of this Pokémon's turn, it will take 1/32 of its max HP in damage."
+			"description": "Whenever this Pokémon uses a move, it takes damage equal to 1/16 of its max HP."
 		},
 		"frostbite": {
 			"name": "Frostbite",

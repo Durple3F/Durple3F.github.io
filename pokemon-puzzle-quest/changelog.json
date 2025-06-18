@@ -1,17 +1,27 @@
 {
 	"versions": {
+		"20250618": {
+			"date": "June 18, 2025",
+			"line-count": 51200,
+			"changes": [
+				"- Added a trainer to 5-6",
+				"- Added a background for 5-6.",
+				"- Moved the remaining pokemon names to another file for organization."
+			]
+		},
 		"20250617": {
 			"date": "June 17, 2025",
-			"line-count": 50900,
+			"line-count": 51100,
 			"changes": [
 				"- Added Staryu, Magby, Mareanie",
-				"- Added Venoshock",
-				"- Added Flame Body",
+				"- Added Venoshock, Recover",
+				"- Added Flame Body, Merciless",
 				"- Added a trainer to 5-5",
 				"- You can now swap which side the tile selection window is on.",
 				"- You can now filter the pokedex by pokemon type.",
 				"- You can now change whether that filter ^^ means 'Normal AND Flying' type or 'Normal OR Flying' type.",
-				"- Polished up levels that end with dialogue."
+				"- Polished up levels that end with dialogue.",
+				"- Poison now triggers when you use a move, instead of at the end of the turn. It does more damage to offset this. I like to think that this makes it more of a counter against pokemon that make a lot of moves. Earlier, I wanted it to be a counter to pokemon with high speed stats, but as it ended up feeling more like it was just horrible for everyone."
 			]
 		},
 		"20250616": {

@@ -1672,17 +1672,6 @@ class Round {
 				fixed: true
 			})
 		}
-		if (activePokemon.hasStatus("poisoned")) {
-			this.dealDamage({
-				fromTrainer: trainer,
-				from: activePokemon,
-				toTrainer: trainer,
-				to: activePokemon,
-				move: undefined,
-				damage: Math.ceil(activePokemon.maxhp / 32),
-				fixed: true
-			})
-		}
 		if (activePokemon.hasStatus("frostbite")) {
 			this.dealDamage({
 				fromTrainer: trainer,
@@ -3969,6 +3958,18 @@ class Round {
 				this.advanceCurrentMove(triggerObj)
 				console.log(triggerObj)
 			}
+		}
+
+		if (pokemon.hasStatus("poisoned")) {
+			this.dealDamage({
+				fromTrainer: trainer,
+				from: pokemon,
+				toTrainer: trainer,
+				to: pokemon,
+				move: undefined,
+				damage: Math.ceil(pokemon.maxhp / 16),
+				fixed: true
+			})
 		}
 
 		//Pokemon with No Guard remove Invulnerable when they use a move
