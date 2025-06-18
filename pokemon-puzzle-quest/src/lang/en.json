@@ -2490,6 +2490,10 @@
 			"name": "Wishiwashi",
 			"pokedex-entry": "Aquariums need to store Wishiwashi in separate tanks to stop them schooling together and breaking through the glass. Even separated, they’re infamous for trying to get back together. Wishiwashi will leap out of any tank if they hear another Wishiwashi crying out, even if it means flopping on the floor until someone finds it."
 		},
+		"Mareanie": {
+			"name": "Mareanie",
+			"pokedex-entry": "As one of Corsola’s primary (and only) predators, keeping its population in check has been an ongoing area of interest for Alolan officials. Stemming from earlier failed attempts at population control with other Pokémon, officials have recently begun introducing Bruxish to the waters, tightly controlling their presence to specific areas of the islands."
+		},
 		"Mudbray": {
 			"name": "Mudbray",
 			"pokedex-entry": "Mudbray loves being sprayed with mud and eating dirt. If it's not covered in a thick coat of mud, it gets agitated and stops listening to others. Be nice to Mudbray. Throw some mud at that little guy."
@@ -3409,6 +3413,11 @@
 			"description": "Deals damage. This move's power increases by 3 for every Grass tile on the board.",
 			"shortDescription": "Damage based on Grass tiles"
 		},
+		"Recover": {
+			"name": "Recover",
+			"description": "The user heals HP equal to half their Max HP, rounded up. This move's cooldown increases by 1 with each use.",
+			"shortDescription": "Heals half the user's Max HP"
+		},
 		"Reflect": {
 			"name": "Reflect",
 			"description": "Gives the user the Reflect status for five turns. Physical moves used against a Pokémon with Reflect have their power halved.",
@@ -3751,6 +3760,11 @@
 			"name": "Torment",
 			"description": "Gives the opponent the Tormented status effect until they switch out. A Pokémon can’t use the same move twice in a row.",
 			"shortDescription": "Prevents the opponent repeating moves"
+		},
+		"Venoshock": {
+			"name": "Venoshock",
+			"description": "Deals damage. If the target is poisoned, the damage is doubled.",
+			"shortDescription": "Deals damage based on poison"
 		},
 		"Vine Whip": {
 			"name": "Vine Whip",
@@ -4160,6 +4174,11 @@
 			"name": "Magnet Pull",
 			"shortDescription": "Prevents Steel-type opponents retreating",
 			"longDescription": "The opposing Pokémon can’t retreat as long as it's Steel-type and this Pokémon is active."
+		},
+		"Merciless": {
+			"name": "Merciless",
+			"shortDescription": "Doubles move power against poisoned opponents",
+			"longDescription": "As long as the opponent is poisoned, the power of this Pokémon's moves is doubled."
 		},
 		"Minus": {
 			"name": "Minus",

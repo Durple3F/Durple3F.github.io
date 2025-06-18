@@ -3610,6 +3610,10 @@ class Round {
 		if (move?.tags.includes("has-recoil") && pokemon.hasAbility("Reckless")) {
 			power *= 1.2
 		}
+		//Merciless makes the pokemon have double power against poisoned enemies
+		if (otherPokemon.hasStatus("poisoned") && pokemon.hasAbility("Merciless")){
+			power *= 2
+		}
 		//Guts applies while the pokemon has a non-volatile status
 		if (
 			pokemon.statusEffects.some(statusEffect => !statusEffect.volatile).length &&

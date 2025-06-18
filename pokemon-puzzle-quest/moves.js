@@ -6228,6 +6228,46 @@ const pokemonMoveData = {
 			{ type: "damage", additivePower: -1 }
 		],
 	},
+	//Restore half your HP
+	"Recover": {
+		name: "Recover",
+		type: "Normal",
+		category: "Status",
+		strategy: "special",
+		tags: ["healing"],
+		pp: 5,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 5,
+		energy: {
+			green: 5,
+			blue: 10,
+			purple: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Recover part 1.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-max-hp", target: "user", label: "heal" },
+			{ type: "load-value", value: 0.5 },
+			{ type: "multiply-numbers", round: "up" },
+			{ type: "heal", target: "user", amount: -1 },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "recover-cooldown",
+				type: "cooldown-alteration",
+				stacks: true,
+				volatile: true,
+				appliesTo: {
+					name: "Recover"
+				},
+				modification: {
+					change: 1,
+					operation: "add"
+				}
+			} },
+		],
+	},
 	//Half damage from physical moves for 5 turns
 	"Reflect": {
 		name: "Reflect",
@@ -6301,7 +6341,7 @@ const pokemonMoveData = {
 		pp: 5,
 		power: null,
 		accuracy: null,
-		rechargeTurns: 10,
+		rechargeTurns: 5,
 		energy: {
 			green: 12,
 			purple: 12
@@ -8553,6 +8593,34 @@ const pokemonMoveData = {
 		effects: [
 			{ type: "play-sound", name: "attack" },
 			{ type: "apply-status-effect", statusEffect: "tormented", target: "opponent" }
+		],
+	},
+	//Deals double damage if the target is already poisoned
+	"Venoshock": {
+		name: "Venoshock",
+		type: "Poison",
+		category: "Special",
+		strategy: "basic-damage",
+		tags: ["damage-dealing"],
+		pp: 10,
+		power: 65,
+		accuracy: 100,
+		rechargeTurns: 2,
+		energy: {
+			purple: 6,
+			yellow: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Venoshock.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-status-stacks", statusName: "poisoned" },
+			{ type: "load-value", value: 1 },
+			{ type: "jump-if-less-than", jumpTo: "small-damage" },
+			{ type: "damage", damageMult: 2 },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "damage", label: "small-damage" },
 		],
 	},
 	//Basic damage

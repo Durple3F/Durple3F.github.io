@@ -970,11 +970,13 @@ function startScene(name, options={}) {
 					displayPage(pageNum)
 				}
 
+				let baseSectionHTML = `<div class='d-flex justify-content-between align-items-center flex-wrap'>`
+
 				modal.find(".modal-header").addClass("justify-content-center")
 				modal.find(".modal-title").html(`<h6 class='display-6 text-center'>Options</h6>`)
 				let form = $(`<div class='mx-auto'>`)
 				body.append(form)
-				let pageSizeSection = $(`<div class='d-flex justify-content-between align-items-center'>`)
+				let pageSizeSection = $(baseSectionHTML)
 				form.append(pageSizeSection)
 				pageSizeSection.append(`<label>Items per page:</label>`)
 				let pageSizeInput = $(`<input class='form-control w-50' type='number'>`)
@@ -989,7 +991,7 @@ function startScene(name, options={}) {
 					}
 				})
 
-				let obtainableSection = $(`<div class='d-flex justify-content-between align-items-center'>`)
+				let obtainableSection = $(baseSectionHTML)
 				form.append(obtainableSection)
 				let obtainableInput = $(`<select class='form-select mx-1 w-50'></select>`)
 				obtainableInput.append(`<option value="" selected>`)
@@ -1015,6 +1017,57 @@ function startScene(name, options={}) {
 					if (oldVal !== filters.obtainable){
 						makeChange()
 					}
+				})
+
+				let typesSection = $(baseSectionHTML).removeClass("justify-content-between")
+				.addClass("justify-content-center").addClass("mt-2")
+				let typeCheckboxes = $()
+				form.append(typesSection)
+				for (let type of types){
+					if (type === "Typeless") continue
+					let typeIcon = getTypeIcon(type)
+					let typeBox = $(`<div class='form-check form-check-inline d-flex align-items-center'>`)
+					typesSection.append(typeBox)
+					let typeCheckbox = $(`<input type='checkbox' class='form-check-input'>`)
+					typeCheckbox.attr("name", "pokedex-filter-type")
+					typeBox.append(typeCheckbox)
+					let id = ("pokedex-filter-setting-"+type).split(" ").join("-")
+					typeCheckbox.val(type).attr("id", id)
+					let label = $(`<label class='form-check-label'>`)
+					typeBox.append(label)
+					label.attr("for", id)
+					let img = $(`<img>`)
+					label.append(img)
+					img.attr("src", typeIcon).css("height", "2em")
+					typeCheckboxes = typeCheckboxes.add(typeCheckbox)
+					typeCheckbox.change(() => {
+						let chosenTypes = []
+						for (let checkbox of typeCheckboxes){
+							let check = $(checkbox)
+							if (!check.is(":checked")) continue
+							chosenTypes.push(check.val())
+						}
+						if (!chosenTypes.length){
+							delete filters.types
+						} else {
+							filters.types = chosenTypes
+						}
+						makeChange()
+					})
+
+					if (filters.types?.includes(type)){
+						typeCheckbox.attr("checked", true)
+					}
+				}
+				let typeExclusivityBox = $(`<div class='form-check form-check-inline d-flex align-items-center'>`)
+				typesSection.append(typeExclusivityBox)
+				let typeExclusivityCheckbox = $(`<input type='checkbox' class='form-check-input'>`)
+				.attr("id", "pokedex-filter-setting-type-exclusivity")
+				typeExclusivityBox.append(typeExclusivityCheckbox)
+				.append(`<label class='form-check-label d-flex align-items-center' for='pokedex-filter-setting-type-exclusivity' style='height: 2em; width: 2em;'>Exclusive</label>`)
+				typeExclusivityBox.change(() => {
+					filters.typeExclusivity = typeExclusivityCheckbox.is(":checked")
+					makeChange()
 				})
 
 				modal.modal("show")
@@ -1165,6 +1218,36 @@ function startScene(name, options={}) {
 						}
 					}
 
+					if ("types" in filters){
+						let types = filters.types
+						let possibleTypes = []
+						let pTypes = pData.types
+						possibleTypes.push(pTypes)
+						if (pData.hasForms){
+							for (let formId in pData.forms){
+								let formData = pData.forms[formId]
+								if ("types" in formData){
+									pTypes = pTypes.concat(formData.types)
+									pTypes = noDuplicates(pTypes)
+									possibleTypes.push(formData.types)
+								}
+							}
+						}
+						let matches = true
+						if (filters.typeExclusivity){
+							matches = possibleTypes.some(typeCombo => {
+								return types.every(type => typeCombo.includes(type))
+							})
+						} else {
+							matches = possibleTypes.some(typeCombo => {
+								return types.some(type => typeCombo.includes(type))
+							})
+						}
+						if (!matches){
+							fitsFilters = false
+						}
+					}
+
 					if (!fitsFilters) continue
 
 					if (!pages[pageI]){
@@ -1184,6 +1267,14 @@ function startScene(name, options={}) {
 					pokemonListTag.append(section)
 				}
 				allPokemonSections = pokemonListTag.children(".pokemon-section")
+
+				if (pages.length > 1){
+					prevBtn.removeAttr("disabled")
+					nextBtn.removeAttr("disabled")
+				} else {
+					prevBtn.attr("disabled", true)
+					nextBtn.attr("disabled", true)
+				}
 			}
 
 			nextBtn.click(() => {

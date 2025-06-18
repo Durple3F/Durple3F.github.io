@@ -2,12 +2,15 @@
 	"versions": {
 		"20250617": {
 			"date": "June 17, 2025",
-			"line-count": 50700,
+			"line-count": 50900,
 			"changes": [
-				"- Added Staryu, Magby",
+				"- Added Staryu, Magby, Mareanie",
+				"- Added Venoshock",
 				"- Added Flame Body",
 				"- Added a trainer to 5-5",
 				"- You can now swap which side the tile selection window is on.",
+				"- You can now filter the pokedex by pokemon type.",
+				"- You can now change whether that filter ^^ means 'Normal AND Flying' type or 'Normal OR Flying' type.",
 				"- Polished up levels that end with dialogue."
 			]
 		},

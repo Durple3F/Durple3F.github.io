@@ -265,6 +265,10 @@ const pokemonAbilityData = {
 	"Magnet Pull": {
 		id: "Magnet Pull"
 	},
+	//Double all move power against poisoned enemies
+	"Merciless": {
+		id: "Merciless"
+	},
 	//Buffs special attack if another one of your pokemon has Plus/Minus
 	"Minus": {
 		id: "Minus"

@@ -7008,7 +7008,7 @@ const pokemonData = {
 			{ name: "Sing", unlock: { type: "level", amount: 20 } },
 			{ name: "Bubble Beam", unlock: { type: "level", amount: 25 } },
 			{ name: "Encore", unlock: { type: "level", amount: 30 } },
-			{ name: "Heal Pulse", unlock: { type: "level", amount: 1 } },
+			{ name: "Recover", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {
@@ -8072,6 +8072,60 @@ const pokemonData = {
 			{ name: "Tearful Look", unlock: { type: "level", amount: 16 } },
 			{ name: "Dive", unlock: { type: "level", amount: 20 } },
 			{ name: "Soak", unlock: { type: "level", amount: 24 } },
+		]
+	},
+	"Mareanie": {
+		name: "Mareanie",
+		number: "747",
+		weight: {
+			pounds: 17.6,
+			kilograms: 8.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0747Mareanie.png",
+			"largeShiny": "src/img/shiny-pokemon/747-Mareanie.png",
+			"home": "src/img/tiny-pokemon/Mareanie.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/mareanie.mp3"
+		},
+		tags: [],
+		types: ["Poison", "Water"],
+		abilities: ["Merciless", "Limber"],
+		hiddenAbilities: ["Regenerator"],
+		stats: {
+			hp: 50,
+			attack: 53,
+			defense: 62,
+			specialAttack: 43,
+			specialDefense: 52,
+			speed: 45
+		},
+		expYield: 61,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 1,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			blue: 2,
+			purple: 3
+		},
+		// evolutions: [
+		// 	{ name: "Mudsdale", unlock: { type: "level", amount: 30 } }
+		// ],
+		learnset: [
+			{ name: "Poison Sting", unlock: { type: "level", amount: 1 } },
+			{ name: "Peck", unlock: { type: "level", amount: 1 } },
+			{ name: "Wide Guard", unlock: { type: "level", amount: 5 } },
+			{ name: "Bite", unlock: { type: "level", amount: 10 } },
+			{ name: "Venoshock", unlock: { type: "level", amount: 15 } },
+			{ name: "Recover", unlock: { type: "level", amount: 20 } },
+			// { name: "Pin Missile", unlock: { type: "level", amount: 25 } },
 		]
 	},
 	"Mudbray": {

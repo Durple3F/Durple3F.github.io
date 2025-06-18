@@ -126,6 +126,7 @@ Incomplete move lists:
 	Lycanroc-Midnight (lv 0)
 	Lycanroc-Dusk (lv 0)
 	Wishiwashi (lv 20)
+	Mareanie (lv 20)
 	Mudbray (lv 24)
 	Mudsdale (lv 24)
 	Dewpider (lv 24)
@@ -177,6 +178,7 @@ Missing Evolutions:
 	Torracat
 	Brionne
 	Crabrawler
+	Mareanie
 	Fomantis
 	Morelull
 	Stufful
