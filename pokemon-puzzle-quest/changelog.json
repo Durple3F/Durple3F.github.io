@@ -1,5 +1,12 @@
 {
 	"versions": {
+		"20250619": {
+			"date": "June 19, 2025",
+			"line-count": 51300,
+			"changes": [
+				"- Added Salandit"
+			]
+		},
 		"20250618": {
 			"date": "June 18, 2025",
 			"line-count": 51200,

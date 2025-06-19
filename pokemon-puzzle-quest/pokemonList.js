@@ -8450,6 +8450,57 @@ const pokemonData = {
 			{ name: "Moonlight", unlock: { type: "level", amount: 20 } },
 		]
 	},
+	"Salandit": {
+		name: "Salandit",
+		number: "757",
+		weight: {
+			pounds: 10.6,
+			kilograms: 4.8
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0757Salandit.png",
+			"largeShiny": "src/img/shiny-pokemon/755-Morelull.png",
+			"home": "src/img/tiny-pokemon/Salandit.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/salandit.mp3"
+		},
+		tags: [],
+		types: ["Poison", "Fire"],
+		abilities: ["Corrosion"],
+		hiddenAbilities: ["Oblivious"],
+		stats: {
+			hp: 48,
+			attack: 44,
+			defense: 40,
+			specialAttack: 71,
+			specialDefense: 40,
+			speed: 77
+		},
+		expYield: 64,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 1
+		},
+		energyMastery: {
+			red: 3,
+			purple: 3
+		},
+		learnset: [
+			{ name: "Scratch", unlock: { type: "level", amount: 1 } },
+			{ name: "Poison Gas", unlock: { type: "level", amount: 1 } },
+			{ name: "Smog", unlock: { type: "level", amount: 5 } },
+			{ name: "Ember", unlock: { type: "level", amount: 10 } },
+			{ name: "Poison Fang", unlock: { type: "level", amount: 15 } },
+			{ name: "Sweet Scent", unlock: { type: "level", amount: 20 } },
+			{ name: "Nasty Plot", unlock: { type: "level", amount: 25 } },
+		]
+	},
 	"Stufful": {
 		name: "Stufful",
 		number: "759",

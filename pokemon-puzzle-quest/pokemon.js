@@ -382,7 +382,12 @@ class Pokemon{
 		//Poison and Steel type pokemon can't be poisoned
 		if (status.name === "poisoned" && types.includes("Poison") ||
 				status.name === "poisoned" && types.includes("Steel")){
-			prevented = true
+			//UNLESS the pokemon from which this status effect was sourced has Corrosion.
+			if (status.sourcePokemon.hasAbility("Corrosion")){
+				//It isn't prevented
+			} else {
+				prevented = true
+			}
 		}
 		//Electric pokemon can't be paralyzed
 		if (status.name === "paralyzed" && types.includes("Electric")){

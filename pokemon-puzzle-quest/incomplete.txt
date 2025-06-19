@@ -132,6 +132,8 @@ Incomplete move lists:
 	Dewpider (lv 24)
 	Araquanid (lv 26)
 	Fomantis (lv 20)
+	Morelull (lv 20)
+	Salandit (lv 20)
 	Stufful (lv 20)
 	Bounsweet (lv 28)
 	Steenee (lv 25)
@@ -173,6 +175,8 @@ Missing Evolutions:
 	Fletchling
 	Litleo
 	Espurr
+	Morelull
+	Salandit
 	Stufful
 	Dartrix
 	Torracat
