@@ -3772,7 +3772,7 @@ const levelData = [
 						name: "5-6-dakota-mareanie",
 						level: 19,
 						activeMoves: ["Venoshock", "Recover", "Poison Sting", "Bite"],
-						nature: "jolly",
+						nature: "careful",
 						ivs: { hp: 30, attack: 20, defense: 30, specialAttack: 15, specialDefense: 15, speed: 25 },
 						evs: { hp: 100, attack: 30, defense: 80, specialAttack: 30, specialDefense: 60, speed: 30 },
 					},
