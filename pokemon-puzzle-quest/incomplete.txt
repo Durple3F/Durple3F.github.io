@@ -134,6 +134,7 @@ Incomplete move lists:
 	Fomantis (lv 20)
 	Morelull (lv 20)
 	Salandit (lv 20)
+	Salazzle (lv 0)
 	Stufful (lv 20)
 	Bounsweet (lv 28)
 	Steenee (lv 25)
@@ -176,7 +177,6 @@ Missing Evolutions:
 	Litleo
 	Espurr
 	Morelull
-	Salandit
 	Stufful
 	Dartrix
 	Torracat

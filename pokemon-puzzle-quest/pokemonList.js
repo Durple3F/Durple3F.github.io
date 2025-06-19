@@ -8278,6 +8278,9 @@ const pokemonData = {
 			green: 2,
 			yellow: 1,
 		},
+		evolutions: [
+			{ name: "Araquanid", unlock: { type: "level", amount: 22 } }
+		],
 		learnset: [
 			{ name: "Water Gun", unlock: { type: "level", amount: 1 } },
 			{ name: "Infestation", unlock: { type: "level", amount: 1 } },
@@ -8460,7 +8463,7 @@ const pokemonData = {
 		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0757Salandit.png",
-			"largeShiny": "src/img/shiny-pokemon/755-Morelull.png",
+			"largeShiny": "src/img/shiny-pokemon/757-Salandit.png",
 			"home": "src/img/tiny-pokemon/Salandit.png"
 		},
 		sounds: {
@@ -8491,11 +8494,74 @@ const pokemonData = {
 			red: 3,
 			purple: 3
 		},
+		evolutions: [
+			{ name: "Salazzle", unlock: { type: "level", amount: 33 } }
+		],
 		learnset: [
 			{ name: "Scratch", unlock: { type: "level", amount: 1 } },
 			{ name: "Poison Gas", unlock: { type: "level", amount: 1 } },
 			{ name: "Smog", unlock: { type: "level", amount: 5 } },
 			{ name: "Ember", unlock: { type: "level", amount: 10 } },
+			{ name: "Poison Fang", unlock: { type: "level", amount: 15 } },
+			{ name: "Sweet Scent", unlock: { type: "level", amount: 20 } },
+			{ name: "Nasty Plot", unlock: { type: "level", amount: 25 } },
+		]
+	},
+	"Salazzle": {
+		name: "Salazzle",
+		number: "758",
+		weight: {
+			pounds: 49.8,
+			kilograms: 22.2
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0758Salazzle.png",
+			"largeShiny": "src/img/shiny-pokemon/758-Salazzle.png",
+			"home": "src/img/tiny-pokemon/Salazzle.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/salazzle.mp3"
+		},
+		tags: [],
+		types: ["Poison", "Fire"],
+		abilities: ["Corrosion"],
+		hiddenAbilities: ["Oblivious"],
+		stats: {
+			hp: 68,
+			attack: 64,
+			defense: 60,
+			specialAttack: 111,
+			specialDefense: 60,
+			speed: 117
+		},
+		expYield: 64,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 2
+		},
+		energyMastery: {
+			orange: 1,
+			red: 4,
+			purple: 5
+		},
+		learnset: [
+			{ name: "Knock Off", unlock: { type: "level", amount: 1 } },
+			{ name: "Encore", unlock: { type: "level", amount: 1 } },
+			{ name: "Torment", unlock: { type: "level", amount: 1 } },
+			{ name: "Swagger", unlock: { type: "level", amount: 1 } },
+			{ name: "Disable", unlock: { type: "level", amount: 1 } },
+			{ name: "Scratch", unlock: { type: "level", amount: 1 } },
+			// { name: "Endeavor", unlock: { type: "level", amount: 1 } },
+			{ name: "Pound", unlock: { type: "level", amount: 1 } },
+			{ name: "Poison Gas", unlock: { type: "level", amount: 1 } },
+			{ name: "Smog", unlock: { type: "level", amount: 1 } },
+			{ name: "Ember", unlock: { type: "level", amount: 1 } },
+			// { name: "Fire Lash", unlock: { type: "level", amount: 1 } },
 			{ name: "Poison Fang", unlock: { type: "level", amount: 15 } },
 			{ name: "Sweet Scent", unlock: { type: "level", amount: 20 } },
 			{ name: "Nasty Plot", unlock: { type: "level", amount: 25 } },

@@ -66,6 +66,10 @@ const pokemonAbilityData = {
 	"Contrary": {
 		id: "Contrary"
 	},
+	//You can poison poison and steel-types
+	"Corrosion": {
+		id: "Corrosion"
+	},
 	//Lowers the defender's Special Attack on contact
 	"Cute Charm": {
 		id: "Cute Charm"

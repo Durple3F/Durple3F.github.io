@@ -2537,6 +2537,10 @@
 			"name": "Salandit",
 			"pokedex-entry": "Like most lizard Pokémon, it enjoys sleeping while being heated. Who doesn’t? Unlike most lizard Pokémon, though, it needs a lot more heat than your average heat lamp provides to feel comfy."
 		},
+		"Salazzle": {
+			"name": "Salazzle",
+			"pokedex-entry": "This Pokémon travels with a pack of weaker Salandit to get food. Salazzle does none of the work, content to just watch unless absolutely necessary. Trainers univerally find it difficult to earn Salazzle’s respect."
+		},
 		"Stufful": {
 			"name": "Stufful",
 			"pokedex-entry": "It’s common knowledge that belying its appearance is a powerful beast. What’s less commonly discussed is the way it sleeps, its arms and legs flopping limp at its sides as it snores softly. It might sound cute to give it a stuffed animal of its own to sleep with, but trainers who do this invariably wake up to find it destroyed the next morning."
@@ -3942,8 +3946,13 @@
 		},
 		"Contrary": {
 			"name": "Contrary",
-			"shortDescription": "Stat stage alterations do the opposite",
+			"shortDescription": "Stat stage alterations to this Pokémon are inverted",
 			"longDescription": "If an effect changes this Pokémon's stat stages, its stats are changed in the opposite way."
+		},
+		"Corrosion": {
+			"name": "Corrosion",
+			"shortDescription": "Can poison Poison- and Steel-type Pokémon",
+			"longDescription": "When this Pokémon applies Poisoned to another Pokémon, that Pokémon being Poison- or Steel- type doesn't prevent it from being poisoned."
 		},
 		"Cute Charm": {
 			"name": "Cute Charm",
