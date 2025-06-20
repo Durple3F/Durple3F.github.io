@@ -1065,7 +1065,7 @@
 			"callbacks": {},
 			"effects": [
 				{ "type": "get-speaker", "name": "Jody", "class": "Bellhop" },
-				{ "type": "text", "speaker": "Narrator", "text": "Whew! Well, they definitely show promise... I'll keep working on making Tide Song Hotel the greatest in Alola!" }
+				{ "type": "text", "speaker": "Jody", "text": "Whew! Well, they definitely show promise... I'll keep working on making Tide Song Hotel the greatest in Alola!" }
 			]
 		},
 		"route-4-3-dialogue": {
