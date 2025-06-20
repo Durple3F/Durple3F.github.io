@@ -3950,6 +3950,9 @@ const pokeballImages = {
 	"dusk ball": {
 		"icon": "src/img/balls/dusk ball.png"
 	},
+	"friend ball": {
+		"icon": "src/img/balls/friend ball.png"
+	},
 }
 const pokeballSpriteData = {
 	types: {
@@ -3969,6 +3972,7 @@ const pokeballSpriteData = {
 		"quick ball": [0, 3 + 26 * 13],
 		"dusk ball": [0, 3 + 26 * 14],
 		"heal ball": [0, 3 + 26 * 15],
+		"friend ball": [0, 452],
 	},
 	sprites: {
 		"none": [1, 1, 0, 0],
