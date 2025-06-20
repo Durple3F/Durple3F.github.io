@@ -6921,15 +6921,16 @@ class Board {
 				changed = true
 			}
 		}
+		let emptyCoords = this.getEmptyCoords()
+		for (let coord of emptyCoords){
+			let x = coord[0]
+			let y = coord[1]
+			let tile = this.getNextTile(x, y)
+			this.add(tile)
+			changed = true
+		}
 		if (changed){
 			console.warn("Something weird just happened!")
-			let emptyCoords = this.getEmptyCoords()
-			for (let coord of emptyCoords){
-				let x = coord[0]
-				let y = coord[1]
-				let tile = this.getNextTile(x, y)
-				this.add(tile)
-			}
 		}
 	}
 
