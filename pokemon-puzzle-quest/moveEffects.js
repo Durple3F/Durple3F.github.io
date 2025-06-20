@@ -1370,6 +1370,7 @@ const pokemonMoveEffects = {
 			let otherPokemon = otherTrainer.activePokemon
 			chosenTiles.forEach(tile => {
 				let move = moveUseObj.move
+				let prevented = false
 
 				if (!prevented){
 					game.addStatusToTiles(tile, status, trainer, pokemon, move)
