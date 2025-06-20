@@ -1420,11 +1420,12 @@ function askToRenamePokemon(pokemon) {
 	question = applyReplacements(question, [name])
 	modal.find(".modal-title").text(question)
 	let innerStuff = $(`<div class='container d-flex'></div>`)
-	innerStuff.append(`<div class='col col-3'><img class='pokemon-image' src='${image}'></div>`)
+	innerStuff.append(`<div class='col col-3'><img class='pokemon-image'></div>`)
 	innerStuff.append(`<div class='col col-9 d-flex flex-column justify-content-center align-items-center'>
 		<input type='text' required value='${name}'>
 		<button class='btn btn-primary confirm'>Submit</button>
 	</div>`)
+	innerStuff.find(".pokemon-image").attr("src", image)
 	let body = modal.find(".modal-body")
 	body.append(innerStuff)
 

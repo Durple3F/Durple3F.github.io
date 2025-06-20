@@ -2049,13 +2049,14 @@ class Round {
 				<div class='row mb-3'>
 					<div class='pokemon-text col d-flex flex-column justify-content-center'></div>
 					<div class='col text-end'>
-						<img class='pokemon-image' src='${image}'>
+						<img class='pokemon-image'>
 					</div>
 				</div>
 				<div class='exp-bar'>
 					<div class='bar'></div>
 				</div>
 			`)
+			chooseable.find(".pokemon-image").attr("src", image)
 			pretendToGiveEXP(chooseable, p, p.level)
 			box.append(chooseable)
 			container.append(box)

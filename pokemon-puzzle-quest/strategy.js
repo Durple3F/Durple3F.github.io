@@ -556,10 +556,10 @@ const trainerStrategy = {
 				result.swap = 1
 			}
 			let switchAllowed = !isWild || options.switchAllowed
-			if (switchAllowed && activePokemon.hp < 0.4 * activePokemon.maxhp){
+			if (switchAllowed && activePokemon.hp < 0.2 * activePokemon.maxhp){
 				let goodSwaps = trainer.pokemon.filter(pokemon => {
 					if (activePokemon === pokemon) return false
-					return pokemon.hp > 0.5 * pokemon.maxhp
+					return pokemon.hp > 0.9 * pokemon.maxhp
 				})
 				if (goodSwaps.length){
 					result = {}
@@ -581,7 +581,12 @@ const trainerStrategy = {
 				if (!nonAces.length){
 					canPick = pokemonList
 				}
-				let chosen = randomChoice(canPick)
+				let highestHPPercent = canPick.reduce((acc, pokemon) => {
+					let p = pokemon.hp / pokemon.maxhp
+					return p > acc ? p : acc
+				}, 0)
+				let hasHighest = canPick.filter(pokemon => pokemon.hp / pokemon.maxhp >= highestHPPercent)
+				let chosen = randomChoice(hasHighest)
 				return [chosen]
 			} else if (reason === "heal"){
 				let lowestHp = pokemonList.reduce((lowest, pokemon) => {

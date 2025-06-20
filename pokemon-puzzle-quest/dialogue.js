@@ -149,11 +149,9 @@ function tryToBeginDialogue(source, options={}){
 		let thenFadeOut = options.fadeOut ?? true
 		if (thenFadeOut){
 			$("#dialogue-container").fadeOut()
-			if (boardIsVisible) {
-				delay(400).then(() => {
-					$("#board").removeClass("showing-dialogue")
-				})
-			}
+			delay(400).then(() => {
+				$("#board").removeClass("showing-dialogue")
+			})
 			fadePromise = delay(400)
 		}
 		fadePromise = fadePromise.then(() => {

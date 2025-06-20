@@ -3564,19 +3564,19 @@ const levelData = [
 				pokemon: [
 					{
 						id: "Comfey",
-						// pokeball: "friend ball",
+						pokeball: "friend ball",
 						name: "5-5-elizabeth-comfey",
 						level: 17
 					},
 					{
 						id: "Cherrim",
-						// pokeball: "friend ball",
+						pokeball: "friend ball",
 						name: "5-5-elizabeth-cherrim",
 						level: 17
 					},
 					{
 						id: "Roselia",
-						// pokeball: "friend ball",
+						pokeball: "friend ball",
 						name: "5-5-elizabeth-roselia",
 						level: 17
 					},
@@ -3609,7 +3609,7 @@ const levelData = [
 					},
 				]
 			},
-			{ // Striker Johnathan
+			{ // Firebreather Keahi
 				name: "Keahi",
 				class: "Firebreather",
 				tags: ["contestant"],
@@ -3657,14 +3657,14 @@ const levelData = [
 				"route-5-5-dialogue-3",
 				"route-5-5-dialogue-4",
 				"route-5-5-dialogue-5",
-			], lossDialogue: "route-5-5-lose", waningHP: true },
+			], lossDialogue: "route-5-5-lose", neededWins: 4, waningHP: true },
 			{ type: "jump", jumpTo: "win-check" },
 			{ type: "tournament", label: "hardMode", contestantTag: "contestant", dialogues: [
 				"route-5-5-dialogue-2",
 				"route-5-5-dialogue-3",
 				"route-5-5-dialogue-4",
 				"route-5-5-dialogue-5",
-			], lossDialogue: "route-5-5-lose", waningHP: false },
+			], lossDialogue: "route-5-5-lose", neededWins: 4, waningHP: false },
 			{ type: "jump", jumpTo: "win-check" },
 			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
 			{ type: "dialogue", source: "route-5-5-win", fadeOut: false },
