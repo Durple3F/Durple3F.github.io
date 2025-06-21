@@ -1121,7 +1121,7 @@ function startScene(name, options={}) {
 				let imageSection = $(`<div class='pokemon-image-section'>`)
 				mainSection.append(imageSection)
 
-				let url = pokemon.getImage("large-compressed")
+				let url = pokemon.getImage("tiny")
 				let pokemonImgBg = $(`<div class='pokemon-image-bg'>`)
 				pokemonImgBg.css("mask-image", `url("${url}")`)
 				imageSection.append(pokemonImgBg)

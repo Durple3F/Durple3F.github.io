@@ -6,6 +6,7 @@ SOMETIMES status effects don't have moves attaches to them BE AWARE
 
 cd img/pokemon
 for i in *.png; do echo "$i"; ffmpeg -hide_banner -loglevel error -n -i "$i" "../small-pokemon/${i%.*}.webp"; done
+for i in *.png; do echo "$i"; ffmpeg -hide_banner -loglevel error -n -i "$i" -vf "scale=iw*.2:ih*.2" "../tiny-pokemon/${i%.*}.webp"; done
 cd ../shiny-pokemon
 for i in *.png; do echo "$i"; ffmpeg -hide_banner -loglevel error -n -i "$i" "../small-shiny-pokemon/${i%.*}.webp"; done
 
