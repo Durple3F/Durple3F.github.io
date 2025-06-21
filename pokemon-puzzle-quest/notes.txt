@@ -4,7 +4,15 @@ SOMETIMES status effects don't have moves attaches to them BE AWARE
 ([^\t]+)(?!\t) \t(\d+).+
 "$1": $2,
 
+cd img/pokemon
 for i in *.png; do echo "$i"; ffmpeg -hide_banner -loglevel error -n -i "$i" "../small-pokemon/${i%.*}.webp"; done
+cd ../shiny-pokemon
+for i in *.png; do echo "$i"; ffmpeg -hide_banner -loglevel error -n -i "$i" "../small-shiny-pokemon/${i%.*}.webp"; done
+
+(\t+)"largeShiny": "src/img/shiny-pokemon/(([^.](?!png))+).png",
+
+$1"largeShiny": "src/img/shiny-pokemon/$2.png",
+$1"largeShiny-compressed": "src/img/small-shiny-pokemon/$2.webp",
 
 HOPEFULLY fixed
 - Music plays twice sometimes

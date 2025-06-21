@@ -2,9 +2,10 @@
 	"versions": {
 		"20250621": {
 			"date": "June 21, 2025",
-			"line-count": 51600,
+			"line-count": 51800,
 			"changes": [
-				"- More improvements to image loading"
+				"- More improvements to image loading",
+				"- Now every shiny pokemon has a compressed version of the image that displays during battle too."
 			]
 		},
 		"20250620": {

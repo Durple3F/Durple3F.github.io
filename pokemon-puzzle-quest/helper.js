@@ -305,7 +305,7 @@ function getPokemonImage(pData, key, shiny, pokemon){
 		}
 	} else if (key === "large-compressed"){
 		if (shiny){
-			return getPokemonImage(pData, "large", shiny, pokemon)
+			return imageSources["largeShiny-compressed"] ?? getPokemonImage(pData, "large", shiny, pokemon)
 		} else {
 			return imageSources["large-compressed"] ?? getPokemonImage(pData, "large", shiny, pokemon)
 		}
