@@ -105,67 +105,126 @@ class Round {
 		}
 
 		this.determineTileWeights()
-		this.loadResources()
+		let p = this.loadResources()
 		
 		//Unload all of that
 		this.promise.then(() => this.unloadResources())
 
-		let p = this.roundStartAnimation()
-		p.then(() => this.begin())
+		p = p.then(() => this.roundStartAnimation())
+		p = p.then(() => this.begin())
 
 		this.startTicks()
 	}
 
 	loadResources() {
-		//Find all the sounds that pokemon might play when they use moves & stuff.
+		let toLoad = []
 		let moveList = []
 		moveList.push(pokemonMoveData["Struggle"])
+		
+		const loadNextBatch = () => {
+			let min = toLoad.filter(loadInfo => !loadInfo[2]).reduce((acc, loadInfo) => {
+				return acc < loadInfo[0] ? acc : loadInfo[0]
+			}, Infinity)
+			let thisBatch = toLoad.filter(loadInfo => loadInfo[0] === min)
+			let loadPromises = []
+			thisBatch.forEach(loadInfo => {
+				let loadPromise
+				if (loadInfo[1] === "pokemon"){
+					loadPromise = loadPokemon(loadInfo)
+				} else if (loadInfo[1] === "move"){
+					loadPromise = loadMove(loadInfo)
+				}
+				if (loadPromise){
+					loadPromise = loadPromise.then(() => loadInfo[2] = true)
+					loadPromises.push(loadPromise)
+				}
+			})
+			if (loadPromises.length){
+				let total = Promise.all(loadPromises)
+				total.then(() => {
+					loadNextBatch()
+				})
+				return total
+			}
+			return Promise.resolve()
+		}
+		const loadPokemon = (loadInfo) => {
+			let loadPromises = []
+			let priority = loadInfo[0]
+			let trainer = loadInfo[3]
+			let pokemon = loadInfo[4]
+			let pokemonId = pokemon.data.id
+
+			let imgUrl = pokemon.getImage("large-compressed")
+			let imgName = `${pokemon.uuid}-img`
+			let imagePromise
+			//If this is the trainer's starter pokemon, it's important enough to pause starting the game for.
+			if (trainer.pokemon.indexOf(pokemon) === 0){
+				imagePromise = loadSprite(imgName, imgUrl)
+				loadPromises.push(imagePromise)
+			}
+			this.imagesToUnload.push(imgName)
+
+			//Preload cry
+			let sounds = pokemon.getAllSounds()
+			let cryUrl = sounds?.cry
+			if (cryUrl) {
+				let cryName = `${pokemonId}-cry`
+				if (pokemon.form){
+					cryName += "-"+pokemon.form
+				}
+				let soundPromise = loadSound(cryName, "cry", cryUrl)
+				loadPromises.push(soundPromise)
+				this.soundsToUnload.push(cryName)
+			}
+
+			for (let k = 0; k < pokemon.activeMoves.length; k++) {
+				let move = pokemon.activeMoves[k]
+				if (!moveList.includes(move)) {
+					toLoad.push([priority + 1, "move", false, move])
+				}
+			}
+			return Promise.all(loadPromises)
+		}
+		const loadMove = (loadInfo) => {
+			let priority = loadInfo[0]
+			let move = loadInfo[3]
+			if (!move.sounds) return
+			let loadPromises = []
+			for (let name in move.sounds) {
+				let url = move.sounds[name]
+				let soundName = `${move.name}-${name}`
+				let loadPromise = loadSound(soundName, "sound", url)
+				loadPromises.push(loadPromise)
+				this.soundsToUnload.push(soundName)
+			}
+			return Promise.all(loadPromises)
+		}
+
+		//Find all the sounds that pokemon might play when they use moves & stuff.
 		for (let i = 0; i < this.trainers.length; i++) {
 			let trainer = this.trainers[i]
 			for (let j = 0; j < trainer.pokemon.length; j++) {
 				let pokemon = trainer.pokemon[j]
 				if (!pokemon) continue
-				let pokemonId = pokemon.data.id
-
-				let imgUrl = pokemon.getImage("large-compressed")
-				let imgName = `${pokemon.uuid}-img`
-				loadSprite(imgName, imgUrl)
-				this.imagesToUnload.push(imgName)
-
-				//Preload cry
-				let sounds = pokemon.getAllSounds()
-				let cryUrl = sounds?.cry
-				if (cryUrl) {
-					let cryName = `${pokemonId}-cry`
-					if (pokemon.form){
-						cryName += "-"+pokemon.form
-					}
-					loadSound(cryName, "cry", cryUrl)
-					this.soundsToUnload.push(cryName)
-				}
-
-				for (let k = 0; k < pokemon.activeMoves.length; k++) {
-					let move = pokemon.activeMoves[k]
-					if (!moveList.includes(move)) {
-						moveList.push(move)
-					}
+				if (j === 0){
+					toLoad.push([0, "pokemon", false, trainer, pokemon])
+				} else {
+					toLoad.push([5, "pokemon", false, trainer, pokemon])
 				}
 			}
 		}
+
 		moveList = moveList.concat(
 			Object.values(pokemonMoveData).filter(move => {
 				return move.tags.includes("z-move")
 			})
 		)
 		for (let move of moveList) {
-			if (!move.sounds) continue
-			for (let name in move.sounds) {
-				let url = move.sounds[name]
-				let soundName = `${move.name}-${name}`
-				loadSound(soundName, "sound", url)
-				this.soundsToUnload.push(soundName)
-			}
+			toLoad.push([20, "move", false, move])
 		}
+
+		return loadNextBatch()
 	}
 	unloadResources() {
 		for (let soundName of this.soundsToUnload) {

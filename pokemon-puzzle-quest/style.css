@@ -54,7 +54,7 @@ body {
 	margin: 0;
 	width: 100vw;
 	height: 100vh;
-	font-family: "Asap Condensed", Absolut_Pro, Arial;
+	font-family: "Asap Condensed", Absolut_Pro, Arial, sans-serif;
 	font-weight: 500;
 	user-select: none;
 	overflow: hidden;
@@ -188,7 +188,7 @@ body {
 }
 .popover > .popover-body {
 	color: white;
-	font-family: Absolut_Pro, Arial;
+	font-family: Absolut_Pro, Arial, sans-serif;
 	font-size: 1.2em;
 }
 .popover.popover-for-energy-bar > .popover-body {

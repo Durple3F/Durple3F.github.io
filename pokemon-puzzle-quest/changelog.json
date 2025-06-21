@@ -9,7 +9,8 @@
 				"- Oops, I made a change a while back to make future tournament levels easier to code, and forgot to apply that change to the one existing tournament level.",
 				"- Fixed several points where, a year ago, I used the filename that pokemon have unsafely, which made Oricorio's Pa'u form sometimes show up failing to load. On the off chance you read this, look out for that stuff, please. Year-ago me didn't account for the pink bird.",
 				"- When trainers switch pokemon, they now always switch to a pokemon they have with the most health instead of just picking one at random.",
-				"- Non-shiny pokemon images should now load in much faster during battle. I'll add the shiny ones later."
+				"- Non-shiny pokemon images should now load in much faster during battle. I'll add the shiny ones later.",
+				"- Did some work to improve the brief stuttering that happens when a battle first begins. The downside is that now a small loading period happens at the beginning of the game as it loads the most high-priority images, which are currently just the two starter pokemon. If you ever see them not loaded as they enter, I will cry."
 			]
 		},
 		"20250619": {
