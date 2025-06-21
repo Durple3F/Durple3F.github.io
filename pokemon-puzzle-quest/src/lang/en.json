@@ -5057,6 +5057,7 @@
 		"toggle-skip-seen-dialogue": "Skip seen dialogue?",
 		"toggle-exp-share": "EXP share? (Exp gained in fights is shared between all active Pokémon)",
 		"toggle-hard-mode": "Hard mode",
+		"toggle-enemy-level-increase": "Increase enemy levels by: $input$ (they won't give any extra EXP.)",
 		"toggle-debug-mode": "Debug mode",
 		"toggle-level-lowering": "Lower Pokémon levels to what’s recommended when starting a level. Note: Pokémon won’t earn EXP while their levels are lowered.",
 		"toggle-show-level-completion-data": "Display level attempts/completions",

@@ -960,7 +960,7 @@ function startScene(name, options={}) {
 			const openSettings = () => {
 				let modal = $("#modal")
 				clearModal(modal)
-				modal.addClass("fade")
+				modal.addClass("fade").css("user-select", "none")
 				let changedSomething = true
 				let body = modal.find(".modal-body")
 
@@ -1064,11 +1064,14 @@ function startScene(name, options={}) {
 				let typeExclusivityCheckbox = $(`<input type='checkbox' class='form-check-input'>`)
 				.attr("id", "pokedex-filter-setting-type-exclusivity")
 				typeExclusivityBox.append(typeExclusivityCheckbox)
-				.append(`<label class='form-check-label d-flex align-items-center' for='pokedex-filter-setting-type-exclusivity' style='height: 2em; width: 2em;'>Exclusive</label>`)
+				let typeExclusivityLabel = $(`<label class='form-check-label d-flex align-items-center' for='pokedex-filter-setting-type-exclusivity' style='height: 2em; width: 2em;'>Or</label>`)
+				typeExclusivityBox.append(typeExclusivityLabel)
 				typeExclusivityBox.change(() => {
 					filters.typeExclusivity = typeExclusivityCheckbox.is(":checked")
+					typeExclusivityLabel.text(filters.typeExclusivity ? "And" : "Or")
 					makeChange()
 				})
+				typeExclusivityLabel.text(filters.typeExclusivity ? "And" : "Or")
 
 				modal.modal("show")
 				modal.on("hidden.bs.modal", () => {

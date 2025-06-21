@@ -175,7 +175,6 @@ function handleSpriteLoad(){
 function loadSprite(name, url){
 	if (name in sprites.images){
 		if (sprites.images[name].complete){
-			loadedResources[0]++
 			return Promise.resolve()
 		}
 	}
@@ -916,7 +915,7 @@ function openSettings(){
 	let promise = new Promise(resolve => resolvePromise = resolve)
 	let modal = $("#modal")
 	clearModal(modal, false)
-	modal.addClass("wide")
+	modal.addClass("wide").css("user-select", "none")
 	let body = modal.find(".modal-body")
 
 	modal.find(".modal-title").html(`<h6 class='display-6 text-center'>Settings</h6>`)
@@ -1012,6 +1011,23 @@ function openSettings(){
 			key: "hardMode"
 		},
 		{
+			text: "toggle-enemy-level-increase",
+			key: "increaseEnemyLevels",
+			numberInput: true,
+			numberValueKey: "increaseEnemyLevelsAmount",
+			numberValueDefault: 0,
+			numberInputToggleIfDefault: true,
+			numberInputToggleIfDefaultVal: false,
+			onclick: (val, section) => {
+				let input = section.find("input.number-input")
+				if (config["increaseEnemyLevels"]){
+					input.attr("disabled", false)
+				} else {
+					input.attr("disabled", true)
+				}
+			}
+		},
+		{
 			text: "toggle-debug-mode",
 			key: "debug"
 		},
@@ -1058,7 +1074,43 @@ function openSettings(){
 		let id = `setting-toggle-${key}`
 		checkbox.attr("id", id)
 		section.append(checkbox)
-		section.append(`<label for='${id}'>${text}</label>`)
+		let label = $(`<label for='${id}'>${text}</label>`)
+		section.append(label)
+
+		if (toggle.numberInput){
+			let html = label.html()
+			html = html.replace("$input$", `<input class="number-input m-0 p-0 text-center" min="0" style="width: 5em;">`)
+			label.html(html)
+			let input = label.children("input.number-input")
+			let curValue = config[toggle.numberValueKey]
+			input.val(curValue)
+			input.change(() => {
+				let val = Number(input.val()) || (toggle.numberInputDefault ?? 0)
+				val = Math.max(val, 0)
+				input.val(val)
+				config[toggle.numberValueKey] = val
+				if (toggle.numberInputToggleIfDefault){
+					if (val === toggle.numberValueDefault){
+						checkbox.prop("checked", toggle.numberInputToggleIfDefaultVal)
+						config[key] = toggle.numberInputToggleIfDefaultVal
+						if (toggle.onclick){
+							toggle.onclick(config[key], section)
+						}
+					} else {
+						checkbox.prop("checked", !toggle.numberInputToggleIfDefaultVal)
+						config[key] = !toggle.numberInputToggleIfDefaultVal
+						if (toggle.onclick){
+							toggle.onclick(config[key], section)
+						}
+					}
+				}
+			})
+
+			if (!config[key]){
+				input.attr("disabled", true)
+			}
+		}
+
 		if (config[key]){
 			checkbox.attr("checked", true)
 		}
@@ -1066,7 +1118,7 @@ function openSettings(){
 			let checked = checkbox[0].checked
 			config[key] = checked
 			if (toggle.onclick){
-				toggle.onclick(checked)
+				toggle.onclick(checked, section)
 			}
 		})
 	}

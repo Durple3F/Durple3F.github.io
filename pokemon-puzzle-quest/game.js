@@ -6777,7 +6777,7 @@ class Round {
 			let evMax = 510
 			for (let p of defeatedPokemon) {
 				let base = p.data.expYield
-				let themLevel = p.level
+				let themLevel = p.levelForExp ?? p.level
 
 				let exp = (base * themLevel * 0.2) * Math.pow((2 * themLevel + 10) / (themLevel + youLevel + 10), 2.5)
 				exp *= expFactor
@@ -7657,7 +7657,8 @@ function beginRound(trainerData, options={}) {
 	}
 	let player = new Trainer("Player", playerActivePokemon, playerOptions)
 
-	let pokemonData = trainerData.pokemon.map(v => v)
+	let pokemonData = trainerData.pokemon.map(v => window.structuredClone(v))
+
 	//If this trainer has a group of pokemon it *might* pull from,
 	//randomly choose new pokemon to add from that list.
 	let targetPokemon = trainerData.targetPokemon
@@ -7735,6 +7736,14 @@ function beginRound(trainerData, options={}) {
 		if (data.nature){
 			options.nature = data.nature
 		}
+
+		//The player can make things harder for themselves
+		if (config['increaseEnemyLevels']){
+			let amount = Math.max(0, Number(config['increaseEnemyLevelsAmount']) || 0)
+			options.levelForExp = options.level
+			options.level += amount
+		}
+
 		let pokemon = new Pokemon(options.name, options.id, options)
 		if (data.isAce){
 			acePokemon.push(pokemon)

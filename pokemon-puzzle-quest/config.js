@@ -6,6 +6,8 @@ const config = {
 	skipSeenDialogue: false,
 	expShare: true,
 	hardMode: false,
+	increaseEnemyLevels: false,
+	increaseEnemyLevelsAmount: 0,
 	debug: false,
 	lowerLevelsToRecommendedLevels: true,
 	showLevelCompletionData: false,

@@ -20,6 +20,9 @@ class Pokemon{
 		this.types = []
 		this.data.types.forEach(type => this.types.push(type))
 		this.level = options?.level ?? 1
+		if ("levelForExp" in options){
+			this.levelForExp = options.levelForExp
+		}
 
 		this.pokeballType = options?.pokeballType ?? "pokeball"
 
