@@ -64,6 +64,9 @@ class Round {
 		this.matchesInCombo = []
 		this.statusEffects = []
 
+		this.imagesToUnload = []
+		this.soundsToUnload = []
+
 		this.playerMatches = []
 		this.moveUseHistory = []
 		this.eventHistory = []
@@ -103,6 +106,10 @@ class Round {
 
 		this.determineTileWeights()
 		this.loadResources()
+		
+		//Unload all of that
+		this.promise.then(() => this.unloadResources())
+
 		let p = this.roundStartAnimation()
 		p.then(() => this.begin())
 
@@ -113,8 +120,6 @@ class Round {
 		//Find all the sounds that pokemon might play when they use moves & stuff.
 		let moveList = []
 		moveList.push(pokemonMoveData["Struggle"])
-		let soundsToUnload = []
-		let imagesToUnload = []
 		for (let i = 0; i < this.trainers.length; i++) {
 			let trainer = this.trainers[i]
 			for (let j = 0; j < trainer.pokemon.length; j++) {
@@ -122,10 +127,10 @@ class Round {
 				if (!pokemon) continue
 				let pokemonId = pokemon.data.id
 
-				let imgUrl = pokemon.getImage()
+				let imgUrl = pokemon.getImage("large-compressed")
 				let imgName = `${pokemon.uuid}-img`
 				loadSprite(imgName, imgUrl)
-				imagesToUnload.push(imgName)
+				this.imagesToUnload.push(imgName)
 
 				//Preload cry
 				let sounds = pokemon.getAllSounds()
@@ -136,7 +141,7 @@ class Round {
 						cryName += "-"+pokemon.form
 					}
 					loadSound(cryName, "cry", cryUrl)
-					soundsToUnload.push(cryName)
+					this.soundsToUnload.push(cryName)
 				}
 
 				for (let k = 0; k < pokemon.activeMoves.length; k++) {
@@ -158,19 +163,18 @@ class Round {
 				let url = move.sounds[name]
 				let soundName = `${move.name}-${name}`
 				loadSound(soundName, "sound", url)
-				soundsToUnload.push(soundName)
+				this.soundsToUnload.push(soundName)
 			}
 		}
-
-		//Unload all of that
-		this.promise.then(() => {
-			for (let soundName of soundsToUnload) {
-				unloadSound(soundName)
-			}
-			for (let imageName of imagesToUnload) {
-				unloadSprite(imageName)
-			}
-		})
+	}
+	unloadResources() {
+		for (let soundName of this.soundsToUnload) {
+			unloadSound(soundName)
+		}
+		for (let imageName of this.imagesToUnload) {
+			unloadSprite(imageName)
+		}
+		console.log("Unloaded!")
 	}
 	roundStartAnimation() {
 		let resolvePromise
@@ -2044,7 +2048,7 @@ class Round {
 			let p = pokemonList[i]
 			let box = $(`<div class='col col-6'></div>`)
 			let chooseable = $(`<div class='chooseable m-1'></div>`)
-			let image = p.getImage()
+			let image = p.getImage("large-compressed")
 			chooseable.html(`
 				<div class='row mb-3'>
 					<div class='pokemon-text col d-flex flex-column justify-content-center'></div>
@@ -2181,8 +2185,9 @@ class Round {
 							${displayName}
 						</div>`)
 						let img = $(`<div class='pc-evolution-item-img'>
-							<img src="${pData.imageSources.large}">
+							<img>
 						</div>`)
+						img.find("img").attr("src", pData.imageSources.large)
 						section.append(img)
 						section.css("cursor", "pointer")
 
@@ -5233,10 +5238,22 @@ class Round {
 
 		let name = pokemonToShow.name
 		let pokemonId = pokemonToShow.pokemonId
-		let src = pokemonToShow.getImage()
+		let src = pokemonToShow.getImage("large-compressed")
 		let facing = pokemonToShow.data.imageFacing
 		let correctFacing = trainerIndex === 0 ? "right" : "left"
 		tags.pokemonImage.attr("src", src)
+
+		let betterSrc = pokemonToShow.getImage("large")
+		let imgName = `${pokemon.uuid}-img-large`
+		let spritePromise = loadSprite(imgName, betterSrc)
+		this.imagesToUnload.push(imgName)
+		Promise.all([delay(1000), spritePromise]).then(() => {
+			let curImage = tags.pokemonImage.attr("src")
+			if (curImage === src){
+				tags.pokemonImage.attr("src", betterSrc)
+			}
+		})
+
 		if (config["showPokemonLevel"]){
 			tags.pokemonName.text(`${name} (Lv. ${pokemonToShow.level})`)
 		} else {

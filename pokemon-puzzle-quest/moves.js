@@ -8703,8 +8703,6 @@ const pokemonMoveData = {
 			{ type: "load-value", value: 2 },
 			{ type: "multiply-numbers" },
 			{ type: "damage", additivePower: -1 },
-			{ type: "load-value", value: 1 },
-			{ type: "choose-tiles", count: -1, target: "user" },
 		],
 	},
 	//Deals damage and confuses with a chance based on Water tile count

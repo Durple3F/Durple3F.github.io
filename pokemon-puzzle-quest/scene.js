@@ -85,7 +85,7 @@ function startScene(name, options={}) {
 				}
 			}
 			const getPopover = pokemon => {
-				let image = getPokemonImage(pokemon, "large")
+				let image = getPokemonImage(pokemon, "large-compressed")
 				let html = `<div class='text-center'>${pokemon.name}
 				<div>
 				<img class='pokemon-image' src='${image}'>
@@ -106,7 +106,7 @@ function startScene(name, options={}) {
 
 					//Now add a tiny, nearly-invisible image of that pokemon
 					//(just to get the image preloaded)
-					let image = getPokemonImage(pokemon, "large")
+					let image = getPokemonImage(pokemon, "large-compressed")
 					chooseTag.append(`<img class='invisible-image' src='${image}'>`)
 				}
 
@@ -1121,9 +1121,9 @@ function startScene(name, options={}) {
 				let imageSection = $(`<div class='pokemon-image-section'>`)
 				mainSection.append(imageSection)
 
-				let url = pokemon.getImage()
+				let url = pokemon.getImage("large-compressed")
 				let pokemonImgBg = $(`<div class='pokemon-image-bg'>`)
-				pokemonImgBg.css("mask-image", `url(${url})`)
+				pokemonImgBg.css("mask-image", `url("${url}")`)
 				imageSection.append(pokemonImgBg)
 
 				let pokemonImg = $(`<img class='pokemon-image'>`)
@@ -2230,8 +2230,9 @@ function viewPokemonInfo(pokemon, options = {}) {
 				${displayName}
 			</div>`)
 			let img = $(`<div class='pc-evolution-item-img'>
-				<img src="${pData.imageSources.large}">
+				<img>
 			</div>`)
+			img.find("img").attr("src", pData.imageSources.large)
 			section.append(img)
 
 			section.popover({
