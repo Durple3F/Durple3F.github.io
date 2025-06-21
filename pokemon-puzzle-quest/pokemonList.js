@@ -11,7 +11,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0010Caterpie.png",
 			"large-compressed": "src/img/small-pokemon/0010Caterpie.webp",
 			"largeShiny": "src/img/shiny-pokemon/010-Caterpie.png",
-			"home": "src/img/tiny-pokemon/Caterpie.png"
+			"home": "src/img/home-pokemon/Caterpie.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/caterpie.mp3"
@@ -69,7 +69,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0011Metapod.png",
 			"large-compressed": "src/img/small-pokemon/0011Metapod.webp",
 			"largeShiny": "src/img/shiny-pokemon/011-Metapod.png",
-			"home": "src/img/tiny-pokemon/Metapod.png"
+			"home": "src/img/home-pokemon/Metapod.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/metapod.mp3"
@@ -125,7 +125,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0012Butterfree.png",
 			"large-compressed": "src/img/small-pokemon/0012Butterfree.webp",
 			"largeShiny": "src/img/shiny-pokemon/012-Butterfree.png",
-			"home": "src/img/tiny-pokemon/Butterfree.png"
+			"home": "src/img/home-pokemon/Butterfree.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/butterfree.mp3"
@@ -184,7 +184,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0019Rattata.png",
 			"large-compressed": "src/img/small-pokemon/0019Rattata.webp",
 			"largeShiny": "src/img/shiny-pokemon/019-Rattata.png",
-			"home": "src/img/tiny-pokemon/Rattata.png"
+			"home": "src/img/home-pokemon/Rattata.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/rattata.mp3"
@@ -244,7 +244,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0019Rattata-Alola.png",
 			"large-compressed": "src/img/small-pokemon/0019Rattata-Alola.webp",
 			"largeShiny": "src/img/shiny-pokemon/019-Rattata-Alola.png",
-			"home": "src/img/tiny-pokemon/Rattata-Alola.png"
+			"home": "src/img/home-pokemon/Rattata-Alola.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/rattata.mp3"
@@ -304,7 +304,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0020Raticate-Alola.png",
 			"large-compressed": "src/img/small-pokemon/0020Raticate-Alola.webp",
 			"largeShiny": "src/img/shiny-pokemon/020-Raticate-Alola.png",
-			"home": "src/img/tiny-pokemon/Raticate-Alola.png"
+			"home": "src/img/home-pokemon/Raticate-Alola.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/raticate.mp3"
@@ -363,7 +363,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0021Spearow.png",
 			"large-compressed": "src/img/small-pokemon/0021Spearow.webp",
 			"largeShiny": "src/img/shiny-pokemon/021-Spearow.png",
-			"home": "src/img/tiny-pokemon/Spearow.png"
+			"home": "src/img/home-pokemon/Spearow.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/spearow.mp3"
@@ -423,7 +423,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0022Fearow.png",
 			"large-compressed": "src/img/small-pokemon/0022Fearow.webp",
 			"largeShiny": "src/img/shiny-pokemon/022-Fearow.png",
-			"home": "src/img/tiny-pokemon/Fearow.png"
+			"home": "src/img/home-pokemon/Fearow.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/fearow.mp3"
@@ -483,7 +483,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0025Pikachu.png",
 			"large-compressed": "src/img/small-pokemon/0025Pikachu.webp",
 			"largeShiny": "src/img/shiny-pokemon/025-Pikachu.png",
-			"home": "src/img/tiny-pokemon/Pikachu.png"
+			"home": "src/img/home-pokemon/Pikachu.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/pikachu.mp3"
@@ -553,7 +553,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0026Raichu.png",
 			"large-compressed": "src/img/small-pokemon/0026Raichu.webp",
 			"largeShiny": "src/img/shiny-pokemon/026-Raichu.png",
-			"home": "src/img/tiny-pokemon/Raichu.png"
+			"home": "src/img/home-pokemon/Raichu.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/raichu.mp3"
@@ -621,7 +621,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0026Raichu-Alola.png",
 			"large-compressed": "src/img/small-pokemon/0026Raichu-Alola.webp",
 			"largeShiny": "src/img/shiny-pokemon/026-Raichu-Alola.png",
-			"home": "src/img/tiny-pokemon/Raichu-Alola.png"
+			"home": "src/img/home-pokemon/Raichu-Alola.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/raichu.mp3"
@@ -689,7 +689,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0027Sandshrew-Alola.png",
 			"large-compressed": "src/img/small-pokemon/0027Sandshrew-Alola.webp",
 			"largeShiny": "src/img/shiny-pokemon/027-Sandshrew-Alola.png",
-			"home": "src/img/tiny-pokemon/Sandshrew-Alola.png"
+			"home": "src/img/home-pokemon/Sandshrew-Alola.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/sandshrew.mp3"
@@ -746,7 +746,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0039Jigglypuff.png",
 			"large-compressed": "src/img/small-pokemon/0039Jigglypuff.webp",
 			"largeShiny": "src/img/shiny-pokemon/039-Jigglypuff.png",
-			"home": "src/img/tiny-pokemon/Jigglypuff.png"
+			"home": "src/img/home-pokemon/Jigglypuff.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/jigglypuff.mp3"
@@ -812,7 +812,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0040Wigglytuff.png",
 			"large-compressed": "src/img/small-pokemon/0040Wigglytuff.webp",
 			"largeShiny": "src/img/shiny-pokemon/040-Wigglytuff.png",
-			"home": "src/img/tiny-pokemon/Wigglytuff.png"
+			"home": "src/img/home-pokemon/Wigglytuff.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/wigglytuff.mp3"
@@ -878,7 +878,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0041Zubat.png",
 			"large-compressed": "src/img/small-pokemon/0041Zubat.webp",
 			"largeShiny": "src/img/shiny-pokemon/041-Zubat.png",
-			"home": "src/img/tiny-pokemon/Zubat.png"
+			"home": "src/img/home-pokemon/Zubat.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/zubat.mp3"
@@ -933,7 +933,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0042Golbat.png",
 			"large-compressed": "src/img/small-pokemon/0042Golbat.webp",
 			"largeShiny": "src/img/shiny-pokemon/042-Golbat.png",
-			"home": "src/img/tiny-pokemon/Zubat.png"
+			"home": "src/img/home-pokemon/Zubat.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/golbat.mp3"
@@ -986,7 +986,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0046Paras.png",
 			"large-compressed": "src/img/small-pokemon/0046Paras.webp",
 			"largeShiny": "src/img/shiny-pokemon/046-Paras.png",
-			"home": "src/img/tiny-pokemon/Paras.png"
+			"home": "src/img/home-pokemon/Paras.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/paras.mp3"
@@ -1041,7 +1041,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0047Parasect.png",
 			"large-compressed": "src/img/small-pokemon/0047Parasect.webp",
 			"largeShiny": "src/img/shiny-pokemon/047-Parasect.png",
-			"home": "src/img/tiny-pokemon/Parasect.png"
+			"home": "src/img/home-pokemon/Parasect.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/parasect.mp3"
@@ -1095,7 +1095,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0050Diglett-Alola.png",
 			"large-compressed": "src/img/small-pokemon/0050Diglett-Alola.webp",
 			"largeShiny": "src/img/shiny-pokemon/050-Diglett-Alola.png",
-			"home": "src/img/tiny-pokemon/Diglett-Alola.png"
+			"home": "src/img/home-pokemon/Diglett-Alola.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/diglett.mp3"
@@ -1151,7 +1151,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0051Dugtrio-Alola.png",
 			"large-compressed": "src/img/small-pokemon/0051Dugtrio-Alola.webp",
 			"largeShiny": "src/img/shiny-pokemon/051-Dugtrio-Alola.png",
-			"home": "src/img/tiny-pokemon/Dugtrio-Alola.png"
+			"home": "src/img/home-pokemon/Dugtrio-Alola.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/dugtrio.mp3"
@@ -1208,7 +1208,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0052Meowth-Alola.png",
 			"large-compressed": "src/img/small-pokemon/0052Meowth-Alola.webp",
 			"largeShiny": "src/img/shiny-pokemon/052-Meowth-Alola.png",
-			"home": "src/img/tiny-pokemon/Meowth-Alola.png"
+			"home": "src/img/home-pokemon/Meowth-Alola.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/meowth.mp3"
@@ -1267,7 +1267,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0053Persian-Alola.png",
 			"large-compressed": "src/img/small-pokemon/0053Persian-Alola.webp",
 			"largeShiny": "src/img/shiny-pokemon/053-Persian-Alola.png",
-			"home": "src/img/tiny-pokemon/Persian-Alola.png"
+			"home": "src/img/home-pokemon/Persian-Alola.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/persian.mp3"
@@ -1325,7 +1325,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0054Psyduck.png",
 			"large-compressed": "src/img/small-pokemon/0054Psyduck.webp",
 			"largeShiny": "src/img/shiny-pokemon/054-Psyduck.png",
-			"home": "src/img/tiny-pokemon/Psyduck.png"
+			"home": "src/img/home-pokemon/Psyduck.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/psyduck.mp3"
@@ -1382,7 +1382,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0055Golduck.png",
 			"large-compressed": "src/img/small-pokemon/0055Golduck.webp",
 			"largeShiny": "src/img/shiny-pokemon/055-Golduck.png",
-			"home": "src/img/tiny-pokemon/Golduck.png"
+			"home": "src/img/home-pokemon/Golduck.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/golduck.mp3"
@@ -1437,7 +1437,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0056Mankey.png",
 			"large-compressed": "src/img/small-pokemon/0056Mankey.webp",
 			"largeShiny": "src/img/shiny-pokemon/056-Mankey.png",
-			"home": "src/img/tiny-pokemon/Mankey.png"
+			"home": "src/img/home-pokemon/Mankey.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/mankey.mp3"
@@ -1492,7 +1492,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0058Growlithe.png",
 			"large-compressed": "src/img/small-pokemon/0058Growlithe.webp",
 			"largeShiny": "src/img/shiny-pokemon/058-Growlithe.png",
-			"home": "src/img/tiny-pokemon/Growlithe.png"
+			"home": "src/img/home-pokemon/Growlithe.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/growlithe.mp3"
@@ -1547,7 +1547,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0059Arcanine.png",
 			"large-compressed": "src/img/small-pokemon/0059Arcanine.webp",
 			"largeShiny": "src/img/shiny-pokemon/059-Arcanine.png",
-			"home": "src/img/tiny-pokemon/Arcanine.png"
+			"home": "src/img/home-pokemon/Arcanine.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/arcanine.mp3"
@@ -1609,7 +1609,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0060Poliwag.png",
 			"large-compressed": "src/img/small-pokemon/0060Poliwag.webp",
 			"largeShiny": "src/img/shiny-pokemon/060-Poliwag.png",
-			"home": "src/img/tiny-pokemon/Poliwag.png"
+			"home": "src/img/home-pokemon/Poliwag.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/poliwag.mp3"
@@ -1663,7 +1663,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0061Poliwhirl.png",
 			"large-compressed": "src/img/small-pokemon/0061Poliwhirl.webp",
 			"largeShiny": "src/img/shiny-pokemon/061-Poliwhirl.png",
-			"home": "src/img/tiny-pokemon/Poliwhirl.png"
+			"home": "src/img/home-pokemon/Poliwhirl.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/poliwhirl.mp3"
@@ -1715,7 +1715,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0063Abra.png",
 			"large-compressed": "src/img/small-pokemon/0063Abra.webp",
 			"largeShiny": "src/img/shiny-pokemon/063-Abra.png",
-			"home": "src/img/tiny-pokemon/Abra.png"
+			"home": "src/img/home-pokemon/Abra.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/abra.mp3"
@@ -1763,7 +1763,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0064Kadabra.png",
 			"large-compressed": "src/img/small-pokemon/0064Kadabra.webp",
 			"largeShiny": "src/img/shiny-pokemon/064-Kadabra.png",
-			"home": "src/img/tiny-pokemon/Kadabra.png"
+			"home": "src/img/home-pokemon/Kadabra.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/kadabra.mp3"
@@ -1813,7 +1813,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0066Machop.png",
 			"large-compressed": "src/img/small-pokemon/0066Machop.webp",
 			"largeShiny": "src/img/shiny-pokemon/066-Machop.png",
-			"home": "src/img/tiny-pokemon/Machop.png"
+			"home": "src/img/home-pokemon/Machop.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/machop.mp3"
@@ -1870,7 +1870,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0067Machoke.png",
 			"large-compressed": "src/img/small-pokemon/0067Machoke.webp",
 			"largeShiny": "src/img/shiny-pokemon/067-Machoke.png",
-			"home": "src/img/tiny-pokemon/Machoke.png"
+			"home": "src/img/home-pokemon/Machoke.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/machoke.mp3"
@@ -1924,7 +1924,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0072Tentacool.png",
 			"large-compressed": "src/img/small-pokemon/0072Tentacool.webp",
 			"largeShiny": "src/img/shiny-pokemon/072-Tentacool.png",
-			"home": "src/img/tiny-pokemon/Tentacool.png"
+			"home": "src/img/home-pokemon/Tentacool.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/tentacool.mp3"
@@ -1981,7 +1981,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0073Tentacruel.png",
 			"large-compressed": "src/img/small-pokemon/0073Tentacruel.webp",
 			"largeShiny": "src/img/shiny-pokemon/073-Tentacruel.png",
-			"home": "src/img/tiny-pokemon/Tentacruel.png"
+			"home": "src/img/home-pokemon/Tentacruel.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/tentacruel.mp3"
@@ -2036,7 +2036,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0079Slowpoke.png",
 			"large-compressed": "src/img/small-pokemon/0079Slowpoke.webp",
 			"largeShiny": "src/img/shiny-pokemon/079-Slowpoke.png",
-			"home": "src/img/tiny-pokemon/Slowpoke.png"
+			"home": "src/img/home-pokemon/Slowpoke.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/slowpoke.mp3"
@@ -2091,7 +2091,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0081Magnemite.png",
 			"large-compressed": "src/img/small-pokemon/0081Magnemite.webp",
 			"largeShiny": "src/img/shiny-pokemon/081-Magnemite.png",
-			"home": "src/img/tiny-pokemon/Magnemite.png"
+			"home": "src/img/home-pokemon/Magnemite.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/magnemite.mp3"
@@ -2144,7 +2144,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0088Grimer-Alola.png",
 			"large-compressed": "src/img/small-pokemon/0088Grimer-Alola.webp",
 			"largeShiny": "src/img/shiny-pokemon/088-Grimer-Alola.png",
-			"home": "src/img/tiny-pokemon/Grimer-Alola.png"
+			"home": "src/img/home-pokemon/Grimer-Alola.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/grimer.mp3"
@@ -2198,7 +2198,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0092Gastly.png",
 			"large-compressed": "src/img/small-pokemon/0092Gastly.webp",
 			"largeShiny": "src/img/shiny-pokemon/092-Gastly.png",
-			"home": "src/img/tiny-pokemon/Gastly.png"
+			"home": "src/img/home-pokemon/Gastly.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/gastly.mp3"
@@ -2253,7 +2253,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0093Haunter.png",
 			"large-compressed": "src/img/small-pokemon/0093Haunter.webp",
 			"largeShiny": "src/img/shiny-pokemon/093-Haunter.png",
-			"home": "src/img/tiny-pokemon/Haunter.png"
+			"home": "src/img/home-pokemon/Haunter.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/haunter.mp3"
@@ -2307,7 +2307,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0096Drowzee.png",
 			"large-compressed": "src/img/small-pokemon/0096Drowzee.webp",
 			"largeShiny": "src/img/shiny-pokemon/096-Drowzee.png",
-			"home": "src/img/tiny-pokemon/Drowzee.png"
+			"home": "src/img/home-pokemon/Drowzee.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/grimer.mp3"
@@ -2361,7 +2361,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0097Hypno.png",
 			"large-compressed": "src/img/small-pokemon/0097Hypno.webp",
 			"largeShiny": "src/img/shiny-pokemon/097-Hypno.png",
-			"home": "src/img/tiny-pokemon/Hypno.png"
+			"home": "src/img/home-pokemon/Hypno.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/hypno.mp3"
@@ -2414,7 +2414,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0100Voltorb.png",
 			"large-compressed": "src/img/small-pokemon/0100Voltorb.webp",
 			"largeShiny": "src/img/shiny-pokemon/100-Voltorb.png",
-			"home": "src/img/tiny-pokemon/Voltorb.png"
+			"home": "src/img/home-pokemon/Voltorb.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/voltorb.mp3"
@@ -2470,7 +2470,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0106Hitmonlee.png",
 			"large-compressed": "src/img/small-pokemon/0106Hitmonlee.webp",
 			"largeShiny": "src/img/shiny-pokemon/106-Hitmonlee.png",
-			"home": "src/img/tiny-pokemon/Hitmonlee.png"
+			"home": "src/img/home-pokemon/Hitmonlee.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/hitmonlee.mp3"
@@ -2525,7 +2525,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0113Chansey.png",
 			"large-compressed": "src/img/small-pokemon/0113Chansey.webp",
 			"largeShiny": "src/img/shiny-pokemon/113-Chansey.png",
-			"home": "src/img/tiny-pokemon/Chansey.png"
+			"home": "src/img/home-pokemon/Chansey.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/chansey.mp3"
@@ -2583,7 +2583,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0118Goldeen.png",
 			"large-compressed": "src/img/small-pokemon/0118Goldeen.webp",
 			"largeShiny": "src/img/shiny-pokemon/118-Goldeen.png",
-			"home": "src/img/tiny-pokemon/Goldeen.png"
+			"home": "src/img/home-pokemon/Goldeen.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/goldeen.mp3"
@@ -2638,7 +2638,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0119Seaking.png",
 			"large-compressed": "src/img/small-pokemon/0119Seaking.webp",
 			"largeShiny": "src/img/shiny-pokemon/119-Seaking.png",
-			"home": "src/img/tiny-pokemon/Seaking.png"
+			"home": "src/img/home-pokemon/Seaking.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/seaking.mp3"
@@ -2690,7 +2690,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0120Staryu.png",
 			"large-compressed": "src/img/small-pokemon/0120Staryu.webp",
 			"largeShiny": "src/img/shiny-pokemon/120-Staryu.png",
-			"home": "src/img/tiny-pokemon/Staryu.png"
+			"home": "src/img/home-pokemon/Staryu.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/staryu.mp3"
@@ -2747,7 +2747,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0128Tauros.png",
 			"large-compressed": "src/img/small-pokemon/0128Tauros.webp",
 			"largeShiny": "src/img/shiny-pokemon/128-Tauros.png",
-			"home": "src/img/tiny-pokemon/Tauros.png"
+			"home": "src/img/home-pokemon/Tauros.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/tauros.mp3"
@@ -2801,7 +2801,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0129Magikarp.png",
 			"large-compressed": "src/img/small-pokemon/0129Magikarp.webp",
 			"largeShiny": "src/img/shiny-pokemon/129-Magikarp.png",
-			"home": "src/img/tiny-pokemon/Magikarp.png"
+			"home": "src/img/home-pokemon/Magikarp.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/magikarp.mp3"
@@ -2848,7 +2848,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0133Eevee.png",
 			"large-compressed": "src/img/small-pokemon/0133Eevee.webp",
 			"largeShiny": "src/img/shiny-pokemon/133-Eevee.png",
-			"home": "src/img/tiny-pokemon/Eevee.png"
+			"home": "src/img/home-pokemon/Eevee.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/eevee.mp3"
@@ -2917,7 +2917,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0165Ledyba.png",
 			"large-compressed": "src/img/small-pokemon/0165Ledyba.webp",
 			"largeShiny": "src/img/shiny-pokemon/165-Ledyba.png",
-			"home": "src/img/tiny-pokemon/Ledyba.png"
+			"home": "src/img/home-pokemon/Ledyba.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/ledyba.mp3"
@@ -2974,7 +2974,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0166Ledian.png",
 			"large-compressed": "src/img/small-pokemon/0166Ledian.webp",
 			"largeShiny": "src/img/shiny-pokemon/166-Ledian.png",
-			"home": "src/img/tiny-pokemon/Ledian.png"
+			"home": "src/img/home-pokemon/Ledian.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/ledyba.mp3"
@@ -3031,7 +3031,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0167Spinarak.png",
 			"large-compressed": "src/img/small-pokemon/0167Spinarak.webp",
 			"largeShiny": "src/img/shiny-pokemon/167-Spinarak.png",
-			"home": "src/img/tiny-pokemon/Spinarak.png"
+			"home": "src/img/home-pokemon/Spinarak.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/spinarak.mp3"
@@ -3087,7 +3087,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0168Ariados.png",
 			"large-compressed": "src/img/small-pokemon/0168Ariados.webp",
 			"largeShiny": "src/img/shiny-pokemon/168-Ariados.png",
-			"home": "src/img/tiny-pokemon/Ariados.png"
+			"home": "src/img/home-pokemon/Ariados.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/ariados.mp3"
@@ -3147,7 +3147,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0172Pichu.png",
 			"large-compressed": "src/img/small-pokemon/0172Pichu.webp",
 			"largeShiny": "src/img/shiny-pokemon/172-Pichu.png",
-			"home": "src/img/tiny-pokemon/Pichu.png"
+			"home": "src/img/home-pokemon/Pichu.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/pichu.mp3"
@@ -3202,7 +3202,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0174Igglybuff.png",
 			"large-compressed": "src/img/small-pokemon/0174Igglybuff.webp",
 			"largeShiny": "src/img/shiny-pokemon/174-Igglybuff.png",
-			"home": "src/img/tiny-pokemon/Igglybuff.png"
+			"home": "src/img/home-pokemon/Igglybuff.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/igglybuff.mp3"
@@ -3258,7 +3258,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0179Mareep.png",
 			"large-compressed": "src/img/small-pokemon/0179Mareep.webp",
 			"largeShiny": "src/img/shiny-pokemon/179-Mareep.png",
-			"home": "src/img/tiny-pokemon/Mareep.png"
+			"home": "src/img/home-pokemon/Mareep.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/mareep.mp3"
@@ -3316,7 +3316,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0180Flaaffy.png",
 			"large-compressed": "src/img/small-pokemon/0180Flaaffy.webp",
 			"largeShiny": "src/img/shiny-pokemon/180-Flaaffy.png",
-			"home": "src/img/tiny-pokemon/Flaaffy.png"
+			"home": "src/img/home-pokemon/Flaaffy.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/flaaffy.mp3"
@@ -3375,7 +3375,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0181Ampharos.png",
 			"large-compressed": "src/img/small-pokemon/0181Ampharos.webp",
 			"largeShiny": "src/img/shiny-pokemon/181-Ampharos.png",
-			"home": "src/img/tiny-pokemon/Ampharos.png"
+			"home": "src/img/home-pokemon/Ampharos.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/ampharos.mp3"
@@ -3436,7 +3436,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0196Espeon.png",
 			"large-compressed": "src/img/small-pokemon/0196Espeon.webp",
 			"largeShiny": "src/img/shiny-pokemon/196-Espeon.png",
-			"home": "src/img/tiny-pokemon/Espeon.png"
+			"home": "src/img/home-pokemon/Espeon.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/espeon.mp3"
@@ -3498,7 +3498,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0198Murkrow.png",
 			"large-compressed": "src/img/small-pokemon/0198Murkrow.webp",
 			"largeShiny": "src/img/shiny-pokemon/198-Murkrow.png",
-			"home": "src/img/tiny-pokemon/Murkrow.png"
+			"home": "src/img/home-pokemon/Murkrow.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/murkrow.mp3"
@@ -3556,7 +3556,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0200Misdreavus.png",
 			"large-compressed": "src/img/small-pokemon/0200Misdreavus.webp",
 			"largeShiny": "src/img/shiny-pokemon/200-Misdreavus.png",
-			"home": "src/img/tiny-pokemon/Misdreavus.png"
+			"home": "src/img/home-pokemon/Misdreavus.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/misdreavus.mp3"
@@ -3611,7 +3611,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0225Delibird.png",
 			"large-compressed": "src/img/small-pokemon/0225Delibird.webp",
 			"largeShiny": "src/img/shiny-pokemon/225-Delibird.png",
-			"home": "src/img/tiny-pokemon/Delibird.png"
+			"home": "src/img/home-pokemon/Delibird.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/delibird.mp3"
@@ -3662,7 +3662,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0228Houndour.png",
 			"large-compressed": "src/img/small-pokemon/0228Houndour.webp",
 			"largeShiny": "src/img/shiny-pokemon/228-Houndour.png",
-			"home": "src/img/tiny-pokemon/Houndour.png"
+			"home": "src/img/home-pokemon/Houndour.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/houndour.mp3"
@@ -3717,7 +3717,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0235Smeargle.png",
 			"large-compressed": "src/img/small-pokemon/0235Smeargle.webp",
 			"largeShiny": "src/img/shiny-pokemon/235-Smeargle.png",
-			"home": "src/img/tiny-pokemon/Smeargle.png"
+			"home": "src/img/home-pokemon/Smeargle.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/smeargle.mp3"
@@ -3773,7 +3773,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0238Smoochum.png",
 			"large-compressed": "src/img/small-pokemon/0238Smoochum.webp",
 			"largeShiny": "src/img/shiny-pokemon/238-Smoochum.png",
-			"home": "src/img/tiny-pokemon/Smoochum.png"
+			"home": "src/img/home-pokemon/Smoochum.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/smoochum.mp3"
@@ -3825,7 +3825,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0240Magby.png",
 			"large-compressed": "src/img/small-pokemon/0240Magby.webp",
 			"largeShiny": "src/img/shiny-pokemon/240-Magby.png",
-			"home": "src/img/tiny-pokemon/Magby.png"
+			"home": "src/img/home-pokemon/Magby.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/magby.mp3"
@@ -3878,7 +3878,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0241Miltank.png",
 			"large-compressed": "src/img/small-pokemon/0241Miltank.webp",
 			"largeShiny": "src/img/shiny-pokemon/241-Miltank.png",
-			"home": "src/img/tiny-pokemon/Miltank.png"
+			"home": "src/img/home-pokemon/Miltank.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/miltank.mp3"
@@ -3932,7 +3932,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0261Poochyena.png",
 			"large-compressed": "src/img/small-pokemon/0261Poochyena.webp",
 			"largeShiny": "src/img/shiny-pokemon/261-Poochyena.png",
-			"home": "src/img/tiny-pokemon/Poochyena.png"
+			"home": "src/img/home-pokemon/Poochyena.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/poochyena.mp3"
@@ -3992,7 +3992,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0278Wingull.png",
 			"large-compressed": "src/img/small-pokemon/0278Wingull.webp",
 			"largeShiny": "src/img/shiny-pokemon/278-Wingull.png",
-			"home": "src/img/tiny-pokemon/Wingull.png"
+			"home": "src/img/home-pokemon/Wingull.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/wingull.mp3"
@@ -4051,7 +4051,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0279Pelipper.png",
 			"large-compressed": "src/img/small-pokemon/0279Pelipper.webp",
 			"largeShiny": "src/img/shiny-pokemon/279-Pelipper.png",
-			"home": "src/img/tiny-pokemon/Pelipper.png"
+			"home": "src/img/home-pokemon/Pelipper.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/pelipper.mp3"
@@ -4114,7 +4114,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0283Surskit.png",
 			"large-compressed": "src/img/small-pokemon/0283Surskit.webp",
 			"largeShiny": "src/img/shiny-pokemon/283-Surskit.png",
-			"home": "src/img/tiny-pokemon/Surskit.png"
+			"home": "src/img/home-pokemon/Surskit.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/surskit.mp3"
@@ -4172,7 +4172,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0284Masquerain.png",
 			"large-compressed": "src/img/small-pokemon/0284Masquerain.webp",
 			"largeShiny": "src/img/shiny-pokemon/284-Masquerain.png",
-			"home": "src/img/tiny-pokemon/Masquerain.png"
+			"home": "src/img/home-pokemon/Masquerain.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/masquerain.mp3"
@@ -4227,7 +4227,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0296Makuhita.png",
 			"large-compressed": "src/img/small-pokemon/0296Makuhita.webp",
 			"largeShiny": "src/img/shiny-pokemon/296-Makuhita.png",
-			"home": "src/img/tiny-pokemon/Makuhita.png"
+			"home": "src/img/home-pokemon/Makuhita.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/makuhita.mp3"
@@ -4284,7 +4284,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0297Hariyama.png",
 			"large-compressed": "src/img/small-pokemon/0297Hariyama.webp",
 			"largeShiny": "src/img/shiny-pokemon/297-Hariyama.png",
-			"home": "src/img/tiny-pokemon/Hariyama.png"
+			"home": "src/img/home-pokemon/Hariyama.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/hariyama.mp3"
@@ -4340,7 +4340,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0302Sableye.png",
 			"large-compressed": "src/img/small-pokemon/0302Sableye.webp",
 			"largeShiny": "src/img/shiny-pokemon/302-Sableye.png",
-			"home": "src/img/tiny-pokemon/Sableye.png"
+			"home": "src/img/home-pokemon/Sableye.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/sableye.mp3"
@@ -4393,7 +4393,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0303Mawile.png",
 			"large-compressed": "src/img/small-pokemon/0303Mawile.webp",
 			"largeShiny": "src/img/shiny-pokemon/303-Mawile.png",
-			"home": "src/img/tiny-pokemon/Mawile.png"
+			"home": "src/img/home-pokemon/Mawile.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/mawile.mp3"
@@ -4451,7 +4451,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0315Roselia.png",
 			"large-compressed": "src/img/small-pokemon/0315Roselia.webp",
 			"largeShiny": "src/img/shiny-pokemon/315-Roselia.png",
-			"home": "src/img/tiny-pokemon/Roselia.png"
+			"home": "src/img/home-pokemon/Roselia.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/roselia.mp3"
@@ -4516,7 +4516,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0327Spinda.png",
 			"large-compressed": "src/img/small-pokemon/0327Spinda.webp",
 			"largeShiny": "src/img/shiny-pokemon/327-Spinda.png",
-			"home": "src/img/tiny-pokemon/Spinda.png"
+			"home": "src/img/home-pokemon/Spinda.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/spinda.mp3"
@@ -4572,7 +4572,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0339Barboach.png",
 			"large-compressed": "src/img/small-pokemon/0339Barboach.webp",
 			"largeShiny": "src/img/shiny-pokemon/339-Barboach.png",
-			"home": "src/img/tiny-pokemon/Barboach.png"
+			"home": "src/img/home-pokemon/Barboach.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/barboach.mp3"
@@ -4628,7 +4628,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0340Whiscash.png",
 			"large-compressed": "src/img/small-pokemon/0340Whiscash.webp",
 			"largeShiny": "src/img/shiny-pokemon/340-Whiscash.png",
-			"home": "src/img/tiny-pokemon/Whiscash.png"
+			"home": "src/img/home-pokemon/Whiscash.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/whiscash.mp3"
@@ -4685,7 +4685,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0371Bagon.png",
 			"large-compressed": "src/img/small-pokemon/0371Bagon.webp",
 			"largeShiny": "src/img/shiny-pokemon/371-Bagon.png",
-			"home": "src/img/tiny-pokemon/Bagon.png"
+			"home": "src/img/home-pokemon/Bagon.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/bagon.mp3"
@@ -4739,7 +4739,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0406Budew.png",
 			"large-compressed": "src/img/small-pokemon/0406Budew.webp",
 			"largeShiny": "src/img/shiny-pokemon/406-Budew.png",
-			"home": "src/img/tiny-pokemon/Budew.png"
+			"home": "src/img/home-pokemon/Budew.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/budew.mp3"
@@ -4790,7 +4790,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0407Roserade.png",
 			"large-compressed": "src/img/small-pokemon/0407Roserade.webp",
 			"largeShiny": "src/img/shiny-pokemon/407-Roserade.png",
-			"home": "src/img/tiny-pokemon/Roserade.png"
+			"home": "src/img/home-pokemon/Roserade.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/roserade.mp3"
@@ -4856,7 +4856,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0421Cherrim.png",
 			"large-compressed": "src/img/small-pokemon/0421Cherrim.webp",
 			"largeShiny": "src/img/shiny-pokemon/421-Cherrim-Overcast.png",
-			"home": "src/img/tiny-pokemon/Drifloon.png"
+			"home": "src/img/home-pokemon/Drifloon.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/cherrim.mp3"
@@ -4871,7 +4871,7 @@ const pokemonData = {
 					"large": "src/img/pokemon/0421Cherrim.png",
 					"large-compressed": "src/img/small-pokemon/0421Cherrim.webp",
 					"largeShiny": "src/img/shiny-pokemon/421-Cherrim-Overcast.png",
-					"home": "src/img/tiny-pokemon/Cherrim-Overcast.png"
+					"home": "src/img/home-pokemon/Cherrim-Overcast.png"
 				},
 			},
 			"Sunshine": {
@@ -4880,7 +4880,7 @@ const pokemonData = {
 					"large": "src/img/pokemon/0421Cherrim-Sunshine.png",
 					"large-compressed": "src/img/small-pokemon/0421Cherrim-Sunshine.webp",
 					"largeShiny": "src/img/shiny-pokemon/421-Cherrim-Sunny.png",
-					"home": "src/img/tiny-pokemon/Cherrim-Sunshine.png"
+					"home": "src/img/home-pokemon/Cherrim-Sunshine.png"
 				},
 			},
 		},
@@ -4935,7 +4935,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0425Drifloon.png",
 			"large-compressed": "src/img/small-pokemon/0425Drifloon.webp",
 			"largeShiny": "src/img/shiny-pokemon/425-Drifloon.png",
-			"home": "src/img/tiny-pokemon/Drifloon.png"
+			"home": "src/img/home-pokemon/Drifloon.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/drifloon.mp3"
@@ -4990,7 +4990,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0426Drifblim.png",
 			"large-compressed": "src/img/small-pokemon/0426Drifblim.webp",
 			"largeShiny": "src/img/shiny-pokemon/426-Drifblim.png",
-			"home": "src/img/tiny-pokemon/Drifblim.png"
+			"home": "src/img/home-pokemon/Drifblim.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/drifblim.mp3"
@@ -5048,7 +5048,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0429Mismagius.png",
 			"large-compressed": "src/img/small-pokemon/0429Mismagius.webp",
 			"largeShiny": "src/img/shiny-pokemon/429-Mismagius.png",
-			"home": "src/img/tiny-pokemon/Mismagius.png"
+			"home": "src/img/home-pokemon/Mismagius.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/mismagius.mp3"
@@ -5100,7 +5100,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0430Honchkrow.png",
 			"large-compressed": "src/img/small-pokemon/0430Honchkrow.webp",
 			"largeShiny": "src/img/shiny-pokemon/430-Honchkrow.png",
-			"home": "src/img/tiny-pokemon/Honchkrow.png"
+			"home": "src/img/home-pokemon/Honchkrow.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/honchkrow.mp3"
@@ -5155,7 +5155,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0438Bonsly.png",
 			"large-compressed": "src/img/small-pokemon/0438Bonsly.webp",
 			"largeShiny": "src/img/shiny-pokemon/438-Bonsly.png",
-			"home": "src/img/tiny-pokemon/Bonsly.png"
+			"home": "src/img/home-pokemon/Bonsly.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/bonsly.mp3"
@@ -5207,7 +5207,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0440Happiny.png",
 			"large-compressed": "src/img/small-pokemon/0440Happiny.webp",
 			"largeShiny": "src/img/shiny-pokemon/440-Happiny.png",
-			"home": "src/img/tiny-pokemon/Happiny.png"
+			"home": "src/img/home-pokemon/Happiny.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/happiny.mp3"
@@ -5263,7 +5263,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0456Finneon.png",
 			"large-compressed": "src/img/small-pokemon/0456Finneon.webp",
 			"largeShiny": "src/img/shiny-pokemon/456-Finneon.png",
-			"home": "src/img/tiny-pokemon/Finneon.png"
+			"home": "src/img/home-pokemon/Finneon.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/finneon.mp3"
@@ -5314,7 +5314,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0471Glaceon.png",
 			"large-compressed": "src/img/small-pokemon/0471Glaceon.webp",
 			"largeShiny": "src/img/shiny-pokemon/471-Glaceon.png",
-			"home": "src/img/tiny-pokemon/Glaceon.png"
+			"home": "src/img/home-pokemon/Glaceon.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/glaceon.mp3"
@@ -5376,7 +5376,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0506Lillipup.png",
 			"large-compressed": "src/img/small-pokemon/0506Lillipup.webp",
 			"largeShiny": "src/img/shiny-pokemon/506-Lillipup.png",
-			"home": "src/img/tiny-pokemon/Lillipup.png"
+			"home": "src/img/home-pokemon/Lillipup.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/lillipup.mp3"
@@ -5436,7 +5436,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0507Herdier.png",
 			"large-compressed": "src/img/small-pokemon/0507Herdier.webp",
 			"largeShiny": "src/img/shiny-pokemon/507-Herdier.png",
-			"home": "src/img/tiny-pokemon/Herdier.png"
+			"home": "src/img/home-pokemon/Herdier.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/herdier.mp3"
@@ -5497,7 +5497,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0508Stoutland.png",
 			"large-compressed": "src/img/small-pokemon/0508Stoutland.webp",
 			"largeShiny": "src/img/shiny-pokemon/508-Stoutland.png",
-			"home": "src/img/tiny-pokemon/Stoutland.png"
+			"home": "src/img/home-pokemon/Stoutland.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/stoutland.mp3"
@@ -5558,7 +5558,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0524Roggenrola.png",
 			"large-compressed": "src/img/small-pokemon/0524Roggenrola.webp",
 			"largeShiny": "src/img/shiny-pokemon/524-Roggenrola.png",
-			"home": "src/img/tiny-pokemon/Roggenrola.png"
+			"home": "src/img/home-pokemon/Roggenrola.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/roggenrola.mp3"
@@ -5613,7 +5613,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0525Boldore.png",
 			"large-compressed": "src/img/small-pokemon/0525Boldore.webp",
 			"largeShiny": "src/img/shiny-pokemon/525-Boldore.png",
-			"home": "src/img/tiny-pokemon/Boldore.png"
+			"home": "src/img/home-pokemon/Boldore.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/boldore.mp3"
@@ -5667,7 +5667,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0546Cottonee.png",
 			"large-compressed": "src/img/small-pokemon/0546Cottonee.webp",
 			"largeShiny": "src/img/shiny-pokemon/546-Cottonee.png",
-			"home": "src/img/tiny-pokemon/Cottonee.png"
+			"home": "src/img/home-pokemon/Cottonee.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/cottonee.mp3"
@@ -5726,7 +5726,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0547Whimsicott.png",
 			"large-compressed": "src/img/small-pokemon/0547Whimsicott.webp",
 			"largeShiny": "src/img/shiny-pokemon/547-Whimsicott.png",
-			"home": "src/img/tiny-pokemon/Whimsicott.png"
+			"home": "src/img/home-pokemon/Whimsicott.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/whimsicott.mp3"
@@ -5797,7 +5797,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0548Petilil.png",
 			"large-compressed": "src/img/small-pokemon/0548Petilil.webp",
 			"largeShiny": "src/img/shiny-pokemon/548-Petilil.png",
-			"home": "src/img/tiny-pokemon/Petilil.png"
+			"home": "src/img/home-pokemon/Petilil.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/petilil.mp3"
@@ -5856,7 +5856,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0549Lilligant.png",
 			"large-compressed": "src/img/small-pokemon/0549Lilligant.webp",
 			"largeShiny": "src/img/shiny-pokemon/549-Lilligant.png",
-			"home": "src/img/tiny-pokemon/Lilligant.png"
+			"home": "src/img/home-pokemon/Lilligant.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/lilligant.mp3"
@@ -5925,7 +5925,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0549Lilligant-Hisui.png",
 			"large-compressed": "src/img/small-pokemon/0549Lilligant-Hisui.webp",
 			"largeShiny": "src/img/shiny-pokemon/549-Lilligant-Hisui.png",
-			"home": "src/img/tiny-pokemon/Lilligant-Hisui.png"
+			"home": "src/img/home-pokemon/Lilligant-Hisui.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/lilligant.mp3"
@@ -6003,7 +6003,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0570Zorua.png",
 			"large-compressed": "src/img/small-pokemon/0570Zorua.webp",
 			"largeShiny": "src/img/shiny-pokemon/570-Zorua.png",
-			"home": "src/img/tiny-pokemon/Zorua.png"
+			"home": "src/img/home-pokemon/Zorua.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/zorua.mp3"
@@ -6061,7 +6061,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0572Minccino.png",
 			"large-compressed": "src/img/small-pokemon/0572Minccino.webp",
 			"largeShiny": "src/img/shiny-pokemon/572-Minccino.png",
-			"home": "src/img/tiny-pokemon/Minccino.png"
+			"home": "src/img/home-pokemon/Minccino.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/minccino.mp3"
@@ -6114,7 +6114,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0594Alomomola.png",
 			"large-compressed": "src/img/small-pokemon/0594Alomomola.webp",
 			"largeShiny": "src/img/shiny-pokemon/594-Alomomola.png",
-			"home": "src/img/tiny-pokemon/Alomomola.png"
+			"home": "src/img/home-pokemon/Alomomola.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/alomomola.mp3"
@@ -6168,7 +6168,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0777Togedemaru.png",
 			"large-compressed": "src/img/small-pokemon/0777Togedemaru.webp",
 			"largeShiny": "src/img/shiny-pokemon/599-Klink.png",
-			"home": "src/img/tiny-pokemon/Klink.png"
+			"home": "src/img/home-pokemon/Klink.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/klink.mp3"
@@ -6222,7 +6222,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0627Rufflet.png",
 			"large-compressed": "src/img/small-pokemon/0627Rufflet.webp",
 			"largeShiny": "src/img/shiny-pokemon/627-Rufflet.png",
-			"home": "src/img/tiny-pokemon/Rufflet.png"
+			"home": "src/img/home-pokemon/Rufflet.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/rufflet.mp3"
@@ -6275,7 +6275,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0629Vullaby.png",
 			"large-compressed": "src/img/small-pokemon/0629Vullaby.webp",
 			"largeShiny": "src/img/shiny-pokemon/629-Vullaby.png",
-			"home": "src/img/tiny-pokemon/Vullaby.png"
+			"home": "src/img/home-pokemon/Vullaby.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/vullaby.mp3"
@@ -6328,7 +6328,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0661Fletchling.png",
 			"large-compressed": "src/img/small-pokemon/0661Fletchling.webp",
 			"largeShiny": "src/img/shiny-pokemon/661-Fletchling.png",
-			"home": "src/img/tiny-pokemon/Fletchling.png"
+			"home": "src/img/home-pokemon/Fletchling.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/seaking.mp3"
@@ -6383,7 +6383,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0667Litleo.png",
 			"large-compressed": "src/img/small-pokemon/0667Litleo.webp",
 			"largeShiny": "src/img/shiny-pokemon/667-Litleo.png",
-			"home": "src/img/tiny-pokemon/Litleo.png"
+			"home": "src/img/home-pokemon/Litleo.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/litleo.mp3"
@@ -6437,7 +6437,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0674Pancham.png",
 			"large-compressed": "src/img/small-pokemon/0674Pancham.webp",
 			"largeShiny": "src/img/shiny-pokemon/674-Pancham.png",
-			"home": "src/img/tiny-pokemon/Pancham.png"
+			"home": "src/img/home-pokemon/Pancham.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/pancham.mp3"
@@ -6494,7 +6494,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0675Pangoro.png",
 			"large-compressed": "src/img/small-pokemon/0675Pangoro.webp",
 			"largeShiny": "src/img/shiny-pokemon/675-Pangoro.png",
-			"home": "src/img/tiny-pokemon/Pangoro.png"
+			"home": "src/img/home-pokemon/Pangoro.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/pangoro.mp3"
@@ -6549,7 +6549,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0676Furfrou.png",
 			"large-compressed": "src/img/small-pokemon/0676Furfrou.webp",
 			"largeShiny": "src/img/shiny-pokemon/676-Furfrou.png",
-			"home": "src/img/tiny-pokemon/Furfrou.png"
+			"home": "src/img/home-pokemon/Furfrou.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/furfrou.mp3"
@@ -6563,7 +6563,7 @@ const pokemonData = {
 					"large": "src/img/pokemon/0676Furfrou.png",
 					"large-compressed": "src/img/small-pokemon/0676Furfrou.webp",
 					"largeShiny": "src/img/shiny-pokemon/676-Furfrou.png",
-					"home": "src/img/tiny-pokemon/Furfrou.png"
+					"home": "src/img/home-pokemon/Furfrou.png"
 				},
 			},
 			"Diamond": {
@@ -6572,7 +6572,7 @@ const pokemonData = {
 					"large": "src/img/pokemon/0676Furfrou-Diamond.png",
 					"large-compressed": "src/img/small-pokemon/0676Furfrou-Diamond.webp",
 					"largeShiny": "src/img/shiny-pokemon/676-Furfrou.png",
-					"home": "src/img/tiny-pokemon/Furfrou-Diamond.png"
+					"home": "src/img/home-pokemon/Furfrou-Diamond.png"
 				},
 			},
 			"Heart": {
@@ -6581,7 +6581,7 @@ const pokemonData = {
 					"large": "src/img/pokemon/0676Furfrou-Heart.png",
 					"large-compressed": "src/img/small-pokemon/0676Furfrou-Heart.webp",
 					"largeShiny": "src/img/shiny-pokemon/676-Furfrou.png",
-					"home": "src/img/tiny-pokemon/Furfrou-Heart.png"
+					"home": "src/img/home-pokemon/Furfrou-Heart.png"
 				},
 			},
 			"Star": {
@@ -6590,7 +6590,7 @@ const pokemonData = {
 					"large": "src/img/pokemon/0676Furfrou-Star.png",
 					"large-compressed": "src/img/small-pokemon/0676Furfrou-Star.webp",
 					"largeShiny": "src/img/shiny-pokemon/676-Furfrou.png",
-					"home": "src/img/tiny-pokemon/Furfrou-Star.png"
+					"home": "src/img/home-pokemon/Furfrou-Star.png"
 				},
 			},
 		},
@@ -6644,7 +6644,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0677Espurr.png",
 			"large-compressed": "src/img/small-pokemon/0677Espurr.webp",
 			"largeShiny": "src/img/shiny-pokemon/677-Espurr.png",
-			"home": "src/img/tiny-pokemon/Espurr.png"
+			"home": "src/img/home-pokemon/Espurr.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/espurr.mp3"
@@ -6698,7 +6698,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0703Carbink.png",
 			"large-compressed": "src/img/small-pokemon/0703Carbink.webp",
 			"largeShiny": "src/img/shiny-pokemon/703-Carbink.png",
-			"home": "src/img/tiny-pokemon/Carbink.png"
+			"home": "src/img/home-pokemon/Carbink.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/carbink.mp3"
@@ -6749,7 +6749,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0714Noibat.png",
 			"large-compressed": "src/img/small-pokemon/0714Noibat.webp",
 			"largeShiny": "src/img/shiny-pokemon/714-Noibat.png",
-			"home": "src/img/tiny-pokemon/Noibat.png"
+			"home": "src/img/home-pokemon/Noibat.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/noibat.mp3"
@@ -6803,7 +6803,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0722Rowlet.png",
 			"large-compressed": "src/img/small-pokemon/0722Rowlet.webp",
 			"largeShiny": "src/img/shiny-pokemon/722-Rowlet.png",
-			"home": "src/img/tiny-pokemon/Rowlet.png"
+			"home": "src/img/home-pokemon/Rowlet.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/rowlet.mp3"
@@ -6862,7 +6862,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0723Dartrix.png",
 			"large-compressed": "src/img/small-pokemon/0723Dartrix.webp",
 			"largeShiny": "src/img/shiny-pokemon/723-Dartrix.png",
-			"home": "src/img/tiny-pokemon/Dartrix.png"
+			"home": "src/img/home-pokemon/Dartrix.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/dartrix.mp3"
@@ -6920,7 +6920,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0725Litten.png",
 			"large-compressed": "src/img/small-pokemon/0725Litten.webp",
 			"largeShiny": "src/img/shiny-pokemon/725-Litten.png",
-			"home": "src/img/tiny-pokemon/Litten.png"
+			"home": "src/img/home-pokemon/Litten.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/litten.mp3"
@@ -6979,7 +6979,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0726Torracat.png",
 			"large-compressed": "src/img/small-pokemon/0726Torracat.webp",
 			"largeShiny": "src/img/shiny-pokemon/726-Torracat.png",
-			"home": "src/img/tiny-pokemon/Torracat.png"
+			"home": "src/img/home-pokemon/Torracat.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/torracat.mp3"
@@ -7037,7 +7037,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0728Popplio.png",
 			"large-compressed": "src/img/small-pokemon/0728Popplio.webp",
 			"largeShiny": "src/img/shiny-pokemon/728-Popplio.png",
-			"home": "src/img/tiny-pokemon/Popplio.png"
+			"home": "src/img/home-pokemon/Popplio.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/popplio.mp3"
@@ -7095,7 +7095,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0729Brionne.png",
 			"large-compressed": "src/img/small-pokemon/0729Brionne.webp",
 			"largeShiny": "src/img/shiny-pokemon/729-Brionne.png",
-			"home": "src/img/tiny-pokemon/Brionne.png"
+			"home": "src/img/home-pokemon/Brionne.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/brionne.mp3"
@@ -7153,7 +7153,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0731Pikipek.png",
 			"large-compressed": "src/img/small-pokemon/0731Pikipek.webp",
 			"largeShiny": "src/img/shiny-pokemon/731-Pikipek.png",
-			"home": "src/img/tiny-pokemon/Pikipek.png"
+			"home": "src/img/home-pokemon/Pikipek.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/pikipek.mp3"
@@ -7209,7 +7209,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0732Trumbeak.png",
 			"large-compressed": "src/img/small-pokemon/0732Trumbeak.webp",
 			"largeShiny": "src/img/shiny-pokemon/732-Trumbeak.png",
-			"home": "src/img/tiny-pokemon/Trumbeak.png"
+			"home": "src/img/home-pokemon/Trumbeak.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/trumbeak.mp3"
@@ -7269,7 +7269,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0733Toucannon.png",
 			"large-compressed": "src/img/small-pokemon/0733Toucannon.webp",
 			"largeShiny": "src/img/shiny-pokemon/733-Toucannon.png",
-			"home": "src/img/tiny-pokemon/Toucannon.png"
+			"home": "src/img/home-pokemon/Toucannon.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/toucannon.mp3"
@@ -7327,7 +7327,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0734Yungoos.png",
 			"large-compressed": "src/img/small-pokemon/0734Yungoos.webp",
 			"largeShiny": "src/img/shiny-pokemon/734-Yungoos.png",
-			"home": "src/img/tiny-pokemon/Yungoos.png"
+			"home": "src/img/home-pokemon/Yungoos.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/yungoos.mp3"
@@ -7383,7 +7383,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0735Gumshoos.png",
 			"large-compressed": "src/img/small-pokemon/0735Gumshoos.webp",
 			"largeShiny": "src/img/shiny-pokemon/735-Gumshoos.png",
-			"home": "src/img/tiny-pokemon/Gumshoos.png"
+			"home": "src/img/home-pokemon/Gumshoos.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/gumshoos.mp3"
@@ -7437,7 +7437,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0736Grubbin.png",
 			"large-compressed": "src/img/small-pokemon/0736Grubbin.webp",
 			"largeShiny": "src/img/shiny-pokemon/736-Grubbin.png",
-			"home": "src/img/tiny-pokemon/Grubbin.png"
+			"home": "src/img/home-pokemon/Grubbin.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/grubbin.mp3"
@@ -7491,7 +7491,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0737Charjabug.png",
 			"large-compressed": "src/img/small-pokemon/0737Charjabug.webp",
 			"largeShiny": "src/img/shiny-pokemon/737-Charjabug.png",
-			"home": "src/img/tiny-pokemon/Charjabug.png"
+			"home": "src/img/home-pokemon/Charjabug.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/charjabug.mp3"
@@ -7546,7 +7546,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0738Vikavolt.png",
 			"large-compressed": "src/img/small-pokemon/0738Vikavolt.webp",
 			"largeShiny": "src/img/shiny-pokemon/738-Vikavolt.png",
-			"home": "src/img/tiny-pokemon/Vikavolt.png"
+			"home": "src/img/home-pokemon/Vikavolt.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/vikavolt.mp3"
@@ -7606,7 +7606,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0739Crabrawler.png",
 			"large-compressed": "src/img/small-pokemon/0739Crabrawler.webp",
 			"largeShiny": "src/img/shiny-pokemon/739-Crabrawler.png",
-			"home": "src/img/tiny-pokemon/Crabrawler.png"
+			"home": "src/img/home-pokemon/Crabrawler.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/crabrawler.mp3"
@@ -7657,7 +7657,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0741Oricorio.png",
 			"large-compressed": "src/img/small-pokemon/0741Oricorio.webp",
 			"largeShiny": "src/img/shiny-pokemon/741-Oricorio-Baile.png",
-			"home": "src/img/tiny-pokemon/Oricorio-Baile.png"
+			"home": "src/img/home-pokemon/Oricorio-Baile.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/oricorio.mp3"
@@ -7672,7 +7672,7 @@ const pokemonData = {
 					"large": "src/img/pokemon/0741Oricorio.png",
 					"large-compressed": "src/img/small-pokemon/0741Oricorio.webp",
 					"largeShiny": "src/img/shiny-pokemon/741-Oricorio-Baile.png",
-					"home": "src/img/tiny-pokemon/Oricorio-Baile.png"
+					"home": "src/img/home-pokemon/Oricorio-Baile.png"
 				},
 				sounds: {
 					"cry": "src/audio/cries/oricorio.mp3"
@@ -7686,7 +7686,7 @@ const pokemonData = {
 					"large": "src/img/pokemon/0741Oricorio-Pom-Pom.png",
 					"large-compressed": "src/img/small-pokemon/0741Oricorio-Pom-Pom.webp",
 					"largeShiny": "src/img/shiny-pokemon/741-Oricorio-Pom-Pom.png",
-					"home": "src/img/tiny-pokemon/Oricorio-Pom-Pom.png"
+					"home": "src/img/home-pokemon/Oricorio-Pom-Pom.png"
 				},
 				sounds: {
 					"cry": "src/audio/cries/oricorio-pompom.mp3"
@@ -7700,7 +7700,7 @@ const pokemonData = {
 					"large": "src/img/pokemon/0741Oricorio-Pa'u.png",
 					"large-compressed": "src/img/small-pokemon/0741Oricorio-Pa'u.webp",
 					"largeShiny": "src/img/shiny-pokemon/741-Oricorio-Pa-u.png",
-					"home": "src/img/tiny-pokemon/Oricorio-Pa-u.png"
+					"home": "src/img/home-pokemon/Oricorio-Pa-u.png"
 				},
 				sounds: {
 					"cry": "src/audio/cries/oricorio-pau.mp3"
@@ -7714,7 +7714,7 @@ const pokemonData = {
 					"large": "src/img/pokemon/0741Oricorio-Sensu.png",
 					"large-compressed": "src/img/small-pokemon/0741Oricorio-Sensu.webp",
 					"largeShiny": "src/img/shiny-pokemon/741-Oricorio-Sensu.png",
-					"home": "src/img/tiny-pokemon/Oricorio-Sensu.png"
+					"home": "src/img/home-pokemon/Oricorio-Sensu.png"
 				},
 				sounds: {
 					"cry": "src/audio/cries/oricorio-sensu.mp3"
@@ -7772,7 +7772,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0742Cutiefly.png",
 			"large-compressed": "src/img/small-pokemon/0742Cutiefly.webp",
 			"largeShiny": "src/img/shiny-pokemon/742-Cutiefly.png",
-			"home": "src/img/tiny-pokemon/Cutiefly.png"
+			"home": "src/img/home-pokemon/Cutiefly.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/cutiefly.mp3"
@@ -7829,7 +7829,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0743Ribombee.png",
 			"large-compressed": "src/img/small-pokemon/0743Ribombee.webp",
 			"largeShiny": "src/img/shiny-pokemon/742-Cutiefly.png",
-			"home": "src/img/tiny-pokemon/Ribombee.png"
+			"home": "src/img/home-pokemon/Ribombee.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/ribombee.mp3"
@@ -7885,7 +7885,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0744Rockruff.png",
 			"large-compressed": "src/img/small-pokemon/0744Rockruff.webp",
 			"largeShiny": "src/img/shiny-pokemon/744-Rockruff.png",
-			"home": "src/img/tiny-pokemon/Rockruff.png"
+			"home": "src/img/home-pokemon/Rockruff.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/rockruff.mp3"
@@ -7945,7 +7945,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0745Lycanroc.png",
 			"large-compressed": "src/img/small-pokemon/0745Lycanroc.webp",
 			"largeShiny": "src/img/shiny-pokemon/745-Lycanroc-Midday.png",
-			"home": "src/img/tiny-pokemon/Lycanroc-Midday.png"
+			"home": "src/img/home-pokemon/Lycanroc-Midday.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/lycanroc.mp3"
@@ -8005,7 +8005,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0745Lycanroc-Midnight.png",
 			"large-compressed": "src/img/small-pokemon/0745Lycanroc-Midnight.webp",
 			"largeShiny": "src/img/shiny-pokemon/745-Lycanroc-Midnight.png",
-			"home": "src/img/tiny-pokemon/Lycanroc-Midnight.png"
+			"home": "src/img/home-pokemon/Lycanroc-Midnight.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/lycanroc-midnight.mp3"
@@ -8065,7 +8065,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0745Lycanroc-Dusk.png",
 			"large-compressed": "src/img/small-pokemon/0745Lycanroc-Dusk.webp",
 			"largeShiny": "src/img/shiny-pokemon/745-Lycanroc-Dusk.png",
-			"home": "src/img/tiny-pokemon/Lycanroc-Dusk.png"
+			"home": "src/img/home-pokemon/Lycanroc-Dusk.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/lycanroc-dusk.mp3"
@@ -8130,7 +8130,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0746Wishiwashi.png",
 			"large-compressed": "src/img/small-pokemon/0746Wishiwashi.webp",
 			"largeShiny": "src/img/shiny-pokemon/746-Wishiwashi.png",
-			"home": "src/img/tiny-pokemon/Wishiwashi.png"
+			"home": "src/img/home-pokemon/Wishiwashi.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/wishiwashi.mp3"
@@ -8146,7 +8146,7 @@ const pokemonData = {
 					"large": "src/img/pokemon/0746Wishiwashi.png",
 					"large-compressed": "src/img/small-pokemon/0746Wishiwashi.webp",
 					"largeShiny": "src/img/shiny-pokemon/746-Wishiwashi.png",
-					"home": "src/img/tiny-pokemon/Wishiwashi.png"
+					"home": "src/img/home-pokemon/Wishiwashi.png"
 				},
 				sounds: {
 					"cry": "src/audio/cries/wishiwashi.mp3"
@@ -8170,7 +8170,7 @@ const pokemonData = {
 					"large": "src/img/pokemon/0746Wishiwashi-School.png",
 					"large-compressed": "src/img/small-pokemon/0746Wishiwashi-School.webp",
 					"largeShiny": "src/img/shiny-pokemon/746-Wishiwashi-School.png",
-					"home": "src/img/tiny-pokemon/Wishiwashi-School.png"
+					"home": "src/img/home-pokemon/Wishiwashi-School.png"
 				},
 				sounds: {
 					"cry": "src/audio/cries/wishiwashi-school.mp3"
@@ -8239,7 +8239,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0747Mareanie.png",
 			"large-compressed": "src/img/small-pokemon/0747Mareanie.webp",
 			"largeShiny": "src/img/shiny-pokemon/747-Mareanie.png",
-			"home": "src/img/tiny-pokemon/Mareanie.png"
+			"home": "src/img/home-pokemon/Mareanie.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/mareanie.mp3"
@@ -8294,7 +8294,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0749Mudbray.png",
 			"large-compressed": "src/img/small-pokemon/0749Mudbray.webp",
 			"largeShiny": "src/img/shiny-pokemon/749-Mudbray.png",
-			"home": "src/img/tiny-pokemon/Mudbray.png"
+			"home": "src/img/home-pokemon/Mudbray.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/mudbray.mp3"
@@ -8350,7 +8350,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0750Mudsdale.png",
 			"large-compressed": "src/img/small-pokemon/0750Mudsdale.webp",
 			"largeShiny": "src/img/shiny-pokemon/750-Mudsdale.png",
-			"home": "src/img/tiny-pokemon/Mudsdale.png"
+			"home": "src/img/home-pokemon/Mudsdale.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/mudsdale.mp3"
@@ -8404,7 +8404,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0751Dewpider.png",
 			"large-compressed": "src/img/small-pokemon/0751Dewpider.webp",
 			"largeShiny": "src/img/shiny-pokemon/751-Dewpider.png",
-			"home": "src/img/tiny-pokemon/Dewpider.png"
+			"home": "src/img/home-pokemon/Dewpider.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/dewpider.mp3"
@@ -8461,7 +8461,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0752Araquanid.png",
 			"large-compressed": "src/img/small-pokemon/0752Araquanid.webp",
 			"largeShiny": "src/img/shiny-pokemon/752-Araquanid.png",
-			"home": "src/img/tiny-pokemon/Araquanid.png"
+			"home": "src/img/home-pokemon/Araquanid.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/araquanid.mp3"
@@ -8518,7 +8518,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0753Fomantis.png",
 			"large-compressed": "src/img/small-pokemon/0753Fomantis.webp",
 			"largeShiny": "src/img/shiny-pokemon/753-Fomantis.png",
-			"home": "src/img/tiny-pokemon/Fomantis.png"
+			"home": "src/img/home-pokemon/Fomantis.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/fomantis.mp3"
@@ -8572,7 +8572,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0755Morelull.png",
 			"large-compressed": "src/img/small-pokemon/0755Morelull.webp",
 			"largeShiny": "src/img/shiny-pokemon/755-Morelull.png",
-			"home": "src/img/tiny-pokemon/Morelull.png"
+			"home": "src/img/home-pokemon/Morelull.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/morelull.mp3"
@@ -8625,7 +8625,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0757Salandit.png",
 			"large-compressed": "src/img/small-pokemon/0757Salandit.webp",
 			"largeShiny": "src/img/shiny-pokemon/757-Salandit.png",
-			"home": "src/img/tiny-pokemon/Salandit.png"
+			"home": "src/img/home-pokemon/Salandit.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/salandit.mp3"
@@ -8680,7 +8680,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0758Salazzle.png",
 			"large-compressed": "src/img/small-pokemon/0758Salazzle.webp",
 			"largeShiny": "src/img/shiny-pokemon/758-Salazzle.png",
-			"home": "src/img/tiny-pokemon/Salazzle.png"
+			"home": "src/img/home-pokemon/Salazzle.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/salazzle.mp3"
@@ -8741,7 +8741,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0759Stufful.png",
 			"large-compressed": "src/img/small-pokemon/0759Stufful.webp",
 			"largeShiny": "src/img/shiny-pokemon/759-Stufful.png",
-			"home": "src/img/tiny-pokemon/Stufful.png"
+			"home": "src/img/home-pokemon/Stufful.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/stufful.mp3"
@@ -8794,7 +8794,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0761Bounsweet.png",
 			"large-compressed": "src/img/small-pokemon/0761Bounsweet.webp",
 			"largeShiny": "src/img/shiny-pokemon/761-Bounsweet.png",
-			"home": "src/img/tiny-pokemon/Bounsweet.png"
+			"home": "src/img/home-pokemon/Bounsweet.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/bounsweet.mp3"
@@ -8851,7 +8851,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0762Steenee.png",
 			"large-compressed": "src/img/small-pokemon/0762Steenee.webp",
 			"largeShiny": "src/img/shiny-pokemon/762-Steenee.png",
-			"home": "src/img/tiny-pokemon/Steenee.png"
+			"home": "src/img/home-pokemon/Steenee.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/steenee.mp3"
@@ -8910,7 +8910,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0764Comfey.png",
 			"large-compressed": "src/img/small-pokemon/0764Comfey.webp",
 			"largeShiny": "src/img/shiny-pokemon/764-Comfey.png",
-			"home": "src/img/tiny-pokemon/Comfey.png"
+			"home": "src/img/home-pokemon/Comfey.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/comfey.mp3"
@@ -8964,7 +8964,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0766Passimian.png",
 			"large-compressed": "src/img/small-pokemon/0766Passimian.webp",
 			"largeShiny": "src/img/shiny-pokemon/766-Passimian.png",
-			"home": "src/img/tiny-pokemon/Passimian.png"
+			"home": "src/img/home-pokemon/Passimian.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/passimian.mp3"
@@ -9016,7 +9016,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0777Togedemaru.png",
 			"large-compressed": "src/img/small-pokemon/0777Togedemaru.webp",
 			"largeShiny": "src/img/shiny-pokemon/777-Togedemaru.png",
-			"home": "src/img/tiny-pokemon/Togedemaru.png"
+			"home": "src/img/home-pokemon/Togedemaru.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/togedemaru.mp3"
@@ -9069,7 +9069,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0771Pyukumuku.png",
 			"large-compressed": "src/img/small-pokemon/0771Pyukumuku.webp",
 			"largeShiny": "src/img/shiny-pokemon/771-Pyukumuku.png",
-			"home": "src/img/tiny-pokemon/Pyukumuku.png"
+			"home": "src/img/home-pokemon/Pyukumuku.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/pyukumuku.mp3"
@@ -9121,7 +9121,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0772Type_Null.png",
 			"large-compressed": "src/img/small-pokemon/0772Type_Null.webp",
 			"largeShiny": "src/img/shiny-pokemon/772-Type_Null.png",
-			"home": "src/img/tiny-pokemon/Type Null.png"
+			"home": "src/img/home-pokemon/Type Null.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/typenull.mp3"
@@ -9176,7 +9176,7 @@ const pokemonData = {
 			"large": "src/img/pokemon/0775Komala.png",
 			"large-compressed": "src/img/small-pokemon/0775Komala.webp",
 			"largeShiny": "src/img/shiny-pokemon/775-Komala.png",
-			"home": "src/img/tiny-pokemon/Komala.png"
+			"home": "src/img/home-pokemon/Komala.png"
 		},
 		sounds: {
 			"cry": "src/audio/cries/komala.mp3"

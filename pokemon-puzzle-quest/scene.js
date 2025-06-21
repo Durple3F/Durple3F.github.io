@@ -1951,7 +1951,7 @@ function viewPokemonInfo(pokemon, options = {}) {
 	let closing = true
 
 	let modal = $("#modal")
-	clearModal(modal)
+	clearModal(modal, false)
 	modal.modal("show")
 	modal.addClass("wide").addClass("summary")
 	let header = modal.find(".modal-header")

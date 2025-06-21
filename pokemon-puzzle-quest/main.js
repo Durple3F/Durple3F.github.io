@@ -494,13 +494,16 @@ function getRandomTileType(){
 	).item
 }
 
-function clearModal(modal){
+function clearModal(modal, verticallyCenter=true){
 	let shown = modal.hasClass("show")
 	modal.removeClass().addClass("modal").addClass("fade")
 	if (shown) modal.addClass("show")
 
 	modal.empty()
-	let dialog = $(`<div class="modal-dialog modal-dialog-centered">`)
+	let dialog = $(`<div class="modal-dialog">`)
+	if (verticallyCenter){
+		dialog.addClass("modal-dialog-centered")
+	}
 	modal.append(dialog)
 	let content = $(`<div class="modal-content">`)
 	dialog.append(content)
@@ -912,7 +915,7 @@ function openSettings(){
 	let resolvePromise
 	let promise = new Promise(resolve => resolvePromise = resolve)
 	let modal = $("#modal")
-	clearModal(modal)
+	clearModal(modal, false)
 	modal.addClass("wide")
 	let body = modal.find(".modal-body")
 
@@ -1174,7 +1177,7 @@ function openChangelog(){
 	let resolvePromise
 	let promise = new Promise(resolve => resolvePromise = resolve)
 	let modal = $("#modal")
-	clearModal(modal)
+	clearModal(modal, false)
 	modal.addClass("wide").addClass("show")
 	let body = modal.find(".modal-body")
 

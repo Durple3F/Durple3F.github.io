@@ -48,4 +48,5 @@ TODO
 - We need an image for timer balls...
 - Make poison trigger upon using moves
 
-- apparently the tile selection window swap button doesn't work
+- apparently the tile selection window swap button doesn't work???
+- when a pokemon evolves, its image is apparently tiny now?
