@@ -2089,6 +2089,10 @@
 			"name": "Voltorb",
 			"pokedex-entry": "Certain kinds of generators work by having Voltorb and Electrode placed in a large enclosed ring, and spinning that ring very fast. The energy produced this way is surprisingly efficient, and they usually think it’s fun. After all, if they didn’t approve, they would just explode."
 		},
+		"Cubone": {
+			"name": "Cubone",
+			"pokedex-entry": "The Sun/Ultra Sun entries for Cubone are so funny. This baby cries about its dead mom like a big baby and then it gets attacked by birds for crying too loud about its dead mom (like a baby) what a baby"
+		},
 		"Hitmonlee": {
 			"name": "Hitmonlee",
 			"pokedex-entry": "Its legs stretch outward as it kicks. Its body has layers upon layers of muscle coiled up into the shape of a string all along its legs, meaning it has to constantly tense its legs to keep them short. Top-level Pokémon researchers call this phenomenon “not how legs work.”"
@@ -2935,6 +2939,11 @@
 			"name": "Fake Tears",
 			"description": "Lowers the opponent's special defense stat by 2 stages.",
 			"shortDescription": "Lowers enemy special defense"
+		},
+		"False Swipe": {
+			"name": "False Swipe",
+			"description": "Deals damage. This damage can't cause the opponent's HP to fall below 1.",
+			"shortDescription": "Deals some damage"
 		},
 		"Feather Dance": {
 			"name": "Feather Dance",

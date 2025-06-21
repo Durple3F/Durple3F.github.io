@@ -2544,6 +2544,61 @@ const pokemonData = {
 			{ name: "Light Screen", unlock: { type: "level", amount: 29 } },
 		]
 	},
+	"Cubone": {
+		name: "Cubone",
+		number: "104",
+		weight: {
+			pounds: 14.3,
+			kilograms: 6.5
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0104Cubone.png",
+			"large-compressed": "src/img/small-pokemon/0104Cubone.webp",
+			"tiny": "src/img/tiny-pokemon/0104Cubone.webp",
+			"largeShiny": "src/img/shiny-pokemon/104-Cubone.png",
+			"largeShiny-compressed": "src/img/small-shiny-pokemon/104-Cubone.webp",
+			"home": "src/img/home-pokemon/Cubone.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/cubone.mp3"
+		},
+		types: ["Ground"],
+		tags: [],
+		abilities: ["Rock Head", "Lightning Rod"],
+		hiddenAbilities: ["Battle Armor"],
+		stats: {
+			hp: 50,
+			attack: 50,
+			defense: 95,
+			specialAttack: 40,
+			specialDefense: 50,
+			speed: 35
+		},
+		expYield: 64,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 1,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 3,
+			green: 1,
+			purple: 1
+		},
+		learnset: [
+			{ name: "Mud-Slap", unlock: { type: "level", amount: 1 } },
+			{ name: "Growl", unlock: { type: "level", amount: 1 } },
+			{ name: "Tail Whip", unlock: { type: "level", amount: 4 } },
+			{ name: "False Swipe", unlock: { type: "level", amount: 8 } },
+			{ name: "Headbutt", unlock: { type: "level", amount: 12 } },
+			{ name: "Retaliate", unlock: { type: "level", amount: 16 } },
+			{ name: "Fling", unlock: { type: "level", amount: 20 } },
+		]
+	},
 	"Hitmonlee": {
 		name: "Hitmonlee",
 		number: "106",
@@ -7398,7 +7453,7 @@ const pokemonData = {
 			{ name: "Sing", unlock: { type: "level", amount: 20 } },
 			{ name: "Bubble Beam", unlock: { type: "level", amount: 25 } },
 			{ name: "Encore", unlock: { type: "level", amount: 30 } },
-			{ name: "Endeavor", unlock: { type: "level", amount: 1 } },
+			{ name: "False Swipe", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {

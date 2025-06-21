@@ -2940,6 +2940,13 @@ class Round {
 		//Finalize how much damage is intended to be dealt.
 		damage = Math.round(damage)
 
+		//Damage can have a minimum HP it's allowed to leave its victim at.
+		if ("minResultHP" in options){
+			if (defender.hp - damage < options.minResultHP){
+				damage = defender.hp - options.minResultHP
+			}
+		}
+
 		//If the receiving Pokemon has Invulnerable, set damage dealt to 0.
 		let prevented = false
 		let isInvulnerable = defender.hasStatus("invulnerable")
@@ -7657,7 +7664,7 @@ function beginRound(trainerData, options={}) {
 	}
 	let player = new Trainer("Player", playerActivePokemon, playerOptions)
 
-	let pokemonData = trainerData.pokemon.map(v => window.structuredClone(v))
+	let pokemonData = trainerData.pokemon.map(v => v)
 
 	//If this trainer has a group of pokemon it *might* pull from,
 	//randomly choose new pokemon to add from that list.

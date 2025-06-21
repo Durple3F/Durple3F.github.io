@@ -327,6 +327,9 @@ const pokemonMoveEffects = {
 			if ("finalImmunityCheck" in effect){
 				damageOptions.finalImmunityCheck = effect.finalImmunityCheck
 			}
+			if ("minResultHP" in effect){
+				damageOptions.minResultHP = params.minResultHP
+			}
 
 			let result = game.dealDamage(damageOptions)
 			resolve(result.damageDealt)

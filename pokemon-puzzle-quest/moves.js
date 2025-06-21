@@ -2415,7 +2415,7 @@ const pokemonMoveData = {
 			{ type: "get-hp", target: "opponent", label: "deal-damage" },
 			{ type: "get-hp", target: "user" },
 			{ type: "subtract-numbers" },
-			{ type: "damage", amount: -1, fixed: true },
+			{ type: "damage", amount: -1, fixed: true, finalImmunityCheck: true },
 		],
 	},
 	//You can't go below 1HP
@@ -2572,6 +2572,30 @@ const pokemonMoveData = {
 					amount: -2
 				}
 			}
+		],
+	},
+	//Deals damage that can't make the enemy hit 0 HP
+	"False Swipe": {
+		name: "False Swipe",
+		type: "Normal",
+		category: "Physical",
+		strategy: "special",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 40,
+		power: 40,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			red: 2,
+			purple: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/False Swipe.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "load-value", value: 1 },
+			{ type: "damage", minResultHP: -1 },
 		],
 	},
 	//Raises attack 2

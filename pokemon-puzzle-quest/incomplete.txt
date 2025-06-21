@@ -36,6 +36,7 @@ Incomplete move lists:
 	Voltorb (lv 0)
 	Drowzee (lv 21)
 	Hypno (lv 21)
+	Cubone (lv 20)
 	Hitmonlee (lv 0)
 	Chansey (lv 20)
 	Goldeen (lv 30)
@@ -156,6 +157,7 @@ Missing Evolutions:
 	Grimer-Alola
 	Voltorb
 	Haunter
+	Cubone
 	Hitmonlee
 	Chansey
 	Staryu
