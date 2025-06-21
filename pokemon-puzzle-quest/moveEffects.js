@@ -2264,6 +2264,17 @@ const pokemonMoveEffects = {
 			resolve(val)
 		}
 	},
+	"subtract-numbers": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let moveUseObj = options.moveUse
+			let effectIndex = options.effectIndex
+			let val1 = moveUseObj.info[effectIndex - 2]
+			let val2 = moveUseObj.info[effectIndex - 1]
+			let val = val1 - val2
+			resolve(val)
+		}
+	},
 	"multiply-numbers": {
 		update: false,
 		execute: (resolve, effect, params, game, options) => {

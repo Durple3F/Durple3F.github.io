@@ -2911,6 +2911,11 @@
 			"description": "Disables all the opponent's moves but the move used most recently by them for 5 turns.",
 			"shortDescription": "Disables all but one move"
 		},
+		"Endeavor": {
+			"name": "Endeavor",
+			"description": "If the opponent has more HP than the user, deals damage exactly equal to the difference.",
+			"shortDescription": "Equalizes HP"
+		},
 		"Endure": {
 			"name": "Endure",
 			"description": "For the next 3 turns, damage that the user takes can’t lower its HP below 1. Then this move's cooldown increases by 1.",
@@ -2960,6 +2965,11 @@
 			"name": "Fire Fang",
 			"description": "Deals damage and has a 50% chance to Burn 3 random tiles for 3 turns. If any tiles were already Burned by the user, instead it deals damage with 30 additional power and doesn't Burn tiles. At the end of their turn, the opponent takes damage equal to 1/32 of their max HP for each of your Burn statuses on the board.",
 			"shortDescription": "Deals damage and might Burn"
+		},
+		"Fire Lash": {
+			"name": "Fire Lash",
+			"description": "Deals damage and lowers the opponent's Defense by a stage.",
+			"shortDescription": "Deals damage and lowers enemy Defense"
 		},
 		"Flail": {
 			"name": "Flail",

@@ -2387,6 +2387,37 @@ const pokemonMoveData = {
 			type: "last-enemy-move"
 		}
 	},
+	//If you have less HP than the opponent, sets your HP to be equal.
+	"Endeavor": {
+		name: "Endeavor",
+		type: "Normal",
+		category: "Physical",
+		strategy: "special",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 5,
+		power: null,
+		accuracy: 100,
+		rechargeTurns: 2,
+		energy: {
+			yellow: 10,
+			red: 10
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Endeavor.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-hp", target: "user" },
+			{ type: "get-hp", target: "opponent" },
+			{ type: "jump-if-less-than", jumpTo: "deal-damage" },
+			{ type: "jump", jumpTo: Infinity },
+			
+			{ type: "get-hp", target: "opponent", label: "deal-damage" },
+			{ type: "get-hp", target: "user" },
+			{ type: "subtract-numbers" },
+			{ type: "damage", amount: -1, fixed: true },
+		],
+	},
 	//You can't go below 1HP
 	"Endure": {
 		name: "Endure",
@@ -2732,6 +2763,41 @@ const pokemonMoveData = {
 				status: { name: "Burn", type: "debuff", duration: 3 }
 			}
 		],
+	},
+	//Damage + lower defense 1
+	"Fire Lash": {
+		name: "Fire Lash",
+		type: "Fire",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 15,
+		power: 80,
+		accuracy: 100,
+		rechargeTurns: 2,
+		energy: {
+			red: 6,
+			orange: 4,
+			yellow: 2
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Fire Lash.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{
+				type: "apply-debuff", target: "opponent", debuff: {
+					type: "stat",
+					stat: "defense",
+					class: "debuff",
+					amount: -1
+				}
+			}
+		]
 	},
 	//Deals damage based on HP/Max HP
 	"Flail": {

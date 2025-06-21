@@ -2,8 +2,9 @@
 	"versions": {
 		"20250621": {
 			"date": "June 21, 2025",
-			"line-count": 52000,
+			"line-count": 52100,
 			"changes": [
+				"- Added Fire Lash, Endeavor",
 				"- More improvements to image loading",
 				"- Now every shiny pokemon has a compressed version of the image that displays during battle too.",
 				"- AAAAnd one last batch so that the pokemon images used in the pokedex look better.",
