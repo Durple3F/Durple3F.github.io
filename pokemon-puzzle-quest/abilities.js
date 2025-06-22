@@ -70,6 +70,10 @@ const pokemonAbilityData = {
 	"Corrosion": {
 		id: "Corrosion"
 	},
+	//Sometimes disables damaging moves used against it
+	"Cursed Body": {
+		id: "Cursed Body"
+	},
 	//Lowers the defender's Special Attack on contact
 	"Cute Charm": {
 		id: "Cute Charm"

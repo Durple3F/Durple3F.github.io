@@ -37,6 +37,8 @@ Incomplete move lists:
 	Drowzee (lv 21)
 	Hypno (lv 21)
 	Cubone (lv 20)
+	Marowak (lv 20)
+	Marowak-Alola (lv 20)
 	Hitmonlee (lv 0)
 	Chansey (lv 20)
 	Goldeen (lv 30)

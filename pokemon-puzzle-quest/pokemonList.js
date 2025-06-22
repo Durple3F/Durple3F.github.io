@@ -2589,6 +2589,10 @@ const pokemonData = {
 			green: 1,
 			purple: 1
 		},
+		evolutions: [
+			{ name: "Marowak", unlock: { type: "levelWhileTime", time: "Day", amount: 28 } },
+			{ name: "Marowak-Alola", unlock: { type: "levelWhileTime", time: "Night", amount: 28 } },
+		],
 		learnset: [
 			{ name: "Mud-Slap", unlock: { type: "level", amount: 1 } },
 			{ name: "Growl", unlock: { type: "level", amount: 1 } },
@@ -2596,6 +2600,124 @@ const pokemonData = {
 			{ name: "False Swipe", unlock: { type: "level", amount: 8 } },
 			{ name: "Headbutt", unlock: { type: "level", amount: 12 } },
 			{ name: "Retaliate", unlock: { type: "level", amount: 16 } },
+			{ name: "Fling", unlock: { type: "level", amount: 20 } },
+		]
+	},
+	"Marowak": {
+		name: "Marowak",
+		number: "105",
+		weight: {
+			pounds: 99.2,
+			kilograms: 45.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0105Marowak.png",
+			"large-compressed": "src/img/small-pokemon/0105Marowak.webp",
+			"tiny": "src/img/tiny-pokemon/0105Marowak.webp",
+			"largeShiny": "src/img/shiny-pokemon/105-Marowak.png",
+			"largeShiny-compressed": "src/img/small-shiny-pokemon/105-Marowak.webp",
+			"home": "src/img/home-pokemon/Marowak.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/marowak.mp3"
+		},
+		types: ["Ground"],
+		tags: [],
+		abilities: ["Rock Head", "Lightning Rod"],
+		hiddenAbilities: ["Battle Armor"],
+		stats: {
+			hp: 60,
+			attack: 80,
+			defense: 110,
+			specialAttack: 50,
+			specialDefense: 80,
+			speed: 45
+		},
+		expYield: 149,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 2,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			orange: 6,
+			green: 2,
+			purple: 2
+		},
+		learnset: [
+			{ name: "Mud-Slap", unlock: { type: "level", amount: 1 } },
+			{ name: "Growl", unlock: { type: "level", amount: 1 } },
+			{ name: "Tail Whip", unlock: { type: "level", amount: 1 } },
+			{ name: "False Swipe", unlock: { type: "level", amount: 1 } },
+			{ name: "Headbutt", unlock: { type: "level", amount: 12 } },
+			{ name: "Retaliate", unlock: { type: "level", amount: 16 } },
+			{ name: "Fling", unlock: { type: "level", amount: 20 } },
+		]
+	},
+	"Marowak-Alola": {
+		name: "Marowak",
+		id: "Marowak-Alola",
+		number: "105a",
+		weight: {
+			pounds: 75.0,
+			kilograms: 34.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0105Marowak-Alola.png",
+			"large-compressed": "src/img/small-pokemon/0105Marowak-Alola.webp",
+			"tiny": "src/img/tiny-pokemon/0105Marowak-Alola.webp",
+			"largeShiny": "src/img/shiny-pokemon/105-Marowak-Alola.png",
+			"largeShiny-compressed": "src/img/small-shiny-pokemon/105-Marowak-Alola.webp",
+			"home": "src/img/home-pokemon/Marowak-Alola.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/marowak.mp3"
+		},
+		types: ["Fire", "Ghost"],
+		tags: [],
+		abilities: ["Cursed Body", "Lightning Rod"],
+		hiddenAbilities: ["Rock Head"],
+		stats: {
+			hp: 60,
+			attack: 80,
+			defense: 110,
+			specialAttack: 50,
+			specialDefense: 80,
+			speed: 45
+		},
+		expYield: 149,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 2,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			red: 2,
+			orange: 2,
+			green: 2,
+			purple: 4
+		},
+		learnset: [
+			{ name: "False Swipe", unlock: { type: "level", amount: 1 } },
+			{ name: "Headbutt", unlock: { type: "level", amount: 1 } },
+			{ name: "Retaliate", unlock: { type: "level", amount: 1 } },
+			{ name: "Focus Energy", unlock: { type: "level", amount: 1 } },
+			{ name: "Double-Edge", unlock: { type: "level", amount: 1 } },
+			{ name: "Mud-Slap", unlock: { type: "level", amount: 1 } },
+			{ name: "Growl", unlock: { type: "level", amount: 1 } },
+			{ name: "Tail Whip", unlock: { type: "level", amount: 1 } },
+			{ name: "Fire Spin", unlock: { type: "level", amount: 1 } },
+			{ name: "Shadow Bone", unlock: { type: "level", amount: 1 } },
+			{ name: "Flame Wheel", unlock: { type: "level", amount: 1 } },
+			{ name: "Hex", unlock: { type: "level", amount: 16 } },
 			{ name: "Fling", unlock: { type: "level", amount: 20 } },
 		]
 	},

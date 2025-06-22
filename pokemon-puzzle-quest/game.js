@@ -3208,7 +3208,7 @@ class Round {
 						amount: 1
 					}, defender.trainer, defender, undefined)
 				}
-				//Effect spore puts a random spore status on a random tile without that status
+				//Effect Spore puts a random spore status on a random tile without that status
 				if (madeContact && attacker !== defender && defender.hasAbility("Effect Spore")){
 					let statusNames = ["Stun Spore", "Poison Powder", "Sleep Powder"]
 					let statusName = randomChoice(statusNames)
@@ -3220,6 +3220,22 @@ class Round {
 							{ name: statusName, type: "debuff", duration: 5 },
 							defenderTrainer, defender, undefined
 						)
+					}
+				}
+				//Cursed Body disables the move used against the defender
+				if (move && attacker !== defender && defender.hasAbility("Cursed Body")) {
+					if (Math.random() < 0.3) {
+						attacker.addStatusEffect({
+							name: "cursed-body-disability",
+							type: "disability",
+							stacks: false,
+							volatile: true,
+							lostOnSwap: true,
+							turns: 4,
+							appliesTo: {
+								names: [move.id],
+							},
+						}, defender.trainer, defender, undefined)
 					}
 				}
 

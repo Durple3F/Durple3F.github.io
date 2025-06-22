@@ -2093,6 +2093,14 @@
 			"name": "Cubone",
 			"pokedex-entry": "The Sun/Ultra Sun entries for Cubone are so funny. This baby cries about its dead mom like a big baby and then it gets attacked by birds for crying too loud about its dead mom (like a baby) what a baby"
 		},
+		"Marowak": {
+			"name": "Marowak",
+			"pokedex-entry": "It’s no longer <i>as</i> sad about its mother dying as it once was, but that sadness has now been replaced with an intense rage. Trainers who intentionally rush it to evolve are frowned upon."
+		},
+		"Marowak-Alola": {
+			"name": "Marowak",
+			"pokedex-entry": "It is still <i>so</i> weird to me that the Cubone line has retained the whole “its mom died” concept as its central premise for this long. And then they <i>doubled down on it</i> and made a new form where its mom is even more <i>explicitly deceased?</i> Never once have they even hypothesized about a non-dead Cubone mother?"
+		},
 		"Hitmonlee": {
 			"name": "Hitmonlee",
 			"pokedex-entry": "Its legs stretch outward as it kicks. Its body has layers upon layers of muscle coiled up into the shape of a string all along its legs, meaning it has to constantly tense its legs to keep them short. Top-level Pokémon researchers call this phenomenon “not how legs work.”"
@@ -3972,6 +3980,11 @@
 			"name": "Corrosion",
 			"shortDescription": "Can poison Poison- and Steel-type Pokémon",
 			"longDescription": "When this Pokémon applies Poisoned to another Pokémon, that Pokémon being Poison- or Steel- type doesn't prevent it from being poisoned."
+		},
+		"Cursed Body": {
+			"name": "Cursed Body",
+			"shortDescription": "On being damaged by a move, has a 30% chance to disable that move for the opponent for 4 turns",
+			"longDescription": "When this Pokémon is dealt damage by another Pokémon with a move, that move is disabled for the opponent for 4 turns 30% of the time."
 		},
 		"Cute Charm": {
 			"name": "Cute Charm",

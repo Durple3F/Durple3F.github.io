@@ -2254,7 +2254,7 @@ function viewPokemonInfo(pokemon, options = {}) {
 						isShiny: false
 					}
 					let evolvePokemon = new Pokemon(undefined, pokemonId, pokemonOptions)
-					viewPokemonInfo(evolvePokemon, {dex: true})
+					viewPokemonInfo(evolvePokemon, {dex: true, pure: true})
 				})
 			})
 		})
@@ -2367,7 +2367,7 @@ function viewPokemonInfo(pokemon, options = {}) {
 		info.append(abilitySection)
 		const addAbility = ability => {
 			if (typeof ability === "string"){
-				ability = pokemonAbilityData[ability]
+				ability = pokemonAbilityData[ability] ?? pokemonAbilityData["No Ability"]
 			}
 			let abilityName = getLocaleString("name", lang, ["abilities", ability.id])
 			abilitySection.append(`<h4>Ability: ${abilityName}</h4>`)
