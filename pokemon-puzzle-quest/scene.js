@@ -657,10 +657,11 @@ function startScene(name, options={}) {
 
 			const openPokemon = pokemon => {
 				let options = {
+					pc: true,
 					canRename: true,
 					canSwitchActiveMoves: true,
 					canSwitchPokeball: true,
-					pc: true
+					highlightedMoves: pokemon.activeMoves,
 				}
 				return viewPokemonInfo(pokemon, options)
 			}

@@ -919,11 +919,12 @@ const pokemonMoveEffects = {
 		targetDefault: "user",
 		execute: (resolve, effect, params, game, options) => {
 			let target = options.target
+			let energy = params.amounts ?? target?.energy
 			let result = 0
 
-			if (target){
-				for (let color in target.energy){
-					result += target.energy[color]
+			if (energy){
+				for (let color in energy){
+					result += energy[color]
 				}
 			}
 
@@ -971,22 +972,6 @@ const pokemonMoveEffects = {
 			}
 
 			resolve(result)
-		}
-	},
-	"get-total-energy": {
-		update: false,
-		hasTarget: true,
-		targetType: "pokemon",
-		targetDefault: "user",
-		execute: (resolve, effect, params, game, options) => {
-			let target = options.target
-			
-			let totalEnergy = 0
-			for (let color in target.energy){
-				totalEnergy += target.energy[color]
-			}
-
-			resolve(totalEnergy)
 		}
 	},
 	"change-tile-weight": {

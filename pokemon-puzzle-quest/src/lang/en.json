@@ -2988,6 +2988,11 @@
 			"description": "Deals damage and lowers the opponent's Defense by a stage.",
 			"shortDescription": "Deals damage and lowers enemy Defense"
 		},
+		"Fire Spin": {
+			"name": "Fire Spin",
+			"description": "Deals damage, then disables Fire Spin for 5 turns before ending the turn. At the end of the user's turn, if Fire Spin is still disabled, applies Burn to 2 random tiles for 7 turns. At the end of their turn, the opponent takes damage equal to 1/32 of their max HP for each Burn status on the board.",
+			"shortDescription": "Burns tiles over several turns"
+		},
 		"Flail": {
 			"name": "Flail",
 			"description": "Deals damage. This move's power depends on the ratio of the user's HP to their Max HP. Its power is 200 while at less than 5% HP, 150 while at less than 10% HP, 100 while at less than 20% HP, 80 while at less than 35% HP, 40 while at less than 70% HP, and 20 otherwise.",
@@ -2995,7 +3000,7 @@
 		},
 		"Flame Wheel": {
 			"name": "Flame Wheel",
-			"description": "Deals damage. There's a 50% chance for this move to inflict Burn 8 times on a random tile until the start of your next turn. At the end of their turn, the opponent takes damage equal to 1/32 of their max HP for each Burn status on the board.",
+			"description": "Deals damage. There's a 50% chance for this move to apply Burn 8 times on a random tile until the start of your next turn. At the end of their turn, the opponent takes damage equal to 1/32 of their max HP for each Burn status on the board.",
 			"shortDescription": "Damages and might burn tiles"
 		},
 		"Flatter": {
@@ -3570,6 +3575,11 @@
 			"description": "Deals damage. If the opponent has any benched Pokémon remaining, this move also attacks one of them of your choice, with 30 less power.",
 			"shortDescription": "Damages a benched Pokémon",
 			"choose-pokemon": "Choose a Pokémon for Shadow Ball to deal damage to."
+		},
+		"Shadow Bone": {
+			"name": "Shadow Bone",
+			"description": "Deals damage, then removes half of the energy in the opponent's yellow, green, and blue energy bars. There's an X% chance that this move will lower the opponent's Defense by a stage, where X is the amount of energy removed.",
+			"shortDescription": "Deals damage and removes energy"
 		},
 		"Shadow Sneak": {
 			"name": "Shadow Sneak",

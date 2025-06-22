@@ -2823,6 +2823,60 @@ const pokemonMoveData = {
 			}
 		]
 	},
+	//Burns tiles over multiple turns
+	"Fire Spin": {
+		name: "Fire Spin",
+		type: "Fire",
+		category: "Special",
+		strategy: "special",
+		tags: ["damage-dealing"],
+		pp: 15,
+		power: 35,
+		accuracy: 85,
+		rechargeTurns: 6,
+		energy: {
+			red: 10,
+			green: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Fire Spin.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack", label: "damage" },
+			{ type: "damage" },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "fire-spin-attacking",
+				type: "disability",
+				stacks: false,
+				volatile: true,
+				turns: 5,
+				lostOnSwap: true,
+				lostOnBatonPass: true,
+				appliesTo: {
+					name: "Fire Spin"
+				},
+			} },
+			{ type: "end-turn" },
+		],
+		onTurnEnd: [
+			{ type: "is-trainers-turn", target: "user" },
+			{ type: "load-value", value: false },
+			{ type: "jump-if-equal", jumpTo: Infinity},
+
+			{ type: "get-status-stacks", target: "user", statusName: "fire-spin-attacking" },
+			{ type: "load-value", value: 1 },
+			{ type: "jump-if-greater-than-or-equal-to", jumpTo: "damage" },
+			{ type: "jump", jumpTo: Infinity },
+
+			{ type: "play-sound", name: "attack", label: "damage" },
+			{ type: "load-value", value: 2 },
+			{ type: "select-random-tiles", count: -1 },
+			{
+				type: "apply-status-to-tiles", selection: "group", which: -1,
+				status: { name: "Burn", type: "debuff", duration: 7 }
+			}
+		]
+	},
 	//Deals damage based on HP/Max HP
 	"Flail": {
 		name: "Flail",
@@ -7185,6 +7239,55 @@ const pokemonMoveData = {
 			{ type: "get-element-from-list", list: -2, index: -1 },
 			{ type: "load-value", value: -30 },
 			{ type: "damage", toPokemon: -2, additivePower: -1 }
+		]
+	},
+	//Removes energy from opponent
+	"Shadow Bone": {
+		name: "Shadow Bone",
+		type: "Ghost",
+		category: "Physical",
+		strategy: "basic-damage",
+		tags: ["damage-dealing"],
+		pp: 10,
+		power: 85,
+		accuracy: 100,
+		rechargeTurns: 2,
+		energy: {
+			// purple: 8,
+			// orange: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Shadow Bone.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "load-value", value: ["yellow", "green", "blue"] },
+			{ type: "get-energy-values", colors: -1, target: "opponent" },
+			{ type: "load-value", value: -0.5 },
+			{ type: "multiply-energy", amounts: -2, scale: -1, round: "down" },
+			{ type: "gain-energy", amounts: -1, target: "opponent" },
+			{ type: "load-value", value: -1 },
+			{ type: "multiply-energy", amounts: -2, scale: -1 },
+			{ type: "get-total-energy", amounts: -1 },
+			{ type: "save-variable", name: "total", save: -1 },
+			{ type: "load-value", value: 1 },
+			{ type: "load-value", value: 100 },
+			{ type: "random-number", min: -2, max: -1, useArgs: true },
+			{ type: "load-variable", name: "total" },
+			{ type: "jump-if-less-than", jumpTo: "debuff" },
+			{ type: "jump", jumpTo: Infinity },
+			{
+				type: "apply-debuff", target: "opponent", label: "debuff", debuff: {
+					type: "stat",
+					stat: "defense",
+					class: "debuff",
+					amount: -1
+				}
+			},
 		]
 	},
 	//Deals more damage if you have a different number of pokemon remaining
