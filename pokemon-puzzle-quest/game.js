@@ -2280,14 +2280,17 @@ class Round {
 				modal.addClass("wide")
 				let message = `${pokemon.name} is evolving!`
 				modal.find(".modal-title").html(`<h6 class='display-6'>${message}</h6>`)
-				let btn = $(`<button class='btn btn-primary'>Continue</button>`)
+				let btn = $(`<button class='btn btn-secondary'>Cancel</button>`)
 				modal.find(".modal-footer").append(btn)
+				let btn2 = $(`<button class='btn btn-primary'>Skip</button>`)
+				modal.find(".modal-footer").append(btn2)
 
+				let body = modal.find(".modal-body")
 				let animation = doEvolutionAnimation(body, pokemon, evolution)
 				let doShowPokemonInfo = false
 				let notActive = []
-				animation.promise.then(() => {
-					if (animation.skipped) return
+				let evolvePromise = animation.promise.then(() => {
+					if (!animation.doEvolution) return
 					let newPokemonName = getLocaleString("name", lang, ["pokemon", evolveTo.id])
 					let message = `${pokemon.name} evolved into ${newPokemonName}!`
 					modal.find(".modal-title").html(`<h6 class='display-6'>${message}</h6>`)
@@ -2320,26 +2323,35 @@ class Round {
 
 				body.append(announcementBox)
 				modal.modal("show")
+				btn2.click(() => {
+					animation.skip()
+					modal.modal("hide")
+				})
 				btn.click(() => {
+					animation.cancel()
 					modal.modal("hide")
 				})
 				modal.on("hidden.bs.modal", () => {
-					if (doShowPokemonInfo){
-						let messageKey = notActive.length !== 1 ? "new-moves-message-plural" : "new-moves-message-single"
-						let message = getLocaleString(messageKey, lang)
-						message = applyReplacements(message, [pokemon.name])
-						let options = {
-							message: message,
-							showOnlyActiveMoves: true,
-							canSwitchActiveMoves: true,
-							highlightedMoves: notActive
-						}
-						viewPokemonInfo(pokemon, options)
-						.then(() => resolve())
-					} else {
-						resolve()
+					if (!animation.complete){
+						animation.skip()
 					}
-					animation.skip()
+					evolvePromise.then(() => {
+						if (doShowPokemonInfo){
+							let messageKey = notActive.length !== 1 ? "new-moves-message-plural" : "new-moves-message-single"
+							let message = getLocaleString(messageKey, lang)
+							message = applyReplacements(message, [pokemon.name])
+							let options = {
+								message: message,
+								showOnlyActiveMoves: true,
+								canSwitchActiveMoves: true,
+								highlightedMoves: notActive
+							}
+							viewPokemonInfo(pokemon, options)
+							.then(() => resolve())
+						} else {
+							resolve()
+						}
+					})
 				})
 			}))
 		}
@@ -7909,11 +7921,23 @@ function doEvolutionAnimation(elem, pokemon, evolution) {
 	box2.append(image2)
 	let result = {}
 
+	let skipResolve
+	let skipPromise = new Promise(res => skipResolve = res)
 	let skipped = false
+	result.complete = false
 	result.skipped = false
+	result.doEvolution = true
+	let cancel = () => {
+		skipped = true
+		result.doEvolution = false
+		result.skipped = true
+		skipResolve()
+	}
 	let skip = () => {
 		skipped = true
+		result.doEvolution = true
 		result.skipped = true
+		skipResolve()
 	}
 
 	//Squash
@@ -8035,8 +8059,12 @@ function doEvolutionAnimation(elem, pokemon, evolution) {
 			}
 		})
 	})
-	let animationComplete = delay(15000)
+	let animPromise = delay(15000).then(() => {
+		result.complete = true
+	})
+	let animationComplete = Promise.any([skipPromise, animPromise])
 	result.promise = animationComplete
+	result.cancel = cancel
 	result.skip = skip
 	return result
 }

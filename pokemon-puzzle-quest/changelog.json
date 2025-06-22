@@ -10,7 +10,9 @@
 				"- More improvements to image loading",
 				"- Now every shiny pokemon has a compressed version of the image that displays during battle too.",
 				"- AAAAnd one last batch so that the pokemon images used in the pokedex look better.",
-				"- Added an option for people who want to just make all enemies a higher level across the board."
+				"- Added an option for people who want to just make all enemies a higher level across the board.",
+				"- Fixed a bug where you couldn't see the evolution animation anymore.",
+				"- You can now skip a pokemon's evolution animation without preventing it from evolving."
 			]
 		},
 		"20250620": {

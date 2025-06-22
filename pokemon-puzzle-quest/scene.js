@@ -85,7 +85,7 @@ function startScene(name, options={}) {
 				}
 			}
 			const getPopover = pokemon => {
-				let image = getPokemonImage(pokemon, "large-compressed")
+				let image = getPokemonImage(pokemon, "tiny")
 				let html = `<div class='text-center'>${pokemon.name}
 				<div>
 				<img class='pokemon-image' src='${image}'>

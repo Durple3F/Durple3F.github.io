@@ -7503,7 +7503,7 @@ const pokemonData = {
 			purple: 3
 		},
 		evolutions: [
-			{ name: "Brionne", unlock: { type: "level", amount: 17 } }
+			{ name: "Brionne", unlock: { type: "level", amount: 1 } }
 		],
 		learnset: [
 			{ name: "Pound", unlock: { type: "level", amount: 1 } },
