@@ -7253,8 +7253,8 @@ const pokemonMoveData = {
 		accuracy: 100,
 		rechargeTurns: 2,
 		energy: {
-			// purple: 8,
-			// orange: 5
+			purple: 8,
+			orange: 5
 		},
 		sounds: {
 			"attack": "src/audio/attacks/Shadow Bone.mp3"

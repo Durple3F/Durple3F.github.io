@@ -19,12 +19,29 @@ const NPCTrainerData = {
 	"Narrator": {
 		name: "",
 		type: "trainer",
+		pickable: false,
 		textStyle: {
 			namePlateOpacity: 0
 		},
 		imageSources: {
 			trainer: "src/img/trainers/empty.png"
 		}
+	},
+	"Elio": {
+		name: "Elio",
+		type: "trainer",
+		alwaysAvailable: true,
+		imageSources: {
+			trainer: "src/img/trainers/elio.png"
+		},
+	},
+	"Selene": {
+		name: "Selene",
+		type: "trainer",
+		alwaysAvailable: true,
+		imageSources: {
+			trainer: "src/img/trainers/selene.png"
+		},
 	},
 	"Hau": {
 		name: "Hau",
@@ -76,6 +93,7 @@ const NPCTrainerData = {
 	"Gladion": {
 		name: "Gladion",
 		type: "trainer",
+		pickable: false,
 		imageSources: {
 			trainer: "src/img/trainers/gladion.png"
 		},
@@ -320,7 +338,7 @@ const NPCTrainerData = {
 		}
 	},
 	"Swimmer-Gen7": {
-		name: "Swimmer-Gen7",
+		name: "Swimmer",
 		type: "trainer",
 		imageSources: {
 			trainer: "src/img/trainers/swimmer-gen7.png"
@@ -372,6 +390,9 @@ for (let trainerName in NPCTrainerData) {
 	let data = NPCTrainerData[trainerName]
 	if (!data.id) {
 		data.id = trainerName
+	}
+	if (!("pickable" in data)){
+		data.pickable = true
 	}
 }
 

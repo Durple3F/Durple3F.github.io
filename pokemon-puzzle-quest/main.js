@@ -1230,7 +1230,7 @@ function openChangelog(){
 	let promise = new Promise(resolve => resolvePromise = resolve)
 	let modal = $("#modal")
 	clearModal(modal, false)
-	modal.addClass("wide").addClass("show")
+	modal.addClass("wide")
 	let body = modal.find(".modal-body")
 
 	modal.find(".modal-title").html(`<h6 class='display-6 text-center'>Changelog</h6>`)
@@ -1430,6 +1430,79 @@ function openChangelog(){
 		resolvePromise()
 	})
 
+	return promise
+}
+function openTrainerSelection(){
+	let resolvePromise
+	let promise = new Promise(resolve => resolvePromise = resolve)
+	let modal = $("#modal")
+	clearModal(modal, false)
+	modal.addClass("wide")
+	let body = modal.find(".modal-body")
+
+	modal.find(".modal-title").html(`<h6 class='display-6 text-center'>Choose a Trainer</h6>`)
+	let btn = $(`<button class='btn btn-primary'>Continue</button>`)
+	modal.find(".modal-footer").append(btn)
+
+	let section = $(`<div class='pokeball-section justify-content-center w-100'>`)
+	body.append(section)
+
+	const pickTrainer = trainerClass => {
+		if (!trainerClass){
+			config["trainerClass"] = null
+		} else {
+			config["trainerClass"] = trainerClass.id
+		}
+	}
+
+	for (let trainerClassId in NPCTrainerData){
+		let trainerClass = NPCTrainerData[trainerClassId]
+		if (!trainerClass.pickable) continue
+		let show = false
+		if (trainerClass.alwaysAvailable){
+			show = true
+		}
+		if (playerSaveInfo["beaten-trainer-classes"].includes(trainerClassId)) {
+			show = true
+		}
+		if (!show) continue
+		let option = $(`<div class='pokeball-option p-2 m-2 d-flex flex-column justify-content-center align-items-center'>`)
+		option.css("width", "8em")
+		section.append(option)
+		let img = $("<img>")
+		option.append(img)
+		img.attr("src", trainerClass.imageSources.trainer)
+		img.css("image-rendering", "pixelated")
+		img.css("width", "round(down, 90%, 80px)")
+		img.css("max-width", "90%")
+		option.append(`<span>${trainerClass.name}</span>`)
+		option.click(() => {
+			if (option.hasClass("active")){
+				option.removeClass("active")
+				pickTrainer(null)
+			} else {
+				section.children(".active").removeClass("active")
+				option.addClass("active")
+				pickTrainer(trainerClass)
+			}
+		})
+		if (config["trainerClass"] === trainerClass.id){
+			option.addClass("active")
+		}
+	}
+	
+	promise = promise.then(() => {
+		if (playerSaveId) return savePlayerInfo()
+		return
+	})
+
+	btn.click(() => {
+		modal.modal("hide")
+	})
+	modal.modal("show")
+	modal.on("hidden.bs.modal", () => {
+		resolvePromise()
+	})
 	return promise
 }
 

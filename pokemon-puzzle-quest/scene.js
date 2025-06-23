@@ -542,7 +542,7 @@ function startScene(name, options={}) {
 				pcBox.off("mouseup").on("mouseup", handleMouseUp2)
 			}
 
-			let adminTag = $(`<div id='pc-admin'></div>`)
+			let adminTag = $(`<div id='pc-admin' class='d-flex flex-column justify-content-center'></div>`)
 			gameTag.append(adminTag)
 
 			let activePokemonTag = $(`<div
@@ -914,16 +914,8 @@ function startScene(name, options={}) {
 			}
 			let pcInterval = setInterval(pcTick, 10)
 
-			let confirmText = getLocaleString("confirm", lang)
-			let confirmButton = $(`<button class='btn big-btn btn-primary m-3'>${confirmText}</button>`)
-			adminTag.append(confirmButton)
-			confirmButton.click(() => {
-				leaveScene()
-				changeScene("route")
-			})
-
 			let pokedexText = getLocaleString("pokedex", lang)
-			let pokedexButton = $(`<button class='btn big-btn btn-primary m-3'>${pokedexText}</button>`)
+			let pokedexButton = $(`<button class='btn btn-primary w-50 m-3 mx-auto'>${pokedexText}</button>`)
 			if (playerSaveInfo["unlocked-pokedex"]) {
 				adminTag.append(pokedexButton)
 				pokedexButton.click(() => {
@@ -931,6 +923,19 @@ function startScene(name, options={}) {
 					changeScene("pokedex")
 				})
 			}
+			
+			let trainerText = getLocaleString("choose-trainer-btn", lang)
+			let trainerButton = $(`<button class='btn btn-primary w-50 m-3 mx-auto'>${trainerText}</button>`)
+			adminTag.append(trainerButton)
+			trainerButton.click(() => openTrainerSelection())
+
+			let confirmText = getLocaleString("confirm", lang)
+			let confirmButton = $(`<button class='btn btn-primary w-50 m-3 mx-auto'>${confirmText}</button>`)
+			confirmButton.click(() => {
+				leaveScene()
+				changeScene("route")
+			})
+			adminTag.append(confirmButton)
 
 		} break
 		case "pokedex": {
@@ -1425,15 +1430,24 @@ function askToRenamePokemon(pokemon) {
 	modal.find(".modal-title").text(question)
 	let innerStuff = $(`<div class='container d-flex'></div>`)
 	innerStuff.append(`<div class='col col-3'><img class='pokemon-image'></div>`)
-	innerStuff.append(`<div class='col col-9 d-flex flex-column justify-content-center align-items-center'>
-		<input type='text' required value='${name}'>
-		<button class='btn btn-primary confirm'>Submit</button>
-	</div>`)
+	let inputSection = $(`<div class='col col-9 d-flex flex-column justify-content-center align-items-center'></div>`)
+	innerStuff.append(inputSection)
+	let input = $(`<input type='text' required>`)
+	inputSection.append(input)
+	input.val(name)
+	let btn = $(`<button class='btn btn-primary confirm'>Submit</button>`)
+	inputSection.append(btn)
 	innerStuff.find(".pokemon-image").attr("src", image)
 	let body = modal.find(".modal-body")
 	body.append(innerStuff)
+	
+	input.on("keydown", event => {
+		if (event.key === "Enter"){
+			btn.click()
+		}
+	})
 
-	body.find(".btn.confirm").click(() => {
+	btn.click(() => {
 		pokemon.name = body.find("input").val()
 		modal.modal("hide")
 	})
@@ -1994,6 +2008,11 @@ function viewPokemonInfo(pokemon, options = {}) {
 			renameInput.fadeOut(100, () => nameTag.fadeIn(100))
 		}
 		renameInput.change(changeName)
+		renameInput.on("keydown", event => {
+			if (event.key === "Enter"){
+				changeName()
+			}
+		})
 
 		let renaming = false
 		const toggleRename = () => {
@@ -2306,7 +2325,7 @@ function viewPokemonInfo(pokemon, options = {}) {
 
 		//Furfrou
 		if (canSwitchPokeball && data.id === "Furfrou"){
-			let furfrouSection = $("<div class='pokeball-section d-flex flex-wrap justify-content-around'>")
+			let furfrouSection = $("<div class='pokeball-section'>")
 			info.append(furfrouSection)
 
 			const changeCoat = type => {
@@ -2338,7 +2357,7 @@ function viewPokemonInfo(pokemon, options = {}) {
 		const changePokeball = type => {
 			pokemon.pokeballType = type
 		}
-		let pokeballSection = $("<div class='pokeball-section d-flex flex-wrap justify-content-around'>")
+		let pokeballSection = $("<div class='pokeball-section'>")
 		info.append(pokeballSection)
 		for (let pokeballType in pokeballImages){
 			if (options.pure) break

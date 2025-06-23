@@ -28,6 +28,8 @@
 	"select-number-tiles-single": "Select a tile",
 	"confirm": "Confirm",
 	"pokedex": "Pokédex",
+	"choose-trainer-btn": "Trainer",
+
 	"dialogue": {
 		"rival-battle-1-dialogue": {
 			"events": [
@@ -1426,7 +1428,6 @@
 			"callbacks": {},
 			"effects": [
 				{ "type": "get-speaker", "name": "Narrator", "class": "Narrator" },
-				{ "type": "text", "speaker": "Narrator", "text": "As you walk along the dirt path, you approach a woman dancing alongside several Oricorio." },
 				{ "type": "animate", "selector": "#dialogue .speakers", "css": {
 					"opacity": 0
 				}, "duration": 0, "waitDuration": 0 },
@@ -1618,6 +1619,7 @@
 						}
 					}
 				]},
+				{ "type": "text", "speaker": "Narrator", "text": "As you walk along the dirt path, you approach a woman dancing alongside several Oricorio." },
 				{ "type": "animate", "selector": "#dialogue .speakers", "css": {
 					"opacity": 1
 				}, "duration": 1000, "waitDuration": 600 },

@@ -1135,7 +1135,16 @@ body {
 	width: 100%;
 	height: 100%;
 }
-.avatar-trainer-image-section > .trainer-image {
+.player .avatar-trainer-image-section {
+	transform: scaleX(-1);
+}
+.avatar-trainer-image-container {
+	position: absolute;
+	top: 0; left: 0;
+	width: 100%;
+	height: 100%;
+}
+.avatar-trainer-image-section .trainer-image {
 	position: absolute;
 	height: max(40%, round(down, 70%, 80px));
 	top: 50%; left: 50%;
@@ -2083,23 +2092,26 @@ body {
 	display: none;
 }
 
-#modal.summary .advanced-info > .pokeball-section {
+#modal .pokeball-section {
 	width: 90%;
 	margin: auto;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
 }
-#modal.summary .advanced-info > .pokeball-section .pokeball-option {
+#modal .pokeball-section .pokeball-option {
 	background-color: var(--move-unusable);
 	border-radius: 1em;
 	cursor: pointer;
 	transition: background-color 0.3s;
 }
-#modal.summary .advanced-info > .pokeball-section .pokeball-option:hover {
+#modal .pokeball-section .pokeball-option:hover {
 	background-color: var(--move-focus);
 }
-#modal.summary .advanced-info > .pokeball-section .pokeball-option.active {
+#modal .pokeball-section .pokeball-option.active {
 	background-color: var(--move-usable);
 }
-#modal.summary .advanced-info > .pokeball-section .pokeball-option.active:hover {
+#modal .pokeball-section .pokeball-option.active:hover {
 	background-color: var(--move-usable-focus);
 }
 

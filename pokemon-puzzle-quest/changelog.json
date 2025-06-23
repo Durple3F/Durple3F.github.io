@@ -1,5 +1,18 @@
 {
 	"versions": {
+		"20250622": {
+			"date": "June 22, 2025",
+			"line-count": 52700,
+			"changes": [
+				"- Fixed a bug where you couldn't see the evolution animation anymore.",
+				"- You can now skip a pokemon's evolution animation without preventing it from evolving.",
+				"- It's now possible for the player's side of the board to have a trainer like the enemy has.",
+				"- You can pick which trainer you'd like to have in the PC.",
+				"- To avoid spoiling stuff, I've decided to make it so you can only pick trainers of classes which you have already fought and beaten.",
+				"- Added Elio and Selene trainer classes which are available by default.",
+				"- You can now press Enter to confirm your save file's name, your pokemon's name as you catch your pokemon, and your pokemon's name when renaming your pokemon."
+			]
+		},
 		"20250621": {
 			"date": "June 21, 2025",
 			"line-count": 52500,
@@ -10,9 +23,7 @@
 				"- More improvements to image loading",
 				"- Now every shiny pokemon has a compressed version of the image that displays during battle too.",
 				"- AAAAnd one last batch so that the pokemon images used in the pokedex look better.",
-				"- Added an option for people who want to just make all enemies a higher level across the board.",
-				"- Fixed a bug where you couldn't see the evolution animation anymore.",
-				"- You can now skip a pokemon's evolution animation without preventing it from evolving."
+				"- Added an option for people who want to just make all enemies a higher level across the board."
 			]
 		},
 		"20250620": {

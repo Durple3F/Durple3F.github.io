@@ -23,6 +23,9 @@ const config = {
 	cpuSpeed: 1,
 	textSpeed: 40,
 
+	//In case the player wants to have a little sprite for themselves
+	trainerClass: null,
+
 	volumes: {
 		"music": 0.02,
 		"sound": 0.2,

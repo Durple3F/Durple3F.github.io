@@ -491,9 +491,16 @@ function askToNameSave(){
 	modal.find(".modal-title").append("<h2>Enter your name:</h2>")
 	let body = modal.find(".modal-body")
 	let innerStuff = $(`<div class='container d-flex justify-content-center'></div>`)
-	innerStuff.append(`<input type='text' class='text-center'
+	let nameInput = $(`<input type='text' class='text-center'
 		required placeholder='Save File Name' style='font-size: 1.5em;'>`)
+	innerStuff.append(nameInput)
 	body.append(innerStuff)
+	
+	nameInput.on("keydown", event => {
+		if (event.key === "Enter"){
+			modal.find(".btn.confirm").click()
+		}
+	})
 
 	modal.find(".modal-footer").addClass("justify-content-center")
 	.append("<button class='btn btn-primary confirm'>Submit</button>")
@@ -526,6 +533,7 @@ function newPlayerSaveData(){
 	data["move-usage-stats"] = {}
 	data["unlocked-pokedex"] = false
 	data["seen-dialogue"] = []
+	data["beaten-trainer-classes"] = []
 	data["z-moves-unlocked"] = []
 	return data
 }

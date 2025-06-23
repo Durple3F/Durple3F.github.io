@@ -256,12 +256,18 @@ class Round {
 			this.sendOutPokemon(1, enemyTrainer.activePokemon)
 		}
 
+		if (config["trainerClass"]){
+			let NPCData = NPCTrainerData[config["trainerClass"]]
+			let trainerImage = NPCData.imageSources.trainer
+			this.trainerTags[0].trainerImage.attr("src", trainerImage)
+		}
+
 		p.then(() => {
-			return this.animateSendOutPokemon(0, this.trainers[0].activePokemon)
+			return this.animateSendOutPokemon(0, this.trainers[0].activePokemon, "default-throw-pokeball")
 		})
-			.then(() => {
-				resolvePromise()
-			})
+		.then(() => {
+			resolvePromise()
+		})
 
 		return promise
 	}
@@ -377,6 +383,14 @@ class Round {
 					//All your pokemon get a point of friendship for each pokemon the opponent had
 					for (let pokemon of this.trainers[0].pokemon){
 						pokemon.friendship += this.trainers[1].pokemon.length
+					}
+
+					//You are considered to have beaten this type of trainer.
+					let NPCData = getNPCDataFromTrainer(this.trainers[1].data)
+					if (NPCData.type === "trainer"){
+						if (!playerSaveInfo["beaten-trainer-classes"].includes(NPCData.id)){
+							playerSaveInfo["beaten-trainer-classes"].push(NPCData.id)
+						}
 					}
 
 					return this.showEndScreen("You win!")
@@ -5744,7 +5758,9 @@ class Round {
 		tags.pokeballImage = tags.pokeballImageSection.find(".pokeball-image")
 		tags.trainerImageSection = tags.pokemonSection.children(".avatar-trainer-image-section")
 		tags.trainerImageSection.attr("style", "")
-		tags.trainerImage = tags.trainerImageSection.children(".trainer-image")
+		tags.trainerImageContainer = tags.trainerImageSection.children(".avatar-trainer-image-container")
+		tags.trainerImageContainer.attr("style", "")
+		tags.trainerImage = tags.trainerImageContainer.children(".trainer-image")
 		tags.trainerImage.attr("src", "")
 
 		tags.zMeter = tags.sideTop.find(".z-meter")
@@ -5783,7 +5799,7 @@ class Round {
 		//Start the little animation throwing the ball
 		let trainer = this.trainers[trainerIndex]
 		let trainerTags = trainer.tags
-		let trainerTag = trainerTags.trainerImageSection
+		let trainerTag = trainerTags.trainerImageContainer
 		let pokeballTag = trainerTags.pokeballImage
 		let pokemonTag = trainerTags.pokemonImage
 		let pokemonSection = trainerTags.pokemonImageSection
@@ -5827,7 +5843,7 @@ class Round {
 			first = first.then(() => trainerAnimations[animName](trainerTag))
 		}
 
-		const trainerMoveToSide = dur => {
+		const trainerMoveToSide = (dur, trainer) => {
 			trainerTag.animate({
 				left: "40%"
 			}, dur)
@@ -5846,7 +5862,7 @@ class Round {
 				})
 
 				return new Promise(resolve => {
-					trainerMoveToSide(900)
+					trainerMoveToSide(900, trainer)
 
 					renderPokeballSmallCanvas(canvas, pokeballType, "closed")
 					renderPokeballSpinSmallCanvas(pokeballTag, spinDirection)
