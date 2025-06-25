@@ -3636,6 +3636,34 @@ const levelData = [
 					},
 				]
 			},
+			{ // Punk Girl Margo
+				name: "Margo",
+				class: "Punk-Girl-Gen7",
+				tags: ["contestant"],
+				introDialogue: "route-5-5-margo-intro",
+				winDialogue: "route-5-5-margo-win",
+				pokemon: [
+					{
+						id: "Poochyena",
+						pokeball: "dusk ball",
+						name: "5-5-margo-poochyena",
+						level: 17
+					},
+					{
+						id: "Zorua",
+						pokeball: "dusk ball",
+						name: "5-5-margo-zorua",
+						level: 17
+					},
+					{
+						id: "Sableye",
+						pokeball: "dusk ball",
+						name: "5-5-margo-sableye",
+						isAce: true,
+						level: 17
+					},
+				]
+			},
 		],
 		effects: [
 			{ type: "change-background-image", name: "battle-royale-dome-exterior" },

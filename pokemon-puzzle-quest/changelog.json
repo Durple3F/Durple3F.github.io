@@ -1,16 +1,27 @@
 {
 	"versions": {
+		"20250625": {
+			"date": "June 25, 2025",
+			"line-count": 52700,
+			"changes": [
+				"- Added Kangaskhan",
+				"- Moved around a lot of the image files for consistency."
+			]
+		},
 		"20250622": {
 			"date": "June 22, 2025",
 			"line-count": 52700,
 			"changes": [
+				"- Added a trainer to 5-5",
 				"- Fixed a bug where you couldn't see the evolution animation anymore.",
 				"- You can now skip a pokemon's evolution animation without preventing it from evolving.",
 				"- It's now possible for the player's side of the board to have a trainer like the enemy has.",
 				"- You can pick which trainer you'd like to have in the PC.",
 				"- To avoid spoiling stuff, I've decided to make it so you can only pick trainers of classes which you have already fought and beaten.",
 				"- Added Elio and Selene trainer classes which are available by default.",
-				"- You can now press Enter to confirm your save file's name, your pokemon's name as you catch your pokemon, and your pokemon's name when renaming your pokemon."
+				"- Added another trainer class",
+				"- You can now press Enter to confirm your save file's name, your pokemon's name as you catch your pokemon, and your pokemon's name when renaming your pokemon.",
+				"- HOPEFULLY I tracked down the error causing dialogue to never end OCCASIONALLY"
 			]
 		},
 		"20250621": {

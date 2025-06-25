@@ -295,6 +295,13 @@ const NPCTrainerData = {
 			trainer: "src/img/trainers/preschoolerf-gen7.png"
 		}
 	},
+	"Punk-Girl-Gen7": {
+		name: "Punk Girl",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/punkgirl-gen7.png"
+		}
+	},
 	"Rising-Star": {
 		name: "Rising Star",
 		type: "trainer",

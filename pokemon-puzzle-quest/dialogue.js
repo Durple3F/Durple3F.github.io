@@ -64,6 +64,9 @@ function beginDialogue(dialogueData, options={}) {
 	let promise = advanceCurrentDialogue()
 	promises.push(promise)
 	dialogueData.promise = promise
+	dialogueData.promise.then(() => {
+		console.log("Dialogue done!")
+	})
 
 	const skipRemainingDialogue = async () => {
 		let effectIndex = dialogueProgress.effectIndex
@@ -170,6 +173,7 @@ function advanceCurrentDialogue() {
 	dialogueProgress.effectIndex = dialogueProgress.nextEffectIndex
 	let effectIndex = dialogueProgress.effectIndex
 	let effect = effects[effectIndex]
+	if (!effect) return Promise.resolve()
 	let effectType = effect.type
 	dialogueProgress.nextEffectIndex++
 	let eventIndex = dialogueProgress.eventIndex
@@ -313,6 +317,7 @@ function advanceCurrentDialogue() {
 			} catch (error){
 				console.error(error)
 			}
+			break
 	}
 
 	promise = promise.then(() => {

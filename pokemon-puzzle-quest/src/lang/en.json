@@ -1894,6 +1894,32 @@
 				{ "type": "fade-out", "speaker": "Keahi" }
 			]
 		},
+		"route-5-5-margo-intro": {
+			"effects": [
+				{ "type": "get-speaker", "name": "Announcer", "class": "Reporter", "position": "left", "facing": "right" },
+				{ "type": "get-speaker", "name": "Margo", "class": "Punk-Girl-Gen7", "fadeIn": true },
+				{ "type": "text", "speaker": "Announcer", "text": "Margo, the rude girl that ate my snack I left in the green room!" },
+				{ "type": "clear-text", "speaker": "Margo" },
+				{ "type": "transform-speaker", "speaker": "Announcer", "transform": "scaleX(-1)", "duration": 300, "waitDuration": 200 },
+				{ "type": "text", "speaker": "Margo", "text": "...Hey, man, I apologized..." },
+				{ "type": "text", "speaker": "Margo", "text": "I just thought it was like, complimentary! You can’t just leave unlabeled food sitting out like that!" },
+				{ "type": "text", "speaker": "Announcer", "text": "Doesn’t matter! You ate my cupcake I was saving for later!" },
+				{ "type": "text", "speaker": "Announcer", "text": "And remember folks, there is $@start-italics|@$no$@end-italics|@$ mercy inside the ring!" }
+			]
+		},
+		"route-5-5-margo-win": {
+			"effects": [
+				{ "type": "get-speaker", "name": "Announcer", "class": "Reporter", "position": "left", "facing": "right" },
+				{ "type": "get-speaker", "name": "Margo", "class": "Punk-Girl-Gen7" },
+				{ "type": "text", "speaker": "Announcer", "text": "And with that, justice has prevailed! The glorious force of nature that is karma has once again laid low another evildoer!" },
+				{ "type": "text", "speaker": "Announcer", "text": "One may even say she has received her just desserts!" },
+				{ "type": "transform-speaker", "speaker": "Announcer", "transform": "scaleX(-1)", "duration": 300, "waitDuration": 0 },
+				{ "type": "text", "speaker": "Margo", "text": "Jeez, okay, I get it! I’ll just buy you a new sandwich, c’mon!" },
+				{ "type": "text", "speaker": "Announcer", "text": "Good. Make sure it has sprinkles." },
+				{ "type": "transform-speaker", "speaker": "Announcer", "transform": "", "duration": 300, "waitDuration": 100 },
+				{ "type": "fade-out", "speaker": "Margo", "waitDuration": 200 }
+			]
+		},
 		"route-5-6-dialogue": {
 			"events": [],
 			"callbacks": {},
@@ -2110,6 +2136,10 @@
 		"Chansey": {
 			"name": "Chansey",
 			"pokedex-entry": "Its eggs are renowned for their curatiive properties and delicious taste. Although, if its trainer tries to sell its eggs, Chansey usually get agitated and stop letting its trainer take them."
+		},
+		"Kangaskhan": {
+			"name": "Kangaskhan",
+			"pokedex-entry": "Intensely motherly by nature, Kangaskhan that aren’t currently raising young of their own often try to help others tend to theirs instead. Kangaskhan have been spotted sporting all kinds of different baby Pokémon in their pouch while their parents are off hunting for the day’s food."
 		},
 		"Goldeen": {
 			"name": "Goldeen",
@@ -4792,6 +4822,9 @@
 		"5-5-keahi-magby": "Singe",
 		"5-5-keahi-houndour": "Soot",
 		"5-5-keahi-growlithe": "Ember",
+		"5-5-margo-poochyena": "Sirius",
+		"5-5-margo-zorua": "Shadow",
+		"5-5-margo-sableye": "Glint",
 		"5-6-dakota-surskit": "Skitter",
 		"5-6-dakota-dewpider": "Bubble",
 		"5-6-dakota-mareanie": "Ursula"
