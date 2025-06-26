@@ -232,6 +232,13 @@ const NPCTrainerData = {
 			trainer: "src/img/trainers/bellhop.png"
 		}
 	},
+	"Black-Belt": {
+		name: "Black Belt",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/blackbelt.png"
+		}
+	},
 	"Dancer-Gen7": {
 		name: "Dancer",
 		type: "trainer",

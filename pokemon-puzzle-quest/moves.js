@@ -5474,6 +5474,68 @@ const pokemonMoveData = {
 			{ type: "apply-status-effect", statusEffect: "paralyzed", target: "opponent" }
 		],
 	},
+	//Deals damage multiple times, once per turn, and converts tiles
+	"Outrage": {
+		name: "Outrage",
+		type: "Dragon",
+		category: "Physical",
+		strategy: "special",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 10,
+		power: 120,
+		accuracy: 100,
+		rechargeTurns: 10,
+		energy: {
+			red: 12,
+			orange: 16,
+			yellow: 12
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Outrage.mp3"
+		},
+		effects: [
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "outrage-attacking",
+				type: "disability",
+				stacks: false,
+				volatile: true,
+				turns: 3,
+				lostOnSwap: true,
+				lostOnBatonPass: true,
+				appliesTo: {
+					name: "Outrage"
+				},
+			} },
+			{ type: "end-turn" },
+		],
+		onTurnEnd: [
+			{ type: "is-trainers-turn", target: "user" },
+			{ type: "load-value", value: false },
+			{ type: "jump-if-equal", jumpTo: Infinity},
+
+			{ type: "get-status-stacks", target: "user", statusName: "outrage-attacking" },
+			{ type: "load-value", value: 1 },
+			{ type: "jump-if-greater-than-or-equal-to", jumpTo: "damage" },
+			{ type: "jump", jumpTo: Infinity },
+
+			{ type: "play-sound", name: "attack", label: "damage" },
+			{ type: "damage" },
+			{ type: "load-value", value: 5 },
+			{ type: "select-random-tiles", count: -1, conditions: { notTypes: ["red"] } },
+			{ type: "select-tiles-orthogonally-adjacent-to", selection: -1 },
+			{ type: "change-tile-type", selection: "group", which: -1, targetType: "red" },
+			{ type: "apply-status-effect", statusEffect: "confused", target: "user" },
+			{ type: "apply-status-effect", target: "user", statusEffect: {
+				name: "outrage-no-extra-turns",
+				type: "no-extra-turns",
+				stacks: false,
+				volatile: true,
+				turns: 1,
+				lostOnSwap: true,
+				lostOnBatonPass: true,
+			} },
+		]
+	},
 	//Turns all Electric tiles into Rainbow tiles
 	"Pay Day": {
 		name: "Pay Day",
@@ -6830,7 +6892,7 @@ const pokemonMoveData = {
 			{ type: "remove-tiles", selection: -1 },
 		]
 	},
-	//Converts to orange tiles orthogonally adjacent to random tiles
+	//Converts orthogonally adjacent to random tiles to orange tiles 
 	"Rock Tomb": {
 		name: "Rock Tomb",
 		type: "Rock",

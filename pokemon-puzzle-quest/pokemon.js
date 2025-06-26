@@ -129,7 +129,13 @@ class Pokemon{
 		if (options.activeMoves){
 			for (let name of options.activeMoves){
 				let move = pokemonMoveData[name]
-				if (move) this.addActiveMove(move)
+				if (move) {
+					this.addActiveMove(move)
+					let moveIndex = this.moves.indexOf(move)
+					if (!this.movesUnlockedMap[moveIndex]){
+						this.movesUnlockedMap[moveIndex] = true
+					}
+				}
 			}
 		}
 

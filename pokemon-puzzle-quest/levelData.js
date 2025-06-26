@@ -3664,6 +3664,33 @@ const levelData = [
 					},
 				]
 			},
+			{ // Black Belt Biff
+				name: "Biff",
+				class: "Black-Belt",
+				tags: ["contestant"],
+				introDialogue: "route-5-5-biff-intro",
+				winDialogue: "route-5-5-biff-win",
+				pokemon: [
+					{
+						id: "Makuhita",
+						pokeball: "heavy ball",
+						name: "5-5-biff-makuhita",
+						level: 17
+					},
+					{
+						id: "Stufful",
+						pokeball: "heavy ball",
+						name: "5-5-biff-stufful",
+						level: 17
+					},
+					{
+						id: "Pancham",
+						pokeball: "heavy ball",
+						name: "5-5-biff-pancham",
+						level: 17
+					},
+				]
+			},
 		],
 		effects: [
 			{ type: "change-background-image", name: "battle-royale-dome-exterior" },
@@ -4017,6 +4044,9 @@ function renderPokeballSmallCanvas(canvasTag, type, sprite) {
 	ctx.height = 30
 	ctx.width = 30
 	ctx.clearRect(0, 0, ctx.width, ctx.height)
+	if (!(type in pokeballSpriteData.types)){
+		type = "pokeball"
+	}
 	let typeData = pokeballSpriteData.types[type]
 	let spriteData = pokeballSpriteData.sprites[sprite]
 	let spriteWidth = spriteData[0]

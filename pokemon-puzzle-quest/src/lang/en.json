@@ -1920,6 +1920,27 @@
 				{ "type": "fade-out", "speaker": "Margo", "waitDuration": 200 }
 			]
 		},
+		"route-5-5-biff-intro": {
+			"effects": [
+				{ "type": "get-speaker", "name": "Announcer", "class": "Reporter", "position": "left", "facing": "right" },
+				{ "type": "get-speaker", "name": "Biff", "class": "Black-Belt", "fadeIn": true },
+				{ "type": "text", "speaker": "Announcer", "text": "Get ready to rumble— here comes Biff the Brawler!" },
+				{ "type": "text", "speaker": "Biff", "text": "Things are about to heat up!" }
+			]
+		},
+		"route-5-5-biff-win": {
+			"events": [
+				{ "type": "transform-speaker", "speaker": "Biff", "transform": "", "duration": 300, "waitDuration": 0 }
+			],
+			"effects": [
+				{ "type": "get-speaker", "name": "Announcer", "class": "Reporter", "position": "left", "facing": "right" },
+				{ "type": "get-speaker", "name": "Biff", "class": "Black-Belt" },
+				{ "type": "transform-speaker", "speaker": "Biff", "transform": "rotate(-10deg)", "duration": 300, "waitDuration": 0 },
+				{ "type": "text", "speaker": "Biff", "text": "That was a good fight. Let me^^ know if you’re ever in need of a sparring partner!" },
+				{ "type": "text", "speaker": "Announcer", "text": "How honorable! See you next time, Biff!" },
+				{ "type": "fade-out", "speaker": "Biff" }
+			]
+		},
 		"route-5-6-dialogue": {
 			"events": [],
 			"callbacks": {},
@@ -3365,6 +3386,11 @@
 			"name": "Nuzzle",
 			"description": "Deals damage. Applies Paralyzed. When a Paralyzed Pokémon uses a move, the move does nothing, and they lose Paralyzed.",
 			"shortDescription": "Deals light damage and paralyzes"
+		},
+		"Outrage": {
+			"name": "Outrage",
+			"description": "At the end of this turn and the user's next 2 turns, this move deals damage, converts 5 random non-Fire tiles into Fire tiles, confuses the user. Using this move ends the turn.",
+			"shortDescription": "Deals high damage 3 times"
 		},
 		"Pay Day": {
 			"name": "Pay Day",
@@ -4825,6 +4851,9 @@
 		"5-5-margo-poochyena": "Sirius",
 		"5-5-margo-zorua": "Shadow",
 		"5-5-margo-sableye": "Glint",
+		"5-5-biff-makuhita": "Lunchbox",
+		"5-5-biff-stufful": "Tuffball",
+		"5-5-biff-pancham": "Panchamp",
 		"5-6-dakota-surskit": "Skitter",
 		"5-6-dakota-dewpider": "Bubble",
 		"5-6-dakota-mareanie": "Ursula"

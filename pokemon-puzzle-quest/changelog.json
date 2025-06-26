@@ -2,10 +2,14 @@
 	"versions": {
 		"20250625": {
 			"date": "June 25, 2025",
-			"line-count": 52700,
+			"line-count": 53000,
 			"changes": [
 				"- Added Kangaskhan",
-				"- Moved around a lot of the image files for consistency."
+				"- Added Outrage",
+				"- Added a new trainer class",
+				"- Added a new trainer to 5-5",
+				"- Moved around a lot of the image files for consistency.",
+				"- Reworked the ordering of pokemon moves when viewed in the PC."
 			]
 		},
 		"20250622": {

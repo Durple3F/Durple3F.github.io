@@ -176,6 +176,12 @@ const pokemonData = {
 			{ name: "Sleep Powder", unlock: { type: "level", amount: 12 } },
 			{ name: "Psybeam", unlock: { type: "level", amount: 16 } },
 			{ name: "Whirlwind", unlock: { type: "level", amount: 20 } },
+			// { name: "Air Slash", unlock: { type: "level", amount: 24 } },
+			{ name: "Safeguard", unlock: { type: "level", amount: 28 } },
+			// { name: "Bug Buzz", unlock: { type: "level", amount: 32 } },
+			{ name: "Tailwind", unlock: { type: "level", amount: 36 } },
+			// { name: "Rage Powder", unlock: { type: "level", amount: 40 } },
+			{ name: "Quiver Dance", unlock: { type: "level", amount: 44 } },
 		]
 	},
 	"Rattata": {
@@ -7638,7 +7644,7 @@ const pokemonData = {
 			{ name: "Sing", unlock: { type: "level", amount: 20 } },
 			{ name: "Bubble Beam", unlock: { type: "level", amount: 25 } },
 			{ name: "Encore", unlock: { type: "level", amount: 30 } },
-			{ name: "Shadow Bone", unlock: { type: "level", amount: 1 } },
+			{ name: "Outrage", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {

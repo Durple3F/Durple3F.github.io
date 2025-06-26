@@ -2064,13 +2064,14 @@ function viewPokemonInfo(pokemon, options = {}) {
 		<div class='info pokemon-info'>
 			<div class='pokemon-section m-2'>
 				<div class='image text-center'>
-					<img src='${image}' class='pokemon-image'>
+					<img class='pokemon-image'>
 				</div>
 			</div>
 			<div class='move-section m-2'></div>
 		</div>
 	`)
 	sections.append(content)
+	content.find(".pokemon-section .image img").attr("src", image)
 	shownSection = content
 	let pokemonSection = content.children(".pokemon-section")
 
@@ -2206,9 +2207,20 @@ function viewPokemonInfo(pokemon, options = {}) {
 		}
 	}
 
-	for (let move of pokemon.moves) {
+	let movesToShow = pokemon.moves.map(v => v)
+	if (options.highlightedMoves){
+		for (let i = 0; i < movesToShow.length; i++){
+			let move = movesToShow[i]
+			if (options.highlightedMoves.includes(move)){
+				movesToShow.splice(i, 1)
+				movesToShow.splice(0, 0, move)
+			}
+		}
+	}
+
+	for (let i = 0; i < movesToShow.length; i++) {
+		let move = movesToShow[i]
 		if (move.name === "Struggle") continue
-		let i = pokemon.moves.indexOf(move)
 		delay(i * 10).then(() => addMove(move))
 	}
 	content.append(moveSection)

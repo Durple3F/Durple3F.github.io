@@ -1996,6 +1996,10 @@ class Round {
 			getExtraTurn = false
 		}
 
+		if (getExtraTurn && activePokemon.getStatusesOfType("no-extra-turns").length){
+			getExtraTurn = false
+		}
+
 		if (getExtraTurn) {
 			let playerIndex = this.activePlayerIndex
 			initiatives[playerIndex] += this.maxInitiative
@@ -5368,7 +5372,7 @@ class Round {
 			tags.pokemonName.text(name)
 		}
 		tags.pokemonImage.off("click").on("click", () => {
-			viewPokemonInfo(pokemonToShow, {pc: true})
+			viewPokemonInfo(pokemonToShow, {pc: true, highlightedMoves: pokemonToShow.activeMoves})
 		})
 
 		if (facing !== correctFacing) {
