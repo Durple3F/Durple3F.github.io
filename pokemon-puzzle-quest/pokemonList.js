@@ -176,9 +176,9 @@ const pokemonData = {
 			{ name: "Sleep Powder", unlock: { type: "level", amount: 12 } },
 			{ name: "Psybeam", unlock: { type: "level", amount: 16 } },
 			{ name: "Whirlwind", unlock: { type: "level", amount: 20 } },
-			// { name: "Air Slash", unlock: { type: "level", amount: 24 } },
+			{ name: "Air Slash", unlock: { type: "level", amount: 24 } },
 			{ name: "Safeguard", unlock: { type: "level", amount: 28 } },
-			// { name: "Bug Buzz", unlock: { type: "level", amount: 32 } },
+			{ name: "Bug Buzz", unlock: { type: "level", amount: 32 } },
 			{ name: "Tailwind", unlock: { type: "level", amount: 36 } },
 			// { name: "Rage Powder", unlock: { type: "level", amount: 40 } },
 			{ name: "Quiver Dance", unlock: { type: "level", amount: 44 } },
@@ -243,6 +243,8 @@ const pokemonData = {
 			{ name: "Crunch", unlock: { type: "level", amount: 22 } },
 			{ name: "Sucker Punch", unlock: { type: "level", amount: 25 } },
 			{ name: "Super Fang", unlock: { type: "level", amount: 28 } },
+			{ name: "Double-Edge", unlock: { type: "level", amount: 31 } },
+			{ name: "Endeavor", unlock: { type: "level", amount: 34 } },
 		]
 	},
 	"Rattata-Alola": {
@@ -305,6 +307,8 @@ const pokemonData = {
 			{ name: "Crunch", unlock: { type: "level", amount: 22 } },
 			{ name: "Sucker Punch", unlock: { type: "level", amount: 25 } },
 			{ name: "Super Fang", unlock: { type: "level", amount: 28 } },
+			{ name: "Double-Edge", unlock: { type: "level", amount: 31 } },
+			{ name: "Endeavor", unlock: { type: "level", amount: 34 } },
 		]
 	},
 	"Raticate-Alola": {
@@ -367,6 +371,8 @@ const pokemonData = {
 			{ name: "Crunch", unlock: { type: "level", amount: 24 } },
 			{ name: "Sucker Punch", unlock: { type: "level", amount: 29 } },
 			{ name: "Super Fang", unlock: { type: "level", amount: 34 } },
+			{ name: "Double-Edge", unlock: { type: "level", amount: 39 } },
+			{ name: "Endeavor", unlock: { type: "level", amount: 44 } },
 		]
 	},
 	"Spearow": {
@@ -559,7 +565,7 @@ const pokemonData = {
 			{ name: "Spark", unlock: { type: "level", amount: 20 } },
 			{ name: "Agility", unlock: { type: "level", amount: 24 } },
 			// { name: "Iron Tail", unlock: { type: "level", amount: 28 } },
-			// { name: "Discharge", unlock: { type: "level", amount: 32 } },
+			{ name: "Discharge", unlock: { type: "level", amount: 32 } },
 			// { name: "Thunderbolt", unlock: { type: "level", amount: 36 } },
 			{ name: "Light Screen", unlock: { type: "level", amount: 40 } },
 			// { name: "Thunder", unlock: { type: "level", amount: 44 } },
@@ -7644,7 +7650,7 @@ const pokemonData = {
 			{ name: "Sing", unlock: { type: "level", amount: 20 } },
 			{ name: "Bubble Beam", unlock: { type: "level", amount: 25 } },
 			{ name: "Encore", unlock: { type: "level", amount: 30 } },
-			{ name: "Outrage", unlock: { type: "level", amount: 1 } },
+			{ name: "Bug Buzz", unlock: { type: "level", amount: 1 } },
 		]
 	},
 	"Pikipek": {

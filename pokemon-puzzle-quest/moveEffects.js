@@ -792,6 +792,27 @@ const pokemonMoveEffects = {
 			resolve(result)
 		}
 	},
+	"get-adjacent-energy-colors": {
+		update: false,
+		execute: (resolve, effect, params, game, options) => {
+			let fromColors = params.colors
+			let result = []
+			let includeOriginal = effect.includeOriginal
+			for (let color of fromColors){
+				if (includeOriginal){
+					result.push(color)
+				}
+				let index = colors.indexOf(color)
+				let left = colors[(index + colors.length - 1) % colors.length]
+				let right = colors[(index + colors.length + 1) % colors.length]
+				result.push(left)
+				result.push(right)
+			}
+			result = noDuplicates(result)
+
+			resolve(result)
+		}
+	},
 	"gain-energy": {
 		hasTarget: true,
 		targetType: "trainer",

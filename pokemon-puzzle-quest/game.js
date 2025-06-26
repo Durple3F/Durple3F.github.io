@@ -4170,6 +4170,15 @@ class Round {
 			}
 			this.moveQueue.push(moveUseObj)
 			this.moveUseHistory.push(moveUseObj)
+
+			//Scale up the move being used so that it's obvious which move is being carried out
+			let moveTags = trainer.tags.moves.filter(tag => {
+				return tag.data("trainer") === trainer && tag.data("pokemon") === pokemon && tag.data("move") === move
+			}).reduce((acc, v) => {
+				return acc.add(v)
+			}, $())
+			moveTags.addClass("scaleUp")
+
 			this.updateEverything()
 
 			pokemon.gameRoundData.movesUsedThisTurn++
@@ -4210,7 +4219,9 @@ class Round {
 				return moveUseObj.promise
 			})
 			
+			//Some moves demand that we wait for longer than the effects of the move suggest
 			promise = promise.then(() => {
+				moveTags.removeClass("scaleUp")
 				if (moveUseObj.additionalPromises.length){
 					return Promise.all(moveUseObj.additionalPromises).then(() => {
 						this.finishCurrentMove()
@@ -6498,6 +6509,10 @@ class Round {
 			tag.attr("data-move-type", type)
 			let parentMoveIndex = pokemon.moves.indexOf(parentMove)
 			tag.attr("data-parent-move", parentMoveIndex)
+
+			tag.data("trainer", trainer)
+			tag.data("pokemon", pokemon)
+			tag.data("move", move)
 
 			//If this is a z-move, make sure that's remembered in the tag
 			let isZMove = trainer.zMoveReady && pokemonTypes.includes(type)

@@ -1452,7 +1452,8 @@ body {
 .move.usable[data-struggle="true"]:hover {
 	background-color: #dcb518;
 }
-.move.usable:active {
+.move.usable:active,
+.move.scaleUp {
 	transform: scale(1.1);
 }
 .move.unavailable {

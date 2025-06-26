@@ -225,6 +225,40 @@ const pokemonMoveData = {
 			{ type: "remove-tiles", selection: -1 }
 		]
 	},
+	//Cuts the enemy's energy in half
+	"Air Slash": {
+		name: "Air Slash",
+		type: "Flying",
+		category: "Special",
+		strategy: "special",
+		tags: ["damage-dealing"],
+		pp: 15,
+		power: 75,
+		accuracy: 95,
+		rechargeTurns: 3,
+		energy: {
+			blue: 8,
+			purple: 6,
+			yellow: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Air Slash.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "load-value", value: 1 },
+			{ type: "select-energy-colors", search: "most-full", target: "opponent", count: -1 },
+			{ type: "get-adjacent-energy-colors", colors: -1, includeOriginal: true },
+			{ type: "get-energy-values", colors: -1, target: "opponent" },
+			{ type: "load-value", value: -0.5 },
+			{ type: "multiply-energy", amounts: -2, scale: -1, round: "up" },
+			{ type: "gain-energy", amounts: -1, target: "opponent" },
+		],
+	},
 	//Raises your special defense 2
 	"Amnesia": {
 		name: "Amnesia",
@@ -1059,6 +1093,56 @@ const pokemonMoveData = {
 			{ type: "load-value", value: -1 },
 			{ type: "multiply-energy", amounts: -2, scale: -1 },
 			{ type: "gain-energy", amounts: -1, target: "user" }
+		]
+	},
+	//Empowers some green tiles and some non-green ones
+	"Bug Buzz": {
+		name: "Bug Buzz",
+		type: "Bug",
+		category: "Special",
+		strategy: "basic-damage",
+		tags: ["damage-dealing", "sound-based"],
+		pp: 10,
+		power: 90,
+		accuracy: 100,
+		rechargeTurns: 3,
+		energy: {
+			green: 8,
+			yellow: 5,
+			red: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Bug Buzz.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "load-value", value: 3 },
+			{
+				type: "select-random-tiles", count: -1,
+				conditions: { types: ["green"], power: 0 }
+			},
+			{ type: "load-value", value: 3 },
+			{
+				type: "select-random-tiles", count: -1,
+				conditions: { notTypes: ["green"], power: 0 }
+			},
+			{ type: "combine-selections", selection1: -1, selection2: -3 },
+			{ type: "empower-tiles", selection: -1 },
+			{ type: "random-number", min: 1, max: 10 },
+			{ type: "load-value", value: 6 },
+			{ type: "jump-if-less-than", jumpTo: Infinity },
+			{
+				type: "apply-debuff", target: "opponent", debuff: {
+					type: "stat",
+					stat: "specialDefense",
+					class: "debuff",
+					amount: -1
+				}
+			},
 		]
 	},
 	//Raises attack 1 and defense 1

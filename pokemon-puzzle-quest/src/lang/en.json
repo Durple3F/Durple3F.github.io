@@ -2681,6 +2681,11 @@
 			"shortDescription": "Removes a V of tiles.",
 			"choose": "Choose a tile to cut a V-shape around."
 		},
+		"Air Slash": {
+			"name": "Air Slash",
+			"description": "Deals damage. The opponent's energy bar with the most energy in it has its energy cut in half, and the energy in the two adjacent energy bars is cut in half as well.",
+			"shortDescription": "Deals damage and drains energy"
+		},
 		"Amnesia": {
 			"name": "Amnesia",
 			"description": "Raises the user's Special Defense stat by 2 stages.",
@@ -2798,6 +2803,11 @@
 			"name": "Bug Bite",
 			"description": "Deals damage. Then, drains 2 energy from the opponent's three most full energy types and gives it to the user.",
 			"shortDescription": "Deals some damage and drains energy"
+		},
+		"Bug Buzz": {
+			"name": "Bug Buzz",
+			"description": "Deals damage. 3 random Grass tiles and 3 random non-Grass tiles are empowered. Empowered tiles are worth twice as much energy and have various additional effects depending on their type. Then, has a 50% chance to lower the opponent’s Special Defense by a stage.",
+			"shortDescription": "Deals damage and empowers tiles"
 		},
 		"Bulk Up": {
 			"name": "Bulk Up",

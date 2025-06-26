@@ -1,11 +1,19 @@
 {
 	"versions": {
+		"20250626": {
+			"date": "June 26, 2025",
+			"line-count": 53000,
+			"changes": [
+				"- Added Bug Buzz",
+				"- Now while a move is being used, the button to use that move is visibly different. Should help with moments where the opponent uses a move and there's very little way to tell which one they used."
+			]
+		},
 		"20250625": {
 			"date": "June 25, 2025",
 			"line-count": 53000,
 			"changes": [
 				"- Added Kangaskhan",
-				"- Added Outrage",
+				"- Added Outrage, Air Slash",
 				"- Added a new trainer class",
 				"- Added a new trainer to 5-5",
 				"- Moved around a lot of the image files for consistency.",

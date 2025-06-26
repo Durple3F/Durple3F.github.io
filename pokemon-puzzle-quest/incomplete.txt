@@ -1,8 +1,5 @@
 Incomplete move lists:
-	Butterfree (lv 20)
-	Rattata (lv 28)
-	Rattata-Alola (lv 28)
-	Raticate-Alola (lv 34)
+	Butterfree (lv 36)
 	Pikachu (lv 24)
 	Raichu (lv 0)
 	Raichu-Alola (lv 0)
