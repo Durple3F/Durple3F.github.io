@@ -2038,9 +2038,17 @@
 			"name": "Dugtrio",
 			"pokedex-entry": "Despite the fact that its thick coat of hair is really just metallic fibers, it seems to enjoy being given a spa treatment. Trainers are advised to use steel wool in place of a regular brush, though."
 		},
+		"Meowth": {
+			"name": "Meowth",
+			"pokedex-entry": "It rarely gets along with its more regional counterparts, but then again, it rarely gets along with anybody. People often joke that Meowth trains the trainer, and not the other way around."
+		},
 		"Meowth-Alola": {
 			"name": "Meowth",
 			"pokedex-entry": "When this Pokémon sees a person accidentally trip and fall over, it will sneer and laugh at them for minutes on end. However, if <i>its</i> delicate pride is wounded, it will rush at anyone that makes fun of it and claw at them."
+		},
+		"Persian": {
+			"name": "Persian",
+			"pokedex-entry": "When Persian wakes up from a long nap, it does a nice, big stretch. It gets annoyed when its trainer giggles at how cute it looks all stretched out like that, and demands some of The Good Stuff (the cans of food in the cabinet its trainer keeps closed) as an apology."
 		},
 		"Persian-Alola": {
 			"name": "Persian",
@@ -2201,6 +2209,10 @@
 		"Ariados": {
 			"name": "Ariados",
 			"pokedex-entry": "Its thread is used in weaving especially durable cloth. It’s extremely valuable, leading Ariados to become small in number in some regions."
+		},
+		"Chinchou": {
+			"name": "Chinchou",
+			"pokedex-entry": "Electrical energy ambiently flows from the ends of its antennae with enough energy to cross the gap between them even while it’s out of the water. When it’s cold, it brings its antennae closer together, making its internal circuit shorter and warming it up."
 		},
 		"Pichu": {
 			"name": "Pichu",
@@ -3186,6 +3198,11 @@
 			"description": "This Pokémon's energy gain is increased by 50% until their next turn.",
 			"shortDescription": "Temporarily doubles energy gain"
 		},
+		"Hydro Pump": {
+			"name": "Hydro Pump",
+			"description": "Deals damage. This move's power increases by 5 for every Water tile on the board.",
+			"shortDescription": "Damage based on Water tiles"
+		},
 		"Hyper Fang": {
 			"name": "Hyper Fang",
 			"description": "Deals damage. Then, removes 30 initiative from the opponent.",
@@ -3668,6 +3685,12 @@
 			"name": "Slam",
 			"description": "Deals damage. Then, this move's orange energy cost increases by 2.",
 			"shortDescription": "Deals damage"
+		},
+		"Slash": {
+			"name": "Slash",
+			"description": "Deals damage. Then, the user chooses a tile. A 5x5 X-shaped area around that tile is removed.",
+			"shortDescription": "Deals damage and removes tiles",
+			"choose": "Choose a tile."
 		},
 		"Sleep Powder": {
 			"name": "Sleep Powder",
@@ -4649,6 +4672,11 @@
 			"shortDescription": "Can't be put to sleep",
 			"longDescription": "This Pokémon can’t be put to sleep during battle."
 		},
+		"Volt Absorb": {
+			"name": "Volt Absorb",
+			"shortDescription": "Electric-type damage taken heals",
+			"longDescription": "Being dealt Electric-type damage heals this Pokémon instead of damaging it."
+		},
 		"Water Absorb": {
 			"name": "Water Absorb",
 			"shortDescription": "Water-type damage taken heals",
@@ -4866,7 +4894,11 @@
 		"5-5-biff-pancham": "Panchamp",
 		"5-6-dakota-surskit": "Skitter",
 		"5-6-dakota-dewpider": "Bubble",
-		"5-6-dakota-mareanie": "Ursula"
+		"5-6-dakota-mareanie": "Ursula",
+		"5-7-mariah-meowth": "Momo",
+		"5-7-mariah-chinchou": "Sparkle",
+		"5-7-mariah-machop": "Mango",
+		"5-7-mariah-comfey": "Petal"
 	},
 	"status-effects": {
 		"burn": {

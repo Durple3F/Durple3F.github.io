@@ -337,6 +337,13 @@ const NPCTrainerData = {
 			trainer: "src/img/trainers/sightseer.png"
 		}
 	},
+	"Sightseer-F": {
+		name: "Sightseer",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/sightseerf.png"
+		}
+	},
 	"Striker": {
 		name: "Striker",
 		type: "trainer",

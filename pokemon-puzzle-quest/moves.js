@@ -1551,6 +1551,7 @@ const pokemonMoveData = {
 		type: "Fighting",
 		category: "Physical",
 		strategy: "basic-damage",
+		tags: ["damage-dealing", "makes-contact"],
 		pp: 5,
 		power: 100,
 		accuracy: 80,
@@ -3998,6 +3999,31 @@ const pokemonMoveData = {
 					operation: "multiply"
 				}
 			} },
+		],
+	},
+	//Upgraded Water Gun
+	"Hydro Pump": {
+		name: "Hydro Pump",
+		type: "Water",
+		category: "Special",
+		strategy: "basic-damage",
+		tags: ["damage-dealing"],
+		pp: 5,
+		power: 100, //originally 110
+		accuracy: 80,
+		rechargeTurns: 3,
+		energy: {
+			blue: 20
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Hydro Pump.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "count-tiles", options: { type: "blue" } },
+			{ type: "load-value", value: 5 },
+			{ type: "multiply-numbers" },
+			{ type: "damage", additivePower: -1 },
 		],
 	},
 	//Reduces enemy initiative by a scalar
@@ -7554,6 +7580,35 @@ const pokemonMoveData = {
 					orange: 2
 				}
 			} },
+		],
+	},
+	//Removes an X-shape
+	"Slash": {
+		name: "Slash",
+		type: "Normal",
+		category: "Physical",
+		strategy: "basic-damage",
+		pp: 5,
+		power: 70,
+		accuracy: 80,
+		rechargeTurns: 1,
+		energy: {
+			yellow: 8,
+			green: 4
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Slash.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "load-value", value: 1 },
+			{ type: "choose-tiles", count: -1, target: "user", text: "choose" },
+			{ type: "select-tiles-diagonal-to", selection: -1, maxDistance: 2, includeOriginal: true },
+			{ type: "remove-tiles", selection: -1 },
 		],
 	},
 	//Places infectious status effects on the board that eventually cause sleep

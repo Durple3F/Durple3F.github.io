@@ -3851,6 +3851,133 @@ const levelData = [
 			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
 		]
 	},
+	//5-7: 
+	{
+		id: "Route 5-7",
+		category: "Route 5",
+		name: "Route 5-7",
+		music: "SM Wild Pokemon Battle",
+		icon: "7",
+		position: {
+			left: 0.60,
+			top: 0.11
+		},
+		images: {
+			"wela-volcano-park-lower-level": "src/img/bg/wela volcano park lower level.jpg"
+		},
+		recommendedLevels: {
+			"normal": (pokemonList) => {
+				if (pokemonList.length >= 3) return 21
+				return 23
+			},
+			"hard": (pokemonList) => {
+				if (pokemonList.length >= 3) return 21
+				return 23
+			}
+		},
+		trainers: [
+			{
+				isWild: true,
+				targetPokemon: 4,
+				canPickDuplicates: true,
+				possiblePokemon: [
+					{ id: "Fletchling", levelMin: 17, levelMax: 20, weight: 3 },
+					{ id: "Salandit", levelMin: 17, levelMax: 20, weight: 3 },
+					{ id: "Cubone", levelMin: 17, levelMax: 20, weight: 2 },
+					{ id: "Magby", levelMin: 17, levelMax: 20, weight: 2 },
+					{ id: "Kangaskhan", levelMin: 17, levelMax: 20, weight: 1 },
+				]
+			},
+			// Easy
+			{
+				name: "Mariah",
+				class: "Sightseer-F",
+				pokemon: [
+					{
+						id: "Meowth",
+						pokeball: "pokeball",
+						name: "5-7-mariah-meowth",
+						level: 19,
+						evTotal: 100
+					},
+					{
+						id: "Chinchou",
+						pokeball: "dive ball",
+						name: "5-7-mariah-chinchou",
+						level: 19,
+						evTotal: 100
+					},
+					{
+						id: "Machop",
+						pokeball: "great ball",
+						name: "5-7-mariah-machop",
+						level: 19,
+						evTotal: 100
+					},
+					{
+						id: "Comfey",
+						pokeball: "friend ball",
+						name: "5-7-mariah-comfey",
+						level: 20,
+						evTotal: 100
+					},
+				]
+			},
+			// Hard
+			{
+				name: "Dakota",
+				class: "Swimmer-Gen7",
+				pokemon: [
+					{
+						id: "Surskit",
+						pokeball: "great ball",
+						name: "5-6-dakota-surskit",
+						level: 19,
+						activeMoves: ["Water Gun", "Agility", "Leech Life", "Quick Attack"],
+						nature: "rash",
+						ivs: { hp: 15, attack: 20, defense: 20, specialAttack: 25, specialDefense: 20, speed: 25 },
+						evs: { hp: 60, attack: 70, defense: 35, specialAttack: 50, specialDefense: 20, speed: 70 },
+					},
+					{
+						id: "Dewpider",
+						pokeball: "great ball",
+						name: "5-6-dakota-dewpider",
+						level: 19,
+						activeMoves: ["Headbutt", "Crunch", "Bug Bite", "Aqua Ring"],
+						nature: "adamant",
+						ivs: { hp: 30, attack: 30, defense: 20, specialAttack: 15, specialDefense: 15, speed: 15 },
+						evs: { hp: 70, attack: 70, defense: 50, specialAttack: 30, specialDefense: 50, speed: 30 },
+					},
+					{
+						id: "Mareanie",
+						pokeball: "dive ball",
+						name: "5-6-dakota-mareanie",
+						level: 19,
+						activeMoves: ["Venoshock", "Recover", "Poison Sting", "Bite"],
+						nature: "careful",
+						ivs: { hp: 30, attack: 20, defense: 30, specialAttack: 15, specialDefense: 15, speed: 25 },
+						evs: { hp: 100, attack: 30, defense: 80, specialAttack: 30, specialDefense: 60, speed: 30 },
+					},
+				]
+			},
+		],
+		effects: [
+			{ type: "change-background-image", name: "wela-volcano-park-lower-level" },
+			{ type: "fight", trainer: 0 },
+			// { type: "jump-if-lost", jumpTo: Infinity },
+			// { type: "dialogue", source: "route-5-6-dialogue" },
+			// { type: "change-music", music: "SM Trainer Battle" },
+			// { type: "load-setting", key: "hardMode" },
+			// { type: "load-value", value: true },
+			// { type: "jump-if-equal", jumpTo: "hardMode" },
+			// { type: "jump", jumpTo: "easyMode" },
+			// { type: "fight", trainer: 1, label: "easyMode" },
+			// { type: "jump", jumpTo: "win-check" },
+			// { type: "fight", trainer: 2, label: "hardMode" },
+			// { type: "jump", jumpTo: "win-check" },
+			// { type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
+		]
+	},
 ]
 
 for (let categoryId in levelCategoryData) {

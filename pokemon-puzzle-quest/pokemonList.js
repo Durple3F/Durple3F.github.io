@@ -1247,6 +1247,70 @@ const pokemonData = {
 			{ name: "Sucker Punch", unlock: { type: "level", amount: 20 } },
 		]
 	},
+	"Meowth": {
+		name: "Meowth",
+		number: "52",
+		weight: {
+			pounds: 9.3,
+			kilograms: 4.2
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0052Meowth.png",
+			"large-compressed": "src/img/pokemon-compressed/0052Meowth.webp",
+			"tiny": "src/img/tiny-pokemon/0052Meowth.webp",
+			"largeShiny": "src/img/shiny-pokemon/052-Meowth.png",
+			"largeShiny-compressed": "src/img/shiny-pokemon-compressed/052-Meowth.webp",
+			"home": "src/img/home-pokemon/Meowth.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/meowth.mp3"
+		},
+		types: ["Normal"],
+		tags: [],
+		abilities: ["Pickup", "Technician"],
+		hiddenAbilities: ["Unnerve"],
+		stats: {
+			hp: 40,
+			attack: 45,
+			defense: 35,
+			specialAttack: 40,
+			specialDefense: 40,
+			speed: 90
+		},
+		expYield: 58,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 1
+		},
+		energyMastery: {
+			orange: 2,
+			yellow: 2,
+			purple: 3
+		},
+		evolutions: [
+			{ name: "Persian", unlock: { type: "level", amount: 28 } }
+		],
+		learnset: [
+			{ name: "Fake Out", unlock: { type: "level", amount: 1 } },
+			{ name: "Growl", unlock: { type: "level", amount: 1 } },
+			{ name: "Feint", unlock: { type: "level", amount: 4 } },
+			{ name: "Scratch", unlock: { type: "level", amount: 8 } },
+			{ name: "Pay Day", unlock: { type: "level", amount: 12 } },
+			{ name: "Bite", unlock: { type: "level", amount: 16 } },
+			{ name: "Taunt", unlock: { type: "level", amount: 20 } },
+			{ name: "Assurance", unlock: { type: "level", amount: 24 } },
+			{ name: "Fury Swipes", unlock: { type: "level", amount: 29 } },
+			{ name: "Screech", unlock: { type: "level", amount: 32 } },
+			{ name: "Slash", unlock: { type: "level", amount: 36 } },
+			{ name: "Nasty Plot", unlock: { type: "level", amount: 40 } },
+			{ name: "Play Rough", unlock: { type: "level", amount: 44 } },
+		]
+	},
 	"Meowth-Alola": {
 		name: "Meowth",
 		id: "Meowth-Alola",
@@ -1255,7 +1319,7 @@ const pokemonData = {
 			pounds: 9.3,
 			kilograms: 4.2
 		},
-		imageFacing: "right",
+		imageFacing: "left",
 		imageSources: {
 			"large": "src/img/pokemon/0052Meowth-Alola.png",
 			"large-compressed": "src/img/pokemon-compressed/0052Meowth-Alola.webp",
@@ -1306,6 +1370,69 @@ const pokemonData = {
 			{ name: "Assurance", unlock: { type: "level", amount: 24 } },
 			{ name: "Fury Swipes", unlock: { type: "level", amount: 29 } },
 			{ name: "Screech", unlock: { type: "level", amount: 32 } },
+		]
+	},
+	"Persian": {
+		name: "Persian",
+		number: "53",
+		weight: {
+			pounds: 70.5,
+			kilograms: 32.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0053Persian.png",
+			"large-compressed": "src/img/pokemon-compressed/0053Persian.webp",
+			"tiny": "src/img/tiny-pokemon/0053Persian.webp",
+			"largeShiny": "src/img/shiny-pokemon/053-Persian.png",
+			"largeShiny-compressed": "src/img/shiny-pokemon-compressed/053-Persian.webp",
+			"home": "src/img/home-pokemon/Persian.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/persian.mp3"
+		},
+		types: ["Normal"],
+		tags: [],
+		abilities: ["Limber", "Technician"],
+		hiddenAbilities: ["Unnerve"],
+		stats: {
+			hp: 65,
+			attack: 70,
+			defense: 60,
+			specialAttack: 65,
+			specialDefense: 65,
+			speed: 115
+		},
+		expYield: 154,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 2
+		},
+		energyMastery: {
+			orange: 3,
+			yellow: 3,
+			purple: 4
+		},
+		learnset: [
+			{ name: "Switcheroo", unlock: { type: "level", amount: 1 } },
+			{ name: "Fake Out", unlock: { type: "level", amount: 1 } },
+			{ name: "Growl", unlock: { type: "level", amount: 1 } },
+			{ name: "Feint", unlock: { type: "level", amount: 1 } },
+			{ name: "Scratch", unlock: { type: "level", amount: 1 } },
+			{ name: "Power Gem", unlock: { type: "level", amount: 1 } }, //note: should be learned on evolution
+			{ name: "Pay Day", unlock: { type: "level", amount: 12 } },
+			{ name: "Bite", unlock: { type: "level", amount: 16 } },
+			{ name: "Taunt", unlock: { type: "level", amount: 20 } },
+			{ name: "Assurance", unlock: { type: "level", amount: 24 } },
+			{ name: "Fury Swipes", unlock: { type: "level", amount: 31 } },
+			{ name: "Screech", unlock: { type: "level", amount: 36 } },
+			{ name: "Slash", unlock: { type: "level", amount: 42 } },
+			{ name: "Nasty Plot", unlock: { type: "level", amount: 48 } },
+			{ name: "Play Rough", unlock: { type: "level", amount: 54 } },
 		]
 	},
 	"Persian-Alola": {
@@ -3495,6 +3622,66 @@ const pokemonData = {
 			{ name: "Fury Swipes", unlock: { type: "level", amount: 23 } },
 			{ name: "Sucker Punch", unlock: { type: "level", amount: 28 } },
 			{ name: "Agility", unlock: { type: "level", amount: 31 } },
+		]
+	},
+	"Chinchou": {
+		name: "Chinchou",
+		number: "170",
+		weight: {
+			pounds: 26.5,
+			kilograms: 12.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0170Chinchou.png",
+			"large-compressed": "src/img/pokemon-compressed/0170Chinchou.webp",
+			"tiny": "src/img/tiny-pokemon/0170Chinchou.webp",
+			"largeShiny": "src/img/shiny-pokemon/170-Chinchou.png",
+			"largeShiny-compressed": "src/img/shiny-pokemon-compressed/170-Chinchou.webp",
+			"home": "src/img/home-pokemon/Chinchou.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/chinchou.mp3"
+		},
+		types: ["Water", "Electric"],
+		tags: [],
+		abilities: ["Volt Absorb", "Illuminate"],
+		hiddenAbilities: ["Water Absorb"],
+		stats: {
+			hp: 75,
+			attack: 38,
+			defense: 38,
+			specialAttack: 56,
+			specialDefense: 56,
+			speed: 67
+		},
+		expYield: 66,
+		evYield: {
+			hp: 1,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			yellow: 3,
+			blue: 3
+		},
+		learnset: [
+			{ name: "Water Gun", unlock: { type: "level", amount: 1 } },
+			{ name: "Supersonic", unlock: { type: "level", amount: 1 } },
+			{ name: "Electro Ball", unlock: { type: "level", amount: 4 } },
+			{ name: "Thunder Wave", unlock: { type: "level", amount: 8 } },
+			{ name: "Bubble Beam", unlock: { type: "level", amount: 12 } },
+			{ name: "Confuse Ray", unlock: { type: "level", amount: 16 } },
+			{ name: "Spark", unlock: { type: "level", amount: 20 } },
+			{ name: "Charge", unlock: { type: "level", amount: 24 } },
+			{ name: "Discharge", unlock: { type: "level", amount: 28 } },
+			{ name: "Aqua Ring", unlock: { type: "level", amount: 32 } },
+			{ name: "Flail", unlock: { type: "level", amount: 36 } },
+			{ name: "Take Down", unlock: { type: "level", amount: 40 } },
+			{ name: "Hydro Pump", unlock: { type: "level", amount: 44 } },
 		]
 	},
 	"Pichu": {
@@ -9923,7 +10110,8 @@ for (let name in pokemonData){
 		let toPId = eData.name
 		let toPData = pokemonData[toPId]
 		if (!toPData){
-			console.error(pData,"has an evolution that doesn't exist")
+			console.error(pData,"has an evolution that doesn't exist in",eData)
+			continue
 		}
 		let preEvolutions = toPData.preEvolutions
 		if (!(preEvolutions.includes(name))){

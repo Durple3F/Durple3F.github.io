@@ -553,6 +553,10 @@ const pokemonAbilityData = {
 	"Vital Spirit": {
 		id: "Vital Spirit"
 	},
+	//Heals when dealt electric damage
+	"Volt Absorb": {
+		id: "Volt Absorb"
+	},
 	//Heals when dealt water damage
 	"Water Absorb": {
 		id: "Water Absorb"

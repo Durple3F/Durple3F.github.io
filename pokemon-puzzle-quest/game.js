@@ -2941,6 +2941,10 @@ class Round {
 		if (damage > 0 && damageType === "Water" && (defender.hasAbility("Dry Skin") || defender.hasAbility("Water Absorb"))){
 			damage *= -1
 		}
+		//Pokemon with volt absorb heal based on electric damage
+		if (damage > 0 && damageType === "Electric" && defender.hasAbility("Volt Absorb")){
+			damage *= -1
+		}
 
 		//I'm going to reduce how much damage things deal across the board, just a smidge.
 		damage *= 0.8

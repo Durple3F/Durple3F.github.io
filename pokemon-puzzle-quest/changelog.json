@@ -1,10 +1,22 @@
 {
 	"versions": {
+		"20250627": {
+			"date": "June 27, 2025",
+			"line-count": 53500,
+			"changes": [
+				"- Added Chinchou",
+				"- Added Hydro Pump",
+				"- Added Volt Absorb",
+				"- Added a new trainer class",
+				"- Added a new trainer to 5-7"
+			]
+		},
 		"20250626": {
 			"date": "June 26, 2025",
-			"line-count": 53000,
+			"line-count": 53400,
 			"changes": [
-				"- Added Bug Buzz",
+				"- Added Meowth, Persian",
+				"- Added Bug Buzz, Slash",
 				"- Now while a move is being used, the button to use that move is visibly different. Should help with moments where the opponent uses a move and there's very little way to tell which one they used."
 			]
 		},
