@@ -56,6 +56,6 @@ TODO
 - Furfrou is missing forms and changing the forms is a bit wonky
 - We need an image for timer balls...
 - Make poison trigger upon using moves
+- Currently all pokemon which evolve are marked as obtainable even though you cant obtain the pokemon they evolve from
 
 - apparently the tile selection window swap button doesn't work???
-- when a pokemon evolves, its image is apparently tiny now?

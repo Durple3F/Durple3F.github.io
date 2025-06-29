@@ -2186,6 +2186,35 @@ const pokemonMoveData = {
 			{ type: "apply-status-effect", statusEffect: "paralyzed", target: "opponent" }
 		]
 	},
+	//Empowers random tiles
+	"Dragon Pulse": {
+		name: "Dragon Pulse",
+		type: "Dragon",
+		category: "Special",
+		strategy: "basic-damage",
+		pp: 10,
+		power: 85,
+		accuracy: 100,
+		rechargeTurns: 3,
+		energy: {
+			red: 3,
+			purple: 7,
+			yellow: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Dragon Pulse.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "damage" },
+			{ type: "trigger", key: "additionalEffects" },
+		],
+		additionalEffects: [
+			{ type: "load-value", value: 10 },
+			{ type: "select-random-tiles", count: -1, conditions: { power: 0 } },
+			{ type: "empower-tiles", selection: -1 },
+		]
+	},
 	//Deals exactly 40 damage
 	"Dragon Rage": {
 		name: "Dragon Rage",
@@ -3141,6 +3170,41 @@ const pokemonMoveData = {
 			{ type: "log-value" },
 		],
 	},
+	//Heal half your HP back, 2/3 if there's enough Grass tiles
+	"Floral Healing": {
+		name: "Floral Healing",
+		type: "Fairy",
+		category: "Status",
+		strategy: "special",
+		tags: ["healing"],
+		pp: 10,
+		power: null,
+		accuracy: null,
+		rechargeTurns: 3,
+		energy: {
+			yellow: 3,
+			green: 6,
+			purple: 12
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Floral Healing part 1.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "count-tiles", options: { type: "green" } },
+			{ type: "load-value", value: 15 },
+			{ type: "jump-if-less-than", jumpTo: "small-heal" },
+			{ type: "get-max-hp", target: "user", label: "big-heal" },
+			{ type: "load-value", value: 2/3 },
+			{ type: "multiply-numbers", round: "up" },
+			{ type: "heal", target: "user", amount: -1 },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "get-max-hp", target: "user", label: "small-heal" },
+			{ type: "load-value", value: 0.5 },
+			{ type: "multiply-numbers", round: "up" },
+			{ type: "heal", target: "user", amount: -1 },
+		],
+	},
 	//Raises attack 2
 	"Focus Energy": {
 		name: "Focus Energy",
@@ -3423,6 +3487,63 @@ const pokemonMoveData = {
 			{ type: "multiply-numbers" },
 			{ type: "load-value", value: 1 },
 			{ type: "heal", target: "user", amount: -2, min: -1 },
+		],
+	},
+	//Deals damage based on opponent's weight
+	"Grass Knot": {
+		name: "Grass Knot",
+		type: "Fighting",
+		category: "Special",
+		strategy: "special",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 20,
+		power: 0,
+		accuracy: 100,
+		rechargeTurns: 1,
+		energy: {
+			green: 5,
+			blue: 5
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Grass Knot.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-weight", target: "opponent" },
+			{ type: "load-value", value: 10 },
+			{ type: "jump-if-less-than", jumpTo: "damage-1" },
+			{ type: "get-weight", target: "opponent" },
+			{ type: "load-value", value: 25 },
+			{ type: "jump-if-less-than", jumpTo: "damage-2" },
+			{ type: "get-weight", target: "opponent" },
+			{ type: "load-value", value: 50 },
+			{ type: "jump-if-less-than", jumpTo: "damage-3" },
+			{ type: "get-weight", target: "opponent" },
+			{ type: "load-value", value: 100 },
+			{ type: "jump-if-less-than", jumpTo: "damage-4" },
+			{ type: "get-weight", target: "opponent" },
+			{ type: "load-value", value: 200 },
+			{ type: "jump-if-less-than", jumpTo: "damage-5" },
+			{ type: "jump", jumpTo: "damage-6" },
+
+			{ type: "load-value", value: 20, label: "damage-1" },
+			{ type: "damage", additivePower: -1 },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "load-value", value: 40, label: "damage-2" },
+			{ type: "damage", additivePower: -1 },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "load-value", value: 60, label: "damage-3" },
+			{ type: "damage", additivePower: -1 },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "load-value", value: 80, label: "damage-4" },
+			{ type: "damage", additivePower: -1 },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "load-value", value: 100, label: "damage-5" },
+			{ type: "damage", additivePower: -1 },
+			{ type: "jump", jumpTo: Infinity },
+			{ type: "load-value", value: 120, label: "damage-6" },
+			{ type: "damage", additivePower: -1 },
+			{ type: "jump", jumpTo: Infinity },
 		],
 	},
 	//Lowers opponent's attack
@@ -9073,6 +9194,31 @@ const pokemonMoveData = {
 				status: { name: "Locked", type: "debuff", duration: 10 }
 			}
 		]
+	},
+	//Deals damage equal to 25% of the opponent's energy
+	"Vital Throw": {
+		name: "Vital Throw",
+		type: "Fighting",
+		category: "Physical",
+		strategy: "special",
+		tags: ["damage-dealing", "makes-contact"],
+		pp: 10,
+		power: null, //originally 70
+		accuracy: 100,
+		rechargeTurns: 2,
+		energy: {
+			orange: 7,
+			yellow: 4,
+			green: 3
+		},
+		sounds: {
+			"attack": "src/audio/attacks/Vital Throw.mp3"
+		},
+		effects: [
+			{ type: "play-sound", name: "attack" },
+			{ type: "get-total-energy", target: "opponent" },
+			{ type: "damage", amount: -1, fixed: true, finalImmunityCheck: true },
+		],
 	},
 	//Deals damage with more power the more Water tiles exist
 	"Water Gun": {

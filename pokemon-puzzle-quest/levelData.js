@@ -3863,7 +3863,7 @@ const levelData = [
 			top: 0.11
 		},
 		images: {
-			"wela-volcano-park-lower-level": "src/img/bg/wela volcano park lower level.jpg"
+			"wela-volcano-park-upper-level": "src/img/bg/wela volcano park upper level.jpg"
 		},
 		recommendedLevels: {
 			"normal": (pokemonList) => {
@@ -3925,57 +3925,87 @@ const levelData = [
 			},
 			// Hard
 			{
-				name: "Dakota",
-				class: "Swimmer-Gen7",
+				name: "Mariah",
+				class: "Sightseer-F",
 				pokemon: [
 					{
-						id: "Surskit",
-						pokeball: "great ball",
-						name: "5-6-dakota-surskit",
+						id: "Meowth",
+						pokeball: "pokeball",
+						name: "5-7-mariah-meowth",
 						level: 19,
-						activeMoves: ["Water Gun", "Agility", "Leech Life", "Quick Attack"],
-						nature: "rash",
-						ivs: { hp: 15, attack: 20, defense: 20, specialAttack: 25, specialDefense: 20, speed: 25 },
-						evs: { hp: 60, attack: 70, defense: 35, specialAttack: 50, specialDefense: 20, speed: 70 },
-					},
-					{
-						id: "Dewpider",
-						pokeball: "great ball",
-						name: "5-6-dakota-dewpider",
-						level: 19,
-						activeMoves: ["Headbutt", "Crunch", "Bug Bite", "Aqua Ring"],
+						activeMoves: ["Fury Swipes", "Pay Day", "Slash", "Screech"],
 						nature: "adamant",
-						ivs: { hp: 30, attack: 30, defense: 20, specialAttack: 15, specialDefense: 15, speed: 15 },
-						evs: { hp: 70, attack: 70, defense: 50, specialAttack: 30, specialDefense: 50, speed: 30 },
+						ivs: { hp: 30, attack: 30, defense: 30, specialAttack: 30, specialDefense: 30, speed: 30 },
+						evs: { hp: 100, attack: 150, defense: 100, specialAttack: 0, specialDefense: 100, speed: 150 },
 					},
 					{
-						id: "Mareanie",
+						id: "Chinchou",
 						pokeball: "dive ball",
-						name: "5-6-dakota-mareanie",
+						name: "5-7-mariah-chinchou",
 						level: 19,
-						activeMoves: ["Venoshock", "Recover", "Poison Sting", "Bite"],
-						nature: "careful",
-						ivs: { hp: 30, attack: 20, defense: 30, specialAttack: 15, specialDefense: 15, speed: 25 },
-						evs: { hp: 100, attack: 30, defense: 80, specialAttack: 30, specialDefense: 60, speed: 30 },
+						activeMoves: ["Discharge", "Charge", "Aqua Ring", "Agility"],
+						nature: "mild",
+						ivs: { hp: 30, attack: 30, defense: 30, specialAttack: 30, specialDefense: 30, speed: 30 },
+						evs: { hp: 100, attack: 0, defense: 50, specialAttack: 150, specialDefense: 100, speed: 200 },
+					},
+					{
+						id: "Turtonator",
+						pokeball: "heavy ball",
+						name: "5-7-mariah-turtonator",
+						level: 19,
+						activeMoves: ["Iron Defense", "Incinerate", "Dragon Pulse", "Body Slam"],
+						nature: "relaxed",
+						ivs: { hp: 30, attack: 30, defense: 30, specialAttack: 30, specialDefense: 30, speed: 30 },
+						evs: { hp: 150, attack: 150, defense: 250, specialAttack: 50, specialDefense: 50, speed: 50 },
+					},
+					{
+						id: "Swablu",
+						pokeball: "ultra ball",
+						name: "5-7-mariah-swablu",
+						level: 19,
+						activeMoves: ["Sing", "Round", "Dragon Breath", "Disarming Voice"],
+						nature: "modest",
+						ivs: { hp: 30, attack: 30, defense: 30, specialAttack: 30, specialDefense: 30, speed: 30 },
+						evs: { hp: 100, attack: 50, defense: 75, specialAttack: 200, specialDefense: 75, speed: 100 },
+					},
+					{
+						id: "Machop",
+						pokeball: "great ball",
+						name: "5-7-mariah-machop",
+						level: 19,
+						activeMoves: ["Strength", "Vital Throw", "Knock Off", "Focus Energy"],
+						nature: "adamant",
+						ivs: { hp: 30, attack: 30, defense: 30, specialAttack: 30, specialDefense: 30, speed: 30 },
+						evs: { hp: 150, attack: 300, defense: 100, specialAttack: 50, specialDefense: 50, speed: 50 },
+					},
+					{
+						id: "Comfey",
+						pokeball: "friend ball",
+						name: "5-7-mariah-comfey",
+						level: 20,
+						activeMoves: ["Magical Leaf", "Floral Healing", "Grass Knot", "Growth"],
+						nature: "rash",
+						ivs: { hp: 30, attack: 30, defense: 30, specialAttack: 30, specialDefense: 30, speed: 30 },
+						evs: { hp: 150, attack: 50, defense: 50, specialAttack: 250, specialDefense: 50, speed: 150 },
 					},
 				]
 			},
 		],
 		effects: [
-			{ type: "change-background-image", name: "wela-volcano-park-lower-level" },
-			{ type: "fight", trainer: 0 },
-			// { type: "jump-if-lost", jumpTo: Infinity },
-			// { type: "dialogue", source: "route-5-6-dialogue" },
-			// { type: "change-music", music: "SM Trainer Battle" },
-			// { type: "load-setting", key: "hardMode" },
-			// { type: "load-value", value: true },
-			// { type: "jump-if-equal", jumpTo: "hardMode" },
-			// { type: "jump", jumpTo: "easyMode" },
-			// { type: "fight", trainer: 1, label: "easyMode" },
-			// { type: "jump", jumpTo: "win-check" },
-			// { type: "fight", trainer: 2, label: "hardMode" },
-			// { type: "jump", jumpTo: "win-check" },
-			// { type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
+			{ type: "change-background-image", name: "wela-volcano-park-upper-level" },
+			// { type: "fight", trainer: 0 },
+			{ type: "jump-if-lost", jumpTo: Infinity },
+			{ type: "dialogue", source: "route-5-7-dialogue" },
+			{ type: "change-music", music: "SM Trainer Battle" },
+			{ type: "load-setting", key: "hardMode" },
+			{ type: "load-value", value: true },
+			{ type: "jump-if-equal", jumpTo: "hardMode" },
+			{ type: "jump", jumpTo: "easyMode" },
+			{ type: "fight", trainer: 1, label: "easyMode" },
+			{ type: "jump", jumpTo: "win-check" },
+			{ type: "fight", trainer: 2, label: "hardMode" },
+			{ type: "jump", jumpTo: "win-check" },
+			{ type: "jump-if-lost", jumpTo: Infinity, label: "win-check" },
 		]
 	},
 ]
@@ -4135,6 +4165,9 @@ const pokeballImages = {
 	"friend ball": {
 		"icon": "src/img/balls/friend ball.png"
 	},
+	"heavy ball": {
+		"icon": "src/img/balls/heavy ball.png"
+	},
 }
 const pokeballSpriteData = {
 	types: {
@@ -4155,6 +4188,7 @@ const pokeballSpriteData = {
 		"dusk ball": [0, 3 + 26 * 14],
 		"heal ball": [0, 3 + 26 * 15],
 		"friend ball": [0, 452],
+		"heavy ball": [0, 478],
 	},
 	sprites: {
 		"none": [1, 1, 0, 0],

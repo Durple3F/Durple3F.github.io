@@ -419,6 +419,10 @@ const pokemonAbilityData = {
 	"Sheer Force": {
 		id: "Sheer Force"
 	},
+	//Prevents taking too much damage in one turn
+	"Shell Armor": {
+		id: "Shell Armor"
+	},
 	//Blocks status effects from the opponent 20% of the time
 	"Shield Dust": {
 		id: "Shield Dust"

@@ -553,6 +553,19 @@ const dialogueEffects = {
 			delay(waitDuration).then(() => resolve())
 		}
 	},
+	"load-sound-effect": {
+		execute: (resolve, effect, progress, options) => {
+			let name = effect.name
+			let url = effect.src
+			loadSound(name, "sound", url).then(() => resolve())
+		}
+	},
+	"play-sound-effect": {
+		execute: (resolve, effect, progress, options) => {
+			let name = effect.name
+			playSound(name).then(() => resolve())
+		}
+	},
 	"choice": {
 		execute: (resolve, effect, progress, options) => {
 			let effectIndex = progress.effectIndex

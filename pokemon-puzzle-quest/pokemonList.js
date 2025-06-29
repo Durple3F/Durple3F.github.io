@@ -5159,6 +5159,67 @@ const pokemonData = {
 			{ name: "Sucker Punch", unlock: { type: "level", amount: 28 } },
 		]
 	},
+	"Swablu": {
+		name: "Swablu",
+		number: "333",
+		weight: {
+			pounds: 2.6,
+			kilograms: 1.2
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0333Swablu.png",
+			"large-compressed": "src/img/pokemon-compressed/0333Swablu.webp",
+			"tiny": "src/img/tiny-pokemon/0333Swablu.webp",
+			"largeShiny": "src/img/shiny-pokemon/333-Swablu.png",
+			"largeShiny-compressed": "src/img/shiny-pokemon-compressed/333-Swablu.webp",
+			"home": "src/img/home-pokemon/Swablu.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/swablu.mp3"
+		},
+		types: ["Normal", "Flying"],
+		tags: [],
+		abilities: ["Natural Cure"],
+		hiddenAbilities: ["Cloud Nine"],
+		stats: {
+			hp: 45,
+			attack: 40,
+			defense: 60,
+			specialAttack: 40,
+			specialDefense: 75,
+			speed: 50
+		},
+		expYield: 62,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 0,
+			specialAttack: 0,
+			specialDefense: 1,
+			speed: 0
+		},
+		energyMastery: {
+			yellow: 2,
+			blue: 2,
+			purple: 1
+		},
+		learnset: [
+			{ name: "Peck", unlock: { type: "level", amount: 1 } },
+			{ name: "Growl", unlock: { type: "level", amount: 1 } },
+			{ name: "Disarming Voice", unlock: { type: "level", amount: 4 } },
+			{ name: "Mist", unlock: { type: "level", amount: 8 } },
+			{ name: "Fury Attack", unlock: { type: "level", amount: 12 } },
+			{ name: "Round", unlock: { type: "level", amount: 16 } },
+			{ name: "Dragon Breath", unlock: { type: "level", amount: 20 } },
+			{ name: "Safeguard", unlock: { type: "level", amount: 24 } },
+			{ name: "Sing", unlock: { type: "level", amount: 28 } },
+			// { name: "Cotton Guard", unlock: { type: "level", amount: 32 } },
+			{ name: "Take Down", unlock: { type: "level", amount: 36 } },
+			// { name: "Moonblast", unlock: { type: "level", amount: 40 } },
+			// { name: "Perish Song", unlock: { type: "level", amount: 44 } },
+		]
+	},
 	"Barboach": {
 		name: "Barboach",
 		number: "339",
@@ -9998,6 +10059,70 @@ const pokemonData = {
 			{ name: "Slam", unlock: { type: "level", amount: 21 } },
 			{ name: "Flail", unlock: { type: "level", amount: 26 } },
 			{ name: "Sucker Punch", unlock: { type: "level", amount: 31 } },
+		]
+	},
+	"Turtonator": {
+		name: "Turtonator",
+		number: "776",
+		weight: {
+			pounds: 467.4,
+			kilograms: 212.0
+		},
+		imageFacing: "left",
+		imageSources: {
+			"large": "src/img/pokemon/0776Turtonator.png",
+			"large-compressed": "src/img/pokemon-compressed/0776Turtonator.webp",
+			"tiny": "src/img/tiny-pokemon/0776Turtonator.webp",
+			"largeShiny": "src/img/shiny-pokemon/776-Turtonator.png",
+			"largeShiny-compressed": "src/img/shiny-pokemon-compressed/776-Turtonator.webp",
+			"home": "src/img/home-pokemon/Turtonator.png"
+		},
+		sounds: {
+			"cry": "src/audio/cries/turtonator.mp3"
+		},
+		tags: [],
+		types: ["Fire", "Dragon"],
+		abilities: ["Shell Armor"],
+		hiddenAbilities: [],
+		stats: {
+			hp: 60,
+			attack: 78,
+			defense: 135,
+			specialAttack: 91,
+			specialDefense: 85,
+			speed: 36
+		},
+		expYield: 170,
+		evYield: {
+			hp: 0,
+			attack: 0,
+			defense: 2,
+			specialAttack: 0,
+			specialDefense: 0,
+			speed: 0
+		},
+		energyMastery: {
+			red: 5,
+			purple: 2,
+			orange: 1,
+			yellow: 1
+		},
+		learnset: [
+			{ name: "Smog", unlock: { type: "level", amount: 1 } },
+			{ name: "Tackle", unlock: { type: "level", amount: 1 } },
+			{ name: "Ember", unlock: { type: "level", amount: 4 } },
+			{ name: "Protect", unlock: { type: "level", amount: 8 } },
+			{ name: "Endure", unlock: { type: "level", amount: 12 } },
+			{ name: "Flail", unlock: { type: "level", amount: 16 } },
+			{ name: "Incinerate", unlock: { type: "level", amount: 20 } },
+			{ name: "Iron Defense", unlock: { type: "level", amount: 24 } },
+			// { name: "Dragon Pulse", unlock: { type: "level", amount: 28 } },
+			{ name: "Body Slam", unlock: { type: "level", amount: 32 } },
+			// { name: "Flamethrower", unlock: { type: "level", amount: 36 } },
+			// { name: "Shell Trap", unlock: { type: "level", amount: 40 } },
+			// { name: "Shell Smash", unlock: { type: "level", amount: 44 } },
+			// { name: "Overheat", unlock: { type: "level", amount: 48 } },
+			// { name: "Explosion", unlock: { type: "level", amount: 52 } },
 		]
 	},
 };

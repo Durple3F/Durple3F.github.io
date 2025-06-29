@@ -1,5 +1,24 @@
 {
 	"versions": {
+		"20250629": {
+			"date": "June 29, 2025",
+			"line-count": 54000,
+			"changes": [
+				"- Added Floral Healing, Vital Throw, Grass Knot",
+				"- Added Heavy Balls and their sprites"
+			]
+		},
+		"20250628": {
+			"date": "June 28, 2025",
+			"line-count": 53900,
+			"changes": [
+				"- Added Turtonator, Swablu",
+				"- Added Dragon Pulse",
+				"- Added Shell Armor",
+				"- Added a background to 5-7",
+				"- Added dialogue to 5-7"
+			]
+		},
 		"20250627": {
 			"date": "June 27, 2025",
 			"line-count": 53500,

@@ -1389,6 +1389,7 @@ class Round {
 			for (let pokemon of trainer.pokemon) {
 				let data = pokemon.gameRoundData
 				data.damagedThisTurn = false
+				data.damageTakenThisTurn = 0
 				data.movesUsedThisTurn = 0
 			}
 		}
@@ -3000,6 +3001,10 @@ class Round {
 		if (defenderActive !== defender && defenderActive.hasAbility("Friend Guard")) {
 			prevented = true
 		}
+		if (defender.gameRoundData.damageTakenThisTurn >= defender.maxhp * 0.2 && defender.hasAbility("Shell Armor")){
+			prevented = true
+		}
+
 		if (prevented) {
 			damage = 0
 		}
@@ -3039,6 +3044,7 @@ class Round {
 				let shakeAmount = Math.min(damage / defender.maxhp * 10, 100)
 				shakeBoard(shakeAmount)
 				defender.gameRoundData.damagedThisTurn = true
+				defender.gameRoundData.damageTakenThisTurn += damage
 				if (defender === this.trainers[this.activePlayerIndex].activePokemon){
 					defender.gameRoundData.damagedThisOwnTurn = true
 				} else {
@@ -7803,6 +7809,15 @@ function beginRound(trainerData, options={}) {
 		}
 		if (data.evs){
 			options.evs = data.evs
+		}
+		if ("evTotal" in data){
+			let stats = ["hp", "attack", "defense", "specialAttack", "specialDefense", "speed"]
+			let evs = {}
+			randomIntegerSplit(data.evTotal, 6).forEach((v, i) => {
+				let stat = stats[i]
+				evs[stat] = v
+			})
+			options.evs = evs
 		}
 		if (data.ivs){
 			options.ivs = data.ivs

@@ -38,6 +38,25 @@ function roundTo(num, precision) {
   return Math.round(num * factor) / factor
 }
 
+function randomIntegerSplit(total, parts) {
+  // Generate random indexes to use to cut apart the total
+  let cuts = []
+  for (let i = 0; i < parts - 1; i++) {
+    cuts.push(Math.floor(Math.random() * total))
+  }
+
+  cuts.sort((a, b) => a - b)
+
+  let pieces = []
+  pieces.push(cuts[0])
+  for (let i = 1; i < cuts.length; i++) {
+    pieces.push(cuts[i] - cuts[i - 1])
+  }
+  pieces.push(total - cuts[cuts.length - 1])
+
+  return pieces
+}
+
 function formatNumber(f, digits=2) {
 	let decimal = f % 1
 	let off = Math.pow(10, -digits)

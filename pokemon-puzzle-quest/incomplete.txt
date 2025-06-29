@@ -67,6 +67,7 @@ Incomplete move lists:
 	Mawile (lv 32)
 	Roselia (lv 0)
 	Spinda (lv 28)
+	Swablu (lv 28)
 	Barboach (lv 24)
 	Whiscash (lv 24)
 	Bagon (lv 25)
@@ -144,6 +145,7 @@ Incomplete move lists:
 	Pyukumuku (lv 20)
 	Type: Null (lv 20)
 	Komala (lv 31)
+	Turtonator (lv 24)
 
 Missing Evolutions:
 	Rattata
@@ -165,6 +167,7 @@ Missing Evolutions:
 	Houndour
 	Smoochum
 	Magby
+	Swablu
 	Bagon
 	Cherrim
 	Bonsly

@@ -1951,6 +1951,94 @@
 				{ "type": "text", "speaker": "Dakota", "text": "I always come out here to do a few laps as my warm-up for the day. And boy does it warm me up! Ha!" },
 				{ "type": "text", "speaker": "Dakota", "text": "I feel like takin’ a break though! Wanna have a quick battle?" }
 			]
+		},
+		"route-5-7-dialogue": {
+			"events": [
+				{ "type": "animate-speaker", "speaker": "Mariah", "css": {
+					"left": "+=10%"
+				}, "duration": 2000, "waitDuration": 200 }
+			],
+			"callbacks": {},
+			"effects": [
+				{ "type": "load-sound-effect", "src": "src/audio/photo snap.mp3", "name": "SFX-Photo-Snap" },
+				{ "type": "get-speaker", "name": "Mariah", "class": "Sightseer-F" },
+				{ "type": "display-image", "src": "src/img/pokemon-compressed/0052Meowth.webp", "name": "Meowth", "position": {
+					"type": "relative",
+					"relative": "Mariah",
+					"widthFactor": 0.3,
+					"heightFactor": 0.3
+				}},
+				{ "type": "style-image", "image": "Meowth", "css": {
+					"left": "+=40%",
+					"top": "+=22%",
+					"transform": "rotate(-7deg)",
+					"filter": "blur(0.3em)"
+				}},
+				{ "type": "display-image", "src": "src/img/pokemon-compressed/0764Comfey.webp", "name": "Comfey", "position": {
+					"type": "relative",
+					"relative": "Mariah",
+					"widthFactor": 0.18,
+					"heightFactor": 0.18
+				}},
+				{ "type": "style-image", "image": "Comfey", "css": {
+					"left": "+=36%",
+					"top": "+=12%",
+					"transform": "rotate(-7deg)",
+					"filter": "blur(0.3em)"
+				}},
+				{ "type": "looping-animation", "name": "Float", "targetType": "image", "image": "Comfey", "states": [
+					{
+						"duration": 1000,
+						"css": {
+							"top": "-=2%"
+						}
+					},
+					{
+						"duration": 1000,
+						"css": {
+							"top": "+=2%"
+						}
+					}
+				]},
+				{ "type": "display-image", "src": "src/img/pokemon-compressed/0170Chinchou.webp", "name": "Chinchou", "position": {
+					"type": "relative",
+					"relative": "Mariah",
+					"widthFactor": 0.24,
+					"heightFactor": 0.24
+				}},
+				{ "type": "style-image", "image": "Chinchou", "css": {
+					"left": "+=28%",
+					"top": "+=28%",
+					"transform": "scaleX(-1) rotate(-10deg)",
+					"filter": "blur(0.3em)"
+				}},
+				{ "type": "text", "speaker": "Mariah", "text": "Hey, can you take a picture of me and my Pokémon? Thanks!" },
+				{ "type": "fade-out", "speaker": "Mariah" },
+				{ "type": "style-speaker", "speaker": "Mariah", "css": {
+					"left": "+=10%",
+					"transform": "scale(0.4) scaleX(-1)",
+					"filter": "blur(0.6em)"
+				}, "waitDuration": 500 },
+				{ "type": "fade-in", "speaker": "Mariah" },
+				{ "type": "text", "speaker": "Mariah", "text": "Whenever you’re ready! Don’t worry if it seems like you’re weirdly off-center and blurred, it’s fine!" },
+				{ "type": "clear-text", "speaker": "Mariah" },
+				{ "type": "play-sound-effect", "name": "SFX-Photo-Snap" },
+				{ "type": "fade-out", "speaker": "Mariah" },
+				{ "type": "style-speaker", "speaker": "Mariah", "css": {
+					"left": "-=10%",
+					"transform": "",
+					"filter": ""
+				}, "waitDuration": 200 },
+				{ "type": "fade-in", "speaker": "Mariah" },
+				{ "type": "text", "speaker": "Mariah", "text": "I bet it turned out great! Thanks for helping me out. We’re gonna be leaving soon for our next vacation spot." },
+				{ "type": "text", "speaker": "Mariah", "text": "My Meowth, Momo, wasn’t too keen on flying all the way out here to Alola." },
+				{ "type": "text", "speaker": "Mariah", "text": "But after climbing up this here volcano, let me tell ya, they’re really starting to $@start-italics|@$warm up$@end-italics|@$ to it!" },
+				{ "type": "text", "speaker": "Mariah", "text": "Yeah that’s two different ‘warm up’ puns in a row! Anyway,^^ we should really be going." },
+				{ "type": "animate-speaker", "speaker": "Mariah", "css": {
+					"left": "-=10%"
+				}, "duration": 200, "waitDuration": 200 },
+				{ "type": "text", "speaker": "Mariah", "text": "But before we do! You’ll never guess!! I wanna have a battle!!!" }
+			]
 		}
 	},
 	"pokemon": {
@@ -2318,6 +2406,10 @@
 			"name": "Spinda",
 			"pokedex-entry": "Some Pokémon researchers have tried to catalog the billions of different patterns Spinda can have. I wouldn’t know. I’ve definitely never tried to do that."
 		},
+		"Swablu": {
+			"name": "Swablu",
+			"pokedex-entry": "A very affectionate Pokémon, Swablu will quickly grow attached to anyone they see regularly, whether huma or Pokémon. It likes to land on people’s heads like a hat while it preens its fluffy wings."
+		},
 		"Barboach": {
 			"name": "Barboach",
 			"pokedex-entry": "It secretes a slimy fluid that makes it almost impossible to hold on to. Some towns hold competitions to see who can hold onto a Barboach the longest as it wriggles out of their hands. Nobody has reached a full minute yet."
@@ -2653,6 +2745,10 @@
 		"Komala": {
 			"name": "Komala",
 			"pokedex-entry": "This Pokémon loves hanging onto its trainer’s arm as they walk. When they put Komala down, it’s important to return its log to its paws, or Komala will have bad dreams."
+		},
+		"Turtonator": {
+			"name": "Turtonator",
+			"pokedex-entry": "Growing Turtonator need a steady diet of carbon and sulfur. Special feed designed for Turtonator is sold in many stores. It’s just kept far, far away from all the other food."
 		}
 	},
 	"moves": {
@@ -2736,7 +2832,7 @@
 		},
 		"Aqua Ring": {
 			"name": "Aqua Ring",
-			"description": "Applies the Aqua Ring status to the user for 10 turns. At the end of its turn, a Pokémon with Aqua Ring gains HP equal to 1/20 of its Max HP, rounded down.",
+			"description": "Applies the Aqua Ring status to the user for 10 turns. At the end of its turn, a Pokémon with Aqua Ring gains HP equal to 1/20 of its max HP, rounded down.",
 			"shortDescription": "Heals over time"
 		},
 		"Aqua Tail": {
@@ -2958,6 +3054,11 @@
 			"description": "Deals damage. Then, 50% of the time, applies Paralyzed.",
 			"shortDescription": "Deals some damage and paralyzes"
 		},
+		"Dragon Pulse": {
+			"name": "Dragon Pulse",
+			"description": "Deals damage. Then empowers 10 random tiles. Empowered tiles are worth twice as much energy and have various effects when matched depending on their type.",
+			"shortDescription": "Deals damage and empowers tiles"
+		},
 		"Dragon Rage": {
 			"name": "Dragon Rage",
 			"description": "Deals exactly 40 damage.",
@@ -3070,7 +3171,7 @@
 		},
 		"Flail": {
 			"name": "Flail",
-			"description": "Deals damage. This move's power depends on the ratio of the user's HP to their Max HP. Its power is 200 while at less than 5% HP, 150 while at less than 10% HP, 100 while at less than 20% HP, 80 while at less than 35% HP, 40 while at less than 70% HP, and 20 otherwise.",
+			"description": "Deals damage. This move's power depends on the ratio of the user's HP to their max HP. Its power is 200 while at less than 5% HP, 150 while at less than 10% HP, 100 while at less than 20% HP, 80 while at less than 35% HP, 40 while at less than 70% HP, and 20 otherwise.",
 			"shortDescription": "Deals damage depending on remaining HP"
 		},
 		"Flame Wheel": {
@@ -3087,6 +3188,11 @@
 			"name": "Fling",
 			"description": "Drains all energy from the user. This move deals damage with 3 additional power for each point of energy removed.",
 			"shortDescription": "Spends all energy to deal damage"
+		},
+		"Floral Healing": {
+			"name": "Floral Healing",
+			"description": "The user heals HP equal to half their max HP, rounded up. If there are at least 15 Grass tiles on the board, they heal two thirds of their max HP instead.",
+			"shortDescription": "Heals based on Grass tiles"
 		},
 		"Focus Energy": {
 			"name": "Focus Energy",
@@ -3122,6 +3228,11 @@
 			"name": "Giga Drain",
 			"description": "Deals damage. Then, heals the user for 50% of the damage dealt.",
 			"shortDescription": "Steals HP"
+		},
+		"Grass Knot": {
+			"name": "Grass Knot",
+			"description": "Deals damage. This move's power depends on the weight of the target. Its power is 20 against Pokémon which are less than 10kg, 40 when less than 25kg, 60 when less than 50kg, 80 when less than 100kg, 100 when less than 200kg, and 120 when greater than 200kg.",
+			"shortDescription": "Deals damage depending on weight"
 		},
 		"Growl": {
 			"name": "Growl",
@@ -3250,7 +3361,7 @@
 		},
 		"Ingrain": {
 			"name": "Ingrain",
-			"description": "The user becomes rooted to the ground, and will heal 1/32 of their Max HP at the end of each of their turns, rounded up. They also become immune to effects of opponent's moves that would force it to switch out.",
+			"description": "The user becomes rooted to the ground, and will heal 1/32 of their max HP at the end of each of their turns, rounded up. They also become immune to effects of opponent's moves that would force it to switch out.",
 			"shortDescription": "Heals over time"
 		},
 		"Iron Defense": {
@@ -3291,7 +3402,7 @@
 		},
 		"Leech Seed": {
 			"name": "Leech Seed",
-			"description": "Applies the Seedling status to the opponent for 10 turns. At the end of its turn, a Pokémon with Seedling loses HP equal to 1/16 of its Max HP, rounded down, and the opponent is healed the same amount of HP.",
+			"description": "Applies the Seedling status to the opponent for 10 turns. At the end of its turn, a Pokémon with Seedling loses HP equal to 1/16 of its max HP, rounded down, and the opponent is healed the same amount of HP.",
 			"shortDescription": "Drains HP over time"
 		},
 		"Leer": {
@@ -3306,7 +3417,7 @@
 		},
 		"Life Dew": {
 			"name": "Life Dew",
-			"description": "For each usable Pokémon remaining in the user's party, that Pokémon is healed for 25% of their Max HP.",
+			"description": "For each usable Pokémon remaining in the user's party, that Pokémon is healed for 25% of their max HP.",
 			"shortDescription": "Heals each of your Pokémon"
 		},
 		"Light Screen": {
@@ -3316,7 +3427,7 @@
 		},
 		"Low Kick": {
 			"name": "Low Kick",
-			"description": "Deals damage. This move's power depends on the weight of the target. Its power is 20 against Pokémon which are less than 10kg, 40 when less than 25kg, 60 when less than 50kg, 80 when less than 100kg, 100 when less than 200kg, and 120 when greater than 200kg. This move is the only reason that I programmed in weights for Pokémon.",
+			"description": "Deals damage. This move's power depends on the weight of the target. Its power is 20 against Pokémon which are less than 10kg, 40 when less than 25kg, 60 when less than 50kg, 80 when less than 100kg, 100 when less than 200kg, and 120 when greater than 200kg.",
 			"shortDescription": "Deals damage depending on weight"
 		},
 		"Low Sweep": {
@@ -3331,7 +3442,7 @@
 		},
 		"Magical Leaf": {
 			"name": "Magical Leaf",
-			"description": "Deals damage. Then, empowers all Grass tiles. When either trainer matches an empowered Grass tile, it provides twice its usual energy, and their active Pokémon heals 5% of its Max HP.",
+			"description": "Deals damage. Then, empowers all Grass tiles. When either trainer matches an empowered Grass tile, it provides twice its usual energy, and their active Pokémon heals 5% of its max HP.",
 			"shortDescription": "Empowers all Grass tiles"
 		},
 		"Mean Look": {
@@ -3551,8 +3662,8 @@
 		},
 		"Recover": {
 			"name": "Recover",
-			"description": "The user heals HP equal to half their Max HP, rounded up. This move's cooldown increases by 1 with each use.",
-			"shortDescription": "Heals half the user's Max HP"
+			"description": "The user heals HP equal to half their max HP, rounded up. This move's cooldown increases by 1 with each use.",
+			"shortDescription": "Heals half the user's max HP"
 		},
 		"Reflect": {
 			"name": "Reflect",
@@ -3586,7 +3697,7 @@
 		},
 		"Reversal": {
 			"name": "Reversal",
-			"description": "Deals damage. This move's power depends on the ratio of the user's HP to their Max HP. Its power is 200 while at less than 5% HP, 150 while at less than 10% HP, 100 while at less than 20% HP, 80 while at less than 35% HP, 40 while at less than 70% HP, and 20 otherwise.",
+			"description": "Deals damage. This move's power depends on the ratio of the user's HP to their max HP. Its power is 200 while at less than 5% HP, 150 while at less than 10% HP, 100 while at less than 20% HP, 80 while at less than 35% HP, 40 while at less than 70% HP, and 20 otherwise.",
 			"shortDescription": "Deals damage depending on remaining HP"
 		},
 		"Roar": {
@@ -3617,8 +3728,8 @@
 		},
 		"Roost": {
 			"name": "Roost",
-			"description": "The user heals HP equal to half their Max HP, rounded up.",
-			"shortDescription": "Heals half the user's Max HP"
+			"description": "The user heals HP equal to half their max HP, rounded up.",
+			"shortDescription": "Heals half the user's max HP"
 		},
 		"Round": {
 			"name": "Round",
@@ -3809,7 +3920,7 @@
 		},
 		"Swallow": {
 			"name": "Swallow",
-			"description": "If the user has no stacks of Stockpile, this move does nothing. Otherwise, the user loses all stacks of Stockpile, and heals HP based on how many stacks were removed. They heal 25% of their Max HP with one stack, 50% with two, and 100% with any more.",
+			"description": "If the user has no stacks of Stockpile, this move does nothing. Otherwise, the user loses all stacks of Stockpile, and heals HP based on how many stacks were removed. They heal 25% of their max HP with one stack, 50% with two, and 100% with any more.",
 			"shortDescription": "Spends Stockpiles to heal"
 		},
 		"Sweet Kiss": {
@@ -3839,7 +3950,7 @@
 		},
 		"Synthesis": {
 			"name": "Synthesis",
-			"description": "Converts 3 random non-Grass tiles into Grass tiles.<br>Passive: Whenever this Pokémon's owner makes a match of 4 or more Grass tiles in a row while this Pokémon is active, this Pokémon restores HP equal to 1/4 of its Max HP.",
+			"description": "Converts 3 random non-Grass tiles into Grass tiles.<br>Passive: Whenever this Pokémon's owner makes a match of 4 or more Grass tiles in a row while this Pokémon is active, this Pokémon restores HP equal to 1/4 of its max HP.",
 			"shortDescription": "Passively restore HP"
 		},
 		"Tackle": {
@@ -3922,6 +4033,11 @@
 			"name": "Vise Grip",
 			"description": "Deals damage. Then, if the target is still active, the user chooses a tile. That tile becomes Locked for 10 turns. Other trainers can’t swap Locked tiles.",
 			"shortDescription": "Damages and locks a tile"
+		},
+		"Vital Throw": {
+			"name": "Vital Throw",
+			"description": "Deals damage exactly equal to the total amount of energy that the opponent has.",
+			"shortDescription": "Deals damage based on enemy energy"
 		},
 		"Water Gun": {
 			"name": "Water Gun",
@@ -4507,6 +4623,11 @@
 			"shortDescription": "Prevents additional effects, but increases power",
 			"longDescription": "When this Pokémon uses a move, if it has additional effects, its power is increased by 30%, but any additional effects of the move are prevented."
 		},
+		"Shell Armor": {
+			"name": "Shell Armor",
+			"shortDescription": "Can’t take damage if it’s already taken 20% of its max HP in damage this turn",
+			"longDescription": "If this Pokémon would be dealt damage, if it has already taken damage greater than or equal to 20% of its max HP that turn, that damage is prevented."
+		},
 		"Shield Dust": {
 			"name": "Shield Dust",
 			"shortDescription": "Prevents receiving status effects from opponent 20% of the time",
@@ -4897,6 +5018,8 @@
 		"5-6-dakota-mareanie": "Ursula",
 		"5-7-mariah-meowth": "Momo",
 		"5-7-mariah-chinchou": "Sparkle",
+		"5-7-mariah-turtonator": "Shellshock",
+		"5-7-mariah-swablu": "Skye",
 		"5-7-mariah-machop": "Mango",
 		"5-7-mariah-comfey": "Petal"
 	},
@@ -4959,11 +5082,11 @@
 		},
 		"seedling": {
 			"name": "Seedling",
-			"description": "At the end of this Pokémon's turn, it loses HP equal to 1/16 of its Max HP, and its opponent is healed the same amount of HP."
+			"description": "At the end of this Pokémon's turn, it loses HP equal to 1/16 of its max HP, and its opponent is healed the same amount of HP."
 		},
 		"aqua-ring": {
 			"name": "Aqua Ring",
-			"description": "At the end of this Pokémon's turn, it gains HP equal to 1/20 of its Max HP."
+			"description": "At the end of this Pokémon's turn, it gains HP equal to 1/20 of its max HP."
 		},
 		"mist": {
 			"name": "Mist",
@@ -5107,6 +5230,10 @@
 		"Route 5-6": {
 			"name": "Route 5-6",
 			"description": "Forging ahead, at the base of Akala's massive volcano, the rocky path curves around a body of water heated by the magma underground."
+		},
+		"Route 5-7": {
+			"name": "Route 5-7",
+			"description": "Further up the volcano, you enter something of a nature reserve for the rare Fire Pokémon found here."
 		}
 	},
 	"route-categories": {
