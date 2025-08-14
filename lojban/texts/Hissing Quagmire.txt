@@ -1,0 +1,24 @@
+Hissing Quagmire
+Danger-Sound Too-Much-Water-Land
+capsna dusycimtu'a
+ 
+
+Land
+
+tumla
+
+
+This land enters tapped.
+This enters tappedly
+ti nerkla co selxaksu
+   
+
+{T}: Add {B} or {G}.
+{T}: You get either {B} or {G}
+{T}: do cpacu {B} o nai {G}
+{T}:   {B}   {G}
+
+{1}{B}{G}: This land becomes a 2/2 black and green Elemental creature with deathtouch until end of turn. It’s still a land.
+{1}{B}{G}: This becomes during this turn a creature which has "dead-touch" and which is an element-being and black and green. This remains land.
+{1}{B}{G}: ti binxo ca le ca kelka'u lo 2/2 danlu poi tolcau zo mrope'u zi'e poi selratkai gi'e xekri gi'e crino ku'o .i ti stali lo tumla
+{1}{B}{G}:        2/2                  

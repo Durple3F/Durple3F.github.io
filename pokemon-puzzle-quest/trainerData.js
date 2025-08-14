@@ -159,6 +159,14 @@ const NPCTrainerData = {
 		},
 		textStyle: {}
 	},
+	"Kiawe": {
+		name: "Kiawe",
+		type: "trainer",
+		imageSources: {
+			trainer: "src/img/trainers/kiawe.png"
+		},
+		textStyle: {}
+	},
 	"Kahili": {
 		name: "Kahili",
 		type: "trainer",

@@ -1,0 +1,24 @@
+ Duskshell Crawler {1}{G}
+Dusk-shell Belly-walker
+lo mursycalku be'udzu
+  
+
+Creature — Insect
+
+danlu - cinki
+ - 
+
+When this creature enters, put a +1/+1 counter on target creature.
+After each event of this entering, an event of you target a creature (x1) and put a +1/+1 counter on x1.
+ba ro nu ti nerkla kei pa nu do fargau pa danlu goi ko'a gi'e punji pa +1/+1 nacdai ko'a
+                 +1/+1  
+
+Each creature you control with a +1/+1 counter on it has trample. (It can deal excess combat damage to the player or planeswalker it’s attacking.)
+For each x, which is a creature and is controlled by you, x has "trample". (It can do the action of combatively dealing damage to the player and/or planeswalker which is attacked by it, in the amount of the excess amount.)
+ro da poi danlu gi'e se jitro do cu cpacu zo maxdzu (.i ko'a kakne lo zu'o damba xrani le kelci ja mujli'u poi se gunta ko'a ku'o le dukse klani)
+            (                  )
+
+They often perch on street lamps, causing the poles to buckle under their weight.
+They often sit on street lamps, with the cause that they bend caused by the weight of them.
+ta'e zutse lo klaji gustci ku seri'a lo ka ri krobi'o ri'a lo junta po ko'a
+               

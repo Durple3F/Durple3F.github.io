@@ -63,6 +63,7 @@ Conjure - mafyzba
 Shuffle - kasygau (It's implied that the thing being shuffled is your library unless stated otherwise.)
 Search - sisku (library is implied again.)
 Reveal - jarco
+Counter - nafygau (x1 causes event x2 to be prevented) (this is the one for countering spells)
 Mill - zalvi
 Look - catlu
 Scry - prujungau
@@ -83,7 +84,7 @@ White - blabi
 Blue - blanu
 Black - xekri
 Red - xunre
-Green - 
+Green - crino
 
 Plains - pintu'a
 Island - daplu
@@ -127,11 +128,12 @@ Control - jitro
 Keywords
 When written on its own line, only the word is written, and the subject is omitted. It doesn't say "lo ti vi'ordai cu vofli" to say "Flying". It's just "vofli". The purpose of these keywords is to save space.
 When written as a declaration/check that something has or gains that keyword, it's written as the property of that keyword. So to say "Your creatures gain flying" you would say "loi danlu po do lebna lo ka vofli" meaning "Your creatures gain the property of flying"
-Trample - maxdzu
+Trample - maxdzu (.i ko'a kakne lo zu'o damba xrani le kelci ja mujli'u poi se gunta ko'a ku'o le dukse klani)
 Vigilance - judycikna
 Flying - vofli
 Haste - sutkla
 Lifelink - ka'orle'a
+Deathtouch - mrope'u (dead-touch) (x1 touches x2 in a way that causes death)
 Flash - pojgu'i (Every language uses light for flash despite the fact it has nothing to do with light.)
 Menace - selte'apre
 Hexproof - dapyjdari
@@ -148,9 +150,11 @@ Rebound - rapmakfa
 Disguise - ticta'u
 Fabricate - runfi'i (x1 creates artificial object(s) x2)
 Infect - prejumydu’a
+Spree - nungumselgunta (x1 is the event of a mass of aggressive actions x2 against x3)
 
 Ability Words
 Eminence - misybalvlapi (fame-grand-powerful)
+Landfall - tumkla (land-comes)
 
 Praetor - .pra'etor. -- TODO: BAD FIX SOON
 Detective - cipcta
@@ -197,6 +201,10 @@ Goblin - ridgobeli
 Rigger - selplibregau
 Guest - vitke
 Faerie - ridrfai
+Plant - spati
+Insect - cinki
+Snake - since
+Fractal - fraktali
 Vedalken - vledalkena (*)
 Thopter - toptera (*)
 Sliver - slivera (*)

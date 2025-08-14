@@ -1,0 +1,14 @@
+Zimone, All-Questioning {1}{G}{U}
+Zimone, known as the Asker of Every Question
+la .zimon. no'u le teryroldzarei
+    
+
+Legendary Creature — Human Wizard
+
+ranmi danlu - remna mafcre
+  -  
+
+At the beginning of your end step, if a land entered the battlefield under your control this turn and you control a prime number of lands, create Primo, the Indivisible, a legendary 0/0 green and blue Fractal creature token, then put that many +1/+1 counters on it. (2, 3, 5, 7, 11, 13, 17, 19, 23, 29, and 31 are prime numbers.)
+After each beginning of the end step of you, if it is true that at least one land which you control entered during the current turn, and that the amount of all lands which you control (x1) is prime, and event of you creating Primo, which is a legendary and creature token which is a 0/0 fractal and green and blue (x2) and putting counters measured by x1 onto x2. (Primes have no less than and no more than two factors.)
+ba ro krasi be le fanmo pagru'e po do cu ifle le du'u su'o tumla poi do jitro pu nerkla ca le ca kelkau kei e le du'u le klani be ro tumla poi do jitro goi ko'a mulna'usle kei pa nu do majgau la .primo. po'u pa 0/0 ranmi je danlu kelsinci poi fraktali gi'e crino gi'e blanu ge'u zi'e goi ko'e gi'e punji lo +1/+1 nacdai la'u ko'a ko'e (.i lo mulna'usle cu tolcau su'esu'ore se dilcymu'o)
+                                                0/0                  +1/+1     (       )

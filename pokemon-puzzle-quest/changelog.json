@@ -1,5 +1,12 @@
 {
 	"versions": {
+		"20250630": {
+			"date": "June 30, 2025",
+			"line-count": 54100,
+			"changes": [
+				"- Added dialogue to 5-8"
+			]
+		},
 		"20250629": {
 			"date": "June 29, 2025",
 			"line-count": 54000,

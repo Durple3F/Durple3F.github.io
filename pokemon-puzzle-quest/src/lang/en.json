@@ -2039,6 +2039,18 @@
 				}, "duration": 200, "waitDuration": 200 },
 				{ "type": "text", "speaker": "Mariah", "text": "But before we do! You’ll never guess!! I wanna have a battle!!!" }
 			]
+		},
+		"route-5-8-dialogue": {
+			"events": [],
+			"callbacks": {},
+			"effects": [
+				{ "type": "get-speaker", "name": "Kiawe", "class": "Kiawe" },
+				{ "type": "text", "speaker": "Kiawe", "text": "You’ve climbed far, challenger. Most turn back before they ever see the volcano’s molten core." },
+				{ "type": "text", "speaker": "Kiawe", "text": "You face but one more challenge atop this fiery peak." },
+				{ "type": "text", "speaker": "Kiawe", "text": "This volcano, these sacred grounds... produce Pokémon blessed by its flames." },
+				{ "type": "text", "speaker": "Kiawe", "text": "They will test your mettle, forge you into a trainer worthy of the elemental stone that is to be your prize." },
+				{ "type": "text", "speaker": "Kiawe", "text": "When you are ready, approach center of the grounds, and face the judgment of the volcano." }
+			]
 		}
 	},
 	"pokemon": {

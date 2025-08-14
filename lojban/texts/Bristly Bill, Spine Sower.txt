@@ -1,0 +1,24 @@
+Bristly Bill, Spine Sower {1}{G}
+
+la .bristlis.bil. no'e kilpunli sombo
+    
+
+Legendary Creature — Plant Druid
+
+ranmi danlu - spati selratmafcre
+  -  
+
+Landfall — Whenever a land you control enters, put a +1/+1 counter on target creature.
+Land-comes - 
+tumkla - ba ro nu pa tumla poi do jitro cu nerkla kei pa nu do fargau pa danlu goi ko'a gi'e punji pa +1/+1 nacdai ko'a
+                        +/+  
+
+{3}{G}{G}: Double the number of +1/+1 counters on each creature you control.
+{3}{G}{G}: For each x which is a creature and you control it, you double the amount of all +1/+1 counters of it
+{3}{G}{G}: ro da poi danlu gi'e jitro be do zo'u do relpi'igau le klani be ro +1/+1 nacdai po da
+{3}{G}{G}:                +1/+1   
+
+“Wake up, little ones. There’s a new day ahead.”
+"Become awake (this is a command) you, who are little. The morning begins."
+lu cikybi'o fa ko, noi cmalu .i le cerni cu cfari li'u
+           
