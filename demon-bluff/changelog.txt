@@ -1,0 +1,19 @@
+9/5 (1100 lines):
+  - Added a system for governing the hints that appear when you hover over cards, like the arrows indicating who people are pointing to.
+  - The hints now show and hide when you move your mouse on or off the associated card.
+
+9/4 (1000 lines):
+  - Further tooltip styling
+  - The confessor and minion work now
+  - Added the UI for killing cards
+  - Killing cards works
+  - Added UI showing starting objective
+  - Now levels are created with a minimum and maximum number of each type of role
+  - Now levels avoid having 2 of the same role
+  - Added Lover, Gemcrafter, Twin Minion, Hunter
+
+2025/9/3 (400 lines):
+  - Initial look to the cards
+  - Got the cards appearing in a circle
+  - Added the system for showing tooltips next to everyone
+  - Added Confessor and Minion but they don't work yet

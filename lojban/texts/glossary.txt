@@ -200,6 +200,7 @@ Dryad - ricru'i
 Goblin - ridgobeli
 Rigger - selplibregau
 Guest - vitke
+Ally - smitergutpre (same-goal-person)
 Faerie - ridrfai
 Plant - spati
 Insect - cinki
