@@ -1,5 +1,67 @@
 import {randomChoice, shuffleArray, lerp} from "./util.js"
 
+export class Selection {
+	constructor(type="basic"){
+		this.type = type
+		this.cards = []
+		this.activeAbilities = []
+	}
+	addCard(card){
+		this.cards.push(card)
+		card.anchorPoint?.addClass("selected")
+		let activeAbilities = this.activeAbilities
+		let curAbility = activeAbilities[activeAbilities.length - 1]
+		if (curAbility){
+			curAbility.checkCompletion()
+		}
+	}
+	changeType(type){
+		this.type = type
+	}
+	reset(){
+		this.cards.forEach(card => {
+			card.anchorPoint?.removeClass("selected")
+		})
+		this.cards.splice(0, this.cards.length)
+		this.changeType("basic")
+	}
+}
+
+class ActivatedAbility {
+	constructor(ownerCard, ownerRole){
+		this.owner = ownerCard
+		this.role = ownerRole
+		this.selection = null
+		this.is_finished = false
+	}
+	checkCompletion(){
+		console.log(this.selection.cards)
+	}
+	begin(selection){
+		this.selection = selection
+		selection.reset()
+		selection.changeType("cards")
+	}
+	end(){
+		this.selection.reset()
+		this.is_finished = true
+		this.role.activatedAbilityCharges--
+	}
+	cancel(){
+		this.selection.reset()
+		this.is_finished = true
+	}
+	performAction(){
+		this.action()
+		this.end()
+		this.owner.showTooltip()
+	}
+	action(){}
+	get infoBox(){
+		return ""
+	}
+}
+
 class Hint {
 	constructor(){
 		this.elements = $()
@@ -44,7 +106,7 @@ allHints["Cards"] = class extends Hint {
 		for (let card of this.cards){
 			let element = $("<img>")
 			element.addClass("hint").addClass("arrow")
-			element.attr("src", "src/arrow_with_outline.png")
+			element.attr("src", "src/img/icons/arrow_with_outline.png")
 			element.data("card", card)
 			this.elements = this.elements.add(element)
 		}
@@ -64,6 +126,79 @@ allHints["Cards"] = class extends Hint {
 			element.css("top", top).css("left", left)
 			.css("width", width * 0.4).css("rotate", "180deg")
 		})
+	}
+}
+allHints["Card"] = class extends allHints["Cards"]{
+	constructor(card){
+		super([card])
+	}
+}
+allHints["Direction"] = class extends Hint {
+	constructor(card, direction){
+		super()
+		this.card = card
+		this.direction = direction
+		this.createElements()
+	}
+	createElements(){
+		let element = $("<div>")
+		element.addClass("hint").addClass("arrow-curve")
+		let img = $("<img>")
+		img.attr("src", "src/img/icons/arrow_curve.png")
+		element.append(img)
+		this.elements = this.elements.add(element)
+
+		let element2 = $("<div>")
+		element2.addClass("hint").addClass("arrow-curve")
+		let img2 = $("<img>")
+		img2.attr("src", "src/img/icons/arrow_curve.png")
+		element2.append(img2)
+		this.elements = this.elements.add(element2)
+
+		this.elements.appendTo("#game .ui-hints").attr("data-direction", this.direction)
+		this.positionElements()
+	}
+	positionElements(){
+		let card = this.card
+		let anchorPoint = card.anchorPoint
+		let W = $(window).width()
+		let H = $(window).height()
+		let angle = anchorPoint.data("angle")
+		let card_height = anchorPoint.height()
+
+		if (this.direction === "clockwise"){
+			angle += Math.PI * 0.13
+		} else {
+			angle -= Math.PI * 0.09
+		}
+
+		let arrow_angle = angle / (2 * Math.PI)
+
+		if (this.direction === "clockwise"){
+			arrow_angle += 0.37
+		} else {
+			arrow_angle += 0.14
+		}
+
+		let arrow1 = $(this.elements[0])
+		let radius1 = Math.min(W, H) * 0.35 - card_height
+		let top1 = H * 0.5 + radius1 * Math.sin(angle)
+		let left1 = W * 0.5 + radius1 * Math.cos(angle)
+		let transform1 = `translate(-50%, -50%)`
+		transform1 += ` rotate(${arrow_angle}turn) scale(1.5)`
+		arrow1.css("top", top1).css("left", left1)
+		.css("transform", transform1)
+
+		let arrow2 = $(this.elements[1])
+		let radius2 = Math.min(W, H) * 0.35 + card_height * 0.8
+		let top2 = H * 0.5 + radius2 * Math.sin(angle)
+		let left2 = W * 0.5 + radius2 * Math.cos(angle)
+		let transform2 = `translate(-50%, -50%)`
+		transform2 += ` rotate(${arrow_angle}turn) scale(1.5)`
+		arrow2.css("top", top2).css("left", left2)
+		.css("transform", transform2)
+
+		this.elements.css("font-size", card_height * 0.1)
 	}
 }
 
@@ -87,6 +222,8 @@ class Character {
 	can_lie = true
 	can_be_disguised_as = true
 	sprite_url = ""
+	activatedAbilityCharges = 0
+	activatedAbility = null
 	constructor(options={}){
 		this.outputs = []
 	}
@@ -127,7 +264,7 @@ allRoles["Confessor"] = class extends Character {
 	alignment = "Good"
 	lies = false
 	can_lie = false
-	sprite_url = "src/img/Confessor.png"
+	sprite_url = "src/img/roles/Confessor.png"
 	trigger(card, level){
 		let lies = card.lies
 		let is_evil = card.true_role.type === "Evil"
@@ -146,7 +283,7 @@ allRoles["Lover"] = class extends Character {
 	type = "Villager"
 	alignment = "Good"
 	lies = false
-	sprite_url = "src/img/Lover.png"
+	sprite_url = "src/img/roles/Lover.png"
 	trigger(card, level){
 		let lies = card.lies
 		let cards = level.cards
@@ -171,6 +308,8 @@ allRoles["Lover"] = class extends Character {
 		} else {
 			this.speak(`NO Evils adjacent to me`)
 		}
+		let hint = new allHints["Cards"](adjacentCards)
+		card.hints.push(hint)
 	}
 	onShow(card, level){
 		this.trigger(card, level)
@@ -181,7 +320,7 @@ allRoles["Gemcrafter"] = class extends Character {
 	type = "Villager"
 	alignment = "Good"
 	lies = false
-	sprite_url = "src/img/Gemcrafter.png"
+	sprite_url = "src/img/roles/Gemcrafter.png"
 	trigger(card, level){
 		let lies = card.lies
 		let cards = level.cards
@@ -201,12 +340,17 @@ allRoles["Gemcrafter"] = class extends Character {
 			otherGoods = goods
 		}
 		let randomCard = randomChoice(otherGoods)
-		let id = randomCard.id
-		this.speak(`#${id} is Good`)
 
-		//Create a hint pointing to that card
-		let hint = new allHints["Cards"]([randomCard])
-		card.hints.push(hint)
+		if (randomCard){
+			let id = randomCard.id
+			this.speak(`#${id} is Good`)
+
+			//Create a hint pointing to that card
+			let hint = new allHints["Card"](randomCard)
+			card.hints.push(hint)
+		} else {
+			this.speak(`Uh... I'm not sure what to say.`)
+		}
 	}
 	onShow(card, level){
 		this.trigger(card, level)
@@ -217,7 +361,7 @@ allRoles["Hunter"] = class extends Character {
 	type = "Villager"
 	alignment = "Good"
 	lies = false
-	sprite_url = "src/img/Hunter.png"
+	sprite_url = "src/img/roles/Hunter.png"
 	trigger(card, level){
 		let lies = card.lies
 		let cards = level.cards
@@ -276,6 +420,128 @@ allRoles["Hunter"] = class extends Character {
 		this.trigger(card, level)
 	}
 }
+allRoles["Enlightened"] = class extends Character {
+	name = "Enlightened"
+	type = "Villager"
+	alignment = "Good"
+	lies = false
+	sprite_url = "src/img/roles/Enlightened.png"
+	trigger(card, level){
+		let lies = card.lies
+		let cards = level.cards
+		let otherEvils = cards.filter(otherCard => otherCard !== card)
+		.filter(otherCard => {
+			let role = this.register(otherCard, lies)
+			return role.alignment === "Evil"
+		})
+		
+		let index = cards.indexOf(card)
+		let minCDist = Infinity
+		let minCCDist = Infinity
+		for (let otherCard of otherEvils){
+			let otherIndex = cards.indexOf(otherCard)
+			let clockwiseDist = otherIndex - index
+			if (clockwiseDist < 0) clockwiseDist += cards.length
+			let counterClockwiseDist = cards.length - clockwiseDist
+			if (clockwiseDist < minCDist){
+				minCDist = clockwiseDist
+			}
+			if (counterClockwiseDist < minCCDist){
+				minCCDist = counterClockwiseDist
+			}
+		}
+
+		let possibleAnswers = {
+			"clockwise": "Closest Evil is: Clockwise",
+			"counterclockwise": "Closest Evil is: Counter-clockwise",
+			"equidistant": "Closest Evil is: Equidistant",
+		}
+		let correctAnswer
+		if (minCDist < minCCDist) correctAnswer = "clockwise"
+		else if (minCDist > minCCDist) correctAnswer = "counterclockwise"
+		else correctAnswer = "equidistant"
+		let shownAnswer = correctAnswer
+		if (lies){
+			shownAnswer = randomChoice(Object.keys(possibleAnswers).filter(key => key !== shownAnswer))
+		}
+		this.speak(possibleAnswers[shownAnswer])
+		
+		if (shownAnswer !== "equidistant"){
+			let hint = new allHints["Direction"](card, shownAnswer)
+			card.hints.push(hint)
+		}
+	}
+	onShow(card, level){
+		this.trigger(card, level)
+	}
+}
+allRoles["Medium"] = class extends Character {
+	name = "Medium"
+	type = "Villager"
+	alignment = "Good"
+	lies = false
+	sprite_url = "src/img/roles/Medium.png"
+	trigger(card, level){
+		let lies = card.lies
+		let cards = level.cards
+		let disguised_cards = cards.filter(card => card.is_disguised)
+		let undisguised_cards = cards.filter(card => !card.is_disguised && card.true_role.alignment === "Good")
+
+		let shownCard
+		if (!lies){
+			shownCard = randomChoice(undisguised_cards)
+		} else {
+			shownCard = randomChoice(disguised_cards)
+		}
+
+		if (shownCard){
+			let id = shownCard.id
+			this.speak(`#${id} is a real ${shownCard.shown_role.name}`)
+
+			//Create a hint pointing to that card
+			let hint = new allHints["Card"](shownCard)
+			card.hints.push(hint)
+		} else {
+			this.speak(`Uh... I'm not sure what to say.`)
+		}
+	}
+	onShow(card, level){
+		this.trigger(card, level)
+	}
+}
+allRoles["Judge"] = class extends Character {
+	name = "Judge"
+	type = "Villager"
+	alignment = "Good"
+	lies = false
+	sprite_url = "src/img/roles/Judge.png"
+	constructor(){
+		super()
+		this.activatedAbilityCharges = 1
+		this.activatedAbility = class extends ActivatedAbility {
+			get infoBox(){
+				return "Pick a Character"
+			}
+			checkCompletion(){
+				if (this.selection.cards.length){
+					this.performAction()
+				}
+			}
+			action(){
+				let lies = this.owner.lies
+				let card = this.selection.cards[0]
+				let targetIsLying = card.lies && card.shown_role.can_lie
+				if (lies === targetIsLying){
+					this.role.speak(`#${card.id} is saying Truth`)
+				} else {
+					this.role.speak(`#${card.id} is lying`)
+				}
+			}
+		}
+	}
+	trigger(card, level){}
+	onShow(card, level){}
+}
 allRoles["Wretch"] = class extends Character {
 	name = "Wretch"
 	type = "Outcast"
@@ -283,7 +549,7 @@ allRoles["Wretch"] = class extends Character {
 	lies = false
 	registers_differently = true
 	can_be_disguised_as = false
-	sprite_url = "src/img/Wretch.png"
+	sprite_url = "src/img/roles/Wretch.png"
 	be_registered(byCard, lying){
 		let evilMinionRoles = Object.values(roleQualities)
 		.filter(role => role.type === "Minion" && role.alignment === "Evil")
@@ -297,7 +563,7 @@ allRoles["Minion"] = class extends Character {
 	alignment = "Evil"
 	lies = true
 	disguises = true
-	sprite_url = "src/img/Minion.png"
+	sprite_url = "src/img/roles/Minion.png"
 }
 allRoles["Twin Minion"] = class extends Character {
 	name = "Twin Minion"
@@ -305,7 +571,7 @@ allRoles["Twin Minion"] = class extends Character {
 	alignment = "Evil"
 	lies = true
 	disguises = true
-	sprite_url = "src/img/Twin Minion.png"
+	sprite_url = "src/img/roles/Twin Minion.png"
 }
 for (let roleName in allRoles){
 	let role = allRoles[roleName]
@@ -313,7 +579,7 @@ for (let roleName in allRoles){
 	roleQualities[roleName] = character
 }
 
-class Card{
+class Card {
 	constructor(character){
 		this.true_role = character
 		this.shown_role = character
@@ -393,7 +659,7 @@ export const cardBackgroundSpriteUrls = {
 export const characterTypes = ["Villager", "Outcast", "Minion", "Demon"]
 
 export function createLevel(){
-	let characterCount = 5
+	let characterCount = 8
 
 	let typeTargets = {
 		"Villager": {
@@ -476,8 +742,13 @@ export function createLevel(){
 			cards.push(card)
 		}
 	}
-	cards[0].true_role = new allRoles["Hunter"]()
-	cards[0].undisguise()
+
+	let forcedSwaps = cards.filter(card => card.true_role.type === "Judge")
+	forcedSwaps.forEach(forcedSwap => {
+		forcedSwap.true_role = new allRoles["Judge"]()
+		forcedSwap.undisguise()
+	})
+
 	shuffleArray(cards)
 	for (let card of cards){
 		card.id = cards.indexOf(card) + 1

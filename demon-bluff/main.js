@@ -1,8 +1,38 @@
 import {delay, randomChoice} from "./util.js"
-import {cardBackgroundSpriteUrls, allRoles, createLevel} from "./stuff.js"
+import {cardBackgroundSpriteUrls, allRoles, createLevel, Selection} from "./stuff.js"
 
+let frameRate = 1000 / 60
 let currentLevel
 let killing_ready = false
+let currentSelection = new Selection()
+let activeAbilities = currentSelection.activeAbilities
+console.log(activeAbilities)
+
+function clickCard(card){
+	if (currentSelection.type === "basic"){
+		if (killing_ready){
+			killCard(card)
+		}
+		else if (!card.is_face_up && card.is_alive){
+			revealCard(card)
+		}
+		else if (
+			card.is_face_up &&
+			card.shown_role.activatedAbility &&
+			card.shown_role.activatedAbilityCharges > 0
+		){
+			let ability = new card.shown_role.activatedAbility(card, card.shown_role)
+			ability.begin(currentSelection)
+			activeAbilities.push(ability)
+		} else {
+			console.log(card)
+		}
+	} else {
+		currentSelection.addCard(card)
+	}
+
+	updateEverything()
+}
 
 function killCard(card){
 	card.container.addClass("dead")
@@ -11,28 +41,27 @@ function killCard(card){
 	updateCardDisplay(card)
 }
 function revealCard(card){
-	let cardContainer = card.container
-	let div = cardContainer.find(".card")
-	div.css("transition", "250ms transform linear")
-	div.css("transform", "rotate3d(0, 1, 0, 90deg)")
+	let model = card.model
+	model.css("transition", "250ms transform linear").css("transform", "rotate3d(0, 1, 0, 90deg)")
 	delay(250).then(() => {
-		div.css("transition", "0s transform linear")
-		div.css("transform", "rotate3d(0, 1, 0, 270deg)")
-		div.css("transition", "250ms transform linear")
-		div.css("transform", "rotate3d(0, 1, 0, 0deg)")
+		model.css("transition", "0s transform linear").css("transform", "rotate3d(0, 1, 0, 270deg)")
+		model.css("transition", "250ms transform linear").css("transform", "rotate3d(0, 1, 0, 0deg)")
 		card.is_face_up = true
 		updateCardDisplay(card)
 		card.onShow(card, currentLevel)
 		card.showTooltip()
 		return delay(250)
 	}).then(() => {
-		div.css("transition", "")
-		div.css("transform", "")
+		model.css("transition", "").css("transform", "")
 	})
 }
 
 function createCardDisplay(){
+	let cardModel = $("<div class='card-model'>")
+	let cardExtras = $("<div class='card-extras'>")
+	cardModel.append(cardExtras)
 	let cardContainer = $("<div class='card-container'>")
+	cardExtras.append(cardContainer)
 	let div = $("<div class='card'>")
 	cardContainer.append(div)
 	let img = $("<img class='card-img-top'>")
@@ -54,14 +83,23 @@ function createCardDisplay(){
 	let skullIcon = $("<img>").attr("src", "src/Pictoicon_Skull.png").addClass("skull")
 	cardContainer.append(skullIcon)
 
-	return cardContainer
+	let shadow = $("<div class='drop-shadow'>")
+	cardModel.append(shadow)
+
+	let activatedAbilityIconBox = $("<div class='activated-ability-container'>")
+	cardExtras.append(activatedAbilityIconBox)
+	let activatedAbilityIcon = $("<img>").attr("src", "src/img/icons/Joystick_Action_Icon_Jump.png")
+	activatedAbilityIconBox.append(activatedAbilityIcon)
+
+	return cardModel
 }
 function updateCardDisplay(card){
+	let anchorPoint = card.anchorPoint
 	let cardContainer = card.container
 	let img = cardContainer.data("img")
 	let img2 = cardContainer.data("img2")
-	cardContainer.attr("faceup", card.is_face_up)
-	cardContainer.attr("data-type", card.shown_role.type)
+	anchorPoint.attr("faceup", card.is_face_up)
+	anchorPoint.attr("data-type", card.shown_role.type)
 	cardContainer.find(".card-id").text(`#${card.id}`)
 
 	let imgBg = img.data("bg")
@@ -98,13 +136,18 @@ function updateCardDisplay(card){
 		div.find(".card-corrupted").hide()
 	}
 
+	if (
+		card.is_face_up &&
+		card.shown_role.activatedAbility &&
+		card.shown_role.activatedAbilityCharges > 0
+	){
+		card.anchorPoint.attr("data-showactive", true)
+	} else {
+		card.anchorPoint.attr("data-showactive", false)
+	}
+
 	div.on("click", () => {
-		if (killing_ready){
-			killCard(card)
-		}
-		else if (!card.is_face_up && card.is_alive){
-			revealCard(card)
-		}
+		clickCard(card)
 	})
 
 	div.off("mouseenter").on("mouseenter", () => {
@@ -113,6 +156,32 @@ function updateCardDisplay(card){
 	div.off("mouseleave").on("mouseleave", () => {
 		card.hideHints()
 	})
+}
+
+function updateAbilities(){
+	for (let i = 0; i < activeAbilities.length; i++){
+		let ability = activeAbilities[i]
+		if (ability.is_finished){
+			activeAbilities.splice(i, 1)
+			i--
+		}
+	}
+}
+function updateCenterInfoBox(){
+	if (!activeAbilities.length) {
+		$("#game .ui-instruction").fadeOut(100)
+	} else {
+		let ability = activeAbilities[activeAbilities.length - 1]
+		let infoBox = ability.infoBox
+		$("#game .ui-instruction").fadeIn(100).html(infoBox)
+	}
+}
+function updateEverything(){
+	for (let card of currentLevel.cards){
+		updateCardDisplay(card)
+	}
+	updateAbilities()
+	updateCenterInfoBox()
 }
 
 function levelTick(){
@@ -140,15 +209,17 @@ function startRound(){
 		charContainers.push(container)
 		charactersContainer.append(container)
 		let div = createCardDisplay()
-		card.container = div
+		card.model = div
+		card.container = div.find(".card-container")
 		container.append(div)
-		div.data("card", card)
+		card.container.data("card", card)
 		updateCardDisplay(card)
 
 		//position the box
-		let radius = 0.3
+		let radius = 0.35
 		let r = Math.min(W, H) * radius
-		let p = (i / cards.length * 2 - 0.5) * Math.PI
+		let p = (((i+1) / cards.length * 2 - 0.5) * Math.PI + 2 * Math.PI) % (2 * Math.PI)
+		container.data("angle", p)
 		// let x = Math.cos(p) * r + (W * 0.5)
 		// let xp = x / W * 100 + "%"
 		container.data("x", Math.cos(p))
@@ -159,7 +230,7 @@ function startRound(){
 		let dBetween = totalCirc / cards.length
 		container.css("left", `calc(min(100vw, 100vh) * ${radius} * ${Math.cos(p)} + 50vw)`)
 		container.css("top", `calc(min(100vw, 100vh) * ${radius} * ${Math.sin(p)} + 50vh)`)
-		container.css("font-size", `calc(min(${dBetween}px / 10, 2.5vh, 2.5vw))`)
+		container.css("font-size", `calc(min(${dBetween}px / 10, 2vh, 1.8vw))`)
 	}
 	charContainers.toSorted((a, b) => {
 		let ay = a.position().top
@@ -171,10 +242,11 @@ function startRound(){
 	for (let i = 0; i < charContainers.length; i++){
 		let container = charContainers[i]
 		let direction = i < charContainers.length * 0.5 ? "right" : "left"
-		if (i === 0){
+		let angle = container.data("angle")
+		if (Math.abs(1.5*Math.PI - angle) < 0.125*Math.PI){
 			direction = "bottom"
 		}
-		if (Math.abs(i - charContainers.length * 0.5) <= 0.5){
+		if (Math.abs(0.5*Math.PI - angle) < 0.125*Math.PI){
 			direction = "top"
 		}
 		let majorOffset = container.data("y") * container.height() * 0.3
@@ -219,7 +291,7 @@ function startRound(){
 	content = content.add(secondaryObjective)
 	$(".ui-info .objective").empty().append(content)
 
-	level.interval = setInterval(levelTick, 1000 / 60)
+	level.interval = setInterval(levelTick, frameRate)
 }
 
 $(".dagger-button").on("click", () => {
@@ -238,6 +310,16 @@ $(window).on("resize", () => {
 			hint.positionElements()
 		})
 	})
+})
+
+$(window).on("contextmenu", e => {
+	e.preventDefault()
+	let parents = [...$(e.target).parents()]
+	if (activeAbilities.length && !parents.some(tag => $(tag).hasClass("character-anchor-point"))){
+		let ability = activeAbilities[0]
+		ability.cancel()
+		updateEverything()
+	}
 })
 
 startRound()
