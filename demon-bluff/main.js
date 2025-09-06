@@ -1,5 +1,5 @@
 import {delay, randomChoice} from "./util.js"
-import {cardBackgroundSpriteUrls, allRoles, createLevel, Selection} from "./stuff.js"
+import {cardBackgroundSpriteUrls, allRoles, createLevel, Selection, GameEventList} from "./stuff.js"
 
 let frameRate = 1000 / 60
 let currentLevel
@@ -10,11 +10,11 @@ console.log(activeAbilities)
 
 function clickCard(card){
 	if (currentSelection.type === "basic"){
-		if (killing_ready){
+		if (killing_ready && card.is_alive){
 			executeCard(card)
 		}
 		else if (!card.is_face_up && card.is_alive){
-			revealCard(card)
+			tryToRevealCard(card)
 		}
 		else if (
 			card.is_face_up &&
@@ -34,13 +34,35 @@ function clickCard(card){
 	updateEverything()
 }
 
-function killCard(card){
-	card.kill(card, currentLevel)
+function tryToRevealCard(card){
+	let revealEvent = new GameEventList()
+	revealEvent.events.push({type: "reveal", card: card})
+
+	let cards = currentLevel.cards
+	//Cards trigger in reverse numerical order
+	for (let i = cards.length - 1; i >= 0; i--){
+		let triggeringCard = cards[i]
+		triggeringCard.onAttemptReveal(triggeringCard, currentLevel, card, revealEvent)
+	}
+	carryOutEvents(revealEvent)
 }
+
+function carryOutEvents(gameEventList){
+	for (let event of gameEventList.events){
+		carryOutEvent(event)
+	}
+}
+function carryOutEvent(event){
+	if (event.type === "reveal"){
+		let card = event.card
+		revealCard(card)
+	} else {
+		console.warn(event)
+	}
+}
+
 function executeCard(card){
-	killCard(card)
-	let health_change = card.true_role.execution_health_change
-	currentLevel.hp += health_change
+	card.execute(card, currentLevel)
 }
 function revealCard(card){
 	let model = card.model

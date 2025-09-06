@@ -1,5 +1,7 @@
 9/6 (1600 lines):
-  - 
+  - Added the health system
+  - Minions now correctly sometimes disguise as an unused role and sometimes not
+  - Added Knight, Bombardier, Empress, Witch, Scout
 
 9/5 (1500 lines):
   - Added a system for governing the hints that appear when you hover over cards, like the arrows indicating who people are pointing to.
