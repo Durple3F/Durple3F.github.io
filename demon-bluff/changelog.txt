@@ -1,7 +1,12 @@
-9/5 (1100 lines):
+9/6 (1600 lines):
+  - 
+
+9/5 (1500 lines):
   - Added a system for governing the hints that appear when you hover over cards, like the arrows indicating who people are pointing to.
   - The hints now show and hide when you move your mouse on or off the associated card.
-  - Added Enlightened, Medium, Judge
+  - Added the system that governs activated abilities.
+  - Adding HP
+  - Added Enlightened, Medium, Judge, Jester
 
 9/4 (1000 lines):
   - Further tooltip styling

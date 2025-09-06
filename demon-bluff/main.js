@@ -11,7 +11,7 @@ console.log(activeAbilities)
 function clickCard(card){
 	if (currentSelection.type === "basic"){
 		if (killing_ready){
-			killCard(card)
+			executeCard(card)
 		}
 		else if (!card.is_face_up && card.is_alive){
 			revealCard(card)
@@ -35,10 +35,12 @@ function clickCard(card){
 }
 
 function killCard(card){
-	card.container.addClass("dead")
-	card.is_alive = false
-	card.undisguise()
-	updateCardDisplay(card)
+	card.kill(card, currentLevel)
+}
+function executeCard(card){
+	killCard(card)
+	let health_change = card.true_role.execution_health_change
+	currentLevel.hp += health_change
 }
 function revealCard(card){
 	let model = card.model
@@ -182,6 +184,12 @@ function updateEverything(){
 	}
 	updateAbilities()
 	updateCenterInfoBox()
+
+	let healthSection = $("#game .health-container")
+	let healthP = currentLevel.hp / currentLevel.max_hp
+	healthSection.find(".bar").css("height", healthP * 100 + "%")
+	healthSection.find(".current").text(currentLevel.hp)
+	healthSection.attr("data-empty", currentLevel.hp <= 0)
 }
 
 function levelTick(){
@@ -313,9 +321,9 @@ $(window).on("resize", () => {
 })
 
 $(window).on("contextmenu", e => {
-	e.preventDefault()
 	let parents = [...$(e.target).parents()]
 	if (activeAbilities.length && !parents.some(tag => $(tag).hasClass("character-anchor-point"))){
+		e.preventDefault()
 		let ability = activeAbilities[0]
 		ability.cancel()
 		updateEverything()
