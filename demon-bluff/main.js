@@ -1,9 +1,17 @@
 import {delay, randomChoice} from "./util.js"
 import {cardBackgroundSpriteUrls, allRoles, createLevel, Selection, GameEventList} from "./stuff.js"
 
+const cardMarkSprites = {
+	"green": "src/img/flags/Title_Flag_01_NoShadow_Green.png",
+	"orange": "src/img/flags/Title_Flag_01_NoShadow_Orange.png",
+	"red": "src/img/flags/Title_Flag_01_NoShadow_Red.png",
+	"blue": "src/img/flags/Title_Flag_01_NoShadow_Blue.png",
+}
+
 let frameRate = 1000 / 60
 let currentLevel
 let killing_ready = false
+let currentlyHoveredCard = null
 let currentSelection = new Selection()
 let activeAbilities = currentSelection.activeAbilities
 console.log(activeAbilities)
@@ -21,7 +29,7 @@ function clickCard(card){
 			card.shown_role.activatedAbility &&
 			card.shown_role.activatedAbilityCharges > 0
 		){
-			let ability = new card.shown_role.activatedAbility(card, card.shown_role)
+			let ability = new card.shown_role.activatedAbility(card, card.shown_role, currentLevel)
 			ability.begin(currentSelection)
 			activeAbilities.push(ability)
 		} else {
@@ -33,17 +41,93 @@ function clickCard(card){
 
 	updateEverything()
 }
+function handleKeydown(e){
+	if (currentlyHoveredCard){
+		let key = e.key
+		let card = currentlyHoveredCard
 
+		if (key === "1"){
+			card.toggleMark("green")
+			card.removeMark("orange")
+			card.removeMark("red")
+		}
+		if (key === "2"){
+			card.toggleMark("orange")
+			card.removeMark("green")
+			card.removeMark("red")
+		}
+		if (key === "3"){
+			card.toggleMark("red")
+			card.removeMark("green")
+			card.removeMark("orange")
+		}
+		if (key === "4"){
+			let marks = card.marks
+			console.log(marks)
+			for (let markType of marks){
+				card.removeMark(markType)
+			}
+		}
+		if (key === "5"){
+			card.toggleMark("blue")
+		}
+		updateEverything()
+	}
+}
+
+function getTriggerPriorities(cards){
+	let result = []
+	
+	cards.toSorted((a, b) => b.id - a.id)
+	.forEach(card => {
+		let role = card.true_role
+		let trigger = {
+			role: role,
+			priority: role.trigger_priority,
+			card: card
+		}
+		result.push(trigger)
+
+		if (card.is_disguised){
+			let role = card.shown_role
+			let trigger = {
+				role: role,
+				priority: role.trigger_priority,
+				card: card
+			}
+			result.push(trigger)
+		}
+	})
+
+	result.sort((a, b) => b.priority - a.priority)
+
+	return result
+}
+function performGameStart(){
+	let gameEvents = new GameEventList()
+
+	let cards = currentLevel.cards
+	let triggers = getTriggerPriorities(cards)
+	triggers.forEach(trigger => {
+		let card = trigger.card
+		let role = trigger.role
+		role.onGameStart(card, currentLevel, gameEvents)
+	})
+	
+	carryOutEvents(gameEvents)
+}
 function tryToRevealCard(card){
 	let revealEvent = new GameEventList()
 	revealEvent.events.push({type: "reveal", card: card})
 
 	let cards = currentLevel.cards
-	//Cards trigger in reverse numerical order
-	for (let i = cards.length - 1; i >= 0; i--){
-		let triggeringCard = cards[i]
-		triggeringCard.onAttemptReveal(triggeringCard, currentLevel, card, revealEvent)
-	}
+	let triggers = getTriggerPriorities(cards)
+	triggers.forEach(trigger => {
+		let triggeringCard = trigger.card
+		let role = trigger.role
+		role.onAttemptReveal(triggeringCard, currentLevel, card, revealEvent)
+	})
+
 	carryOutEvents(revealEvent)
 }
 
@@ -80,26 +164,32 @@ function revealCard(card){
 	})
 }
 
+function createCardHtml(){
+	let div = $("<div class='card'>")
+	let img = $("<img class='card-img-top' data-img='1'>")
+	div.append(img)
+	let img2 = $("<img class='card-img-top true-role' data-img='2'>")
+	div.append(img2)
+	let body = $("<div class='card-body'>")
+	div.append(body)
+	let title = $("<h5 class='card-title'>")
+	body.append(title)
+	title.append("<span class='card-name'>")
+	title.append("<span class='card-corrupted'>&lt;Corrupted&gt;</span>")
+	return div
+}
 function createCardDisplay(){
 	let cardModel = $("<div class='card-model'>")
 	let cardExtras = $("<div class='card-extras'>")
 	cardModel.append(cardExtras)
 	let cardContainer = $("<div class='card-container'>")
 	cardExtras.append(cardContainer)
-	let div = $("<div class='card'>")
+	let div = createCardHtml().addClass("base")
 	cardContainer.append(div)
-	let img = $("<img class='card-img-top'>")
-	div.append(img)
-	let img2 = $("<img class='card-img-top true-role'>")
-	div.append(img2)
-	let body = $("<div class='card-body'>")
-	div.append(body)
-	let title = $("<h5 class='card-title'>")
-	body.append(title)
-	title.append("<span class='card-corrupted'>&lt;Corrupted&gt;</span>")
-	title.append("<span class='card-name'>")
-	cardContainer.data("img", img)
-	cardContainer.data("img2", img2)
+	cardContainer.data("img", div.find(".card-img-top[data-img='1']"))
+	cardContainer.data("img2", div.find(".card-img-top[data-img='2']"))
+	cardContainer.data("base", div.find(".card.base"))
+	cardContainer.data("ghost", div.find(".card.ghost"))
 
 	let cardId = $("<div class='card-id'>")
 	cardContainer.append(cardId)
@@ -114,6 +204,28 @@ function createCardDisplay(){
 	cardExtras.append(activatedAbilityIconBox)
 	let activatedAbilityIcon = $("<img>").attr("src", "src/img/icons/Joystick_Action_Icon_Jump.png")
 	activatedAbilityIconBox.append(activatedAbilityIcon)
+
+	let disguiseIconBox = $("<div class='disguise-icon-container'>")
+	cardExtras.append(disguiseIconBox)
+	let disguiseIcon = $("<img>").attr("src", "src/img/icons/disguise.png")
+	disguiseIconBox.append(disguiseIcon)
+
+	let cardMarksBox = $("<div class='card-marks-container'>")
+	cardExtras.append(cardMarksBox)
+	let markTypes = ["green", "orange", "red", "blue"]
+	markTypes.forEach(type => {
+		let mark = $("<div class='card-mark'>")
+		mark.attr("data-mark-type", type)
+		let div = $("<div>").addClass("mark-flag")
+		mark.append(div)
+		div.css("background-image", `url("${cardMarkSprites[type]}")`)
+		let icon = $("<div>").addClass("mark-icon")
+		mark.append(icon)
+		cardMarksBox.append(mark)
+	})
+
+	let ghostCard = createCardHtml().addClass("ghost")
+	cardContainer.append(ghostCard)
 
 	return cardModel
 }
@@ -142,7 +254,7 @@ function updateCardDisplay(card){
 	img2.data("bg2", img2Bg)
 	img2.css("background-image", img2Bg)
 
-	let div = cardContainer.find(".card")
+	let div = cardContainer.find(".card.base")
 	div.off("click")
 
 	if (card.is_face_up){
@@ -154,10 +266,10 @@ function updateCardDisplay(card){
 		div.children().hide()
 	}
 
-	if (card.is_corrupted){
-		div.find(".card-corrupted").show()
+	if (card.is_corrupted && !card.is_alive){
+		card.anchorPoint.attr("data-showcorrupted", true)
 	} else {
-		div.find(".card-corrupted").hide()
+		card.anchorPoint.attr("data-showcorrupted", false)
 	}
 
 	if (
@@ -170,15 +282,46 @@ function updateCardDisplay(card){
 		card.anchorPoint.attr("data-showactive", false)
 	}
 
+	if (card.original_disguise && card.original_disguise !== card.shown_role && card.is_face_up){
+		card.anchorPoint.attr("data-showdisguise", true)
+	} else {
+		card.anchorPoint.attr("data-showdisguise", false)
+	}
+
+	if (card.original_disguise){
+		let ghost = card.container.find(".card.ghost")
+		let img = ghost.find("img[data-img='1']")
+		img.attr("src", card.original_disguise.sprite_url)
+		img.css("background-image", imgBg)
+		ghost.find(".card-name").text(card.original_disguise.name)
+	}
+
+	//Card marks
+	let marksContainer = card.anchorPoint.find(".card-marks-container")
+	marksContainer.find(".card-mark").hide()
+	for (let markType of card.marks){
+		marksContainer.find(`.card-mark[data-mark-type='${markType}']`).show()
+	}
+
 	div.on("click", () => {
 		clickCard(card)
 	})
 
 	div.off("mouseenter").on("mouseenter", () => {
+		currentlyHoveredCard = card
 		card.showHints()
 	})
 	div.off("mouseleave").on("mouseleave", () => {
+		currentlyHoveredCard = null
 		card.hideHints()
+	})
+
+	let disguiseIconBox = card.anchorPoint.find(".disguise-icon-container")
+	disguiseIconBox.off("mouseenter").on("mouseenter", () => {
+		card.anchorPoint.attr("data-showghost", true)
+	})
+	disguiseIconBox.off("mouseleave").on("mouseleave", () => {
+		card.anchorPoint.attr("data-showghost", false)
 	})
 }
 
@@ -322,6 +465,7 @@ function startRound(){
 	$(".ui-info .objective").empty().append(content)
 
 	level.interval = setInterval(levelTick, frameRate)
+	performGameStart()
 }
 
 $(".dagger-button").on("click", () => {
@@ -351,5 +495,7 @@ $(window).on("contextmenu", e => {
 		updateEverything()
 	}
 })
+
+$(document).on("keydown", handleKeydown)
 
 startRound()

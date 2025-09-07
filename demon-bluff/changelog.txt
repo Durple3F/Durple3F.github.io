@@ -1,7 +1,15 @@
-9/6 (1600 lines):
+9/7 (2100 lines):
+  - Added the little ghost cards that appear when you hover over a dead disguised card
+  - Added the card marking system, so you can mark cards if you feel like it.
+  - Cards can be corrupted now.
+  - Added Knitter, Poisoner, Plague Doctor, Bard, Fortune Teller
+
+9/6 (2000 lines):
   - Added the health system
   - Minions now correctly sometimes disguise as an unused role and sometimes not
-  - Added Knight, Bombardier, Empress, Witch, Scout
+  - Added the deck system internally at least
+  - Added the trigger priority system
+  - Added Knight, Bombardier, Empress, Witch, Scout, Baa, Doppelganger, Slayer
 
 9/5 (1500 lines):
   - Added a system for governing the hints that appear when you hover over cards, like the arrows indicating who people are pointing to.

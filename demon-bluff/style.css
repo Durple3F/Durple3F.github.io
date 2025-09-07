@@ -274,9 +274,12 @@ body {
 	display: flex;
 	flex-direction: column;
 }
-.card .card-corrupted {
+.character-anchor-point[data-showcorrupted="true"] .card-name {
 	font-size: 60%;
 	filter: brightness(0.7);
+}
+.character-anchor-point[data-showcorrupted="false"] .card-corrupted {
+	display: none;
 }
 .character-anchor-point .activated-ability-container {
 	position: absolute;
@@ -300,6 +303,32 @@ body {
 	filter: drop-shadow(0 0 0.4em rgba(255,255,255,0.4));
 }
 
+.card.ghost {
+	position: absolute;
+	top: 50%; left: 50%;
+	transform: translate(-52%, -56%);
+	filter: contrast(0.7) brightness(0.5) sepia(1) contrast(1.3) hue-rotate(120deg) brightness(3.5) blur(0.05em) drop-shadow(0 0 1em rgb(76, 174, 212));
+	pointer-events: none;
+	opacity: 0;
+	z-index: 100;
+	transition: opacity 0.2s;
+	background-color: var(--border-color);
+	--border-color: var(--border-color-base);
+	animation: ghostfloat 10s infinite;
+}
+.character-anchor-point[data-showdisguise="true"][data-showghost="true"] .card.ghost {
+	opacity: 1;
+}
+.character-anchor-point[faceup="false"] .card.ghost {
+	background-image: none;
+}
+.card.ghost .card-corrupted {
+	display: none;
+}
+.card.ghost img[data-img="2"] {
+	display: none;
+}
+
 .character-anchor-point {
 	position: absolute;
 	width: fit-content;
@@ -308,6 +337,62 @@ body {
 }
 .character-anchor-point:hover {
 	z-index: 100 !important;
+}
+
+.character-anchor-point .disguise-icon-container {
+	position: absolute;
+	top: 0.1em; left: -0.8em;
+	width: 2.4em; height: 2.4em;
+	opacity: 0;
+	transition: 0.25s opacity;
+}
+.character-anchor-point .disguise-icon-container img {
+	position: absolute;
+	top: 50%; left: 50%;
+	transform: translate(-50%, -50%);
+	width: 100%; height: 100%;
+	filter: brightness(0.7);
+}
+.character-anchor-point[data-showdisguise="true"] .disguise-icon-container {
+	opacity: 1;
+}
+
+.character-anchor-point .card-marks-container {
+	position: absolute;
+	bottom: 0; right: 0;
+	width: 2em;
+	padding-bottom: 1em;
+	display: flex;
+	flex-direction: column-reverse;
+	pointer-events: none;
+	--mark-width: 2.6em
+}
+.character-anchor-point .card-mark {
+	width: 100%; height: var(--mark-width);
+	margin-top: 0.2em;
+	position: relative;
+	display: none;
+}
+.character-anchor-point .card-mark .mark-icon {
+	position: absolute;
+	top: 0; left: 0;
+	width: var(--mark-width); height: 100%;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	transform: scale(0.85);
+	filter: drop-shadow(0 0 0.1em black);
+}
+.character-anchor-point .card-mark[data-mark-type="blue"] .mark-icon {
+	background-image: url("src/img/icons/function_icon_exclamation.png");
+}
+.character-anchor-point .card-mark .mark-flag {
+	transform: rotate(90deg) translateX(100%);
+	transform-origin: top right;
+	height: 1.7em;
+	width: var(--mark-width);
+	background-size: 100% 100%;
+	position: absolute;
+	right: 0;
 }
 
 #characters .popover {
@@ -419,7 +504,7 @@ body {
 
 .health-container {
 	position: absolute;
-	padding-top: 10vh;
+	/* padding-top: 10vh; */
 	bottom: 20vh; left: 12vw;
 	width: 10vw;
 	height: 10vw;
@@ -557,4 +642,8 @@ body {
 	font-family: "Encode Sans", sans-serif;
 	font-weight: 500;
 	aspect-ratio: 182 / 61;
+}
+
+@keyframes ghostfloat {
+
 }

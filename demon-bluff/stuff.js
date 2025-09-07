@@ -39,10 +39,40 @@ export class GameEventList {
 	}
 }
 
+class Deck {
+	constructor(){
+		this.contents = []
+	}
+	add(roleId){
+		if (!this.includes(roleId)){
+			this.push(roleId)
+		}
+	}
+	includes(roleId){
+		return this.contents.includes(roleId)
+	}
+	push(roleId){
+		this.contents.push(roleId)
+	}
+	shuffle(){
+		shuffleArray(this.contents)
+		this.sort()
+	}
+	sort(){
+		let types = ["Villager", "Outcast", "Minion", "Demon"]
+		this.contents.sort((a, b) => {
+			let typeA = types.indexOf(roleQualities[a].type)
+			let typeB = types.indexOf(roleQualities[b].type)
+			return typeA - typeB
+		})
+	}
+}
+
 class ActivatedAbility {
-	constructor(ownerCard, ownerRole){
+	constructor(ownerCard, ownerRole, level){
 		this.owner = ownerCard
 		this.role = ownerRole
+		this.level = level
 		this.selection = null
 		this.is_finished = false
 	}
@@ -242,8 +272,11 @@ class Character {
 	get registers_differently(){
 		return false
 	}
-	get can_be_killed(){
+	can_be_killed(card, level){
 		return true
+	}
+	get trigger_priority(){
+		return Object.keys(allRoles).indexOf(this.id)
 	}
 	getExecutionHealthChange(card, level){
 		return 0
@@ -279,6 +312,7 @@ class Character {
 	onKill(card, level){}
 	onExecute(card, level){}
 	onAttemptReveal(card, level, cardBeingRevealed, gameEvents){}
+	onGameStart(card, level, gameEvents){}
 }
 
 export const allRoles = {}
@@ -589,6 +623,50 @@ allRoles["Medium"] = class Medium extends Character {
 		this.trigger(card, level)
 	}
 }
+allRoles["Knitter"] = class Knitter extends Character {
+	name = "Knitter"
+	type = "Villager"
+	alignment = "Good"
+	lies = false
+	sprite_url = "src/img/roles/Knitter.png"
+	trigger(card, level){
+		let lies = card.lies
+		let cards = level.cards
+		
+		let evils = cards.filter(otherCard => {
+			let role = this.register(otherCard, lies)
+			return role.alignment === "Evil"
+		})
+		let count = evils.filter(card1 => {
+			let index = cards.indexOf(card1)
+			let prevIndex = (index - 1 + cards.length) % cards.length
+			let card2 = cards[prevIndex]
+			let role = this.register(card2, lies)
+			return role.alignment === "Evil"
+		}).length
+		
+		let shownCount = count
+		if (lies){
+			let possibilities = []
+			for (let i = 0; i < evils.length; i++){
+				if (i === shownCount) continue
+				possibilities.push(i)
+			}
+			shownCount = randomChoice(possibilities)
+		}
+
+		if (shownCount === 0){
+			this.speak("Evils are not adjacent to each other")
+		} else if (shownCount === 1) {
+			this.speak(`There is only ${shownCount} pair of Evil`)
+		} else {
+			this.speak(`There are ${shownCount} pairs of Evil`)
+		}
+	}
+	onShow(card, level){
+		this.trigger(card, level)
+	}
+}
 allRoles["Judge"] = class Judge extends Character {
 	name = "Judge"
 	type = "Villager"
@@ -598,28 +676,28 @@ allRoles["Judge"] = class Judge extends Character {
 	constructor(){
 		super()
 		this.activatedAbilityCharges = 1
-		this.activatedAbility = class extends ActivatedAbility {
-			get infoBox(){
-				return "Pick a Character"
+	}
+	activatedAbility = class extends ActivatedAbility {
+		get infoBox(){
+			return "Pick a Character"
+		}
+		checkCompletion(){
+			if (this.selection.cards.length){
+				this.performAction()
 			}
-			checkCompletion(){
-				if (this.selection.cards.length){
-					this.performAction()
-				}
+		}
+		action(){
+			let lies = this.owner.lies
+			let card = this.selection.cards[0]
+			let targetIsLying = card.lies && card.shown_role.can_lie
+			if (lies === targetIsLying){
+				this.role.speak(`#${card.id} is saying Truth`)
+			} else {
+				this.role.speak(`#${card.id} is lying`)
 			}
-			action(){
-				let lies = this.owner.lies
-				let card = this.selection.cards[0]
-				let targetIsLying = card.lies && card.shown_role.can_lie
-				if (lies === targetIsLying){
-					this.role.speak(`#${card.id} is saying Truth`)
-				} else {
-					this.role.speak(`#${card.id} is lying`)
-				}
 
-				let hint = new allHints["Card"](card)
-				this.owner.hints.push(hint)
-			}
+			let hint = new allHints["Card"](card)
+			this.owner.hints.push(hint)
 		}
 	}
 }
@@ -632,42 +710,41 @@ allRoles["Jester"] = class Jester extends Character {
 	constructor(){
 		super()
 		this.activatedAbilityCharges = 1
-		this.activatedAbility = class extends ActivatedAbility {
-			get infoBox(){
-				return "Pick 3 Characters"
+	}
+	activatedAbility = class extends ActivatedAbility {
+		get infoBox(){
+			return "Pick 3 Characters"
+		}
+		checkCompletion(){
+			if (this.selection.cards.length >= 3){
+				this.performAction()
 			}
-			checkCompletion(){
-				if (this.selection.cards.length >= 3){
-					this.performAction()
+		}
+		action(){
+			let owner = this.owner
+			let lies = owner.lies
+			let cards = this.selection.cards
+			let ownerRole = this.role
+			let evils = cards.filter(card => {
+				let role = ownerRole.register(card, lies)
+				let alignment = role.alignment
+				return alignment === "Evil"
+			})
+			let trueCount = evils.length
+			let shownCount = trueCount
+			if (lies){
+				let possibilities = []
+				for (let i = 0; i <= cards.length; i++){
+					if (i === trueCount) continue
+					possibilities.push(i)
 				}
+				shownCount = randomChoice(possibilities)
 			}
-			action(){
-				console.log(this)
-				let owner = this.owner
-				let lies = owner.lies
-				let cards = this.selection.cards
-				let ownerRole = this.role
-				let evils = cards.filter(card => {
-					let role = ownerRole.register(card, lies)
-					let alignment = role.alignment
-					return alignment === "Evil"
-				})
-				let trueCount = evils.length
-				let shownCount = trueCount
-				if (lies){
-					let possibilities = []
-					for (let i = 0; i <= cards.length; i++){
-						if (i === trueCount) continue
-						possibilities.push(i)
-					}
-					shownCount = randomChoice(possibilities)
-				}
-				let ids = cards.map(card => "#"+card.id).join(", ")
-				ownerRole.speak(`Among: ${ids}: There are ${shownCount} Evils`)
+			let ids = cards.map(card => "#"+card.id).join(", ")
+			ownerRole.speak(`Among: ${ids}: There are ${shownCount} Evils`)
 
-				let hint = new allHints["Cards"](cards)
-				this.owner.hints.push(hint)
-			}
+			let hint = new allHints["Cards"](cards)
+			this.owner.hints.push(hint)
 		}
 	}
 }
@@ -677,8 +754,9 @@ allRoles["Knight"] = class Knight extends Character {
 	alignment = "Good"
 	lies = false
 	sprite_url = "src/img/roles/Knight.png"
-	get can_be_killed(){
-		return false
+	can_be_killed(card, level){
+		let lies = card.lies
+		return lies
 	}
 	getExecutionHealthChange(card, level){
 		let change = super.getExecutionHealthChange(card, level)
@@ -741,6 +819,160 @@ allRoles["Scout"] = class Scout extends Character {
 		this.trigger(card, level)
 	}
 }
+allRoles["Slayer"] = class Slayer extends Character {
+	name = "Slayer"
+	type = "Villager"
+	alignment = "Good"
+	lies = false
+	sprite_url = "src/img/roles/Slayer.png"
+	constructor(){
+		super()
+		this.activatedAbilityCharges = 1
+	}
+	activatedAbility = class extends ActivatedAbility {
+		get infoBox(){
+			return "Pick a Character"
+		}
+		checkCompletion(){
+			if (this.selection.cards.some(card => !card.is_alive)){
+				this.cancel()
+				return
+			}
+			if (this.selection.cards.length){
+				this.performAction()
+			}
+		}
+		action(){
+			let owner = this.owner
+			let lies = this.owner.lies
+			let ownerRole = this.role
+			let card = this.selection.cards[0]
+			let level = this.level
+			
+			if (!lies && ownerRole.register(card, lies).alignment === "Evil" && card.is_alive){
+				owner.execute(card, level)
+				if (!card.is_alive){
+					ownerRole.speak(`I killed Evil at #${card.id}`)
+				} else {
+					ownerRole.speak(`I couldn't kill #${card.id}`)
+				}
+			} else {
+				ownerRole.speak(`I couldn't kill #${card.id}`)
+			}
+
+			let hint = new allHints["Card"](card)
+			this.owner.hints.push(hint)
+		}
+	}
+}
+allRoles["Bard"] = class Bard extends Character {
+	name = "Bard"
+	type = "Villager"
+	alignment = "Good"
+	lies = false
+	sprite_url = "src/img/roles/Bard.png"
+	trigger(card, level){
+		let lies = card.lies
+		let cards = level.cards
+		let otherCorrupteds = cards.filter(otherCard => otherCard !== card)
+		.filter(otherCard => {
+			return otherCard.is_corrupted
+		})
+		
+		let index = cards.indexOf(card)
+		let minDistance = Infinity
+		for (let otherCard of otherCorrupteds){
+			let otherIndex = cards.indexOf(otherCard)
+			let clockwiseDist = otherIndex - index
+			if (clockwiseDist < 0) clockwiseDist += cards.length
+			let counterClockwiseDist = cards.length - clockwiseDist
+			let distance = Math.min(clockwiseDist, counterClockwiseDist)
+			if (distance < minDistance){
+				minDistance = distance
+			}
+		}
+
+		let shownDistance = minDistance
+		let canShow = true
+		if (lies){
+			//Pick a random possible incorrect answer
+			let possibilities = []
+			let max = Math.ceil((cards.length - 1) * 0.5)
+			for (let i = 1; i <= max; i++){
+				if (i === minDistance) continue
+				possibilities.push(i)
+			}
+			if (possibilities.length){
+				shownDistance = randomChoice(possibilities)
+			} else {
+				canShow = false
+			}
+		}
+
+		if (canShow){
+			let s = shownDistance === 1 ? "" : "s"
+			this.speak(`I am ${shownDistance} card${s} away from closest Corrupted character`)
+
+			//Create a hint pointing to those cards
+			let hintCards = []
+			let clockwiseCard = cards[(index + shownDistance) % cards.length]
+			hintCards.push(clockwiseCard)
+			let counterClockwiseCard = cards[(index - shownDistance + cards.length) % cards.length]
+			hintCards.push(counterClockwiseCard)
+			let hint = new allHints["Cards"](hintCards)
+			card.hints.push(hint)
+		} else {
+			this.speak(`There are no Corrupted characters`)
+		}
+	}
+	onShow(card, level){
+		this.trigger(card, level)
+	}
+}
+allRoles["FortuneTeller"] = class FortuneTeller extends Character {
+	name = "Fortune Teller"
+	id = "FortuneTeller"
+	type = "Villager"
+	alignment = "Good"
+	lies = false
+	sprite_url = "src/img/roles/Fortune Teller.png"
+	constructor(){
+		super()
+		this.activatedAbilityCharges = 1
+	}
+	activatedAbility = class extends ActivatedAbility {
+		get infoBox(){
+			return "Pick 2 Characters"
+		}
+		checkCompletion(){
+			if (this.selection.cards.length >= 2){
+				this.performAction()
+			}
+		}
+		action(){
+			let owner = this.owner
+			let lies = owner.lies
+			let cards = this.selection.cards
+			let ownerRole = this.role
+			let evils = cards.filter(card => {
+				let role = ownerRole.register(card, lies)
+				let alignment = role.alignment
+				return alignment === "Evil"
+			})
+
+			let isEvil = evils.length > 0
+			let shownResult = isEvil
+			if (lies) shownResult = !shownResult
+			
+			let ids = cards.map(otherCard => "#"+otherCard.id).join(" or ")
+			let shownResultText = shownResult ? "True" : "False"
+			ownerRole.speak(`Is ${ids} Evil? ${shownResultText}`)
+
+			let hint = new allHints["Cards"](cards)
+			this.owner.hints.push(hint)
+		}
+	}
+}
 allRoles["Wretch"] = class Wretch extends Character {
 	name = "Wretch"
 	type = "Outcast"
@@ -764,6 +996,108 @@ allRoles["Bombardier"] = class Bombardier extends Character {
 	sprite_url = "src/img/roles/Bombardier.png"
 	onExecute(card, level){
 		level.hp = 0
+	}
+}
+allRoles["Doppelganger"] = class Doppelganger extends Character {
+	name = "Doppelganger"
+	type = "Outcast"
+	alignment = "Good"
+	lies = false
+	sprite_url = "src/img/roles/Doppelganger.png"
+	onGameStart(card, level, gameEvents){
+		//Disguises self as Villager currently in play
+		let cards = level.cards
+		let villagers = cards.filter(card => card.true_role.type === "Villager")
+		if (villagers.length){
+			let disguiseId = randomChoice(villagers).true_role.id
+			let disguiseRole = allRoles[disguiseId]
+			let disguise = new disguiseRole()
+			card.disguise_as(disguise)
+		}
+	}
+}
+allRoles["PlagueDoctor"] = class PlagueDoctor extends Character {
+	name = "Plague Doctor"
+	id = "PlagueDoctor"
+	type = "Outcast"
+	alignment = "Good"
+	sprite_url = "src/img/roles/Plague Doctor.png"
+	constructor(){
+		super()
+		this.activatedAbilityCharges = 1
+	}
+	onGameStart(card, level, gameEvents){
+		//Corrupts a random Good Villager
+
+		//If an evil role is disguised as this card, they won't corrupt anyone.
+		if (card.is_disguised){
+			return
+		}
+
+		let cards = level.cards
+		let options = cards.filter(otherCard => {
+			return otherCard.true_role.type === "Villager" && otherCard.true_role.alignment === "Good"
+		})
+		if (options.length){
+			let randomCard = randomChoice(options)
+			randomCard.is_corrupted = true
+		}
+	}
+	activatedAbility = class extends ActivatedAbility {
+		get infoBox(){
+			return "Pick a Character"
+		}
+		checkCompletion(){
+			if (this.selection.cards.length){
+				this.performAction()
+			}
+		}
+		action(){
+			let lies = this.owner.lies
+			let card = this.selection.cards[0]
+			let targetisCorrupted = card.is_corrupted
+
+			if (card === this.owner){
+				//Plague Doctors always view themselves as not corrupted.
+				targetIsLying = false
+			}
+
+			let showEvil = false
+			if (targetisCorrupted && !lies){
+				showEvil = true
+			} else if (!targetisCorrupted && lies){
+				showEvil = true
+			}
+
+			if (showEvil){
+				let cards = this.level.cards
+				let evils = []
+				if (!lies){
+					evils = cards.filter(otherCard => {
+						return this.role.register(otherCard, lies).alignment === "Evil"
+					})
+				} else {
+					evils = cards.filter(otherCard => {
+						return this.role.register(otherCard, lies).alignment !== "Evil"
+					})
+				}
+
+				if (evils.length){
+					let randomEvil = randomChoice(evils)
+					this.role.speak(`#${randomEvil.id} is Evil`)
+					this.role.speak(`#${card.id} is Corrupted`)
+					let hint = new allHints["Card"](randomEvil)
+					this.owner.hints.push(hint)
+				} else {
+					this.role.speak(`#${card.id} is Corrupted`)
+				}
+			} else {
+				this.role.speak(`#${card.id} is Not Corrupted`)
+			}
+
+			let hint = new allHints["Card"](card)
+			this.owner.hints.push(hint)
+		}
 	}
 }
 allRoles["Minion"] = class Minion extends Character {
@@ -808,6 +1142,50 @@ allRoles["Witch"] = class Witch extends Character {
 		}
 	}
 }
+allRoles["Poisoner"] = class Poisoner extends Character {
+	name = "Poisoner"
+	type = "Minion"
+	alignment = "Evil"
+	lies = true
+	disguises = true
+	sprite_url = "src/img/roles/Poisoner.png"
+	onGameStart(card, level, gameEvents){
+		//Poisons an adjacent Villager
+		let cards = level.cards
+		let index = cards.indexOf(card)
+		let nextIndex = (index + 1) % cards.length
+		let prevIndex = (index - 1 + cards.length) % cards.length
+		let adjacentCards = [cards[nextIndex], cards[prevIndex]]
+		let options = adjacentCards.filter(otherCard => {
+			return otherCard.true_role.type === "Villager" && !otherCard.is_corrupted
+		})
+		if (options.length){
+			let randomCard = randomChoice(options)
+			randomCard.is_corrupted = true
+		}
+	}
+}
+allRoles["Baa"] = class Baa extends Character {
+	name = "Baa"
+	type = "Demon"
+	alignment = "Evil"
+	lies = true
+	disguises = true
+	sprite_url = "src/img/roles/Baa.png"
+	onGameStart(card, level, gameEvents){
+		//Adds an additional outcast to the deck
+		let outcasts = Object.keys(allRoles)
+		.filter(roleId => !level.deck.includes(roleId))
+		.filter(roleId => {
+			return roleQualities[roleId].type === "Outcast"
+		})
+		
+		if (outcasts.length){
+			level.deck.add(randomChoice(outcasts))
+			level.deck.shuffle()
+		}
+	}
+}
 for (let roleName in allRoles){
 	let role = allRoles[roleName]
 	let character = new role()
@@ -822,8 +1200,10 @@ class Card {
 		this.is_alive = true
 		this.is_face_up = false
 		this.is_disguised = false
+		this.original_disguise = null
 		this.is_corrupted = false
 		this.hints = []
+		this.marks = []
 	}
 	get lies(){
 		let lies = this.true_role.lies || this.is_corrupted
@@ -833,6 +1213,7 @@ class Card {
 		return lies
 	}
 	disguise_as(character){
+		this.original_disguise = character
 		this.shown_role = character
 		this.is_disguised = this.shown_role !== this.true_role
 	}
@@ -853,7 +1234,7 @@ class Card {
 		card.undisguise()
 	}
 	execute(card, level){
-		if (card.is_alive && card.true_role.can_be_killed){
+		if (card.is_alive && card.true_role.can_be_killed(card, level)){
 			card.kill(card, level)
 			if (!card.is_alive){
 				let health_change = 0
@@ -908,6 +1289,20 @@ class Card {
 			hint.hide()
 		})
 	}
+	toggleMark(markType){
+		let marks = this.marks
+		if (marks.includes(markType)){
+			marks.splice(marks.indexOf(markType), 1)
+		} else {
+			marks.push(markType)
+		}
+	}
+	removeMark(markType){
+		let marks = this.marks
+		if (marks.includes(markType)){
+			marks.splice(marks.indexOf(markType), 1)
+		}
+	}
 }
 
 export const cardBackgroundSpriteUrls = {
@@ -935,7 +1330,7 @@ export function createLevel(){
 			min: 1, max: 2
 		},
 		"Demon": {
-			min: 0, max: 1
+			min: 1, max: 1
 		}
 	}
 	let typePriorities = ["Demon", "Minion", "Outcast", "Villager"]
@@ -955,13 +1350,13 @@ export function createLevel(){
 		}
 	}
 
-	let forcedRoles = ["Scout"]
+	let forcedRoles = ["Witch", "Poisoner", "PlagueDoctor", "FortuneTeller"]
 
 	let typeCounts = {}
 	for (let charType of characterTypes){
 		typeCounts[charType] = 0
 	}
-	let deck = []
+	let deck = new Deck()
 	let cards = []
 	let failsafe = 0
 	while (cards.length < characterCount && failsafe < 100){
@@ -1016,15 +1411,12 @@ export function createLevel(){
 		if (isLegal){
 			typeCounts[type]++
 			cards.push(card)
-			deck.push(card.true_role.id)
-			deck.push(card.shown_role.id)
+			deck.add(card.true_role.id)
+			deck.add(card.shown_role.id)
 		}
 	}
 
 	shuffleArray(cards)
-	for (let card of cards){
-		card.id = cards.indexOf(card) + 1
-	}
 
 	//Disguises
 	for (let card of cards){
@@ -1041,7 +1433,7 @@ export function createLevel(){
 			.filter(roleId => {
 				return roleQualities[roleId].can_be_disguised_as
 			})
-			//TODO: Minions should have the 60% thing
+			
 			let disguiseId
 			let tryToBeUnique = Math.random() < 0.4
 			disguiseId = randomChoice(options)
@@ -1066,13 +1458,43 @@ export function createLevel(){
 			let disguiseRole = allRoles[disguiseId]
 			let disguise = new disguiseRole()
 			card.disguise_as(disguise)
-			deck.push(disguiseId)
+			deck.add(disguiseId)
+		}
+		//Demons only ever disguise as villagers, but only as ones not already in play
+		else if (type === "Demon"){
+			let options = Object.keys(allRoles).filter(roleId => {
+				let type = roleQualities[roleId].type
+				return type === "Villager"
+			})
+			//They can't disguise as some roles
+			.filter(roleId => {
+				return roleQualities[roleId].can_be_disguised_as
+			})
+
+			let disguiseId
+			disguiseId = randomChoice(options)
+
+			//Pick a role that is available but not used
+			let unusedRoles = options.filter(roleId => {
+				return !cards.some(card => card.true_role.id === roleId)
+			})
+			if (unusedRoles.length){
+				disguiseId = randomChoice(unusedRoles)
+			}
+
+			let disguiseRole = allRoles[disguiseId]
+			let disguise = new disguiseRole()
+			card.disguise_as(disguise)
+			deck.add(disguiseId)
 		}
 	}
 
-	//Remove all duplicates from the deck
-	deck = deck.filter((v,i,s) => s.indexOf(v) === i)
+	shuffleArray(cards)
+	for (let card of cards){
+		card.id = cards.indexOf(card) + 1
+	}
 
+	deck.shuffle()
 	level.deck = deck
 	level.cards = cards
 	level.max_hp = 10
