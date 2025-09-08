@@ -1,8 +1,12 @@
-9/7 (2100 lines):
+9/8 (2600 lines):
+  - Fixed the interaction between Drunk and Knight
+  - Added Druid, Pooka
+
+9/7 (2500 lines):
   - Added the little ghost cards that appear when you hover over a dead disguised card
   - Added the card marking system, so you can mark cards if you feel like it.
   - Cards can be corrupted now.
-  - Added Knitter, Poisoner, Plague Doctor, Bard, Fortune Teller
+  - Added Knitter, Poisoner, Plague Doctor, Bard, Fortune Teller, Oracle, Drunk
 
 9/6 (2000 lines):
   - Added the health system

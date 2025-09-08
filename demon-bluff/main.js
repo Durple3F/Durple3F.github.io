@@ -75,6 +75,21 @@ function handleKeydown(e){
 	}
 }
 
+function triggerCards(cards, callback){
+	let triggers = getTriggerPriorities(cards)
+	let highestPriority = triggers[0].priority
+
+	while (highestPriority > 0){
+		let toPerform = triggers.filter(trigger => trigger.priority === highestPriority)
+		
+		toPerform.forEach(trigger => {
+			callback(trigger, cards)
+		})
+
+		triggers = getTriggerPriorities(cards)
+		highestPriority = triggers.find(trigger => trigger.priority < highestPriority)?.priority || 0
+	}
+}
 function getTriggerPriorities(cards){
 	let result = []
 	
@@ -107,8 +122,7 @@ function performGameStart(){
 	let gameEvents = new GameEventList()
 
 	let cards = currentLevel.cards
-	let triggers = getTriggerPriorities(cards)
-	triggers.forEach(trigger => {
+	triggerCards(cards, trigger => {
 		let card = trigger.card
 		let role = trigger.role
 		role.onGameStart(card, currentLevel, gameEvents)
@@ -121,8 +135,7 @@ function tryToRevealCard(card){
 	revealEvent.events.push({type: "reveal", card: card})
 
 	let cards = currentLevel.cards
-	let triggers = getTriggerPriorities(cards)
-	triggers.forEach(trigger => {
+	triggerCards(cards, trigger => {
 		let triggeringCard = trigger.card
 		let role = trigger.role
 		role.onAttemptReveal(triggeringCard, currentLevel, card, revealEvent)
@@ -371,6 +384,7 @@ function startRound(){
 	const level = createLevel()
 	currentLevel = level
 	console.log(level)
+	performGameStart()
 
 	let charactersContainer = $("#characters")
 	let cards = level.cards
@@ -465,7 +479,6 @@ function startRound(){
 	$(".ui-info .objective").empty().append(content)
 
 	level.interval = setInterval(levelTick, frameRate)
-	performGameStart()
 }
 
 $(".dagger-button").on("click", () => {
