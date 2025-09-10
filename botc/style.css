@@ -68,6 +68,8 @@ body {
 
 .accordion-button .role-heading {
 	margin-bottom: 0;
+	font-size: 2em;
+	min-width: 6em;
 }
 .accordion-button .role-desc {
 	display: flex;
