@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Roles</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="style.css">
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" defer></script>
+	<script src="main.js" type="module" defer></script>
+</head>
+<body>
+	<div class="buttons text-center p-2">
+		<div class="d-inline">
+			<input type="checkbox" class="btn-check" id="btn-tips-toggle" autocomplete="off">
+			<label class="btn btn-outline-primary" for="btn-tips-toggle">Show good tips 😇</label>
+		</div>
+		<div class="d-inline">
+			<input type="checkbox" class="btn-check" id="btn-bluffs-toggle" autocomplete="off">
+			<label class="btn btn-outline-danger" for="btn-bluffs-toggle">Show evil tips 😈</label>
+		</div>
+	</div>
+	<div class="d-flex" id="roles">
+		<div class="accordion column-1" id="townsfolk">
+			<div class="accordion-item townsfolk" id="role-washerwoman">
+				<div class="accordion-header">
+					<button class="accordion-button collapsed" type="button">
+						<div class="d-flex w-100 justify-content-start align-items-center">
+							<img class="role-icon" src="img/roles/washerwoman.webp">
+							<h4 class="role-heading">Washerwoman</h4>
+							<div class="role-desc">
+								<p class="role-brief">You start knowing that 1 of 2 players is a particular Townsfolk.</p>
+							</div>
+						</div>
+					</button>
+				</div>
+				<div class="accordion-collapse collapse">
+					<div class="accordion-body">
+						<ul>
+							<li>During the first night, the Storyteller chooses two players, and informs the Washerwoman of a) who was chosen, and b) a role which one of those players has.</li>
+							<li><strong>Example:</strong> Alice or Bob is a Monk.</li>
+							<li>The Washerwoman's ability does nothing after the first night.</li>
+							<li class="tip"><strong>Tip:</strong> The Washerwoman's ability is useful to narrow down which roles are present in the game.</li>
+							<li class="tip"><strong>Tip:</strong> It may be better to reveal only that the role you learned is present in the game, rather than also reveal who exactly you know to have that role.</li>
+							<li class="tip"><strong>Tip:</strong> Because you only receive information once, you don't need to play very politically.</li>
+							<li class="bluff"><strong>Bluff:</strong> When a player claims to be a Good role, you can lie and say that you are a Washerwoman able to back up their claim.</li>
+							<li class="bluff"><strong>Bluff:</strong> If you want to take a risk, upon waking after the first night, you can claim to know that a role is in play, because you "are" a "Washerwoman." It's easier to pick a role this way if you're a Demon, because you will know some roles which are confirmed to not be in play. Either way, you can just claim that you must be Drunk if you're wrong.</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="accordion-item townsfolk" id="role-librarian">
+				<div class="accordion-header">
+					<button class="accordion-button collapsed" type="button">
+						<div class="d-flex w-100 justify-content-start align-items-center">
+							<img class="role-icon" src="img/roles/librarian.webp">
+							<h4 class="role-heading">Librarian</h4>
+							<div class="role-desc">
+								<p class="role-brief">You start knowing that 1 of 2 players is a particular Outsider.</p>
+							</div>
+						</div>
+					</button>
+				</div>
+				<div class="accordion-collapse collapse">
+					<div class="accordion-body">
+						<ul class="w-100">
+							<li>During the first night, the Storyteller chooses two players, and informs the Librarian of a) who was chosen, and b) a role which one of those players has.</li>
+							<li><strong>Example:</strong> Alice or Bob is a Butler.</li>
+							<li>The Librarian's ability does nothing after the first night.</li>
+							<li class="tip"><strong>Tip:</strong> The Librarian's ability is useful to narrow down which roles are present in the game.</li>
+							<li class="tip"><strong>Tip:</strong> It may be better to reveal only that the role you learned is present in the game, rather than also reveal who exactly you know to have that role.</li>
+							<li class="bluff"><strong>Bluff:</strong> When a player claims to be an Outsider role, you can lie and say that you are a Washerwoman able to back up their claim.</li>
+							<li class="bluff"><strong>Bluff:</strong> The Saint is a common role for Evil players to bluff as. If you'd like to lend credibility to their bluff, you can claim that you, a "very real" "Librarian" were informed that they are a Saint. After all, the only way to completely verify that their claim is true is for the Good players to risk losing the game.</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="accordion-item townsfolk" id="role-investigator">
+				<div class="accordion-header">
+					<button class="accordion-button collapsed" type="button">
+						<div class="d-flex w-100 justify-content-start align-items-center">
+							<img class="role-icon" src="img/roles/investigator.webp">
+							<h4 class="role-heading">Investigator</h4>
+							<div class="role-desc">
+								<p class="role-brief">You start knowing that 1 of 2 players is a particular Minion.</p>
+							</div>
+						</div>
+					</button>
+				</div>
+				<div class="accordion-collapse collapse">
+					<div class="accordion-body">
+						<ul class="w-100">
+							<li>During the first night, the Storyteller chooses two players, and informs the Investigator of a) who was chosen, and b) a role which one of those players has.</li>
+							<li><strong>Example:</strong> Alice or Bob is a Poisoner.</li>
+							<li>The Investigator's ability does nothing after the first night.</li>
+							<li class="tip"><strong>Tip:</strong> The Investigator's ability is useful to narrow down which roles are present in the game.</li>
+							<li class="tip"><strong>Tip:</strong> It may be better to reveal only that the role you learned is present in the game, rather than also reveal who exactly you know to have that role.</li>
+							<li class="tip"><strong>Tip:</strong> Watch out for the Recluse. Despite not being a Minion, they sure loom like one.</li>
+							<li class="bluff"><strong>Bluff:</strong> It can be fun to throw your evil teammates under the bus!</li>
+							<li class="bluff"><strong>Bluff:</strong> Remember that the Undertaker may be able to find out if the person you Claimed was a Minion was actually a Minion. They may be able to corroborate or refute your story.</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="accordion-item townsfolk" id="role-chef">
+				<div class="accordion-header">
+					<button class="accordion-button collapsed" type="button">
+						<div class="d-flex w-100 justify-content-start align-items-center">
+							<img class="role-icon" src="img/roles/chef.webp">
+							<h4 class="role-heading">Chef</h4>
+							<div class="role-desc">
+								<p class="role-brief">You start knowing how many pairs of evil players there are.</p>
+							</div>
+						</div>
+					</button>
+				</div>
+				<div class="accordion-collapse collapse">
+					<div class="accordion-body">
+						<ul class="w-100">
+							<li>During the first night, the Storyteller informs the chef of how many pairs of Evil players are sitting directly next to each other.</li>
+							<li><strong>Example:</strong> Alice the Recluse and Bob the Baron are sitting next to each other. There is 1 pair of Evil.</li>
+							<li>The Chef's ability does nothing after the first night.</li>
+							<li><strong>Example:</strong> Alice sits next to Bob, and Bob sits next to Charlie, and all three are evil. There are 2 pairs of Evil. If Bob is a Spy, there may appear to be 0 pairs of Evil.</li>
+							<li class="tip"><strong>Tip:</strong> The Chef's information isn't very useful by itself, but becomes much more valuable when combined with information from other information roles.</li>
+							<li class="tip"><strong>Tip:</strong> The Recluse and the Spy make your job more complicated, because they may or may not register as being Evil when you receive your information.</li>
+							<li class="tip"><strong>Tip:</strong> In games with five or six players, the Demon and Minion will not know each other. You can lie to make the Evil players trust the wrong people.</li>
+							<li class="bluff"><strong>Bluff:</strong> It is very easy for Minion and Demon players to pretend to be the Chef, because they will know, more or less, exactly what the Chef knows.</li>
+							<li class="bluff"><strong>Bluff:</strong> Due to how difficult it is to use the Chef's information effectively, providing false information can be very confusing for the Good team.</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="accordion-item townsfolk" id="role-empath">
+				<div class="accordion-header">
+					<button class="accordion-button collapsed" type="button">
+						<div class="d-flex w-100 justify-content-start align-items-center">
+							<img class="role-icon" src="img/roles/empath.webp">
+							<h4 class="role-heading">Empath</h4>
+							<div class="role-desc">
+								<p class="role-brief">Each night, you learn how many of your 2 alive neighbors are evil.</p>
+							</div>
+						</div>
+					</button>
+				</div>
+				<div class="accordion-collapse collapse">
+					<div class="accordion-body">
+						<ul class="w-100">
+							<li>During each night, the Storyteller informs the Empath how many of their neighbors are Evil.</li>
+							<li>Here, "neighbors" means the Empath's closest living players in either direction, so an Empath whose adjacent players are dead can detect players 2 or more seats away.</li>
+							<li><strong>Example:</strong> The players adjacent to the Empath are both alive. They may learn that only one of them is Evil.</li>
+							<li><strong>Example:</strong> The player directly to the left of the Empath is dead. They may learn that among the player 2 seats to the left of them and the player directly right of the Empath, both players are Evil.</li>
+							<li class="tip"><strong>Tip:</strong> You learn your information very late in the night, so if a player dies during the night, the information will take the dead players into account.</li>
+							<li class="tip"><strong>Tip:</strong> The information you know usually only changes when your neighbors die.</li>
+							<li class="bluff"><strong>Bluff:</strong> Falsely claiming that exactly one of your neighbors is Evil can help pit people against each other, and not against you.</li>
+							<li class="bluff"><strong>Bluff:</strong> Since Evil players usually know who each other are, you know exactly what the Empath would know, unless there's a Recluse.</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="accordion column-2" id="other-roles">
+			<div class="accordion-item neutral">
+				<div class="accordion-header">
+					<button class="accordion-button collapsed" type="button">
+						<div class="d-flex w-100 justify-content-start align-items-center">
+							<img class="role-icon" src="">
+							<h4 class="role-heading">Basics</h4>
+							<div class="role-desc">
+								<p class="role-brief">General rules.</p>
+							</div>
+						</div>
+					</button>
+				</div>
+				<div class="accordion-collapse collapse">
+					<div class="accordion-body">
+						<ul>
+							<li>Each day, players discuss whatever they want, and then can vote to execute whoever they want.</li>
+							<li>Each night, players speak privately with the Storyteller to receive information or make decisions.</li>
+							<li>If there are at least seven players in the game, Evil players learn who their teammates are at the beginning of the first night.</li>
+							<li>If you are a Townsfolk (Blue) or Outsider (Light blue) then you are Good.</li>
+							<li>If you are a Minion (Orange) or Demon (Red) then you are Evil.</li>
+							<li>Good players win when the Demon dies and there are no other Demons.</li>
+							<li>Evil players win when there are only two players left alive.</li>
+							<li><strong>Discussion can happen at any time during the day, and talking more is always encouraged.</strong></li>
+							<li><strong>Private conversation is completely allowed. You can just DM people in discord if you want.</strong></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="accordion-item neutral">
+				<div class="accordion-header">
+					<button class="accordion-button collapsed" type="button">
+						<div class="d-flex w-100 justify-content-start align-items-center">
+							<img class="role-icon" src="">
+							<h4 class="role-heading">Executions</h4>
+							<div class="role-desc">
+								<p class="role-brief">How voting works</p>
+							</div>
+						</div>
+					</button>
+				</div>
+				<div class="accordion-collapse collapse">
+					<div class="accordion-body">
+						<ul>
+							<li>Each day, players may nominate players to be executed. Nominations can happen at any point in discussion.</li>
+							<li>Players then vote, one by one, starting with the person sitting next to the nominee in clockwise order.</li>
+							<li>If 50% of players vote to execute the nominee, they are executed, and die.</li>
+							<li>Nominations can happen any number of times during the day until someone is executed. It is not required to execute somebody, though.</li>
+							<li>Once a player is executed, the day ends.</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="accordion-item neutral">
+				<div class="accordion-header">
+					<button class="accordion-button collapsed" type="button">
+						<div class="d-flex w-100 justify-content-start align-items-center">
+							<img class="role-icon" src="">
+							<h4 class="role-heading">Storyteller</h4>
+							<div class="role-desc">
+								<p class="role-brief">Functionally just a game master</p>
+							</div>
+						</div>
+					</button>
+				</div>
+				<div class="accordion-collapse collapse">
+					<div class="accordion-body">
+						<ul>
+							<li>Most of the decisions in the game are made by the Storyteller, who is just trying to keep the game running smoothly.</li>
+							<li>At any time, you can ask the Storyteller anything. (But you should probably do that in private.)</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="accordion-item outsider" id="role-butler">
+				<div class="accordion-header">
+					<button class="accordion-button collapsed" type="button">
+						<div class="d-flex w-100 justify-content-start align-items-center">
+							<img class="role-icon" src="img/roles/butler.webp">
+							<h4 class="role-heading">Butler</h4>
+							<div class="role-desc">
+								<p class="role-brief">Each night, choose a player (not yourself): tomorrow, you may only vote if they are voting too.</p>
+							</div>
+						</div>
+					</button>
+				</div>
+				<div class="accordion-collapse collapse">
+					<div class="accordion-body">
+						<ul>
+							<li>Each night, the Butler chooses a player to serve.</li>
+							<li>You can choose the same player multiple times, if you wish.</li>
+							<li><strong>Example:</strong> During the night, you choose to serve Alice the next day. The next day, Alice votes, then the Butler decides to vote as well.</li>
+							<li>Just because your chosen player has voted does not mean you have to vote the same way as them. The only limitation is that you cannot vote <strong>unless</strong> your chosen player has currently voted.</li>
+							<li>If your chosen player changes from voting to abstaining, you must change to abstain as well.</li>
+							<li>You are never forced to vote.</li>
+							<li>If you choose a dead player, you can still only vote if that dead player is currently voting.</li>
+							<li>Dead players have no abilities, so once you die, you can vote however you want.</li>
+							<li><strong>Clarification:</strong> If you accidentally vote when you shouldn't, the Storyteller will act as though your vote was counted, but the final tally will not include your vote, hopefully obscuring your mistake. It's fine. Don't worry about it.</li>
+							<li class="tip"><strong>Tip:</strong> You probably want to pick a good player to serve.</li>
+							<li class="tip"><strong>Tip:</strong> Voting begins clockwise from the player being nominated, and ends with the player being nominated's vote. Take that into consideration, so that when voting gets to you, your chosen player will have already voted.</li>
+							<li class="bluff"><strong>Bluff:</strong> Since the Butler has an ability that doesn't affect very much, it can make for an innocuous bluff. Both Good and Evil players may consider pretending to be a Butler.</li>
+							<li class="bluff"><strong>Bluff:</strong> Everything that the Butler does after choosing a player is public information. It's incredibly easy to pretend to be a Butler.</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="accordion-item minion" id="role-poisoner">
+				<div class="accordion-header">
+					<button class="accordion-button collapsed" type="button">
+						<div class="d-flex w-100 justify-content-start align-items-center">
+							<img class="role-icon" src="img/roles/poisoner.webp">
+							<h4 class="role-heading">Poisoner</h4>
+							<div class="role-desc">
+								<p class="role-brief">Each night, choose a player: they are poisoned tonight and tomorrow day.</p>
+							</div>
+						</div>
+					</button>
+				</div>
+				<div class="accordion-collapse collapse">
+					<div class="accordion-body">
+						<ul>
+							<li>Each night, the Poisoner chooses a player. That player's abilities don't work properly for the rest of the night and the entire next day.</li>
+							<li>A poisoned player has no ability, but the Storyteller pretends that they do. The poisoned player still takes all the same actions, but their actions don't affect anything.</li>
+							<li>They are not informed that they were poisoned.</li>
+							<li>If a poisoned player's ability gives them information, the Storyteller can give them false information.</li>
+							<li>Using a "once per game" action while poisoned has no effect, but does count as using the action, so they can't do it again this game. Sucks for them.</li>
+							<li class="bluff"><strong>Tip:</strong> Try to target characters whose abilities do something multiple times during the game. There's no use poisoning an Investigator after the first night.</li>
+							<li class="bluff"><strong>Tip:</strong> Characters like the Virgin, Slayer, and Mayor have powerful effects that rely on a condition being met. If you can contrive a situation for them to use their ability on a day where they are unfortunately poisoned, that would be very unfortunate for them.</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="accordion-item demon" id="role-imp">
+				<div class="accordion-header">
+					<button class="accordion-button collapsed" type="button">
+						<div class="d-flex w-100 justify-content-start align-items-center">
+							<img class="role-icon" src="img/roles/imp.webp">
+							<h4 class="role-heading">Imp</h4>
+							<div class="role-desc">
+								<p class="role-brief">Each night*, choose a player: they die. If you kill yourself this way, a Minion becomes the Imp.</p>
+							</div>
+						</div>
+					</button>
+				</div>
+				<div class="accordion-collapse collapse">
+					<div class="accordion-body">
+						<ul>
+							<li>Each night, the Imp chooses a player to kill.</li>
+							<li>The Imp does not get to choose anyone on the first night.</li>
+							<li><strong>Example:</strong> During the night, you choose to kill Alice. The next morning, the town finds Alice dead.</li>
+							<li><strong>Example:</strong> During the night, you choose to kill Bob. Earlier in the night, the Monk chose to protect Bob. The next morning, Bob is not found dead.</li>
+							<li>The Good team wins if there are no Demons alive. Stay alive at all costs.</li>
+							<li class="bluff"><strong>Tip:</strong> The Imp gets to act very early in the night, so your victim will likely not get a chance to act.</li>
+							<li class="bluff"><strong>Tip:</strong> Dying does not reveal your role to others. It can be a good play to choose to kill yourself and pass your power to a Minion if needed.</li>
+							<li class="bluff"><strong>Tip:</strong> It is the Storyteller who chooses which Minion will become the next Imp. However, if you're desperate enough to choose to kill yourself, the Storyteller is likely to choose the most favorable option for you :).</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

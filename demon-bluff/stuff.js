@@ -159,6 +159,9 @@ allHints["Cards"] = class extends Hint {
 		this.elements.each((i, e) => {
 			let element = $(e)
 			let card = element.data("card")
+			if (!card){
+				console.log(this)
+			}
 			let anchorPoint = card.anchorPoint
 			let position = anchorPoint.position()
 			let width = anchorPoint.width()
@@ -375,6 +378,48 @@ allRoles["Lover"] = class Lover extends Character {
 		}
 		let hint = new allHints["Cards"](adjacentCards)
 		card.hints.push(hint)
+	}
+	onShow(card, level){
+		this.trigger(card, level)
+	}
+}
+allRoles["Cremgafter"] = class Cremgafter extends Character {
+	name = "Cremgafter"
+	type = "Villager"
+	alignment = "Good"
+	lies = false
+	spawnable = false
+	sprite_url = "src/img/roles/Gemcrafter.png"
+	trigger(card, level){
+		let lies = card.lies
+		let cards = level.cards
+		let evils
+		let alignments = cards.map(card => {
+			let registered_alignment = this.register(card, lies).alignment
+			return registered_alignment
+		})
+		if (!lies){
+			//I am not lying
+			evils = cards.filter((_, i) => alignments[i] === "Evil")
+		} else {
+			evils = cards.filter((_, i) => alignments[i] !== "Evil")
+		}
+		let otherEvils = evils.filter(evilCard => evilCard !== card)
+		if (!otherEvils.length){
+			otherEvils = evils
+		}
+		let randomCard = randomChoice(otherEvils)
+
+		if (randomCard){
+			let id = randomCard.id
+			this.speak(`#${id} is Evil`)
+
+			//Create a hint pointing to that card
+			let hint = new allHints["Card"](randomCard)
+			card.hints.push(hint)
+		} else {
+			this.speak(`Uh... I'm not sure what to say.`)
+		}
 	}
 	onShow(card, level){
 		this.trigger(card, level)
@@ -916,6 +961,9 @@ allRoles["Bard"] = class Bard extends Character {
 			} else {
 				canShow = false
 			}
+		} else if (!lies && minDistance === Infinity){
+			//There are no corrupted characters
+			canShow = false
 		}
 
 		if (canShow){
@@ -928,8 +976,12 @@ allRoles["Bard"] = class Bard extends Character {
 			hintCards.push(clockwiseCard)
 			let counterClockwiseCard = cards[(index - shownDistance + cards.length) % cards.length]
 			hintCards.push(counterClockwiseCard)
-			let hint = new allHints["Cards"](hintCards)
-			card.hints.push(hint)
+
+			hintCards = hintCards.filter(otherCard => otherCard)
+			if (hintCards.length){
+				let hint = new allHints["Cards"](hintCards)
+				card.hints.push(hint)
+			}
 		} else {
 			this.speak(`There are no Corrupted characters`)
 		}
@@ -1075,7 +1127,9 @@ allRoles["Alchemist"] = class Alchemist extends Character {
 		let successes = 0
 		for (let otherCard of affectedCards){
 			if (otherCard.is_corrupted){
-				card.cure(otherCard)
+				if (!card.is_corrupted){
+					card.cure(otherCard)
+				}
 				if (!otherCard.is_corrupted){
 					successes++
 				}
@@ -1170,6 +1224,313 @@ allRoles["Druid"] = class Druid extends Character {
 		}
 	}
 }
+allRoles["Baker"] = class Baker extends Character {
+	name = "Baker"
+	type = "Villager"
+	alignment = "Good"
+	lies = false
+	sprite_url = "src/img/roles/Baker.png"
+	constructor(){
+		super()
+		this.prev_role = null
+	}
+	trigger(card, level){
+		let lies = card.lies
+		let cards = level.cards
+		let unrevealedCards = cards.filter(otherCard => otherCard !== card && !otherCard.is_face_up)
+		.filter(otherCard => {
+			let role = otherCard.true_role
+			return role.alignment === "Good" && role.type === "Villager"
+		})
+
+		if (!card.is_corrupted && unrevealedCards.length){
+			let randomVillager = randomChoice(unrevealedCards)
+			let newRole = new allRoles["Baker"]()
+			let previousRole = randomVillager.true_role
+			newRole.prev_role = previousRole
+			randomVillager.setRole(newRole)
+		}
+
+		if (!lies){
+			if (!this.prev_role){
+				this.speak("I am the original Baker")
+			} else {
+				let name = this.prev_role.name
+				let n = "AEIOUaeiou".includes(name[0]) ? "n" : ""
+				this.speak(`I was a${n} ${name}`)
+			}
+		} else {
+			//Pick a random existing villager role
+			let roles = cards.filter(otherCard => otherCard !== card)
+			.filter(otherCard => {
+				let role = otherCard.true_role
+				return role.alignment === "Good" && role.type === "Villager"
+			})
+			.filter(otherCard => {
+				if (this.prev_role){
+					let role = otherCard.true_role
+					return role.id !== this.prev_role.id
+				} else {
+					return true
+				}
+			})
+			.map(otherCard => otherCard.true_role)
+			if (!roles.length){
+				roles = Object.keys(allRoles).filter(roleId => {
+					let role = roleQualities[roleId]
+					return role.alignment === "Good" && role.type === "Villager"
+				}).map(roleId => roleQualities[roleId])
+			}
+			let randomRole = randomChoice(roles)
+			let name = randomRole.name
+			let n = "AEIOUaeiou".includes(name[0]) ? "n" : ""
+			this.speak(`I was a${n} ${randomRole.name}`)
+		}
+	}
+	onShow(card, level){
+		this.trigger(card, level)
+	}
+}
+allRoles["Architect"] = class Architect extends Character {
+	name = "Architect"
+	type = "Villager"
+	alignment = "Good"
+	lies = false
+	sprite_url = "src/img/roles/Architect.png"
+	trigger(card, level){
+		let lies = card.lies
+		let cards = level.cards
+		let roles = cards.map(otherCard => this.register(otherCard, lies))
+		let sides = cards.map((otherCard, index) => {
+			if (otherCard.id === cards.length) return "both"
+			if (otherCard.id === cards.length * 0.5) return "both"
+			if (otherCard.id > cards.length * 0.5) return "left"
+			return "right"
+		})
+		
+		let lefts = 0
+		let rights = 0
+		cards.forEach((otherCard, index) => {
+			let role = roles[index]
+			let side = sides[index]
+
+			if (role.alignment === "Evil"){
+				if (side === "left") lefts++
+				else if (side === "right") rights++
+				else {
+					lefts++
+					rights++
+				}
+			}
+		})
+		
+		let trueAnswer = lefts > rights ? "left" : lefts < rights ? "right" : "both"
+		let shownAnswer = trueAnswer
+		if (lies){
+			let possibilities = ["left", "right", "both"].filter(option => option !== trueAnswer)
+			shownAnswer = randomChoice(possibilities)
+		}
+
+		if (shownAnswer === "left"){
+			this.speak("Left side is more Evil")
+			let affectedCards = cards.filter((otherCard, index) => {
+				let side = sides[index]
+				return side === "left" || side === "both"
+			})
+			let hint = new allHints["Cards"](affectedCards)
+			card.hints.push(hint)
+		} else if (shownAnswer === "right"){
+			this.speak("Right side is more Evil")
+			let affectedCards = cards.filter((otherCard, index) => {
+				let side = sides[index]
+				return side === "right" || side === "both"
+			})
+			let hint = new allHints["Cards"](affectedCards)
+			card.hints.push(hint)
+		} else {
+			this.speak("Both sides are equally Evil")
+		}
+	}
+	onShow(card, level){
+		this.trigger(card, level)
+	}
+}
+allRoles["Bishop"] = class Bishop extends Character {
+	name = "Bishop"
+	type = "Villager"
+	alignment = "Good"
+	lies = false
+	sprite_url = "src/img/roles/Bishop.png"
+	trigger(card, level){
+		let lies = card.lies
+		let cards = level.cards
+		let roles = cards.map(otherCard => this.register(otherCard, lies))
+		
+		let info = []
+		if (!lies){
+			//Find one villager, one outcast, one minion
+			let added = []
+			let villagers = cards.filter((otherCard, index) => roles[index].type === "Villager")
+			if (villagers.length){
+				info.push(randomChoice(villagers))
+				added.push("Villager")
+			}
+			let minions = cards.filter((otherCard, index) => roles[index].type === "Minion")
+			if (minions.length){
+				info.push(randomChoice(minions))
+				added.push("Minion")
+			}
+			let outcasts = cards.filter((otherCard, index) => roles[index].type === "Outcasts")
+			if (outcasts.length){
+				info.push(randomChoice(outcasts))
+				added.push("Outcast")
+			}
+			
+			if (added.length === 3){
+				let ids = info.map(card => "#"+card.id).join(", ")
+				this.speak(`Between ${ids} there is: Villager, Minion, and Outcast`)
+			} else {
+				let ids = info.map(card => "#"+card.id).join(" & ")
+				let claim = added.join(" & ")
+				this.speak(`Between ${ids} there is: ${claim}`)
+			}
+		} else {
+			//Find three villagers
+			let villagers = cards.filter((otherCard, index) => roles[index].type === "Villager")
+			while (info.length < 3){
+				let options = villagers.filter(otherCard => !info.includes(otherCard))
+				info.push(randomChoice(options))
+			}
+
+			let ids = info.map(card => "#"+card.id).join(", ")
+			this.speak(`Between ${ids} there is: Villager, Minion, and Outcast`)
+		}
+		let hint = new allHints["Cards"](info)
+		card.hints.push(hint)
+	}
+	onShow(card, level){
+		this.trigger(card, level)
+	}
+}
+allRoles["Dreamer"] = class Dreamer extends Character {
+	name = "Dreamer"
+	type = "Villager"
+	alignment = "Good"
+	lies = false
+	sprite_url = "src/img/roles/Dreamer.png"
+	constructor(){
+		super()
+		this.activatedAbilityCharges = 1
+	}
+	activatedAbility = class extends ActivatedAbility {
+		get infoBox(){
+			return "Pick a Character"
+		}
+		checkCompletion(){
+			if (this.selection.cards.length > 0){
+				this.performAction()
+			}
+		}
+		action(){
+			let owner = this.owner
+			let lies = owner.lies
+			let selectedCard = this.selection.cards[0]
+			let ownerRole = this.role
+			let seenRole = ownerRole.register(selectedCard, lies)
+			let cards = this.owner.level.cards
+
+			let showIncorrect = false
+			if (!lies){
+				if (selectedCard.true_role === "Wretch"){
+					//Cute detail
+					ownerRole.speak(`#${selectedCard.id} could be: Cabbage`)
+				} else if (seenRole.alignment === "Evil"){
+					ownerRole.speak(`#${selectedCard.id} could be: ${seenRole.name}`)
+				} else {
+					showIncorrect = true
+				}
+			} else {
+				showIncorrect = true
+			}
+			if (showIncorrect){
+				//Find a random existing but incorrect role
+				let evilCards = cards.filter(otherCard => otherCard !== selectedCard && otherCard.true_role.alignment === "Evil")
+				let evilRoles = evilCards.map(otherCard => otherCard.true_role)
+				if (!evilRoles.length){
+					evilRoles = Object.keys(allRoles).filter(roleId => roleQualities[roleId].alignment === "Evil")
+				}
+				let seenRole = randomChoice(evilRoles)
+				ownerRole.speak(`#${selectedCard.id} could be: ${seenRole.name}`)
+			}
+
+			let hint = new allHints["Card"](selectedCard)
+			this.owner.hints.push(hint)
+		}
+	}
+}
+allRoles["Poet"] = class Poet extends Character {
+	name = "Poet"
+	type = "Villager"
+	alignment = "Good"
+	lies = false
+	sprite_url = "src/img/roles/Poet.png"
+	trigger(card, level){
+		let usableRoleIds = [
+			"Architect", "Bard", "Bishop", "Empress", "Enlightened",
+			"Gemcrafter", "Hunter", "Knitter", "Lover", "Medium",
+			"Oracle", "Scout", "Witness",
+			"Cremgafter"
+		]
+		let Role = allRoles[randomChoice(usableRoleIds)]
+		let role = new Role()
+		role.onShow(card, level)
+		role.outputs.forEach(output => {
+			this.speak(output.text, output.type)
+		})
+	}
+	onShow(card, level){
+		this.trigger(card, level)
+	}
+}
+allRoles["Witness"] = class Witness extends Character {
+	name = "Witness"
+	type = "Villager"
+	alignment = "Good"
+	lies = false
+	sprite_url = "src/img/roles/Witness.png"
+	trigger(card, level){
+		let lies = card.lies
+		let cards = level.cards
+
+		let affectedCards = cards.filter(otherCard => {
+			return otherCard.eventHistory.some(event => {
+				let role = roleQualities[event.fromRole]
+				return role.alignment === "Evil"
+			})
+		})
+		
+		let randomCard
+		if (!lies && affectedCards.length){
+			randomCard = randomChoice(affectedCards)
+		} else if (lies){
+			let unaffectedCards = cards.filter(otherCard => !affectedCards.includes(otherCard))
+			if (unaffectedCards.length){
+				randomCard = randomChoice(unaffectedCards)
+			}
+		}
+
+		if (randomCard){
+			this.speak(`#${randomCard.id} was affected by an Evil`)
+			let hint = new allHints["Card"](randomCard)
+			card.hints.push(hint)
+		} else {
+			this.speak("No one was affected by an Evil")
+		}
+	}
+	onShow(card, level){
+		this.trigger(card, level)
+	}
+}
 allRoles["Wretch"] = class Wretch extends Character {
 	name = "Wretch"
 	type = "Outcast"
@@ -1234,6 +1595,11 @@ allRoles["Shaman"] = class Shaman extends Character {
 			let Role = allRoles[roleId]
 			let role = new Role()
 			randomVillager.setRole(role)
+			randomVillager.eventHistory.push({
+				type: "role_switch",
+				from: card,
+				fromRole: this.id
+			})
 		}
 	}
 }
@@ -1319,6 +1685,45 @@ allRoles["PlagueDoctor"] = class PlagueDoctor extends Character {
 
 			let hint = new allHints["Card"](card)
 			this.owner.hints.push(hint)
+		}
+	}
+}
+allRoles["Puppet"] = class Puppet extends Character {
+	name = "Puppet"
+	type = "Minion"
+	alignment = "Evil"
+	lies = false
+	spawnable = false
+	sprite_url = "src/img/roles/Puppet.png"
+}
+allRoles["Puppeteer"] = class Puppeteer extends Character {
+	name = "Puppeteer"
+	type = "Minion"
+	alignment = "Evil"
+	lies = true
+	disguises = true
+	sprite_url = "src/img/roles/Puppeteer.png"
+	onGameStart(card, level, gameEvents){
+		//Adds an additional outcast to the board
+		let cards = level.cards
+		let index = cards.indexOf(card)
+		let nextIndex = (index + 1) % cards.length
+		let prevIndex = (index - 1 + cards.length) % cards.length
+		let adjacentCards = [cards[nextIndex], cards[prevIndex]]
+		let options = adjacentCards.filter(otherCard => {
+			return otherCard.true_role.type === "Villager"
+		})
+		if (options.length){
+			let roleId = "Puppet"
+			let Role = allRoles[roleId]
+			let randomVillager = randomChoice(options)
+			let role = new Role()
+			randomVillager.true_role = role
+			randomVillager.eventHistory.push({
+				type: "puppet",
+				from: card,
+				fromRole: this.id
+			})
 		}
 	}
 }
@@ -1423,6 +1828,11 @@ allRoles["Poisoner"] = class Poisoner extends Character {
 		if (options.length){
 			let randomCard = randomChoice(options)
 			randomCard.is_corrupted = true
+			randomCard.eventHistory.push({
+				type: "corrupted",
+				from: card,
+				fromRole: this.id
+			})
 		}
 	}
 }
@@ -1445,6 +1855,11 @@ allRoles["Pooka"] = class Pooka extends Character {
 		})
 		for (let adjacentCard of options){
 			adjacentCard.is_corrupted = true
+			adjacentCard.eventHistory.push({
+				type: "corrupted",
+				from: card,
+				fromRole: this.id
+			})
 		}
 	}
 }
@@ -1474,6 +1889,11 @@ allRoles["Counsellor"] = class Counsellor extends Character {
 			let randomVillager = randomChoice(villagers)
 			let role = new Role()
 			randomVillager.setRole(role)
+			randomVillager.eventHistory.push({
+				type: "counselled",
+				from: card,
+				fromRole: this.id
+			})
 		}
 
 		//Then re-seats himself to sit next to an outcast, if possible.
@@ -1536,6 +1956,7 @@ class Card {
 		this.original_disguise = null
 		this.is_corrupted = false
 		this.level = null
+		this.eventHistory = []
 		this.hints = []
 		this.marks = []
 	}
@@ -1690,7 +2111,7 @@ export function createLevel(){
 			min: 1, max: 2
 		},
 		"Demon": {
-			min: 1, max: 1
+			min: 0, max: 0
 		}
 	}
 	let typePriorities = ["Demon", "Minion", "Outcast", "Villager"]
@@ -1710,7 +2131,7 @@ export function createLevel(){
 		}
 	}
 
-	let forcedRoles = ["Shaman", "Pooka", "Drunk", "Druid"]
+	let forcedRoles = ["Counsellor", "TwinMinion", "Witness"]
 
 	let typeCounts = {}
 	for (let charType of characterTypes){

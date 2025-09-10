@@ -400,7 +400,7 @@ body {
 	background-color: transparent;
 	font-size: calc(min(100vw, 100vh) * 0.02);
 	filter: drop-shadow(0.25em 0.25em 0.1em rgba(0,0,0,0.6));
-	pointer-events: none;
+	/* pointer-events: none; */
 }
 #characters .popover .popover-body {
 	padding: 0.7em;

@@ -1,6 +1,10 @@
-9/8 (2600 lines):
+9/9 (3100 lines):
+  - Added a secret internal-only role to make Poet work the way it's supposed to.
+  - Added Architect, Dreamer
+
+9/8 (3000 lines):
   - Fixed the interaction between Drunk and Knight
-  - Added Druid, Pooka
+  - Added Druid, Pooka, Counsellor, Puppeteer, Puppet, Baker, Architect
 
 9/7 (2500 lines):
   - Added the little ghost cards that appear when you hover over a dead disguised card

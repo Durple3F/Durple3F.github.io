@@ -1,0 +1,131 @@
+body {
+	background-color: #0a0a00;
+}
+
+#roles > .accordion {
+	width: 50%;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+}
+
+.accordion-item.neutral {
+	--accordion-bright: #ccd1d6;
+	--accordion-medium: #a7b2c7;
+	--accordion-dark: #303035;
+	--bs-accordion-btn-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+}
+.accordion-item.townsfolk {
+	--accordion-bright: #70b2fd;
+	--accordion-medium: #2f6ee2;
+	--accordion-dark: #111133;
+	--bs-accordion-btn-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%232395ff' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+}
+.accordion-item.outsider {
+	--accordion-bright: #70dcfd;
+	--accordion-medium: #2f91e2;
+	--accordion-dark: #111a33;
+	--bs-accordion-btn-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%232395ff' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+}
+.accordion-item.minion {
+	--accordion-bright: #fdaf70;
+	--accordion-medium: #e28e2f;
+	--accordion-dark: #332111;
+	--bs-accordion-btn-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='red' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+}
+.accordion-item.demon {
+	--accordion-bright: #fd7970;
+	--accordion-medium: #e24a2f;
+	--accordion-dark: #331511;
+	--bs-accordion-btn-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='red' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+}
+.accordion-item {
+	--bs-accordion-bg: var(--accordion-dark);
+	--bs-accordion-active-bg: var(--accordion-bright);
+	--bs-accordion-color: var(--accordion-medium);
+	--bs-accordion-btn-color: var(--accordion-bright);
+	--bs-accordion-active-color: var(--accordion-dark);
+	--bs-accordion-border-color: var(--accordion-medium);
+	--bs-accordion-btn-bg: var(--accordion-dark);
+}
+
+.accordion-button {
+	padding: 0.3em;
+	padding-right: 0.7em;
+	font-size: 0.6em;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	/* align-items: end; */
+}
+
+.accordion-header .role-icon {
+	height: 5em;
+	aspect-ratio: 1 / 1;
+}
+.accordion-header .role-icon[src=""] {
+	opacity: 0;
+}
+
+.accordion-button .role-heading {
+	margin-bottom: 0;
+}
+.accordion-button .role-desc {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+}
+.accordion-button .role-brief {
+	width: fit-content;
+	margin-bottom: 0;
+	font-size: 1.2em;
+	text-align: center;
+}
+
+.accordion-body {
+	padding: 0.5em;
+}
+.accordion-body ul {
+	padding-left: 1em;
+	margin-bottom: 0.5em;
+}
+
+.tip {
+	display: none;
+}
+.tip strong:first-child {
+	color: white;
+}
+body[data-showtips="true"] .tip {
+	display: list-item;
+}
+.bluff {
+	display: none;
+}
+body[data-showbluffs="true"] .bluff {
+	display: list-item;
+}
+.bluff strong:first-child {
+	color: red;
+}
+
+.accordion-collapse {
+	width: 100% !important;
+}
+
+@media (max-width: 900px) {
+	#roles {
+		flex-direction: column-reverse;
+	}
+	#roles > .accordion {
+		width: 100%;
+	}
+}
+
+@media (min-width: 1400px) {
+	.accordion-button .role-brief {
+		font-size: 1.6em;
+	}
+}
