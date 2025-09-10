@@ -1,3 +1,7 @@
+html{
+	scrollbar-width: none;
+}
+
 body {
 	background-color: #0a0a00;
 }
@@ -8,11 +12,17 @@ body {
 	padding-right: 0.5em;
 }
 
+.color-neutral {
+	color: #ccd1d6;
+}
 .accordion-item.neutral {
 	--accordion-bright: #ccd1d6;
 	--accordion-medium: #a7b2c7;
 	--accordion-dark: #303035;
 	--bs-accordion-btn-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+}
+.color-townsfolk {
+	color: #70b2fd;
 }
 .accordion-item.townsfolk {
 	--accordion-bright: #70b2fd;
@@ -20,17 +30,26 @@ body {
 	--accordion-dark: #111133;
 	--bs-accordion-btn-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%232395ff' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
 }
+.color-outsider {
+	color: #70dcfd;
+}
 .accordion-item.outsider {
 	--accordion-bright: #70dcfd;
 	--accordion-medium: #2f91e2;
 	--accordion-dark: #111a33;
 	--bs-accordion-btn-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%232395ff' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
 }
+.color-minion {
+	color: #fdaf70;
+}
 .accordion-item.minion {
 	--accordion-bright: #fdaf70;
 	--accordion-medium: #e28e2f;
 	--accordion-dark: #332111;
 	--bs-accordion-btn-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='red' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+}
+.color-demon {
+	color: #fd7970;
 }
 .accordion-item.demon {
 	--accordion-bright: #fd7970;
@@ -49,7 +68,7 @@ body {
 }
 
 .accordion-button {
-	padding: 0.3em;
+	padding: 0;
 	padding-right: 0.7em;
 	font-size: 0.6em;
 	display: flex;
@@ -59,7 +78,7 @@ body {
 }
 
 .accordion-header .role-icon {
-	height: 5em;
+	height: 4em;
 	aspect-ratio: 1 / 1;
 }
 .accordion-header .role-icon[src=""] {
@@ -68,7 +87,7 @@ body {
 
 .accordion-button .role-heading {
 	margin-bottom: 0;
-	font-size: 2em;
+	font-size: 1.6em;
 	min-width: 6em;
 }
 .accordion-button .role-desc {
@@ -94,22 +113,22 @@ body {
 	margin-bottom: 0.5em;
 }
 
-.tip {
+.tip-good {
 	display: none;
 }
-.tip strong:first-child {
+.tip-good strong:first-child {
 	color: white;
 }
-body[data-showtips="true"] .tip {
+body[data-showtips="true"] .tip-good {
 	display: list-item;
 }
-.bluff {
+.tip-evil {
 	display: none;
 }
-body[data-showbluffs="true"] .bluff {
+body[data-showbluffs="true"] .tip-evil {
 	display: list-item;
 }
-.bluff strong:first-child {
+.tip-evil strong:first-child {
 	color: red;
 }
 
