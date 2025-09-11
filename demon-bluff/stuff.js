@@ -1,4 +1,4 @@
-import {randomChoice, shuffleArray, lerp} from "./util.js"
+import {randomChoice, shuffleArray, lerp, delay} from "./util.js"
 
 export class Selection {
 	constructor(type="basic"){
@@ -269,6 +269,7 @@ class Character {
 	can_be_cured = true
 	can_be_reseated = true
 	spawnable = true
+	night_cycle = false
 	sprite_url = ""
 	activatedAbilityCharges = 0
 	activatedAbility = null
@@ -322,6 +323,7 @@ class Character {
 	onExecute(card, level){}
 	onAttemptReveal(card, level, cardBeingRevealed, gameEvents){}
 	onGameStart(card, level, gameEvents){}
+	onNight(card, level, gameEvents){}
 }
 
 export const allRoles = {}
@@ -1939,6 +1941,18 @@ allRoles["Baa"] = class Baa extends Character {
 		}
 	}
 }
+allRoles["Lilis"] = class Lilis extends Character {
+	name = "Lilis"
+	type = "Demon"
+	alignment = "Evil"
+	lies = true
+	disguises = true
+	night_cycle = true
+	sprite_url = "src/img/roles/Lilis.png"
+	onNight(card, level, gameEvents){
+		let cards = level.cards
+	}
+}
 for (let roleName in allRoles){
 	let role = allRoles[roleName]
 	let character = new role()
@@ -2086,6 +2100,18 @@ class Card {
 	}
 }
 
+class Level {
+	constructor(){
+		this.deck = new Deck()
+		this.cards = []
+		this.max_hp = 10
+		this.hp = this.max_hp
+		this.night_cycle = false
+		this.night_hour = 0
+		this.night_day = 0
+	}
+}
+
 export const cardBackgroundSpriteUrls = {
 	"Good": [
 		"src/img/card-bg/good_1.png"
@@ -2097,7 +2123,7 @@ export const cardBackgroundSpriteUrls = {
 export const characterTypes = ["Villager", "Outcast", "Minion", "Demon"]
 
 export function createLevel(){
-	let level = {}
+	let level = new Level()
 	let characterCount = 10
 
 	let typeTargets = {
@@ -2108,10 +2134,10 @@ export function createLevel(){
 			min: 1, max: 2
 		},
 		"Minion": {
-			min: 1, max: 2
+			min: 0, max: 0
 		},
 		"Demon": {
-			min: 0, max: 0
+			min: 1, max: 1
 		}
 	}
 	let typePriorities = ["Demon", "Minion", "Outcast", "Villager"]
@@ -2131,14 +2157,14 @@ export function createLevel(){
 		}
 	}
 
-	let forcedRoles = ["Counsellor", "TwinMinion", "Witness"]
+	let forcedRoles = ["Shaman", "TwinMinion", "Lilis"]
 
 	let typeCounts = {}
 	for (let charType of characterTypes){
 		typeCounts[charType] = 0
 	}
-	let deck = new Deck()
-	let cards = []
+	let deck = level.deck
+	let cards = level.cards
 	let failsafe = 0
 	while (cards.length < characterCount && failsafe < 100){
 		failsafe++
@@ -2282,10 +2308,6 @@ export function createLevel(){
 	}
 
 	deck.shuffle()
-	level.deck = deck
-	level.cards = cards
-	level.max_hp = 10
-	level.hp = level.max_hp
 	return level
 }
 console.log(allRoles)

@@ -14,15 +14,14 @@ let killing_ready = false
 let currentlyHoveredCard = null
 let currentSelection = new Selection()
 let activeAbilities = currentSelection.activeAbilities
-console.log(activeAbilities)
 
-function clickCard(card){
+async function clickCard(card){
 	if (currentSelection.type === "basic"){
 		if (killing_ready && card.is_alive){
-			executeCard(card)
+			await executeCard(card)
 		}
 		else if (!card.is_face_up && card.is_alive){
-			tryToRevealCard(card)
+			await tryToRevealCard(card)
 		}
 		else if (
 			card.is_face_up &&
@@ -75,16 +74,16 @@ function handleKeydown(e){
 	}
 }
 
-function triggerCards(cards, callback){
+async function triggerCards(cards, callback){
 	let triggers = getTriggerPriorities(cards)
 	let highestPriority = triggers[0].priority
 
 	while (highestPriority > 0){
 		let toPerform = triggers.filter(trigger => trigger.priority === highestPriority)
 		
-		toPerform.forEach(trigger => {
-			callback(trigger, cards)
-		})
+		for (let trigger of toPerform){
+			await callback(trigger, cards)
+		}
 
 		triggers = getTriggerPriorities(cards)
 		highestPriority = triggers.find(trigger => trigger.priority < highestPriority)?.priority || 0
@@ -118,63 +117,102 @@ function getTriggerPriorities(cards){
 
 	return result
 }
-function performGameStart(){
+async function performGameStart(){
 	let gameEvents = new GameEventList()
 
 	let cards = currentLevel.cards
-	triggerCards(cards, trigger => {
+	await triggerCards(cards, async trigger => {
 		let card = trigger.card
 		let role = trigger.role
-		role.onGameStart(card, currentLevel, gameEvents)
+		return await role.onGameStart(card, currentLevel, gameEvents)
 	})
+	await carryOutEvents(gameEvents)
 	
-	carryOutEvents(gameEvents)
+	//If the cards call for the night cycle, enable it.
+	if (cards.some(card => card.true_role.night_cycle || card.shown_role.night)){
+		currentLevel.night_cycle = true
+	}
 }
-function tryToRevealCard(card){
+async function tryToRevealCard(card){
 	let revealEvent = new GameEventList()
 	revealEvent.events.push({type: "reveal", card: card})
 
 	let cards = currentLevel.cards
-	triggerCards(cards, trigger => {
+	await triggerCards(cards, async trigger => {
 		let triggeringCard = trigger.card
 		let role = trigger.role
-		role.onAttemptReveal(triggeringCard, currentLevel, card, revealEvent)
+		return await role.onAttemptReveal(triggeringCard, currentLevel, card, revealEvent)
 	})
 
-	carryOutEvents(revealEvent)
+	await carryOutEvents(revealEvent)
 }
 
-function carryOutEvents(gameEventList){
+async function carryOutEvents(gameEventList){
 	for (let event of gameEventList.events){
-		carryOutEvent(event)
+		await carryOutEvent(event)
 	}
 }
-function carryOutEvent(event){
+async function carryOutEvent(event){
 	if (event.type === "reveal"){
 		let card = event.card
-		revealCard(card)
+		await revealCard(card)
 	} else {
 		console.warn(event)
 	}
 }
 
-function executeCard(card){
+async function executeCard(card){
 	card.execute(card, currentLevel)
 }
-function revealCard(card){
+async function revealCard(card){
 	let model = card.model
 	model.css("transition", "250ms transform linear").css("transform", "rotate3d(0, 1, 0, 90deg)")
-	delay(250).then(() => {
-		model.css("transition", "0s transform linear").css("transform", "rotate3d(0, 1, 0, 270deg)")
-		model.css("transition", "250ms transform linear").css("transform", "rotate3d(0, 1, 0, 0deg)")
-		card.is_face_up = true
-		updateCardDisplay(card)
-		card.onShow(card, currentLevel)
-		card.showTooltip()
-		return delay(250)
-	}).then(() => {
-		model.css("transition", "").css("transform", "")
-	})
+	await delay(250)
+	model.css("transition", "0s transform linear").css("transform", "rotate3d(0, 1, 0, 270deg)")
+	model.css("transition", "250ms transform linear").css("transform", "rotate3d(0, 1, 0, 0deg)")
+	card.is_face_up = true
+	updateCardDisplay(card)
+	let p = Promise.resolve()
+	p = p.then(() => card.onShow(card, currentLevel))
+	p = p.then(() => advanceNightCycle())
+	card.showTooltip()
+	delay(250).then(() => model.css("transition", "").css("transform", ""))
+	await p
+}
+async function advanceNightCycle(){
+	let level = currentLevel
+	let gameEvents = new GameEventList()
+	if (level.night_cycle){
+		level.night_hour++
+		if (level.night_hour >= 4){
+			await triggerCards(level.cards, async trigger => {
+				let card = trigger.card
+				let role = trigger.role
+				return await role.onNight(card, currentLevel, gameEvents)
+			})
+			level.night_hour = 0
+		}
+	}
+	await carryOutEvents(gameEvents)
+}
+function updateNightCycleDisplay(){
+	let level = currentLevel
+	let clock = $("#game").children(".dagger-button").find(".clock-container")
+	clock.find(".hour-indicator").attr("data-active", false)
+	for (let i = 1; i < level.night_hour + 1; i++){
+		let elem = clock.find(`.hour-indicator[data-hour="${i}"]`)
+		elem.attr("data-active", true)
+	}
+	let curElem = clock.find(`.hour-indicator[data-hour="${level.night_hour + 1}"]`)
+	if (curElem.hasClass("hour-night")){
+		curElem.attr("data-active", true)
+	}
+
+	let hand_degrees = [-30, -10, 10, 30]
+	let degrees = hand_degrees[(level.night_hour) % hand_degrees.length]
+	let hand = clock.find(".clock-hand")
+	hand.children("img").css("transform", `rotate(${degrees}deg)`)
+	console.log(hand.children("img"), degrees)
 }
 
 function createCardHtml(){
@@ -316,6 +354,15 @@ function updateCardDisplay(card){
 		marksContainer.find(`.card-mark[data-mark-type='${markType}']`).show()
 	}
 
+	//Blood
+	if (!card.is_alive && !anchorPoint.data("blood-box")){
+		let bloodBox = $("<div class='card-blood'>")
+		$("#characters-bg").append(bloodBox)
+		anchorPoint.data("blood-box", bloodBox)
+		bloodBox.data("card", card)
+	}
+	repositionBlood(card)
+
 	div.on("click", () => {
 		clickCard(card)
 	})
@@ -336,6 +383,36 @@ function updateCardDisplay(card){
 	disguiseIconBox.off("mouseleave").on("mouseleave", () => {
 		card.anchorPoint.attr("data-showghost", false)
 	})
+}
+function repositionBlood(card){
+	let anchorPoint = card.anchorPoint
+	let bloodBox = anchorPoint.data("blood-box")
+	if (!bloodBox) return
+	let offset = anchorPoint.position()
+	bloodBox.width(anchorPoint.width())
+	bloodBox.height(anchorPoint.height())
+	bloodBox.css("top", offset.top)
+	bloodBox.css("left", offset.left)
+}
+function repositionHours(){
+	let clock = $("#game").children(".dagger-button").find(".clock-container")
+	let hand = clock.find(".clock-hand")
+	let radius = hand.height() * 0.85
+	let angles = [
+		39,
+		13,
+		-13,
+		-39
+	]
+	for (let i = 1; i <= 4; i++){
+		let elem = clock.find("#hour-"+i)
+		let degreeOffset = angles[i - 1]
+		let angle = Math.PI * 0.5 + (degreeOffset / 180 * Math.PI)
+		let left = clock.width() * 0.5 + Math.cos(angle) * radius
+		let bottom = Math.sin(angle) * radius
+		elem.css("left", left)
+		elem.css("bottom", bottom)
+	}
 }
 
 function updateAbilities(){
@@ -363,6 +440,10 @@ function updateEverything(){
 	updateAbilities()
 	updateCenterInfoBox()
 
+	if (currentLevel.night_cycle){
+		updateNightCycleDisplay()
+	}
+
 	let healthSection = $("#game .health-container")
 	let healthP = currentLevel.hp / currentLevel.max_hp
 	healthSection.find(".bar").css("height", healthP * 100 + "%")
@@ -378,13 +459,14 @@ function levelTick(){
 	})
 }
 
-function startRound(){
+async function startRound(){
 	let W = $(window).width()
 	let H = $(window).height()
 	const level = createLevel()
 	currentLevel = level
 	console.log(level)
-	performGameStart()
+	await performGameStart()
+	repositionHours()
 
 	let charactersContainer = $("#characters")
 	let cards = level.cards
@@ -478,10 +560,11 @@ function startRound(){
 	content = content.add(secondaryObjective)
 	$(".ui-info .objective").empty().append(content)
 
+	updateEverything()
 	level.interval = setInterval(levelTick, frameRate)
 }
 
-$(".dagger-button").on("click", () => {
+$(".dagger-button .button-bg").on("click", () => {
 	killing_ready = !killing_ready
 	if (killing_ready){
 		$("#game").addClass("killing-active")
@@ -496,7 +579,9 @@ $(window).on("resize", () => {
 		card.hints.forEach(hint => {
 			hint.positionElements()
 		})
+		repositionBlood(card)
 	})
+	repositionHours()
 })
 
 $(window).on("contextmenu", e => {

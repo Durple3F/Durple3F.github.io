@@ -1,3 +1,7 @@
+9/11 (3400 lines):
+  - Added the little blood splatter behind dead characters
+  - Added the UI for the night cycle, but it doesn't work.
+
 9/9 (3100 lines):
   - Added a secret internal-only role to make Poet work the way it's supposed to.
   - Added Architect, Dreamer
