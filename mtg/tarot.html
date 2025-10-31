@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+	
+	<link rel="icon" type="image/x-icon" href="favicon.ico">
+	<link rel="stylesheet" href="style.css">
+	<script src="data.js"></script>
+	<script src="main.js" defer></script>
+
+	<title>79 Tarot Cards</title>
+	<meta property="og:title" content="79 Tarot Cards">
+	<meta property="og:description" content="I did put effort into this">
+
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Cookie&family=Red+Hat+Text:ital,wght@0,300..700;1,300..700&display=swap');
+
+		body {
+			color: #f2f0b8;
+			font-family: "Red Hat Text", sans-serif;
+			/* font-size: 130%; */
+			scroll-behavior: smooth;
+		}
+
+		.display-1 {
+			font-family: "Cookie", cursive;
+			font-weight: bold;
+		}
+		.fancy-shadow {
+			text-shadow: 0 0 0.25em #f2f0b8;
+		}
+
+		.mtg-card {
+			border-top-left-radius: 7.5% 5%;
+			border-top-right-radius: 7.5% 5%;
+			border-bottom-left-radius: 7.5% 5%;
+			border-bottom-right-radius: 7.5% 5%;
+			overflow: hidden;
+		}
+
+		.col img + p {
+			margin-top: 0.5em;
+		}
+		.col :last-child {
+			margin-bottom: 0;
+		}
+
+		.wands {
+			background-color: #5a0000a8;
+			/* box-shadow: 0 0 1em #5a0000a8; */
+			border-radius: 1rem;
+			margin-top: 0.5rem;
+			margin-bottom: 0.5rem;
+		}
+		.cups {
+			background-color: #3a91b6a8;
+			/* box-shadow: 0 0 1em #3a91b6a8; */
+			border-radius: 1rem;
+			margin-top: 0.5rem;
+			margin-bottom: 0.5rem;
+		}
+		.swords {
+			background-color: #510d8da8;
+			/* box-shadow: 0 0 1em #510d8da8; */
+			border-radius: 1rem;
+			margin-top: 0.5rem;
+			margin-bottom: 0.5rem;
+		}
+		.pentacles {
+			background-color: #2e5004a8;
+			/* box-shadow: 0 0 1em #73bf16a8; */
+			border-radius: 1rem;
+			margin-top: 0.5rem;
+			margin-bottom: 0.5rem;
+		}
+		.major {
+			background-color: #504504a8;
+			/* box-shadow: 0 0 1em #73bf16a8; */
+			border-radius: 1rem;
+			margin-top: 0.5rem;
+			margin-bottom: 0.5rem;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="row text-center">
+			<span class="display-1 fancy-shadow">79 Tarot Cards</span>
+		</div>
+		<div class="row text-center">
+			<p style="margin: 0.05em 0;">NOBODY CARES ABOUT MOST OF THE TAROT DECK.</p>
+			<p style="margin: 0.05em 0;">People VAGUELY know about the major arcana, and MAYBE they know of the EXISTENCE of the minor arcana.</p>
+			<p style="margin: 0.05em 0;">LET ALONE THE HISTORY! How many people even know that there ARE real games played with tarot decks?</p>
+			<p style="margin: 0.05em 0;">Let alone how many know that the tarot deck was originally just a deck of playing cards?</p>
+			<p style="margin: 0.05em 0;">It bothers me!</p>
+			<p style="margin: 0.05em 0;">Oh, and also I'm a huge MTG nerd so the only option is to go make magic cards about it.</p>
+			<p style="margin: 0.05em 0;">I've seen people create cards based on the major arcana, but NEVER on the minor arcana.</p>
+		</div>
+		<div class="row">
+			<p>&nbsp;</p>
+		</div>
+		<div class="row">
+			<p>So the thing about the minor arcana is that it's split into 4 lots of 14. Just like the major arcana, the "meaning" of each card is a vaguely-defined vibes-based suggestion of a narrative originating from a game of telephone that has lasted from the early 19th century to this day. Regardless, the occult are a fascinating phenomenon, and I find the act of trying to understand how symbols have come hold the meanings they have.</p>
+			<p>After all... I play fucking Magic: the Gathering. These bastards sell their entire game on five arbitrary symbols holding so much meaning. So it's fun to try to connect some dots.</p>
+			<p>ANYWAY:</p>
+			<p>The general idea with the minor arcana is to take the number, find its meaning in numerology, and flavor it with the suit.</p>
+		</div>
+		<div class="row text-center">
+			<p class="display-1">And so I did.</p>
+		</div>
+		<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4">
+			<div class="col p-2 wands">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/1W.png">
+				<p>I think you can tell, "1" has to do with beginnings, in tarot.</p>
+				<p>Wands are all about willpower, initiative, and drive. That's red incarnate.</p>
+				<p>If you wanna dip your toe into another layer of pareidolia, Wands are associated with the classical element of Fire.</p>
+				<p>So I think that making it a tiny red spell is obvious.</p>
+			</div>
+			<div class="col p-2 cups">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/1C.png">
+				<p>Cups are associated with both "Emotions" and "Intuition."</p>
+				<p>We'll be seeing them in white, blue, and a bit of red.</p>
+				<p>Anyway, in tarot, this guy means you're feeling something new, or you've had some little eureka moment.</p>
+				<p>You may be able to guess that Cups are associated with the classical element of Water.</p>
+			</div>
+			<div class="col p-2 swords">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/1S.png">
+				<p>Swords are associated with clarity and truth. This is usually depicted as leading to despair, which is where I'm getting the black from.</p>
+				<p>Here, you find a weakness in the problem facing you, and if you successfully cut it down, are rewarded with knowledge (in card form.)</p>
+				<p>Neat, I think.</p>
+			</div>
+			<div class="col p-2 pentacles">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/1P.png">
+				<p>Pentacles have to do with the material world. Just to be clear, "pentacles" might as well be coins.</p>
+				<p>As you may guess, the material world is associated with Earth. That means... Swords are Air. I guess.</p>
+				<p>Here, the Ace represents the beginning in a literal sense: a seed is planted. You'll draw it later.</p>
+			</div>
+		</div>
+		<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4">
+			<div class="col p-2 wands">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/2W.png">
+				<p>Twos are all about duality. Each of these Twos features a choice to reflect that.</p>
+				<p>For Wands, that means making decisions in the sense of planning for one's own future.</p>
+				<p>With this card, if you can finagle it right, you can plan even better.</p>
+			</div>
+			<div class="col p-2 cups">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/2C.png">
+				<p>These Twos ALSO all feature a little minigame. If you can make something two-y, they give you a bonus.</p>
+				<p>Two of Cups signals Unity and Partnership. Here, partnering is flavored as being buddies with an opponent, and, well, white makes guys.</p>
+				<p>Have two <span class="fst-italic">(or zero)</span> guys, and get bonus.</p>
+			</div>
+			<div class="col p-2 swords">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/2S.png">
+				<p>Two of Swords is about making decisions, but in the sense that these are difficult decisions to be made. A fork presents itself in the road, and only one path may be traveled.</p>
+				<p>Edicts are simple choices, and they are the easiest "difficult" choices to give.</p>
+				<p>Again, Swords is about harsh realities and truth. Cards are knowledge.</p>
+			</div>
+			<div class="col p-2 pentacles">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/2P.png">
+				<p>Two of Pentacles is about harmony with one's means. Like, understanding one's capabilities as well as one's limitations. The maximum and the minimum.</p>
+				<p>So, would you like to go on the offensive, or hang back and improve yourself?</p>
+				<p>Notably, the fighting creature will not die until after you get to scry.</p>
+				<p>Oh, and I absolutely cannot ignore this: The Panorama tarot deck I'm using for the art on these put a SEAL in this one! Yay! It's my favorite wahoo!</p>
+			</div>
+		</div>
+		<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4">
+			<div class="col p-2 wands">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/3W.png">
+				<p>The Threes are all about you putting some effort in and seeing a tangible outcome.</p>
+				<p>Here, the effort you expend to take action fuels your next action. I think that's pretty clear-cut for Wands.</p>
+			</div>
+			<div class="col p-2 cups">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/3C.png">
+				<p>Three of Cups is about a union, a celebration. When anyone feels good, you can put a little effort into understanding them, and you will be rewarded for it.</p>
+			</div>
+			<div class="col p-2 swords">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/3S.png">
+				<p>Look, that is a Stabbed Heart. Three of Swords is about grief and loss. So get bonus when things die.</p>
+				<p>We're gonna be milling people in this suit pretty soon. But killing them works too.</p>
+			</div>
+			<div class="col p-2 pentacles">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/3P.png">
+				<p>Three of Pentacles is about a lot of things. Its meaning has moved from one of nobility and honest labor to one of growth and construction. It's as though all this stuff is deeply, deeply arbitrary.</p>
+				<p>A lot of these are like that.</p>
+				<p>So this is about construction, let's say. Build farther, and reap greater reward.</p>
+				<p>Probably the easiest cost to pay, since when it enters, it will probably be primed to produce mana.</p>
+			</div>
+		</div>
+		<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4">
+			<div class="col p-2 wands">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/4W.png">
+				<p>Fours are in some sense about structure, or regularity. So all of these Fours offer you some protection so long as you meet their condition. They also meet their condition by themselves on the turn they come in.</p>
+				<p>This card shows a celebration of some kind, so I thought this was an obvious bit of flavor. In tarot, this is supposed to signal that you are accomplished and celebrated. So go beat the shit out of that guy sitting on the other side of the table.</p>
+			</div>
+			<div class="col p-2 cups">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/4C.png">
+				<p>This card heralds a moment of contemplation, so it rewards you for looking ahead.</p>
+				<p>When you look ahead, you find a way through your obstacles.</p>
+			</div>
+			<div class="col p-2 swords">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/4S.png">
+				<p>That guy's dead. This card likes it when things die <span class="fst-italic">(or are otherwise removed.)</span></p>
+				<p>In tarot, this card signals that you should probably hang back for a while and not rush on ahead. <span class="fst-italic">('Cuz you'll die, but the tarot reader usually leaves that bit out.)</span></p>
+				<p>I didn't want the card to punish you, so if your opponents rush in while the condition is met, they die to deathtouch.</p>
+			</div>
+			<div class="col p-2 pentacles">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/4P.png">
+				<p>This is a man holding tight to his belongings. All of his moneys.</p>
+				<p>Unfortunately, making money (Treasure) more permanent in Magic is pretty much impossible. Treasures cease to exist almost instantly upon use.</p>
+				<p>And I can't reward you for <span class="fst-italic">using</span> Treasures, because that's not the point of the card. So you get to reclaim one of your lost belongings, in another green way.</p>
+			</div>
+		</div>
+		<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4">
+			<div class="col p-2 wands">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/5W.png">
+				<p>Fives are about disorder, in one way or another.</p>
+				<p>Disorder of Wands, of Willpower, is some kind of rivalry, or raucus disagreement.</p>
+				<p>I love the card Barroom Brawl. Absolutely wonderful.</p>
+				<p>This card also empowers you to take on the challenges of your rivals.</p>
+			</div>
+			<div class="col p-2 cups">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/5C.png">
+				<p>Disorder of Cups, Emotion, is some kind of trauma.</p>
+				<p>In tarot, people always point at how there are three spilled cups, but two filled ones. BUT, those cups are behind the subject, out of view. You still have something, but it's not obvious where.</p>
+				<p>Emotional loss like this is pretty plainly some kinda mill-y, graveyard stuff. I'm flavoring the "something you still have" as the thing you take from your opponent.</p>
+			</div>
+			<div class="col p-2 swords">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/5S.png">
+				<p>Disorder of Swords, Clarity, can mean uncertainty about one's path. It is taken to mean that your efforts are wasted and your victories are pyrrhic. You are acting underhandedly, and not communicating with your peers.</p>
+				<p>Do I hear UNDERHANDED SECRET CHOICES?? Confuse your opponents and try to weasel your way into NOT sacrificing half your board!</p>
+			</div>
+			<div class="col p-2 pentacles">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/5P.png">
+				<p>Disorder of Pentacles, Material, can mean you have lost something tangible.</p>
+				<p>So here's Big Disenchant, but you get bonus for losing your own stuff. Get rid of some Treasures or something.</p>
+			</div>
+		</div>
+		<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4">
+			<div class="col p-2 wands">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/6W.png">
+				<p>Sixes are about a reconciliation of some kind.</p>
+				<p>Six of Wands is about a recognition of one's worth, that you are celebrated for your achievements.</p>
+				<p>You have successfully attacked with several guys, and you get to probably win about it! Look at you aren't you so cool.</p>
+			</div>
+			<div class="col p-2 cups">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/6C.png">
+				<p>All of these cards will give a pretty good reward if you meet their condition, but a kinda meh reward if you don't.</p>
+				<p>Six of Cups is about nostalgia, or joy in community. You feel good if you have friends. Otherwise, you make some new ones in want for that community.</p>
+			</div>
+			<div class="col p-2 swords">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/6S.png">
+				<p>Six of Swords represents leaving one's current situation for another. Throw away your hand and you'll get another. Briefly.</p>
+				<p>Otherwise, you find some new stuff, but must lose something in the process.</p>
+			</div>
+			<div class="col p-2 pentacles">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/6P.png">
+				<p>Six of Pentacles is about giving gifts and supporting others.</p>
+				<p>There's not really a... condition, implied in that. So if you have flourishing prosperity, you get big bonus.</p>
+				<p>Either way, those two guys in the art show up to help.</p>
+			</div>
+		</div>
+		<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4">
+			<div class="col p-2 wands">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/7W.png">
+				<p>The Sevens are about unpredictability. Broadly.</p>
+				<p>The Seven of Wands is about being called on to use your capabilities. What task lies before you is unknown.</p>
+				<p>Here, if things go well for you, your opponents will be severely weakened and your creatures will be wounded, but powerful.</p>
+			</div>
+			<div class="col p-2 cups">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/7C.png">
+				<p>I really like dice. I'm very biased, but I thought this was a fun design.</p>
+				<p>The Seven of Cups is about having too many choices, and trying to calm everything down and come to a greater understanding.</p>
+				<p>So you remove blockers. And draw cards.</p>
+			</div>
+			<div class="col p-2 swords">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/7S.png">
+				<p>I'm not entirely happy with this design, but it's neat, in my opinion.</p>
+				<p>The Seven of Swords is about getting away with it. Doing something underhanded and it all works out, yippee.</p>
+				<p>I'd love to have some kind of theft effect, but it's hard to do that with the text limitations. So oh well, the underhanded aspect is you kneecap your opponents and then beat em up.</p>
+			</div>
+			<div class="col p-2 pentacles">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/7P.png">
+				<p>These cards all have retrace because with Sevens, the idea is that leaving the state that Sevens describe is a choice. You can go back and roll the dice again, if you want. (As long as you still have things in your hand worth paying its retrace cost.)</p>
+				<p>The Seven of Pentacles is about one's labor paying off. You're working that farm. So if you do it well, you'll eat well and get strong.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center flex-lg-row-reverse row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 wands">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/8W.png">
+			</div>
+			<div class="col col-lg-4 p-2 wands text-lg-end align-content-lg-center fs-5">
+				<p>We're getting into the ones that have more individual flavor.</p>
+				<p>Eight of Wands is about momentum picking up. This is sometimes depicted as needing to "keep up" with what the world is giving you. Here, you draw more cards, but you'll draw more if you can churn through them quickly.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 cups">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/8C.png">
+			</div>
+			<div class="col col-lg-4 p-2 cups align-content-lg-center fs-5">
+				<p>Eight of Cups is about walking away from your situation and maybe coming back later.</p>
+				<p>So this is Teferi's Protection, but it exiles your permanents instead of phasing them out.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center flex-lg-row-reverse row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 swords">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/8S.png">
+			</div>
+			<div class="col col-lg-4 p-2 swords text-lg-end align-content-lg-center fs-5">
+				<p>Eight of Swords signifies helplessness and anxiety, usually depicted as being a result of one's own self-sabotaging actions.</p>
+				<p>A Curse that says the words "enchant yourself" is very funny to me. I think it works nicely.</p>
+				<p>So it's Phyrexian Arena but without the life loss because you're already kneecapping yourself in another way.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 pentacles">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/8P.png">
+			</div>
+			<div class="col col-lg-4 p-2 pentacles align-content-lg-center fs-5">
+				<p>Just like the others, the Eight of Pentacles is in some sense about continuation.</p>
+				<p>Continuing to improve one's material environment means using your mastery (prowess) to continue to improve (training)</p>
+			</div>
+		</div>
+		<div class="row justify-content-center flex-lg-row-reverse row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 wands">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/9W.png">
+			</div>
+			<div class="col col-lg-4 p-2 wands text-lg-end align-content-lg-center fs-5">
+				<p>The Nine of Wands represents being "nearly there." The battle is almost completed.</p>
+				<p>So, like, this design is as good of a "one last push" thing as I can think of. Not hugely happy with this one.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 cups">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/9C.png">
+			</div>
+			<div class="col col-lg-4 p-2 cups align-content-lg-center fs-5">
+				<p>Look how happy he is with his stupid cups.</p>
+				<p>Like the other Nines, Nine of Cups represents "nearly there" in a Cups-y way. You are transitioning into a time of plenty.</p>
+				<p>So now your turns begin with a cascade of whatever you did last turn. This also has the effect of creating more Treasures.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center flex-lg-row-reverse row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 swords">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/9S.png">
+			</div>
+			<div class="col col-lg-4 p-2 swords text-lg-end align-content-lg-center fs-5">
+				<p>Me when the Swarm of Swords says they're breaking up with me</p>
+				<p>Anyway, this is another Swords-y card that says you're anxious and scared and such a whiny goddamn baby.</p>
+				<p>That usually means milling. A rare but fun payoff for milling is stealing stuff from your opponent's graveyard. This is nine mana! Take it all! End the game!</p>
+			</div>
+		</div>
+		<div class="row justify-content-center row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 pentacles">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/9P.png">
+			</div>
+			<div class="col col-lg-4 p-2 pentacles align-content-lg-center fs-5">
+				<p>Here, "nearly there" in the material sense signifies that you're now able to sit back and enjoy the splendor you've created for yourself.</p>
+				<p>I don't actually think there's any effect that just flatly lets all your lands provide 2 mana like this.</p>
+				<p>Is that plus Ghostly Prison worth 9 mana? Probably not.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center flex-lg-row-reverse row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 wands">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/10W.png">
+			</div>
+			<div class="col col-lg-4 p-2 wands text-lg-end align-content-lg-center fs-5">
+				<p>The Tens are all about having completed one's task.</p>
+				<p>If you've been slingin' spells all game, go storm off, I guess. Whatever.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 cups">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/10C.png">
+			</div>
+			<div class="col col-lg-4 p-2 cups align-content-lg-center fs-5">
+				<p>All of these are pretty plainly designed to just end the game pretty quickly after they land on the board.</p>
+				<p>For Cups, the ultimate emotional fulfilment leaves you stronger, empowered, and with no gaps in your defense.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center flex-lg-row-reverse row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 swords">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/10S.png">
+			</div>
+			<div class="col col-lg-4 p-2 swords text-lg-end align-content-lg-center fs-5">
+				<p>Yo that guy's dead</p>
+				<p>This card represents betrayal. Loss of relationships one holds dear.</p>
+				<p>I think making your opponents' creatures betray their owners is fitting. I think it's fitting that this card is likely to be most useful after a board wipe. This card's mean. But fitting.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 pentacles">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/10P.png">
+			</div>
+			<div class="col col-lg-4 p-2 pentacles align-content-lg-center fs-5">
+				<p>Culmination in the material sense is often depicted as an undying legacy, an eternal and indelible mark on the world.</p>
+				<p>So, you literally can't die. Your influence spans further, and everyone you call to help you brings friends.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center flex-lg-row-reverse row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 wands">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/11W.png">
+			</div>
+			<div class="col col-lg-4 p-2 wands text-lg-end align-content-lg-center fs-5">
+				<p>The Pages are a rank that simply does not exist in modern playing card decks. They are the first of the tarot deck's face cards, which are called the Court Cards.</p>
+				<p>The Page of Wands brings good news. It is hasty and might rush ahead. It is the first anthropomorphized force in this suit of willpower and creativity.</p>
+				<p>So it's a creature that discovers stuff for you. Notably, it cannot discover itself.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 cups">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/11C.png">
+			</div>
+			<div class="col col-lg-4 p-2 cups align-content-lg-center fs-5">
+				<p>Historically, a "page" is literally just a servant. So these guys, in general, represent some kind of idea coming to you.</p>
+				<p>The Page of Cups heralds the coming of a kind of news that makes you go "oh, hey!" A surprise of some kind, probably an emotional one. Examples often include gossip or secrets.</p>
+				<p>This guy makes the first card you draw into a neat surprise. Pretty straightforward I think.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center flex-lg-row-reverse row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 swords">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/11S.png">
+			</div>
+			<div class="col col-lg-4 p-2 swords text-lg-end align-content-lg-center fs-5">
+				<p>The Book of Toth, another rather influential source of tarot iconography, further split this rank into "princes" and "princesses" which I will not be caring about.</p>
+				<p>The Page of Swords signifies a kind of eureka that will only come if one waits and considers. Questions need to be asked, and stuff.</p>
+				<p>And guess what we got a word for that it's connive wahoo. They can't be blocked because they're very curious, you see. They've got <a href="https://scryfall.com/card/jmp/147/curiosity">curiosity</a>, you see.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 pentacles">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/11P.png">
+			</div>
+			<div class="col col-lg-4 p-2 pentacles align-content-lg-center fs-5">
+				<p>I think that it's interesting that the most popular surviving tarot deck today has 14 ranks. 14 is a weird number, right? 13 has huge cachet, 15 is a solid number, a multiple of 5. 14? Fourteen.</p>
+				<p>The Page of Pentacles bears news regarding one's future in the sense of how to grow.</p>
+				<p>And so, the cycle of Guys With Keywords Relating To Discovery comes to an end.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center flex-lg-row-reverse row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 wands">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/12W.png">
+			</div>
+			<div class="col col-lg-4 p-2 wands text-lg-end align-content-lg-center fs-5">
+				<p>Knights all signal some kind of initiative force. They bear many of the same message-focused symbolism that Pages do.</p>
+				<p>Wands are still very, very red-aligned. Here, this Knight is so quick and ready to push on that he can even do it from your hand.</p>
+				<p>I liked the idea of having all the Knights have Adventures, but it didn't work very well.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 cups">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/12C.png">
+			</div>
+			<div class="col col-lg-4 p-2 cups align-content-lg-center fs-5">
+				<p>Several sources note the different ways the HORSES are posed in these arts. The one for Wands is showing off, ready to gallop. This one is in a slow trot. Etc. Y'know.</p>
+				<p>Knight of Cups is another messenger, but this one is usually depicted as very romantic. It is, literally, a knight in shining armor.</p>
+				<p>So this card lets you go back and find some lost love you used to pine for.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center flex-lg-row-reverse row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 swords">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/12S.png">
+			</div>
+			<div class="col col-lg-4 p-2 swords text-lg-end align-content-lg-center fs-5">
+				<p>The Knight of Swords indicates some kind of messaging that is deeply confrontational.</p>
+				<p>The kind of thing that others need to take heed of and answer.</p>
+				<p>So this is an absolute bastard of a card that takes advantage of anything your opponents may have forgotten.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 pentacles">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/12P.png">
+			</div>
+			<div class="col col-lg-4 p-2 pentacles align-content-lg-center fs-5">
+				<p>Pentacles are still about the material, and here this guy is about the coming of a reward for your efforts.</p>
+				<p>Those with strong devotion reap greater rewards this way.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center flex-lg-row-reverse row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 wands">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/13W.png">
+			</div>
+			<div class="col col-lg-4 p-2 wands text-lg-end align-content-lg-center fs-5">
+				<p>Queens are all motherly figures of some sort.</p>
+				<p>Here, the Queen of Wands is the most motherly of the bunch, and as such, she has mentor.</p>
+				<p>The Queen here represents a very palpable threat, because the turn after it comes down, you're likely to just use her ability to push through and win the game.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 cups">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/13C.png">
+			</div>
+			<div class="col col-lg-4 p-2 cups align-content-lg-center fs-5">
+				<p>The Queen of Cups is often depicted as like, a psychic. Among other things. These face cards are all deeply, deeply whatever you want them to be.</p>
+				<p>So anyway, psychics foretell stuff. I just like this mechanic.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center flex-lg-row-reverse row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 swords">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/13S.png">
+			</div>
+			<div class="col col-lg-4 p-2 swords text-lg-end align-content-lg-center fs-5">
+				<p>The Queen of Swords is another helpful caretaker character. This one instructs you to step back and make a clear, logical decision.</p>
+				<p>Swords are so, so blue. Anyway, here, whenever a threat presents itself, the Queen immediately discerns how to defeat it. There's a little minigame here, because every creature your opponent plays, you can ask yourself, are they baiting me? Will there be a second, bigger creature this turn? Probably not, usually.</p>
+				<p>That bottom ability is wholely unrelated to the card, but I like the idea in the sense that it allows you, the player, to make a decision, with all the facts otherwise hidden from you. Also, I wanted a black effect in here to make it fit with the other three Queens.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 pentacles">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/13P.png">
+			</div>
+			<div class="col col-lg-4 p-2 pentacles align-content-lg-center fs-5">
+				<p>The Queen of Pentacles is a very practical figure. It's often depicted as being like, VERY motherly. I can't avoid bringing it up, all of these fall into very obvious gender roles, I'm not a fan.</p>
+				<p>However, this line of text was too fun for me to not write. She can do it all! She can <a href="https://scryfall.com/card/otc/251/academy-manufactor">Manufact Academies</a> with the best of 'em.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center flex-lg-row-reverse row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 wands">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/14W.png">
+			</div>
+			<div class="col col-lg-4 p-2 wands text-lg-end align-content-lg-center fs-5">
+				<p>The Kings are leaders. They are less focused on the desires of their suit, and more focused on guiding people to get there.</p>
+				<p>The King of Wands is just here to do red things on his own, but he is here to lead his people <span class="fst-italic">(and himself)</span> into combat in any way that works.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 cups">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/14C.png">
+			</div>
+			<div class="col col-lg-4 p-2 cups align-content-lg-center fs-5">
+				<p>Obviously, all of these Kings make you the monarch. I feel that's a necessity.</p>
+				<p>The King of Cups is very in-tune with his emotions, and I wanted to depict that as just, like, talking about what he wants at any given time. Plus, voting is a fun minigame.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center flex-lg-row-reverse row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 swords">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/14S.png">
+			</div>
+			<div class="col col-lg-4 p-2 swords text-lg-end align-content-lg-center fs-5">
+				<p>All of these Kings also have abilities that are much more powerful while you're the monarch. A king without his crown is much less effective, yeah?</p>
+				<p>Here, the King of Swords is a stern leader, not afraid to cast down any idea he deems foolish. He will find the path that's best, and as long as his kingdom has momentum, he's sure to do so.</p>
+				<p>I am NOT afraid to put the <a href="https://scryfall.com/card/cmm/2/kozilek-the-great-distortion">Kozilek</a> ability on another creature.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 pentacles">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/14P.png">
+			</div>
+			<div class="col col-lg-4 p-2 pentacles align-content-lg-center fs-5">
+				<p>The King of Pentacles is a provider. The sort of king that would throw a festival of plenty.</p>
+				<p>So here we have a twist on the <a href="https://scryfall.com/card/ltr/287/aragorn-and-arwen-wed">Aragorn and Arwen</a> ability. I don't really have much more than that, honestly.</p>
+			</div>
+		</div>
+		<div id="major-0" class="row justify-content-center flex-lg-row-reverse row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 major">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/0T.png">
+			</div>
+			<div class="col col-lg-4 p-2 major text-lg-end align-content-lg-center fs-5">
+				<p>This is the only tarot-based card that WotC actually designed themselves.</p>
+				<p>I've elected to include it on the basis that it makes for a good example.</p>
+				<p>Flubs is a rathe popular commander, because his ability encourages you to kneecap yourself, which is what commander is all about. We love that shit over there.</p>
+				<p>The Fool, as a card, represents the beginning of a journey, of having no idea where the world is taking you. What's on top of your deck? Who knows. Just play the hand you're dealt.<br>(The hand contains 1 card.)</p>
+			</div>
+		</div>
+		<div class="row justify-content-center row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 major">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/1T.png">
+			</div>
+			<div class="col col-lg-4 p-2 major align-content-lg-center fs-5">
+				<p>So, for most of these major arcana, I've made them commanders, in the same vein.</p>
+				<p>I won't claim that any of them are ESPECIALLY interesting, or even as appealing as Flubs. He's a Frog. I can't beat that. But I tried.</p>
+				<p>I will say, a lot of these don't lend themselves very well to magic vernacular.</p>
+				<p>The major arcana are often depicted as a story that plays out in relation to The Fool. Here, the Magician is a character that shows the Fool how to make choices and learn to actually desire things.</p>
+				<p>He also has the four other tarot suits on the table, signifying that he has some sort of power over them.</p>
+				<p>I was tempted to give each of the tarot cards, like, a supertype, in the same way "Snow" is just tossed onto cards to mark them as "caring about snow." I feel like that always comes off as especially silly, though.</p>
+				<p>So as far as this design truly goes, he gives you the choice to direct your resources in the way you want, and then he can also cast anything he's seen someone else cast.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center flex-lg-row-reverse row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 major">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/2T.png">
+			</div>
+			<div class="col col-lg-4 p-2 major text-lg-end align-content-lg-center fs-5">
+				<p>High Priestess has an emphasis on the "Priestess." She is a knower of the occult and the ways of the unseen parts of the universe.</p>
+				<p>There are very few effects which exile things from your hand, but many of them depict secrecy or planning for the future. Morph, plot, disguise, foretell.</p>
+				<p>However, those are quite rare. Speak with the priestess, and she can help you make plans out of any resource you have to hand.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 major">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/3T.png">
+			</div>
+			<div class="col col-lg-4 p-2 major align-content-lg-center fs-5">
+				<p>The Empress is fertility and abundance.</p>
+				<p>So have more creatures and an <a href="https://scryfall.com/card/mkc/77/orzhov-advokist">Orzhov Advokist</a> rolled into one.</p>
+				<p>Very little to say about this one.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center flex-lg-row-reverse row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 major">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/4T.png">
+			</div>
+			<div class="col col-lg-4 p-2 major text-lg-end align-content-lg-center fs-5">
+				<p>The Emperor is a ruler, he is an authority, but depicted as a just and good force.</p>
+				<p>So he sets rules, and empowers the weak to attack with confidence.</p>
+				<p>I like the politics that I imagine could form around this. You don't HAVE to attack alone, but all players have a choice when combat comes around. His first ability makes it much more likely that there will be mana left over for a big attack. (Though that attack will not have trample.)</p>
+			</div>
+		</div>
+		<div class="row justify-content-center row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 major">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/5T.png">
+			</div>
+			<div class="col col-lg-4 p-2 major align-content-lg-center fs-5">
+				<p>A hierophant is a type of high-ranking priest, and the term originated in ancient Greece. You might call this card a high priest, a mirror to the High Priestess.</p>
+				<p>Where the High Priestess is reserved and conniving, the Hierophant teaches his acolytes openly. Think about those gender roles.</p>
+				<p>Anyway, learn is a keyword in magic. And there are no commanders at the moment focused on it.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center flex-lg-row-reverse row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 major">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/6T.png">
+			</div>
+			<div class="col col-lg-4 p-2 major text-lg-end align-content-lg-center fs-5">
+				<p>The Lovers reprsent unity, and may also signify that one must wrestle with two contradictory things.</p>
+				<p>Obviously they have Soulbond because it pairs things. That choice in this design is like, clich&eacute;.</p>
+				<p>The other part I think is much better. The card rewards you for attacking, but also for having them die. The two are contradictory.</p>
+				<p>Due to the name of the card, I guess every creature this pairs with forms a throuple. Good for them.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 major">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/7T.png">
+			</div>
+			<div class="col col-lg-4 p-2 major align-content-lg-center fs-5">
+				<p>The Chariot represents the power to overcome obstacles and maintain control over your situation.</p>
+				<p>Many depictions emphasize the power of the Chariot's control, its ability to choose.</p>
+				<p>So you get to choose exactly how your opponents are going to lose. You may only do this if you have two guys ready to pull the chariot.</p>
+				<p>That first choice is a VERY scary piece of text, but <a href="https://scryfall.com/card/cmm/46/odric-master-tactician">Odric</a> isn't, like, hugely problematic? I think 6 mana is more than fine for this.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center flex-lg-row-reverse row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 major">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/8T.png">
+			</div>
+			<div class="col col-lg-4 p-2 major text-lg-end align-content-lg-center fs-5">
+				<p>Strength indicates that you have the power to remain calm and capable, even in the face of strong opposition.</p>
+				<p>So here's <a href="https://scryfall.com/card/sld/1737/wolverine-best-there-is">Wolverine</a>, except instead of encouraging you to have 50 fight spells, Strength only helps you in real, honest combat.</p>
+				<p>I've decided they also include the cat. The lion is on most tarot decks' art for Strength.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 major">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/9T.png">
+			</div>
+			<div class="col col-lg-4 p-2 major align-content-lg-center fs-5">
+				<p>The Hermit indicates that solitude may lead to greater understanding.</p>
+				<p>So I wanna reward introspection, and I love cards like this that slightly alter how you follow instructions on cards.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center flex-lg-row-reverse row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 major">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/10T.png">
+			</div>
+			<div class="col col-lg-4 p-2 major text-lg-end align-content-lg-center fs-5">
+				<p>The wheel is comprised of both the good times and the bad times, and it is always turning.</p>
+				<p>But, unfortunately, magic already has a term named wheel of fortune. So here, if you make the person to your left discard stuff, every other player, <span class="fst-italic">(including&nbsp;you)</span> has to discard cards.</p>
+				<p>Whenever you see someone <span class="fst-italic">(including&nbsp;you)</span> discard a card you like, you can keep it, for a price.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 major">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/11T.png">
+			</div>
+			<div class="col col-lg-4 p-2 major align-content-lg-center fs-5">
+				<p>Justice signals retribution. It reminds you that every action has a reaction.</p>
+				<p>As much as I've been using bunches of different keywords in this pile of cards, I don't wanna use the words 'commit a crime.' So I didn't. I don't think the vibe is right, here, weirdly, despite the fact that Justice literally has legal scales.</p>
+				<p>(Using crimes also makes the text much less understandable.)</p>
+			</div>
+		</div>
+		<div class="row justify-content-center flex-lg-row-reverse row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 major">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/12T.png">
+			</div>
+			<div class="col col-lg-4 p-2 major text-lg-end align-content-lg-center fs-5">
+				<p>The Hanged Man is about surrender in some aspect. That the best course of action might be to simply allow the universe to take its course, and to observe.</p>
+				<p>So if you allow creatures to hit you, the universe hits your opponent back, and you learn from the experience.</p>
+				<p>(Also, you can gain life better, to compensate.)</p>
+			</div>
+		</div>
+		<div class="row justify-content-center row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 major">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/13T.png">
+			</div>
+			<div class="col col-lg-4 p-2 major align-content-lg-center fs-5">
+				<p>Death, famously, is not actually a negative tarot card. It signals metamorphosis, an ending of some kind immediately followed by a new beginning.</p>
+				<p>However, it does say "Death" right there. So the current board dies, and another board spawns in right after.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center flex-lg-row-reverse row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 major">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/14T.png">
+			</div>
+			<div class="col col-lg-4 p-2 major text-lg-end align-content-lg-center fs-5">
+				<p>Temperance is yet another tarot card extolling balance. This one is the "everything in moderation" kind of balance. That you should bite off only what you can chew.</p>
+				<p>So cast two-color stuff. Dip your toe into different disciplines. Oh, and split spells, too. Rooms are split spells. If you cast a spell with fuse, it's counted as one, single, split spell.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 major">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/15T.png">
+			</div>
+			<div class="col col-lg-4 p-2 major align-content-lg-center fs-5">
+				<p>The Devil bonks you on the head and tells you to stop indulging yourself. It's the card that calls you a schmuck. You're being tempted in some way to act in a way you should not.</p>
+				<p>So anyway, all your opponents' cards gain the text "Sacrifice something: Draw a card! <span style="font-size:70%;">Side-effects </span><span style="font-size:60%;">include </span><span style="font-size:50%;">headache, </span><span style="font-size:40%;">nausea, </span><span style="font-size:30%;">vomiting </span><span style="font-size:20%;">blood, </span><span style="font-size:10%;">and...</span></p>
+				<p>Notably, one of the things YOU can sacrifice to bargain things is: Your own red Devils, who wanna be sacrificed anyway!</p>
+				<p>I feel like making bargains with the devil is a necessary bit of flavor on this card.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center flex-lg-row-reverse row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 major">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/16T.png">
+			</div>
+			<div class="col col-lg-4 p-2 major text-lg-end align-content-lg-center fs-5">
+				<p>The Tower signals a catastrophic change of some kind. While not <span class="fst-italic">necessarily</span> a negative change, it's hard to interpret in any other way. The artwork depicts a lightning bolt destroying the titular tower, and many decks retain this detail.</p>
+				<p>So, this card shows up, <a href="https://scryfall.com/card/clu/141/lightning-bolt">Lightning Bolts</a> something, then you get to remove your opponent's favorite things.</p>
+				<p>This card is intentionally not a commander. I don't want this effect on a commander.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 major">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/17T.png">
+			</div>
+			<div class="col col-lg-4 p-2 major align-content-lg-center fs-5">
+				<p>This card has no teeth. The Star just symbolizes... hope? Bleh.</p>
+				<p>The best thing I can say is that, to return to the idea that the 22 major arcana form a narrative, that the Star follows the anguish caused by the Tower.</p>
+				<p>So this card lets you bring back whichever creature died to the Tower. And, bonus, it shows you the way to your future, you can just put anything you scry into your hand.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center flex-lg-row-reverse row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 major">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/18T.png">
+			</div>
+			<div class="col col-lg-4 p-2 major text-lg-end align-content-lg-center fs-5">
+				<p>The Moon is associated with illusion and deception. In tarot, it is heavily associated with uncertainty.</p>
+				<p>When this card enters, everyone loses track of who's who. The effect is only temporary, but for a few turns, the identities of the cards on the board become uncertain.</p>
+				<p>Also, this card has a little lobster guy on it. Neat!</p>
+			</div>
+		</div>
+		<div class="row justify-content-center row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 major">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/19T.png">
+			</div>
+			<div class="col col-lg-4 p-2 major align-content-lg-center fs-5">
+				<p>The Sun heralds success and fulfilment. I don't even have to explain this one. It's the sun. You know what the sun does. You like the sun. It's nice. It's warm.</p>
+				<p>I'm a big fan of the recently-revealed <a href="https://scryfall.com/card/tla/153/solstice-revelations">Solstice Revelations</a> card. Fittingly, those revelations also appear when the sun is at its peak. Revelations, as well, involve revealing lots of cards.</p>
+				<p>I thought about having this card mirror The Moon, and maybe flip face-up all of the face-down cards. But face-down-ness is so, so rare. I didn't really see much reason to do that.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center flex-lg-row-reverse row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 major">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/20T.png">
+			</div>
+			<div class="col col-lg-4 p-2 major text-lg-end align-content-lg-center fs-5">
+				<p>Judgment indicates that you should reflect on yourself and act in a just and sure way.</p>
+				<p>I didn't have a great idea for this one, it doesn't lend itself well to this, I think. So the card here just demands that nobody attack the little guy. You give gifts as rewards to anyone who acts according to these laws, and hopefully all of this is to your benefit.</p>
+				<p><span class="fst-italic">(It is you who decides which creature gets the counter. Will you be nice, and put the counter on the creature that would most enjoy it? Probably not.)</span></p>
+			</div>
+		</div>
+		<div class="row justify-content-center row-cols-1 row-cols-lg-2">
+			<div class="col col-lg-4 p-2 major">
+				<img class="mtg-card img-fluid d-block mx-auto" src="tarot/21T.png">
+			</div>
+			<div class="col col-lg-4 p-2 major align-content-lg-center fs-5">
+				<p>The World signals completion, wholeness, perfect unity. Fulfilment in its entirety.</p>
+				<p>So it sorta has to be a big-ass "you probably win the game" card. There's no shortage of 9+ mana, 5 color, big splashy huge spells. This one isn't even particularly interesting.</p>
+				<p>However, I will point out, it grows stronger while you have no cards in your hand, BECAUSE of <a href="#major-0">The Fool</a>! Completing this task requires a condition that is similar to The Fool, but impossible to accomplish while The Fool is in play.</p>
+			</div>
+		</div>
+		<div class="row" style="height: 50vh;"></div>
+	</div>
+</body>
+</html>
