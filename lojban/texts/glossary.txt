@@ -117,6 +117,7 @@ untap - tolxakygau pagru'e
 upkeep - cikre pagru'e
 end step - fanmo pagru'e
 combat - damba pruce
+main phase - ralju pruce
 
 Opponent - bradi
 Player - kelci
@@ -151,6 +152,8 @@ Disguise - ticta'u
 Fabricate - runfi'i (x1 creates artificial object(s) x2)
 Infect - prejumydu’a
 Spree - nungumselgunta (x1 is the event of a mass of aggressive actions x2 against x3)
+Convoke - braklacpe (big-go-summon) (x1 summons many to location x2 for reason x3)
+Persist - kupmrora'i (beyond-death-continue) (x1 continues to exist beyond its death)
 
 Ability Words
 Eminence - misybalvlapi (fame-grand-powerful)

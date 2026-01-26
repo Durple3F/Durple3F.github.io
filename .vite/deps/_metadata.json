@@ -1,0 +1,25 @@
+{
+  "hash": "1bfb748e",
+  "configHash": "61915c54",
+  "lockfileHash": "ca1a506e",
+  "browserHash": "70960eae",
+  "optimized": {
+    "three": {
+      "src": "../../node_modules/three/build/three.module.js",
+      "file": "three.js",
+      "fileHash": "46c8e1ee",
+      "needsInterop": false
+    },
+    "three/addons/loaders/GLTFLoader.js": {
+      "src": "../../node_modules/three/examples/jsm/loaders/GLTFLoader.js",
+      "file": "three_addons_loaders_GLTFLoader__js.js",
+      "fileHash": "038c0b8f",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-PF4EC4Q7": {
+      "file": "chunk-PF4EC4Q7.js"
+    }
+  }
+}

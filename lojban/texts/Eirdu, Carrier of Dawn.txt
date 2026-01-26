@@ -1,0 +1,49 @@
+Eirdu, Carrier of Dawn {3}{W}{W}
+
+la .eirdu. noi cermurse bevri
+    
+
+Legendary Creature — Elemental God
+
+ranmi danlu - selratkai cevni
+    
+
+Flying, lifelink
+
+vofli gi'e ka'orle'a
+  
+
+Creature spells you cast have convoke. (Your creatures can help cast those spells. Each creature you tap while casting a creature spell pays for {1} or one mana of that creature’s color.)
+Each creature spell for which you control it has "many-summon" (. Each of your creatures can do helping you to cast it. Each creature for which you tap it reduces the cost of it by {1})
+ro danlu mafru'e poi do jitro ke'a tolcau zo braklacpe (.i ro danlu po do kakne le zu'o sidju do le zu'o do mafpli ko'a .i ro danlu poi do xakygau ke'a vimcu {1} le jdima po ko'a)
+          (                       {1}    )
+
+At the beginning of your first main phase, you may pay {B}. If you do, transform Eirdu.
+After each of your first main phases an event of you can do you pay {B} and transform this happens.
+ba ro le pamoi ralju pruce po do pa nu do kakne pa zu'o do pleji {B} gi'e gafygau ti
+                {B}   
+
+Isilu, Carrier of Twilight
+
+la .isilus. noi vacmurse bevri
+    
+
+Legendary Creature — Elemental God
+
+ranmi danlu - selratkai cevni
+    
+
+Flying, lifelink
+
+vofli gi'e ka'orle'a
+  
+
+Each other nontoken creature you control has persist. (When it dies, if it had no -1/-1 counters on it, return it to the battlefield under its owner’s control with a -1/-1 counter on it.)
+Each other and not-token creature for which you control it has "beyond-death-continue" (. After it dying, if it has no -1/-1 counters an event of you returning it with a -1/-1 counter to the battlefield.)
+ro drata e na'e kelsinci danlu poi do jitro ke'a tolcau zo kupmrora'i (.i ba le nu ko'a mrobi'o cu ifle le du'u ko'a claxu lo -1/-1 nacdai kei pa nu do xrubei ko'a to'esecau pa -1/-1 nacdai le nunda'afoi)
+             (             1/1          1/1   )
+
+At the beginning of your first main phase, you may pay {W}. If you do, transform Isilu.
+
+ba ro le pamoi ralju pruce po do pa nu do kakne pa zu'o do pleji {W} gi'e gafygau ti
+                {W}   

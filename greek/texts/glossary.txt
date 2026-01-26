@@ -8,11 +8,12 @@
 Instant - 
 Sorcery - Τελετουργία
 Enchantment - Γοητεία
+Artifact - τεχνουργήμα
 Creature - Πλάσμα. Οντότητα seems like a bad translation now.
 
 Battlefield - πεδίο μάχης
 
-Flying - Πετάει
+Flying - Πτήση
 Exile - εξορίζω
 
 Tap - ξοδεύω seems good.
