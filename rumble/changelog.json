@@ -1,5 +1,25 @@
 {
 	"versions": {
+		"20260127": {
+			"date": "January 27, 2026",
+			"line-count": 400,
+			"changes": [
+				"- Made the camera follow you correctly this time I think."
+			]
+		},
+		"20260126": {
+			"date": "January 26, 2026",
+			"line-count": 250,
+			"changes": [
+				"- Added a very simple set of controls. Working with three coordinates is new for me.",
+				"- Added a debug panel showing frame draw times.",
+				"- Organized some code a bit. These things get big, and honestly I'm not entirely sure how to keep this one organized all that well. We'll try our best.",
+				"- Started to add the controls system.",
+				"- I'm toying around with the idea of getting a controller just to see how programming for controller works.",
+				"- Right now I just have a silly little scene with a bunch of bulbasaurs.",
+				"- Added a form of easing to the camera as it moves."
+			]
+		},
 		"20260125": {
 			"date": "January 25, 2026",
 			"line-count": 60,
@@ -10,7 +30,9 @@
 				"- I feel very tired right now, but I've been gradually, SLOWLY, at a snail's pace, been wanting to program again.",
 				"- I was going to wait until I was done with another project, but that was going to take a very long time.",
 				"- Anyway, my idea here is that I might be able to make a little dynasty warriors-y thing with pokemon.",
-				"- I'd love to try and have like a hundred little guys moving around."
+				"- I'd love to try and have like a hundred little guys moving around.",
+				"- Today I learned more about the different lights available, as well as how to import GLB/GLTF files.",
+				"- I spent an hour trying to set up git credential manager so I can have a personal account and a work account on this computer."
 			]
 		}
 	}
