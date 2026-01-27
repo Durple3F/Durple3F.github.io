@@ -4,7 +4,8 @@
 			"date": "January 27, 2026",
 			"line-count": 400,
 			"changes": [
-				"- Made the camera follow you correctly this time I think."
+				"- Made the camera follow you correctly this time I think.",
+				"- I learned how to give an object a shader. These guys need some outlines."
 			]
 		},
 		"20260126": {

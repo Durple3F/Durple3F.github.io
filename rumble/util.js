@@ -42,3 +42,27 @@ export function dotProduct2d(x1, y1, x2, y2){
 export function dotProduct3d(x1, y1, z1, x2, y2, z2){
 	return x1 * x2 + y1 * y2 + z1 * z2
 }
+
+export async function solidify(scene, mesh, thickness=0.012){
+	const geometry = mesh.geometry
+	thickness = thickness.toString()
+	if (!thickness.includes(".")){
+		thickness += ".0"
+	}
+	const material = new THREE.ShaderMaterial({
+		vertexShader: `
+			void main() {
+				vec3 newPosition = position + normal * ${thickness};
+				gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1);
+			}
+		`,
+		fragmentShader: `
+			void main() {
+				gl_FragColor = vec4(0, 0, 0, 1);
+			}
+		`,
+		side: THREE.BackSide
+	})
+	const outline = new THREE.Mesh(geometry, material)
+	scene.add(outline)
+}

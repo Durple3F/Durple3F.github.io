@@ -9,7 +9,10 @@ $("#screen").append( renderer.domElement );
 const controls = new ControlManager()
 let game
 
-loadModel("bulbasaur", "public/Bulbasaur.glb")
+Promise.all([
+	loadModel("bulbasaur", "public/Bulbasaur.glb"),
+	loadModel("level", "public/models/levels/level.glb")
+])
 .then(() => {
 	game = new Game(renderer, controls)
 	game.renderer.setAnimationLoop( animate );

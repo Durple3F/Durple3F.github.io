@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { loader, expDecay, expDecay3d, expDecayAngle, expDecayEuler } from "./util.js";
+import { loader, expDecay, expDecay3d, expDecayAngle, expDecayEuler, solidify } from "./util.js";
 import { framesPerSecond } from './config.js';
 
 export class Game {
@@ -9,12 +9,8 @@ export class Game {
 		this.controls = controls
 		this.cameras = []
 		this.currentCamera = -1
+		this.lastFrameTime = Date.now()
 		this.newScene()
-		this.playerCharacter = new Character("bulbasaur")
-		const helper = new THREE.AxesHelper(2);
-		this.playerCharacter.model.add(helper);
-		this.scene.add(this.playerCharacter.model)
-		console.log(this.playerCharacter)
 	}
 	async newScene(){
 		let width = window.innerWidth, height = window.innerHeight;
@@ -30,11 +26,22 @@ export class Game {
 		this.cameras.push(camera2);
 		this.currentCamera = 1
 
-		const al = new THREE.AmbientLight(0xffffff, 0.5);
+		const al = new THREE.AmbientLight(0xffffff, 0.7);
 		scene.add(al);
 
+		scene.background = new THREE.Color().setRGB( 0.5, 0.5, 0.5 );
+
+		this.level = MODELS["level"]
+		this.scene.add(this.level.gltf.scene)
+
+		this.playerCharacter = new Character("bulbasaur", ["outline"])
+		const helper = new THREE.AxesHelper(2);
+		this.playerCharacter.model.add(helper);
+		this.scene.add(this.playerCharacter.model)
+		console.log(this.playerCharacter)
+
 		for (let i = 0; i < 10; i++){
-			const char = new Character("bulbasaur")
+			const char = new Character("bulbasaur", ["outline"])
 			const gltf = char.model;
 			gltf.position.x += Math.random() - 0.5
 			gltf.position.z += Math.random() - 0.5
@@ -81,8 +88,10 @@ export class Game {
 		if (controls.isPressing("s")){
 			dz += 1
 		}
-		playerPos.x += dx * 0.05
-		playerPos.z += dz * 0.05
+		playerCharacter.vx = expDecay(playerCharacter.vx, dx, decay, dt)
+		playerCharacter.vz = expDecay(playerCharacter.vz, dz, decay, dt)
+		playerPos.x += playerCharacter.vx * 0.05
+		playerPos.z += playerCharacter.vz * 0.05
 
 		//update facing direction
 		if (!(dx === 0 && dz === 0)){
@@ -125,11 +134,24 @@ export class Game {
 }
 
 class Character{
-	constructor(modelId){
+	constructor(modelId, modifiers){
 		this.modelId = modelId
 		this.model = MODELS[modelId].gltf.scene.clone()
-		this.model.rotation.y = Math.PI
-		this.modelData = MODELS[modelId]
+
+		if (modifiers){
+			if (modifiers.includes("outline")){
+				let totalGroup = new THREE.Group()
+				let outlineGroup = new THREE.Group()
+				outlineGroup.rotation.x = Math.PI * 0.5
+				let model = this.model
+				for (let mesh of model.children){
+					solidify(outlineGroup, mesh)
+				}
+				totalGroup.add(model)
+				totalGroup.add(outlineGroup)
+				this.model = totalGroup
+			}
+		}
 
 		this.vx = 0
 		this.vy = 0
@@ -169,7 +191,7 @@ export async function loadModel(modelId, url){
 	MODELS[modelId] = model
 	model.modelId = modelId
 	model.url = url
-	return loader.loadAsync(url).then(gltf => {
+	await loader.loadAsync(url).then(gltf => {
 		model.loaded = true
 		model.gltf = gltf
 	})
@@ -177,5 +199,8 @@ export async function loadModel(modelId, url){
 		console.error("Model failed to load.")
 		console.log(modelId, url)
 		console.log(e)
+		loadModel(modelId, url)
 	})
+	return model
 }
+
