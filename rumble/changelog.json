@@ -1,11 +1,22 @@
 {
 	"versions": {
+		"20260128": {
+			"date": "January 28, 2026",
+			"line-count": 600,
+			"changes": [
+				"- Gravity now uses a map so as to not check the heights of coordinates it's already checked before. This saved a lot of time."
+			]
+		},
 		"20260127": {
 			"date": "January 27, 2026",
 			"line-count": 400,
 			"changes": [
 				"- Made the camera follow you correctly this time I think.",
-				"- I learned how to give an object a shader. These guys need some outlines."
+				"- I learned how to give an object a shader. These guys need some outlines.",
+				"- I made a new model entirely myself, to give me some simple space to play around with collision detection. It looks like trash but I made it.",
+				"- Turns out this whole time the game was inaccessible outside of my local machine.",
+				"- Each bulbasaur now has a capsule-shaped hull attached to it which I plan to use for collision detection.",
+				"- Added a basic form of gravity, though I don't think it's particularly efficient."
 			]
 		},
 		"20260126": {

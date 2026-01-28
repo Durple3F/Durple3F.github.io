@@ -13,8 +13,9 @@ Promise.all([
 	loadModel("bulbasaur", "public/Bulbasaur.glb"),
 	loadModel("level", "public/models/levels/level.glb")
 ])
-.then(() => {
+.then(async () => {
 	game = new Game(renderer, controls)
+	await game.startLevel("level1")
 	game.renderer.setAnimationLoop( animate );
 	resize()
 })
@@ -28,6 +29,7 @@ const frameTimes = {
 function animate( time ) {
 	let start = Date.now()
 	game.time = time
+	game.tick()
 
 	// gltf.scene.rotation.x = time / 2000;
 	// gltf.scene.rotation.y = time / 1000;
@@ -58,22 +60,8 @@ function animate( time ) {
 	}
 
 }
-function tick(){
-	game?.tick()
-}
 
 const resize = () => {
 	game?.resizeWindow()
 }
 window.addEventListener("resize", resize)
-
-let tickInterval = 0
-document.addEventListener("visibilitychange", () => {
-	if (document.hidden) {
-		clearInterval(tickInterval)
-	} else {
-		// Page became visible!
-		tickInterval = setInterval(tick, 1000 / framesPerSecond)
-	}
-});
-tickInterval = setInterval(tick, 1000 / framesPerSecond)

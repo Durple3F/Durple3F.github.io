@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { loader, expDecay, expDecay3d, expDecayAngle, expDecayEuler, solidify } from "./util.js";
 import { framesPerSecond } from './config.js';
+import { Capsule } from 'three/addons/math/Capsule.js';
 
 export class Game {
 	constructor(renderer, controls){
@@ -9,6 +10,7 @@ export class Game {
 		this.controls = controls
 		this.cameras = []
 		this.currentCamera = -1
+		this.actors = []
 		this.lastFrameTime = Date.now()
 		this.newScene()
 	}
@@ -26,8 +28,12 @@ export class Game {
 		this.cameras.push(camera2);
 		this.currentCamera = 1
 
-		const al = new THREE.AmbientLight(0xffffff, 0.7);
+		const al = new THREE.AmbientLight(0xffffff, 0.3);
 		scene.add(al);
+		const directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
+		directionalLight.position.set(5, 20, -5)
+		directionalLight.lookAt(0, 0, 0)
+		scene.add(directionalLight);
 
 		scene.background = new THREE.Color().setRGB( 0.5, 0.5, 0.5 );
 
@@ -38,6 +44,8 @@ export class Game {
 		const helper = new THREE.AxesHelper(2);
 		this.playerCharacter.model.add(helper);
 		this.scene.add(this.playerCharacter.model)
+		// this.scene.add(this.playerCharacter.collisionModel)
+		this.actors.push(this.playerCharacter)
 		console.log(this.playerCharacter)
 
 		for (let i = 0; i < 10; i++){
@@ -46,6 +54,7 @@ export class Game {
 			gltf.position.x += Math.random() - 0.5
 			gltf.position.z += Math.random() - 0.5
 			scene.add( gltf );
+			this.actors.push(char)
 		}
 
 		return scene
@@ -61,13 +70,25 @@ export class Game {
 		this.renderer.domElement.height = height;
 	}
 
+	async startLevel(levelId){
+		this.level = new World(levelId)
+		await this.level.load()
+		let worldSegments = this.level.worldSegments
+		console.log(this.level)
+		let worldSegment = this.level.worldSegmentMap.get(worldSegments[0])
+		this.scene.add(worldSegment.gltf.scene)
+	}
+
 	tick(){
+		const now = Date.now()
 		const controls = this.controls
 		controls.tick()
 
 		//controls how fast easing is applied
-		const decay = 0.1
-		const dt = 1000 / framesPerSecond
+		const decay = 0.01
+		const dt = now - this.lastFrameTime
+		// console.log(now, dt, this.lastFrameTime)
+		this.lastFrameTime = now
 
 		const camera1 = this.cameras[0]
 		const camera2 = this.cameras[this.currentCamera]
@@ -77,21 +98,22 @@ export class Game {
 		let dx = 0
 		let dz = 0
 		if (controls.isPressing("a")){
-			dx -= 1
+			dx -= 0.05
 		}
 		if (controls.isPressing("d")){
-			dx += 1
+			dx += 0.05
 		}
 		if (controls.isPressing("w")){
-			dz -= 1
+			dz -= 0.05
 		}
 		if (controls.isPressing("s")){
-			dz += 1
+			dz += 0.05
 		}
 		playerCharacter.vx = expDecay(playerCharacter.vx, dx, decay, dt)
 		playerCharacter.vz = expDecay(playerCharacter.vz, dz, decay, dt)
-		playerPos.x += playerCharacter.vx * 0.05
-		playerPos.z += playerCharacter.vz * 0.05
+		playerPos.x += playerCharacter.vx
+		playerPos.y += playerCharacter.vy
+		playerPos.z += playerCharacter.vz
 
 		//update facing direction
 		if (!(dx === 0 && dz === 0)){
@@ -103,6 +125,46 @@ export class Game {
 			const dir2 = playerCharacter.model.rotation
 			const newDir = expDecayEuler(dir1, dir2, decay, dt)
 			playerCharacter.model.rotation.setFromVector3(newDir)
+		}
+
+		//Update collision boxes
+		const actors = this.actors
+		for (let actor of actors){
+			let collisionModel = actor.collisionModel
+			let model = actor.model
+			collisionModel.rotation.copy(model.rotation)
+			collisionModel.position.copy(model.position)
+		}
+
+		//handle gravity
+		let level = this.level
+		for (let actor of actors){
+			let collisionModel = actor.collisionModel
+			let position = collisionModel.position
+			let groundCoord = level.getGroundCoord(position)
+			let distFromGround = position.y - groundCoord
+			if (distFromGround > 1e-5){
+				//Actor is above ground
+				actor.vy -= 0.01
+			} else if (distFromGround < -1e-5){
+				//Actor is below the ground
+				//Pop them out of the ground
+				position.y = groundCoord
+				actor.vy = 0
+			} else {
+				//Actor is on the ground
+				position.y = groundCoord
+				actor.vy = 0
+			}
+			break
+		}
+
+		//Update visual models to reflect collision boxes
+		for (let actor of actors){
+			let collisionModel = actor.collisionModel
+			let model = actor.model
+			model.rotation.copy(collisionModel.rotation)
+			model.position.copy(collisionModel.position)
 		}
 
 		//Now move the camera towards the goal
@@ -133,10 +195,36 @@ export class Game {
 	}
 }
 
+const LEVELS = {}
+LEVELS["level1"] = {
+	heightMapResolution: 0.01,
+	worldSegments: [
+		{
+			modelId: "level1/0",
+			modelUrl: "public/models/levels/level.glb",
+			px: 0,
+			py: 0,
+			pz: 0,
+			rx: 0,
+			ry: 0,
+			rz: 0
+		}
+	]
+}
+
 class Character{
 	constructor(modelId, modifiers){
 		this.modelId = modelId
 		this.model = MODELS[modelId].gltf.scene.clone()
+		//Collision element
+		const collisionGroup = new THREE.Group()
+		const geometry = new THREE.CapsuleGeometry(0.25, 0.2, 2, 6, 4);
+		const material = new THREE.MeshBasicMaterial( { color: 0x0000ff } );
+		const collisionCapsule = new THREE.Mesh( geometry, material );
+		collisionCapsule.position.y += 0.2
+		collisionCapsule.rotation.x = Math.PI * 0.5
+		collisionGroup.add(collisionCapsule)
+		this.collisionModel = collisionGroup
 
 		if (modifiers){
 			if (modifiers.includes("outline")){
@@ -174,6 +262,63 @@ class Character{
 	}
 	set z(coord){
 		this.model.position.z = coord
+	}
+}
+
+class World {
+	constructor(levelId){
+		this.isLoaded = false
+		this.worldData = LEVELS[levelId]
+		let worldSegments = this.worldData.worldSegments
+		this.worldSegments = worldSegments
+		this.worldSegmentMap = new Map()
+		this.heightMap = new Map()
+	}
+	async load(){
+		let p = []
+		for (let i = 0; i < this.worldSegments.length; i++){
+			let segment = this.worldSegments[i]
+			let modelId = segment.modelId
+			let modelUrl = segment.modelUrl
+			let segmentP = loadModel(modelId, modelUrl)
+			.then(model => {
+				this.worldSegmentMap.set(segment, model)
+			})
+			p.push(segmentP)
+		}
+		p = Promise.all(p).then(() => {
+			this.isLoaded = true
+		})
+		return p
+	}
+	getGroundCoord(position){
+		//Returns the y-coordinate of the nearest ground below the given position.
+		let x = position.x
+		let z = position.z
+		let resolution = this.worldData.heightMapResolution ?? 0.01
+		x -= x % resolution
+		z -= z % resolution
+		let key = x.toString()+","+z.toString()
+		let heightMap = this.heightMap
+		if (heightMap.has(key)){
+			return heightMap.get(key)
+		} else {
+			let worldSegmentModel = this.worldSegmentMap.get(this.worldSegments[0])
+			let worldModel = worldSegmentModel.gltf.scene
+			//Check downwards from y=0 to see if the ground is below 0
+			let raycaster = new THREE.Raycaster(new THREE.Vector3(x, 0, z), new THREE.Vector3(0, 1, 0))
+			let upResult = raycaster.intersectObject(worldModel)
+			let dist = upResult.length ? upResult[upResult.length - 1].distance : -Infinity
+			let groundCoord = dist
+			if (groundCoord === -Infinity){
+				raycaster.set(position, new THREE.Vector3(0, -1, 0))
+				let downResult = raycaster.intersectObject(worldModel)
+				dist = downResult.length ? downResult[0].distance : Infinity
+				groundCoord = -dist
+			}
+			heightMap.set(key, groundCoord)
+			return groundCoord
+		}
 	}
 }
 

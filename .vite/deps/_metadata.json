@@ -2,18 +2,24 @@
   "hash": "1bfb748e",
   "configHash": "61915c54",
   "lockfileHash": "ca1a506e",
-  "browserHash": "70960eae",
+  "browserHash": "be5fd874",
   "optimized": {
     "three": {
       "src": "../../node_modules/three/build/three.module.js",
       "file": "three.js",
-      "fileHash": "46c8e1ee",
+      "fileHash": "69a11b46",
       "needsInterop": false
     },
     "three/addons/loaders/GLTFLoader.js": {
       "src": "../../node_modules/three/examples/jsm/loaders/GLTFLoader.js",
       "file": "three_addons_loaders_GLTFLoader__js.js",
-      "fileHash": "038c0b8f",
+      "fileHash": "2d2bb787",
+      "needsInterop": false
+    },
+    "three/addons/math/Capsule.js": {
+      "src": "../../node_modules/three/examples/jsm/math/Capsule.js",
+      "file": "three_addons_math_Capsule__js.js",
+      "fileHash": "3b4c43c0",
       "needsInterop": false
     }
   },
