@@ -114,7 +114,7 @@ export default class ControlManager {
 	}
 	tick(){
 		let records = this.mouse.records
-		records.push([this.mouse.x, this.mouse.y, Date.now()])
+		records.push([this.mouse.x, this.mouse.y, performance.now()])
 		if (records.length > 5){
 			records.splice(0, records.length - 5)
 		}

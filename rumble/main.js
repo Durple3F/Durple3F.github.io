@@ -11,7 +11,6 @@ let game
 
 Promise.all([
 	loadModel("bulbasaur", "public/Bulbasaur.glb"),
-	loadModel("level", "public/models/levels/level.glb")
 ])
 .then(async () => {
 	game = new Game(renderer, controls)
@@ -27,7 +26,7 @@ const frameTimes = {
 	max: 0
 }
 function animate( time ) {
-	let start = Date.now()
+	let start = performance.now()
 	game.time = time
 	game.tick()
 
@@ -35,7 +34,7 @@ function animate( time ) {
 	// gltf.scene.rotation.y = time / 1000;
 
 	render(game)
-	let end = Date.now()
+	let end = performance.now()
 	frameTimes.records.push(end - start)
 	let len = frameTimes.records.length
 	if (len > 1000){

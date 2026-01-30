@@ -5,7 +5,7 @@ export const loader = new GLTFLoader();
 
 const decay = 16
 export function expDecay(a, b, decay, dt){
-	return b+(a-b)*Math.exp(-decay * dt)
+	return a === b ? b : b+(a-b)*Math.exp(-decay * dt)
 }
 export function expDecayAngle(a, b, decay, dt){
 	const PI = Math.PI
@@ -41,6 +41,10 @@ export function dotProduct2d(x1, y1, x2, y2){
 }
 export function dotProduct3d(x1, y1, z1, x2, y2, z2){
 	return x1 * x2 + y1 * y2 + z1 * z2
+}
+
+export function getBoundingBox(obj){
+	return new THREE.Box3().setFromObject(obj);
 }
 
 export async function solidify(scene, mesh, thickness=0.012){

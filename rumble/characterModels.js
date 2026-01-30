@@ -1,0 +1,1 @@
+THREE.CapsuleGeometry(0.25, 0.2, 2, 6, 4)

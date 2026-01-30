@@ -1,10 +1,21 @@
 {
 	"versions": {
+		"20260129": {
+			"date": "January 29, 2026",
+			"line-count": 600,
+			"changes": [
+				"- Fixed an issue with how heights were determined.",
+				"- Added a way to resize the world model if need be",
+				"- Added a more robust collision check that actually checks if you're about to run into a wall. It has some fun trigonometry that I believe is even correct.",
+				"- Reworked a lot of the ways that I was storing velocities to actually just use the prebuilt data structures instead of coding stuff for that myself."
+			]
+		},
 		"20260128": {
 			"date": "January 28, 2026",
 			"line-count": 600,
 			"changes": [
-				"- Gravity now uses a map so as to not check the heights of coordinates it's already checked before. This saved a lot of time."
+				"- Gravity now uses a map so as to not check the heights of coordinates it's already checked before. This saved a lot of time.",
+				"- I tried to build a simpler level model that might be an example of one used for collision. I don't understand a lot of why this isn't working. They fall through the floor so often."
 			]
 		},
 		"20260127": {
