@@ -5,9 +5,9 @@ LEVELS["level1"] = {
 	worldSegments: [
 		{
 			modelId: "level1/0",
-			modelUrl: "public/models/levels/level2.glb",
+			modelUrl: "public/models/levels/level3.glb",
 			px: 0,
-			py: 0.9841242432594298,
+			py: 0,
 			pz: 0,
 			rx: 0,
 			ry: 0,

@@ -1,3 +1,2 @@
 to do:
 - find a way to have a level's collision mesh coexist with its visual mesh
-- make walking up a ramp use the same normal vector manipulation that sliding along a wall does

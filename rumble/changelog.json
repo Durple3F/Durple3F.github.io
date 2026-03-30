@@ -1,8 +1,23 @@
 {
 	"versions": {
+		"20260202": {
+			"date": "February 2, 2026",
+			"line-count": 770,
+			"changes": [
+				"- Figured out how to embed information in a model such as where the player should spawn.",
+				"- Blender is not my friend. Trying to create another level model. Gave up midway through."
+			]
+		},
+		"20260130": {
+			"date": "January 30, 2026",
+			"line-count": 700,
+			"changes": [
+				"- Trying to make moving up ramps smoother."
+			]
+		},
 		"20260129": {
 			"date": "January 29, 2026",
-			"line-count": 600,
+			"line-count": 650,
 			"changes": [
 				"- Fixed an issue with how heights were determined.",
 				"- Added a way to resize the world model if need be",

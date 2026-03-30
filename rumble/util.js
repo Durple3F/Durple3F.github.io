@@ -70,3 +70,23 @@ export async function solidify(scene, mesh, thickness=0.012){
 	const outline = new THREE.Mesh(geometry, material)
 	scene.add(outline)
 }
+
+export function randomPointInBox(object) {
+  const box = new THREE.Box3().setFromObject(object);
+
+  const size = new THREE.Vector3();
+  box.getSize(size);
+  size.multiplyScalar(0.5);
+
+  const localPoint = new THREE.Vector3(
+    THREE.MathUtils.randFloat(-size.x, size.x),
+    THREE.MathUtils.randFloat(-size.y, size.y),
+    THREE.MathUtils.randFloat(-size.z, size.z)
+  );
+
+  return object.localToWorld(localPoint);
+}
+
+export function randomChoice(arr){
+	return arr[Math.floor(arr.length * Math.random())]
+}

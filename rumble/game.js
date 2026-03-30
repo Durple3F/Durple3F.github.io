@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { loader, expDecay, expDecay3d, expDecayAngle, expDecayEuler, solidify, getBoundingBox } from "./util.js";
+import { loader, expDecay, expDecay3d, expDecayAngle, expDecayEuler, solidify, getBoundingBox, randomChoice, randomPointInBox } from "./util.js";
 import { framesPerSecond } from './config.js';
 import { Capsule } from 'three/addons/math/Capsule.js';
 import { LEVELS } from './levels.js';
@@ -76,6 +76,26 @@ export class Game {
 			sceneSegment.position.y = worldSegmentData.py * sceneSegment.scale.y
 			sceneSegment.position.z = worldSegmentData.pz * sceneSegment.scale.z
 			scene.add(sceneSegment)
+
+			//Find relevant custom data within the mesh for stuff like spawns, keeps, death planes, etc
+			scene.traverse(obj => {
+			if (obj.userData.type === "spawn") {
+				level.spawnAreas.push(obj)
+				const position = new THREE.Vector3();
+   			obj.getWorldPosition(position);
+				const bbox = getBoundingBox(obj)
+				const center = bbox.getCenter(new THREE.Vector3())
+				const size = new THREE.Vector3();
+				new THREE.Box3().setFromObject(obj).getSize(size);
+				console.log(position, center, size, bbox)
+
+				// Use position + size as a spawn volume
+			}
+
+			if (obj.userData.type === "keep") {
+				// later
+			}
+		});
 		}
 
 		this.playerCharacter = new Character("bulbasaur", { scale, modifiers: ["outline"] })
@@ -85,10 +105,15 @@ export class Game {
 		this.scene.add(this.playerCharacter.model)
 		// this.scene.add(this.playerCharacter.collisionModel)
 		this.actors.push(this.playerCharacter)
+		let playerSpawnArea = randomChoice(level.spawnAreas)
+		if (playerSpawnArea){
+			const point = randomPointInBox(playerSpawnArea)
+			this.playerCharacter.model.position.copy(point)
+		}
 		console.log(this.playerCharacter)
 
 		for (let i = 0; i < 10; i++){
-			break
+			// break
 			const char = new Character("bulbasaur", { scale, modifiers: ["outline"] })
 			const gltf = char.model;
 			gltf.position.x += Math.random() - 0.5
@@ -155,76 +180,73 @@ export class Game {
 			playerCharacter.collisionModel.rotation.copy(newDir)
 		}
 
-		//handle gravity
+		//Handle velocity
 		for (let actor of actors){
-			const collisionModel = actor.collisionModel
-			const bbox = getBoundingBox(collisionModel)
-			const position = bbox.getCenter(new THREE.Vector3())
-			const groundCoord = level.getGroundCoord(position)
-			console.log(groundCoord)
-			const distFromGround = position.y - groundCoord
-			if (distFromGround > 1e-3){
-				//Actor is above ground
-				actor.velocity.y -= 0.0001 * scale
-				// actor.floorLevel = groundCoord
-			} else if (distFromGround < -1e-3){
-				//Actor is below the ground
-				//Pop them out of the ground
-				position.y = groundCoord
-				actor.velocity.y = 0
-			} else {
-				//Actor is on the ground
-				position.y = groundCoord
-				actor.velocity.y = 0
-			}
-		}
-
-		//Apply velocity
-		for (let actor of actors){
-			const collisionModel = actor.collisionModel
-			const position = collisionModel.position
 			//Velocity
 			const v = actor.velocity.clone().multiplyScalar(dt)
-
-			//Don't let the player go into a wall
+			const collisionModel = actor.collisionModel
+			const position = collisionModel.position
 			const bbox = getBoundingBox(collisionModel)
 			const center = bbox.getCenter(new THREE.Vector3())
-			const forward = new THREE.Vector3(0, 0, 1).applyQuaternion(collisionModel.quaternion)
-			const raycaster = new THREE.Raycaster(center, forward)
-			const worldModel = level.worldSegmentMap.get(level.worldSegments[0]).gltf.scene
-			const result = raycaster.intersectObject(worldModel)
-			if (result.length){
-				const hit = result[0]
+			const down = new THREE.Vector3(0, -1, 0)
+			const raycaster = new THREE.Raycaster(center, down)
+			const worldSegmentModel = level.getWorldSegment(position)
+			const worldModel = worldSegmentModel.gltf.scene
+			const downResult = raycaster.intersectObject(worldModel)
+			v.y -= 0.0001 * scale * dt
+			if (downResult.length){
+				const hit = downResult[0]
 				const dist = hit.distance
-				const length = v.length()
-				if (dist < length + 0.27 * scale){
-					const N = hit.face.normal.clone().transformDirection(hit.object.matrixWorld)
-					const intoWall = v.dot(N)
-					v.addScaledVector(N, -intoWall)
+				const center_foot_dist = 0.25
+				if (dist > Math.abs(v.y) + center_foot_dist){
+					//Leave everything unchanged, falling is allowed.
+				} else if (dist > Math.abs(v.y)){
+					v.y = center_foot_dist - dist
+				} else {
+					v.y = 0
 				}
 			}
 
 			if (v.x < -1e-5 || v.x > 1e-5 || v.z < -1e-5 || v.z > 1e-5){
-				const groundCoord = level.getGroundCoord(position)
-				const distFromGround = position.y - groundCoord
-				//If we are only a small amount above the ground now, move them to the ground.
-				if (distFromGround > 0 && distFromGround < 0.1 * scale){
-					position.y = groundCoord
+				//Don't let the player go into a wall
+				const forward = new THREE.Vector3(0, 0, 1).applyQuaternion(collisionModel.quaternion)
+				raycaster.set(center, forward)
+				const result2 = raycaster.intersectObject(worldModel)
+				if (result2.length){
+					const hit = result2[0]
+					const dist = hit.distance
+					const length = v.length()
+					if (dist < length + 0.25 * scale){
+						const N = hit.face.normal.clone().transformDirection(hit.object.matrixWorld)
+						const intoWall = v.dot(N)
+						v.addScaledVector(N, -intoWall)
+					}
 				}
-				//If the ground you're attempting to move into is too high, move back.
-				else if (distFromGround < -0.1 * scale){
-					v.x = 0
-					v.z = 0
+
+				//Check that the ground level of the intended destination is not in the ground
+				raycaster.set(center.clone().add(v), new THREE.Vector3(0, -1, 0))
+				const downResult2 = raycaster.intersectObject(worldModel)
+				if (downResult2.length){
+					const hit = downResult2[0]
+					const dist = hit.distance
+					const center_foot_dist = 0.25
+					const absvy = Math.abs(v.y)
+					if (dist > absvy + center_foot_dist && dist < absvy + center_foot_dist * 2){
+						//Snap the player to the ground
+						v.y = center_foot_dist - dist
+					} else if (dist > absvy + center_foot_dist){
+						//Leave everything unchanged, falling is allowed.
+					} else if (dist > absvy){
+						v.y = center_foot_dist - dist
+					} else {
+						v.y = 0
+					}
 				}
 			}
 			
 			position.x += v.x
 			position.y += v.y
 			position.z += v.z
-			if (position.y < actor.floorLevel){
-				position.y = actor.floorLevel
-				v.y = 0
-			}
 			actor.velocity.copy(v).multiplyScalar(1 / dt)
 			actor.vx = v.x / dt
 			actor.vy = v.y / dt
@@ -240,7 +262,7 @@ export class Game {
 		}
 
 		//Now move the camera towards the goal
-		const CAMERA_OFFSET_LOCAL = new THREE.Vector3(0, 1.5, 2);
+		const CAMERA_OFFSET_LOCAL = new THREE.Vector3(0, 1, 2);
 		CAMERA_OFFSET_LOCAL.multiplyScalar(scale)
 		// const anchor = playerPos.clone();
 		// anchor.y += 2;
@@ -339,6 +361,8 @@ class World {
 		this.worldSegments = worldSegments
 		this.worldSegmentMap = new Map()
 		this.heightMap = new Map()
+
+		this.spawnAreas = []
 	}
 	async load(){
 		let p = []
@@ -380,7 +404,6 @@ class World {
 			let hit = downResult[0]
 			let point = hit.point
 			let normal = hit.normal
-			console.log(y, point.y)
 			groundCoord = y - hit.distance
 		}
 		return groundCoord
