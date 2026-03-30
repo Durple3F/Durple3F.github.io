@@ -1,0 +1,20 @@
+{
+	"versions": {
+		"20260329": {
+			"date": "March 29, 2026",
+			"line-count": 400,
+			"changes": [
+				"- Lots of initial work towards simply setting up a hexagonal grid. I've always wanted to make a hex grid, but never actually done it.",
+				"- The hex grid renders, and fills available space based on how much space is available on the screen,",
+				"- Allowed the player to pan the camera around the screen, and did a lot of work to try and sell the illusion that the space is infinite. Right now, new cells are created as you pan the camera around, but old cells that are inactive are still kept. I need to remove those."
+			]
+		},
+		"20260330": {
+			"date": "March 30, 2026",
+			"line-count": 400,
+			"changes": [
+				"- I'm making it so that the game renders fake tiles that aren't persistent until the tile is actually involved in the simulation. Creating untouched tiles on the fly seems faster than remembering every tile that's ever been created."
+			]
+		}
+	}
+}
