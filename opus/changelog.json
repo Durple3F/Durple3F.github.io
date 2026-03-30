@@ -17,7 +17,8 @@
 				"- Now when the game first loads, you spawn centered at (0, 0, 0)",
 				"- Wrote the logic for finding which hex your mouse is on.",
 				"- Added the window where the components like mechanisms and reagents will go.",
-				"- Added a neat collapsing effect where that window can be hidden or shown."
+				"- Added a neat collapsing effect where that window can be hidden or shown.",
+				"- Created an image for the first atom, Fire."
 			]
 		}
 	}

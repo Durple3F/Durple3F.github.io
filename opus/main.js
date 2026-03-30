@@ -1,9 +1,10 @@
 import {Game} from "./game.js";
 import {render} from "./render.js";
 import ControlManager from './controls.js';
-import { easeInOutCubic, easeInOutSine, easeOutCubic } from "./util"
+import { easeInOutCubic, easeInOutSine, easeOutCubic, ELEMENTS } from "./util"
 
 const FRAMERATE = 60
+let tickInterval
 
 const canvas = document.getElementById("screen")
 const debug = document.getElementById("debug")
@@ -19,8 +20,6 @@ const resize = () => {
 	game.resizeScreen()
 	window.requestAnimationFrame(draw)
 }
-window.addEventListener("resize", resize)
-resize()
 
 function draw(){
 	render(game, ctx, canvas.width, canvas.height)
@@ -33,7 +32,6 @@ function tick(){
 	const drawEnd = performance.now()
 	debug.innerHTML = `${drawEnd-tickEnd}ms\n${tickEnd-start}ms`
 }
-
 
 const componentsPane = $("#components")
 const componentsTab = $("#components-tab")
@@ -67,4 +65,18 @@ componentsTab.click(() => {
 	})
 })
 
-let tickInterval = setInterval(tick, 1000 / FRAMERATE)
+async function loadGame(){
+	//Load element sprites
+	for (let elementId in ELEMENTS){
+		let element = ELEMENTS[elementId]
+		await element.load()
+	}
+}
+
+function startGame(){
+	window.addEventListener("resize", resize)
+	resize()
+	$("#loading-screen").fadeOut()
+	tickInterval = setInterval(tick, 1000 / FRAMERATE)
+}
+loadGame().then(() => startGame())

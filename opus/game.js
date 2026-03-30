@@ -1,102 +1,10 @@
-import {Hex} from "./util.js"
+import {Hex, Grid, Component, Element, Atom, loadSprite, Molecule} from "./util.js"
 
 const min = Math.min
 const max = Math.max
 const ROOT3 = Math.sqrt(3)
 const floor = Math.floor
 const ceil = Math.ceil
-
-export class Grid{
-	constructor(){
-		this.map = new Map()
-		this.minQ = 0
-		this.maxQ = 0
-		this.minR = 0
-		this.maxR = 0
-	}
-	getKey(q, r, s){
-		return `${q},${r},${s}`
-	}
-	addHex(hex){
-		const q = Math.floor(hex.q)
-		const r = Math.floor(hex.r)
-		const s = Math.floor(hex.s)
-		const key = this.getKey(q, r, s)
-		this.map.set(key, hex)
-	}
-	fill(minQ, maxQ, minR, maxR){
-		const map = this.map
-		if (minQ >= this.minQ && maxQ <= this.minQ && minR >= this.minR && maxR <= this.maxR){
-			//we're done. return
-			return
-		}
-		let tryCount = 0
-		let addedCount = 0
-
-		const tryToAdd = (q, r) => {
-			tryCount++
-			let s = -q - r
-			const key = this.getKey(q, r, s)
-			if (!map.has(key)){
-				let hex = new Hex(q, r, s)
-				this.addHex(hex)
-				addedCount++
-			}
-		}
-		
-		if (map.size === 0){
-			for (let r = minR; r <= maxR; r++){
-				//Because the hex grid is rectangular, every two rows, the starting point for q will move one unit back.
-				let offset = floor(-r*0.5)
-				for (let q = minQ + offset; q <= maxQ + offset; q++){
-					tryToAdd(q, r)
-				}
-			}
-			return
-		}
-
-		if (minR < this.minR){
-			for (let r = minR; r <= this.minR; r++){
-				let offset = floor(-r*0.5)
-				for (let q = this.minQ + offset; q <= this.maxQ + offset; q++){
-					tryToAdd(q, r)
-				}
-			}
-			this.minR = minR
-		}
-		if (maxR > this.maxR){
-			for (let r = this.maxR; r <= maxR; r++){
-				let offset = floor(-r*0.5)
-				for (let q = this.minQ + offset; q <= this.maxQ + offset; q++){
-					tryToAdd(q, r)
-				}
-			}
-			this.maxR = maxR
-		}
-		if (minQ < this.minQ){
-			for (let r = this.minR; r <= this.maxR; r++){
-				let offset = floor(-r*0.5)
-				for (let q = minQ + offset; q <= this.maxQ + offset; q++){
-					tryToAdd(q, r)
-				}
-			}
-			this.minQ = minQ
-		}
-		if (maxQ > this.maxQ){
-			for (let r = this.minR; r <= this.maxR; r++){
-				let offset = floor(-r*0.5)
-				for (let q = this.minQ + offset; q <= maxQ + offset; q++){
-					tryToAdd(q, r)
-				}
-			}
-			this.maxQ = maxQ
-		}
-	}
-	findHex(q, r, s){
-		const key = this.getKey(q, r, s)
-		return this.map.get(key)
-	}
-}
 
 export class Level{
 	constructor(){
@@ -112,7 +20,7 @@ export class Game{
 		this.isDraggingMap = false
 
 		this.currentLevel = new Level()
-		this.hexSize = 20
+		this.hexSize = 40
 		this.canvas = canvas
 		this.canvasWidth = canvas.width
 		this.canvasHeight = canvas.height
@@ -123,6 +31,17 @@ export class Game{
 
 	initialize(){
 		this.resizeScreen()
+
+		//Create a molecule of elemental Fire and put it on the home tile.
+		let molecule = new Molecule()
+		let atom = new Atom("Fire")
+		atom.setCoords(0, 0, 0)
+		molecule.addAtom(atom)
+		let atom2 = new Atom("Fire")
+		atom.setCoords(-1, 1, 0)
+		molecule.addAtom(atom2)
+		molecule.homeTile = this.getHexAt(0, 0)
+		this.currentLevel.grid.contents.push(molecule)
 	}
 
 	resizeScreen(){
@@ -188,7 +107,7 @@ export class Game{
 		let mouseY = controls.mouse.y
 		let activeHex = this.getHexFromXY(mouseX, mouseY)
 		// console.log(activeHex)
-		activeHex.active = true
+		// activeHex.active = true
 
 		//Map dragging
 		if (controls.isClicking("left")){
