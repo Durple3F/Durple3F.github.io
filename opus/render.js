@@ -29,14 +29,48 @@ function drawHex(ctx, hex, x, y, size, inRadius){
 	ctx.fill()
 	ctx.stroke()
 	ctx.restore()
+}
 
-	//If the hex has contents, draw them.
-	if (hex.content instanceof Atom){
-		let sprites = hex.content.element.sprites
-		let sprite = sprites["atom"]
-		let atomSize = inRadius * 0.9
-		ctx.drawImage(sprite, x - atomSize, y - atomSize, 2*atomSize, 2*atomSize)
+function drawMolecule(ctx, molecule, x, y, hexSize, inRadius, horiz, vert){
+	const atoms = molecule.atoms
+	const contents = atoms.contents
+	const bonds = molecule.bonds.contents
+	for (let bond of bonds){
+		const atom1 = bond.atoms[0]
+		const q1 = atom1.coord.q
+		const r1 = atom1.coord.r
+		const atom1X = x + (q1 + 0.5 * r1) * horiz 
+		const atom1Y = y + r1 * vert
+
+		const atom2 = bond.atoms[1]
+		const q2 = atom2.coord.q
+		const r2 = atom2.coord.r
+		const atom2X = x + (q2 + 0.5 * r2) * horiz 
+		const atom2Y = y + r2 * vert
+
+		const type = bond.type
+		ctx.save()
+		ctx.lineWidth = hexSize * 0.4
+		ctx.strokeStyle = "white"
+		ctx.moveTo(atom1X, atom1Y)
+		ctx.lineTo(atom2X, atom2Y)
+		ctx.stroke()
+		ctx.restore()
 	}
+	for (let atom of contents){
+		const q = atom.coord.q
+		const r = atom.coord.r
+		const atomX = x + (q + 0.5 * r) * horiz 
+		const atomY = y + r * vert
+		drawAtom(ctx, atom, atomX, atomY, hexSize, inRadius)
+	}
+}
+
+function drawAtom(ctx, atom, x, y, hexSize, inRadius){
+	// console.log(atom)
+	let atomSize = inRadius * 0.8
+	let sprite = atom.element.sprites["atom"]
+	ctx.drawImage(sprite, x - atomSize, y - atomSize, 2*atomSize, 2*atomSize)
 }
 
 export function render(game, ctx, w, h){
@@ -66,6 +100,19 @@ export function render(game, ctx, w, h){
 			let y = r * vert - yOffset
 			let hex = grid.findHex(q, r, s) || new Hex(q, r, s)
 			drawHex(ctx, hex, x, y, hexSize, inRadius)
+		}
+	}
+
+	const components = grid.contents
+	for (let component of components){
+		let homeTile = component.homeTile
+		let q = homeTile.q
+		let r = homeTile.r
+		let s = homeTile.s
+		let x = (q + 0.5 * r) * horiz - xOffset
+		let y = r * vert - yOffset
+		switch (component.type){
+			case "Molecule": drawMolecule(ctx, component, x, y, hexSize, inRadius, horiz, vert); break
 		}
 	}
 	// grid.map.forEach(hex => {

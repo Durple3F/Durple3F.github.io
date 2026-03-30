@@ -38,10 +38,12 @@ export class Game{
 		atom.setCoords(0, 0, 0)
 		molecule.addAtom(atom)
 		let atom2 = new Atom("Fire")
-		atom.setCoords(-1, 1, 0)
+		atom2.setCoords(-1, 1, 0)
 		molecule.addAtom(atom2)
+		molecule.addBond(atom, atom2)
 		molecule.homeTile = this.getHexAt(0, 0)
 		this.currentLevel.grid.contents.push(molecule)
+		console.log(molecule)
 	}
 
 	resizeScreen(){
