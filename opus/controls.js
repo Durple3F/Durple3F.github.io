@@ -1,9 +1,10 @@
 export default class ControlManager {
-	constructor(){
+	constructor(canvas){
+		this.canvas = canvas
 		this.buttons = {}
 		this.mouse = {
-			x: window.innerWidth * 0.5,
-			y: window.innerHeight * 0.5,
+			x: this.canvas.clientWidth * 0.5,
+			y: this.canvas.clientHeight * 0.5,
 			vx: 0,
 			vy: 0,
 			buttons: {
@@ -13,7 +14,6 @@ export default class ControlManager {
 			},
 			records: []
 		}
-		console.log(this)
 		window.addEventListener("keydown", e => {
 			let key = e.key
 			this.setButtonState(key, true)
@@ -34,15 +34,15 @@ export default class ControlManager {
 				// Page became visible!
 			}
 		});
-		document.addEventListener("mousemove", e => {
+		this.canvas.addEventListener("mousemove", e => {
 			this.setMousePosition(e.clientX, e.clientY)
 		})
-		document.addEventListener("mousedown", e => {
+		this.canvas.addEventListener("mousedown", e => {
 			let buttons = e.buttons
 			this.setMouseButtonState(buttons)
 			this.setMousePosition(e.clientX, e.clientY)
 		})
-		document.addEventListener("mouseup", e => {
+		this.canvas.addEventListener("mouseup", e => {
 			let buttons = e.buttons
 			this.setMouseButtonState(buttons)
 			this.setMousePosition(e.clientX, e.clientY)
@@ -109,6 +109,9 @@ export default class ControlManager {
 		return this.getMouseButtonState(index)
 	}
 	setMousePosition(x, y){
+		let offset = $(this.canvas).offset()
+		x -= offset.left
+		y -= offset.top
 		this.mouse.x = x
 		this.mouse.y = y
 	}

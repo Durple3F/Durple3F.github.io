@@ -1,4 +1,4 @@
-import {Hex} from "./game.js";
+import {Hex} from "./util.js";
 
 const ROOT3 = Math.sqrt(3)
 const floor = Math.floor
@@ -9,7 +9,11 @@ function drawHex(ctx, hex, x, y, size){
 	const diagx = ROOT3*0.5*size
 	const diagy = size*0.5
 	ctx.save()
-	const color = `rgb(${hex.q % 255}, ${hex.r % 255}, ${hex.s % 255})`
+	let red = (hex.q + 20) % 255
+	let green = (hex.r + 20) % 255
+	let blue = (hex.s + 20) % 255
+	let color = `rgb(${red}, ${green}, ${blue})`
+	color = (hex.active || (hex.q === 0 && hex.r === 0 && hex.s === 0)) ? "white" : color
 	ctx.fillStyle = color
 	ctx.lineWidth = Math.max(size * 0.05, 2)
 	ctx.strokeStyle = "black"

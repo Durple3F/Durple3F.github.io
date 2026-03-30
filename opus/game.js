@@ -1,24 +1,10 @@
+import {Hex} from "./util.js"
+
 const min = Math.min
 const max = Math.max
 const ROOT3 = Math.sqrt(3)
 const floor = Math.floor
 const ceil = Math.ceil
-
-export class Hex{
-	constructor(q, r, s){
-		//q, r, and s are coordinates in a kind of 3-dimensional space.
-		//Each hex on a grid is defined by these three coordinates, though not uniquely.
-		//The canonical coordinates for each hex are such that q+r+s === 0.
-		this.q = q
-		this.r = r
-		this.s = s
-		if (Math.round(q + r + s) !== 0){
-			throw "q + r + s must be 0"
-		}
-	}
-}
-Hex.directions = [new Hex(1, 0, -1), new Hex(1, -1, 0), new Hex(0, -1, 1), new Hex(-1, 0, 1), new Hex(-1, 1, 0), new Hex(0, 1, -1)]
-Hex.diagonals = [new Hex(2, -1, -1), new Hex(1, -2, 1), new Hex(-1, -1, 2), new Hex(-2, 1, 1), new Hex(-1, 2, -1), new Hex(1, 1, -2)]
 
 export class Grid{
 	constructor(){
@@ -128,14 +114,26 @@ export class Game{
 		this.currentLevel = new Level()
 		this.hexSize = 20
 		this.canvas = canvas
+		this.canvasWidth = canvas.width
+		this.canvasHeight = canvas.height
 		this.xOffset = -0.5 * canvas.width
 		this.yOffset = -0.5 * canvas.height
+		this.initialize()
+	}
+
+	initialize(){
 		this.resizeScreen()
 	}
 
 	resizeScreen(){
+		const oldW = this.canvasWidth
+		const oldH = this.canvasHeight
 		const w = this.canvas.width
 		const h = this.canvas.height
+		this.canvasWidth = w
+		this.canvasHeight = h
+		this.xOffset += (oldW - w) * 0.5
+		this.yOffset += (oldH - h) * 0.5
 		const grid = this.currentLevel.grid
 		const hexSize = this.hexSize
 		const horiz = ROOT3 * hexSize
@@ -156,12 +154,43 @@ export class Game{
 		//TODO: Remove cells that are far outside the current play space.
 	}
 
+	getHexAt(q, r){
+		const grid = this.currentLevel.grid
+		q = Math.round(q)
+		r = Math.round(r)
+		const s = -q - r
+		let hex = grid.findHex(q, r, s)
+		if (!hex){
+			hex = new Hex(q, r, s)
+			grid.addHex(hex)
+		}
+		return hex
+	}
+	getHexFromXY(x, y){
+		const hexSize = this.hexSize
+		const horiz = ROOT3 * hexSize
+		const vert = 1.5 * hexSize
+		// let x = (q + 0.5 * r) * horiz - xOffset
+		// let y = r * vert - yOffset
+		let r = (y + this.yOffset) / vert
+		let q = ((x + this.xOffset) / horiz) - 0.5 * r
+		let hex = this.getHexAt(q, r)
+		return hex
+	}
+
 	tick(){
 		const now = performance.now()
 		const dt = now - this.lastTick
 		const controls = this.controls
 		controls.tick()
 
+		let mouseX = controls.mouse.x
+		let mouseY = controls.mouse.y
+		let activeHex = this.getHexFromXY(mouseX, mouseY)
+		// console.log(activeHex)
+		activeHex.active = true
+
+		//Map dragging
 		if (controls.isClicking("left")){
 			this.isDraggingMap = true
 			let records = controls.mouse.records

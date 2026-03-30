@@ -1,7 +1,53 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css");
+
+:root {
+	--components-bg: rgb(37, 34, 92);
+}
+
 #screen {
 	position: absolute;
+	top: 0; right: 0;
+	height: 100vh; width: 85vw;
+}
+
+#components {
+	position: absolute;
 	top: 0; left: 0;
-	height: 100vh; width: 100vw;
+	height: 100vh; width: 15vw;
+	background-color: var(--components-bg);
+	border-right: 2px solid black;
+	z-index: 10;
+}
+
+.ui-tab {
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	transition: filter 0.05s ease-out;
+}
+#components-tab {
+	top: 2vh; left: 15vw;
+	height: 8vh; width: 3vh;
+	background-color: var(--components-bg);
+	/* background-color: oklab(from var(--components-bg) calc()); */
+	border-top: 3px solid black;
+	border-right: 3px solid black;
+	border-bottom: 3px solid black;
+	border-top-right-radius: 1.5vh;
+	border-bottom-right-radius: 1.5vh;
+	z-index: 9;
+	font-size: min(2vh, 2vw);
+
+	&:hover {
+		filter: drop-shadow(0 0 5px white);
+	}
+
+	.tab-label {
+		transform: rotate(45deg);
+		color: white;
+	}
 }
 
 #debug {
@@ -11,4 +57,6 @@
 	color: white;
 	font-family: monospace;
 	white-space: pre;
+	z-index: 100;
+	pointer-events: none;
 }
