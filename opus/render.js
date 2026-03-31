@@ -7,7 +7,7 @@ const ceil = Math.ceil
 const sin = Math.sin
 const cos = Math.cos
 
-function drawHex(ctx, hex, x, y, size, inRadius){
+function drawHex(ctx, hex, x, y, size, inRadius, q, r, s){
 	//x, y is the center of the hexagon.
 	const diagx = ROOT3*0.5*size
 	const diagy = size*0.5
@@ -44,6 +44,73 @@ function drawHex(ctx, hex, x, y, size, inRadius){
 	ctx.closePath()
 	ctx.fill()
 	ctx.stroke()
+	ctx.restore()
+
+	if (hex.active){
+		ctx.save()
+		const fontSize = size * 0.4
+		const font = fontSize+"px monospace"
+		ctx.font = font
+		ctx.fillStyle = "red"
+		ctx.fillText(q, x - fontSize * 0.2, y - fontSize * 0.8)
+		ctx.fillText(r, x - fontSize * 0.2, y + fontSize * 0.2)
+		ctx.fillText(s, x - fontSize * 0.2, y + fontSize * 1.2)
+		ctx.restore()
+	}
+}
+
+function drawArmMechanism(ctx, mechanism, x, y, hexSize, inRadius, horiz, vert){
+	const arms = mechanism.arms.contents
+
+	//use the home tile to handle fine decimal rotation
+	const angle = mechanism.rotation
+	const cosT = cos(angle)
+	const sinT = sin(angle)
+	const atomSize = 0.7
+
+	ctx.save()
+	ctx.beginPath()
+	ctx.moveTo(x, y)
+	ctx.fillStyle = "yellow"
+	ctx.arc(x, y, hexSize * 0.5, 0, Math.PI * 2)
+	ctx.closePath()
+	ctx.fill()
+
+	for (let arm of arms){
+		const hand = arm.coord
+		const q = hand.q
+		const r = hand.r
+		//Because arms can have their hands any distance from the home tile, multiply these distances to get the true distance.
+		const distance = arm.distance
+		const handX = (q + 0.5 * r) * horiz * distance
+		const handY = r * vert * distance
+
+		ctx.translate(x, y)
+		ctx.rotate(angle)
+		ctx.beginPath()
+		ctx.strokeStyle = "yellow"
+		ctx.lineWidth = hexSize * 0.1
+		ctx.arc(handX, handY, hexSize * atomSize, 0, Math.PI * 2)
+		ctx.closePath()
+		ctx.stroke()
+
+		//Draw the arm connecting the home tile to the hand
+		const len = Math.hypot(handX, handY)
+		const ux = handX / len
+		const uy = handY / len
+
+		const radius = hexSize * atomSize
+
+		// Endpoint just before the circle
+		const endX = handX - ux * radius
+		const endY = handY - uy * radius
+
+		ctx.beginPath()
+		ctx.moveTo(0, 0)
+		ctx.lineTo(endX, endY)
+		ctx.closePath()
+		ctx.stroke()
+	}
 	ctx.restore()
 }
 
@@ -143,7 +210,7 @@ export function render(game, ctx, w, h){
 			let x = (q + 0.5 * r) * horiz - xOffset
 			let y = r * vert - yOffset
 			let hex = grid.findHex(q, r, s) || new Hex(q, r, s)
-			drawHex(ctx, hex, x, y, hexSize, inRadius)
+			drawHex(ctx, hex, x, y, hexSize, inRadius, q, r, s)
 		}
 	}
 
@@ -152,11 +219,19 @@ export function render(game, ctx, w, h){
 		let homeTile = component.homeTile
 		let q = homeTile.q
 		let r = homeTile.r
-		let s = homeTile.s
+		// let s = homeTile.s
 		let x = (q + 0.5 * r) * horiz - xOffset
 		let y = r * vert - yOffset
+		//Components can be offset in non-integer amounts to allow for smooth translation
+		let componentOffset = component.offset
+		let componentOffDist = component.offsetDistance
+		let	componentOffX = (componentOffset.q + 0.5*componentOffset.r) * horiz * componentOffDist
+		let	componentOffY = (componentOffset.r) * vert * componentOffDist
+		x += componentOffX
+		y += componentOffY
 		switch (component.type){
 			case "Molecule": drawMolecule(ctx, component, x, y, hexSize, inRadius, horiz, vert); break
+			case "ArmMechanism": drawArmMechanism(ctx, component, x, y, hexSize, inRadius, horiz, vert); break
 		}
 	}
 	// grid.map.forEach(hex => {

@@ -1,1 +1,1 @@
-export const drawGhostRotation = true
+export const drawGhostRotation = false

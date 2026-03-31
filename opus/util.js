@@ -32,7 +32,6 @@ export class Hex {
 		this.q = q
 		this.r = r
 		this.s = s
-		this.content = null
 		this.active = false
 		if (Math.round(q + r + s) !== 0) {
 			console.trace(this)
@@ -271,8 +270,48 @@ export class Component {
 		this.type = null
 		this.rotation = 0
 		this.homeTile = new Hex(0, 0, 0)
+		this.offset = Hex.directions[0]
+		this.offsetDistance = 0
 		this.atoms = new Grid()
 		this.bonds = new Grid()
+		this.arms = new Grid()
+	}
+
+
+	moveOrigin(b) {
+		let origin = this.homeTile
+		origin.q += b.q
+		origin.r += b.r
+		origin.s += b.s
+		let atoms = this.atoms
+		for (let atom of atoms.contents){
+			let dest = atom.coord.subtract(b)
+			atom.setCoords(dest.q, dest.r, dest.s)
+		}
+	}
+	rotateLeft() {
+		let atoms = this.atoms
+		for (let atom of atoms.contents){
+			let coord = atom.coord
+			atom.setCoords(-coord.s, -coord.q, -coord.r)
+		}
+		let arms = this.arms
+		for (let arm of arms.contents){
+			let coord = arm.coord
+			arm.setCoords(-coord.s, -coord.q, -coord.r)
+		}
+	}
+	rotateRight() {
+		let atoms = this.atoms
+		for (let atom of atoms.contents){
+			let coord = atom.coord
+			atom.setCoords(-coord.r, -coord.s, -coord.q)
+		}
+		let arms = this.arms
+		for (let arm of arms.contents){
+			let coord = arm.coord
+			arm.setCoords(-coord.r, -coord.s, -coord.q)
+		}
 	}
 }
 
@@ -363,30 +402,57 @@ export class Molecule extends Component {
 			this.bonds.contents.push(bond)
 		}
 	}
+}
 
-	moveOrigin(b) {
-		let origin = this.homeTile
-		origin.q += b.q
-		origin.r += b.r
-		origin.s += b.s
-		let atoms = this.atoms
-		for (let atom of atoms.contents){
-			let dest = atom.coord.subtract(b)
-			atom.setCoords(dest.q, dest.r, dest.s)
+export const ARMTYPES = {}
+export class ArmMechanismType {
+	constructor(abilities={}, armDirectionList=[Hex.directions[0]], atomList=[]){
+		this.armDirectionList = armDirectionList
+		this.atomList = atomList
+		this.abilities = {
+			rotateLeft: true,
+			rotateRight: true,
+			pivotLeft: true,
+			pivotRight: true,
+			extend: false,
+			retract: false,
+			grab: true,
+			release: true,
+		}
+		for (let ability in this.abilities){
+			if (ability in abilities){
+				this.abilities[ability] = abilities[ability]
+			}
 		}
 	}
-	rotateLeft() {
-		let atoms = this.atoms
-		for (let atom of atoms.contents){
-			let coord = atom.coord
-			atom.setCoords(-coord.s, -coord.q, -coord.r)
+}
+ARMTYPES["Piston"] = new ArmMechanismType({
+	extend: true,
+	retract: true
+})
+
+export class ArmMechanism extends Component {
+	constructor(typeId){
+		super()
+		this.type = "ArmMechanism"
+		let type = ARMTYPES[typeId]
+		for (let armLocation of type.armDirectionList){
+			let arm = new Arm(this.homeTile, armLocation)
+			this.arms.contents.push(arm)
 		}
+		console.log(this)
 	}
-	rotateRight() {
-		let atoms = this.atoms
-		for (let atom of atoms.contents){
-			let coord = atom.coord
-			atom.setCoords(-coord.r, -coord.s, -coord.q)
-		}
+}
+
+export class Arm {
+	constructor(home, hand){
+		this.distance = home.distance(hand)
+		this.coord = hand
+		this.isGripping = false
+	}
+	setCoords(q, r, s) {
+		this.coord.q = q
+		this.coord.r = r
+		this.coord.s = s
 	}
 }

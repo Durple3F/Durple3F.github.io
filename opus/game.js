@@ -1,4 +1,5 @@
-import {Hex, Grid, Component, Element, Atom, loadSprite, Molecule} from "./util.js"
+import {Hex, Grid, Component, Element, Atom, loadSprite, Molecule, ArmMechanism} from "./util.js"
+import { Scenario } from "./scenarios.js"
 
 const min = Math.min
 const max = Math.max
@@ -9,7 +10,17 @@ const ceil = Math.ceil
 export class Level{
 	constructor(){
 		this.grid = new Grid()
+		this.timestep = 0
+		this.programs = []
 		// this.grid.fill(-10, 10, -10, 10)
+	}
+}
+
+export class Program{
+	constructor(component){
+		this.component = component
+		this.name = ""
+		this.instructions = []
 	}
 }
 
@@ -26,6 +37,7 @@ export class Game{
 		this.canvasHeight = canvas.height
 		this.xOffset = -0.5 * canvas.width
 		this.yOffset = -0.5 * canvas.height
+		this.hoveredHex = null
 		this.initialize()
 	}
 
@@ -45,7 +57,22 @@ export class Game{
 		this.getHexAt(0, 0).active = true
 		this.currentLevel.grid.contents.push(molecule)
 		this.currentLevel.grid.contents[0].moveOrigin(new Hex(-2, 2, 0))
-		console.log(molecule)
+		if (true) {
+			let molecule = new Molecule()
+			let atom = new Atom("Fire")
+			atom.setCoords(0, 0, 0)
+			molecule.addAtom(atom)
+			this.currentLevel.grid.contents.push(molecule)
+			this.currentLevel.grid.contents[1].moveOrigin(new Hex(2, -2, 0))
+		}
+
+		//Put a piston arm -3, -2, 5
+		let arm = new ArmMechanism("Piston")
+		arm.homeTile = this.getHexAt(2, -2)
+		this.currentLevel.grid.contents.push(arm)
+		arm.rotateRight()
+		arm.rotateRight()
+		arm.arms.contents.forEach(arm => arm.distance = 2)
 	}
 
 	resizeScreen(){
@@ -108,12 +135,27 @@ export class Game{
 		controls.tick()
 
 		this.currentLevel.grid.contents[0].rotation += 0.1
+		this.currentLevel.grid.contents[1].rotation -= 0.1*0.15
+		this.currentLevel.grid.contents[2].rotation -= 0.1*0.15
+		for (let component of this.currentLevel.grid.contents){
+			let right = Math.PI * 1/3
+			let left = -right
+			let curAngle = component.rotation
+			if (curAngle > right){
+				component.rotation -= right
+				component.rotateRight()
+			} else if (curAngle < left){
+				component.rotation -= left
+				component.rotateLeft()
+			}
+		}
 
 		let mouseX = controls.mouse.x
 		let mouseY = controls.mouse.y
 		let activeHex = this.getHexFromXY(mouseX, mouseY)
-		// console.log(activeHex)
-		// activeHex.active = true
+		if (this.hoveredHex) this.hoveredHex.active = false
+		this.hoveredHex = activeHex
+		activeHex.active = true
 
 		//Map dragging
 		if (controls.isClicking("left")){

@@ -47,6 +47,10 @@ export default class ControlManager {
 			this.setMouseButtonState(buttons)
 			this.setMousePosition(e.clientX, e.clientY)
 		})
+		window.addEventListener("mouseup", e => {
+			let buttons = e.buttons
+			this.setMouseButtonState(buttons)
+		})
 	}
 	setButtonState(key, value){
 		this.buttons[key] = value

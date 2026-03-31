@@ -28,7 +28,10 @@
 			"date": "March 31, 2026",
 			"line-count": 900,
 			"changes": [
-				"- The game can now render molecules with a non-integer rotation. The atoms it draws this way are not actually stored as being where they claim to be, and only rendered there. I will need to do a lot of math again to determine their locations in the game logic for collision checks and stuff."
+				"- The game can now render molecules with a non-integer rotation. The atoms it draws this way are not actually stored as being where they claim to be, and only rendered there. I will need to do a lot of math again to determine their locations in the game logic for collision checks and stuff.",
+				"- Now components can be offset in non-integer amounts for smooth translations.",
+				"- Added a way for me to see the coordinates of any tile I want. It's getting hard to remember which is which.",
+				"- Added a prototype kind of arm, that can rotate the same way molecules can. Currently it can't actually affect molecules by itself, but it's there."
 			]
 		}
 	}
