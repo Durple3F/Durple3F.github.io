@@ -12,6 +12,11 @@ export default class ControlManager {
 				2: false, //right mouse
 				3: false //secret third mouse (mr. squeaker)
 			},
+			clickTimes: {
+				1: 0,
+				2: 0,
+				3: 0
+			},
 			records: []
 		}
 		window.addEventListener("keydown", e => {
@@ -34,15 +39,16 @@ export default class ControlManager {
 				// Page became visible!
 			}
 		});
-		this.canvas.addEventListener("mousemove", e => {
+		window.addEventListener("mousemove", e => {
+			this.currentHoveredElement = e.target
 			this.setMousePosition(e.clientX, e.clientY)
 		})
-		this.canvas.addEventListener("mousedown", e => {
+		window.addEventListener("mousedown", e => {
 			let buttons = e.buttons
 			this.setMouseButtonState(buttons)
 			this.setMousePosition(e.clientX, e.clientY)
 		})
-		this.canvas.addEventListener("mouseup", e => {
+		window.addEventListener("mouseup", e => {
 			let buttons = e.buttons
 			this.setMouseButtonState(buttons)
 			this.setMousePosition(e.clientX, e.clientY)
@@ -75,6 +81,10 @@ export default class ControlManager {
 		for (let i = 0; i < 3; i++){
 			let pow = Math.pow(2, i)
 			let equal = Math.floor(buttons / pow) % 2 === 1
+			if (equal && !this.mouse.buttons[i+1]){
+				//note down click time
+				this.mouse.clickTimes[i+1] = performance.now()
+			}
 			this.mouse.buttons[i+1] = equal
 		}
 	}
@@ -112,12 +122,29 @@ export default class ControlManager {
 		}
 		return this.getMouseButtonState(index)
 	}
+	justClicked(mouseButtonName, leniency=100){
+		let index = 1
+		switch (mouseButtonName){
+			case undefined: break
+			case 1: index = 1; break
+			case 2: index = 2; break
+			case 3: index = 3; break
+			case "left": index = 1; break
+			case "right": index = 2; break
+			case "middle": index = 3; break
+		}
+		return this.getMouseButtonState(index) && (performance.now() - this.mouse.clickTimes[index] < leniency)
+	}
 	setMousePosition(x, y){
 		let offset = $(this.canvas).offset()
 		x -= offset.left
 		y -= offset.top
 		this.mouse.x = x
 		this.mouse.y = y
+	}
+	isMouseOnScreen(){
+		let canvas = $(this.canvas)
+		return this.currentHoveredElement === this.canvas && this.mouse.x > 0 && this.mouse.y > 0 && this.mouse.x < canvas.width() && this.mouse.y < canvas.height()
 	}
 	tick(){
 		let records = this.mouse.records

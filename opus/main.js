@@ -47,9 +47,10 @@ componentsTab.click(() => {
 		if (target === "open") p = 1 - p
 		const t = easeInOutSine(p)
 		const paneWidth = componentsPane.width()
-		const xOffset = -t * paneWidth
-		componentsPane.css("transform", `translateX(${xOffset}px)`)
-		componentsTab.css("transform", `translateX(${xOffset}px)`)
+		let xOffset = -t * paneWidth - 3
+		let transform = `translateX(${xOffset}px)`
+		componentsPane.css("transform", transform)
+		componentsTab.css("transform", transform)
 		$(canvas).width(window.innerWidth - paneWidth - xOffset)
 		
 		canvas.width = canvas.clientWidth

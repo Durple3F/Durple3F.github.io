@@ -61,6 +61,7 @@ function drawHex(ctx, hex, x, y, size, inRadius, q, r, s){
 
 function drawArmMechanism(ctx, mechanism, x, y, hexSize, inRadius, horiz, vert){
 	const arms = mechanism.arms.contents
+	const alpha = mechanism.isGhost ? 0.7 : 1
 
 	//use the home tile to handle fine decimal rotation
 	const angle = mechanism.rotation
@@ -71,6 +72,7 @@ function drawArmMechanism(ctx, mechanism, x, y, hexSize, inRadius, horiz, vert){
 	ctx.save()
 	ctx.beginPath()
 	ctx.moveTo(x, y)
+	ctx.globalAlpha = alpha
 	ctx.fillStyle = "yellow"
 	ctx.arc(x, y, hexSize * 0.5, 0, Math.PI * 2)
 	ctx.closePath()
@@ -118,6 +120,7 @@ function drawMolecule(ctx, molecule, x, y, hexSize, inRadius, horiz, vert){
 	const atoms = molecule.atoms
 	const contents = atoms.contents
 	const bonds = molecule.bonds.contents
+	const alpha = molecule.isGhost ? 0.7 : 1
 
 	//use the home tile to handle fine decimal rotation
 	const angle = molecule.rotation
@@ -146,6 +149,7 @@ function drawMolecule(ctx, molecule, x, y, hexSize, inRadius, horiz, vert){
 		ctx.beginPath()
 		ctx.lineWidth = hexSize * 0.4
 		ctx.strokeStyle = "white"
+		ctx.globalAlpha = alpha
 		ctx.moveTo(atom1XR, atom1YR)
 		ctx.lineTo(atom2XR, atom2YR)
 		ctx.closePath()
@@ -159,11 +163,11 @@ function drawMolecule(ctx, molecule, x, y, hexSize, inRadius, horiz, vert){
 		const atomY = r * vert
 		const atomXR = x + atomX * cosT - atomY * sinT
 		const atomYR = y + atomX * sinT + atomY * cosT
-		drawAtom(ctx, atom, atomXR, atomYR, hexSize, inRadius)
+		drawAtom(ctx, atom, atomXR, atomYR, hexSize, inRadius, alpha)
 
 		if (drawGhostRotation){
 			ctx.globalAlpha = 0.5
-			drawAtom(ctx, atom, atomX+x, atomY+y, hexSize, inRadius)
+			drawAtom(ctx, atom, atomX+x, atomY+y, hexSize, inRadius, alpha)
 			ctx.globalAlpha = 1
 		}
 	}
@@ -177,11 +181,22 @@ function drawMolecule(ctx, molecule, x, y, hexSize, inRadius, horiz, vert){
 	ctx.restore()
 }
 
-function drawAtom(ctx, atom, x, y, hexSize, inRadius){
+function drawAtom(ctx, atom, x, y, hexSize, inRadius, alpha){
 	// console.log(atom)
 	let atomSize = inRadius * 0.8
 	let sprite = atom.element.sprites["atom"]
+	ctx.save()
+	ctx.globalAlpha = alpha
 	ctx.drawImage(sprite, x - atomSize, y - atomSize, 2*atomSize, 2*atomSize)
+	ctx.restore()
+}
+
+function drawComponent(ctx, component, x, y, hexSize, inRadius, horiz, vert){
+	if (!component.isRendered) return
+	switch (component.type){
+		case "Molecule": drawMolecule(ctx, component, x, y, hexSize, inRadius, horiz, vert); break
+		case "ArmMechanism": drawArmMechanism(ctx, component, x, y, hexSize, inRadius, horiz, vert); break
+	}
 }
 
 export function render(game, ctx, w, h){
@@ -229,16 +244,23 @@ export function render(game, ctx, w, h){
 		let	componentOffY = (componentOffset.r) * vert * componentOffDist
 		x += componentOffX
 		y += componentOffY
-		switch (component.type){
-			case "Molecule": drawMolecule(ctx, component, x, y, hexSize, inRadius, horiz, vert); break
-			case "ArmMechanism": drawArmMechanism(ctx, component, x, y, hexSize, inRadius, horiz, vert); break
-		}
+		drawComponent(ctx, component, x, y, hexSize, inRadius, horiz, vert)
 	}
-	// grid.map.forEach(hex => {
-	// 	const q = hex.q
-	// 	const r = hex.r
-	// 	let x = (q + 0.5 * r) * horiz - xOffset
-	// 	let y = r * vert - yOffset
-	// 	drawHex(ctx, hex, x, y, hexSize)
-	// })
+
+	if (game.selectedComponent){
+		let component = game.selectedComponent
+		let homeTile = component.homeTile
+		let q = homeTile.q
+		let r = homeTile.r
+		let x = (q + 0.5 * r) * horiz - xOffset
+		let y = r * vert - yOffset
+		//Components can be offset in non-integer amounts to allow for smooth translation
+		let componentOffset = component.offset
+		let componentOffDist = component.offsetDistance
+		let	componentOffX = (componentOffset.q + 0.5*componentOffset.r) * horiz * componentOffDist
+		let	componentOffY = (componentOffset.r) * vert * componentOffDist
+		x += componentOffX
+		y += componentOffY
+		drawComponent(ctx, component, x, y, hexSize, inRadius, horiz, vert)
+	}
 }

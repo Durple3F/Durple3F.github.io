@@ -43,6 +43,9 @@ export class Hex {
 		this.r = b.r
 		this.s = b.s
 	}
+	clone() {
+		return new Hex(this.q, this.r, this.s)
+	}
 	add(b) {
 		return new Hex(this.q + b.q, this.r + b.r, this.s + b.s);
 	}
@@ -268,6 +271,8 @@ export class Grid {
 export class Component {
 	constructor() {
 		this.type = null
+		this.isGhost = false
+		this.isRendered = true
 		this.rotation = 0
 		this.homeTile = new Hex(0, 0, 0)
 		this.offset = Hex.directions[0]
@@ -348,9 +353,7 @@ export class Atom {
 		this.coord = new Hex(0, 0, 0)
 	}
 	setCoords(q, r, s) {
-		this.coord.q = q
-		this.coord.r = r
-		this.coord.s = s
+		this.coord = new Hex(q, r, s)
 	}
 }
 
@@ -404,6 +407,14 @@ export class Molecule extends Component {
 	}
 }
 
+export class Reagent extends Component {
+	constructor(molecule){
+		super()
+		this.type = "Reagent"
+		this.molecule = molecule
+	}
+}
+
 export const ARMTYPES = {}
 export class ArmMechanismType {
 	constructor(abilities={}, armDirectionList=[Hex.directions[0]], atomList=[]){
@@ -440,7 +451,6 @@ export class ArmMechanism extends Component {
 			let arm = new Arm(this.homeTile, armLocation)
 			this.arms.contents.push(arm)
 		}
-		console.log(this)
 	}
 }
 
@@ -451,8 +461,6 @@ export class Arm {
 		this.isGripping = false
 	}
 	setCoords(q, r, s) {
-		this.coord.q = q
-		this.coord.r = r
-		this.coord.s = s
+		this.coord = new Hex(q, r, s)
 	}
 }

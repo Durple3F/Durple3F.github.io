@@ -1,4 +1,10 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css");
+@import url('https://fonts.googleapis.com/css2?family=Quintessential&display=swap');
+
+body {
+	color: white;
+	user-select: none;
+}
 
 :root {
 	--components-bg: rgb(37, 34, 92);
@@ -47,6 +53,33 @@
 	.tab-label {
 		transform: rotate(45deg);
 		color: white;
+	}
+}
+
+.components-label {
+	font-family: "Quintessential", serif;
+	text-align: center;
+}
+.components-list {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	padding-bottom: 0.5em;
+}
+
+.component {
+	border: 0.1em solid lightblue;
+	background-color:rgb(27, 98, 169);
+	padding: 0.3em;
+	transition: box-shadow 0.1s ease-out;
+}
+.component[data-available="true"] {
+	cursor: pointer;
+
+	&:hover {
+		box-shadow: 0 0 5px white;
 	}
 }
 

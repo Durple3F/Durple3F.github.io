@@ -1,5 +1,5 @@
-import {Hex, Grid, Component, Element, Atom, loadSprite, Molecule, ArmMechanism} from "./util.js"
-import { Scenario } from "./scenarios.js"
+import {Hex, Grid, Component, Element, Atom, loadSprite, Molecule, ArmMechanism, ARMTYPES} from "./util.js"
+import { SCENARIOS } from "./scenarios.js"
 
 const min = Math.min
 const max = Math.max
@@ -8,7 +8,8 @@ const floor = Math.floor
 const ceil = Math.ceil
 
 export class Level{
-	constructor(){
+	constructor(scenario){
+		this.scenario = scenario
 		this.grid = new Grid()
 		this.timestep = 0
 		this.programs = []
@@ -29,8 +30,10 @@ export class Game{
 		this.controls = controls
 		this.lastTick = performance.now()
 		this.isDraggingMap = false
+		this.selectedComponent = null
 
-		this.currentLevel = new Level()
+		let scenario = SCENARIOS["test"]
+		this.currentLevel = new Level(scenario)
 		this.hexSize = 40
 		this.canvas = canvas
 		this.canvasWidth = canvas.width
@@ -39,10 +42,30 @@ export class Game{
 		this.yOffset = -0.5 * canvas.height
 		this.hoveredHex = null
 		this.initialize()
+		this.fillComponentPane()
+	}
+
+	fillComponentPane(){
+		let scenario = this.currentLevel.scenario
+		let allowedMechanisms = scenario.allowedMechanisms
+		let mechanismsPane = $("#components-mechanisms").children(".components-list")
+		mechanismsPane.empty()
+		for (let mechanismName of allowedMechanisms){
+			let componentTag = $("<div class='component'>")
+			componentTag.text(mechanismName)
+			mechanismsPane.append(componentTag)
+			componentTag.attr("data-available", true)
+			componentTag.on("mousedown", () => {
+				this.selectedComponent = new ArmMechanism(mechanismName)
+				this.selectedComponent.isGhost = true
+				this.selectedComponent.isRendered = false
+			})
+		}
 	}
 
 	initialize(){
 		this.resizeScreen()
+		this.getHexAt(0, 0).active = true
 
 		//Create a molecule of elemental Fire and put it on the home tile.
 		let molecule = new Molecule()
@@ -53,8 +76,7 @@ export class Game{
 		atom2.setCoords(-1, 1, 0)
 		molecule.addAtom(atom2)
 		molecule.addBond(atom, atom2)
-		molecule.homeTile = this.getHexAt(0, 0)
-		this.getHexAt(0, 0).active = true
+		molecule.homeTile = new Hex(0, 0, 0)
 		this.currentLevel.grid.contents.push(molecule)
 		this.currentLevel.grid.contents[0].moveOrigin(new Hex(-2, 2, 0))
 		if (true) {
@@ -73,6 +95,52 @@ export class Game{
 		arm.rotateRight()
 		arm.rotateRight()
 		arm.arms.contents.forEach(arm => arm.distance = 2)
+
+		let arm2 = new ArmMechanism("Piston")
+		arm2.homeTile = this.getHexAt(5, -3)
+		this.currentLevel.grid.contents.push(arm2)
+	}
+
+	getCollisionHexes(component){
+		let result = []
+		let homeTile = component.homeTile
+		if (component.type === "ArmMechanism"){
+			result.push(homeTile)
+		}
+		let atoms = component.atoms.contents
+		for (let atom of atoms){
+			let hex = homeTile.add(atom.coord)
+			result.push(hex)
+		}
+		return result
+	}
+	checkPlacement(component){
+		//The rules for collision are that:
+		//The home tile of an arm must not overlap with an atom or the home tile of another arm.
+		//The same is true for atoms. They can't touch other atoms or arms. The arm itself is fine, just not the home tile.
+		//Since this function will only run while the simulation is paused, we don't need to calculate collision
+		//using the non-integer rotation and translation stuff.
+		//Also, only collisions with *other* components matters. The component can touch itself.
+		let legal = true
+		let proposedHexes = this.getCollisionHexes(component)
+
+		let components = this.currentLevel.grid.contents
+		for (let otherComponent of components){
+			if (otherComponent === component) continue
+			let takenHexes = this.getCollisionHexes(otherComponent)
+			for (let otherHex of takenHexes){
+				for (let hex of proposedHexes){
+					if (hex.q === otherHex.q && hex.r === otherHex.r){
+						legal = false
+						return false
+					}
+				}
+			}
+		}
+		return legal
+	}
+	cancelPlacement(){
+		this.selectedComponent = null
 	}
 
 	resizeScreen(){
@@ -134,8 +202,8 @@ export class Game{
 		const controls = this.controls
 		controls.tick()
 
-		this.currentLevel.grid.contents[0].rotation += 0.1
-		this.currentLevel.grid.contents[1].rotation -= 0.1*0.15
+		// this.currentLevel.grid.contents[0].rotation += 0.1
+		// this.currentLevel.grid.contents[1].rotation -= 0.1*0.15
 		this.currentLevel.grid.contents[2].rotation -= 0.1*0.15
 		for (let component of this.currentLevel.grid.contents){
 			let right = Math.PI * 1/3
@@ -152,14 +220,20 @@ export class Game{
 
 		let mouseX = controls.mouse.x
 		let mouseY = controls.mouse.y
-		let activeHex = this.getHexFromXY(mouseX, mouseY)
+		let hoveredHex = this.getHexFromXY(mouseX, mouseY)
 		if (this.hoveredHex) this.hoveredHex.active = false
-		this.hoveredHex = activeHex
-		activeHex.active = true
+		this.hoveredHex = hoveredHex
+		hoveredHex.active = true
 
 		//Map dragging
-		if (controls.isClicking("left")){
+		const isLeftClicking = controls.isClicking("left")
+		const isMouseOnScreen = controls.isMouseOnScreen()
+		if (isLeftClicking && isMouseOnScreen && controls.justClicked("left")){
 			this.isDraggingMap = true
+		} else if (!(isLeftClicking && isMouseOnScreen)) {
+			this.isDraggingMap = false
+		}
+		if (this.isDraggingMap){
 			let records = controls.mouse.records
 			let prev = records[records.length - 2]
 			let cur = records[records.length - 1]
@@ -168,8 +242,27 @@ export class Game{
 			this.xOffset += dx
 			this.yOffset += dy
 			this.resizeScreen()
-		} else {
-			this.isDraggingMap = false
+		}
+
+		//Component placement
+		if (this.selectedComponent){
+			if (isLeftClicking && controls.isMouseOnScreen() && hoveredHex){
+				this.selectedComponent.homeTile = hoveredHex
+				this.selectedComponent.isRendered = true
+			}
+			else if (!isLeftClicking && hoveredHex){
+				//If the proposed placement is legal, place it. Otherwise, cancel.
+				if (this.checkPlacement(this.selectedComponent)){
+					this.currentLevel.grid.contents.push(this.selectedComponent)
+					this.selectedComponent.isGhost = false
+					this.selectedComponent = null
+				} else {
+					this.cancelPlacement()
+				}
+			}
+			else if (!isLeftClicking){
+				this.cancelPlacement()
+			}
 		}
 	}
 }
