@@ -42,7 +42,9 @@ export class Game{
 		molecule.addAtom(atom2)
 		molecule.addBond(atom, atom2)
 		molecule.homeTile = this.getHexAt(0, 0)
+		this.getHexAt(0, 0).active = true
 		this.currentLevel.grid.contents.push(molecule)
+		this.currentLevel.grid.contents[0].moveOrigin(new Hex(-2, 2, 0))
 		console.log(molecule)
 	}
 
@@ -104,6 +106,8 @@ export class Game{
 		const dt = now - this.lastTick
 		const controls = this.controls
 		controls.tick()
+
+		this.currentLevel.grid.contents[0].rotation += 0.1
 
 		let mouseX = controls.mouse.x
 		let mouseY = controls.mouse.y

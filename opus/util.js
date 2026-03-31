@@ -88,6 +88,78 @@ export class Hex {
 		}
 		return results;
 	}
+	round() {
+		var qi = Math.round(this.q);
+		var ri = Math.round(this.r);
+		var si = Math.round(this.s);
+		var q_diff = Math.abs(qi - this.q);
+		var r_diff = Math.abs(ri - this.r);
+		var s_diff = Math.abs(si - this.s);
+		if (q_diff > r_diff && q_diff > s_diff) {
+			qi = -ri - si;
+		}
+		else if (r_diff > s_diff) {
+			ri = -qi - si;
+		}
+		else {
+			si = -qi - ri;
+		}
+		return new Hex(qi, ri, si);
+	}
+
+	//TODO: Still gives incorrect cells. Need to have it use two points instead of one
+	//Probably just completely rewrite.
+	lineDrawArc(targetCell, degrees) {
+		// convert hex to pixel (pointy-top, size = 1)
+		const toPixel = (h) => {
+			return {
+				x: Math.sqrt(3) * (h.q + h.r / 2),
+				y: 1.5 * h.r
+			};
+		};
+
+		const origin = toPixel(this);
+		const target = toPixel(targetCell);
+		const dx = target.x - origin.x;
+		const dy = target.y - origin.y;
+
+		const steps = Math.max(1, Math.ceil(Math.abs(degrees)));
+		const results = [];
+		const seen = new Set();
+
+		for (let i = 0; i <= steps; i++) {
+			const angleRad = (degrees * i / steps) * Math.PI / 180;
+			const cos = Math.cos(angleRad), sin = Math.sin(angleRad);
+			const rx = (cos * dx - sin * dy);
+			const ry = (sin * dx + cos * dy);
+			const px = origin.x + rx;
+			const py = origin.y + ry;
+
+			// pixel -> axial (pointy-top)
+			const qf = (Math.sqrt(3) / 3) * px - (1 / 3) * py;
+			const rf = (2 / 3) * py;
+			const sf = -qf - rf;
+
+			// round to nearest cube coordinates
+			let rq = Math.round(qf), rr = Math.round(rf), rs = Math.round(sf);
+			const qDiff = Math.abs(rq - qf), rDiff = Math.abs(rr - rf), sDiff = Math.abs(rs - sf);
+			if (qDiff > rDiff && qDiff > sDiff) {
+				rq = -rr - rs;
+			} else if (rDiff > sDiff) {
+				rr = -rq - rs;
+			} else {
+				rs = -rq - rr;
+			}
+
+			const key = `${rq},${rr},${rs}`;
+			if (!seen.has(key)) {
+				seen.add(key);
+				results.push(new Hex(rq, rr, rs));
+			}
+		}
+
+		return results;
+	}
 }
 Hex.directions = [new Hex(1, 0, -1), new Hex(1, -1, 0), new Hex(0, -1, 1), new Hex(-1, 0, 1), new Hex(-1, 1, 0), new Hex(0, 1, -1)]
 Hex.diagonals = [new Hex(2, -1, -1), new Hex(1, -2, 1), new Hex(-1, -1, 2), new Hex(-2, 1, 1), new Hex(-1, 2, -1), new Hex(1, 1, -2)]
@@ -199,7 +271,8 @@ export class Component {
 		this.type = null
 		this.rotation = 0
 		this.homeTile = new Hex(0, 0, 0)
-		this.grid = new Grid()
+		this.atoms = new Grid()
+		this.bonds = new Grid()
 	}
 }
 
@@ -236,7 +309,9 @@ export class Atom {
 		this.coord = new Hex(0, 0, 0)
 	}
 	setCoords(q, r, s) {
-		this.coord = new Hex(q, r, s)
+		this.coord.q = q
+		this.coord.r = r
+		this.coord.s = s
 	}
 }
 
@@ -251,8 +326,6 @@ export class Molecule extends Component {
 	constructor() {
 		super()
 		this.type = "Molecule"
-		this.atoms = new Grid()
-		this.bonds = new Grid()
 	}
 	addAtom(atom) {
 		//Ensure that no other atom is taking up this space.
@@ -271,23 +344,49 @@ export class Molecule extends Component {
 		}
 		this.atoms.contents.push(atom)
 	}
-	addBond(atom1, atom2, type="simple") {
-		if (atom1.coord.distance(atom2.coord) !== 1){
+	addBond(atom1, atom2, type = "simple") {
+		if (atom1.coord.distance(atom2.coord) !== 1) {
 			console.error("These two atoms are too far apart to be bonded:")
 			console.log(atom1, atom2)
 		}
 		let bond = new Bond(atom1, atom2, type)
 		let taken = false
-		for (let otherBond of this.bonds.contents){
-			if (otherBond.atom.includes(atom1) && otherBond.atoms.includes(atom2) && type === otherBond.type){
+		for (let otherBond of this.bonds.contents) {
+			if (otherBond.atom.includes(atom1) && otherBond.atoms.includes(atom2) && type === otherBond.type) {
 				console.error("Duplicate bond detected!")
 				console.log(this, bond, otherBond, atom1, atom2)
 				taken = true
 				break
 			}
 		}
-		if (!taken){
+		if (!taken) {
 			this.bonds.contents.push(bond)
+		}
+	}
+
+	moveOrigin(b) {
+		let origin = this.homeTile
+		origin.q += b.q
+		origin.r += b.r
+		origin.s += b.s
+		let atoms = this.atoms
+		for (let atom of atoms.contents){
+			let dest = atom.coord.subtract(b)
+			atom.setCoords(dest.q, dest.r, dest.s)
+		}
+	}
+	rotateLeft() {
+		let atoms = this.atoms
+		for (let atom of atoms.contents){
+			let coord = atom.coord
+			atom.setCoords(-coord.s, -coord.q, -coord.r)
+		}
+	}
+	rotateRight() {
+		let atoms = this.atoms
+		for (let atom of atoms.contents){
+			let coord = atom.coord
+			atom.setCoords(-coord.r, -coord.s, -coord.q)
 		}
 	}
 }

@@ -20,7 +20,15 @@
 				"- Added a neat collapsing effect where that window can be hidden or shown.",
 				"- Created an image for the first atom, Fire.",
 				"- The computer can now render an atom in the correct location",
-				"- Created some of the basics for displaying a molecule that contains two bonded atoms."
+				"- Created some of the basics for displaying a molecule that contains two bonded atoms.",
+				"- The game can now correctly rotate molecules around a point, but it can only do it in whole integer amounts right now."
+			]
+		},
+		"20260331": {
+			"date": "March 31, 2026",
+			"line-count": 900,
+			"changes": [
+				"- The game can now render molecules with a non-integer rotation. The atoms it draws this way are not actually stored as being where they claim to be, and only rendered there. I will need to do a lot of math again to determine their locations in the game logic for collision checks and stuff."
 			]
 		}
 	}
