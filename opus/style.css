@@ -11,6 +11,8 @@ body {
 	--components-bg: rgb(41, 49, 112);
 	--playback-bg: rgb(37, 69, 151);
 	--programs-bg: rgb(20, 45, 121);
+	--pane-border: 3px solid black;
+	--base-program-row-color: oklch(0.2015 0.074 250.71);
 }
 
 #screen {
@@ -24,7 +26,7 @@ body {
 	top: 0; left: 0;
 	height: 100vh; width: 15vw;
 	background-color: var(--components-bg);
-	border-right: 2px solid black;
+	border-right: var(--pane-border);
 	z-index: 10;
 }
 
@@ -41,9 +43,9 @@ body {
 	height: 8vh; width: 3vh;
 	background-color: var(--components-bg);
 	/* background-color: oklab(from var(--components-bg) calc()); */
-	border-top: 3px solid black;
-	border-right: 3px solid black;
-	border-bottom: 3px solid black;
+	border-top: var(--pane-border);
+	border-right: var(--pane-border);
+	border-bottom: var(--pane-border);
 	border-top-right-radius: 1.5vh;
 	border-bottom-right-radius: 1.5vh;
 	z-index: 9;
@@ -93,12 +95,21 @@ body {
 	height: calc(100vh - var(--screen-height));
 	z-index: 15;
 	background-color: var(--programs-bg);
+	border-top: var(--pane-border);
 }
 #instruction-pane {
 	position: absolute;
 	top: 0; left: 0;
 	height: 100%; width: 15%;
 	background-color: var(--playback-bg);
+	border-right: var(--pane-border);
+}
+#program-pane {
+	position: absolute;
+	top: 0; left: 15%;
+	height: 100%; width: 85%;
+	display: flex;
+	overflow-y: auto;
 }
 
 #instructions {
@@ -120,18 +131,25 @@ body {
 	text-align: center;
 }
 
-.instruction {
+.instruction-button .instruction {
 	width: 100%;
+}
+.instruction {
 	aspect-ratio: 10 / 9;
 	background-color: #cfcdc1;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	border: 0.2em solid rgb(125, 84, 37);
 }
+/* .instruction[data-type="idle"] {
+	opacity: 0;
+} */
 
 .instruction-symbol {
 	width: 90%;
 	aspect-ratio: 1 / 1;
+	pointer-events: none;
 }
 
 #playback-pane {
@@ -141,6 +159,74 @@ body {
 	display: flex;
 	justify-content: space-evenly;
 	align-items: center;
+}
+
+#program-names {
+	width: 5vh;
+}
+#program-names > *, #program-rows > * {
+	height: 5vh;
+}
+.program-name {
+	background-color: black;
+	width: 100%;
+	border: 2px solid gray;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 160%;
+	font-family: monospace;
+}
+#program-rows-wrapper {
+	margin-left: 2px;
+	overflow-x: auto;
+	flex-grow: 1;
+}
+#program-rows {
+	min-width: 100%;
+	width: fit-content;
+}
+.program-row {
+	width: 100%;
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: left;
+	padding-right: 30vw;
+}
+/* Add sibling index to firefox now. */
+.program-row:nth-of-type(10n+0) {
+	background-color: oklch(from var(--base-program-row-color) l c calc(h + 36*9));
+}
+.program-row:nth-of-type(10n+1) {
+	background-color: oklch(from var(--base-program-row-color) l c h);
+}
+.program-row:nth-of-type(10n+2) {
+	background-color: oklch(from var(--base-program-row-color) l c calc(h + 36*1));
+}
+.program-row:nth-of-type(10n+3) {
+	background-color: oklch(from var(--base-program-row-color) l c calc(h + 36*2));
+}
+.program-row:nth-of-type(10n+4) {
+	background-color: oklch(from var(--base-program-row-color) l c calc(h + 36*3));
+}
+.program-row:nth-of-type(10n+5) {
+	background-color: oklch(from var(--base-program-row-color) l c calc(h + 36*4));
+}
+.program-row:nth-of-type(10n+6) {
+	background-color: oklch(from var(--base-program-row-color) l c calc(h + 36*5));
+}
+.program-row:nth-of-type(10n+7) {
+	background-color: oklch(from var(--base-program-row-color) l c calc(h + 36*6));
+}
+.program-row:nth-of-type(10n+8) {
+	background-color: oklch(from var(--base-program-row-color) l c calc(h + 36*7));
+}
+.program-row:nth-of-type(10n+9) {
+	background-color: oklch(from var(--base-program-row-color) l c calc(h + 36*8));
+}
+.program-row .instruction {
+	height: 100%;
+	display: flex-inline;
 }
 
 #debug {

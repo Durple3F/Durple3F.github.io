@@ -1,5 +1,6 @@
-import {Hex, Grid, Component, Element, Atom, loadSprite, Molecule, ArmMechanism, ARMTYPES, Reagent} from "./util.js"
+import {Hex, Grid, Component, Element, Atom, loadSprite, Molecule, ArmMechanism, ARMTYPES, Reagent, tagHierarchy} from "./util.js"
 import { SCENARIOS } from "./scenarios.js"
+import { createInstructionTag, Instruction, INSTRUCTIONS } from "./instructions.js"
 
 const min = Math.min
 const max = Math.max
@@ -18,10 +19,16 @@ export class Level{
 }
 
 export class Program{
-	constructor(component){
+	constructor(component, name){
 		this.component = component
-		this.name = ""
+		this.name = name
 		this.instructions = []
+
+		let programRow = $("<div>").addClass("program-row")
+		this.elem = programRow
+		let programName = $("<div>").addClass("program-name").text(this.name)
+		$("#program-names").append(programName)
+		$("#program-rows").append(programRow)
 	}
 }
 
@@ -31,6 +38,8 @@ export class Game{
 		this.lastTick = performance.now()
 		this.isDraggingMap = false
 		this.selectedComponent = null
+		this.heldInstruction = null
+		this.heldInstructions = []
 
 		let scenario = SCENARIOS["test"]
 		this.currentLevel = new Level(scenario)
@@ -79,6 +88,23 @@ export class Game{
 			}
 		}
 		contents.splice(index, 0, component)
+
+		//If this component was a mechanism, add a new program connected to it.
+		if (component.type === "ArmMechanism"){
+			let programs = this.currentLevel.programs
+			let program = new Program(component, programs.length + 1)
+			programs.push(program)
+			component.program = program
+			program.elem[0].addEventListener("mousemove", e => {
+				this.handleProgramMouseMove(e, program, component)
+			})
+			program.elem[0].addEventListener("mouseup", e => {
+				this.handleProgramMouseUp(e, program, component)
+			})
+			program.elem[0].addEventListener("mousedown", e => {
+				this.handleProgramMouseDown(e, program, component)
+			})
+		}
 	}
 
 	initialize(){
@@ -117,6 +143,153 @@ export class Game{
 		// let arm2 = new ArmMechanism("Piston")
 		// arm2.homeTile = this.getHexAt(5, -3)
 		// this.addComponent(arm2)
+	}
+
+	beginHoldingInstruction(instruction){
+		this.beginHoldingInstructions([[instruction]])
+	}
+	beginHoldingInstructions(instructionsList){
+		this.heldInstructions = instructionsList
+
+		//if any of those instructions are from a program currently being written, remove them.
+		if (!instructionsList.length || !instructionsList[0].length) return
+		let programs = this.currentLevel.programs
+		for (let instructions of instructionsList){
+			let firstInstruction = instructions[0]
+			for (let program of programs){
+				let programInstructions = program.instructions
+				let index = programInstructions.indexOf(firstInstruction)
+				if (index !== -1){
+					for (let i = 0; i < instructions.length; i++){
+						let indexToChange = i + index
+						let replacement = new Instruction(INSTRUCTIONS["idle"])
+						programInstructions[indexToChange] = replacement
+					}
+				}
+			}
+		}
+		this.renderPrograms()
+	}
+	endHoldingInstructions(){
+		this.heldInstructions = []
+	}
+	handleProgramMouseMove(event, program, component){
+		let row = program.elem[0]
+		let rect = row.getBoundingClientRect()
+		let mouseX = event.clientX - rect.x
+		let mouseY = event.clientY - rect.y
+	}
+	handleProgramMouseUp(event, program, component){
+		//if the player was holding an instruction, place it.
+		//Otherwise, do nothing.
+		if (!this.heldInstructions.length){
+			return
+		}
+		let instruction = this.heldInstructions[0][0]
+
+		//If the player is moving this instruction, first remove it from any row it was in.
+		let programs = this.currentLevel.programs
+		let originalProgram = null
+		let originalIndex = null
+		for (let levelProgram of programs){
+			let instructions = levelProgram.instructions
+			if (instructions.includes(instruction)){
+				let index = instructions.indexOf(instruction)
+				// let replacement = new Instruction(INSTRUCTIONS["idle"])
+				// instructions.splice(index, 1, replacement)
+				// delete instructions[index]
+				originalProgram = levelProgram
+				originalIndex = index
+				break
+			}
+		}
+
+		let row = program.elem[0]
+		let rect = row.getBoundingClientRect()
+		let mouseX = event.clientX - rect.x
+		let mouseY = event.clientY - rect.y
+		//Instructions have a 10 / 9 aspect ratio
+		let instructionWidth = rect.height * 10 / 9
+		let instructionIndex = Math.floor(mouseX / instructionWidth)
+		let instructions = program.instructions
+		//If the player is placing an instruction where there already was one, insert it before that instruction.
+		if (instructions.length >= instructionIndex){
+			let hoveredInstruction = instructions[instructionIndex]
+			if (hoveredInstruction?.type?.id === "idle"){
+				//Player is replacing an idle instruction with this instruction
+				instructions.splice(instructionIndex, 1, instruction)
+			} else {
+				//Player is inserting this instruction into previous space
+				//To do this, we will first shift instructions from the intended index until the next idle instruction to the right by an amount equal to the length of the added parts.
+				let foundOffset = false
+				let offset = 1
+				while (!foundOffset){
+					let nextInstruction = instructions[instructionIndex + offset]
+					if (!nextInstruction){
+						foundOffset = true
+						break
+					}
+					let type = nextInstruction.type.id
+					if (type === "idle"){
+						foundOffset = true
+						break
+					}
+					offset++
+				}
+				for (let i = offset; i >= 1; i--){
+					let index = instructionIndex + i
+					instructions[index] = instructions[index - 1]
+				}
+				instructions[instructionIndex] = instruction
+				// instructions.splice(instructionIndex, 0, instruction)
+			}
+		} else {
+			//Player is adding to the end of the program
+			instructions[instructionIndex] = instruction
+		}
+
+		this.fixPrograms()
+		this.renderPrograms()
+	}
+	handleProgramMouseDown(event, program, component){
+		//Check if the player is clicking an instruction
+		let tags = tagHierarchy(event.target).reverse()
+		let instructionTag = tags.find(tag => $(tag).hasClass("instruction"))
+		if (instructionTag){
+			let instruction = $(instructionTag).data("instruction")
+			this.beginHoldingInstruction(instruction)
+		}
+	}
+	fixPrograms(){
+		let programs = this.currentLevel.programs
+		for (let program of programs){
+			let instructions = program.instructions
+			//replace all empty space with idle instructions
+			for (let i = 0; i < instructions.length; i++){
+				let instruction = instructions[i]
+				if (!instruction){
+					instruction = new Instruction(INSTRUCTIONS["idle"])
+					instructions[i] = instruction
+				}
+			}
+		}
+	}
+	renderPrograms(){
+		let programs = this.currentLevel.programs
+		for (let program of programs){
+			let row = program.elem
+			let instructions = program.instructions
+			row.empty()
+			for (let i = 0; i < instructions.length; i++){
+				let instruction = instructions[i]
+				let tag = createInstructionTag(instruction)
+				row.append(tag)
+				tag.data("program", program)
+				tag[0].addEventListener("mousedown", () => {
+					// this.beginHoldingInstruction(instruction)
+				})
+			}
+		}
 	}
 
 	getCollisionHexes(component){
@@ -246,7 +419,7 @@ export class Game{
 		//Map dragging
 		const isLeftClicking = controls.isClicking("left")
 		const isMouseOnScreen = controls.isMouseOnScreen()
-		if (isLeftClicking && isMouseOnScreen && controls.justClicked("left")){
+		if (isLeftClicking && isMouseOnScreen && controls.justClicked("left", 50)){
 			this.isDraggingMap = true
 		} else if (!(isLeftClicking && isMouseOnScreen)) {
 			this.isDraggingMap = false
@@ -268,7 +441,7 @@ export class Game{
 				this.selectedComponent.homeTile = hoveredHex
 				this.selectedComponent.isRendered = true
 			}
-			else if (!isLeftClicking && hoveredHex){
+			else if (!isLeftClicking && controls.isMouseOnScreen() && hoveredHex){
 				//If the proposed placement is legal, place it. Otherwise, cancel.
 				if (this.checkPlacement(this.selectedComponent)){
 					this.addComponent(this.selectedComponent)
@@ -280,6 +453,13 @@ export class Game{
 			}
 			else if (!isLeftClicking){
 				this.cancelPlacement()
+			}
+		}
+
+		//Instruction placement
+		if (this.heldInstructions.length){
+			if (!isLeftClicking){
+				this.endHoldingInstructions()
 			}
 		}
 	}

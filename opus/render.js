@@ -70,6 +70,7 @@ function drawArmMechanism(ctx, mechanism, x, y, hexSize, inRadius, horiz, vert){
 	const sinT = sin(angle)
 	const atomSize = 0.7
 
+	//Draw base
 	ctx.save()
 	ctx.beginPath()
 	ctx.moveTo(x, y)
@@ -78,6 +79,7 @@ function drawArmMechanism(ctx, mechanism, x, y, hexSize, inRadius, horiz, vert){
 	ctx.arc(x, y, hexSize * 0.5, 0, Math.PI * 2)
 	ctx.closePath()
 	ctx.fill()
+	ctx.restore()
 
 	for (let arm of arms){
 		const hand = arm.coord
@@ -88,6 +90,7 @@ function drawArmMechanism(ctx, mechanism, x, y, hexSize, inRadius, horiz, vert){
 		const handX = (q + 0.5 * r) * horiz * distance
 		const handY = r * vert * distance
 
+		ctx.save()
 		ctx.translate(x, y)
 		ctx.rotate(angle)
 		ctx.beginPath()
@@ -113,8 +116,22 @@ function drawArmMechanism(ctx, mechanism, x, y, hexSize, inRadius, horiz, vert){
 		ctx.lineTo(endX, endY)
 		ctx.closePath()
 		ctx.stroke()
+		ctx.restore()
 	}
-	ctx.restore()
+
+	//Draw number
+	if (mechanism.program){
+		ctx.save()
+		const name = mechanism.program.name
+		const fontSize = hexSize * 0.4
+		const font = fontSize+"px monospace"
+		ctx.font = font
+		ctx.fillStyle = "black"
+		const length = name.toString().length - 1
+		const diffX = hexSize * 0.1
+		ctx.fillText(name, x - hexSize*0.1 - diffX * length, y + hexSize * 0.1)
+		ctx.restore()
+	}
 }
 
 function drawMolecule(ctx, molecule, x, y, hexSize, inRadius, horiz, vert){

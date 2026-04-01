@@ -24,6 +24,15 @@ export async function loadSprite(url) {
 	})
 }
 
+//Returns an array of that tag and its parents and ancestors.
+export function tagHierarchy(tag){
+	const nodes = [tag]
+	while (nodes[0].parentNode){
+		nodes.unshift(nodes[0].parentNode)
+	}
+	return nodes
+}
+
 export class Hex {
 	constructor(q, r, s) {
 		//q, r, and s are coordinates in a kind of 3-dimensional space.
@@ -448,6 +457,7 @@ export class ArmMechanism extends Component {
 		this.type = "ArmMechanism"
 		let type = ARMTYPES[typeId]
 		this.mechanismType = type
+		this.program = null
 		for (let armLocation of type.armDirectionList){
 			let arm = new Arm(this.homeTile, armLocation)
 			this.arms.contents.push(arm)

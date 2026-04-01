@@ -2,7 +2,7 @@ import {Game} from "./game.js";
 import {render} from "./render.js";
 import ControlManager from './controls.js';
 import { easeInOutCubic, easeInOutSine, easeOutCubic, ELEMENTS } from "./util"
-import { INSTRUCTIONS, createInstructionButton } from "./instructions.js";
+import { INSTRUCTIONS, Instruction, createInstructionButton } from "./instructions.js";
 
 const FRAMERATE = 60
 let tickInterval
@@ -69,10 +69,16 @@ componentsTab.click(() => {
 
 async function loadGame(){
 	//Display instructions
-	for (let instruction of INSTRUCTIONS){
-		if (!instruction.spriteUrl) continue
+	for (let typeId in INSTRUCTIONS){
+		let instructionType = INSTRUCTIONS[typeId]
+		if (!instructionType.spriteUrl) continue
+		let instruction = new Instruction(instructionType)
 		let tag = createInstructionButton(instruction)
 		$("#instructions").append(tag)
+		tag.on("mousedown", () => {
+			let instruction = new Instruction(instructionType)
+			game.beginHoldingInstruction(instruction)
+		})
 	}
 	//Load element sprites
 	for (let elementId in ELEMENTS){

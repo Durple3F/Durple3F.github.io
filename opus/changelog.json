@@ -26,7 +26,7 @@
 		},
 		"20260331": {
 			"date": "March 31, 2026",
-			"line-count": 1300,
+			"line-count": 1400,
 			"changes": [
 				"- The game can now render molecules with a non-integer rotation. The atoms it draws this way are not actually stored as being where they claim to be, and only rendered there. I will need to do a lot of math again to determine their locations in the game logic for collision checks and stuff.",
 				"- Now components can be offset in non-integer amounts for smooth translations.",
@@ -36,6 +36,16 @@
 				"- You can now place things onto the grid. Right now the only thing you can place is pistons.",
 				"- Placing something onto the grid is prevented if you try to place something on top of something else.",
 				"- Starting to work on allowing some programming from the player. I set up som eof the stuff that needs to go on the bottom panel."
+			]
+		},
+		"20260401": {
+			"date": "April 1, 2026",
+			"line-count": 1500,
+			"changes": [
+				"- Placing a new arm onto the page now creates a corresponding row in the programming pane that, eventually, I hope to be able to drag and drop commands onto. I even made it make a nice rainbow.",
+				"- Arms now display the number of the corresponding program on their base.",
+				"- You can now drag and drop instructions onto the programs you create.",
+				"- You can now move previously placed instructions around."
 			]
 		}
 	}
