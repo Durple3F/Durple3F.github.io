@@ -447,6 +447,7 @@ export class ArmMechanism extends Component {
 		super()
 		this.type = "ArmMechanism"
 		let type = ARMTYPES[typeId]
+		this.mechanismType = type
 		for (let armLocation of type.armDirectionList){
 			let arm = new Arm(this.homeTile, armLocation)
 			this.arms.contents.push(arm)

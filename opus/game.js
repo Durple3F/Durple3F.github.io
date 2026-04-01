@@ -1,4 +1,4 @@
-import {Hex, Grid, Component, Element, Atom, loadSprite, Molecule, ArmMechanism, ARMTYPES} from "./util.js"
+import {Hex, Grid, Component, Element, Atom, loadSprite, Molecule, ArmMechanism, ARMTYPES, Reagent} from "./util.js"
 import { SCENARIOS } from "./scenarios.js"
 
 const min = Math.min
@@ -63,6 +63,24 @@ export class Game{
 		}
 	}
 
+	addComponent(component){
+		//For rendering purposes, all components must be placed in this order.
+		const type = component.type
+		const hierarchy = ["Reagent", "Product", "Glyph", "Molecule", "ArmMechanism"]
+		const score = hierarchy.indexOf(type)
+		const contents = this.currentLevel.grid.contents
+		let index = contents.length
+		while (index !== 0){
+			let prev = contents[index - 1]
+			if (hierarchy.indexOf(prev.type) > score){
+				index--
+			} else {
+				break
+			}
+		}
+		contents.splice(index, 0, component)
+	}
+
 	initialize(){
 		this.resizeScreen()
 		this.getHexAt(0, 0).active = true
@@ -76,29 +94,29 @@ export class Game{
 		atom2.setCoords(-1, 1, 0)
 		molecule.addAtom(atom2)
 		molecule.addBond(atom, atom2)
-		molecule.homeTile = new Hex(0, 0, 0)
-		this.currentLevel.grid.contents.push(molecule)
-		this.currentLevel.grid.contents[0].moveOrigin(new Hex(-2, 2, 0))
+		let reagent = new Reagent(molecule)
+		reagent.homeTile = new Hex(-1, 0, 1)
+		this.addComponent(reagent)
+		// this.currentLevel.grid.contents[0].moveOrigin(new Hex(-2, 2, 0))
 		if (true) {
-			let molecule = new Molecule()
-			let atom = new Atom("Fire")
-			atom.setCoords(0, 0, 0)
-			molecule.addAtom(atom)
-			this.currentLevel.grid.contents.push(molecule)
-			this.currentLevel.grid.contents[1].moveOrigin(new Hex(2, -2, 0))
+			// let molecule = new Molecule()
+			// let atom = new Atom("Fire")
+			// atom.setCoords(0, 0, 0)
+			// molecule.addAtom(atom)
+			// molecule.moveOrigin(new Hex(2, -2, 0))
+			// this.addComponent(molecule)
 		}
 
-		//Put a piston arm -3, -2, 5
-		let arm = new ArmMechanism("Piston")
-		arm.homeTile = this.getHexAt(2, -2)
-		this.currentLevel.grid.contents.push(arm)
-		arm.rotateRight()
-		arm.rotateRight()
-		arm.arms.contents.forEach(arm => arm.distance = 2)
+		// let arm = new ArmMechanism("Piston")
+		// arm.homeTile = this.getHexAt(2, -2)
+		// this.addComponent(arm)
+		// arm.rotateRight()
+		// arm.rotateRight()
+		// arm.arms.contents.forEach(arm => arm.distance = 2)
 
-		let arm2 = new ArmMechanism("Piston")
-		arm2.homeTile = this.getHexAt(5, -3)
-		this.currentLevel.grid.contents.push(arm2)
+		// let arm2 = new ArmMechanism("Piston")
+		// arm2.homeTile = this.getHexAt(5, -3)
+		// this.addComponent(arm2)
 	}
 
 	getCollisionHexes(component){
@@ -204,7 +222,7 @@ export class Game{
 
 		// this.currentLevel.grid.contents[0].rotation += 0.1
 		// this.currentLevel.grid.contents[1].rotation -= 0.1*0.15
-		this.currentLevel.grid.contents[2].rotation -= 0.1*0.15
+		// this.currentLevel.grid.contents[2].rotation -= 0.1*0.15
 		for (let component of this.currentLevel.grid.contents){
 			let right = Math.PI * 1/3
 			let left = -right
@@ -253,7 +271,7 @@ export class Game{
 			else if (!isLeftClicking && hoveredHex){
 				//If the proposed placement is legal, place it. Otherwise, cancel.
 				if (this.checkPlacement(this.selectedComponent)){
-					this.currentLevel.grid.contents.push(this.selectedComponent)
+					this.addComponent(this.selectedComponent)
 					this.selectedComponent.isGhost = false
 					this.selectedComponent = null
 				} else {

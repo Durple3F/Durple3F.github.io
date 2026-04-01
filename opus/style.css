@@ -7,13 +7,16 @@ body {
 }
 
 :root {
-	--components-bg: rgb(37, 34, 92);
+	--screen-height: calc(100vh - 15vw);
+	--components-bg: rgb(41, 49, 112);
+	--playback-bg: rgb(37, 69, 151);
+	--programs-bg: rgb(20, 45, 121);
 }
 
 #screen {
 	position: absolute;
 	top: 0; right: 0;
-	height: 100vh; width: 85vw;
+	height: var(--screen-height); width: 85vw;
 }
 
 #components {
@@ -81,6 +84,63 @@ body {
 	&:hover {
 		box-shadow: 0 0 5px white;
 	}
+}
+
+#bottom-pane {
+	position: absolute;
+	bottom: 0; left: 0;
+	width: 100vw;
+	height: calc(100vh - var(--screen-height));
+	z-index: 15;
+	background-color: var(--programs-bg);
+}
+#instruction-pane {
+	position: absolute;
+	top: 0; left: 0;
+	height: 100%; width: 15%;
+	background-color: var(--playback-bg);
+}
+
+#instructions {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	overflow-y: auto;
+	margin-top: 0.25vw;
+	position: absolute;
+	top: 0; left: 0;
+	width: 100%; height: 75%;
+}
+
+.instruction-button {
+	width: 12%;
+	margin-left: 0.5vw;
+	margin-right: 0.5vw;
+	margin-top: 0.25vw;
+	text-align: center;
+}
+
+.instruction {
+	width: 100%;
+	aspect-ratio: 10 / 9;
+	background-color: #cfcdc1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.instruction-symbol {
+	width: 90%;
+	aspect-ratio: 1 / 1;
+}
+
+#playback-pane {
+	position: absolute;
+	bottom: 0; left: 0;
+	width: 100%; height: 25%;
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
 }
 
 #debug {

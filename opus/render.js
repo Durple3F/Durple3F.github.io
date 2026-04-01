@@ -2,6 +2,7 @@ import {Hex, Atom, Molecule} from "./util.js";
 import {drawGhostRotation} from "./config.js";
 
 const ROOT3 = Math.sqrt(3)
+const max = Math.max
 const floor = Math.floor
 const ceil = Math.ceil
 const sin = Math.sin
@@ -32,7 +33,7 @@ function drawHex(ctx, hex, x, y, size, inRadius, q, r, s){
 	color = (hex.active || (hex.q === 0 && hex.r === 0 && hex.s === 0)) ? "white" : color
 	// color = (hex.content) ? "white" : color
 	ctx.fillStyle = color
-	ctx.lineWidth = Math.max(size * 0.05, 2)
+	ctx.lineWidth = max(size * 0.05, 2)
 	ctx.strokeStyle = "black"
 	ctx.beginPath()
 	ctx.moveTo(x, y - size)
@@ -191,10 +192,47 @@ function drawAtom(ctx, atom, x, y, hexSize, inRadius, alpha){
 	ctx.restore()
 }
 
+function drawReagent(ctx, reagent, x, y, hexSize, inRadius, horiz, vert){
+	//A reagent is just the hexagonal grid underneath the molecule that it produces.
+	//Before the simulation starts, it should render the molecule that it produces as though it were a normal molecule
+	const diagx = ROOT3*0.5*hexSize
+	const diagy = hexSize*0.5
+	const molecule = reagent.molecule
+	const atoms = molecule.atoms.contents
+	for (let atom of atoms){
+		const q = atom.coord.q
+		const r = atom.coord.r
+		const atomX = (q + 0.5 * r) * horiz
+		const atomY = r * vert
+		const atomXR = x + atomX //atomX * cosT - atomY * sinT
+		const atomYR = y + atomY //atomX * sinT + atomY * cosT
+
+		//Draw a hexagon on the ground
+		let color = "green"
+		ctx.fillStyle = color
+		ctx.lineWidth = max(hexSize * 0.05, 2)
+		ctx.strokeStyle = "black"
+		ctx.beginPath()
+		ctx.moveTo(atomXR, atomYR - hexSize)
+		ctx.lineTo(atomXR + diagx, atomYR - diagy)
+		ctx.lineTo(atomXR + diagx, atomYR + diagy)
+		ctx.lineTo(atomXR, atomYR + hexSize)
+		ctx.lineTo(atomXR - diagx, atomYR + diagy)
+		ctx.lineTo(atomXR - diagx, atomYR - diagy)
+		ctx.closePath()
+		ctx.fill()
+		ctx.stroke()
+		ctx.restore()
+
+		// drawAtom(ctx, atom, atomXR, atomYR, hexSize, inRadius, 1)
+	}
+}
+
 function drawComponent(ctx, component, x, y, hexSize, inRadius, horiz, vert){
 	if (!component.isRendered) return
 	switch (component.type){
 		case "Molecule": drawMolecule(ctx, component, x, y, hexSize, inRadius, horiz, vert); break
+		case "Reagent": drawReagent(ctx, component, x, y, hexSize, inRadius, horiz, vert); break
 		case "ArmMechanism": drawArmMechanism(ctx, component, x, y, hexSize, inRadius, horiz, vert); break
 	}
 }
