@@ -149,6 +149,9 @@ export class Hex {
 		const xy = this.toXY()
 		return new Circle(xy[0], xy[1], radius)
 	}
+	equals(b){
+		return this.q === b.q && this.r === b.r
+	}
 
 	//TODO: Still gives incorrect cells. Need to have it use two points instead of one
 	//Probably just completely rewrite.
@@ -322,25 +325,16 @@ export class Component {
 		this.currentHexRotation = 0
 		this.offset = Hex.directions[0]
 		this.offsetDistance = 0
-
-		//These values are remembered and not changed during playback, so that the component can be reset to where it was before playback began.
-		this.startingHomeTile = new Hex(0, 0, 0)
-		this.startingRotation = 0
 	}
 	
 	clone() {
 		console.warn("Uh oh! You never handled", this)
 	}
 	moveOrigin(b) {
-		let origin = this.homeTile
-		origin.q += b.q
-		origin.r += b.r
-		origin.s += b.s
-		let atoms = this.atoms
-		for (let atom of atoms.contents) {
-			let dest = atom.coord.subtract(b)
-			atom.setCoords(dest.q, dest.r, dest.s)
-		}
+		const oldOrigin = this.homeTile
+		this.homeTile = b
+		const diff = oldOrigin.subtract(b)
+		this.translate(diff)
 	}
 	rotateLeft() {
 		let atoms = this.atoms
@@ -367,6 +361,13 @@ export class Component {
 			arm.setCoords(-coord.r, -coord.s, -coord.q)
 		}
 		this.currentHexRotation = (this.currentHexRotation + 1) % Hex.directions.length
+	}
+	translate(b){
+		const atoms = this.atoms
+		for (let atom of atoms.contents) {
+			let dest = atom.coord.add(b)
+			atom.setCoords(dest.q, dest.r, dest.s)
+		}
 	}
 }
 

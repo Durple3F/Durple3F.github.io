@@ -54,9 +54,10 @@
 		},
 		"20260402": {
 			"date": "April 2, 2026",
-			"line-count": 1900,
+			"line-count": 2100,
 			"changes": [
-				"- Now, when the simulation starts and every tick afterward, if the game is able, it places molecules on any reagents you've placed."
+				"- Now, when the simulation starts and every tick afterward, if the game is able, it places molecules on any reagents you've placed.",
+				"- Added the grab, drop, extend, and retract instructions."
 			]
 		}
 	}

@@ -1,5 +1,5 @@
 import {Hex, Atom, Molecule} from "./util.js";
-import {drawGhostRotation} from "./config.js";
+import {drawGhostRotation, drawMoleculeHomeTile} from "./config.js";
 
 const ROOT3 = Math.sqrt(3)
 const max = Math.max
@@ -189,14 +189,17 @@ function drawMolecule(ctx, molecule, x, y, hexSize, inRadius, horiz, vert){
 			ctx.globalAlpha = 1
 		}
 	}
-	ctx.save()
-	ctx.beginPath()
-	ctx.moveTo(x, y)
-	ctx.fillStyle = "red"
-	ctx.arc(x, y, hexSize * 0.5, 0, Math.PI * 2)
-	ctx.closePath()
-	ctx.fill()
-	ctx.restore()
+
+	if (drawMoleculeHomeTile){
+		ctx.save()
+		ctx.beginPath()
+		ctx.moveTo(x, y)
+		ctx.fillStyle = "red"
+		ctx.arc(x, y, hexSize * 0.5, 0, Math.PI * 2)
+		ctx.closePath()
+		ctx.fill()
+		ctx.restore()
+	}
 }
 
 function drawAtom(ctx, atom, x, y, hexSize, inRadius, alpha){
@@ -240,9 +243,12 @@ function drawReagent(ctx, reagent, x, y, hexSize, inRadius, horiz, vert){
 		ctx.fill()
 		ctx.stroke()
 		ctx.restore()
-
-		// drawAtom(ctx, atom, atomXR, atomYR, hexSize, inRadius, 1)
 	}
+
+	ctx.save()
+	ctx.filter = "brightness(0.2)"
+	drawMolecule(ctx, molecule, x, y, hexSize, inRadius, horiz, vert)
+	ctx.restore()
 }
 
 function drawComponent(ctx, component, x, y, hexSize, inRadius, horiz, vert){

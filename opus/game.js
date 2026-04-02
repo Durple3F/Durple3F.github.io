@@ -553,12 +553,13 @@ export class Game{
 		this.placeReagents()
 
 		//get each instruction that should be executed right now and add them to the list of animations
-		let programs = this.simulation.programs
+		const programs = this.simulation.programs
 		for (let program of programs){
-			let instruction = program.getInstruction(timestep)
+			const instruction = program.getInstruction(timestep)
 			if (!instruction) continue
-			let instructionType = instruction.type.id
-			let component = program.component
+			const instructionType = instruction.type.id
+			const component = program.component
+			const homeTile = component.homeTile
 			switch (instructionType){
 				case "rotator_cw": {
 					let animation = {
@@ -570,6 +571,23 @@ export class Game{
 						endV: component.rotation + Math.PI / 3
 					}
 					this.playingAnimations.push(animation)
+
+					//Rotate any molecules gripped by arms
+					const arms = component.arms.contents
+					for (let arm of arms){
+						if (!arm.grippedComponent) continue
+						const molecule = arm.grippedComponent
+						molecule.moveOrigin(homeTile)
+						let animation = {
+							type: "set_rotation",
+							target: molecule,
+							startT: timestep,
+							endT: timestep + 1,
+							startV: molecule.rotation,
+							endV: molecule.rotation + Math.PI / 3
+						}
+						this.playingAnimations.push(animation)
+					}
 				} break
 				case "rotator_ccw": {
 					let animation = {
@@ -581,6 +599,114 @@ export class Game{
 						endV: component.rotation - Math.PI / 3
 					}
 					this.playingAnimations.push(animation)
+
+					//Rotate any molecules gripped by arms
+					const arms = component.arms.contents
+					for (let arm of arms){
+						if (!arm.grippedComponent) continue
+						const molecule = arm.grippedComponent
+						molecule.moveOrigin(homeTile)
+						let animation = {
+							type: "set_rotation",
+							target: molecule,
+							startT: timestep,
+							endT: timestep + 1,
+							startV: molecule.rotation,
+							endV: molecule.rotation - Math.PI / 3
+						}
+						this.playingAnimations.push(animation)
+					}
+				} break
+				case "grabber_grab": {
+					const arms = component.arms.contents
+					for (let arm of arms){
+						const targetHex = homeTile.add(arm.direction.scale(arm.distance))
+						//find the first molecule that has an atom at that hex.
+						const components = this.simulation.grid.contents
+						let targetMolecule = null
+						for (let otherComponent of components){
+							if (otherComponent.type !== "Molecule") continue
+							const hexes = this.getSimulationCollisionHexes(otherComponent)
+							for (let hex of hexes){
+								if (hex.equals(targetHex)){
+									targetMolecule = otherComponent
+									break
+								}
+							}
+							if (targetMolecule) break
+						}
+						if (targetMolecule){
+							arm.grippedComponent = targetMolecule
+						}
+					}
+				} break
+				case "grabber_drop": {
+					const arms = component.arms.contents
+					for (let arm of arms){
+						arm.grippedComponent = null
+					}
+				} break
+				case "piston_extend": {
+					const arms = component.arms.contents
+					const firstArm = arms[0]
+					if (firstArm.distance >= 3) break
+					const animation = {
+						type: "set_all_arm_length",
+						target: component,
+						startT: timestep,
+						endT: timestep + 1,
+						startV: firstArm.distance,
+						endV: firstArm.distance + 1
+					}
+					this.playingAnimations.push(animation)
+
+					//Translate each item those arms were connected to
+					for (let arm of arms){
+						if (!arm.grippedComponent) continue
+						let molecule = arm.grippedComponent
+						let distance = 1
+						molecule.offset = arm.direction
+						const moleculeAnimation = {
+							type: "set_offset",
+							target: molecule,
+							startT: timestep,
+							endT: timestep + 1,
+							startV: 0,
+							endV: distance
+						}
+						this.playingAnimations.push(moleculeAnimation)
+					}
+				} break
+				case "piston_retract": {
+					const arms = component.arms.contents
+					const firstArm = arms[0]
+					if (firstArm.distance <= 1) break
+					const animation = {
+						type: "set_all_arm_length",
+						target: component,
+						startT: timestep,
+						endT: timestep + 1,
+						startV: firstArm.distance,
+						endV: firstArm.distance - 1
+					}
+					this.playingAnimations.push(animation)
+
+					//Translate each item those arms were connected to
+					for (let arm of arms){
+						if (!arm.grippedComponent) continue
+						let molecule = arm.grippedComponent
+						let distance = -1
+						molecule.offset = arm.direction
+						const moleculeAnimation = {
+							type: "set_offset",
+							target: molecule,
+							startT: timestep,
+							endT: timestep + 1,
+							startV: 0,
+							endV: distance
+						}
+						this.playingAnimations.push(moleculeAnimation)
+					}
 				} break
 			}
 		}
@@ -590,9 +716,20 @@ export class Game{
 		const component = animation.target
 		switch (animation.type){
 			case "set_rotation": {
-				let v = lerp(animation.startV, animation.endV, p)
+				const v = lerp(animation.startV, animation.endV, p)
 				component.rotation = v
-			}
+			} break
+			case "set_all_arm_length": {
+				const arms = component.arms.contents
+				const v = lerp(animation.startV, animation.endV, p)
+				for (let arm of arms){
+					arm.distance = v
+				}
+			} break
+			case "set_offset": {
+				const v = lerp(animation.startV, animation.endV, p)
+				component.offsetDistance = v
+			} break
 		}
 	}
 	finishAnimation(animation){
@@ -607,7 +744,18 @@ export class Game{
 					component.rotation = 0
 					component.rotateLeft()
 				}
-			}
+			} break
+			case "set_all_arm_length": {
+				const arms = component.arms.contents
+				const v = animation.endV
+				for (let arm of arms){
+					arm.distance = v
+				}
+			} break
+			case "set_offset": {
+				let translation = component.scale(floor(component.offsetDistance))
+				component.translate(translation)
+			} break
 		}
 	}
 
