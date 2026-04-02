@@ -1,9 +1,11 @@
-import {Hex, Grid, Component, Element, Atom, loadSprite, Molecule, ArmMechanism, ARMTYPES, Reagent, tagHierarchy, lerp, clamp} from "./util.js"
+import {Hex, Grid, Component, Element, Atom, loadSprite, Molecule, ArmMechanism, ARMTYPES, Reagent, tagHierarchy, lerp, clamp, Product} from "./util.js"
 import { SCENARIOS } from "./scenarios.js"
 import { createInstructionTag, Instruction, INSTRUCTIONS } from "./instructions.js"
 
 const min = Math.min
 const max = Math.max
+const sin = Math.sin
+const cos = Math.cos
 const ROOT3 = Math.sqrt(3)
 const floor = Math.floor
 const ceil = Math.ceil
@@ -160,7 +162,11 @@ export class Game{
 		let reagent = new Reagent(molecule)
 		reagent.homeTile = new Hex(-1, 0, 1)
 		this.addComponent(reagent)
-		// this.currentLevel.grid.contents[0].moveOrigin(new Hex(-2, 2, 0))
+		
+		let product = new Product(molecule.clone())
+		product.homeTile = new Hex(1, 0, -1)
+		this.addComponent(product)
+
 		if (true) {
 			// let molecule = new Molecule()
 			// let atom = new Atom("Fire")
@@ -471,11 +477,46 @@ export class Game{
 		const components = level.grid.contents
 		for (let component of components){
 			const toAdd = this.getSimulationCollisionHexes(component)
+			const homeTile = component.homeTile
+			const homeXY = homeTile.toXY()
 			for (let hex of toAdd){
-				circles.push(hex.toCircle(0.7))
+				hex = hex.add(component.offset.scale(component.offsetDistance))
+				let circle = hex.toCircle(0.7)
+				if (component.rotation !== 0){
+					let angle = component.rotation
+					let circleX = circle.x
+					let circleY = circle.y
+					let homeX = homeXY[0]
+					let homeY = homeXY[1]
+					let dx = circleX - homeX
+					let dy = circleY - homeY
+					let x2 = dx * cos(angle) - dy * sin(angle)
+					let y2 = dx * sin(angle) + dy * cos(angle)
+					let finalX = x2 + homeX
+					let finalY = y2 + homeY
+					circle.x = finalX
+					circle.y = finalY
+					circles.push(circle)
+				} else {
+					circles.push(circle)
+				}
 			}
 		}
 		return circles
+	}
+	detectCollisions(){
+		const level = this.simulation
+		const circles = this.getAllSimulationCollisionCircles()
+		for (let i = 0; i < circles.length; i++){
+			let circle1 = circles[i]
+			for (let j = i + 1; j < circles.length; j++){
+				let circle2 = circles[j]
+				if (circle1.intersects(circle2) && this.playbackSpeed > 0){
+					window.alert("Some components collided with each other. Reset the simulation and try again.")
+					this.playbackSpeed = 0
+				}
+			}
+		}
 	}
 	placeReagents(){
 		//For each reagent, check if it can create a copy of its molecule on the same tile as it.
@@ -537,6 +578,7 @@ export class Game{
 		this.resetSimulation()
 		this.simulationTimeStep = 0
 		this.simulationDeltaT = 0
+		this.playbackSpeed = 1
 		this.isPlayingSimulation = true
 		this.beginAnimatingInstructions(this.simulationTimeStep)
 	}
@@ -620,7 +662,7 @@ export class Game{
 				case "grabber_grab": {
 					const arms = component.arms.contents
 					for (let arm of arms){
-						const targetHex = homeTile.add(arm.direction.scale(arm.distance))
+						const targetHex = homeTile.add(arm.direction.scale(arm.distance)).round()
 						//find the first molecule that has an atom at that hex.
 						const components = this.simulation.grid.contents
 						let targetMolecule = null
@@ -708,6 +750,42 @@ export class Game{
 						this.playingAnimations.push(moleculeAnimation)
 					}
 				} break
+				case "pivot_cw": {
+					//Rotate any molecules gripped by arms
+					const arms = component.arms.contents
+					for (let arm of arms){
+						if (!arm.grippedComponent) continue
+						const molecule = arm.grippedComponent
+						molecule.moveOrigin(homeTile.add(arm.direction.scale(arm.distance)).round())
+						let animation = {
+							type: "set_rotation",
+							target: molecule,
+							startT: timestep,
+							endT: timestep + 1,
+							startV: molecule.rotation,
+							endV: molecule.rotation + Math.PI / 3
+						}
+						this.playingAnimations.push(animation)
+					}
+				} break
+				case "pivot_ccw": {
+					//Rotate any molecules gripped by arms
+					const arms = component.arms.contents
+					for (let arm of arms){
+						if (!arm.grippedComponent) continue
+						const molecule = arm.grippedComponent
+						molecule.moveOrigin(homeTile.add(arm.direction.scale(arm.distance)).round())
+						let animation = {
+							type: "set_rotation",
+							target: molecule,
+							startT: timestep,
+							endT: timestep + 1,
+							startV: molecule.rotation,
+							endV: molecule.rotation - Math.PI / 3
+						}
+						this.playingAnimations.push(animation)
+					}
+				} break
 			}
 		}
 	}
@@ -753,7 +831,7 @@ export class Game{
 				}
 			} break
 			case "set_offset": {
-				let translation = component.scale(floor(component.offsetDistance))
+				let translation = component.scale(floor(component.offsetDistance)).round()
 				component.translate(translation)
 			} break
 		}
@@ -766,7 +844,7 @@ export class Game{
 		const controls = this.controls
 		controls.tick()
 
-		if (this.isPlayingSimulation){
+		if (this.isPlayingSimulation && this.playbackSpeed > 0){
 			//Increase time slightly.
 			this.simulationDeltaT += this.playbackSpeed * (dt / 1000)
 			//simulation time, simulation delta time.
@@ -796,6 +874,8 @@ export class Game{
 				this.simulationDeltaT--
 				this.beginAnimatingInstructions(this.simulationTimeStep)
 			}
+			
+			this.detectCollisions()
 		}
 
 		let mouseX = controls.mouse.x

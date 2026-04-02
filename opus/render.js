@@ -1,5 +1,5 @@
 import {Hex, Atom, Molecule} from "./util.js";
-import {drawGhostRotation, drawMoleculeHomeTile} from "./config.js";
+import {drawCollisionCircles, drawGhostRotation, drawMoleculeHomeTile} from "./config.js";
 
 const ROOT3 = Math.sqrt(3)
 const max = Math.max
@@ -228,7 +228,44 @@ function drawReagent(ctx, reagent, x, y, hexSize, inRadius, horiz, vert){
 		const atomYR = y + atomY //atomX * sinT + atomY * cosT
 
 		//Draw a hexagon on the ground
-		let color = "green"
+		let color = "lightgreen"
+		ctx.fillStyle = color
+		ctx.lineWidth = max(hexSize * 0.05, 2)
+		ctx.strokeStyle = "black"
+		ctx.beginPath()
+		ctx.moveTo(atomXR, atomYR - hexSize)
+		ctx.lineTo(atomXR + diagx, atomYR - diagy)
+		ctx.lineTo(atomXR + diagx, atomYR + diagy)
+		ctx.lineTo(atomXR, atomYR + hexSize)
+		ctx.lineTo(atomXR - diagx, atomYR + diagy)
+		ctx.lineTo(atomXR - diagx, atomYR - diagy)
+		ctx.closePath()
+		ctx.fill()
+		ctx.stroke()
+		ctx.restore()
+	}
+
+	ctx.save()
+	ctx.filter = "brightness(0.2)"
+	drawMolecule(ctx, molecule, x, y, hexSize, inRadius, horiz, vert)
+	ctx.restore()
+}
+function drawProduct(ctx, reagent, x, y, hexSize, inRadius, horiz, vert){
+	//A product is just the hexagonal grid underneath the molecule that it produces.
+	const diagx = ROOT3*0.5*hexSize
+	const diagy = hexSize*0.5
+	const molecule = reagent.molecule
+	const atoms = molecule.atoms.contents
+	for (let atom of atoms){
+		const q = atom.coord.q
+		const r = atom.coord.r
+		const atomX = (q + 0.5 * r) * horiz
+		const atomY = r * vert
+		const atomXR = x + atomX //atomX * cosT - atomY * sinT
+		const atomYR = y + atomY //atomX * sinT + atomY * cosT
+
+		//Draw a hexagon on the ground
+		let color = "tomato"
 		ctx.fillStyle = color
 		ctx.lineWidth = max(hexSize * 0.05, 2)
 		ctx.strokeStyle = "black"
@@ -256,6 +293,7 @@ function drawComponent(ctx, component, x, y, hexSize, inRadius, horiz, vert){
 	switch (component.type){
 		case "Molecule": drawMolecule(ctx, component, x, y, hexSize, inRadius, horiz, vert); break
 		case "Reagent": drawReagent(ctx, component, x, y, hexSize, inRadius, horiz, vert); break
+		case "Product": drawProduct(ctx, component, x, y, hexSize, inRadius, horiz, vert); break
 		case "ArmMechanism": drawArmMechanism(ctx, component, x, y, hexSize, inRadius, horiz, vert); break
 	}
 }
@@ -328,5 +366,22 @@ export function render(game, ctx, w, h){
 		x += componentOffX
 		y += componentOffY
 		drawComponent(ctx, component, x, y, hexSize, inRadius, horiz, vert)
+	}
+
+	if (drawCollisionCircles){
+		const circles = game.getAllSimulationCollisionCircles()
+		for (let circle of circles){
+			const x = circle.x * horiz/ROOT3 - xOffset
+			const y = circle.y * vert*2/3 - yOffset
+			ctx.save()
+			ctx.beginPath()
+			ctx.moveTo(x, y)
+			ctx.globalAlpha = 0.5
+			ctx.fillStyle = "purple"
+			ctx.arc(x, y, hexSize * circle.radius, 0, Math.PI * 2)
+			ctx.closePath()
+			ctx.fill()
+			ctx.restore()
+		}
 	}
 }

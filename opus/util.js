@@ -503,6 +503,20 @@ export class Reagent extends Component {
 		return clone
 	}
 }
+export class Product extends Component {
+	constructor(molecule) {
+		super()
+		this.type = "Product"
+		this.molecule = molecule
+	}
+
+	clone() {
+		let molecule = this.molecule.clone()
+		let clone = new Product(molecule)
+		clone.homeTile = this.homeTile
+		return clone
+	}
+}
 
 export const ARMTYPES = {}
 export class ArmMechanismType {

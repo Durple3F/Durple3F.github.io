@@ -54,10 +54,12 @@
 		},
 		"20260402": {
 			"date": "April 2, 2026",
-			"line-count": 2100,
+			"line-count": 2300,
 			"changes": [
 				"- Now, when the simulation starts and every tick afterward, if the game is able, it places molecules on any reagents you've placed.",
-				"- Added the grab, drop, extend, and retract instructions."
+				"- Added the grab, drop, extend, retract, pivot clockwise, and pivot counterclockwise instructions.",
+				"- The collision detection is more accurate now and takes into account where a molecule is even while it's in the middle of an animation.",
+				"- If two atoms collide during a simulation, the simulation stops."
 			]
 		}
 	}

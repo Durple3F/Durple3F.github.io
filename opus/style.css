@@ -7,7 +7,8 @@ body {
 }
 
 :root {
-	--screen-height: calc(100vh - 15vw);
+	--bottom-pane-height: min(35vh, 15vw);
+	--screen-height: calc(100vh - var(--bottom-pane-height));
 	--components-bg: rgb(41, 49, 112);
 	--playback-bg: rgb(37, 69, 151);
 	--programs-bg: rgb(20, 45, 121);
@@ -24,9 +25,10 @@ body {
 #components {
 	position: absolute;
 	top: 0; left: 0;
-	height: 100vh; width: 15vw;
+	height: calc(100vh - var(--bottom-pane-height)); width: 15vw;
 	background-color: var(--components-bg);
 	border-right: var(--pane-border);
+	overflow-y: auto;
 	z-index: 10;
 }
 
@@ -92,7 +94,7 @@ body {
 	position: absolute;
 	bottom: 0; left: 0;
 	width: 100vw;
-	height: calc(100vh - var(--screen-height));
+	height: var(--bottom-pane-height);
 	z-index: 15;
 	background-color: var(--programs-bg);
 	border-top: var(--pane-border);
