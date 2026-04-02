@@ -16,7 +16,7 @@ export class Level{
 		this.grid = new Grid()
 		this.timestep = 0
 		this.programs = []
-		// this.grid.fill(-10, 10, -10, 10)
+		this.submittedProductCounts = [0]
 	}
 }
 
@@ -145,6 +145,16 @@ export class Game{
 			})
 		}
 	}
+	deleteComponent(component, level){
+		if (!level){
+			level = this.currentLevel
+		}
+		const contents = level.grid.contents
+		let index = contents.indexOf(component)
+		if (index !== -1){
+			contents.splice(index, 1)
+		}
+	}
 
 	initialize(){
 		this.resizeScreen()
@@ -160,12 +170,18 @@ export class Game{
 		molecule.addAtom(atom2)
 		molecule.addBond(atom, atom2)
 		let reagent = new Reagent(molecule)
-		reagent.homeTile = new Hex(-1, 0, 1)
+		reagent.moveOrigin(new Hex(-1, 0, 1))
 		this.addComponent(reagent)
 		
 		let product = new Product(molecule.clone())
-		product.homeTile = new Hex(1, 0, -1)
+		product.moveOrigin(new Hex(1, 0, -1))
+		// molecule.rotateRight()
+		// molecule.rotateRight()
+		// molecule.rotateRight()
 		this.addComponent(product)
+
+		// molecule.moveOrigin(new Hex(-5, 5, 0))
+		// product.molecule.moveOrigin(new Hex(-2, 3, -1))
 
 		if (true) {
 			// let molecule = new Molecule()
@@ -550,6 +566,73 @@ export class Game{
 			}
 		}
 	}
+	acceptProducts(){
+		//For each product, check if an equivalent molecule is on top of it.
+		//If so, despawn the molecule.
+		const level = this.simulation
+		const components = level.grid.contents
+		//Find all molecules that are held by something, so we can tell if other molecules aren't.
+		const products = []
+		const productHexes = new Map()
+		const allMolecules = []
+		const heldMolecules = []
+
+		const sortFunction = (a, b) => {
+			return (a.q < b.q || (a.q === b.q && a.r < b.r)) ? -1 : 1
+		}
+
+		for (let component of components){
+			const type = component.type
+			switch (type) {
+				case "Product":
+					products.push(component)
+				break
+				case "ArmMechanism":
+					let arms = component.arms.contents
+					for (let arm of arms){
+						let grippedComponent = arm.grippedComponent
+						if (grippedComponent && !heldMolecules.includes(grippedComponent)){
+							heldMolecules.push(grippedComponent)
+						}
+					}
+				break
+				case "Molecule":
+					allMolecules.push(component)
+				break
+			}
+		}
+		for (let product of products){
+			let hexes = this.getPlacementCollisionHexes(product)
+			hexes.sort(sortFunction)
+			productHexes.set(product, hexes)
+		}
+		for (let molecule of allMolecules){
+			if (heldMolecules.includes(molecule)){
+				continue
+			}
+			let hexes = this.getPlacementCollisionHexes(molecule)
+			hexes.sort(sortFunction)
+			let wasRemoved = false
+			for (let product of products){
+				let hexes2 = productHexes.get(product)
+				if (hexes.length !== hexes2.length) continue
+				let isEqual = true
+				for (let i = 0; i < hexes.length; i++){
+					if (!hexes[i].equals(hexes2[i])){
+						isEqual = false
+					}
+				}
+				if (isEqual){
+					level.submittedProductCounts[0]++
+					this.deleteComponent(molecule, level)
+					break
+				}
+			}
+			if (wasRemoved){
+				break
+			}
+		}
+	}
 
 	resetSimulation(){
 		//we create a simulated copy of the original level that contains all the same things in all the same places.
@@ -788,6 +871,9 @@ export class Game{
 				} break
 			}
 		}
+		
+		//Then, see if the player has satisfied any of the products, and accept them.
+		this.acceptProducts()
 	}
 
 	applyAnimation(animation, p){

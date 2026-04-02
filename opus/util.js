@@ -408,6 +408,11 @@ export class Atom {
 		clone.coord = this.coord.clone()
 		return clone
 	}
+	equals(otherAtom) {
+		let coord1 = this.coord
+		let coord2 = otherAtom.coord
+		return this.element === otherAtom.element && coord1.q === coord2.q && coord1.r === coord2.r
+	}
 	setCoords(q, r, s) {
 		this.coord = new Hex(q, r, s)
 	}
@@ -450,6 +455,71 @@ export class Molecule extends Component {
 			clone.bonds.contents.push(bondClone)
 		}
 		return clone
+	}
+	equals(molecule) {
+		//Two molecules are equivalent if for some translation, the atoms are in the same spots.
+		let result = true
+		let clone1 = this.clone()
+		let clone2 = molecule.clone()
+		let atoms1 = clone1.atoms.contents
+		let atoms2 = clone2.atoms.contents
+		let bonds1 = clone1.bonds.contents
+		let bonds2 = clone2.bonds.contents
+		//Empty molecules are equivalent
+		if (!atoms1.length && !atoms2.length) return true
+		//Molecules with an inequal number of atoms are inequal
+		if (atoms1.length !== atoms2.length) return false
+		//Molecules with an inequal number of bonds are inequal
+		if (bonds1.length !== bonds2.length) return false
+		//Find the atom of each molecule that has the smallest q, using r as a tiebreaker
+		let bottomLeft1 = atoms1[0]
+		let bottomLeft2 = atoms2[0]
+		for (let i = 1; i < atoms1.length; i++){
+			let atom1 = atoms1[i]
+			if (atom1.coord.q < bottomLeft1.coord.q || (atom1.coord.q === bottomLeft1.coord.q && atom1.coord.r < bottomLeft1.coord.r)){
+				bottomLeft1 = atom1
+			}
+			let atom2 = atoms2[i]
+			if (atom2.coord.q < bottomLeft2.coord.q || (atom2.coord.q === bottomLeft2.coord.q && atom2.coord.r < bottomLeft2.coord.r)){
+				bottomLeft2 = atom2
+			}
+		}
+		clone1.translate(bottomLeft1.coord.scale(-1))
+		clone2.translate(bottomLeft2.coord.scale(-1))
+		//Now that clone1 and clone2 are in the same orientation, test that for each atom inside each clone, there exists an equivalent atom in the other. Then do the same for the bonds.
+		for (let atom1 of atoms1){
+			let hasEqual = false
+			for (let atom2 of atoms2){
+				if (atom1.equals(atom2)){
+					hasEqual = true
+					break
+				}
+			}
+			if (!hasEqual){
+				result = false
+				break
+			}
+		}
+		//Neat! Now let's check that all of the bonds are the same.
+		for (let bond1 of bonds1){
+			let hasEqual = false
+			let atom1 = bond1.atoms[0]
+			let atom2 = bond1.atoms[1]
+			for (let bond2 of bonds2){
+				if (
+					(atom1.equals(bond2.atoms[0]) && atom2.equals(bond2.atoms[1])) ||
+					(atom1.equals(bond2.atoms[1]) && atom2.equals(bond2.atoms[0]))
+				){
+					hasEqual = true
+					break
+				}
+			}
+			if (!hasEqual){
+				result = false
+				break
+			}
+		}
+		return result
 	}
 	addAtom(atom) {
 		//Ensure that no other atom is taking up this space.
