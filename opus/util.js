@@ -1,3 +1,5 @@
+const ROOT3 = Math.sqrt(3)
+
 export function easeInOutCubic(x) {
 	return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
 }
@@ -38,6 +40,17 @@ export function tagHierarchy(tag) {
 		nodes.unshift(nodes[0].parentNode)
 	}
 	return nodes
+}
+
+export class Circle {
+	constructor(x, y, radius){
+		this.x = x
+		this.y = y
+		this.radius = radius
+	}
+	intersects(circle){
+		return Math.hypot(circle.x-this.x, circle.y-this.y) <= (circle.radius + this.radius)
+	}
 }
 
 export class Hex {
@@ -123,6 +136,18 @@ export class Hex {
 			si = -qi - ri;
 		}
 		return new Hex(qi, ri, si);
+	}
+	toXY(){
+		//based on an assumed "size" of 1. this means their inner radius is <1.
+		const q = this.q
+		const r = this.r
+		const x = ROOT3 * q + ROOT3 * 0.5 * r
+		const y = 3/2 * r
+		return [x, y]
+	}
+	toCircle(radius=1){
+		const xy = this.toXY()
+		return new Circle(xy[0], xy[1], radius)
 	}
 
 	//TODO: Still gives incorrect cells. Need to have it use two points instead of one
@@ -302,8 +327,10 @@ export class Component {
 		this.startingHomeTile = new Hex(0, 0, 0)
 		this.startingRotation = 0
 	}
-
-
+	
+	clone() {
+		console.warn("Uh oh! You never handled", this)
+	}
 	moveOrigin(b) {
 		let origin = this.homeTile
 		origin.q += b.q
@@ -323,7 +350,7 @@ export class Component {
 		}
 		let arms = this.arms
 		for (let arm of arms.contents) {
-			let coord = arm.coord
+			let coord = arm.direction
 			arm.setCoords(-coord.s, -coord.q, -coord.r)
 		}
 		this.currentHexRotation = (this.currentHexRotation - 1 + Hex.directions.length) % Hex.directions.length
@@ -336,7 +363,7 @@ export class Component {
 		}
 		let arms = this.arms
 		for (let arm of arms.contents) {
-			let coord = arm.coord
+			let coord = arm.direction
 			arm.setCoords(-coord.r, -coord.s, -coord.q)
 		}
 		this.currentHexRotation = (this.currentHexRotation + 1) % Hex.directions.length
@@ -375,15 +402,28 @@ export class Atom {
 		this.element = ELEMENTS[elementId]
 		this.coord = new Hex(0, 0, 0)
 	}
+	clone() {
+		let clone = new Atom(this.element.id)
+		clone.coord = this.coord.clone()
+		return clone
+	}
 	setCoords(q, r, s) {
 		this.coord = new Hex(q, r, s)
 	}
 }
 
+export const BONDTYPES = {}
+export class BondType {
+	constructor(id){
+		this.id = id
+	}
+}
+BONDTYPES["simple"] = new BondType("simple")
+
 export class Bond {
 	constructor(atom1, atom2) {
 		this.atoms = [atom1, atom2]
-		this.type = "simple"
+		this.type = BONDTYPES["simple"]
 	}
 }
 
@@ -391,6 +431,24 @@ export class Molecule extends Component {
 	constructor() {
 		super()
 		this.type = "Molecule"
+	}
+	clone() {
+		let clone = new Molecule()
+		clone.homeTile = this.homeTile
+		for (let atom of this.atoms.contents){
+			clone.atoms.contents.push(atom.clone())
+		}
+		for (let bond of this.bonds.contents){
+			let atom1 = bond.atoms[0]
+			let atom2 = bond.atoms[1]
+			let atom1Index = this.atoms.contents.indexOf(atom1)
+			let atom2Index = this.atoms.contents.indexOf(atom2)
+			let atom1Clone = clone.atoms.contents[atom1Index]
+			let atom2Clone = clone.atoms.contents[atom2Index]
+			let bondClone = new Bond(atom1Clone, atom2Clone)
+			clone.bonds.contents.push(bondClone)
+		}
+		return clone
 	}
 	addAtom(atom) {
 		//Ensure that no other atom is taking up this space.
@@ -436,22 +494,30 @@ export class Reagent extends Component {
 		this.type = "Reagent"
 		this.molecule = molecule
 	}
+
+	clone() {
+		let molecule = this.molecule.clone()
+		let clone = new Reagent(molecule)
+		clone.homeTile = this.homeTile
+		return clone
+	}
 }
 
 export const ARMTYPES = {}
 export class ArmMechanismType {
-	constructor(abilities = {}, armDirectionList = [Hex.directions[0]], atomList = []) {
+	constructor(id, abilities = {}, armDirectionList = [Hex.directions[0]], atomList = []) {
+		this.id = id
 		this.armDirectionList = armDirectionList
 		this.atomList = atomList
 		this.abilities = {
-			rotateLeft: true,
-			rotateRight: true,
-			pivotLeft: true,
-			pivotRight: true,
-			extend: false,
-			retract: false,
-			grab: true,
-			release: true,
+			"rotator_ccw": true,
+			"rotator_cw": true,
+			"pivot_ccw": true,
+			"pivot_cw": true,
+			"piston_extend": false,
+			"piston_retract": false,
+			"grabber_grab": true,
+			"grabber_drop": true,
 		}
 		for (let ability in this.abilities) {
 			if (ability in abilities) {
@@ -460,9 +526,9 @@ export class ArmMechanismType {
 		}
 	}
 }
-ARMTYPES["Piston"] = new ArmMechanismType({
-	extend: true,
-	retract: true
+ARMTYPES["Piston"] = new ArmMechanismType("Piston", {
+	"piston_extend": true,
+	"piston_retract": true
 })
 
 export class ArmMechanism extends Component {
@@ -477,15 +543,33 @@ export class ArmMechanism extends Component {
 			this.arms.contents.push(arm)
 		}
 	}
+
+	clone() {
+		let clone = new ArmMechanism(this.mechanismType.id)
+		clone.homeTile = this.homeTile
+		clone.arms.contents.length = 0
+		let origin = new Hex(0, 0, 0)
+		for (let arm of this.arms.contents) {
+			let armClone = new Arm(origin, arm.direction)
+			clone.arms.contents.push(armClone)
+		}
+		clone.program = this.program.clone(clone)
+		return clone
+	}
 }
 
 export class Arm {
 	constructor(home, hand) {
+		//Arms remember their coordinates by storing the distance of their arm and a normal vector that shows the direction.
 		this.distance = home.distance(hand)
-		this.coord = hand
+		this.direction = hand
 		this.isGripping = false
+		this.grippedComponent = null
+	}
+	setDirection(q, r, s) {
+		this.direction = new Hex(q, r, s)
 	}
 	setCoords(q, r, s) {
-		this.coord = new Hex(q, r, s)
+		this.direction = new Hex(q, r, s)
 	}
 }

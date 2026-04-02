@@ -82,7 +82,7 @@ function drawArmMechanism(ctx, mechanism, x, y, hexSize, inRadius, horiz, vert){
 	ctx.restore()
 
 	for (let arm of arms){
-		const hand = arm.coord
+		const hand = arm.direction
 		const q = hand.q
 		const r = hand.r
 		//Because arms can have their hands any distance from the home tile, multiply these distances to get the true distance.
@@ -256,7 +256,12 @@ function drawComponent(ctx, component, x, y, hexSize, inRadius, horiz, vert){
 
 export function render(game, ctx, w, h){
 	ctx.clearRect(0, 0, w, h)
-	const grid = game.currentLevel.grid
+	let grid
+	if (game.isPlayingSimulation){
+		grid = game.simulation.grid
+	} else {
+		grid = game.currentLevel.grid
+	}
 	const hexSize = game.hexSize
 	const inRadius = hexSize * ROOT3 * 0.5
 	const horiz = ROOT3 * hexSize

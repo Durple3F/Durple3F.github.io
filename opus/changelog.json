@@ -40,7 +40,7 @@
 		},
 		"20260401": {
 			"date": "April 1, 2026",
-			"line-count": 1500,
+			"line-count": 1800,
 			"changes": [
 				"- Placing a new arm onto the page now creates a corresponding row in the programming pane that, eventually, I hope to be able to drag and drop commands onto. I even made it make a nice rainbow.",
 				"- Arms now display the number of the corresponding program on their base.",
@@ -48,7 +48,15 @@
 				"- You can now move previously placed instructions around.",
 				"- Finally starting to work on simulating the game. Right now you can tell your arms to rotate right and left. That's it.",
 				"- Empty instructions are removed from the end of your programs.",
-				"- You can now press the play button and it will play your program."
+				"- You can now press the play button and it will play your program.",
+				"- You can now stop the playback, and it will reset everything back to how it was before you pressed play. This is done through a very hacky method: The computer just creates a copy of the level and then animates that."
+			]
+		},
+		"20260402": {
+			"date": "April 2, 2026",
+			"line-count": 1900,
+			"changes": [
+				"- Now, when the simulation starts and every tick afterward, if the game is able, it places molecules on any reagents you've placed."
 			]
 		}
 	}

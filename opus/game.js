@@ -27,7 +27,19 @@ export class Program{
 		//a program's period is the number of instructions from the first to the last non-idle instruction.
 		this.period = 0
 		this.instructions = []
+		this.elem = null
+	}
 
+	clone(component=null){
+		let clone = new Program(component ?? this.component, this.name)
+		clone.startStep = this.startStep
+		clone.period = this.period
+		clone.instructions = this.instructions
+		clone.elem = this.elem
+		return clone
+	}
+
+	createElement(){
 		let programRow = $("<div>").addClass("program-row")
 		this.elem = programRow
 		let programName = $("<div>").addClass("program-name").text(this.name)
@@ -93,12 +105,15 @@ export class Game{
 		}
 	}
 
-	addComponent(component){
+	addComponent(component, level){
+		if (!level){
+			level = this.currentLevel
+		}
 		//For rendering purposes, all components must be placed in this order.
 		const type = component.type
 		const hierarchy = ["Reagent", "Product", "Glyph", "Molecule", "ArmMechanism"]
 		const score = hierarchy.indexOf(type)
-		const contents = this.currentLevel.grid.contents
+		const contents = level.grid.contents
 		let index = contents.length
 		while (index !== 0){
 			let prev = contents[index - 1]
@@ -111,11 +126,12 @@ export class Game{
 		contents.splice(index, 0, component)
 
 		//If this component was a mechanism, add a new program connected to it.
-		if (component.type === "ArmMechanism"){
-			let programs = this.currentLevel.programs
+		if (component.type === "ArmMechanism" && level === this.currentLevel){
+			let programs = level.programs
 			let program = new Program(component, programs.length + 1)
 			programs.push(program)
 			component.program = program
+			program.createElement()
 			program.elem[0].addEventListener("mousemove", e => {
 				this.handleProgramMouseMove(e, program, component)
 			})
@@ -332,7 +348,7 @@ export class Game{
 		}
 	}
 
-	getCollisionHexes(component){
+	getPlacementCollisionHexes(component){
 		let result = []
 		let homeTile = component.homeTile
 		if (component.type === "ArmMechanism"){
@@ -342,6 +358,13 @@ export class Game{
 		for (let atom of atoms){
 			let hex = homeTile.add(atom.coord)
 			result.push(hex)
+		}
+		if (component.molecule){
+			let atoms = component.molecule.atoms.contents
+			for (let atom of atoms){
+				let hex = homeTile.add(atom.coord)
+				result.push(hex)
+			}
 		}
 		return result
 	}
@@ -353,12 +376,12 @@ export class Game{
 		//using the non-integer rotation and translation stuff.
 		//Also, only collisions with *other* components matters. The component can touch itself.
 		let legal = true
-		let proposedHexes = this.getCollisionHexes(component)
+		let proposedHexes = this.getPlacementCollisionHexes(component)
 
 		let components = this.currentLevel.grid.contents
 		for (let otherComponent of components){
 			if (otherComponent === component) continue
-			let takenHexes = this.getCollisionHexes(otherComponent)
+			let takenHexes = this.getPlacementCollisionHexes(otherComponent)
 			for (let otherHex of takenHexes){
 				for (let hex of proposedHexes){
 					if (hex.q === otherHex.q && hex.r === otherHex.r){
@@ -404,7 +427,8 @@ export class Game{
 	}
 
 	getHexAt(q, r){
-		const grid = this.currentLevel.grid
+		const level = this.isPlayingSimulation ? this.simulation : this.currentLevel
+		const grid = level.grid
 		q = Math.round(q)
 		r = Math.round(r)
 		const s = -q - r
@@ -427,26 +451,109 @@ export class Game{
 		return hex
 	}
 
-	resetComponents(){
-		// const components = this.currentLevel.grid.contents
+	getSimulationCollisionHexes(component){
+		let result = []
+		let homeTile = component.homeTile
+		if (component.type === "ArmMechanism"){
+			result.push(homeTile)
+		}
+		let atoms = component.atoms.contents
+		for (let atom of atoms){
+			let hex = homeTile.add(atom.coord)
+			result.push(hex)
+		}
+		return result
+	}
+	getAllSimulationCollisionCircles(){
+		//For each component, find the areas it occupies, taking into account non-integer rotation and translation.
+		const circles = []
+		const level = this.simulation
+		const components = level.grid.contents
+		for (let component of components){
+			const toAdd = this.getSimulationCollisionHexes(component)
+			for (let hex of toAdd){
+				circles.push(hex.toCircle(0.7))
+			}
+		}
+		return circles
+	}
+	placeReagents(){
+		//For each reagent, check if it can create a copy of its molecule on the same tile as it.
+		//If so, spawn one in.
+		const level = this.simulation
+		const circles = this.getAllSimulationCollisionCircles()
+		const components = level.grid.contents
+		for (let component of components){
+			const type = component.type
+			if (type !== "Reagent") continue
+			const homeTile = component.homeTile
+			const atoms = component.molecule.atoms.contents
+			const intendedCircles = []
+			for (let atom of atoms){
+				let hex = homeTile.add(atom.coord)
+				intendedCircles.push(hex.toCircle(0.7))
+			}
+			let canPlace = true
+			for (let circle of intendedCircles){
+				for (let otherCircle of circles){
+					if (circle.intersects(otherCircle)){
+						canPlace = false
+					}
+				}
+			}
+
+			if (canPlace){
+				const molecule = component.molecule.clone()
+				molecule.homeTile = homeTile.clone()
+				this.addComponent(molecule, level)
+			}
+		}
+	}
+
+	resetSimulation(){
+		//we create a simulated copy of the original level that contains all the same things in all the same places.
+		//it is this copy that carries out the simulation, so the original settings remain untouched
+		//so that way the player can easily reset back to square one. they never leave square one. they just advance to rectangle two.
+		this.simulation = new Level(this.currentLevel.scenario)
+		for (let [key, value] of this.currentLevel.grid.map){
+			this.simulation.grid.addHex(value.clone())
+		}
+		const components = this.currentLevel.grid.contents
+		const simulationComponents = this.simulation.grid.contents
+		for (let component of components){
+			//Create a copy in the simulation
+			let clone = component.clone()
+			simulationComponents.push(clone)
+		}
+
+		const simulationPrograms = this.simulation.programs
+		for (let component of simulationComponents){
+			if (component.program){
+				simulationPrograms.push(component.program)
+			}
+		}
 	}
 	startSimulation(){
-		//remove all molecules on the board
-		//reset everything to initial settings (translation, rotation)
-		this.resetComponents()
+		this.resetSimulation()
 		this.simulationTimeStep = 0
+		this.simulationDeltaT = 0
 		this.isPlayingSimulation = true
 		this.beginAnimatingInstructions(this.simulationTimeStep)
 	}
 	stopSimulation(){
-		this.resetComponents()
+		this.resetSimulation()
 		this.simulationTimeStep = 0
+		this.simulationDeltaT = 0
 		this.isPlayingSimulation = false
 		this.playingAnimations.length = 0
 	}
 	beginAnimatingInstructions(timestep){
+		//Some things happen the moment a time step starts.
+		//Namely, placing reagents onto the board needs to happen before the arms can grab them.
+		this.placeReagents()
+
 		//get each instruction that should be executed right now and add them to the list of animations
-		let programs = this.currentLevel.programs
+		let programs = this.simulation.programs
 		for (let program of programs){
 			let instruction = program.getInstruction(timestep)
 			if (!instruction) continue
@@ -517,6 +624,7 @@ export class Game{
 			//simulation time, simulation delta time.
 			const st = this.simulationTimeStep + this.simulationDeltaT
 			const sdt = this.simulationDeltaT
+			this.placeReagents()
 
 			//apply each ongoing animation to the appropriate components.
 			const animations = this.playingAnimations
