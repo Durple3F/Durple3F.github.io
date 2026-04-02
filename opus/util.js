@@ -10,6 +10,13 @@ export function easeInOutSine(x) {
 	return -(Math.cos(Math.PI * x) - 1) / 2;
 }
 
+export function lerp(a, b, alpha) {
+	return a + alpha * (b - a);
+}
+export function clamp(val, min, max) {
+	return Math.min(Math.max(val, min), max)
+}
+
 export async function loadSprite(url) {
 	let img = new Image()
 	img.src = url
@@ -25,9 +32,9 @@ export async function loadSprite(url) {
 }
 
 //Returns an array of that tag and its parents and ancestors.
-export function tagHierarchy(tag){
+export function tagHierarchy(tag) {
 	const nodes = [tag]
-	while (nodes[0].parentNode){
+	while (nodes[0].parentNode) {
 		nodes.unshift(nodes[0].parentNode)
 	}
 	return nodes
@@ -280,15 +287,20 @@ export class Grid {
 export class Component {
 	constructor() {
 		this.type = null
+		this.atoms = new Grid()
+		this.bonds = new Grid()
+		this.arms = new Grid()
 		this.isGhost = false
 		this.isRendered = true
 		this.rotation = 0
 		this.homeTile = new Hex(0, 0, 0)
+		this.currentHexRotation = 0
 		this.offset = Hex.directions[0]
 		this.offsetDistance = 0
-		this.atoms = new Grid()
-		this.bonds = new Grid()
-		this.arms = new Grid()
+
+		//These values are remembered and not changed during playback, so that the component can be reset to where it was before playback began.
+		this.startingHomeTile = new Hex(0, 0, 0)
+		this.startingRotation = 0
 	}
 
 
@@ -298,34 +310,36 @@ export class Component {
 		origin.r += b.r
 		origin.s += b.s
 		let atoms = this.atoms
-		for (let atom of atoms.contents){
+		for (let atom of atoms.contents) {
 			let dest = atom.coord.subtract(b)
 			atom.setCoords(dest.q, dest.r, dest.s)
 		}
 	}
 	rotateLeft() {
 		let atoms = this.atoms
-		for (let atom of atoms.contents){
+		for (let atom of atoms.contents) {
 			let coord = atom.coord
 			atom.setCoords(-coord.s, -coord.q, -coord.r)
 		}
 		let arms = this.arms
-		for (let arm of arms.contents){
+		for (let arm of arms.contents) {
 			let coord = arm.coord
 			arm.setCoords(-coord.s, -coord.q, -coord.r)
 		}
+		this.currentHexRotation = (this.currentHexRotation - 1 + Hex.directions.length) % Hex.directions.length
 	}
 	rotateRight() {
 		let atoms = this.atoms
-		for (let atom of atoms.contents){
+		for (let atom of atoms.contents) {
 			let coord = atom.coord
 			atom.setCoords(-coord.r, -coord.s, -coord.q)
 		}
 		let arms = this.arms
-		for (let arm of arms.contents){
+		for (let arm of arms.contents) {
 			let coord = arm.coord
 			arm.setCoords(-coord.r, -coord.s, -coord.q)
 		}
+		this.currentHexRotation = (this.currentHexRotation + 1) % Hex.directions.length
 	}
 }
 
@@ -417,7 +431,7 @@ export class Molecule extends Component {
 }
 
 export class Reagent extends Component {
-	constructor(molecule){
+	constructor(molecule) {
 		super()
 		this.type = "Reagent"
 		this.molecule = molecule
@@ -426,7 +440,7 @@ export class Reagent extends Component {
 
 export const ARMTYPES = {}
 export class ArmMechanismType {
-	constructor(abilities={}, armDirectionList=[Hex.directions[0]], atomList=[]){
+	constructor(abilities = {}, armDirectionList = [Hex.directions[0]], atomList = []) {
 		this.armDirectionList = armDirectionList
 		this.atomList = atomList
 		this.abilities = {
@@ -439,8 +453,8 @@ export class ArmMechanismType {
 			grab: true,
 			release: true,
 		}
-		for (let ability in this.abilities){
-			if (ability in abilities){
+		for (let ability in this.abilities) {
+			if (ability in abilities) {
 				this.abilities[ability] = abilities[ability]
 			}
 		}
@@ -452,13 +466,13 @@ ARMTYPES["Piston"] = new ArmMechanismType({
 })
 
 export class ArmMechanism extends Component {
-	constructor(typeId){
+	constructor(typeId) {
 		super()
 		this.type = "ArmMechanism"
 		let type = ARMTYPES[typeId]
 		this.mechanismType = type
 		this.program = null
-		for (let armLocation of type.armDirectionList){
+		for (let armLocation of type.armDirectionList) {
 			let arm = new Arm(this.homeTile, armLocation)
 			this.arms.contents.push(arm)
 		}
@@ -466,7 +480,7 @@ export class ArmMechanism extends Component {
 }
 
 export class Arm {
-	constructor(home, hand){
+	constructor(home, hand) {
 		this.distance = home.distance(hand)
 		this.coord = hand
 		this.isGripping = false

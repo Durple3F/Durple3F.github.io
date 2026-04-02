@@ -36,7 +36,7 @@ function tick(){
 
 const componentsPane = $("#components")
 const componentsTab = $("#components-tab")
-componentsTab.click(() => {
+componentsTab.on("click", () => {
 	let target = "closed"
 	if (componentsTab.data("closed")){
 		target = "open"
@@ -65,6 +65,13 @@ componentsTab.click(() => {
 		step: animate,
 		complete: () => animate(1)
 	})
+})
+
+$("#playback-play-button").on("click", () => {
+	game.startSimulation()
+})
+$("#playback-stop-button").on("click", () => {
+	game.stopSimulation()
 })
 
 async function loadGame(){

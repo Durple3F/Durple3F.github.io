@@ -25,7 +25,7 @@ new InstructionType("grabber_drop", "./src/img/instructions/grabber_drop.png", "
 new InstructionType("track_retreat", "./src/img/instructions/track_retreat.png", "t")
 new InstructionType("rotator_ccw", "./src/img/instructions/rotator_ccw.png", "a")
 new InstructionType("piston_retract", "./src/img/instructions/piston_retract.png", "s")
-new InstructionType("rotator_cw", "./src/img/instructions/rotator_ccw.png", "d")
+new InstructionType("rotator_cw", "./src/img/instructions/rotator_cw.png", "d")
 new InstructionType("grabber_grab", "./src/img/instructions/grabber_grab.png", "f")
 new InstructionType("track_advance", "./src/img/instructions/track_advance.png", "g")
 new InstructionType("delete", "./src/img/instructions/halt.png", "z")

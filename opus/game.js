@@ -1,4 +1,4 @@
-import {Hex, Grid, Component, Element, Atom, loadSprite, Molecule, ArmMechanism, ARMTYPES, Reagent, tagHierarchy} from "./util.js"
+import {Hex, Grid, Component, Element, Atom, loadSprite, Molecule, ArmMechanism, ARMTYPES, Reagent, tagHierarchy, lerp, clamp} from "./util.js"
 import { SCENARIOS } from "./scenarios.js"
 import { createInstructionTag, Instruction, INSTRUCTIONS } from "./instructions.js"
 
@@ -22,6 +22,10 @@ export class Program{
 	constructor(component, name){
 		this.component = component
 		this.name = name
+		//the start step is the index of the first non-idle instruction.
+		this.startStep = 0
+		//a program's period is the number of instructions from the first to the last non-idle instruction.
+		this.period = 0
 		this.instructions = []
 
 		let programRow = $("<div>").addClass("program-row")
@@ -29,6 +33,16 @@ export class Program{
 		let programName = $("<div>").addClass("program-name").text(this.name)
 		$("#program-names").append(programName)
 		$("#program-rows").append(programRow)
+	}
+
+	getInstruction(timestep){
+		if (timestep < this.instructions.length){
+			return this.instructions[timestep]
+		} else if (timestep >= this.instructions.length && this.period > 0){
+			let offset = timestep - this.startStep
+			let instruction = this.instructions[offset % this.period]
+			return instruction
+		}
 	}
 }
 
@@ -43,6 +57,13 @@ export class Game{
 
 		let scenario = SCENARIOS["test"]
 		this.currentLevel = new Level(scenario)
+		this.simulation = new Level(scenario)
+		this.isPlayingSimulation = false
+		this.simulationTimeStep = 0
+		this.simulationDeltaT = 0
+		this.playbackSpeed = 1
+		this.playingAnimations = []
+
 		this.hexSize = 40
 		this.canvas = canvas
 		this.canvasWidth = canvas.width
@@ -273,6 +294,25 @@ export class Game{
 				}
 			}
 		}
+		
+		//Remove all idle instructions from the end of the program
+		for (let program of programs){
+			let instructions = program.instructions
+			//replace all empty space with idle instructions
+			for (let i = instructions.length - 1; i >= 0; i--){
+				let instruction = instructions[i]
+				let typeId = instruction.type.id
+				if (typeId === "idle") {
+					instructions.splice(i, 1)
+				}
+			}
+		}
+
+		//TODO: ensure all programs are the same length
+		//(a 5-step program that starts on step 200 is 5 steps long.)
+		for (let program of programs){
+
+		}
 	}
 	renderPrograms(){
 		let programs = this.currentLevel.programs
@@ -387,25 +427,118 @@ export class Game{
 		return hex
 	}
 
+	resetComponents(){
+		// const components = this.currentLevel.grid.contents
+	}
+	startSimulation(){
+		//remove all molecules on the board
+		//reset everything to initial settings (translation, rotation)
+		this.resetComponents()
+		this.simulationTimeStep = 0
+		this.isPlayingSimulation = true
+		this.beginAnimatingInstructions(this.simulationTimeStep)
+	}
+	stopSimulation(){
+		this.resetComponents()
+		this.simulationTimeStep = 0
+		this.isPlayingSimulation = false
+		this.playingAnimations.length = 0
+	}
+	beginAnimatingInstructions(timestep){
+		//get each instruction that should be executed right now and add them to the list of animations
+		let programs = this.currentLevel.programs
+		for (let program of programs){
+			let instruction = program.getInstruction(timestep)
+			if (!instruction) continue
+			let instructionType = instruction.type.id
+			let component = program.component
+			switch (instructionType){
+				case "rotator_cw": {
+					let animation = {
+						type: "set_rotation",
+						target: component,
+						startT: timestep,
+						endT: timestep + 1,
+						startV: component.rotation,
+						endV: component.rotation + Math.PI / 3
+					}
+					this.playingAnimations.push(animation)
+				} break
+				case "rotator_ccw": {
+					let animation = {
+						type: "set_rotation",
+						target: component,
+						startT: timestep,
+						endT: timestep + 1,
+						startV: component.rotation,
+						endV: component.rotation - Math.PI / 3
+					}
+					this.playingAnimations.push(animation)
+				} break
+			}
+		}
+	}
+
+	applyAnimation(animation, p){
+		const component = animation.target
+		switch (animation.type){
+			case "set_rotation": {
+				let v = lerp(animation.startV, animation.endV, p)
+				component.rotation = v
+			}
+		}
+	}
+	finishAnimation(animation){
+		const component = animation.target
+		switch (animation.type){
+			case "set_rotation": {
+				let curAngle = component.rotation
+				if (curAngle > 0){
+					component.rotation = 0
+					component.rotateRight()
+				} else if (curAngle < 0){
+					component.rotation = 0
+					component.rotateLeft()
+				}
+			}
+		}
+	}
+
 	tick(){
 		const now = performance.now()
 		const dt = now - this.lastTick
+		this.lastTick = now
 		const controls = this.controls
 		controls.tick()
 
-		// this.currentLevel.grid.contents[0].rotation += 0.1
-		// this.currentLevel.grid.contents[1].rotation -= 0.1*0.15
-		// this.currentLevel.grid.contents[2].rotation -= 0.1*0.15
-		for (let component of this.currentLevel.grid.contents){
-			let right = Math.PI * 1/3
-			let left = -right
-			let curAngle = component.rotation
-			if (curAngle > right){
-				component.rotation -= right
-				component.rotateRight()
-			} else if (curAngle < left){
-				component.rotation -= left
-				component.rotateLeft()
+		if (this.isPlayingSimulation){
+			//Increase time slightly.
+			this.simulationDeltaT += this.playbackSpeed * (dt / 1000)
+			//simulation time, simulation delta time.
+			const st = this.simulationTimeStep + this.simulationDeltaT
+			const sdt = this.simulationDeltaT
+
+			//apply each ongoing animation to the appropriate components.
+			const animations = this.playingAnimations
+			for (let i = 0; i < animations.length; i++){
+				let animation = animations[i]
+				let startT = animation.startT, endT = animation.endT
+				if (st >= endT){
+					this.finishAnimation(animation)
+					animations.splice(i, 1)
+					i--
+					continue
+				}
+				let p = (st - startT) / (endT - startT)
+				p = clamp(p, 0, 1)
+				this.applyAnimation(animation, p)
+			}
+
+			if (sdt >= 1){
+				//finish all ongoing animations maybe?
+				this.simulationTimeStep++
+				this.simulationDeltaT--
+				this.beginAnimatingInstructions(this.simulationTimeStep)
 			}
 		}
 
