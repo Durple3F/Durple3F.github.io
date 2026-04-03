@@ -1,4 +1,4 @@
-import {Hex, Grid, Component, Element, Atom, loadSprite, Molecule, ArmMechanism, ARMTYPES, Reagent, tagHierarchy, lerp, clamp, Product, createMolecule} from "./util.js"
+import {Hex, Grid, Component, Element, Atom, loadSprite, Molecule, ArmMechanism, ARMTYPES, Reagent, tagHierarchy, lerp, clamp, Product, createMolecule, Circle, find_angle} from "./util.js"
 import { SCENARIOS } from "./scenarios.js"
 import { createInstructionTag, Instruction, INSTRUCTIONS } from "./instructions.js"
 
@@ -69,6 +69,7 @@ export class Game{
 		this.lastTick = performance.now()
 		this.isDraggingMap = false
 		this.selectedComponent = null
+		this.isAdjustingComponent = false
 		this.heldInstruction = null
 		this.heldInstructions = []
 
@@ -462,11 +463,12 @@ export class Game{
 		}
 		return legal
 	}
-	beginHoldingComponent(component){
+	beginHoldingComponent(component, adjusting=false){
 		//You can't begin holding components while the simulation is running.
 		if (this.isPlayingSimulation) return
 		this.selectedComponent = component
 		this.selectedComponent.isGhost = true
+		this.isAdjustingComponent = adjusting
 
 		let components = this.currentLevel.grid.contents
 		if (components.includes(component)){
@@ -484,6 +486,7 @@ export class Game{
 	}
 	cancelPlacement(){
 		this.selectedComponent = null
+		this.isAdjustingComponent = false
 	}
 
 	resizeScreen(){
@@ -526,7 +529,7 @@ export class Game{
 		}
 		return hex
 	}
-	getHexFromXY(x, y){
+	getHexFromXY(x, y, decimal=false){
 		const hexSize = this.hexSize
 		const horiz = ROOT3 * hexSize
 		const vert = 1.5 * hexSize
@@ -534,8 +537,12 @@ export class Game{
 		// let y = r * vert - yOffset
 		let r = (y + this.yOffset) / vert
 		let q = ((x + this.xOffset) / horiz) - 0.5 * r
-		let hex = this.getHexAt(q, r)
-		return hex
+		if (!decimal){
+			let hex = this.getHexAt(q, r)
+			return hex
+		} else {
+			return new Hex(q, r, -q -r)
+		}
 	}
 
 	getSimulationCollisionHexes(component){
@@ -716,6 +723,7 @@ export class Game{
 		for (let component of components){
 			//Create a copy in the simulation
 			let clone = component.clone()
+			clone.renderRotationPoint = false
 			simulationComponents.push(clone)
 		}
 
@@ -1044,24 +1052,94 @@ export class Game{
 
 		//Component placement
 		if (this.selectedComponent){
-			if (isLeftClicking && controls.isMouseOnScreen() && hoveredHex){
-				this.selectedComponent.homeTile = hoveredHex
-				this.selectedComponent.isRendered = true
-			}
-			else if (!isLeftClicking && controls.isMouseOnScreen() && hoveredHex){
-				//If the proposed placement is legal, place it. Otherwise, cancel.
-				this.tryToPlaceSelectedComponent()
-			}
-			else if (!isLeftClicking){
-				this.cancelPlacement()
+			if (!this.isAdjustingComponent){
+				//This code runs while the player is moving a component
+				if (isLeftClicking && controls.isMouseOnScreen() && hoveredHex){
+					this.selectedComponent.homeTile = hoveredHex
+					this.selectedComponent.isRendered = true
+				}
+				else if (!isLeftClicking && controls.isMouseOnScreen() && hoveredHex){
+					//If the proposed placement is legal, place it. Otherwise, cancel.
+					this.tryToPlaceSelectedComponent()
+				}
+				else if (!isLeftClicking){
+					this.cancelPlacement()
+				}
+			} else {
+				//This code runs while the player is adjusting a component's rotation or arm length
+				let component = this.selectedComponent
+				let mouseXY = this.getHexFromXY(mouseX, mouseY, true).toXY()
+				let homeXY = component.homeTile.toXY()
+				let rotationPoint = component.rotationPoint.add(component.homeTile)
+				let rotationCoords = rotationPoint.toXY()
+				//Look I'll admit this was hard and I needed to do math, shut up.
+				let A = {
+					x: mouseXY[0],
+					y: mouseXY[1]
+				}
+				let B = {
+					x: homeXY[0],
+					y: homeXY[1]
+				}
+				let C = {
+					x: rotationCoords[0],
+					y: rotationCoords[1]
+				}
+				let cross = (C.x - B.x)*(A.y - B.y) - (C.y - B.y)*(A.x - B.x)
+				let side = cross < 0 ? "left" : "right"
+				let angle = find_angle(A, B, C)
+				if (angle > Math.PI / 6){
+					if (side === "left"){
+						component.rotateLeft()
+					} else {
+						component.rotateRight()
+					}
+				}
+
+				let intendedDistance = component.homeTile.distance(hoveredHex)
+				intendedDistance = max(1, min(intendedDistance, 3))
+				if (component.type === "ArmMechanism"){
+					let arms = component.arms.contents
+					let changed = false
+					for (let arm of arms){
+						//TODO: If the arm has any molecules it's holding, translate them accordingly.
+						if (arm.distance < intendedDistance){
+							changed = true
+							arm.distance++
+						} else if (arm.distance > intendedDistance){
+							changed = true
+							arm.distance--
+						}
+					}
+					if (changed){
+						let firstArm = arms[0]
+						let difference = firstArm.direction.scale(firstArm.distance)
+						component.rotationPoint = difference
+					}
+				}
+
+				if (!isLeftClicking){
+					this.tryToPlaceSelectedComponent()
+				}
 			}
 		} else if (controls.justClicked("left") && !this.isPlayingSimulation){
 			//check if the player just clicked on a component they can move
 			const components = this.currentLevel.grid.contents
 			for (let component of components){
 				let hexes = this.getPlacementCollisionHexes(component)
-				if (hexes.some(hex => hex.equals(hoveredHex))){
-					this.beginHoldingComponent(component)
+				let rotationPoint = component.rotationPoint.add(component.homeTile)
+				//Did the player just click on the component's rotation point?
+				let isAdjusting = false
+
+				let rotationCoords = rotationPoint.toXY()
+				let rotationCircle = new Circle(rotationCoords[0], rotationCoords[1], 1)
+				let mouseXY = this.getHexFromXY(mouseX, mouseY, true).toXY()
+				if (rotationCircle.contains(mouseXY[0], mouseXY[1])){
+					isAdjusting = true
+				}
+
+				if (isAdjusting || hexes.some(hex => hex.equals(hoveredHex))){
+					this.beginHoldingComponent(component, isAdjusting)
 					break
 				}
 			}

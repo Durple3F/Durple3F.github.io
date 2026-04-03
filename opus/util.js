@@ -19,6 +19,13 @@ export function clamp(val, min, max) {
 	return Math.min(Math.max(val, min), max)
 }
 
+export function find_angle(A, B, C) {
+	var AB = Math.sqrt(Math.pow(B.x - A.x, 2) + Math.pow(B.y - A.y, 2));
+	var BC = Math.sqrt(Math.pow(B.x - C.x, 2) + Math.pow(B.y - C.y, 2));
+	var AC = Math.sqrt(Math.pow(C.x - A.x, 2) + Math.pow(C.y - A.y, 2));
+	return Math.acos((BC * BC + AB * AB - AC * AC) / (2 * BC * AB));
+}
+
 export async function loadSprite(url) {
 	let img = new Image()
 	img.src = url
@@ -43,13 +50,16 @@ export function tagHierarchy(tag) {
 }
 
 export class Circle {
-	constructor(x, y, radius){
+	constructor(x, y, radius) {
 		this.x = x
 		this.y = y
 		this.radius = radius
 	}
-	intersects(circle){
-		return Math.hypot(circle.x-this.x, circle.y-this.y) <= (circle.radius + this.radius)
+	intersects(circle) {
+		return Math.hypot(circle.x - this.x, circle.y - this.y) <= (circle.radius + this.radius)
+	}
+	contains(x, y) {
+		return Math.hypot(x - this.x, y - this.y) <= this.radius
 	}
 }
 
@@ -137,19 +147,19 @@ export class Hex {
 		}
 		return new Hex(qi, ri, si);
 	}
-	toXY(){
+	toXY() {
 		//based on an assumed "size" of 1. this means their inner radius is <1.
 		const q = this.q
 		const r = this.r
 		const x = ROOT3 * q + ROOT3 * 0.5 * r
-		const y = 3/2 * r
+		const y = 3 / 2 * r
 		return [x, y]
 	}
-	toCircle(radius=1){
+	toCircle(radius = 1) {
 		const xy = this.toXY()
 		return new Circle(xy[0], xy[1], radius)
 	}
-	equals(b){
+	equals(b) {
 		return this.q === b.q && this.r === b.r
 	}
 
@@ -318,6 +328,7 @@ export class Component {
 		this.atoms = new Grid()
 		this.bonds = new Grid()
 		this.arms = new Grid()
+		this.molecule = null
 		this.isGhost = false
 		this.isRendered = true
 		this.rotation = 0
@@ -325,8 +336,11 @@ export class Component {
 		this.currentHexRotation = 0
 		this.offset = Hex.directions[0]
 		this.offsetDistance = 0
+
+		this.renderRotationPoint = false
+		this.rotationPoint = new Hex(1, 0, -1)
 	}
-	
+
 	clone() {
 		console.warn("Uh oh! You never handled", this)
 	}
@@ -347,6 +361,10 @@ export class Component {
 			let coord = arm.direction
 			arm.setCoords(-coord.s, -coord.q, -coord.r)
 		}
+		if (this.molecule){
+			this.molecule.rotateLeft()
+		}
+		this.rotationPoint = this.rotationPoint.rotateLeft()
 		this.currentHexRotation = (this.currentHexRotation - 1 + Hex.directions.length) % Hex.directions.length
 	}
 	rotateRight() {
@@ -360,9 +378,13 @@ export class Component {
 			let coord = arm.direction
 			arm.setCoords(-coord.r, -coord.s, -coord.q)
 		}
+		if (this.molecule){
+			this.molecule.rotateRight()
+		}
+		this.rotationPoint = this.rotationPoint.rotateRight()
 		this.currentHexRotation = (this.currentHexRotation + 1) % Hex.directions.length
 	}
-	translate(b){
+	translate(b) {
 		const atoms = this.atoms
 		for (let atom of atoms.contents) {
 			let dest = atom.coord.add(b)
@@ -420,7 +442,7 @@ export class Atom {
 
 export const BONDTYPES = {}
 export class BondType {
-	constructor(id){
+	constructor(id) {
 		this.id = id
 	}
 }
@@ -441,10 +463,10 @@ export class Molecule extends Component {
 	clone() {
 		let clone = new Molecule()
 		clone.homeTile = this.homeTile
-		for (let atom of this.atoms.contents){
+		for (let atom of this.atoms.contents) {
 			clone.atoms.contents.push(atom.clone())
 		}
-		for (let bond of this.bonds.contents){
+		for (let bond of this.bonds.contents) {
 			let atom1 = bond.atoms[0]
 			let atom2 = bond.atoms[1]
 			let atom1Index = this.atoms.contents.indexOf(atom1)
@@ -454,6 +476,7 @@ export class Molecule extends Component {
 			let bondClone = new Bond(atom1Clone, atom2Clone)
 			clone.bonds.contents.push(bondClone)
 		}
+		clone.rotationPoint = this.rotationPoint
 		return clone
 	}
 	equals(molecule) {
@@ -474,47 +497,47 @@ export class Molecule extends Component {
 		//Find the atom of each molecule that has the smallest q, using r as a tiebreaker
 		let bottomLeft1 = atoms1[0]
 		let bottomLeft2 = atoms2[0]
-		for (let i = 1; i < atoms1.length; i++){
+		for (let i = 1; i < atoms1.length; i++) {
 			let atom1 = atoms1[i]
-			if (atom1.coord.q < bottomLeft1.coord.q || (atom1.coord.q === bottomLeft1.coord.q && atom1.coord.r < bottomLeft1.coord.r)){
+			if (atom1.coord.q < bottomLeft1.coord.q || (atom1.coord.q === bottomLeft1.coord.q && atom1.coord.r < bottomLeft1.coord.r)) {
 				bottomLeft1 = atom1
 			}
 			let atom2 = atoms2[i]
-			if (atom2.coord.q < bottomLeft2.coord.q || (atom2.coord.q === bottomLeft2.coord.q && atom2.coord.r < bottomLeft2.coord.r)){
+			if (atom2.coord.q < bottomLeft2.coord.q || (atom2.coord.q === bottomLeft2.coord.q && atom2.coord.r < bottomLeft2.coord.r)) {
 				bottomLeft2 = atom2
 			}
 		}
 		clone1.translate(bottomLeft1.coord.scale(-1))
 		clone2.translate(bottomLeft2.coord.scale(-1))
 		//Now that clone1 and clone2 are in the same orientation, test that for each atom inside each clone, there exists an equivalent atom in the other. Then do the same for the bonds.
-		for (let atom1 of atoms1){
+		for (let atom1 of atoms1) {
 			let hasEqual = false
-			for (let atom2 of atoms2){
-				if (atom1.equals(atom2)){
+			for (let atom2 of atoms2) {
+				if (atom1.equals(atom2)) {
 					hasEqual = true
 					break
 				}
 			}
-			if (!hasEqual){
+			if (!hasEqual) {
 				result = false
 				break
 			}
 		}
 		//Neat! Now let's check that all of the bonds are the same.
-		for (let bond1 of bonds1){
+		for (let bond1 of bonds1) {
 			let hasEqual = false
 			let atom1 = bond1.atoms[0]
 			let atom2 = bond1.atoms[1]
-			for (let bond2 of bonds2){
+			for (let bond2 of bonds2) {
 				if (
 					(atom1.equals(bond2.atoms[0]) && atom2.equals(bond2.atoms[1])) ||
 					(atom1.equals(bond2.atoms[1]) && atom2.equals(bond2.atoms[0]))
-				){
+				) {
 					hasEqual = true
 					break
 				}
 			}
-			if (!hasEqual){
+			if (!hasEqual) {
 				result = false
 				break
 			}
@@ -527,7 +550,7 @@ export class Molecule extends Component {
 		let q = atom.coord.q
 		let r = atom.coord.r
 		for (let otherAtom of this.atoms.contents) {
-			if (q === otherAtom.coord.q || r === otherAtom.coord.r) {
+			if (q === otherAtom.coord.q && r === otherAtom.coord.r) {
 				taken = true
 				break
 			}
@@ -559,14 +582,14 @@ export class Molecule extends Component {
 	}
 }
 
-export function createMolecule(moleculeRecipe){
+export function createMolecule(moleculeRecipe) {
 	let atomRecipeList = moleculeRecipe[0] ?? []
 	let bondRecipeList = moleculeRecipe[1] ?? []
 	//uses a simplified list of only the things that atoms NEED to create them
 	//and a simplified list of only the indexes of the atoms that are linked in bonds (as well as their bond type.)
 	let molecule = new Molecule()
 	let atoms = []
-	for (let atomRecipe of atomRecipeList){
+	for (let atomRecipe of atomRecipeList) {
 		let atom = new Atom(atomRecipe[0])
 		let q = atomRecipe[1]
 		let r = atomRecipe[2]
@@ -574,10 +597,10 @@ export function createMolecule(moleculeRecipe){
 		atom.setCoords(q, r, s)
 		atoms.push(atom)
 	}
-	for (let atom of atoms){
+	for (let atom of atoms) {
 		molecule.addAtom(atom)
 	}
-	for (let bondRecipe of bondRecipeList){
+	for (let bondRecipe of bondRecipeList) {
 		let atom1Index = bondRecipe[0]
 		let atom2Index = bondRecipe[1]
 		molecule.addBond(atoms[atom1Index], atoms[atom2Index], bondRecipe[2])
@@ -596,6 +619,7 @@ export class Reagent extends Component {
 		let molecule = this.molecule.clone()
 		let clone = new Reagent(molecule)
 		clone.homeTile = this.homeTile
+		clone.rotationPoint = this.rotationPoint
 		return clone
 	}
 }
@@ -610,6 +634,7 @@ export class Product extends Component {
 		let molecule = this.molecule.clone()
 		let clone = new Product(molecule)
 		clone.homeTile = this.homeTile
+		clone.rotationPoint = this.rotationPoint
 		return clone
 	}
 }
@@ -662,9 +687,11 @@ export class ArmMechanism extends Component {
 		let origin = new Hex(0, 0, 0)
 		for (let arm of this.arms.contents) {
 			let armClone = new Arm(origin, arm.direction)
+			armClone.distance = arm.distance
 			clone.arms.contents.push(armClone)
 		}
 		clone.program = this.program.clone(clone)
+		clone.rotationPoint = this.rotationPoint
 		return clone
 	}
 }

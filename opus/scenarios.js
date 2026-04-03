@@ -13,7 +13,7 @@ SCENARIOS["test"] = new Scenario([
 		"molecule": [
 			[
 				["Fire", 0, 0, 0],
-				["Fire", 1, -1, 0]
+				["Fire", 1, 0, -1]
 			], [
 				[0, 1]
 			]

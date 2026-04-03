@@ -298,6 +298,21 @@ function drawComponent(ctx, component, x, y, hexSize, inRadius, horiz, vert, isS
 		case "Product": drawProduct(ctx, component, x, y, hexSize, inRadius, horiz, vert, isSimulated); break
 		case "ArmMechanism": drawArmMechanism(ctx, component, x, y, hexSize, inRadius, horiz, vert); break
 	}
+
+	if (!component.renderRotationPoint){
+		let rotationPoint = component.rotationPoint
+		let rotationPointX = x + (rotationPoint.q + 0.5 * rotationPoint.r) * horiz
+		let rotationPointY = y + rotationPoint.r * vert
+		ctx.save()
+		ctx.beginPath()
+		ctx.moveTo(rotationPointX, rotationPointY)
+		ctx.globalAlpha = 0.9
+		ctx.fillStyle = "lightblue"
+		ctx.arc(rotationPointX, rotationPointY, hexSize * 0.2, 0, Math.PI * 2)
+		ctx.closePath()
+		ctx.fill()
+		ctx.restore()
+	}
 }
 
 export function render(game, ctx, w, h){
