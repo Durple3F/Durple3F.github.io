@@ -73,6 +73,10 @@ $("#playback-play-button").on("click", () => {
 $("#playback-stop-button").on("click", () => {
 	game.stopSimulation()
 })
+window.addEventListener("mousemove", e => {
+	$("#tooltip").css("top", e.clientY)
+	$("#tooltip").css("left", e.clientX)
+})
 
 async function loadGame(){
 	//Display instructions

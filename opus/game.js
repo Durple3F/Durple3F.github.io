@@ -1,4 +1,4 @@
-import {Hex, Grid, Component, Element, Atom, loadSprite, Molecule, ArmMechanism, ARMTYPES, Reagent, tagHierarchy, lerp, clamp, Product} from "./util.js"
+import {Hex, Grid, Component, Element, Atom, loadSprite, Molecule, ArmMechanism, ARMTYPES, Reagent, tagHierarchy, lerp, clamp, Product, createMolecule} from "./util.js"
 import { SCENARIOS } from "./scenarios.js"
 import { createInstructionTag, Instruction, INSTRUCTIONS } from "./instructions.js"
 
@@ -54,7 +54,10 @@ export class Program{
 			return this.instructions[timestep]
 		} else if (timestep >= this.instructions.length && this.period > 0){
 			let offset = timestep - this.startStep
-			let instruction = this.instructions[offset % this.period]
+			let instruction = this.instructions[this.startStep + (offset % this.period)]
+			if (this.name == 2){
+				console.log(instruction, offset % this.period, offset, this.startStep)
+			}
 			return instruction
 		}
 	}
@@ -91,17 +94,35 @@ export class Game{
 
 	fillComponentPane(){
 		let scenario = this.currentLevel.scenario
+		let productMolecules = scenario.productMolecules
+		let productsPane = $("#components-products").children(".components-list")
+		productsPane.empty()
 		let allowedMechanisms = scenario.allowedMechanisms
 		let mechanismsPane = $("#components-mechanisms").children(".components-list")
 		mechanismsPane.empty()
+
+		for (let productMolecule of productMolecules){
+			let moleculeName = productMolecule.name
+			let molecule = createMolecule(productMolecule.molecule)
+			let componentTag = $("<div class='component'>")
+			componentTag.text(moleculeName)
+			productsPane.append(componentTag)
+			componentTag.attr("data-available", true)
+			componentTag.on("mousedown", () => {
+				let component = new Product(molecule)
+				this.beginHoldingComponent(component)
+				this.selectedComponent.isRendered = false
+			})
+		}
+
 		for (let mechanismName of allowedMechanisms){
 			let componentTag = $("<div class='component'>")
 			componentTag.text(mechanismName)
 			mechanismsPane.append(componentTag)
 			componentTag.attr("data-available", true)
 			componentTag.on("mousedown", () => {
-				this.selectedComponent = new ArmMechanism(mechanismName)
-				this.selectedComponent.isGhost = true
+				let component = new ArmMechanism(mechanismName)
+				this.beginHoldingComponent(component)
 				this.selectedComponent.isRendered = false
 			})
 		}
@@ -128,7 +149,7 @@ export class Game{
 		contents.splice(index, 0, component)
 
 		//If this component was a mechanism, add a new program connected to it.
-		if (component.type === "ArmMechanism" && level === this.currentLevel){
+		if (component.type === "ArmMechanism" && level === this.currentLevel && !component.program){
 			let programs = level.programs
 			let program = new Program(component, programs.length + 1)
 			programs.push(program)
@@ -227,10 +248,22 @@ export class Game{
 				}
 			}
 		}
+
+		//Place those instructions into the tooltip
+		for (let instructions of instructionsList){
+			let rowElem = $("<div>").addClass("program-row")
+			for (let instruction of instructions){
+				let elem = createInstructionTag(instruction)
+				rowElem.append(elem)
+			}
+			$("#tooltip").append(rowElem)
+		}
+
 		this.renderPrograms()
 	}
 	endHoldingInstructions(){
 		this.heldInstructions = []
+		$("#tooltip").empty()
 	}
 	handleProgramMouseMove(event, program, component){
 		let row = program.elem[0]
@@ -342,14 +375,54 @@ export class Game{
 				let typeId = instruction.type.id
 				if (typeId === "idle") {
 					instructions.splice(i, 1)
+				} else {
+					break
 				}
 			}
 		}
 
-		//TODO: ensure all programs are the same length
+		//Set stats
+		let maxPeriod = 0
+		for (let program of programs){
+			let instructions = program.instructions
+			//Find start step
+			for (let i = 0; i < instructions.length; i++){
+				let instruction = instructions[i]
+				if (instruction.type.id !== "idle"){
+					program.startStep = i
+					break
+				}
+			}
+			//Find end step
+			let endStep = max(instructions.length - 1, 0)
+			for (let i = endStep; i > program.startStep; i++){
+				let instruction = instructions[i]
+				if (instruction.type.id !== "idle"){
+					endStep = i
+					break
+				}
+			}
+
+			program.period = endStep - program.startStep + 1
+			if (program.period > maxPeriod){
+				maxPeriod = program.period
+			}
+		}
+
+		//ensure all programs are the same length
 		//(a 5-step program that starts on step 200 is 5 steps long.)
 		for (let program of programs){
+			let instructions = program.instructions
+			while (instructions.length < program.startStep + maxPeriod){
+				let instruction = new Instruction(INSTRUCTIONS["idle"])
+				instructions.push(instruction)
+			}
+			program.period = maxPeriod
+		}
 
+		//Fix all program's stats for stuff like repeating over time with periods
+		for (let program of programs){
+			// program.setStats()
 		}
 	}
 	renderPrograms(){
@@ -415,6 +488,24 @@ export class Game{
 		}
 		return legal
 	}
+	beginHoldingComponent(component){
+		this.selectedComponent = component
+		this.selectedComponent.isGhost = true
+
+		let components = this.currentLevel.grid.contents
+		if (components.includes(component)){
+			this.deleteComponent(component)
+		}
+	}
+	tryToPlaceSelectedComponent(){
+		if (this.checkPlacement(this.selectedComponent)){
+			this.addComponent(this.selectedComponent)
+			this.selectedComponent.isGhost = false
+			this.selectedComponent = null
+		} else {
+			this.cancelPlacement()
+		}
+	}
 	cancelPlacement(){
 		this.selectedComponent = null
 	}
@@ -428,24 +519,22 @@ export class Game{
 		this.canvasHeight = h
 		this.xOffset += (oldW - w) * 0.5
 		this.yOffset += (oldH - h) * 0.5
-		const grid = this.currentLevel.grid
-		const hexSize = this.hexSize
-		const horiz = ROOT3 * hexSize
-		const vert = 1.5 * hexSize
-		const xOffset = this.xOffset
-		const yOffset = this.yOffset
+		// const grid = this.currentLevel.grid
+		// const hexSize = this.hexSize
+		// const horiz = ROOT3 * hexSize
+		// const vert = 1.5 * hexSize
+		// const xOffset = this.xOffset
+		// const yOffset = this.yOffset
 
-		const topPixel = 0 + yOffset
-		const bottomPixel = h + yOffset
-		const leftPixel = 0 + xOffset
-		const rightPixel = w + xOffset
-		const topR = floor(topPixel / vert)
-		const bottomR = ceil(bottomPixel / vert)
-		const leftQ = floor(leftPixel / horiz)
-		const rightQ = ceil(rightPixel / horiz)
+		// const topPixel = 0 + yOffset
+		// const bottomPixel = h + yOffset
+		// const leftPixel = 0 + xOffset
+		// const rightPixel = w + xOffset
+		// const topR = floor(topPixel / vert)
+		// const bottomR = ceil(bottomPixel / vert)
+		// const leftQ = floor(leftPixel / horiz)
+		// const rightQ = ceil(rightPixel / horiz)
 		// grid.fill(leftQ, rightQ, topR, bottomR)
-
-		//TODO: Remove cells that are far outside the current play space.
 	}
 
 	getHexAt(q, r){
@@ -497,7 +586,11 @@ export class Game{
 			const homeXY = homeTile.toXY()
 			for (let hex of toAdd){
 				hex = hex.add(component.offset.scale(component.offsetDistance))
-				let circle = hex.toCircle(0.7)
+				let size = 0.6
+				if (component.type === "ArmMechanism" && hex.equals(component.homeTile)){
+					size = 0.4
+				}
+				let circle = hex.toCircle(size)
 				if (component.rotation !== 0){
 					let angle = component.rotation
 					let circleX = circle.x
@@ -871,7 +964,7 @@ export class Game{
 				} break
 			}
 		}
-		
+
 		//Then, see if the player has satisfied any of the products, and accept them.
 		this.acceptProducts()
 	}
@@ -928,7 +1021,6 @@ export class Game{
 		const dt = now - this.lastTick
 		this.lastTick = now
 		const controls = this.controls
-		controls.tick()
 
 		if (this.isPlayingSimulation && this.playbackSpeed > 0){
 			//Increase time slightly.
@@ -971,12 +1063,39 @@ export class Game{
 		this.hoveredHex = hoveredHex
 		hoveredHex.active = true
 
-		//Map dragging
 		const isLeftClicking = controls.isClicking("left")
 		const isMouseOnScreen = controls.isMouseOnScreen()
-		if (isLeftClicking && isMouseOnScreen && controls.justClicked("left", 50)){
+
+		//Component placement
+		if (this.selectedComponent){
+			if (isLeftClicking && controls.isMouseOnScreen() && hoveredHex){
+				this.selectedComponent.homeTile = hoveredHex
+				this.selectedComponent.isRendered = true
+			}
+			else if (!isLeftClicking && controls.isMouseOnScreen() && hoveredHex){
+				//If the proposed placement is legal, place it. Otherwise, cancel.
+				this.tryToPlaceSelectedComponent()
+			}
+			else if (!isLeftClicking){
+				this.cancelPlacement()
+			}
+		} else if (controls.justClicked("left") && !this.isPlayingSimulation){
+			//check if the player just clicked on a component they can move
+			const components = this.currentLevel.grid.contents
+			for (let component of components){
+				let hexes = this.getPlacementCollisionHexes(component)
+				if (hexes.some(hex => hex.equals(hoveredHex))){
+					this.beginHoldingComponent(component)
+					break
+				}
+			}
+		}
+
+		//Map dragging
+		if (controls.justClicked("left")){
 			this.isDraggingMap = true
-		} else if (!(isLeftClicking && isMouseOnScreen)) {
+		}
+		if (!isMouseOnScreen || !isLeftClicking || this.selectedComponent) {
 			this.isDraggingMap = false
 		}
 		if (this.isDraggingMap){
@@ -990,32 +1109,13 @@ export class Game{
 			this.resizeScreen()
 		}
 
-		//Component placement
-		if (this.selectedComponent){
-			if (isLeftClicking && controls.isMouseOnScreen() && hoveredHex){
-				this.selectedComponent.homeTile = hoveredHex
-				this.selectedComponent.isRendered = true
-			}
-			else if (!isLeftClicking && controls.isMouseOnScreen() && hoveredHex){
-				//If the proposed placement is legal, place it. Otherwise, cancel.
-				if (this.checkPlacement(this.selectedComponent)){
-					this.addComponent(this.selectedComponent)
-					this.selectedComponent.isGhost = false
-					this.selectedComponent = null
-				} else {
-					this.cancelPlacement()
-				}
-			}
-			else if (!isLeftClicking){
-				this.cancelPlacement()
-			}
-		}
-
 		//Instruction placement
 		if (this.heldInstructions.length){
 			if (!isLeftClicking){
 				this.endHoldingInstructions()
 			}
 		}
+
+		controls.tick()
 	}
 }

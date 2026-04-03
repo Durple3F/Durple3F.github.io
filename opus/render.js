@@ -212,7 +212,7 @@ function drawAtom(ctx, atom, x, y, hexSize, inRadius, alpha){
 	ctx.restore()
 }
 
-function drawReagent(ctx, reagent, x, y, hexSize, inRadius, horiz, vert){
+function drawReagent(ctx, reagent, x, y, hexSize, inRadius, horiz, vert, isSimulated){
 	//A reagent is just the hexagonal grid underneath the molecule that it produces.
 	//Before the simulation starts, it should render the molecule that it produces as though it were a normal molecule
 	const diagx = ROOT3*0.5*hexSize
@@ -246,7 +246,9 @@ function drawReagent(ctx, reagent, x, y, hexSize, inRadius, horiz, vert){
 	}
 
 	ctx.save()
-	ctx.filter = "brightness(0.2)"
+	if (isSimulated){
+		ctx.filter = "brightness(0.2)"
+	}
 	drawMolecule(ctx, molecule, x, y, hexSize, inRadius, horiz, vert)
 	ctx.restore()
 }
@@ -288,12 +290,12 @@ function drawProduct(ctx, reagent, x, y, hexSize, inRadius, horiz, vert){
 	ctx.restore()
 }
 
-function drawComponent(ctx, component, x, y, hexSize, inRadius, horiz, vert){
+function drawComponent(ctx, component, x, y, hexSize, inRadius, horiz, vert, isSimulated){
 	if (!component.isRendered) return
 	switch (component.type){
 		case "Molecule": drawMolecule(ctx, component, x, y, hexSize, inRadius, horiz, vert); break
 		case "Reagent": drawReagent(ctx, component, x, y, hexSize, inRadius, horiz, vert); break
-		case "Product": drawProduct(ctx, component, x, y, hexSize, inRadius, horiz, vert); break
+		case "Product": drawProduct(ctx, component, x, y, hexSize, inRadius, horiz, vert, isSimulated); break
 		case "ArmMechanism": drawArmMechanism(ctx, component, x, y, hexSize, inRadius, horiz, vert); break
 	}
 }
@@ -348,7 +350,8 @@ export function render(game, ctx, w, h){
 		let	componentOffY = (componentOffset.r) * vert * componentOffDist
 		x += componentOffX
 		y += componentOffY
-		drawComponent(ctx, component, x, y, hexSize, inRadius, horiz, vert)
+		let isSimulated = game.isPlayingSimulation
+		drawComponent(ctx, component, x, y, hexSize, inRadius, horiz, vert, isSimulated)
 	}
 
 	if (game.selectedComponent){

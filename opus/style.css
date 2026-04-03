@@ -9,6 +9,7 @@ body {
 :root {
 	--bottom-pane-height: min(35vh, 15vw);
 	--screen-height: calc(100vh - var(--bottom-pane-height));
+	--program-row-height: 5vh;
 	--components-bg: rgb(41, 49, 112);
 	--playback-bg: rgb(37, 69, 151);
 	--programs-bg: rgb(20, 45, 121);
@@ -112,6 +113,74 @@ body {
 	height: 100%; width: 85%;
 	display: flex;
 	overflow-y: auto;
+
+	#program-names {
+		width: var(--program-row-height);
+	}
+	#program-names > *, #program-rows > * {
+		height: var(--program-row-height);
+	}
+	.program-name {
+		background-color: black;
+		width: 100%;
+		border: 2px solid gray;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 160%;
+		font-family: monospace;
+	}
+	#program-rows-wrapper {
+		margin-left: 2px;
+		overflow-x: auto;
+		flex-grow: 1;
+	}
+	#program-rows {
+		min-width: 100%;
+		width: fit-content;
+	}
+	.program-row {
+		width: 100%;
+		display: flex;
+		flex-wrap: nowrap;
+		justify-content: left;
+		padding-right: 30vw;
+	}
+	/* Add sibling index to firefox now. */
+	.program-row:nth-of-type(10n+0) {
+		background-color: oklch(from var(--base-program-row-color) l c calc(h + 36*9));
+	}
+	.program-row:nth-of-type(10n+1) {
+		background-color: oklch(from var(--base-program-row-color) l c h);
+	}
+	.program-row:nth-of-type(10n+2) {
+		background-color: oklch(from var(--base-program-row-color) l c calc(h + 36*1));
+	}
+	.program-row:nth-of-type(10n+3) {
+		background-color: oklch(from var(--base-program-row-color) l c calc(h + 36*2));
+	}
+	.program-row:nth-of-type(10n+4) {
+		background-color: oklch(from var(--base-program-row-color) l c calc(h + 36*3));
+	}
+	.program-row:nth-of-type(10n+5) {
+		background-color: oklch(from var(--base-program-row-color) l c calc(h + 36*4));
+	}
+	.program-row:nth-of-type(10n+6) {
+		background-color: oklch(from var(--base-program-row-color) l c calc(h + 36*5));
+	}
+	.program-row:nth-of-type(10n+7) {
+		background-color: oklch(from var(--base-program-row-color) l c calc(h + 36*6));
+	}
+	.program-row:nth-of-type(10n+8) {
+		background-color: oklch(from var(--base-program-row-color) l c calc(h + 36*7));
+	}
+	.program-row:nth-of-type(10n+9) {
+		background-color: oklch(from var(--base-program-row-color) l c calc(h + 36*8));
+	}
+	.program-row .instruction {
+		height: 100%;
+		display: flex-inline;
+	}
 }
 
 #instructions {
@@ -144,9 +213,9 @@ body {
 	align-items: center;
 	border: 0.2em solid rgb(125, 84, 37);
 }
-/* .instruction[data-type="idle"] {
+.instruction[data-type="idle"] {
 	opacity: 0;
-} */
+}
 
 .instruction-symbol {
 	width: 90%;
@@ -163,74 +232,6 @@ body {
 	align-items: center;
 }
 
-#program-names {
-	width: 5vh;
-}
-#program-names > *, #program-rows > * {
-	height: 5vh;
-}
-.program-name {
-	background-color: black;
-	width: 100%;
-	border: 2px solid gray;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: 160%;
-	font-family: monospace;
-}
-#program-rows-wrapper {
-	margin-left: 2px;
-	overflow-x: auto;
-	flex-grow: 1;
-}
-#program-rows {
-	min-width: 100%;
-	width: fit-content;
-}
-.program-row {
-	width: 100%;
-	display: flex;
-	flex-wrap: nowrap;
-	justify-content: left;
-	padding-right: 30vw;
-}
-/* Add sibling index to firefox now. */
-.program-row:nth-of-type(10n+0) {
-	background-color: oklch(from var(--base-program-row-color) l c calc(h + 36*9));
-}
-.program-row:nth-of-type(10n+1) {
-	background-color: oklch(from var(--base-program-row-color) l c h);
-}
-.program-row:nth-of-type(10n+2) {
-	background-color: oklch(from var(--base-program-row-color) l c calc(h + 36*1));
-}
-.program-row:nth-of-type(10n+3) {
-	background-color: oklch(from var(--base-program-row-color) l c calc(h + 36*2));
-}
-.program-row:nth-of-type(10n+4) {
-	background-color: oklch(from var(--base-program-row-color) l c calc(h + 36*3));
-}
-.program-row:nth-of-type(10n+5) {
-	background-color: oklch(from var(--base-program-row-color) l c calc(h + 36*4));
-}
-.program-row:nth-of-type(10n+6) {
-	background-color: oklch(from var(--base-program-row-color) l c calc(h + 36*5));
-}
-.program-row:nth-of-type(10n+7) {
-	background-color: oklch(from var(--base-program-row-color) l c calc(h + 36*6));
-}
-.program-row:nth-of-type(10n+8) {
-	background-color: oklch(from var(--base-program-row-color) l c calc(h + 36*7));
-}
-.program-row:nth-of-type(10n+9) {
-	background-color: oklch(from var(--base-program-row-color) l c calc(h + 36*8));
-}
-.program-row .instruction {
-	height: 100%;
-	display: flex-inline;
-}
-
 #debug {
 	position: absolute;
 	top: 0; right: 0;
@@ -238,6 +239,13 @@ body {
 	color: white;
 	font-family: monospace;
 	white-space: pre;
+	z-index: 100;
+	pointer-events: none;
+}
+
+#tooltip {
+	position: absolute;
+	top: 0; left: 0;
 	z-index: 100;
 	pointer-events: none;
 }

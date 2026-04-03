@@ -60,7 +60,18 @@
 				"- Added the grab, drop, extend, retract, pivot clockwise, and pivot counterclockwise instructions.",
 				"- The collision detection is more accurate now and takes into account where a molecule is even while it's in the middle of an animation.",
 				"- If two atoms collide during a simulation, the simulation stops.",
-				"- If you place a molecule on a product, and that molecule fits, the molecule disappears."
+				"- If you place a molecule on a product, and that molecule fits, the molecule disappears.",
+				"- Programs now loop! And they even allow you to have empty space at the beginning, and properly calculate their periods! (as long as you don't use a period override. haven't done that yet.)",
+				"- Now when you pick up an instruction, you can see it as a tooltip following your mouse."
+			]
+		},
+		"20260403": {
+			"date": "April 3, 2026",
+			"line-count": 2500,
+			"changes": [
+				"- You can finally click and drag components around after placing them.",
+				"- You can now click and drag products onto the screen like you can arms!",
+				"- Reagents now properly show the molecules they make while the simulation isn't running."
 			]
 		}
 	}

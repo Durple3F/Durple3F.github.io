@@ -12,6 +12,11 @@ export default class ControlManager {
 				2: false, //right mouse
 				3: false //secret third mouse (mr. squeaker)
 			},
+			prevButtons: {
+				1: false,
+				2: false,
+				3: false
+			},
 			clickTimes: {
 				1: 0,
 				2: 0,
@@ -122,7 +127,20 @@ export default class ControlManager {
 		}
 		return this.getMouseButtonState(index)
 	}
-	justClicked(mouseButtonName, leniency=100){
+	// justClicked(mouseButtonName, leniency=100){
+	// 	let index = 1
+	// 	switch (mouseButtonName){
+	// 		case undefined: break
+	// 		case 1: index = 1; break
+	// 		case 2: index = 2; break
+	// 		case 3: index = 3; break
+	// 		case "left": index = 1; break
+	// 		case "right": index = 2; break
+	// 		case "middle": index = 3; break
+	// 	}
+	// 	return this.getMouseButtonState(index) && (performance.now() - this.mouse.clickTimes[index] < leniency)
+	// }
+	justClicked(mouseButtonName){
 		let index = 1
 		switch (mouseButtonName){
 			case undefined: break
@@ -133,7 +151,7 @@ export default class ControlManager {
 			case "right": index = 2; break
 			case "middle": index = 3; break
 		}
-		return this.getMouseButtonState(index) && (performance.now() - this.mouse.clickTimes[index] < leniency)
+		return this.getMouseButtonState(index) && !this.mouse.prevButtons[index]
 	}
 	setMousePosition(x, y){
 		let offset = $(this.canvas).offset()
@@ -151,6 +169,9 @@ export default class ControlManager {
 		records.push([this.mouse.x, this.mouse.y, performance.now()])
 		if (records.length > 5){
 			records.splice(0, records.length - 5)
+		}
+		for (let key in this.mouse.buttons){
+			this.mouse.prevButtons[key] = this.mouse.buttons[key]
 		}
 		let vx = 0
 		let vy = 0

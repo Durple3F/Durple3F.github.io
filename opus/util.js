@@ -559,6 +559,32 @@ export class Molecule extends Component {
 	}
 }
 
+export function createMolecule(moleculeRecipe){
+	let atomRecipeList = moleculeRecipe[0] ?? []
+	let bondRecipeList = moleculeRecipe[1] ?? []
+	//uses a simplified list of only the things that atoms NEED to create them
+	//and a simplified list of only the indexes of the atoms that are linked in bonds (as well as their bond type.)
+	let molecule = new Molecule()
+	let atoms = []
+	for (let atomRecipe of atomRecipeList){
+		let atom = new Atom(atomRecipe[0])
+		let q = atomRecipe[1]
+		let r = atomRecipe[2]
+		let s = atomRecipe[3]
+		atom.setCoords(q, r, s)
+		atoms.push(atom)
+	}
+	for (let atom of atoms){
+		molecule.addAtom(atom)
+	}
+	for (let bondRecipe of bondRecipeList){
+		let atom1Index = bondRecipe[0]
+		let atom2Index = bondRecipe[1]
+		molecule.addBond(atoms[atom1Index], atoms[atom2Index], bondRecipe[2])
+	}
+	return molecule
+}
+
 export class Reagent extends Component {
 	constructor(molecule) {
 		super()
