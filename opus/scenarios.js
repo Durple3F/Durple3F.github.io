@@ -1,8 +1,7 @@
-import { createMolecule } from "./util"
-
 export class Scenario{
-	constructor(productList, allowedMechanisms){
+	constructor(productList, reagentList, allowedMechanisms){
 		this.productMolecules = productList
+		this.reagentMolecules = reagentList
 		this.allowedMechanisms = allowedMechanisms
 	}
 }
@@ -17,6 +16,15 @@ SCENARIOS["test"] = new Scenario([
 				["Fire", 1, -1, 0]
 			], [
 				[0, 1]
+			]
+		]
+	}
+], [
+	{
+		"name": "Elemental Fire",
+		"molecule": [
+			[
+				["Fire", 0, 0, 0]
 			]
 		]
 	}

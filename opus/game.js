@@ -97,6 +97,9 @@ export class Game{
 		let productMolecules = scenario.productMolecules
 		let productsPane = $("#components-products").children(".components-list")
 		productsPane.empty()
+		let reagentMolecules = scenario.reagentMolecules
+		let reagentsPane = $("#components-reagents").children(".components-list")
+		reagentsPane.empty()
 		let allowedMechanisms = scenario.allowedMechanisms
 		let mechanismsPane = $("#components-mechanisms").children(".components-list")
 		mechanismsPane.empty()
@@ -110,6 +113,20 @@ export class Game{
 			componentTag.attr("data-available", true)
 			componentTag.on("mousedown", () => {
 				let component = new Product(molecule)
+				this.beginHoldingComponent(component)
+				this.selectedComponent.isRendered = false
+			})
+		}
+
+		for (let reagentMolecule of reagentMolecules){
+			let moleculeName = reagentMolecule.name
+			let molecule = createMolecule(reagentMolecule.molecule)
+			let componentTag = $("<div class='component'>")
+			componentTag.text(moleculeName)
+			reagentsPane.append(componentTag)
+			componentTag.attr("data-available", true)
+			componentTag.on("mousedown", () => {
+				let component = new Reagent(molecule)
 				this.beginHoldingComponent(component)
 				this.selectedComponent.isRendered = false
 			})
@@ -180,49 +197,6 @@ export class Game{
 	initialize(){
 		this.resizeScreen()
 		this.getHexAt(0, 0).active = true
-
-		//Create a molecule of elemental Fire and put it on the home tile.
-		let molecule = new Molecule()
-		let atom = new Atom("Fire")
-		atom.setCoords(0, 0, 0)
-		molecule.addAtom(atom)
-		let atom2 = new Atom("Fire")
-		atom2.setCoords(-1, 1, 0)
-		molecule.addAtom(atom2)
-		molecule.addBond(atom, atom2)
-		let reagent = new Reagent(molecule)
-		reagent.moveOrigin(new Hex(-1, 0, 1))
-		this.addComponent(reagent)
-		
-		let product = new Product(molecule.clone())
-		product.moveOrigin(new Hex(1, 0, -1))
-		// molecule.rotateRight()
-		// molecule.rotateRight()
-		// molecule.rotateRight()
-		this.addComponent(product)
-
-		// molecule.moveOrigin(new Hex(-5, 5, 0))
-		// product.molecule.moveOrigin(new Hex(-2, 3, -1))
-
-		if (true) {
-			// let molecule = new Molecule()
-			// let atom = new Atom("Fire")
-			// atom.setCoords(0, 0, 0)
-			// molecule.addAtom(atom)
-			// molecule.moveOrigin(new Hex(2, -2, 0))
-			// this.addComponent(molecule)
-		}
-
-		// let arm = new ArmMechanism("Piston")
-		// arm.homeTile = this.getHexAt(2, -2)
-		// this.addComponent(arm)
-		// arm.rotateRight()
-		// arm.rotateRight()
-		// arm.arms.contents.forEach(arm => arm.distance = 2)
-
-		// let arm2 = new ArmMechanism("Piston")
-		// arm2.homeTile = this.getHexAt(5, -3)
-		// this.addComponent(arm2)
 	}
 
 	beginHoldingInstruction(instruction){
@@ -489,6 +463,8 @@ export class Game{
 		return legal
 	}
 	beginHoldingComponent(component){
+		//You can't begin holding components while the simulation is running.
+		if (this.isPlayingSimulation) return
 		this.selectedComponent = component
 		this.selectedComponent.isGhost = true
 
