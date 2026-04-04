@@ -307,7 +307,7 @@ function drawComponent(ctx, component, x, y, hexSize, inRadius, horiz, vert, isS
 		case "Glyph": drawGlyph(ctx, component, x, y, hexSize, inRadius, horiz, vert); break
 	}
 
-	if (!component.renderRotationPoint){
+	if (component.renderRotationPoint){
 		let rotationPoint = component.rotationPoint
 		let rotationPointX = x + (rotationPoint.q + 0.5 * rotationPoint.r) * horiz
 		let rotationPointY = y + rotationPoint.r * vert

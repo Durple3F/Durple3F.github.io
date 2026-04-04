@@ -1,5 +1,5 @@
 export const drawGhostRotation = false
-export const drawMoleculeHomeTile = true
+export const drawMoleculeHomeTile = false
 export const drawCollisionCircles = true
 export const atomSize = 0.6
 export const atomRenderSize = 0.7

@@ -84,7 +84,8 @@
 			"line-count": 3100,
 			"changes": [
 				"- The bonder glyph works now.",
-				"- Now, moving molecules in impossible ways is detected by the simulation and prevented."
+				"- Now, moving molecules in impossible ways is detected by the simulation and prevented.",
+				"- The game only shows you a component's rotation handle if your mouse is close enough."
 			]
 		}
 	}

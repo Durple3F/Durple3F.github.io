@@ -1303,6 +1303,33 @@ export class Game{
 		const isLeftClicking = controls.isClicking("left")
 		const isMouseOnScreen = controls.isMouseOnScreen()
 
+		//Finding whether we should show any components' rotation points
+		const components = this.currentLevel.grid.contents
+		for (let component of components){
+			component.renderRotationPoint = false
+		}
+		if (isMouseOnScreen){
+			for (let component of components){
+				//1-atom products and reagents don't need a rotation point.
+				if (component.type === "Product" || component.type === "Reagent"){
+					if (component.molecule.atoms.contents.length <= 1){
+						continue
+					}
+				}
+				if (hoveredHex.equals(component.homeTile)){
+					component.renderRotationPoint = true
+				} else {
+					let rotationHex = component.homeTile.add(component.rotationPoint)
+					let rotationXY = rotationHex.toXY()
+					let rotationCircle = new Circle(rotationXY[0], rotationXY[1], 0.5)
+					let mouseXY = this.getHexFromXY(mouseX, mouseY, true).toXY()
+					if (rotationCircle.contains(mouseXY[0], mouseXY[1])){
+						component.renderRotationPoint = true
+					}
+				}
+			}
+		}
+
 		//Component placement
 		if (this.selectedComponent){
 			if (!this.isAdjustingComponent){
@@ -1385,9 +1412,9 @@ export class Game{
 				let isAdjusting = false
 
 				let rotationCoords = rotationPoint.toXY()
-				let rotationCircle = new Circle(rotationCoords[0], rotationCoords[1], 1)
+				let rotationCircle = new Circle(rotationCoords[0], rotationCoords[1], 0.5)
 				let mouseXY = this.getHexFromXY(mouseX, mouseY, true).toXY()
-				if (rotationCircle.contains(mouseXY[0], mouseXY[1])){
+				if (component.renderRotationPoint && rotationCircle.contains(mouseXY[0], mouseXY[1])){
 					isAdjusting = true
 				}
 
