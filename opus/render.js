@@ -1,5 +1,5 @@
 import {Hex, Atom, Molecule} from "./util.js";
-import {drawCollisionCircles, drawGhostRotation, drawMoleculeHomeTile} from "./config.js";
+import {drawCollisionCircles, drawGhostRotation, drawMoleculeHomeTile, atomRenderSize} from "./config.js";
 
 const ROOT3 = Math.sqrt(3)
 const max = Math.max
@@ -68,7 +68,7 @@ function drawArmMechanism(ctx, mechanism, x, y, hexSize, inRadius, horiz, vert){
 	const angle = mechanism.rotation
 	const cosT = cos(angle)
 	const sinT = sin(angle)
-	const atomSize = 0.7
+	const atomSize = atomRenderSize
 
 	//Draw base
 	ctx.save()
@@ -290,6 +290,13 @@ function drawProduct(ctx, reagent, x, y, hexSize, inRadius, horiz, vert){
 	ctx.restore()
 }
 
+function drawGlyph(ctx, glyph, x, y, hexSize, inRadius, horiz, vert){
+	let glyphType = glyph.glyphType
+	ctx.save()
+	glyphType.render(ctx, glyph, x, y, hexSize, inRadius, horiz, vert)
+	ctx.restore()
+}
+
 function drawComponent(ctx, component, x, y, hexSize, inRadius, horiz, vert, isSimulated){
 	if (!component.isRendered) return
 	switch (component.type){
@@ -297,6 +304,7 @@ function drawComponent(ctx, component, x, y, hexSize, inRadius, horiz, vert, isS
 		case "Reagent": drawReagent(ctx, component, x, y, hexSize, inRadius, horiz, vert); break
 		case "Product": drawProduct(ctx, component, x, y, hexSize, inRadius, horiz, vert, isSimulated); break
 		case "ArmMechanism": drawArmMechanism(ctx, component, x, y, hexSize, inRadius, horiz, vert); break
+		case "Glyph": drawGlyph(ctx, component, x, y, hexSize, inRadius, horiz, vert); break
 	}
 
 	if (!component.renderRotationPoint){

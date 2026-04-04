@@ -1,6 +1,8 @@
-import {Hex, Grid, Component, Element, Atom, loadSprite, Molecule, ArmMechanism, ARMTYPES, Reagent, tagHierarchy, lerp, clamp, Product, createMolecule, Circle, find_angle} from "./util.js"
+import {Hex, Grid, Component, Atom, loadSprite, Molecule, ArmMechanism, ARMTYPES, Reagent, tagHierarchy, lerp, clamp, Product, createMolecule, Circle, find_angle} from "./util.js"
 import { SCENARIOS } from "./scenarios.js"
 import { createInstructionTag, Instruction, INSTRUCTIONS } from "./instructions.js"
+import { Glyph } from "./glyphs.js"
+import { armSize, atomSize } from "./config.js"
 
 const min = Math.min
 const max = Math.max
@@ -104,6 +106,9 @@ export class Game{
 		let allowedMechanisms = scenario.allowedMechanisms
 		let mechanismsPane = $("#components-mechanisms").children(".components-list")
 		mechanismsPane.empty()
+		let allowedGlyphs = scenario.allowedGlyphs
+		let glyphsPane = $("#components-glyphs").children(".components-list")
+		glyphsPane.empty()
 
 		for (let productMolecule of productMolecules){
 			let moleculeName = productMolecule.name
@@ -140,6 +145,18 @@ export class Game{
 			componentTag.attr("data-available", true)
 			componentTag.on("mousedown", () => {
 				let component = new ArmMechanism(mechanismName)
+				this.beginHoldingComponent(component)
+				this.selectedComponent.isRendered = false
+			})
+		}
+
+		for (let glyphName of allowedGlyphs){
+			let componentTag = $("<div class='component'>")
+			componentTag.text(glyphName)
+			glyphsPane.append(componentTag)
+			componentTag.attr("data-available", true)
+			componentTag.on("mousedown", () => {
+				let component = new Glyph(glyphName)
 				this.beginHoldingComponent(component)
 				this.selectedComponent.isRendered = false
 			})
@@ -569,9 +586,9 @@ export class Game{
 			const homeXY = homeTile.toXY()
 			for (let hex of toAdd){
 				hex = hex.add(component.offset.scale(component.offsetDistance))
-				let size = 0.6
+				let size = atomSize
 				if (component.type === "ArmMechanism" && hex.equals(component.homeTile)){
-					size = 0.4
+					size = armSize
 				}
 				let circle = hex.toCircle(size)
 				if (component.rotation !== 0){
@@ -624,7 +641,7 @@ export class Game{
 			const intendedCircles = []
 			for (let atom of atoms){
 				let hex = homeTile.add(atom.coord)
-				intendedCircles.push(hex.toCircle(0.7))
+				intendedCircles.push(hex.toCircle(atomSize))
 			}
 			let canPlace = true
 			for (let circle of intendedCircles){

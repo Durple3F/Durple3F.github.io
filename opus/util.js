@@ -365,7 +365,7 @@ export class Component {
 			this.molecule.rotateLeft()
 		}
 		this.rotationPoint = this.rotationPoint.rotateLeft()
-		this.currentHexRotation = (this.currentHexRotation - 1 + Hex.directions.length) % Hex.directions.length
+		this.currentHexRotation = (this.currentHexRotation + 1) % Hex.directions.length
 	}
 	rotateRight() {
 		let atoms = this.atoms
@@ -382,7 +382,7 @@ export class Component {
 			this.molecule.rotateRight()
 		}
 		this.rotationPoint = this.rotationPoint.rotateRight()
-		this.currentHexRotation = (this.currentHexRotation + 1) % Hex.directions.length
+		this.currentHexRotation = (this.currentHexRotation - 1 + Hex.directions.length) % Hex.directions.length
 	}
 	translate(b) {
 		const atoms = this.atoms

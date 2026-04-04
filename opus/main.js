@@ -1,8 +1,10 @@
 import {Game} from "./game.js";
 import {render} from "./render.js";
 import ControlManager from './controls.js';
-import { easeInOutCubic, easeInOutSine, easeOutCubic, ELEMENTS } from "./util"
+import { easeInOutCubic, easeInOutSine, easeOutCubic } from "./util.js"
+import { ELEMENTS } from "./util.js";
 import { INSTRUCTIONS, Instruction, createInstructionButton } from "./instructions.js";
+import { GLYPHTYPES } from "./glyphs.js";
 
 const FRAMERATE = 60
 let tickInterval
@@ -50,6 +52,9 @@ componentsTab.on("click", () => {
 		const paneWidth = componentsPane.width()
 		let xOffset = -t * paneWidth - 3
 		let transform = `translateX(${xOffset}px)`
+		if (xOffset === -3){
+			transform = ""
+		}
 		componentsPane.css("transform", transform)
 		componentsTab.css("transform", transform)
 		$(canvas).width(window.innerWidth - paneWidth - xOffset)
@@ -95,6 +100,11 @@ async function loadGame(){
 	for (let elementId in ELEMENTS){
 		let element = ELEMENTS[elementId]
 		await element.load()
+	}
+	//Load glyph sprites
+	for (let glyphId in GLYPHTYPES){
+		let glyph = GLYPHTYPES[glyphId]
+		await glyph.load()
 	}
 }
 

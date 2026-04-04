@@ -67,13 +67,14 @@
 		},
 		"20260403": {
 			"date": "April 3, 2026",
-			"line-count": 2500,
+			"line-count": 2700,
 			"changes": [
 				"- You can finally click and drag components around after placing them.",
 				"- You can now click and drag products and reagents onto the screen like you can arms!",
 				"- Reagents now properly show the molecules they make while the simulation isn't running.",
 				"- You can now rotate components around after placing them!",
-				"- You can now change the initial length of arms!"
+				"- You can now change the initial length of arms!",
+				"- Starting to work on rendering glyphs. They seem like they'll be very hard to work with so far."
 			]
 		}
 	}

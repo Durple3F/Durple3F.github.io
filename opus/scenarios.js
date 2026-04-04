@@ -1,8 +1,9 @@
 export class Scenario{
-	constructor(productList, reagentList, allowedMechanisms){
+	constructor(productList, reagentList, allowedMechanisms, allowedGlyphs){
 		this.productMolecules = productList
 		this.reagentMolecules = reagentList
 		this.allowedMechanisms = allowedMechanisms
+		this.allowedGlyphs = allowedGlyphs
 	}
 }
 
@@ -28,4 +29,4 @@ SCENARIOS["test"] = new Scenario([
 			]
 		]
 	}
-], ["Piston"])
+], ["Piston"], ["Glyph of Bonding"])
