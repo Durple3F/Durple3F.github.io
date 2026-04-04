@@ -328,6 +328,7 @@ export class Component {
 		this.atoms = new Grid()
 		this.bonds = new Grid()
 		this.arms = new Grid()
+		this.inputs = new Grid()
 		this.molecule = null
 		this.isGhost = false
 		this.isRendered = true
@@ -364,6 +365,11 @@ export class Component {
 		if (this.molecule){
 			this.molecule.rotateLeft()
 		}
+		let inputs = this.inputs
+		for (let input of inputs.contents) {
+			let coord = input.coord
+			input.setCoords(-coord.s, -coord.q, -coord.r)
+		}
 		this.rotationPoint = this.rotationPoint.rotateLeft()
 		this.currentHexRotation = (this.currentHexRotation + 1) % Hex.directions.length
 	}
@@ -380,6 +386,11 @@ export class Component {
 		}
 		if (this.molecule){
 			this.molecule.rotateRight()
+		}
+		let inputs = this.inputs
+		for (let input of inputs.contents) {
+			let coord = input.coord
+			input.setCoords(-coord.r, -coord.s, -coord.q)
 		}
 		this.rotationPoint = this.rotationPoint.rotateRight()
 		this.currentHexRotation = (this.currentHexRotation - 1 + Hex.directions.length) % Hex.directions.length
@@ -476,6 +487,7 @@ export class Molecule extends Component {
 			let bondClone = new Bond(atom1Clone, atom2Clone)
 			clone.bonds.contents.push(bondClone)
 		}
+		clone.currentHexRotation = this.currentHexRotation
 		clone.rotationPoint = this.rotationPoint
 		return clone
 	}
@@ -569,7 +581,7 @@ export class Molecule extends Component {
 		let bond = new Bond(atom1, atom2, type)
 		let taken = false
 		for (let otherBond of this.bonds.contents) {
-			if (otherBond.atom.includes(atom1) && otherBond.atoms.includes(atom2) && type === otherBond.type) {
+			if (otherBond.atoms.includes(atom1) && otherBond.atoms.includes(atom2) && type === otherBond.type) {
 				console.error("Duplicate bond detected!")
 				console.log(this, bond, otherBond, atom1, atom2)
 				taken = true
@@ -619,6 +631,7 @@ export class Reagent extends Component {
 		let molecule = this.molecule.clone()
 		let clone = new Reagent(molecule)
 		clone.homeTile = this.homeTile
+		clone.currentHexRotation = this.currentHexRotation
 		clone.rotationPoint = this.rotationPoint
 		return clone
 	}
@@ -634,6 +647,7 @@ export class Product extends Component {
 		let molecule = this.molecule.clone()
 		let clone = new Product(molecule)
 		clone.homeTile = this.homeTile
+		clone.currentHexRotation = this.currentHexRotation
 		clone.rotationPoint = this.rotationPoint
 		return clone
 	}
@@ -691,6 +705,7 @@ export class ArmMechanism extends Component {
 			clone.arms.contents.push(armClone)
 		}
 		clone.program = this.program.clone(clone)
+		clone.currentHexRotation = this.currentHexRotation
 		clone.rotationPoint = this.rotationPoint
 		return clone
 	}

@@ -57,9 +57,6 @@ export class Program{
 		} else if (timestep >= this.instructions.length && this.period > 0){
 			let offset = timestep - this.startStep
 			let instruction = this.instructions[this.startStep + (offset % this.period)]
-			if (this.name == 2){
-				console.log(instruction, offset % this.period, offset, this.startStep)
-			}
 			return instruction
 		}
 	}
@@ -453,6 +450,11 @@ export class Game{
 				result.push(hex)
 			}
 		}
+		let inputs = component.inputs.contents
+		for (let input of inputs){
+			let hex = homeTile.add(input.coord)
+			result.push(hex)
+		}
 		return result
 	}
 	checkPlacement(component){
@@ -659,6 +661,84 @@ export class Game{
 			}
 		}
 	}
+	carryOutGlyphs(){
+		//For each glyph, find their inputs and run whatever code that glyph does.
+		//For each product, check if an equivalent molecule is on top of it.
+		//If so, despawn the molecule.
+		const level = this.simulation
+		const components = level.grid.contents
+		//Find all molecules that are held by something, so we can tell if other molecules aren't.
+		const glyphs = []
+		const glyphDatas = []
+		const glyphHexes = new Map()
+		const allMolecules = []
+		const heldMolecules = []
+
+		for (let component of components){
+			const type = component.type
+			switch (type) {
+				case "Glyph":
+					glyphs.push(component)
+					let glyphData = {}
+					glyphDatas.push(glyphData)
+					glyphData.glyph = component
+					glyphData.inputs = {}
+					glyphData.inputLocations = {}
+					let inputCoords = {}
+					let homeTile = component.homeTile
+					let inputs = component.inputs.contents
+					for (let input of inputs){
+						let tile = homeTile.add(input.coord)
+						let key = component.inputs.getKey(tile.q, tile.r, tile.s)
+						inputCoords[key] = input
+						glyphData.inputs[input.name] = null
+						glyphData.inputLocations[key] = input
+					}
+					glyphHexes.set(component, inputCoords)
+				break
+				case "ArmMechanism":
+					let arms = component.arms.contents
+					for (let arm of arms){
+						let grippedComponent = arm.grippedComponent
+						if (grippedComponent && !heldMolecules.includes(grippedComponent)){
+							heldMolecules.push(grippedComponent)
+						}
+					}
+				break
+				case "Molecule":
+					allMolecules.push(component)
+				break
+			}
+		}
+
+		//Now, for each component, find any atoms that are on one of its inputs and log them.
+		for (let molecule of allMolecules){
+			let atoms = molecule.atoms.contents
+			let homeTile = molecule.homeTile
+			for (let atom of atoms){
+				let tile = homeTile.add(atom.coord)
+				let key = molecule.atoms.getKey(tile.q, tile.r, tile.s)
+				for (let glyphData of glyphDatas){
+					if (key in glyphData.inputLocations){
+						let input = glyphData.inputLocations[key]
+						//TODO: Some inputs only accept singleton, non-held atoms.
+						let name = input.name
+						glyphData.inputs[name] = {
+							atom: atom,
+							molecule: molecule,
+							held: !heldMolecules.includes(molecule)
+						}
+					}
+				}
+			}
+		}
+		
+		//Now we can finally run the code associated with each glyph.
+		for (let glyphData of glyphDatas){
+			let glyph = glyphData.glyph
+			glyph.execute(this, level, glyphData.inputs)
+		}
+	}
 	acceptProducts(){
 		//For each product, check if an equivalent molecule is on top of it.
 		//If so, despawn the molecule.
@@ -771,6 +851,25 @@ export class Game{
 		//Namely, placing reagents onto the board needs to happen before the arms can grab them.
 		this.placeReagents()
 
+		//Then, run all glyphs.
+		this.carryOutGlyphs()
+
+		//keep a list of each movement that happens to atoms
+		//this way we can tell if an illegal action is occuring
+		const moleculeMovements = new Map()
+		const armsGrippingMolecules = new Map()
+		const armMechanismsGrippingMolecules = new Map()
+		const components = this.simulation.grid.contents
+		for (let component of components){
+			switch (component.type){
+				case "Molecule":
+				moleculeMovements.set(component, [])
+				armsGrippingMolecules.set(component, [])
+				armMechanismsGrippingMolecules.set(component, [])
+				break
+			}
+		}
+
 		//get each instruction that should be executed right now and add them to the list of animations
 		const programs = this.simulation.programs
 		for (let program of programs){
@@ -806,6 +905,7 @@ export class Game{
 							endV: molecule.rotation + Math.PI / 3
 						}
 						this.playingAnimations.push(animation)
+						moleculeMovements.get(molecule).push(animation)
 					}
 				} break
 				case "rotator_ccw": {
@@ -834,6 +934,7 @@ export class Game{
 							endV: molecule.rotation - Math.PI / 3
 						}
 						this.playingAnimations.push(animation)
+						moleculeMovements.get(molecule).push(animation)
 					}
 				} break
 				case "grabber_grab": {
@@ -891,9 +992,11 @@ export class Game{
 							startT: timestep,
 							endT: timestep + 1,
 							startV: 0,
-							endV: distance
+							endV: distance,
+							direction: arm.direction
 						}
 						this.playingAnimations.push(moleculeAnimation)
+						moleculeMovements.get(molecule).push(moleculeAnimation)
 					}
 				} break
 				case "piston_retract": {
@@ -922,9 +1025,11 @@ export class Game{
 							startT: timestep,
 							endT: timestep + 1,
 							startV: 0,
-							endV: distance
+							endV: distance,
+							direction: arm.direction
 						}
 						this.playingAnimations.push(moleculeAnimation)
+						moleculeMovements.get(molecule).push(moleculeAnimation)
 					}
 				} break
 				case "pivot_cw": {
@@ -933,7 +1038,8 @@ export class Game{
 					for (let arm of arms){
 						if (!arm.grippedComponent) continue
 						const molecule = arm.grippedComponent
-						molecule.moveOrigin(homeTile.add(arm.direction.scale(arm.distance)).round())
+						const handLocation = homeTile.add(arm.direction.scale(arm.distance)).round()
+						molecule.moveOrigin(handLocation)
 						let animation = {
 							type: "set_rotation",
 							target: molecule,
@@ -943,6 +1049,7 @@ export class Game{
 							endV: molecule.rotation + Math.PI / 3
 						}
 						this.playingAnimations.push(animation)
+						moleculeMovements.get(molecule).push(animation)
 					}
 				} break
 				case "pivot_ccw": {
@@ -951,7 +1058,8 @@ export class Game{
 					for (let arm of arms){
 						if (!arm.grippedComponent) continue
 						const molecule = arm.grippedComponent
-						molecule.moveOrigin(homeTile.add(arm.direction.scale(arm.distance)).round())
+						const handLocation = homeTile.add(arm.direction.scale(arm.distance)).round()
+						molecule.moveOrigin(handLocation)
 						let animation = {
 							type: "set_rotation",
 							target: molecule,
@@ -961,9 +1069,135 @@ export class Game{
 							endV: molecule.rotation - Math.PI / 3
 						}
 						this.playingAnimations.push(animation)
+						moleculeMovements.get(molecule).push(animation)
 					}
 				} break
 			}
+		}
+
+		//Update which arms are gripping which molecules
+		for (let component of components){
+			if (component.type !== "ArmMechanism") continue
+			let arms = component.arms.contents
+			for (let arm of arms){
+				if (arm.grippedComponent && armsGrippingMolecules.has(arm.grippedComponent)){
+					armsGrippingMolecules.get(arm.grippedComponent).push(arm)
+					armMechanismsGrippingMolecules.get(arm.grippedComponent).push(component)
+				}
+			}
+		}
+
+		//Now go through each molecule to see if it was animated in an illegal way
+		let illegalAnimation = false
+		for (let [molecule, animations] of moleculeMovements){
+			if (animations.length === 0) continue
+			const rotations = animations.filter(animation => animation.type === "set_rotation")
+			//A molecule can never be rotated around two points at once.
+			if (rotations.length > 1) {
+				illegalAnimation = true
+				window.alert("A molecule was moved in an impossible way. You can't rotate a molecule in two ways at once.")
+				console.trace()
+				break
+			}
+			const offsets = animations.filter(animation => animation.type === "set_offset")
+			//You can't ever rotate and translate a molecule at the same time.
+			if (offsets.length && rotations.length){
+				illegalAnimation = true
+				window.alert("A molecule was moved in an impossible way. You can't rotate and move a molecule at the same time.")
+				console.trace()
+				break
+			}
+			//And it's hard but possible to translate a molecule more than once at a time.
+			if (offsets.length > 1){
+				let firstOffset = offsets[0]
+				let dir = firstOffset.direction
+				let diff = firstOffset.endV - firstOffset.startV
+				let firstTotal = dir.scale(diff)
+				for (let i = 1; i < offsets.length; i++){
+					let offset = offsets[i]
+					let dir = offset.direction
+					let diff = offset.endV - offset.startV
+					let total = dir.scale(diff)
+					if (!total.equals(firstTotal)){
+						illegalAnimation = true
+						break
+					}
+				}
+				if (illegalAnimation){
+					window.alert("A molecule was moved in an impossible way. A molecule can't be moved in two directions at once.")
+					console.trace()
+					break
+				}
+				//Regardless of how legal it is, we need to remove the duplicate instructions to translate the molecule in the same way.
+				else {
+					let firstOffset = offsets[0]
+					molecule.offset = firstOffset.direction
+					for (let i = 1; i < offsets.length; i++){
+						let offset = offsets[i]
+						this.playingAnimations.splice(this.playingAnimations.indexOf(offset), 1)
+					}
+				}
+			}
+
+			//For all moving molecules, ensure that all arms that are gripping that molecule are being animated in a valid way.
+			const armsGripping = armsGrippingMolecules.get(molecule)
+			const mechanismsGripping = armMechanismsGrippingMolecules.get(molecule)
+			for (let offset of offsets){
+				let dir = offset.direction
+				let diff = offset.endV - offset.startV
+				let moleculeTotal = dir.scale(diff)
+				//For each mechanism gripping this molecule, there ought to be either:
+				//A) An identical offset being applied to the arm.
+				//B) A change to the arm's length that produces the same offset.
+				for (let mechanism of mechanismsGripping){
+					let animations = this.playingAnimations.filter(animation => animation.target === mechanism)
+					let offsets = animations.filter(animation => animation.type === "set_offset")
+					let lengthChanges = animations.filter(animation => animation.type === "set_all_arm_length")
+					if (offsets.length + lengthChanges.length === 0) {
+						illegalAnimation = true
+						window.alert("A molecule an arm is gripping is moving without the arm following it.")
+						console.trace()
+						break
+					}
+					if (offsets.length + lengthChanges.length > 1) {
+						illegalAnimation = true
+						window.alert("An arm can't have both its length and location change in more than one way at once.")
+						break
+					}
+					if (offsets.length){
+						//Ensure that this offset produces the same change as the total change to the molecule.
+						let firstOffset = offsets[0]
+						let dir = firstOffset.direction
+						let diff = firstOffset.endV - firstOffset.startV
+						let armTotal = dir.scale(diff)
+						if (!armTotal.equals(moleculeTotal)){
+							illegalAnimation = true
+							window.alert("A molecule an arm is gripping is moving in a different way than the arm that's gripping it.")
+							console.trace()
+							break
+						}
+					} else if (lengthChanges.length){
+						let lengthChange = lengthChanges[0]
+						let lengthDiff = lengthChange.endV - lengthChange.startV
+						let arms = mechanism.arms.contents.filter(arm => arm.grippedComponent === molecule)
+						for (let arm of arms){
+							let armTotal = arm.direction.scale(lengthDiff)
+							if (!armTotal.equals(moleculeTotal)){
+								illegalAnimation = true
+								window.alert("A molecule an arm is gripping is moving in a different way than the arm that's gripping it.")
+								console.trace()
+								break
+							}
+						}
+					}
+				}
+				if (illegalAnimation){
+					break
+				}
+			}
+		}
+		if (illegalAnimation){
+			this.playbackSpeed = 0
 		}
 
 		//Then, see if the player has satisfied any of the products, and accept them.
@@ -1011,8 +1245,10 @@ export class Game{
 				}
 			} break
 			case "set_offset": {
-				let translation = component.scale(floor(component.offsetDistance)).round()
-				component.translate(translation)
+				const v = animation.endV
+				let translation = component.offset.scale(floor(v)).round()
+				component.homeTile = component.homeTile.add(translation)
+				component.offsetDistance = 0
 			} break
 		}
 	}

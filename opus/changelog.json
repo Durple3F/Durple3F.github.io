@@ -67,14 +67,24 @@
 		},
 		"20260403": {
 			"date": "April 3, 2026",
-			"line-count": 2700,
+			"line-count": 2900,
 			"changes": [
 				"- You can finally click and drag components around after placing them.",
 				"- You can now click and drag products and reagents onto the screen like you can arms!",
 				"- Reagents now properly show the molecules they make while the simulation isn't running.",
 				"- You can now rotate components around after placing them!",
 				"- You can now change the initial length of arms!",
-				"- Starting to work on rendering glyphs. They seem like they'll be very hard to work with so far."
+				"- Starting to work on rendering glyphs. They seem like they'll be very hard to work with so far.",
+				"- The game can now render the glyph of bonding, but it doesn't have functionality yet.",
+				"- The game can now detect which atoms are sitting on top of the inputs of a glyph."
+			]
+		},
+		"20260404": {
+			"date": "April 4, 2026",
+			"line-count": 3100,
+			"changes": [
+				"- The bonder glyph works now.",
+				"- Now, moving molecules in impossible ways is detected by the simulation and prevented."
 			]
 		}
 	}
