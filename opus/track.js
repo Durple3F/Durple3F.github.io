@@ -87,7 +87,17 @@ export class Track extends Component {
 		this.type = "Track"
 		this.loops = false
 		this.trackPieces = []
-		this.addTrackPiece(new Hex(0, 0, 0))
+	}
+	clone(){
+		let clone = new Track()
+		clone.loops = this.loops
+		for (let trackPiece of this.trackPieces){
+			clone.addTrackPiece(trackPiece.coord)
+		}
+		clone.homeTile = this.homeTile
+		clone.currentHexRotation = this.currentHexRotation
+		clone.rotationPoint = this.rotationPoint
+		return clone
 	}
 	fixPieceRotations(){
 		const pieces = this.trackPieces

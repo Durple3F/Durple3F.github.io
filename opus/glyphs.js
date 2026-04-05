@@ -41,8 +41,7 @@ export class GlyphType {
 		return await Promise.all(promises)
 	}
 }
-new GlyphType(
-	{
+new GlyphType({
 		id: "Glyph of Bonding",
 		sprites: {
 			base: "./src/img/glyphs/bonder_base.png",
@@ -54,8 +53,7 @@ new GlyphType(
 			new GlyphInput("a", "ring", new Hex(0, 0, 0)),
 			new GlyphInput("b", "ring", Hex.directions[0])
 		]
-	},
-	function (game, level, inputs){
+	}, function (game, level, inputs){
 		let inputA = inputs["a"]
 		let inputB = inputs["b"]
 		if (!inputA || !inputB) return
@@ -100,8 +98,7 @@ new GlyphType(
 		if (!bondExists){
 			moleculeA.addBond(atomA, atomB, "simple")
 		}
-	},
-	function (ctx, glyph, x, y, hexSize, inRadius, horiz, vert) {
+	}, function (ctx, glyph, x, y, hexSize, inRadius, horiz, vert) {
 		const ringSize = atomRenderSize * hexSize * 1.15
 		const baseSprite = this.sprites["base"]
 		ctx.translate(x, y)
@@ -129,7 +126,7 @@ new GlyphType(
 		otherRingHexXY[0] *= hexSize
 		otherRingHexXY[1] *= hexSize
 		ctx.drawImage(ringSprite, otherRingHexXY[0] - ringSize, otherRingHexXY[1] - ringSize, ringSize * 2, ringSize * 2)
-	})
+})
 
 export class Glyph extends Component {
 	constructor(typeId) {

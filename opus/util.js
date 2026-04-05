@@ -344,6 +344,8 @@ export class Component {
 
 		this.renderRotationPoint = false
 		this.rotationPoint = new Hex(1, 0, -1)
+		this.lastPlacement = null
+		this.lastPlacementHomeTile = null
 	}
 
 	clone() {
@@ -692,6 +694,8 @@ export class ArmMechanism extends Component {
 		let type = ARMTYPES[typeId]
 		this.mechanismType = type
 		this.program = null
+		this.attachedTrack = null
+		this.attachedTrackIndex = null
 		for (let armLocation of type.armDirectionList) {
 			let arm = new Arm(this.homeTile, armLocation)
 			this.arms.contents.push(arm)
@@ -711,6 +715,8 @@ export class ArmMechanism extends Component {
 		clone.program = this.program.clone(clone)
 		clone.currentHexRotation = this.currentHexRotation
 		clone.rotationPoint = this.rotationPoint
+		clone.attachedTrack = this.attachedTrack
+		clone.attachedTrackIndex = this.attachedTrackIndex
 		return clone
 	}
 }

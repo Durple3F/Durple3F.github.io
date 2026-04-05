@@ -143,8 +143,8 @@ export class Game{
 			componentTag.attr("data-available", true)
 			componentTag.on("mousedown", () => {
 				let component = new ArmMechanism(mechanismName)
+				component.isRendered = false
 				this.beginHoldingComponent(component)
-				this.selectedComponent.isRendered = false
 			})
 		}
 
@@ -167,8 +167,9 @@ export class Game{
 		trackTag.attr("data-available", true)
 		trackTag.on("mousedown", () => {
 			let component = new Track()
+			component.isRendered = false
+			component.addTrackPiece(new Hex(0, 0, 0))
 			this.beginHoldingComponent(component)
-			this.selectedComponent.isRendered = false
 		})
 	}
 
@@ -178,7 +179,7 @@ export class Game{
 		}
 		//For rendering purposes, all components must be placed in this order.
 		const type = component.type
-		const hierarchy = ["Reagent", "Product", "Glyph", "Molecule", "ArmMechanism"]
+		const hierarchy = ["Track", "Reagent", "Product", "Glyph", "Molecule", "ArmMechanism"]
 		const score = hierarchy.indexOf(type)
 		const contents = level.grid.contents
 		let index = contents.length
@@ -208,6 +209,10 @@ export class Game{
 			program.elem[0].addEventListener("mousedown", e => {
 				this.handleProgramMouseDown(e, program, component)
 			})
+		}
+
+		if (component.type === "ArmMechanism"){
+			this.placeArmsOnTracks(level)
 		}
 	}
 	deleteComponent(component, level){
@@ -516,7 +521,8 @@ export class Game{
 	}
 	tryToPlaceSelectedComponent(){
 		if (this.checkPlacement(this.selectedComponent)){
-			this.addComponent(this.selectedComponent)
+			let component = this.selectedComponent
+			this.addComponent(component)
 			this.selectedComponent.isGhost = false
 			this.selectedComponent = null
 		} else {
@@ -845,12 +851,14 @@ export class Game{
 			simulationComponents.push(clone)
 		}
 
+		//Attach programs to the new simulation
 		const simulationPrograms = this.simulation.programs
 		for (let component of simulationComponents){
 			if (component.program){
 				simulationPrograms.push(component.program)
 			}
 		}
+		this.placeArmsOnTracks(this.simulation)
 	}
 	startSimulation(){
 		this.resetSimulation()
@@ -1223,6 +1231,30 @@ export class Game{
 
 		//Then, see if the player has satisfied any of the products, and accept them.
 		this.acceptProducts()
+	}
+
+	placeArmsOnTracks(level){
+		const components = level.grid.contents
+		const arms = components.filter(component => component.type === "ArmMechanism")
+		const tracks = components.filter(component => component.type === "Track")
+		for (let arm of arms){
+			for (let track of tracks){
+				let trackPieces = track.trackPieces
+				let found = false
+				for (let i = 0; i < trackPieces.length; i++){
+					let trackPiece = trackPieces[i]
+					let hex = track.homeTile.add(trackPiece.coord)
+					if (hex.equals(arm.homeTile)){
+						found = true
+						arm.attachedTrack = track
+						arm.attachedTrackIndex = i
+						console.log(arm)
+						break
+					}
+				}
+				if (found) break
+			}
+		}
 	}
 
 	applyAnimation(animation, p){

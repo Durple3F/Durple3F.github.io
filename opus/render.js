@@ -433,7 +433,7 @@ export function render(game, ctx, w, h){
 		drawComponent(ctx, component, x, y, hexSize, inRadius, horiz, vert)
 	}
 
-	if (drawCollisionCircles){
+	if (game.isPlayingSimulation && drawCollisionCircles){
 		const circles = game.getAllSimulationCollisionCircles()
 		for (let circle of circles){
 			const x = circle.x * horiz/ROOT3 - xOffset
