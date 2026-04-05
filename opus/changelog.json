@@ -85,7 +85,20 @@
 			"changes": [
 				"- The bonder glyph works now.",
 				"- Now, moving molecules in impossible ways is detected by the simulation and prevented.",
-				"- The game only shows you a component's rotation handle if your mouse is close enough."
+				"- The game only shows you a component's rotation handle if your mouse is close enough.",
+				"- Pretty sure the game's engine supports any playback speed you want"
+			]
+		},
+		"20260405": {
+			"date": "April 5, 2026",
+			"line-count": 3300,
+			"changes": [
+				"- You can now place tracks, but they don't work yet.",
+				"- You can now click and drag to place more tracks.",
+				"- Tracks figure out which image that the need to use to appear connected, but don't currently rotate correctly to show it.",
+				"- Huge improvement to how the computer determines which hexagon your mouse is hovering over.",
+				"- Tracks can loop and display their tracks correctly when they do.",
+				"- Making the tracks look good was a huge headache and I also didn't make them look very good. At some point I'll come through and try making them nicer, but unfortunately I don't know how to make the images look good without shaders that I am trying to avoid using."
 			]
 		}
 	}

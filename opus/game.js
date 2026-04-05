@@ -1,8 +1,9 @@
-import {Hex, Grid, Component, Atom, loadSprite, Molecule, ArmMechanism, ARMTYPES, Reagent, tagHierarchy, lerp, clamp, Product, createMolecule, Circle, find_angle} from "./util.js"
+import {Hex, Grid, Component, Atom, loadSprite, Molecule, ArmMechanism, ARMTYPES, Reagent, tagHierarchy, lerp, clamp, Product, createMolecule, Circle, find_angle, cross_product} from "./util.js"
 import { SCENARIOS } from "./scenarios.js"
 import { createInstructionTag, Instruction, INSTRUCTIONS } from "./instructions.js"
 import { Glyph } from "./glyphs.js"
 import { armSize, atomSize } from "./config.js"
+import { Track, TrackPiece } from "./track.js"
 
 const min = Math.min
 const max = Math.max
@@ -158,6 +159,17 @@ export class Game{
 				this.selectedComponent.isRendered = false
 			})
 		}
+
+		//Add one last mechanism for tracks.
+		let trackTag = $("<div class='component'>")
+		trackTag.text("Track")
+		mechanismsPane.append(trackTag)
+		trackTag.attr("data-available", true)
+		trackTag.on("mousedown", () => {
+			let component = new Track()
+			this.beginHoldingComponent(component)
+			this.selectedComponent.isRendered = false
+		})
 	}
 
 	addComponent(component, level){
@@ -455,6 +467,13 @@ export class Game{
 			let hex = homeTile.add(input.coord)
 			result.push(hex)
 		}
+		if (component.trackPieces){
+			let trackPieces = component.trackPieces
+			for (let trackPiece of trackPieces){
+				let hex = homeTile.add(trackPiece.coord)
+				result.push(hex)
+			}
+		}
 		return result
 	}
 	checkPlacement(component){
@@ -470,6 +489,7 @@ export class Game{
 		let components = this.currentLevel.grid.contents
 		for (let otherComponent of components){
 			if (otherComponent === component) continue
+			if (component.type === "ArmMechanism" && otherComponent.type === "Track") continue
 			let takenHexes = this.getPlacementCollisionHexes(otherComponent)
 			for (let otherHex of takenHexes){
 				for (let hex of proposedHexes){
@@ -557,10 +577,11 @@ export class Game{
 		let r = (y + this.yOffset) / vert
 		let q = ((x + this.xOffset) / horiz) - 0.5 * r
 		if (!decimal){
-			let hex = this.getHexAt(q, r)
+			let ref = (new Hex(q, r, -q - r)).round()
+			let hex = this.getHexAt(ref.q, ref.r)
 			return hex
 		} else {
-			return new Hex(q, r, -q -r)
+			return new Hex(q, r, -q - r)
 		}
 	}
 
@@ -1224,15 +1245,33 @@ export class Game{
 			} break
 		}
 	}
+	applyAllAnimations(){
+		//apply each ongoing animation to the appropriate components.
+		const st = this.simulationTimeStep + this.simulationDeltaT
+		const animations = this.playingAnimations
+		for (let i = 0; i < animations.length; i++){
+			let animation = animations[i]
+			let startT = animation.startT, endT = animation.endT
+			if (st >= endT){
+				this.finishAnimation(animation)
+				animations.splice(i, 1)
+				i--
+				continue
+			}
+			let p = (st - startT) / (endT - startT)
+			p = clamp(p, 0, 1)
+			this.applyAnimation(animation, p)
+		}
+	}
 	finishAnimation(animation){
 		const component = animation.target
 		switch (animation.type){
 			case "set_rotation": {
-				let curAngle = component.rotation
-				if (curAngle > 0){
+				let difference = animation.endV - animation.startV
+				if (difference > 0){
 					component.rotation = 0
 					component.rotateRight()
-				} else if (curAngle < 0){
+				} else if (difference < 0){
 					component.rotation = 0
 					component.rotateLeft()
 				}
@@ -1263,31 +1302,16 @@ export class Game{
 			//Increase time slightly.
 			this.simulationDeltaT += this.playbackSpeed * (dt / 1000)
 			//simulation time, simulation delta time.
-			const st = this.simulationTimeStep + this.simulationDeltaT
-			const sdt = this.simulationDeltaT
 			this.placeReagents()
 
-			//apply each ongoing animation to the appropriate components.
-			const animations = this.playingAnimations
-			for (let i = 0; i < animations.length; i++){
-				let animation = animations[i]
-				let startT = animation.startT, endT = animation.endT
-				if (st >= endT){
-					this.finishAnimation(animation)
-					animations.splice(i, 1)
-					i--
-					continue
-				}
-				let p = (st - startT) / (endT - startT)
-				p = clamp(p, 0, 1)
-				this.applyAnimation(animation, p)
-			}
+			this.applyAllAnimations()
 
-			if (sdt >= 1){
+			while (this.simulationDeltaT >= 1){
 				//finish all ongoing animations maybe?
 				this.simulationTimeStep++
 				this.simulationDeltaT--
 				this.beginAnimatingInstructions(this.simulationTimeStep)
+				this.applyAllAnimations()
 			}
 			
 			this.detectCollisions()
@@ -1345,7 +1369,7 @@ export class Game{
 				else if (!isLeftClicking){
 					this.cancelPlacement()
 				}
-			} else {
+			} else if (this.selectedComponent.type !== "Track") {
 				//This code runs while the player is adjusting a component's rotation or arm length
 				let component = this.selectedComponent
 				let mouseXY = this.getHexFromXY(mouseX, mouseY, true).toXY()
@@ -1353,6 +1377,8 @@ export class Game{
 				let rotationPoint = component.rotationPoint.add(component.homeTile)
 				let rotationCoords = rotationPoint.toXY()
 				//Look I'll admit this was hard and I needed to do math, shut up.
+				//By getting the sign of the cross product, we can tell whether the
+				//player's mouse is rotating the component left or rigjt.
 				let A = {
 					x: mouseXY[0],
 					y: mouseXY[1]
@@ -1365,7 +1391,7 @@ export class Game{
 					x: rotationCoords[0],
 					y: rotationCoords[1]
 				}
-				let cross = (C.x - B.x)*(A.y - B.y) - (C.y - B.y)*(A.x - B.x)
+				let cross = cross_product(A.x, A.y, B.x, B.y, C.x, C.y)
 				let side = cross < 0 ? "left" : "right"
 				let angle = find_angle(A, B, C)
 				if (angle > Math.PI / 6){
@@ -1396,6 +1422,22 @@ export class Game{
 						let difference = firstArm.direction.scale(firstArm.distance)
 						component.rotationPoint = difference
 					}
+				}
+
+				if (!isLeftClicking){
+					this.tryToPlaceSelectedComponent()
+				}
+			} else {
+				//This code only runs while trying to adjust tracks.
+				//The player can only add or remove adjacent tiles from the track.
+				let track = this.selectedComponent
+				let trackTiles = track.trackPieces.map(piece => track.homeTile.add(piece.coord))
+				//If the player is hovering over a Hex that is adjacent to the end tile,
+				//AND that tile is empty, add it to the track.
+				let finalTile = trackTiles[trackTiles.length - 1]
+				if (finalTile.distance(hoveredHex) === 1){
+					let trackCoord = hoveredHex.subtract(track.homeTile)
+					track.addTrackPiece(trackCoord, true)
 				}
 
 				if (!isLeftClicking){

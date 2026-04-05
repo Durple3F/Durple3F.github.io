@@ -1,5 +1,6 @@
 import {Hex, Atom, Molecule} from "./util.js";
 import {drawCollisionCircles, drawGhostRotation, drawMoleculeHomeTile, atomRenderSize} from "./config.js";
+import { TrackPiece } from "./track.js";
 
 const ROOT3 = Math.sqrt(3)
 const max = Math.max
@@ -297,6 +298,43 @@ function drawGlyph(ctx, glyph, x, y, hexSize, inRadius, horiz, vert){
 	ctx.restore()
 }
 
+function drawTrack(ctx, track, x, y, hexSize, inRadius, horiz, vert){
+	const trackPieces = track.trackPieces
+	const homeTile = track.homeTile
+	const sprites = TrackPiece.sprites
+	for (let trackPiece of trackPieces){
+		ctx.save()
+		const trackTile = trackPiece.coord
+		const q = trackTile.q
+		const r = trackTile.r
+		const pieceX = x + (q + 0.5 * r) * horiz
+		const pieceY = y + r * vert
+		const spriteNames = trackPiece.getImageDirections()
+		ctx.translate(pieceX, pieceY)
+		ctx.rotate(trackPiece.spriteRotation)
+		const sprite = sprites[spriteNames[0]]
+		const spriteOffset = 1
+		const spriteRenderOffset = 2
+		ctx.drawImage(
+			sprite,
+			spriteOffset, spriteOffset, sprite.width - spriteOffset*2, sprite.height - spriteOffset*2,
+			- horiz * 0.5 - spriteRenderOffset, - vert * 2 / 3 - spriteRenderOffset,
+			horiz + spriteRenderOffset*2, vert * 4 / 3 + spriteRenderOffset*2
+		)
+		if (spriteNames.length > 1){
+			const sprite = sprites[spriteNames[1]]
+			ctx.globalAlpha = 0.5
+			ctx.drawImage(
+				sprite,
+				spriteOffset, spriteOffset, sprite.width - spriteOffset*2, sprite.height - spriteOffset*2,
+				- horiz * 0.5 - spriteRenderOffset, - vert * 2 / 3 - spriteRenderOffset,
+				horiz + spriteRenderOffset*2, vert * 4 / 3 + spriteRenderOffset*2
+			)
+		}
+		ctx.restore()
+	}
+}
+
 function drawComponent(ctx, component, x, y, hexSize, inRadius, horiz, vert, isSimulated){
 	if (!component.isRendered) return
 	switch (component.type){
@@ -305,6 +343,7 @@ function drawComponent(ctx, component, x, y, hexSize, inRadius, horiz, vert, isS
 		case "Product": drawProduct(ctx, component, x, y, hexSize, inRadius, horiz, vert, isSimulated); break
 		case "ArmMechanism": drawArmMechanism(ctx, component, x, y, hexSize, inRadius, horiz, vert); break
 		case "Glyph": drawGlyph(ctx, component, x, y, hexSize, inRadius, horiz, vert); break
+		case "Track": drawTrack(ctx, component, x, y, hexSize, inRadius, horiz, vert); break
 	}
 
 	if (component.renderRotationPoint){

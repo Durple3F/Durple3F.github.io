@@ -1,10 +1,11 @@
 import {Game} from "./game.js";
 import {render} from "./render.js";
 import ControlManager from './controls.js';
-import { easeInOutCubic, easeInOutSine, easeOutCubic } from "./util.js"
+import { easeInOutCubic, easeInOutSine, easeOutCubic, loadSprite } from "./util.js"
 import { ELEMENTS } from "./util.js";
 import { INSTRUCTIONS, Instruction, createInstructionButton } from "./instructions.js";
 import { GLYPHTYPES } from "./glyphs.js";
+import { TrackPiece } from "./track.js";
 
 const FRAMERATE = 60
 let tickInterval
@@ -106,6 +107,18 @@ async function loadGame(){
 		let glyph = GLYPHTYPES[glyphId]
 		await glyph.load()
 	}
+	//Load track sprites
+	let trackSpriteMap = TrackPiece.spriteMap
+	let trackSprites = TrackPiece.sprites
+	let trackPromises = []
+	for (let spriteName in trackSpriteMap){
+		let url = trackSpriteMap[spriteName]
+		let p = loadSprite(url)
+			.then(img => trackSprites[spriteName] = img)
+		trackPromises.push(p)
+	}
+	await Promise.all(trackPromises)
+
 }
 
 function startGame(){

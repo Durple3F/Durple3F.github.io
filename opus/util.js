@@ -25,6 +25,10 @@ export function find_angle(A, B, C) {
 	var AC = Math.sqrt(Math.pow(C.x - A.x, 2) + Math.pow(C.y - A.y, 2));
 	return Math.acos((BC * BC + AB * AB - AC * AC) / (2 * BC * AB));
 }
+export function cross_product(Ax, Ay, Bx, By, Cx, Cy) {
+	let cross = (Cx - Bx)*(Ay - By) - (Cy - By)*(Ax - Bx)
+	return cross
+}
 
 export async function loadSprite(url) {
 	let img = new Image()
