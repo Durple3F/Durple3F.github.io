@@ -214,6 +214,8 @@ export class Game{
 		if (component.type === "ArmMechanism"){
 			this.placeArmsOnTracks(level)
 		}
+
+		component.lastPlacement = component.homeTile.clone()
 	}
 	deleteComponent(component, level){
 		if (!level){
@@ -520,18 +522,29 @@ export class Game{
 		}
 	}
 	tryToPlaceSelectedComponent(){
-		if (this.checkPlacement(this.selectedComponent)){
-			let component = this.selectedComponent
+		let component = this.selectedComponent
+		if (!component) return
+		if (this.checkPlacement(component)){
 			this.addComponent(component)
 			this.selectedComponent.isGhost = false
 			this.selectedComponent = null
 		} else {
+			if (component.lastPlacement && component.lastPlacement.equals(component.homeTile)){
+				component.lastPlacement = null
+			}
 			this.cancelPlacement()
 		}
 	}
 	cancelPlacement(){
-		this.selectedComponent = null
-		this.isAdjustingComponent = false
+		let component = this.selectedComponent
+		let wasAdjusting = this.isAdjustingComponent
+		if (!wasAdjusting && component.lastPlacement){
+			component.homeTile = component.lastPlacement
+			this.tryToPlaceSelectedComponent()
+		} else {
+			this.selectedComponent = null
+			this.isAdjustingComponent = false
+		}
 	}
 
 	resizeScreen(){

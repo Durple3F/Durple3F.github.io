@@ -345,7 +345,6 @@ export class Component {
 		this.renderRotationPoint = false
 		this.rotationPoint = new Hex(1, 0, -1)
 		this.lastPlacement = null
-		this.lastPlacementHomeTile = null
 	}
 
 	clone() {

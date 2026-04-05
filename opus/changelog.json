@@ -98,7 +98,8 @@
 				"- Tracks figure out which image that the need to use to appear connected, but don't currently rotate correctly to show it.",
 				"- Huge improvement to how the computer determines which hexagon your mouse is hovering over.",
 				"- Tracks can loop and display their tracks correctly when they do.",
-				"- Making the tracks look good was a huge headache and I also didn't make them look very good. At some point I'll come through and try making them nicer, but unfortunately I don't know how to make the images look good without shaders that I am trying to avoid using."
+				"- Making the tracks look good was a huge headache and I also didn't make them look very good. At some point I'll come through and try making them nicer, but unfortunately I don't know how to make the images look good without shaders that I am trying to avoid using.",
+				"- If you pick up a component and place it somewhere illegal, it teleports back to where it was instead of vanishing from reality."
 			]
 		}
 	}
