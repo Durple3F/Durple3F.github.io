@@ -497,6 +497,7 @@ export class Game{
 		for (let otherComponent of components){
 			if (otherComponent === component) continue
 			if (component.type === "ArmMechanism" && otherComponent.type === "Track") continue
+			if (otherComponent.type === "ArmMechanism" && component.type === "Track") continue
 			let takenHexes = this.getPlacementCollisionHexes(otherComponent)
 			for (let otherHex of takenHexes){
 				for (let hex of proposedHexes){
@@ -535,10 +536,10 @@ export class Game{
 			this.cancelPlacement()
 		}
 	}
-	cancelPlacement(){
+	cancelPlacement(force=false){
 		let component = this.selectedComponent
 		let wasAdjusting = this.isAdjustingComponent
-		if (!wasAdjusting && component.lastPlacement){
+		if (!force && !wasAdjusting && component.lastPlacement){
 			component.homeTile = component.lastPlacement
 			this.tryToPlaceSelectedComponent()
 		} else {
@@ -1114,6 +1115,106 @@ export class Game{
 						moleculeMovements.get(molecule).push(animation)
 					}
 				} break
+				case "track_advance": {
+					let track = component.attachedTrack
+					if (!track) break
+					let index = component.attachedTrackIndex
+					let trackPieces = track.trackPieces
+					if (!track.loops && index === trackPieces.length - 1) break
+					let nextIndex = (index + 1) % trackPieces.length
+					let curPiece = trackPieces[index]
+					let nextPiece = trackPieces[nextIndex]
+					let diff = nextPiece.coord.subtract(curPiece.coord)
+					component.offset = diff
+					const animation = {
+						type: "set_offset",
+						target: component,
+						startT: timestep,
+						endT: timestep + 1,
+						startV: 0,
+						endV: 1,
+						direction: diff
+					}
+					this.playingAnimations.push(animation)
+					
+					const animation2 = {
+						type: "set_track_index",
+						target: component,
+						startT: timestep,
+						endT: timestep + 1,
+						startV: index,
+						endV: nextIndex
+					}
+					this.playingAnimations.push(animation2)
+
+					const arms = component.arms.contents
+					for (let arm of arms){
+						if (!arm.grippedComponent) continue
+						let molecule = arm.grippedComponent
+						molecule.offset = diff
+						const moleculeAnimation = {
+							type: "set_offset",
+							target: molecule,
+							startT: timestep,
+							endT: timestep + 1,
+							startV: 0,
+							endV: 1,
+							direction: diff
+						}
+						this.playingAnimations.push(moleculeAnimation)
+						moleculeMovements.get(molecule).push(moleculeAnimation)
+					}
+				} break
+				case "track_retreat": {
+					let track = component.attachedTrack
+					if (!track) break
+					let index = component.attachedTrackIndex
+					let trackPieces = track.trackPieces
+					if (!track.loops && index === 0) break
+					let nextIndex = (index - 1 + trackPieces.length) % trackPieces.length
+					let curPiece = trackPieces[index]
+					let nextPiece = trackPieces[nextIndex]
+					let diff = nextPiece.coord.subtract(curPiece.coord)
+					component.offset = diff
+					const animation = {
+						type: "set_offset",
+						target: component,
+						startT: timestep,
+						endT: timestep + 1,
+						startV: 0,
+						endV: 1,
+						direction: diff
+					}
+					this.playingAnimations.push(animation)
+					
+					const animation2 = {
+						type: "set_track_index",
+						target: component,
+						startT: timestep,
+						endT: timestep + 1,
+						startV: index,
+						endV: nextIndex
+					}
+					this.playingAnimations.push(animation2)
+
+					const arms = component.arms.contents
+					for (let arm of arms){
+						if (!arm.grippedComponent) continue
+						let molecule = arm.grippedComponent
+						molecule.offset = diff
+						const moleculeAnimation = {
+							type: "set_offset",
+							target: molecule,
+							startT: timestep,
+							endT: timestep + 1,
+							startV: 0,
+							endV: 1,
+							direction: diff
+						}
+						this.playingAnimations.push(moleculeAnimation)
+						moleculeMovements.get(molecule).push(moleculeAnimation)
+					}
+				} break
 			}
 		}
 
@@ -1334,6 +1435,9 @@ export class Game{
 				component.homeTile = component.homeTile.add(translation)
 				component.offsetDistance = 0
 			} break
+			case "set_track_index": {
+				component.attachedTrackIndex = animation.endV
+			} break
 		}
 	}
 
@@ -1403,16 +1507,20 @@ export class Game{
 		if (this.selectedComponent){
 			if (!this.isAdjustingComponent){
 				//This code runs while the player is moving a component
-				if (isLeftClicking && controls.isMouseOnScreen() && hoveredHex){
+				if (isLeftClicking && isMouseOnScreen && hoveredHex){
 					this.selectedComponent.homeTile = hoveredHex
 					this.selectedComponent.isRendered = true
 				}
-				else if (!isLeftClicking && controls.isMouseOnScreen() && hoveredHex){
+				else if (!isLeftClicking && isMouseOnScreen && hoveredHex){
 					//If the proposed placement is legal, place it. Otherwise, cancel.
 					this.tryToPlaceSelectedComponent()
 				}
 				else if (!isLeftClicking){
 					this.cancelPlacement()
+				}
+				//If the player drags a previously-placed component offscreen, delete it.
+				else if (!isMouseOnScreen && this.selectedComponent.lastPlacement){
+					this.cancelPlacement(true)
 				}
 			} else if (this.selectedComponent.type !== "Track") {
 				//This code runs while the player is adjusting a component's rotation or arm length
@@ -1492,7 +1600,8 @@ export class Game{
 		} else if (controls.justClicked("left") && !this.isPlayingSimulation){
 			//check if the player just clicked on a component they can move
 			const components = this.currentLevel.grid.contents
-			for (let component of components){
+			for (let i = components.length - 1; i >= 0; i--){
+				let component = components[i]
 				let hexes = this.getPlacementCollisionHexes(component)
 				let rotationPoint = component.rotationPoint.add(component.homeTile)
 				//Did the player just click on the component's rotation point?
