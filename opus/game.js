@@ -1,4 +1,4 @@
-import {Hex, Grid, Component, Atom, loadSprite, Molecule, ArmMechanism, ARMTYPES, Reagent, tagHierarchy, lerp, clamp, Product, createMolecule, Circle, find_angle, cross_product} from "./util.js"
+import {Hex, Grid, Component, Atom, loadSprite, Molecule, ArmMechanism, ARMTYPES, Reagent, tagHierarchy, lerp, clamp, Product, createMolecule, Circle, find_angle, cross_product, Rectangle} from "./util.js"
 import { SCENARIOS } from "./scenarios.js"
 import { createInstructionTag, Instruction, INSTRUCTIONS } from "./instructions.js"
 import { Glyph } from "./glyphs.js"
@@ -20,6 +20,7 @@ export class Level{
 		this.timestep = 0
 		this.programs = []
 		this.submittedProductCounts = [0]
+		this.highlightBoxes = []
 	}
 }
 
@@ -72,6 +73,8 @@ export class Game{
 		this.isAdjustingComponent = false
 		this.heldInstruction = null
 		this.heldInstructions = []
+		//When you place an instruction by clicking the mouse down (via keys) you do nothing when you lift the mouse back up.
+		this.overrideInstructionMouseUp = false
 
 		let scenario = SCENARIOS["test"]
 		this.currentLevel = new Level(scenario)
@@ -237,6 +240,7 @@ export class Game{
 		this.beginHoldingInstructions([[instruction]])
 	}
 	beginHoldingInstructions(instructionsList){
+		this.endHoldingInstructions()
 		this.heldInstructions = instructionsList
 
 		//if any of those instructions are from a program currently being written, remove them.
@@ -273,6 +277,9 @@ export class Game{
 		this.heldInstructions = []
 		$("#tooltip").empty()
 	}
+	placeHeldInstructions(){
+		
+	}
 	handleProgramMouseMove(event, program, component){
 		let row = program.elem[0]
 		let rect = row.getBoundingClientRect()
@@ -282,9 +289,8 @@ export class Game{
 	handleProgramMouseUp(event, program, component){
 		//if the player was holding an instruction, place it.
 		//Otherwise, do nothing.
-		if (!this.heldInstructions.length){
-			return
-		}
+		if (!this.heldInstructions.length) return
+		if (this.overrideInstructionMouseUp) return
 		let instruction = this.heldInstructions[0][0]
 
 		//If the player is moving this instruction, first remove it from any row it was in.
@@ -295,9 +301,6 @@ export class Game{
 			let instructions = levelProgram.instructions
 			if (instructions.includes(instruction)){
 				let index = instructions.indexOf(instruction)
-				// let replacement = new Instruction(INSTRUCTIONS["idle"])
-				// instructions.splice(index, 1, replacement)
-				// delete instructions[index]
 				originalProgram = levelProgram
 				originalIndex = index
 				break
@@ -311,6 +314,39 @@ export class Game{
 		//Instructions have a 10 / 9 aspect ratio
 		let instructionWidth = rect.height * 10 / 9
 		let instructionIndex = Math.floor(mouseX / instructionWidth)
+		this.insertProgramInstruction(instruction, program, instructionIndex)
+
+		this.endHoldingInstructions()
+		this.fixPrograms()
+		this.renderPrograms()
+	}
+	handleProgramMouseDown(event, program, component){
+		let tags = tagHierarchy(event.target).reverse()
+		let instructionTag = tags.find(tag => $(tag).hasClass("instruction"))
+		//Check if the player is trying to place an instruction they're already holding
+		//(like ones they create with keys)
+		if (this.heldInstructions.length){
+			let row = program.elem[0]
+			let rect = row.getBoundingClientRect()
+			let mouseX = event.clientX - rect.x
+			let mouseY = event.clientY - rect.y
+			//Instructions have a 10 / 9 aspect ratio
+			let instructionWidth = rect.height * 10 / 9
+			let instructionIndex = Math.floor(mouseX / instructionWidth)
+			let instruction = this.heldInstructions[0][0]
+			this.insertProgramInstruction(instruction, program, instructionIndex)
+			this.endHoldingInstructions()
+			this.fixPrograms()
+			this.overrideInstructionMouseUp = true
+			return
+		}
+		//Check if the player is clicking an instruction
+		if (instructionTag){
+			let instruction = $(instructionTag).data("instruction")
+			this.beginHoldingInstruction(instruction)
+		}
+	}
+	insertProgramInstruction(instruction, program, instructionIndex){
 		let instructions = program.instructions
 		//If the player is placing an instruction where there already was one, insert it before that instruction.
 		if (instructions.length >= instructionIndex){
@@ -341,23 +377,10 @@ export class Game{
 					instructions[index] = instructions[index - 1]
 				}
 				instructions[instructionIndex] = instruction
-				// instructions.splice(instructionIndex, 0, instruction)
 			}
 		} else {
 			//Player is adding to the end of the program
 			instructions[instructionIndex] = instruction
-		}
-
-		this.fixPrograms()
-		this.renderPrograms()
-	}
-	handleProgramMouseDown(event, program, component){
-		//Check if the player is clicking an instruction
-		let tags = tagHierarchy(event.target).reverse()
-		let instructionTag = tags.find(tag => $(tag).hasClass("instruction"))
-		if (instructionTag){
-			let instruction = $(instructionTag).data("instruction")
-			this.beginHoldingInstruction(instruction)
 		}
 	}
 	fixPrograms(){
@@ -618,40 +641,48 @@ export class Game{
 		}
 		return result
 	}
+	getSimulationCollisionCircles(component){
+		const circles = []
+		const toAdd = this.getSimulationCollisionHexes(component)
+		const homeTile = component.homeTile
+		const homeXY = homeTile.toXY()
+		for (let hex of toAdd){
+			hex = hex.add(component.offset.scale(component.offsetDistance))
+			let size = atomSize
+			if (component.type === "ArmMechanism" && hex.equals(component.homeTile)){
+				size = armSize
+			}
+			let circle = hex.toCircle(size)
+			if (component.rotation !== 0){
+				let angle = component.rotation
+				let circleX = circle.x
+				let circleY = circle.y
+				let homeX = homeXY[0]
+				let homeY = homeXY[1]
+				let dx = circleX - homeX
+				let dy = circleY - homeY
+				let x2 = dx * cos(angle) - dy * sin(angle)
+				let y2 = dx * sin(angle) + dy * cos(angle)
+				let finalX = x2 + homeX
+				let finalY = y2 + homeY
+				circle.x = finalX
+				circle.y = finalY
+				circles.push(circle)
+			} else {
+				circles.push(circle)
+			}
+		}
+		return circles
+	}
 	getAllSimulationCollisionCircles(){
 		//For each component, find the areas it occupies, taking into account non-integer rotation and translation.
 		const circles = []
 		const level = this.simulation
 		const components = level.grid.contents
 		for (let component of components){
-			const toAdd = this.getSimulationCollisionHexes(component)
-			const homeTile = component.homeTile
-			const homeXY = homeTile.toXY()
-			for (let hex of toAdd){
-				hex = hex.add(component.offset.scale(component.offsetDistance))
-				let size = atomSize
-				if (component.type === "ArmMechanism" && hex.equals(component.homeTile)){
-					size = armSize
-				}
-				let circle = hex.toCircle(size)
-				if (component.rotation !== 0){
-					let angle = component.rotation
-					let circleX = circle.x
-					let circleY = circle.y
-					let homeX = homeXY[0]
-					let homeY = homeXY[1]
-					let dx = circleX - homeX
-					let dy = circleY - homeY
-					let x2 = dx * cos(angle) - dy * sin(angle)
-					let y2 = dx * sin(angle) + dy * cos(angle)
-					let finalX = x2 + homeX
-					let finalY = y2 + homeY
-					circle.x = finalX
-					circle.y = finalY
-					circles.push(circle)
-				} else {
-					circles.push(circle)
-				}
+			const toAdd = this.getSimulationCollisionCircles(component)
+			for (let circle of toAdd){
+				circles.push(circle)
 			}
 		}
 		return circles
@@ -659,15 +690,25 @@ export class Game{
 	detectCollisions(){
 		const level = this.simulation
 		const circles = this.getAllSimulationCollisionCircles()
+		let legal = true
 		for (let i = 0; i < circles.length; i++){
 			let circle1 = circles[i]
 			for (let j = i + 1; j < circles.length; j++){
 				let circle2 = circles[j]
 				if (circle1.intersects(circle2) && this.playbackSpeed > 0){
 					window.alert("Some components collided with each other. Reset the simulation and try again.")
+					legal = false
 					this.playbackSpeed = 0
+					let r1 = circle1.radius * 1.3
+					let r2 = circle2.radius * 1.3
+					let box1 = new Rectangle(circle1.x - r1, circle1.y - r1, r1*2, r1*2)
+					let box2 = new Rectangle(circle2.x - r2, circle2.y - r2, r2*2, r2*2)
+					level.highlightBoxes.push(box1)
+					level.highlightBoxes.push(box2)
+					break
 				}
 			}
+			if (!legal) break
 		}
 	}
 	placeReagents(){
@@ -1232,6 +1273,7 @@ export class Game{
 
 		//Now go through each molecule to see if it was animated in an illegal way
 		let illegalAnimation = false
+		let illegalMolecules = []
 		for (let [molecule, animations] of moleculeMovements){
 			if (animations.length === 0) continue
 			const rotations = animations.filter(animation => animation.type === "set_rotation")
@@ -1239,14 +1281,15 @@ export class Game{
 			if (rotations.length > 1) {
 				illegalAnimation = true
 				window.alert("A molecule was moved in an impossible way. You can't rotate a molecule in two ways at once.")
+				illegalMolecules.push(molecule)
 				console.trace()
-				break
 			}
 			const offsets = animations.filter(animation => animation.type === "set_offset")
 			//You can't ever rotate and translate a molecule at the same time.
 			if (offsets.length && rotations.length){
 				illegalAnimation = true
 				window.alert("A molecule was moved in an impossible way. You can't rotate and move a molecule at the same time.")
+				illegalMolecules.push(molecule)
 				console.trace()
 				break
 			}
@@ -1267,7 +1310,9 @@ export class Game{
 					}
 				}
 				if (illegalAnimation){
+					illegalAnimation = true
 					window.alert("A molecule was moved in an impossible way. A molecule can't be moved in two directions at once.")
+					illegalMolecules.push(molecule)
 					console.trace()
 					break
 				}
@@ -1299,12 +1344,14 @@ export class Game{
 					if (offsets.length + lengthChanges.length === 0) {
 						illegalAnimation = true
 						window.alert("A molecule an arm is gripping is moving without the arm following it.")
+						illegalMolecules.push(molecule)
 						console.trace()
 						break
 					}
 					if (offsets.length + lengthChanges.length > 1) {
 						illegalAnimation = true
 						window.alert("An arm can't have both its length and location change in more than one way at once.")
+						illegalMolecules.push(molecule)
 						break
 					}
 					if (offsets.length){
@@ -1316,6 +1363,7 @@ export class Game{
 						if (!armTotal.equals(moleculeTotal)){
 							illegalAnimation = true
 							window.alert("A molecule an arm is gripping is moving in a different way than the arm that's gripping it.")
+							illegalMolecules.push(molecule)
 							console.trace()
 							break
 						}
@@ -1328,6 +1376,7 @@ export class Game{
 							if (!armTotal.equals(moleculeTotal)){
 								illegalAnimation = true
 								window.alert("A molecule an arm is gripping is moving in a different way than the arm that's gripping it.")
+								illegalMolecules.push(molecule)
 								console.trace()
 								break
 							}
@@ -1341,6 +1390,27 @@ export class Game{
 		}
 		if (illegalAnimation){
 			this.playbackSpeed = 0
+			for (let molecule of illegalMolecules){
+				let circles = this.getSimulationCollisionCircles(molecule)
+				let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity
+				for (let circle of circles){
+					if (circle.x - circle.radius < minX){
+						minX = circle.x - circle.radius
+					}
+					if (circle.x + circle.radius > maxX){
+						maxX = circle.x + circle.radius
+					}
+					if (circle.y - circle.radius < minY){
+						minY = circle.y - circle.radius
+					}
+					if (circle.y + circle.radius > maxY){
+						maxY = circle.y + circle.radius
+					}
+				}
+				let box = new Rectangle(minX, minY, maxX - minX, maxY - minY)
+				this.simulation.highlightBoxes.push(box)
+				break
+			}
 		}
 
 		//Then, see if the player has satisfied any of the products, and accept them.
@@ -1680,11 +1750,28 @@ export class Game{
 			this.resizeScreen()
 		}
 
+		//instruction keyboard controls
+		let continueHoldingInstructions = isLeftClicking
+		for (let instructionId in INSTRUCTIONS){
+			let instructionType = INSTRUCTIONS[instructionId]
+			let key = instructionType.key
+			let pressing = controls.isPressing(key)
+			if (pressing && (controls.justPressed(key) || !this.heldInstructions.length)){
+				let instruction = new Instruction(instructionType)
+				this.beginHoldingInstruction(instruction)
+			}
+			if (pressing){
+				continueHoldingInstructions = true
+			}
+		}
+
 		//Instruction placement
 		if (this.heldInstructions.length){
-			if (!isLeftClicking){
+			if (!continueHoldingInstructions){
 				this.endHoldingInstructions()
 			}
+		} else if (this.overrideInstructionMouseUp && !isLeftClicking){
+			this.overrideInstructionMouseUp = false
 		}
 
 		controls.tick()

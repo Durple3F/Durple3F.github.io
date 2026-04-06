@@ -91,7 +91,7 @@
 		},
 		"20260405": {
 			"date": "April 5, 2026",
-			"line-count": 3300,
+			"line-count": 3600,
 			"changes": [
 				"- You can now place tracks, but they don't work yet.",
 				"- You can now click and drag to place more tracks.",
@@ -102,6 +102,15 @@
 				"- If you pick up a component and place it somewhere illegal, it teleports back to where it was instead of vanishing from reality.",
 				"- Added the retract and advance instructions associated with tracks.",
 				"- You can now remove track pieces from a track while you click and drag it."
+			]
+		},
+		"20260406": {
+			"date": "April 6, 2026",
+			"line-count": 3600,
+			"changes": [
+				"- Added the ability to select instructions by pressing the appropriate key instead of just by clicking and dragging.",
+				"- When a problem occurs during a simulation, you now see the problematic molecules highlighted.",
+				"- Huge improvements to instruction placement"
 			]
 		}
 	}

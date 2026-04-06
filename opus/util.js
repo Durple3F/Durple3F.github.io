@@ -53,6 +53,14 @@ export function tagHierarchy(tag) {
 	return nodes
 }
 
+export class Rectangle {
+	constructor (x, y, width, height){
+		this.x = x
+		this.y = y
+		this.w = width
+		this.h = height
+	}
+}
 export class Circle {
 	constructor(x, y, radius) {
 		this.x = x

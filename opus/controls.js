@@ -2,6 +2,7 @@ export default class ControlManager {
 	constructor(canvas){
 		this.canvas = canvas
 		this.buttons = {}
+		this.prevButtons = {}
 		this.mouse = {
 			x: this.canvas.clientWidth * 0.5,
 			y: this.canvas.clientHeight * 0.5,
@@ -74,10 +75,15 @@ export default class ControlManager {
 		if (modifiers){
 			//Control, Shift, stuff like that
 			for (let modifier of modifiers){
-				pressed = pressed && this.getButtonState(modifier)
+				let keyName = modifier[0] === "!" ? modifier.substring(1) : modifier
+				let state = modifier[0] !== "!"
+				pressed = pressed && (this.getButtonState(keyName) === state)
 			}
 		}
 		return pressed
+	}
+	justPressed(key){
+		return this.getButtonState(key) && !this.prevButtons[key]
 	}
 	setMouseButtonState(buttons){
 		//binary
@@ -127,19 +133,6 @@ export default class ControlManager {
 		}
 		return this.getMouseButtonState(index)
 	}
-	// justClicked(mouseButtonName, leniency=100){
-	// 	let index = 1
-	// 	switch (mouseButtonName){
-	// 		case undefined: break
-	// 		case 1: index = 1; break
-	// 		case 2: index = 2; break
-	// 		case 3: index = 3; break
-	// 		case "left": index = 1; break
-	// 		case "right": index = 2; break
-	// 		case "middle": index = 3; break
-	// 	}
-	// 	return this.getMouseButtonState(index) && (performance.now() - this.mouse.clickTimes[index] < leniency)
-	// }
 	justClicked(mouseButtonName){
 		let index = 1
 		switch (mouseButtonName){
@@ -172,6 +165,9 @@ export default class ControlManager {
 		}
 		for (let key in this.mouse.buttons){
 			this.mouse.prevButtons[key] = this.mouse.buttons[key]
+		}
+		for (let key in this.buttons){
+			this.prevButtons[key] = this.buttons[key]
 		}
 		let vx = 0
 		let vy = 0

@@ -364,12 +364,13 @@ function drawComponent(ctx, component, x, y, hexSize, inRadius, horiz, vert, isS
 
 export function render(game, ctx, w, h){
 	ctx.clearRect(0, 0, w, h)
-	let grid
+	let level
 	if (game.isPlayingSimulation){
-		grid = game.simulation.grid
+		level = game.simulation
 	} else {
-		grid = game.currentLevel.grid
+		level = game.currentLevel
 	}
+	const grid = level.grid
 	const hexSize = game.hexSize
 	const inRadius = hexSize * ROOT3 * 0.5
 	const horiz = ROOT3 * hexSize
@@ -431,6 +432,24 @@ export function render(game, ctx, w, h){
 		x += componentOffX
 		y += componentOffY
 		drawComponent(ctx, component, x, y, hexSize, inRadius, horiz, vert)
+	}
+
+	if (level.highlightBoxes.length){
+		console.log(level.highlightBoxes)
+		ctx.save()
+		ctx.lineWidth = hexSize * 0.1
+		ctx.strokeStyle = "#E62551"
+		for (let box of level.highlightBoxes){
+			let x = box.x*horiz/ROOT3 - xOffset
+			let y = box.y*vert*2/3 - yOffset
+			let w = box.w*horiz/ROOT3
+			let h = box.h*vert*2/3
+			ctx.beginPath()
+			ctx.rect(x, y, w, h)
+			ctx.closePath()
+			ctx.stroke()
+		}
+		ctx.restore()
 	}
 
 	if (game.isPlayingSimulation && drawCollisionCircles){
