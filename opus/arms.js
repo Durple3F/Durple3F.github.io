@@ -21,10 +21,14 @@ export class ArmMechanismType {
 				this.abilities[ability] = abilities[ability];
 			}
 		}
+		ARMTYPES[this.id] = this
 	}
 }
-ARMTYPES["Fixed-Length Arm"] = new ArmMechanismType("Fixed-Length Arm");
-ARMTYPES["Piston"] = new ArmMechanismType("Piston", {
+new ArmMechanismType("Fixed-Length Arm");
+new ArmMechanismType("Fixed-Length Double Arm", {}, [Hex.directions[0], Hex.directions[3]]);
+new ArmMechanismType("Fixed-Length Triple Arm", {}, [Hex.directions[0], Hex.directions[2], Hex.directions[4]]);
+new ArmMechanismType("Fixed-Length Sextuple Arm", {}, Hex.directions.map(d => d));
+new ArmMechanismType("Piston Arm", {
 	"piston_extend": true,
 	"piston_retract": true
 });

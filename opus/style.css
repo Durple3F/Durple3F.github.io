@@ -27,6 +27,7 @@ body {
 	position: absolute;
 	top: 0; left: 0;
 	height: calc(100vh - var(--bottom-pane-height)); width: 15vw;
+	padding-top: 1em;
 	background-color: var(--components-bg);
 	border-right: var(--pane-border);
 	overflow-y: auto;
@@ -81,6 +82,11 @@ body {
 	border: 0.1em solid lightblue;
 	background-color:rgb(27, 98, 169);
 	padding: 0.3em;
+	margin: 0.5em;
+	min-width: 35%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	transition: box-shadow 0.1s ease-out;
 }
 .component[data-available="true"] {
