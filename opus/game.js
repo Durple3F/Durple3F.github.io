@@ -1,8 +1,9 @@
-import {Hex, Grid, Component, Atom, loadSprite, Molecule, ArmMechanism, ARMTYPES, Reagent, tagHierarchy, lerp, clamp, Product, createMolecule, Circle, find_angle, cross_product, Rectangle} from "./util.js"
+import {Hex, Grid, Component, Atom, loadSprite, Molecule, Reagent, tagHierarchy, lerp, clamp, Product, createMolecule, Circle, find_angle, cross_product, Rectangle} from "./util.js"
+import { ArmMechanism, ARMTYPES } from "./arms.js"
 import { SCENARIOS } from "./scenarios.js"
 import { createInstructionTag, Instruction, INSTRUCTIONS } from "./instructions.js"
 import { Glyph } from "./glyphs.js"
-import { armSize, atomSize } from "./config.js"
+import { armSize, atomSize, msPerCycle } from "./config.js"
 import { Track, TrackPiece } from "./track.js"
 
 const min = Math.min
@@ -961,6 +962,9 @@ export class Game{
 			if (!instruction) continue
 			const instructionType = instruction.type.id
 			const component = program.component
+			const mechanismType = component.mechanismType
+			const abilities = mechanismType.abilities
+			if (instructionType in abilities && !abilities[instructionType]) continue
 			const homeTile = component.homeTile
 			switch (instructionType){
 				case "rotator_cw": {
@@ -1522,9 +1526,10 @@ export class Game{
 		this.lastTick = now
 		const controls = this.controls
 
-		if (this.isPlayingSimulation && this.playbackSpeed > 0){
+		if (this.isPlayingSimulation && this.playbackSpeed > 0 && dt > 0){
 			//Increase time slightly.
-			this.simulationDeltaT += this.playbackSpeed * (dt / 1000)
+			this.simulationDeltaT += this.playbackSpeed * (dt / msPerCycle)
+			console.log(this.simulationDeltaT)
 			//simulation time, simulation delta time.
 			this.placeReagents()
 

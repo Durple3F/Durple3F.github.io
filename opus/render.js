@@ -71,12 +71,15 @@ function drawArmMechanism(ctx, mechanism, x, y, hexSize, inRadius, horiz, vert){
 	const sinT = sin(angle)
 	const atomSize = atomRenderSize
 
+	let isPiston = !!mechanism.mechanismType.abilities["piston_extend"]
+	let color = isPiston ? "#F5BF45" : "#6AE3F7"
+
 	//Draw base
 	ctx.save()
 	ctx.beginPath()
 	ctx.moveTo(x, y)
 	ctx.globalAlpha = alpha
-	ctx.fillStyle = "yellow"
+	ctx.fillStyle = color
 	ctx.arc(x, y, hexSize * 0.5, 0, Math.PI * 2)
 	ctx.closePath()
 	ctx.fill()
@@ -95,7 +98,7 @@ function drawArmMechanism(ctx, mechanism, x, y, hexSize, inRadius, horiz, vert){
 		ctx.translate(x, y)
 		ctx.rotate(angle)
 		ctx.beginPath()
-		ctx.strokeStyle = "yellow"
+		ctx.strokeStyle = color
 		ctx.lineWidth = hexSize * 0.1
 		ctx.arc(handX, handY, hexSize * atomSize, 0, Math.PI * 2)
 		ctx.closePath()
