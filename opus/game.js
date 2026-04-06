@@ -1352,6 +1352,7 @@ export class Game{
 		const arms = components.filter(component => component.type === "ArmMechanism")
 		const tracks = components.filter(component => component.type === "Track")
 		for (let arm of arms){
+			let onTrack = false
 			for (let track of tracks){
 				let trackPieces = track.trackPieces
 				let found = false
@@ -1360,13 +1361,17 @@ export class Game{
 					let hex = track.homeTile.add(trackPiece.coord)
 					if (hex.equals(arm.homeTile)){
 						found = true
+						onTrack = true
 						arm.attachedTrack = track
 						arm.attachedTrackIndex = i
-						console.log(arm)
 						break
 					}
 				}
 				if (found) break
+			}
+			if (!onTrack){
+				arm.attachedTrack = null
+				arm.attachedTrackIndex = null
 			}
 		}
 	}
@@ -1589,8 +1594,44 @@ export class Game{
 				//AND that tile is empty, add it to the track.
 				let finalTile = trackTiles[trackTiles.length - 1]
 				if (finalTile.distance(hoveredHex) === 1){
-					let trackCoord = hoveredHex.subtract(track.homeTile)
-					track.addTrackPiece(trackCoord, true)
+					let legalAdd = true
+					//A track may not contain any tiles twice.
+					for (let hex of trackTiles){
+						if (hex.equals(hoveredHex)){
+							legalAdd = false
+						}
+					}
+					
+					//A track may not be placed onto an existing non-Arm component.
+					if (legalAdd){
+						let takenHexes = []
+						for (let component of components){
+							if (component === track) continue
+							if (component.type === "ArmMechanism") continue
+							let hexes = this.getPlacementCollisionHexes(component)
+							for (let hex of hexes){
+								takenHexes.push(hex)
+							}
+						}
+						for (let hex of takenHexes){
+							if (hex.equals(hoveredHex)){
+								legalAdd = false
+							}
+						}
+					}
+
+					if (legalAdd){
+						let trackCoord = hoveredHex.subtract(track.homeTile)
+						track.addTrackPiece(trackCoord, true)
+						this.placeArmsOnTracks(this.currentLevel)
+					} else if (trackTiles.length > 1) {
+						//Perhaps the player is trying to remove a tile?
+						let prevTile = trackTiles[trackTiles.length - 2]
+						if (prevTile.equals(hoveredHex)){
+							track.removeFinalTrackPiece()
+							this.placeArmsOnTracks(this.currentLevel)
+						}
+					}
 				}
 
 				if (!isLeftClicking){

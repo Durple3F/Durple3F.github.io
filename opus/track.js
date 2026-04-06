@@ -240,4 +240,11 @@ export class Track extends Component {
 
 		this.fixPieceRotations()
 	}
+	removeFinalTrackPiece() {
+		let trackPieces = this.trackPieces
+		if (trackPieces.length <= 1) return
+		let prevPiece = trackPieces[trackPieces.length - 2]
+		this.trackPieces.splice(trackPieces.length - 2, 2)
+		this.addTrackPiece(prevPiece.coord, true)
+	}
 }

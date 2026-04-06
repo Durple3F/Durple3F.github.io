@@ -100,7 +100,8 @@
 				"- Tracks can loop and display their tracks correctly when they do.",
 				"- Making the tracks look good was a huge headache and I also didn't make them look very good. At some point I'll come through and try making them nicer, but unfortunately I don't know how to make the images look good without shaders that I am trying to avoid using.",
 				"- If you pick up a component and place it somewhere illegal, it teleports back to where it was instead of vanishing from reality.",
-				"- Added the retract and advance instructions associated with tracks."
+				"- Added the retract and advance instructions associated with tracks.",
+				"- You can now remove track pieces from a track while you click and drag it."
 			]
 		}
 	}
