@@ -118,10 +118,11 @@
 		},
 		"20260407": {
 			"date": "April 7, 2026",
-			"line-count": 3900,
+			"line-count": 4000,
 			"changes": [
-				"- Added the repeat instruction.",
-				"- The game won't let you start the simulation if any of your programs contain something illegal. Namely, you can't have a reset instruction that produces too many instructions to fit in the space available."
+				"- Added the reset instruction.",
+				"- The game won't let you start the simulation if any of your programs contain something illegal. Namely, you can't have a reset instruction that produces too many instructions to fit in the space available.",
+				"- Added an arrow to the programming pane to help you see how long the 'reset' instruction will take."
 			]
 		}
 	}

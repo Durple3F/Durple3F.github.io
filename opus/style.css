@@ -217,7 +217,25 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	border: 0.2em solid rgb(125, 84, 37);
+	--instruction-border-thickness: 0.2em;
+	border: var(--instruction-border-thickness) solid rgb(125, 84, 37);
+	position: relative;
+
+	.instruction-arrow {
+		position: absolute;
+		top: calc(var(--instruction-border-thickness) * -1);
+		left: calc(100% + var(--instruction-border-thickness));
+		height: calc(100% + var(--instruction-border-thickness) * 2);
+		display: flex;
+		z-index: 10;
+		pointer-events: none;
+
+		.instruction-arrow-part {
+			height: 100%;
+			aspect-ratio: 10 / 9;
+			display: inline-block;
+		}
+	}
 }
 .instruction[data-type="idle"] {
 	opacity: 0;

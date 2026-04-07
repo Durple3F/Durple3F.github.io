@@ -43,6 +43,22 @@ export function createInstructionTag(instruction){
 	tag.append(symbol)
 	tag.attr("data-type", type.id)
 	tag.data("instruction", instruction)
+
+	let arrow = $("<div>").addClass("instruction-arrow")
+	tag.append(arrow)
+
+	for (let i = 1; i < instruction.generatedInstructions.length; i++){
+		let part = $("<img>").addClass("instruction-arrow-part")
+		if (i === instruction.generatedInstructions.length - 1){
+			part.attr("src", "./src/img/arrow-head.png")
+			part.attr("data-final", true)
+		} else {
+			part.attr("src", "./src/img/arrow-part.png")
+			part.attr("data-final", false)
+		}
+		arrow.append(part)
+	}
+
 	return tag
 }
 export function createInstructionButton(instruction) {
