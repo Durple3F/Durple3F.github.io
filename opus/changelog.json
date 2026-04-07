@@ -111,7 +111,9 @@
 				"- Added the ability to select instructions by pressing the appropriate key instead of just by clicking and dragging.",
 				"- When a problem occurs during a simulation, you now see the problematic molecules highlighted.",
 				"- Huge improvements to instruction placement",
-				"- Added fixed-length arms. They have a different color to differentiate them."
+				"- Added fixed-length arms. They have a different color to differentiate them.",
+				"- Added the multi-arm arms.",
+				"- Added Air atoms."
 			]
 		}
 	}

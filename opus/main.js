@@ -2,7 +2,7 @@ import {Game} from "./game.js";
 import {render} from "./render.js";
 import ControlManager from './controls.js';
 import { easeInOutCubic, easeInOutSine, easeOutCubic, loadSprite } from "./util.js"
-import { ELEMENTS } from "./util.js";
+import { ELEMENTS } from "./elements.js";
 import { INSTRUCTIONS, Instruction, createInstructionButton } from "./instructions.js";
 import { GLYPHTYPES } from "./glyphs.js";
 import { TrackPiece } from "./track.js";
