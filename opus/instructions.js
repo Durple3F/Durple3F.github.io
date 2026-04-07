@@ -1,11 +1,12 @@
 export const INSTRUCTIONS = {}
 
 class InstructionType {
-	constructor(id, spriteUrl, key = null, isSingleton = false, disabledUrl = null) {
+	constructor(id, spriteUrl, key = null, stopsRepeats=false, isSingleton = false, disabledUrl = null) {
 		this.id = id
 		this.spriteUrl = spriteUrl
 		this.key = key
 		this.isSingleton = isSingleton
+		this.stopsRepeats = stopsRepeats
 		this.disabledUrl = disabledUrl
 		INSTRUCTIONS[id] = this
 	}
@@ -15,24 +16,33 @@ export class Instruction {
 	constructor(type){
 		this.type = type
 		this.generatedInstructions = []
+		this.isLegal = true
+	}
+	clone(){
+		let clone = new Instruction(this.type)
+		clone.isLegal = this.isLegal
+		for (let instruction of this.generatedInstructions){
+			clone.generatedInstructions.push(instruction.clone())
+		}
+		return clone
 	}
 }
 
 new InstructionType("idle")
-new InstructionType("pivot_ccw", "./src/img/instructions/pivot_ccw.png", "q")
-new InstructionType("piston_extend", "./src/img/instructions/piston_extend.png", "w")
-new InstructionType("pivot_cw", "./src/img/instructions/pivot_cw.png", "e")
-new InstructionType("grabber_drop", "./src/img/instructions/grabber_drop.png", "r")
-new InstructionType("track_retreat", "./src/img/instructions/track_retreat.png", "t")
-new InstructionType("rotator_ccw", "./src/img/instructions/rotator_ccw.png", "a")
-new InstructionType("piston_retract", "./src/img/instructions/piston_retract.png", "s")
-new InstructionType("rotator_cw", "./src/img/instructions/rotator_cw.png", "d")
-new InstructionType("grabber_grab", "./src/img/instructions/grabber_grab.png", "f")
-new InstructionType("track_advance", "./src/img/instructions/track_advance.png", "g")
+new InstructionType("pivot_ccw", "./src/img/instructions/pivot_ccw.png", "q",)
+new InstructionType("piston_extend", "./src/img/instructions/piston_extend.png", "w",)
+new InstructionType("pivot_cw", "./src/img/instructions/pivot_cw.png", "e",)
+new InstructionType("grabber_drop", "./src/img/instructions/grabber_drop.png", "r",)
+new InstructionType("track_retreat", "./src/img/instructions/track_retreat.png", "t",)
+new InstructionType("rotator_ccw", "./src/img/instructions/rotator_ccw.png", "a",)
+new InstructionType("piston_retract", "./src/img/instructions/piston_retract.png", "s",)
+new InstructionType("rotator_cw", "./src/img/instructions/rotator_cw.png", "d",)
+new InstructionType("grabber_grab", "./src/img/instructions/grabber_grab.png", "f",)
+new InstructionType("track_advance", "./src/img/instructions/track_advance.png", "g",)
 new InstructionType("delete", "./src/img/instructions/halt.png", "z")
-new InstructionType("period_override", "./src/img/instructions/clock.png", "x", true, "./src/img/clock_disabled.png")
-new InstructionType("reset", "./src/img/instructions/reset.png", "c")
-new InstructionType("repeat", "./src/img/instructions/repeat.png", "v")
+new InstructionType("period_override", "./src/img/instructions/clock.png", "x", true, true, "./src/img/clock_disabled.png")
+new InstructionType("reset", "./src/img/instructions/reset.png", "c",)
+new InstructionType("repeat", "./src/img/instructions/repeat.png", "v", true)
 new InstructionType("halt", "./src/img/instructions/halt.png", "b")
 
 export function createInstructionTag(instruction){
@@ -50,10 +60,18 @@ export function createInstructionTag(instruction){
 	for (let i = 1; i < instruction.generatedInstructions.length; i++){
 		let part = $("<img>").addClass("instruction-arrow-part")
 		if (i === instruction.generatedInstructions.length - 1){
-			part.attr("src", "./src/img/arrow-head.png")
+			if (instruction.isLegal){
+				part.attr("src", "./src/img/arrow-head.png")
+			} else {
+				part.attr("src", "./src/img/arrow-head-illegal.png")
+			}
 			part.attr("data-final", true)
 		} else {
-			part.attr("src", "./src/img/arrow-part.png")
+			if (instruction.isLegal){
+				part.attr("src", "./src/img/arrow-part.png")
+			} else {
+				part.attr("src", "./src/img/arrow-part-illegal.png")
+			}
 			part.attr("data-final", false)
 		}
 		arrow.append(part)

@@ -428,8 +428,8 @@ export class Game{
 			if (program.component){
 				positionInfo.extension = program.component.arms.contents[0].distance
 			}
-			for (let i = 0; i < instructions.length; i++){
-				let instruction = instructions[i]
+
+			const add = instruction => {
 				switch (instruction.type.id){
 					case "rotator_cw": positionInfo.rotation -= 1; break
 					case "rotator_ccw": positionInfo.rotation += 1; break
@@ -441,6 +441,22 @@ export class Game{
 						break
 					case "track_advance": positionInfo.track += 1; break
 					case "track_retreat": positionInfo.track -= 1; break
+					case "reset": {
+						positionInfo.rotation = 0
+						positionInfo.extension = 1
+						positionInfo.track = 0
+					} break
+				}
+				if (instruction.generatedInstructions.length){
+					for (let ins of instruction.generatedInstructions){
+						add(ins)
+					}
+				}
+			}
+
+			for (let i = 0; i < instructions.length; i++){
+				let instruction = instructions[i]
+				switch (instruction.type.id){
 					case "reset": {
 						let rotation = ((positionInfo.rotation % 6) + 6) % 6
 						let extension = positionInfo.extension - 1
@@ -515,7 +531,44 @@ export class Game{
 						}
 						instruction.generatedInstructions = generated
 					} break
+					case "repeat": {
+						let prevInstructions = []
+						for (let j = i - 1; j >= 0; j--){
+							let ins = instructions[j]
+							if (!ins) continue
+							let toCheck = [ins]
+							let stopped = false
+							while (toCheck.length){
+								ins = toCheck[0]
+								toCheck.splice(0, 1)
+								let type = ins.type
+								if (type.id !== "idle" && !ins.generatedInstructions.length){
+									prevInstructions.push(ins)
+								}
+
+								if (ins.generatedInstructions.length){
+									for (let ins2 of ins.generatedInstructions){
+										toCheck.push(ins2)
+									}
+								}
+								if (type.stopsRepeats){
+									stopped = true
+									if (prevInstructions.length !== 0){
+										break
+									}
+								}
+							}
+							if (stopped){
+								break
+							}
+						}
+						instruction.generatedInstructions = []
+						for (let ins of prevInstructions){
+							instruction.generatedInstructions.push(ins.clone())
+						}
+					}
 				}
+				add(instruction)
 			}
 			positionInfo.rotation = ((positionInfo.rotation % 6) + 6) % 6
 		}
@@ -528,6 +581,7 @@ export class Game{
 			let instructions = program.instructions
 			for (let i = 0; i < instructions.length; i++){
 				let instruction = instructions[i]
+				instruction.isLegal = true
 				generated[i] = instruction
 			}
 			for (let i = 0; i < instructions.length; i++){
@@ -536,6 +590,7 @@ export class Game{
 					let gen = instruction.generatedInstructions[j]
 					if (j > 0 && generated[i + j] && generated[i + j].type.id !== "idle"){
 						program.isLegal = false
+						instruction.isLegal = false
 					}
 					generated[i + j] = gen
 				}
@@ -1120,7 +1175,6 @@ export class Game{
 		const programs = this.simulation.programs
 		for (let program of programs){
 			const instruction = program.getInstruction(timestep)
-			console.log(instruction, timestep, program)
 			if (!instruction) continue
 			const instructionType = instruction.type.id
 			const component = program.component
