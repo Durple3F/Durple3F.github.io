@@ -115,6 +115,14 @@
 				"- Added the multi-arm arms.",
 				"- Added Air atoms."
 			]
+		},
+		"20260407": {
+			"date": "April 7, 2026",
+			"line-count": 3900,
+			"changes": [
+				"- Added the repeat instruction.",
+				"- The game won't let you start the simulation if any of your programs contain something illegal. Namely, you can't have a reset instruction that produces too many instructions to fit in the space available."
+			]
 		}
 	}
 }

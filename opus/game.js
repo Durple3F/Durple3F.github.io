@@ -34,6 +34,8 @@ export class Program{
 		//a program's period is the number of instructions from the first to the last non-idle instruction.
 		this.period = 0
 		this.instructions = []
+		this.generatedInstructions = []
+		this.isLegal = true
 		this.elem = null
 	}
 
@@ -42,6 +44,7 @@ export class Program{
 		clone.startStep = this.startStep
 		clone.period = this.period
 		clone.instructions = this.instructions
+		clone.generatedInstructions = this.generatedInstructions
 		clone.elem = this.elem
 		return clone
 	}
@@ -55,11 +58,12 @@ export class Program{
 	}
 
 	getInstruction(timestep){
-		if (timestep < this.instructions.length){
-			return this.instructions[timestep]
-		} else if (timestep >= this.instructions.length && this.period > 0){
+		let instructions = this.generatedInstructions
+		if (timestep < instructions.length){
+			return instructions[timestep]
+		} else if (timestep >= instructions.length && this.period > 0){
 			let offset = timestep - this.startStep
-			let instruction = this.instructions[this.startStep + (offset % this.period)]
+			let instruction = instructions[this.startStep + (offset % this.period)]
 			return instruction
 		}
 	}
@@ -272,11 +276,12 @@ export class Game{
 			$("#tooltip").append(rowElem)
 		}
 
-		this.renderPrograms()
+		this.performUIUpdates()
 	}
 	endHoldingInstructions(){
 		this.heldInstructions = []
 		$("#tooltip").empty()
+		this.performUIUpdates()
 	}
 	placeHeldInstructions(){
 		
@@ -318,8 +323,7 @@ export class Game{
 		this.insertProgramInstruction(instruction, program, instructionIndex)
 
 		this.endHoldingInstructions()
-		this.fixPrograms()
-		this.renderPrograms()
+		this.performUIUpdates()
 	}
 	handleProgramMouseDown(event, program, component){
 		let tags = tagHierarchy(event.target).reverse()
@@ -337,7 +341,7 @@ export class Game{
 			let instruction = this.heldInstructions[0][0]
 			this.insertProgramInstruction(instruction, program, instructionIndex)
 			this.endHoldingInstructions()
-			this.fixPrograms()
+			this.performUIUpdates()
 			this.overrideInstructionMouseUp = true
 			return
 		}
@@ -413,10 +417,135 @@ export class Game{
 			}
 		}
 
+		//Set all "reset position" instructions inside the programs.
+		for (let program of programs){
+			let instructions = program.instructions
+			let positionInfo = {
+				rotation: 0,
+				extension: 1,
+				track: 0
+			}
+			if (program.component){
+				positionInfo.extension = program.component.arms.contents[0].distance
+			}
+			for (let i = 0; i < instructions.length; i++){
+				let instruction = instructions[i]
+				switch (instruction.type.id){
+					case "rotator_cw": positionInfo.rotation -= 1; break
+					case "rotator_ccw": positionInfo.rotation += 1; break
+					case "piston_extend":
+						if (positionInfo.extension < 3) positionInfo.extension += 1
+						break
+					case "piston_retract":
+						if (positionInfo.extension > 0) positionInfo.extension -= 1
+						break
+					case "track_advance": positionInfo.track += 1; break
+					case "track_retreat": positionInfo.track -= 1; break
+					case "reset": {
+						let rotation = ((positionInfo.rotation % 6) + 6) % 6
+						let extension = positionInfo.extension - 1
+						let trackIndexChange = positionInfo.track
+						let generated = []
+						if (extension !== 0){
+							while (extension < 0){
+								let ins = new Instruction(INSTRUCTIONS["piston_extend"])
+								generated.push(ins)
+								extension++
+							}
+							while (extension > 0){
+								let ins = new Instruction(INSTRUCTIONS["piston_retract"])
+								generated.push(ins)
+								extension--
+							}
+						}
+						if (rotation !== 0){
+							while (rotation < 3 && rotation > 0){
+								let ins = new Instruction(INSTRUCTIONS["rotator_cw"])
+								generated.push(ins)
+								rotation--
+							}
+							while (rotation >= 3 && rotation < 6){
+								let ins = new Instruction(INSTRUCTIONS["rotator_ccw"])
+								generated.push(ins)
+								rotation++
+							}
+						}
+						if (trackIndexChange !== 0){
+							if (program.component?.attachedTrack){
+								let track = program.component.attachedTrack
+								let trackLength = track.trackPieces.length
+								let targetIndex = program.component.attachedTrackIndex
+								let curIndex = targetIndex + trackIndexChange
+								if (curIndex >= trackLength){
+									if (track.loops){
+										curIndex %= trackLength
+									} else {
+										curIndex = trackLength - 1
+									}
+								} else if (curIndex < 0){
+									if (track.loops){
+										curIndex = trackLength + curIndex
+										curIndex += trackLength
+										curIndex %= trackLength
+									} else {
+										curIndex = 0
+									}
+								}
+
+								let change = curIndex - targetIndex
+								if (track.loops){
+									const right = (targetIndex - curIndex + trackLength) % trackLength
+									const left  = (curIndex - targetIndex + trackLength) % trackLength
+									if (left < right) change = left
+									else if (right < left) change = -right
+									else change = 0
+								}
+								console.log(change)
+								while (change > 0){
+									let ins = new Instruction(INSTRUCTIONS["track_retreat"])
+									generated.push(ins)
+									change--
+								}
+								while (change < 0){
+									let ins = new Instruction(INSTRUCTIONS["track_advance"])
+									generated.push(ins)
+									change++
+								}
+							}
+						}
+						instruction.generatedInstructions = generated
+					} break
+				}
+			}
+			positionInfo.rotation = ((positionInfo.rotation % 6) + 6) % 6
+		}
+
+		//Change the program's true instructions to those generated.
+		for (let program of programs){
+			program.isLegal = true
+			program.generatedInstructions.length = 0
+			let generated = program.generatedInstructions
+			let instructions = program.instructions
+			for (let i = 0; i < instructions.length; i++){
+				let instruction = instructions[i]
+				generated[i] = instruction
+			}
+			for (let i = 0; i < instructions.length; i++){
+				let instruction = instructions[i]
+				for (let j = 0; j < instruction.generatedInstructions.length; j++){
+					let gen = instruction.generatedInstructions[j]
+					if (j > 0 && generated[i + j] && generated[i + j].type.id !== "idle"){
+						program.isLegal = false
+					}
+					generated[i + j] = gen
+				}
+			}
+		}
+
 		//Set stats
 		let maxPeriod = 0
 		for (let program of programs){
-			let instructions = program.instructions
+			let instructions = program.generatedInstructions
 			//Find start step
 			for (let i = 0; i < instructions.length; i++){
 				let instruction = instructions[i]
@@ -553,6 +682,7 @@ export class Game{
 			this.addComponent(component)
 			this.selectedComponent.isGhost = false
 			this.selectedComponent = null
+			this.performUIUpdates()
 		} else {
 			if (component.lastPlacement && component.lastPlacement.equals(component.homeTile)){
 				component.lastPlacement = null
@@ -570,6 +700,7 @@ export class Game{
 			this.selectedComponent = null
 			this.isAdjustingComponent = false
 		}
+		this.performUIUpdates()
 	}
 
 	resizeScreen(){
@@ -890,6 +1021,12 @@ export class Game{
 		}
 	}
 
+	performUIUpdates(){
+		this.placeArmsOnTracks(this.currentLevel)
+		this.fixPrograms()
+		this.renderPrograms()
+	}
+
 	resetSimulation(){
 		//we create a simulated copy of the original level that contains all the same things in all the same places.
 		//it is this copy that carries out the simulation, so the original settings remain untouched
@@ -915,8 +1052,32 @@ export class Game{
 			}
 		}
 		this.placeArmsOnTracks(this.simulation)
+
+		//Update programs that have reset instruction
+		// for (let program of simulationPrograms){
+		// 	let instructions = program.instructions
+		// 	for (let i = 0; i < instructions.length; i++){
+		// 		let instruction = instructions[i]
+		// 		if (instruction.generatedInstructions.length){
+		// 			let toAdd = instruction.generatedInstructions
+		// 			for (let j = 0; j < toAdd.length; j++){
+		// 				instructions[i + j] = toAdd[j]
+		// 			}
+		// 		}
+		// 	}
+		// }
+		this.performUIUpdates()
 	}
 	startSimulation(){
+		//If any programs are illegal, do nothing.
+		this.fixPrograms()
+		let programs = this.currentLevel.programs
+		for (let program of programs){
+			if (!program.isLegal){
+				window.alert("There is a problem with one or more programs. Fix the problems before continuing.")
+				return
+			}
+		}
 		this.resetSimulation()
 		this.simulationTimeStep = 0
 		this.simulationDeltaT = 0
@@ -959,6 +1120,7 @@ export class Game{
 		const programs = this.simulation.programs
 		for (let program of programs){
 			const instruction = program.getInstruction(timestep)
+			console.log(instruction, timestep, program)
 			if (!instruction) continue
 			const instructionType = instruction.type.id
 			const component = program.component
@@ -1529,7 +1691,6 @@ export class Game{
 		if (this.isPlayingSimulation && this.playbackSpeed > 0 && dt > 0){
 			//Increase time slightly.
 			this.simulationDeltaT += this.playbackSpeed * (dt / msPerCycle)
-			console.log(this.simulationDeltaT)
 			//simulation time, simulation delta time.
 			this.placeReagents()
 

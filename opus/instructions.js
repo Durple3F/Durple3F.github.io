@@ -14,6 +14,7 @@ class InstructionType {
 export class Instruction {
 	constructor(type){
 		this.type = type
+		this.generatedInstructions = []
 	}
 }
 
