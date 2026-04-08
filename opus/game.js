@@ -20,7 +20,17 @@ export class Level{
 		this.grid = new Grid()
 		this.timestep = 0
 		this.programs = []
-		this.submittedProductCounts = [0]
+		this.submittedProductCounts = []
+		this.usedProductCounts = []
+		this.usedReagentCounts = []
+		for (let i = 0; i < this.scenario.productMolecules.length; i++){
+			let product = this.scenario.productMolecules[i]
+			this.submittedProductCounts[i] = 0
+			this.usedProductCounts[i] = 0
+		}
+		for (let i = 0; i < this.scenario.reagentMolecules.length; i++){
+			this.usedReagentCounts[i] = 0
+		}
 		this.highlightBoxes = []
 	}
 }
@@ -119,28 +129,46 @@ export class Game{
 		glyphsPane.empty()
 
 		for (let productMolecule of productMolecules){
+			let index = productMolecules.indexOf(productMolecule)
+			let componentCountInfo = {
+				type: "Product",
+				index: index,
+				count: 0,
+				maxCount: 1
+			}
 			let moleculeName = productMolecule.name
 			let molecule = createMolecule(productMolecule.molecule)
 			let componentTag = $("<div class='component'>")
 			componentTag.text(moleculeName)
 			productsPane.append(componentTag)
 			componentTag.attr("data-available", true)
+			componentTag.data("count", componentCountInfo)
 			componentTag.on("mousedown", () => {
 				let component = new Product(molecule)
+				component.componentCountInfos.push(componentCountInfo)
 				this.beginHoldingComponent(component)
 				this.selectedComponent.isRendered = false
 			})
 		}
 
 		for (let reagentMolecule of reagentMolecules){
+			let index = reagentMolecules.indexOf(reagentMolecule)
+			let componentCountInfo = {
+				type: "Reagent",
+				index: index,
+				count: 0,
+				maxCount: 1
+			}
 			let moleculeName = reagentMolecule.name
 			let molecule = createMolecule(reagentMolecule.molecule)
 			let componentTag = $("<div class='component'>")
 			componentTag.text(moleculeName)
 			reagentsPane.append(componentTag)
 			componentTag.attr("data-available", true)
+			componentTag.data("count", componentCountInfo)
 			componentTag.on("mousedown", () => {
 				let component = new Reagent(molecule)
+				component.componentCountInfos.push(componentCountInfo)
 				this.beginHoldingComponent(component)
 				this.selectedComponent.isRendered = false
 			})
@@ -181,6 +209,29 @@ export class Game{
 			component.addTrackPiece(new Hex(0, 0, 0))
 			this.beginHoldingComponent(component)
 		})
+	}
+	updateComponentPane(){
+		let holdingCounts = []
+		if (this.selectedComponent){
+			for (let componentCountInfo of this.selectedComponent.componentCountInfos){
+				holdingCounts.push(componentCountInfo)
+			}
+		}
+		//Check whether any components are currently at their limit.
+		let componentTags = $("#components").find(".component")
+		for (let componentTag of componentTags){
+			let componentCountInfo = $(componentTag).data("count")
+			if (!componentCountInfo) continue
+			let count = componentCountInfo.count
+			if (holdingCounts.includes(componentCountInfo)){
+				count++
+			}
+			if (count >= componentCountInfo.maxCount){
+				$(componentTag).attr("data-available", false)
+			} else {
+				$(componentTag).attr("data-available", true)
+			}
+		}
 	}
 
 	addComponent(component, level){
@@ -226,6 +277,12 @@ export class Game{
 		}
 
 		component.lastPlacement = component.homeTile.clone()
+
+		//If this component is marked as needing count info, count it.
+		for (let componentCountInfo of component.componentCountInfos){
+			componentCountInfo.count++
+		}
+		this.performUIUpdates()
 	}
 	deleteComponent(component, level){
 		if (!level){
@@ -235,7 +292,13 @@ export class Game{
 		let index = contents.indexOf(component)
 		if (index !== -1){
 			contents.splice(index, 1)
+
+			//If this component is marked as needing count info, count it.
+			for (let componentCountInfo of component.componentCountInfos){
+				componentCountInfo.count--
+			}
 		}
+		this.performUIUpdates()
 	}
 
 	initialize(){
@@ -1196,6 +1259,7 @@ export class Game{
 
 	performUIUpdates(){
 		this.placeArmsOnTracks(this.currentLevel)
+		this.updateComponentPane()
 		this.fixPrograms()
 		this.renderPrograms()
 	}
@@ -1921,6 +1985,7 @@ export class Game{
 
 		//Component placement
 		if (this.selectedComponent){
+			this.updateComponentPane()
 			if (!this.isAdjustingComponent){
 				//This code runs while the player is moving a component
 				if (isLeftClicking && isMouseOnScreen && hoveredHex){
@@ -1970,13 +2035,12 @@ export class Game{
 						component.rotateRight()
 					}
 				}
-
-				let intendedDistance = component.homeTile.distance(hoveredHex)
-				const mechanismType = component.mechanismType
-				const minLength = mechanismType.abilities["min_length"]
-				const maxLength = mechanismType.abilities["max_length"]
-				intendedDistance = max(minLength, min(intendedDistance, maxLength))
 				if (component.type === "ArmMechanism"){
+					const mechanismType = component.mechanismType
+					const minLength = mechanismType.abilities["min_length"]
+					const maxLength = mechanismType.abilities["max_length"]
+					let intendedDistance = component.homeTile.distance(hoveredHex)
+					intendedDistance = max(minLength, min(intendedDistance, maxLength))
 					let arms = component.arms.contents
 					let changed = false
 					for (let arm of arms){

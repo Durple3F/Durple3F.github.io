@@ -137,7 +137,8 @@
 			"date": "April 8, 2026",
 			"line-count": 4200,
 			"changes": [
-				"- "
+				"- Fixed a bug that would happen if you rotated regeants & products",
+				"- You are now prevented from placing two of any one product or molecule."
 			]
 		}
 	}
