@@ -138,7 +138,9 @@
 			"line-count": 4200,
 			"changes": [
 				"- Fixed a bug that would happen if you rotated regeants & products",
-				"- You are now prevented from placing two of any one product or molecule."
+				"- You are now prevented from placing two of any one product or molecule.",
+				"- The area you've used now resets whenever the simulation resets. Oops.",
+				"- The reset instruction now properly drops whatever the arm was holding."
 			]
 		}
 	}

@@ -6,6 +6,7 @@ import { ELEMENTS } from "./elements.js";
 import { INSTRUCTIONS, Instruction, createInstructionButton } from "./instructions.js";
 import { GLYPHTYPES } from "./glyphs.js";
 import { TrackPiece } from "./track.js";
+import { loadLocale } from "./locale.js";
 
 const FRAMERATE = 60
 let tickInterval
@@ -85,6 +86,8 @@ window.addEventListener("mousemove", e => {
 })
 
 async function loadGame(){
+	await loadLocale("./src/locale/en.json", "en")
+
 	//Display instructions
 	for (let typeId in INSTRUCTIONS){
 		let instructionType = INSTRUCTIONS[typeId]

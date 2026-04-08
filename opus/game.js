@@ -1,10 +1,11 @@
-import {Hex, Grid, Component, Atom, loadSprite, Molecule, Reagent, tagHierarchy, lerp, clamp, Product, createMolecule, Circle, find_angle, cross_product, Rectangle} from "./util.js"
+import {Hex, Grid, Component, Atom, loadSprite, Molecule, Reagent, tagHierarchy, lerp, clamp, Product, createMolecule, Circle, find_angle, cross_product, Rectangle, fillScoreboard} from "./util.js"
 import { ArmMechanism, ARMTYPES } from "./arms.js"
 import { SCENARIOS } from "./scenarios.js"
 import { createInstructionTag, Instruction, INSTRUCTIONS } from "./instructions.js"
 import { Glyph } from "./glyphs.js"
-import { armSize, atomSize, msPerCycle } from "./config.js"
+import { armSize, atomSize, msPerCycle, submissionsPerProduct } from "./config.js"
 import { Track, TrackPiece } from "./track.js"
+import { getLocaleString } from "./locale.js"
 
 const min = Math.min
 const max = Math.max
@@ -111,6 +112,60 @@ export class Game{
 		this.hoveredHex = null
 		this.initialize()
 		this.fillComponentPane()
+	}
+
+	win(){
+		this.playbackSpeed = 0
+		let modalTag = $("#modal")
+
+		let header = modalTag.find(".modal-header")
+		header.addClass("justify-content-center")
+		let closeButton = modalTag.find(".btn-close")
+		closeButton.hide()
+		let title = modalTag.find(".modal-title")
+		title.text(getLocaleString("you-win-message", language))
+		title.addClass("text-center").addClass("display-3")
+		let body = modalTag.find(".modal-body")
+		let scenarioName = getLocaleString(["scenarios", this.currentLevel.scenario.id], language, "%scenario name%")
+		let winSubtitle = getLocaleString("you-win-subtitle", language, "%win message%")
+		body.addClass("text-center")
+		body.append($("<h2>").text(scenarioName))
+		body.append($("<h3>").text(winSubtitle))
+
+		let scoreboards = $("<div>").addClass("scoreboards")
+		body.append(scoreboards)
+
+		let costScoreboard = $("<div>").addClass("scoreboard")
+		scoreboards.append(costScoreboard)
+		let cycleScoreboard = $("<div>").addClass("scoreboard")
+		scoreboards.append(cycleScoreboard)
+		let areaScoreboard = $("<div>").addClass("scoreboard")
+		scoreboards.append(areaScoreboard)
+		// TODO:
+		// let instructionsScoreboard = $("<div>").addClass("scoreboard")
+		// scoreboards.append(instructionsScoreboard)
+
+		let playerName = "You"
+		let nowCost = 0
+		let nowCycles = this.simulationTimeStep + 1
+		let nowArea = this.solutionUsedHexes.length
+		let nowInstructions = 0
+
+		fillScoreboard(
+			costScoreboard, playerName, getLocaleString("scoreboard-title-cost", language, "COST"), 0, nowCost, 0, 0, {}, []
+		)
+		costScoreboard.find(".scoreboard-score").append($("<span class='tiny-g'>G</span>"))
+		fillScoreboard(
+			cycleScoreboard, playerName, getLocaleString("scoreboard-title-cycle", language, "CYCLES"), 0, nowCycles, 0, 0, {}, []
+		)
+		fillScoreboard(
+			areaScoreboard, playerName, getLocaleString("scoreboard-title-area", language, "AREA"), 0, nowArea, 0, 0, {}, []
+		)
+
+		var modal = new bootstrap.Modal(modalTag[0], {
+			keyboard: false
+		})
+		modal.toggle()
 	}
 
 	fillComponentPane(){
@@ -485,6 +540,7 @@ export class Game{
 		for (let program of programs){
 			let instructions = program.instructions
 			let positionInfo = {
+				grabbing: false,
 				rotation: 0,
 				extension: 1,
 				track: 0
@@ -500,6 +556,8 @@ export class Game{
 
 			const add = instruction => {
 				switch (instruction.type.id){
+					case "grabber_grab": positionInfo.grabbing = true; break
+					case "grabber_drop": positionInfo.grabbing = false; break
 					case "rotator_cw": positionInfo.rotation -= 1; break
 					case "rotator_ccw": positionInfo.rotation += 1; break
 					case "piston_extend":
@@ -511,6 +569,7 @@ export class Game{
 					case "track_advance": positionInfo.track += 1; break
 					case "track_retreat": positionInfo.track -= 1; break
 					case "reset": {
+						positionInfo.grabbing = false
 						positionInfo.rotation = 0
 						positionInfo.extension = 1
 						positionInfo.track = 0
@@ -531,6 +590,10 @@ export class Game{
 						let extension = positionInfo.extension - 1
 						let trackIndexChange = positionInfo.track
 						let generated = []
+						if (positionInfo.grabbing){
+							let ins = new Instruction(INSTRUCTIONS["grabber_drop"])
+							generated.push(ins)
+						}
 						if (extension !== 0){
 							while (extension < 0){
 								let ins = new Instruction(INSTRUCTIONS["piston_extend"])
@@ -1268,6 +1331,7 @@ export class Game{
 		//we create a simulated copy of the original level that contains all the same things in all the same places.
 		//it is this copy that carries out the simulation, so the original settings remain untouched
 		//so that way the player can easily reset back to square one. they never leave square one. they just advance to rectangle two.
+		this.solutionUsedHexes.length = 0
 		this.simulation = new Level(this.currentLevel.scenario)
 		for (let [key, value] of this.currentLevel.grid.map){
 			this.simulation.grid.addHex(value.clone())
@@ -1944,6 +2008,20 @@ export class Game{
 			
 			this.detectCollisions()
 			this.updateUsedHexes()
+		}
+		//Handle winning
+		if (this.isPlayingSimulation && this.playbackSpeed > 0 && dt > 0){
+			let submittedProductCounts = this.simulation.submittedProductCounts
+			let won = true
+			for (let productCount of submittedProductCounts){
+				if (productCount < submissionsPerProduct){
+					won = false
+					break
+				}
+			}
+			if (won){
+				this.win()
+			}
 		}
 
 		let mouseX = controls.mouse.x

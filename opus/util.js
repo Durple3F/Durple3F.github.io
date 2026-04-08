@@ -1,4 +1,5 @@
 import { ELEMENTS } from "./elements";
+import { getLocaleString } from "./locale";
 
 const ROOT3 = Math.sqrt(3)
 
@@ -53,6 +54,57 @@ export function tagHierarchy(tag) {
 		nodes.unshift(nodes[0].parentNode)
 	}
 	return nodes
+}
+
+export function fillScoreboard(tag, playerName, title, best, now, prev, targets, histogram, scores){
+	tag.append($("<div>").addClass("scoreboard-title").text(title))
+	let bestRow = $("<div>").addClass("scoreboard-bests")
+	tag.append(bestRow)
+	let bestTag = $("<div>").addClass("scoreboard-best")
+	bestRow.append(bestTag)
+	let bestText = getLocaleString("scoreboard-best-best", language, "BEST:")
+	bestTag.append($("<span>").addClass("scoreboard-best-title").text(bestText))
+	bestTag.append($("<span>").addClass("scoreboard-score").text(best))
+	
+	let nowTag = $("<div>").addClass("scoreboard-best")
+	bestRow.append(nowTag)
+	let nowText = getLocaleString("scoreboard-best-now", language, "NOW:")
+	nowTag.append($("<span>").addClass("scoreboard-best-title").text(nowText))
+	nowTag.append($("<span>").addClass("scoreboard-score").text(now))
+	
+	let prevTag = $("<div>").addClass("scoreboard-best")
+	bestRow.append(prevTag)
+	let prevText = getLocaleString("scoreboard-best-prev", language, "NOW:")
+	prevTag.append($("<span>").addClass("scoreboard-best-title").text(prevText))
+	prevTag.append($("<span>").addClass("scoreboard-score").text(prev))
+
+	let recordsTag = $("<div>").addClass("scoreboard-records")
+	tag.append(recordsTag)
+	let shownScores = []
+	shownScores.push({
+		name: playerName,
+		score: best,
+		isPlayer: true
+	})
+	while (shownScores.length < 12){
+		shownScores.push({})
+	}
+	for (let score of shownScores){
+		let scoreTag = $("<div>").addClass("scoreboard-record")
+		recordsTag.append(scoreTag)
+		let nameTag = $("<div>").addClass("scoreboard-player-name")
+		scoreTag.append(nameTag)
+		if ("name" in score) nameTag.text(score.name)
+		let spaceTag = $("<div>").html("&nbsp;")
+		scoreTag.append(spaceTag)
+		let valTag = $("<div>").addClass("scoreboard-player-score").addClass("scoreboard-score")
+		scoreTag.append(valTag)
+		if ("score" in score) valTag.text(score.score)
+		else valTag.css("opacity", 0)
+		if (score.isPlayer){
+			scoreTag.addClass("scoreboard-player")
+		}
+	}
 }
 
 export class Rectangle {

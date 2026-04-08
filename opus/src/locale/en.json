@@ -1,0 +1,14 @@
+{
+	"you-win-message": "You win!",
+	"you-win-subtitle": "Your machine has successfully created the desired products.",
+	"scoreboard-title-cost": "COST",
+	"scoreboard-title-cycle": "CYCLES",
+	"scoreboard-title-area": "AREA",
+	"scoreboard-best-best": "BEST:",
+	"scoreboard-best-now": "NOW:",
+	"scoreboard-best-prev": "PREV:",
+
+	"scenarios": {
+		"test": "Test Scenario"
+	}
+}

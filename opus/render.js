@@ -468,7 +468,6 @@ export function render(game, ctx, w, h){
 	}
 
 	if (level.highlightBoxes.length){
-		console.log(level.highlightBoxes)
 		ctx.save()
 		ctx.lineWidth = hexSize * 0.1
 		ctx.strokeStyle = "#E62551"
