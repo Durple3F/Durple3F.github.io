@@ -1,5 +1,5 @@
 import {Hex, Atom, Molecule} from "./util.js";
-import {drawCollisionCircles, drawGhostRotation, drawMoleculeHomeTile, atomRenderSize} from "./config.js";
+import {drawCollisionCircles, drawGhostRotation, drawMoleculeHomeTile, atomRenderSize, drawHexCoords} from "./config.js";
 import { TrackPiece } from "./track.js";
 import Color from "https://colorjs.io/dist/color.js";
 
@@ -10,25 +10,44 @@ const floor = Math.floor
 const ceil = Math.ceil
 const sin = Math.sin
 const cos = Math.cos
+const sqrt = Math.sqrt
+
+const hexColorCache = new Map()
 
 function drawHex(ctx, hex, x, y, size, inRadius, q, r, s){
 	//x, y is the center of the hexagon.
 	const diagx = ROOT3*0.5*size
 	const diagy = size*0.5
 	ctx.save()
-	let color
-	if (true){
-		let xy = hex.toXY()
-		let d = Math.hypot(xy[0], xy[1])
-		let sat = min(80, max(20, d + 20))
-		let bri = min(50, max(20, Math.sqrt(d) + 20))
-		let cangle = Math.atan2(xy[0], xy[1]) * 180 / Math.PI;
-		let color2 = new Color("hsl", [cangle, sat, bri]);
-		color = color2.toString({format: "hex"})
+	let key = `${hex.q},${hex.r},${hex.active}`
+	let color = "gray"
+	let color2
+	
+	if (!hexColorCache.has(key)){
+		if (hex.q === 0 && hex.r === 0){
+			let bri = 20
+			if (hex.active){
+				bri *= 1.4
+			}
+			color2 = new Color("hsl", [0, 0, bri])
+			color = color2.toString({format: "hex"})
+		} else {
+			let xy = hex.toXY()
+			let d = Math.hypot(xy[0], xy[1])
+			let sat = min(80, max(20, d + 20))
+			let bri = min(50, max(20, sqrt(d) + 20))
+			if (hex.active){
+				bri *= 1.4
+			}
+			let cangle = Math.atan2(xy[0], xy[1]) * 180 / Math.PI;
+			color2 = new Color("hsl", [cangle, sat, bri]);
+			color = color2.toString({format: "hex"})
+		}
+		hexColorCache.set(key, color)
+	} else {
+		color = hexColorCache.get(key)
 	}
-	if (hex.q === 0 && hex.r === 0){
-		color = new Color("hsl", [0, 0, 20]).toString({format: "hex"})
-	}
+	
 
 	ctx.fillStyle = color
 	ctx.lineWidth = max(size * 0.05, 2)
@@ -45,7 +64,7 @@ function drawHex(ctx, hex, x, y, size, inRadius, q, r, s){
 	ctx.stroke()
 	ctx.restore()
 
-	if (hex.active){
+	if (drawHexCoords){
 		ctx.save()
 		const fontSize = size * 0.4
 		const font = fontSize+"px monospace"

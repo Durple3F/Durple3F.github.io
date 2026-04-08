@@ -90,6 +90,8 @@ export class Game{
 		this.playbackSpeed = 1
 		this.playingAnimations = []
 
+		this.solutionUsedHexes = []
+
 		this.hexSize = 40
 		this.canvas = canvas
 		this.canvasWidth = canvas.width
@@ -238,7 +240,6 @@ export class Game{
 
 	initialize(){
 		this.resizeScreen()
-		this.getHexAt(0, 0).active = true
 	}
 
 	beginHoldingInstruction(instruction){
@@ -1080,6 +1081,118 @@ export class Game{
 			}
 		}
 	}
+	
+	getCircleOverlappingHexes(circle){
+		let hexes = []
+		let closestHex = Hex.fromXY(circle.x, circle.y).round()
+		let candidates = [closestHex]
+		for (let direction of Hex.directions){
+			let next = closestHex.add(direction)
+			candidates.push(next)
+		}
+		for (let hex of candidates){
+			let xy = hex.toXY()
+			let c = new Circle(xy[0], xy[1], 0.5)
+			if (c.intersects(circle)){
+				hexes.push(hex)
+			}
+		}
+		return hexes
+	}
+	getAllSimulationCollisionHexes(){
+		let circles = this.getAllSimulationCollisionCircles()
+		let hexes = []
+		//For each circle, find the hexes that overlap with it.
+		for (let circle of circles){
+			let toAdd = this.getCircleOverlappingHexes(circle)
+			for (let hex of toAdd){
+				hexes.push(hex)
+			}
+		}
+		let len = hexes.length
+		for (let i = 0; i < len - 1; i++){
+			let hex = hexes[i]
+			for (let j = i + 1; j < len; j++){
+				let hex2 = hexes[j]
+				if (hex.equals(hex2)){
+					hexes.splice(j, 1)
+					len--
+					j--
+				}
+			}
+		}
+		return hexes
+	}
+	getAllSimulationAreaHexes(){
+		let hexes = []
+		let collisions = this.getAllSimulationCollisionHexes()
+		for (let hex of collisions){
+			hexes.push(hex)
+		}
+
+		let level = this.simulation
+		let components = level.grid.contents
+		for (let component of components){
+			if (component.type !== "ArmMechanism") continue
+			let arms = component.arms.contents
+			let homeTile = component.homeTile
+			if (component.offsetDistance){
+				homeTile = homeTile.add(component.offset.scale(component.offsetDistance))
+			}
+			let homeXY = homeTile.toXY()
+			for (let arm of arms){
+				let handHex = arm.direction.scale(arm.distance).add(homeTile)
+				let handXY = handHex.toXY()
+				let handX = handXY[0]
+				let handY = handXY[1]
+				let angle = component.rotation
+				if (angle !== 0){
+					let cosT = cos(angle)
+					let sinT = sin(angle)
+					let dx = handX - homeXY[0]
+					let dy = handY - homeXY[1]
+					let x = dx * cosT - dy * sinT
+					let y = dx * sinT + dy * cosT
+					handX = x + homeXY[0]
+					handY = y + homeXY[1]
+				}
+				let distance = arm.distance
+				for (let i = 1; i <= distance; i++){
+					let dx = handX - homeXY[0]
+					let dy = handY - homeXY[1]
+					dx *= i / distance
+					dy *= i / distance
+					let circle = new Circle(homeXY[0] + dx, homeXY[1] + dy, atomSize)
+					let toAdd = this.getCircleOverlappingHexes(circle)
+					for (let hex of toAdd){
+						hexes.push(hex)
+					}
+				}
+			}
+		}
+
+		return hexes
+	}
+	updateUsedHexes(){
+		let hexes = this.getAllSimulationAreaHexes()
+		let alreadyUsed = this.solutionUsedHexes
+		for (let hex of hexes){
+			let used = false
+			for (let usedHex of alreadyUsed){
+				if (hex.equals(usedHex)){
+					used = true
+					break
+				}
+			}
+			if (!used){
+				alreadyUsed.push(hex)
+			}
+		}
+		for (let hex of alreadyUsed){
+			let levelHex = this.getHexAt(hex.q, hex.r)
+			levelHex.active = true
+		}
+	}
 
 	performUIUpdates(){
 		this.placeArmsOnTracks(this.currentLevel)
@@ -1766,14 +1879,15 @@ export class Game{
 			}
 			
 			this.detectCollisions()
+			this.updateUsedHexes()
 		}
 
 		let mouseX = controls.mouse.x
 		let mouseY = controls.mouse.y
 		let hoveredHex = this.getHexFromXY(mouseX, mouseY)
-		if (this.hoveredHex) this.hoveredHex.active = false
+		if (this.hoveredHex && !this.isPlayingSimulation) this.hoveredHex.active = false
 		this.hoveredHex = hoveredHex
-		hoveredHex.active = true
+		if (!this.isPlayingSimulation) hoveredHex.active = true
 
 		const isLeftClicking = controls.isClicking("left")
 		const isMouseOnScreen = controls.isMouseOnScreen()

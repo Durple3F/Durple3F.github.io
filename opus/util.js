@@ -177,58 +177,11 @@ export class Hex {
 		return this.q === b.q && this.r === b.r
 	}
 
-	//TODO: Still gives incorrect cells. Need to have it use two points instead of one
-	//Probably just completely rewrite.
-	lineDrawArc(targetCell, degrees) {
-		// convert hex to pixel (pointy-top, size = 1)
-		const toPixel = (h) => {
-			return {
-				x: Math.sqrt(3) * (h.q + h.r / 2),
-				y: 1.5 * h.r
-			};
-		};
-
-		const origin = toPixel(this);
-		const target = toPixel(targetCell);
-		const dx = target.x - origin.x;
-		const dy = target.y - origin.y;
-
-		const steps = Math.max(1, Math.ceil(Math.abs(degrees)));
-		const results = [];
-		const seen = new Set();
-
-		for (let i = 0; i <= steps; i++) {
-			const angleRad = (degrees * i / steps) * Math.PI / 180;
-			const cos = Math.cos(angleRad), sin = Math.sin(angleRad);
-			const rx = (cos * dx - sin * dy);
-			const ry = (sin * dx + cos * dy);
-			const px = origin.x + rx;
-			const py = origin.y + ry;
-
-			// pixel -> axial (pointy-top)
-			const qf = (Math.sqrt(3) / 3) * px - (1 / 3) * py;
-			const rf = (2 / 3) * py;
-			const sf = -qf - rf;
-
-			// round to nearest cube coordinates
-			let rq = Math.round(qf), rr = Math.round(rf), rs = Math.round(sf);
-			const qDiff = Math.abs(rq - qf), rDiff = Math.abs(rr - rf), sDiff = Math.abs(rs - sf);
-			if (qDiff > rDiff && qDiff > sDiff) {
-				rq = -rr - rs;
-			} else if (rDiff > sDiff) {
-				rr = -rq - rs;
-			} else {
-				rs = -rq - rr;
-			}
-
-			const key = `${rq},${rr},${rs}`;
-			if (!seen.has(key)) {
-				seen.add(key);
-				results.push(new Hex(rq, rr, rs));
-			}
-		}
-
-		return results;
+	static fromXY(x, y){
+		// cartesian to hex
+		var q = (ROOT3/3 * x - 1/3 * y)
+		var r = (2/3 * y)
+		return new Hex(q, r, -q - r)
 	}
 }
 Hex.directions = [new Hex(1, 0, -1), new Hex(1, -1, 0), new Hex(0, -1, 1), new Hex(-1, 0, 1), new Hex(-1, 1, 0), new Hex(0, 1, -1)]

@@ -118,7 +118,7 @@
 		},
 		"20260407": {
 			"date": "April 7, 2026",
-			"line-count": 4000,
+			"line-count": 4200,
 			"changes": [
 				"- Added the reset instruction.",
 				"- The game won't let you start the simulation if any of your programs contain something illegal. Namely, you can't have a reset instruction that produces too many instructions to fit in the space available.",
@@ -128,7 +128,16 @@
 				"- Added Water, Earth, and Salt atoms.",
 				"- Added Van Berlo's Wheel.",
 				"- Different types of arms can now have different minimum and maximum lengths.",
-				"- Made the hexagon grid have a fun rainbow."
+				"- Made the hexagon grid have a fun rainbow.",
+				"- The game now highlights tiles used in the simulation of a solution. This was annoying to calculate for stuff like arms.",
+				"- Drawing the fancy rainbow now uses a cache, cutting the time used to generate the frame down by about 80%."
+			]
+		},
+		"20260408": {
+			"date": "April 8, 2026",
+			"line-count": 4200,
+			"changes": [
+				"- "
 			]
 		}
 	}

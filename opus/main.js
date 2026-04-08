@@ -34,7 +34,7 @@ function tick(){
 	const tickEnd = performance.now()
 	draw()
 	const drawEnd = performance.now()
-	debug.innerHTML = `${drawEnd-tickEnd}ms\n${tickEnd-start}ms`
+	debug.innerHTML = `d${drawEnd-tickEnd}ms\nt${tickEnd-start}ms`
 }
 
 const componentsPane = $("#components")
