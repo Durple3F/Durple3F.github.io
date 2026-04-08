@@ -124,7 +124,11 @@
 				"- The game won't let you start the simulation if any of your programs contain something illegal. Namely, you can't have a reset instruction that produces too many instructions to fit in the space available.",
 				"- Added an arrow to the programming pane to help you see how long the 'reset' instruction will take.",
 				"- The arrow properly changes to show whether it's legal or illegal.",
-				"- Added the repeat instruction. It was a headache."
+				"- Added the repeat instruction. It was a headache.",
+				"- Added Water, Earth, and Salt atoms.",
+				"- Added Van Berlo's Wheel.",
+				"- Different types of arms can now have different minimum and maximum lengths.",
+				"- Made the hexagon grid have a fun rainbow."
 			]
 		}
 	}

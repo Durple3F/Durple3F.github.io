@@ -425,8 +425,13 @@ export class Game{
 				extension: 1,
 				track: 0
 			}
+			let maxLength = 3
+			let minLength = 1
 			if (program.component){
 				positionInfo.extension = program.component.arms.contents[0].distance
+				let mechanismType = program.component.mechanismType
+				minLength = mechanismType.abilities["min_length"]
+				maxLength = mechanismType.abilities["max_length"]
 			}
 
 			const add = instruction => {
@@ -434,10 +439,10 @@ export class Game{
 					case "rotator_cw": positionInfo.rotation -= 1; break
 					case "rotator_ccw": positionInfo.rotation += 1; break
 					case "piston_extend":
-						if (positionInfo.extension < 3) positionInfo.extension += 1
+						if (positionInfo.extension < maxLength) positionInfo.extension += 1
 						break
 					case "piston_retract":
-						if (positionInfo.extension > 0) positionInfo.extension -= 1
+						if (positionInfo.extension > minLength) positionInfo.extension -= 1
 						break
 					case "track_advance": positionInfo.track += 1; break
 					case "track_retreat": positionInfo.track -= 1; break
@@ -1273,7 +1278,8 @@ export class Game{
 				case "piston_extend": {
 					const arms = component.arms.contents
 					const firstArm = arms[0]
-					if (firstArm.distance >= 3) break
+					const mechanismType = component.mechanismType
+					if (firstArm.distance >= mechanismType.abilities["max_length"]) break
 					const animation = {
 						type: "set_all_arm_length",
 						target: component,
@@ -1306,7 +1312,8 @@ export class Game{
 				case "piston_retract": {
 					const arms = component.arms.contents
 					const firstArm = arms[0]
-					if (firstArm.distance <= 1) break
+					const mechanismType = component.mechanismType
+					if (firstArm.distance <=  mechanismType.abilities["min_length"]) break
 					const animation = {
 						type: "set_all_arm_length",
 						target: component,
@@ -1851,7 +1858,10 @@ export class Game{
 				}
 
 				let intendedDistance = component.homeTile.distance(hoveredHex)
-				intendedDistance = max(1, min(intendedDistance, 3))
+				const mechanismType = component.mechanismType
+				const minLength = mechanismType.abilities["min_length"]
+				const maxLength = mechanismType.abilities["max_length"]
+				intendedDistance = max(minLength, min(intendedDistance, maxLength))
 				if (component.type === "ArmMechanism"){
 					let arms = component.arms.contents
 					let changed = false

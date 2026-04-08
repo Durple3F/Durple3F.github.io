@@ -1,9 +1,11 @@
 import {Hex, Atom, Molecule} from "./util.js";
 import {drawCollisionCircles, drawGhostRotation, drawMoleculeHomeTile, atomRenderSize} from "./config.js";
 import { TrackPiece } from "./track.js";
+import Color from "https://colorjs.io/dist/color.js";
 
 const ROOT3 = Math.sqrt(3)
 const max = Math.max
+const min = Math.min
 const floor = Math.floor
 const ceil = Math.ceil
 const sin = Math.sin
@@ -14,25 +16,20 @@ function drawHex(ctx, hex, x, y, size, inRadius, q, r, s){
 	const diagx = ROOT3*0.5*size
 	const diagy = size*0.5
 	ctx.save()
-	let lim = 150
-	let red = hex.q
-	red = red % (lim*2)
-	red = red > lim ? red = lim*2 - red : red
-	red += 20
-	let green = hex.r
-	green = green % (lim*2)
-	green = green > lim ? green = lim*2 - green : green
-	green += 20
-	let blue = hex.s
-	blue = blue % (lim*2)
-	blue = blue > lim ? blue = lim*2 - blue : blue
-	blue += 20
-	// let red = (hex.q + 20) % 255
-	// let green = (hex.r + 20) % 255
-	// let blue = (hex.s + 20) % 255
-	let color = `rgb(${red}, ${green}, ${blue})`
-	color = (hex.active || (hex.q === 0 && hex.r === 0 && hex.s === 0)) ? "white" : color
-	// color = (hex.content) ? "white" : color
+	let color
+	if (true){
+		let xy = hex.toXY()
+		let d = Math.hypot(xy[0], xy[1])
+		let sat = min(80, max(20, d + 20))
+		let bri = min(50, max(20, Math.sqrt(d) + 20))
+		let cangle = Math.atan2(xy[0], xy[1]) * 180 / Math.PI;
+		let color2 = new Color("hsl", [cangle, sat, bri]);
+		color = color2.toString({format: "hex"})
+	}
+	if (hex.q === 0 && hex.r === 0){
+		color = new Color("hsl", [0, 0, 20]).toString({format: "hex"})
+	}
+
 	ctx.fillStyle = color
 	ctx.lineWidth = max(size * 0.05, 2)
 	ctx.strokeStyle = "black"
@@ -85,6 +82,18 @@ function drawArmMechanism(ctx, mechanism, x, y, hexSize, inRadius, horiz, vert){
 	ctx.fill()
 	ctx.restore()
 
+	//Draw atoms if need be
+	const atoms = mechanism.atoms.contents
+	for (let atom of atoms){
+		const q = atom.coord.q
+		const r = atom.coord.r
+		const atomX = (q + 0.5 * r) * horiz
+		const atomY = r * vert
+		const atomXR = x + atomX * cosT - atomY * sinT
+		const atomYR = y + atomX * sinT + atomY * cosT
+		drawAtom(ctx, atom, atomXR, atomYR, hexSize, inRadius, alpha)
+	}
+
 	for (let arm of arms){
 		const hand = arm.direction
 		const q = hand.q
@@ -98,6 +107,7 @@ function drawArmMechanism(ctx, mechanism, x, y, hexSize, inRadius, horiz, vert){
 		ctx.translate(x, y)
 		ctx.rotate(angle)
 		ctx.beginPath()
+		ctx.globalAlpha = alpha
 		ctx.strokeStyle = color
 		ctx.lineWidth = hexSize * 0.1
 		ctx.arc(handX, handY, hexSize * atomSize, 0, Math.PI * 2)
@@ -130,6 +140,7 @@ function drawArmMechanism(ctx, mechanism, x, y, hexSize, inRadius, horiz, vert){
 		const fontSize = hexSize * 0.4
 		const font = fontSize+"px monospace"
 		ctx.font = font
+		ctx.globalAlpha = alpha
 		ctx.fillStyle = "black"
 		const length = name.toString().length - 1
 		const diffX = hexSize * 0.1

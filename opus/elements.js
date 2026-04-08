@@ -32,3 +32,21 @@ ELEMENTS["Air"] = new Element({
 		atom: "./src/img/atoms/air.png"
 	}
 });
+ELEMENTS["Water"] = new Element({
+	id: "Water",
+	sprites: {
+		atom: "./src/img/atoms/water.png"
+	}
+});
+ELEMENTS["Earth"] = new Element({
+	id: "Earth",
+	sprites: {
+		atom: "./src/img/atoms/earth.png"
+	}
+});
+ELEMENTS["Salt"] = new Element({
+	id: "Salt",
+	sprites: {
+		atom: "./src/img/atoms/salt.png"
+	}
+});

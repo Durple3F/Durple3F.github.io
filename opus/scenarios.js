@@ -34,5 +34,6 @@ SCENARIOS["test"] = new Scenario([
 	"Fixed-Length Double Arm",
 	"Fixed-Length Triple Arm",
 	"Fixed-Length Sextuple Arm",
-	"Piston Arm"
+	"Piston Arm",
+	"Van Berlo's Wheel",
 ], ["Glyph of Bonding"])

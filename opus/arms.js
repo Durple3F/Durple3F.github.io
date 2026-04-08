@@ -1,4 +1,4 @@
-import { Hex, Component } from "./util";
+import { Hex, Component, Atom } from "./util";
 
 export const ARMTYPES = {};
 export class ArmMechanismType {
@@ -7,6 +7,8 @@ export class ArmMechanismType {
 		this.armDirectionList = armDirectionList;
 		this.atomList = atomList;
 		this.abilities = {
+			"min_length": 1,
+			"max_length": 3,
 			"rotator_ccw": true,
 			"rotator_cw": true,
 			"pivot_ccw": true,
@@ -32,6 +34,19 @@ new ArmMechanismType("Piston Arm", {
 	"piston_extend": true,
 	"piston_retract": true
 });
+new ArmMechanismType("Van Berlo's Wheel", {
+	"min_length": 1,
+	"max_length": 1,
+	"grabber_grab": false,
+	"grabber_drop": false
+}, Hex.directions.map(d => d), [
+	new Atom("Fire").setCoords(-1, 1, 0),
+	new Atom("Air").setCoords(0, -1, 1),
+	new Atom("Salt").setCoords(1, 0, -1),
+	new Atom("Water").setCoords(1, -1, 0),
+	new Atom("Earth").setCoords(0, 1, -1),
+	new Atom("Salt").setCoords(-1, 0, 1),
+])
 
 export class ArmMechanism extends Component {
 	constructor(typeId) {
@@ -45,6 +60,11 @@ export class ArmMechanism extends Component {
 		for (let armLocation of type.armDirectionList) {
 			let arm = new Arm(this.homeTile, armLocation);
 			this.arms.contents.push(arm);
+		}
+
+		for (let atom of type.atomList){
+			let clone = atom.clone()
+			this.atoms.contents.push(clone)
 		}
 	}
 

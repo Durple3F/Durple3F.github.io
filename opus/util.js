@@ -436,6 +436,7 @@ export class Atom {
 	}
 	setCoords(q, r, s) {
 		this.coord = new Hex(q, r, s)
+		return this
 	}
 }
 
