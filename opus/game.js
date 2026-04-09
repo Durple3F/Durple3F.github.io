@@ -123,9 +123,11 @@ export class Game{
 		let closeButton = modalTag.find(".btn-close")
 		closeButton.hide()
 		let title = modalTag.find(".modal-title")
+		body.empty()
 		title.text(getLocaleString("you-win-message", language))
 		title.addClass("text-center").addClass("display-3")
 		let body = modalTag.find(".modal-body")
+		body.empty()
 		let scenarioName = getLocaleString(["scenarios", this.currentLevel.scenario.id], language, "%scenario name%")
 		let winSubtitle = getLocaleString("you-win-subtitle", language, "%win message%")
 		body.addClass("text-center")
@@ -555,6 +557,11 @@ export class Game{
 			}
 
 			const add = instruction => {
+				if (instruction.generatedInstructions.length){
+					for (let ins of instruction.generatedInstructions){
+						add(ins)
+					}
+				}
 				switch (instruction.type.id){
 					case "grabber_grab": positionInfo.grabbing = true; break
 					case "grabber_drop": positionInfo.grabbing = false; break
@@ -575,17 +582,13 @@ export class Game{
 						positionInfo.track = 0
 					} break
 				}
-				if (instruction.generatedInstructions.length){
-					for (let ins of instruction.generatedInstructions){
-						add(ins)
-					}
-				}
 			}
 
 			for (let i = 0; i < instructions.length; i++){
 				let instruction = instructions[i]
 				switch (instruction.type.id){
 					case "reset": {
+						console.log(i, positionInfo)
 						let rotation = ((positionInfo.rotation % 6) + 6) % 6
 						let extension = positionInfo.extension - 1
 						let trackIndexChange = positionInfo.track
@@ -1982,6 +1985,28 @@ export class Game{
 				component.attachedTrackIndex = animation.endV
 			} break
 		}
+	}
+
+	getPrice(component){
+		let prices = this.currentLevel.scenario.prices
+		let price = 0
+		if (component.type === "Track"){
+			price = component.trackPieces.length * 5
+		}
+		else if (component.type === "ArmMechanism"){
+			price = component.mechanismType.defaultPrice
+		}
+
+		return price
+	}
+	getTotalCost(){
+		let sum = 0
+		let components = this.currentLevel.contents
+		for (let component of components){
+			let price = this.getPrice(component)
+			sum += price
+		}
+		return sum
 	}
 
 	tick(){

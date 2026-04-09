@@ -194,6 +194,49 @@ body {
 	}
 }
 
+#program-tools {
+	position: absolute;
+	bottom: var(--bottom-pane-height);
+	right: 0;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	font-size: 130%;
+
+	#program-stats {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		background-color: #2c2924;
+		padding-top: 0.2em;
+		padding-bottom: 0.2em;
+		padding-left: 1em;
+		border: #504d44;
+		border-top-left-radius: 3em;
+		font-family: "Crimson Text", serif;
+
+		.program-stat {
+			margin-left: 0.3em;
+			margin-right: 0.3em;
+			transform: translateY(0.1em);
+
+			.program-stat-name {
+				background: linear-gradient(180deg, rgb(107, 101, 89) 0%, rgb(159, 154, 150) 100%);
+				filter: drop-shadow(0 0.2em 0.1em black);
+				color: transparent;
+				background-clip: text;
+			}
+			.program-stat-val {
+				background-color: #bfb7ac;
+				color: #372d23;
+				min-width: 3em;
+				display: inline-block;
+				text-align: center;
+			}
+		}
+	}
+}
+
 #instructions {
 	display: flex;
 	flex-wrap: wrap;

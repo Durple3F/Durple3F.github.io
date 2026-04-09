@@ -135,12 +135,15 @@
 		},
 		"20260408": {
 			"date": "April 8, 2026",
-			"line-count": 4200,
+			"line-count": 4500,
 			"changes": [
 				"- Fixed a bug that would happen if you rotated regeants & products",
 				"- You are now prevented from placing two of any one product or molecule.",
 				"- The area you've used now resets whenever the simulation resets. Oops.",
-				"- The reset instruction now properly drops whatever the arm was holding."
+				"- The reset instruction now properly drops whatever the arm was holding.",
+				"- Fixed a bug with the reset instruction not correctly figuring out how to reset",
+				"- Added a fancy screen for when you win. It doesn't fully work yet and it affords far more space than necessary to leaderboards that I never plan to fill.",
+				"- Working on displaying your solutions' stats throughout the simulation."
 			]
 		}
 	}

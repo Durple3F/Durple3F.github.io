@@ -1,10 +1,16 @@
 export class Scenario {
-	constructor(id, productList, reagentList, allowedMechanisms, allowedGlyphs) {
+	constructor(id, productList, reagentList, allowedMechanisms, allowedGlyphs, prices={}) {
 		this.id = id
 		this.productMolecules = productList
 		this.reagentMolecules = reagentList
 		this.allowedMechanisms = allowedMechanisms
 		this.allowedGlyphs = allowedGlyphs
+		this.prices = prices
+		for (let type of ["Product", "Reagent", "Glyph", "ArmMechanism", "Track"]){
+			if (!this.prices[type]){
+				this.prices[type] = {}
+			}
+		}
 		SCENARIOS[this.id] = this
 	}
 }

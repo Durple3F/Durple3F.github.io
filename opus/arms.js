@@ -2,8 +2,9 @@ import { Hex, Component, Atom } from "./util";
 
 export const ARMTYPES = {};
 export class ArmMechanismType {
-	constructor(id, abilities = {}, armDirectionList = [Hex.directions[0]], atomList = []) {
+	constructor(id, defaultPrice, abilities = {}, armDirectionList = [Hex.directions[0]], atomList = []) {
 		this.id = id;
+		this.defaultPrice = defaultPrice
 		this.armDirectionList = armDirectionList;
 		this.atomList = atomList;
 		this.abilities = {
@@ -26,15 +27,15 @@ export class ArmMechanismType {
 		ARMTYPES[this.id] = this
 	}
 }
-new ArmMechanismType("Fixed-Length Arm");
-new ArmMechanismType("Fixed-Length Double Arm", {}, [Hex.directions[0], Hex.directions[3]]);
-new ArmMechanismType("Fixed-Length Triple Arm", {}, [Hex.directions[0], Hex.directions[2], Hex.directions[4]]);
-new ArmMechanismType("Fixed-Length Sextuple Arm", {}, Hex.directions.map(d => d));
-new ArmMechanismType("Piston Arm", {
+new ArmMechanismType("Fixed-Length Arm", 20);
+new ArmMechanismType("Fixed-Length Double Arm", 20, {}, [Hex.directions[0], Hex.directions[3]]);
+new ArmMechanismType("Fixed-Length Triple Arm", 20, {}, [Hex.directions[0], Hex.directions[2], Hex.directions[4]]);
+new ArmMechanismType("Fixed-Length Sextuple Arm", 20, {}, Hex.directions.map(d => d));
+new ArmMechanismType("Piston Arm", 40, {
 	"piston_extend": true,
 	"piston_retract": true
 });
-new ArmMechanismType("Van Berlo's Wheel", {
+new ArmMechanismType("Van Berlo's Wheel", 30, {
 	"min_length": 1,
 	"max_length": 1,
 	"grabber_grab": false,
