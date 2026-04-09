@@ -74,11 +74,33 @@ componentsTab.on("click", () => {
 	})
 })
 
-$("#playback-play-button").on("click", () => {
-	game.startSimulation()
+$(document).on("keydown", e => {
+	e.preventDefault()
 })
 $("#playback-stop-button").on("click", () => {
 	game.stopSimulation()
+})
+$("#playback-pause-button").on("click", () => {
+	game.stopSimulationAtNextTimestep = true
+})
+$("#playback-advance-button").on("click", () => {
+	if (!game.isPlayingSimulation){
+		game.startSimulation()
+	}
+	game.playbackSpeed = 1
+	game.stopSimulationAtNextTimestep = true
+})
+$("#playback-play-button").on("click", () => {
+	if (!game.isPlayingSimulation){
+		game.startSimulation()
+	}
+	game.playbackSpeed = 1
+})
+$("#playback-fast-forward-button").on("click", () => {
+	if (!game.isPlayingSimulation){
+		game.startSimulation()
+	}
+	game.playbackSpeed = 5
 })
 window.addEventListener("mousemove", e => {
 	$("#tooltip").css("top", e.clientY)

@@ -99,6 +99,7 @@ export class Game{
 		this.simulationTimeStep = 0
 		this.simulationDeltaT = 0
 		this.playbackSpeed = 1
+		this.stopSimulationAtNextTimestep = false
 		this.playingAnimations = []
 
 		this.solutionUsedHexes = []
@@ -2086,6 +2087,22 @@ export class Game{
 		this.lastTick = now
 		const controls = this.controls
 
+		//Playback keyboard controls
+		if (controls.justPressed(" ")){
+			if (this.isPlayingSimulation && this.playbackSpeed > 0){
+				$("#playback-pause-button").click()
+			} else {
+				$("#playback-play-button").click()
+			}
+		}
+		if (controls.justPressed("Tab")){
+			$("#playback-advance-button").click()
+		}
+		if (controls.justPressed("Escape")){
+			$("#playback-stop-button").click()
+		}
+
+		//Advance time
 		if (this.isPlayingSimulation && this.playbackSpeed > 0 && dt > 0){
 			//Increase time slightly.
 			this.simulationDeltaT += this.playbackSpeed * (dt / msPerCycle)
@@ -2094,11 +2111,19 @@ export class Game{
 
 			this.applyAllAnimations()
 
+			let ticks = 0
 			while (this.simulationDeltaT >= 1){
 				//finish all ongoing animations maybe?
+				ticks++
 				this.simulationTimeStep++
 				this.simulationDeltaT--
 				this.beginAnimatingInstructions(this.simulationTimeStep)
+				this.applyAllAnimations()
+			}
+			if (ticks > 0 && this.stopSimulationAtNextTimestep){
+				this.stopSimulationAtNextTimestep = false
+				this.playbackSpeed = 0
+				this.simulationDeltaT = 0
 				this.applyAllAnimations()
 			}
 			

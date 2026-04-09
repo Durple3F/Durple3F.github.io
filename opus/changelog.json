@@ -150,7 +150,8 @@
 			"date": "April 9, 2026",
 			"line-count": 4700,
 			"changes": [
-				"- Stats actually display now"
+				"- Stats actually display now",
+				"- You can play/pause the game with your keyboard."
 			]
 		}
 	}
