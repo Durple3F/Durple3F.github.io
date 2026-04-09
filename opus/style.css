@@ -211,9 +211,10 @@ body {
 		padding-top: 0.2em;
 		padding-bottom: 0.2em;
 		padding-left: 1em;
-		border: #504d44;
 		border-top-left-radius: 3em;
 		font-family: "Crimson Text", serif;
+		border: 0.2em solid #504d44;
+		border-bottom: none;
 
 		.program-stat {
 			margin-left: 0.3em;

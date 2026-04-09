@@ -826,6 +826,26 @@ export class Game{
 		}
 		return result
 	}
+	getAllPlacementCollisionHexes(){
+		let hexes = []
+		let components = this.currentLevel.grid.contents
+		for (let component of components){
+			let toAdd = this.getPlacementCollisionHexes(component)
+			for (let hex of toAdd){
+				let found = false
+				for (let otherHex of hexes){
+					if (hex.equals(otherHex)){
+						found = true
+						break
+					}
+				}
+				if (!found){
+					hexes.push(hex)
+				}
+			}
+		}
+		return hexes
+	}
 	checkPlacement(component){
 		//The rules for collision are that:
 		//The home tile of an arm must not overlap with an atom or the home tile of another arm.
@@ -1259,6 +1279,20 @@ export class Game{
 			hexes.push(hex)
 		}
 
+		let placements = this.getAllPlacementCollisionHexes()
+		for (let hex of placements){
+			let found = false
+			for (let otherHex of hexes){
+				if (hex.equals(otherHex)){
+					found = true
+					break
+				}
+			}
+			if (!found){
+				hexes.push(hex)
+			}
+		}
+
 		let level = this.simulation
 		let components = level.grid.contents
 		for (let component of components){
@@ -1328,6 +1362,7 @@ export class Game{
 		this.updateComponentPane()
 		this.fixPrograms()
 		this.renderPrograms()
+		this.updateSolutionStats()
 	}
 
 	resetSimulation(){
@@ -2001,12 +2036,44 @@ export class Game{
 	}
 	getTotalCost(){
 		let sum = 0
-		let components = this.currentLevel.contents
+		let components = this.currentLevel.grid.contents
 		for (let component of components){
 			let price = this.getPrice(component)
 			sum += price
 		}
 		return sum
+	}
+
+	updateSolutionStats(){
+		let statsTag = $("#program-stats")
+		let priceTag = statsTag.find(".program-stat[data-stat='cost']")
+		priceTag.children(".program-stat-val").text(this.getTotalCost())
+		.append($("<span>").addClass("tiny-g").text("G"))
+		let cycleTag = statsTag.find(".program-stat[data-stat='cycle']")
+		cycleTag.children(".program-stat-val").text(this.simulationTimeStep)
+		let areaTag = statsTag.find(".program-stat[data-stat='area']")
+		areaTag.children(".program-stat-val").text(this.solutionUsedHexes.length)
+
+		let totalProducts = 0
+		let submittedProductCounts = this.simulation.submittedProductCounts
+		let neededProducts = submittedProductCounts.length * submissionsPerProduct
+		let productTag = statsTag.find(".program-stat[data-stat='products']")
+		for (let count of submittedProductCounts){
+			totalProducts += min(submissionsPerProduct, count)
+		}
+		productTag.children(".program-stat-val").text(`${totalProducts}/${neededProducts}`)
+
+		let totalInstructions = 0
+		let instructionTag = statsTag.find(".program-stat[data-stat='instructions']")
+		let programs = this.currentLevel.programs
+		for (let program of programs){
+			let instructions = program.instructions
+			for (let instruction of instructions){
+				if (instruction.type.id === "idle") continue
+				totalInstructions++
+			}
+		}
+		instructionTag.children(".program-stat-val").text(totalInstructions)
 	}
 
 	tick(){
@@ -2033,6 +2100,7 @@ export class Game{
 			
 			this.detectCollisions()
 			this.updateUsedHexes()
+			this.updateSolutionStats()
 		}
 		//Handle winning
 		if (this.isPlayingSimulation && this.playbackSpeed > 0 && dt > 0){
