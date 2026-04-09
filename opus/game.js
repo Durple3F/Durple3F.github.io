@@ -2043,6 +2043,18 @@ export class Game{
 		}
 		return sum
 	}
+	getTotalInstructions(){
+		let totalInstructions = 0
+		let programs = this.currentLevel.programs
+		for (let program of programs){
+			let instructions = program.instructions
+			for (let instruction of instructions){
+				if (instruction.type.id === "idle") continue
+				totalInstructions++
+			}
+		}
+		return totalInstructions
+	}
 
 	updateSolutionStats(){
 		let statsTag = $("#program-stats")
@@ -2054,25 +2066,17 @@ export class Game{
 		let areaTag = statsTag.find(".program-stat[data-stat='area']")
 		areaTag.children(".program-stat-val").text(this.solutionUsedHexes.length)
 
+		let productTag = statsTag.find(".program-stat[data-stat='products']")
 		let totalProducts = 0
 		let submittedProductCounts = this.simulation.submittedProductCounts
 		let neededProducts = submittedProductCounts.length * submissionsPerProduct
-		let productTag = statsTag.find(".program-stat[data-stat='products']")
 		for (let count of submittedProductCounts){
 			totalProducts += min(submissionsPerProduct, count)
 		}
 		productTag.children(".program-stat-val").text(`${totalProducts}/${neededProducts}`)
 
-		let totalInstructions = 0
+		let totalInstructions = this.getTotalInstructions()
 		let instructionTag = statsTag.find(".program-stat[data-stat='instructions']")
-		let programs = this.currentLevel.programs
-		for (let program of programs){
-			let instructions = program.instructions
-			for (let instruction of instructions){
-				if (instruction.type.id === "idle") continue
-				totalInstructions++
-			}
-		}
 		instructionTag.children(".program-stat-val").text(totalInstructions)
 	}
 

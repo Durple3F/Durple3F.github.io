@@ -135,7 +135,7 @@
 		},
 		"20260408": {
 			"date": "April 8, 2026",
-			"line-count": 4500,
+			"line-count": 4600,
 			"changes": [
 				"- Fixed a bug that would happen if you rotated regeants & products",
 				"- You are now prevented from placing two of any one product or molecule.",
@@ -144,6 +144,13 @@
 				"- Fixed a bug with the reset instruction not correctly figuring out how to reset",
 				"- Added a fancy screen for when you win. It doesn't fully work yet and it affords far more space than necessary to leaderboards that I never plan to fill.",
 				"- Working on displaying your solutions' stats throughout the simulation."
+			]
+		},
+		"20260409": {
+			"date": "April 9, 2026",
+			"line-count": 4700,
+			"changes": [
+				"- Stats actually display now"
 			]
 		}
 	}
