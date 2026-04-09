@@ -29,7 +29,6 @@ export function getLocaleString(key, language, fallback){
 		path = key
 	}
 	let result = LOCALE[language]
-	console.log(LOCALE)
 	for (let key of path){
 		if (key in result){
 			result = result[key]

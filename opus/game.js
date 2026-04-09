@@ -81,7 +81,7 @@ export class Program{
 }
 
 export class Game{
-	constructor(canvas, controls){
+	constructor(canvas, controls, scenario){
 		this.controls = controls
 		this.lastTick = performance.now()
 		this.isDraggingMap = false
@@ -92,9 +92,8 @@ export class Game{
 		//When you place an instruction by clicking the mouse down (via keys) you do nothing when you lift the mouse back up.
 		this.overrideInstructionMouseUp = false
 
-		let scenario = SCENARIOS["test"]
-		this.currentLevel = new Level(scenario)
-		this.simulation = new Level(scenario)
+		this.currentLevel = null
+		this.simulation = null
 		this.isPlayingSimulation = false
 		this.simulationTimeStep = 0
 		this.simulationDeltaT = 0
@@ -111,8 +110,14 @@ export class Game{
 		this.xOffset = -0.5 * canvas.width
 		this.yOffset = -0.5 * canvas.height
 		this.hoveredHex = null
+		this.setScenario(scenario)
 		this.initialize()
 		this.fillComponentPane()
+	}
+
+	setScenario(scenario){
+		this.currentLevel = new Level(scenario)
+		this.simulation = new Level(scenario)
 	}
 
 	win(){

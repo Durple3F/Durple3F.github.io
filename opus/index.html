@@ -19,78 +19,92 @@
 </head>
 
 <body data-bs-theme="dark">
-	<canvas id="screen"></canvas>
-	<div id="components">
-		<div id="components-products" class="components-section">
-			<p class="components-label">Products</p>
-			<div class="components-list"></div>
+	<div id="game-ui">
+		<canvas id="screen"></canvas>
+		<div id="components">
+			<div id="components-products" class="components-section">
+				<p class="components-label">Products</p>
+				<div class="components-list"></div>
+			</div>
+			<div id="components-reagents" class="components-section">
+				<p class="components-label">Reagents</p>
+				<div class="components-list"></div>
+			</div>
+			<div id="components-mechanisms" class="components-section">
+				<p class="components-label">Mechanisms</p>
+				<div class="components-list"></div>
+			</div>
+			<div id="components-glyphs" class="components-section">
+				<p class="components-label">Glyphs</p>
+				<div class="components-list"></div>
+			</div>
 		</div>
-		<div id="components-reagents" class="components-section">
-			<p class="components-label">Reagents</p>
-			<div class="components-list"></div>
+		<div id="components-tab" class="ui-tab">
+			<span class="tab-label"><i class="bi bi-wrench"></i></span>
 		</div>
-		<div id="components-mechanisms" class="components-section">
-			<p class="components-label">Mechanisms</p>
-			<div class="components-list"></div>
+		<div id="bottom-pane">
+			<div id="instruction-pane">
+				<div id="instructions"></div>
+				<div id="playback-pane">
+					<button class="btn btn-primary" id="playback-stop-button">
+						<i class="bi bi-stop-fill"></i>
+					</button>
+					<button class="btn btn-primary" id="playback-pause-button">
+						<i class="bi bi-pause-fill"></i>
+					</button>
+					<button class="btn btn-primary" id="playback-advance-button">
+						<i class="bi bi-skip-end-fill"></i>
+					</button>
+					<button class="btn btn-primary" id="playback-play-button">
+						<i class="bi bi-play-fill"></i>
+					</button>
+					<button class="btn btn-primary" id="playback-fast-forward-button">
+						<i class="bi bi-fast-forward-fill"></i>
+					</button>
+				</div>
+			</div>
+			<div id="program-pane">
+				<div id="program-names"></div>
+				<div id="program-rows-wrapper">
+					<div id="program-rows"></div>
+				</div>
+			</div>
 		</div>
-		<div id="components-glyphs" class="components-section">
-			<p class="components-label">Glyphs</p>
-			<div class="components-list"></div>
+		<div id="program-tools">
+			<div id="program-stats">
+				<div class="program-stat" data-stat="products">
+					<span class="program-stat-name">PRODUCTS:</span>
+					<span class="program-stat-val">0/6</span>
+				</div>
+				<div class="program-stat" data-stat="cost">
+					<span class="program-stat-name">COST:</span>
+					<span class="program-stat-val">0<span class="tiny-g">G</span></span>
+				</div>
+				<div class="program-stat" data-stat="cycle">
+					<span class="program-stat-name">CYCLES:</span>
+					<span class="program-stat-val">0</span>
+				</div>
+				<div class="program-stat" data-stat="area">
+					<span class="program-stat-name">AREA:</span>
+					<span class="program-stat-val">0</span>
+				</div>
+				<div class="program-stat" data-stat="instructions">
+					<span class="program-stat-name">INSTRUCTIONS:</span>
+					<span class="program-stat-val">0</span>
+				</div>
+			</div>
 		</div>
 	</div>
-	<div id="components-tab" class="ui-tab">
-		<span class="tab-label"><i class="bi bi-wrench"></i></span>
-	</div>
-	<div id="bottom-pane">
-		<div id="instruction-pane">
-			<div id="instructions"></div>
-			<div id="playback-pane">
-				<button class="btn btn-primary" id="playback-stop-button">
-					<i class="bi bi-stop-fill"></i>
-				</button>
-				<button class="btn btn-primary" id="playback-pause-button">
-					<i class="bi bi-pause-fill"></i>
-				</button>
-				<button class="btn btn-primary" id="playback-advance-button">
-					<i class="bi bi-skip-end-fill"></i>
-				</button>
-				<button class="btn btn-primary" id="playback-play-button">
-					<i class="bi bi-play-fill"></i>
-				</button>
-				<button class="btn btn-primary" id="playback-fast-forward-button">
-					<i class="bi bi-fast-forward-fill"></i>
-				</button>
+	<div id="game-menu">
+		<canvas id="level-select-bg"></canvas>
+		<div id="level-chapter-title"></div>
+		<div id="level-select">
+			<div id="level-select-header">
+				<div class="level-select-name"></div>
+				<div class="level-select-subtitle"></div>
 			</div>
-		</div>
-		<div id="program-pane">
-			<div id="program-names"></div>
-			<div id="program-rows-wrapper">
-				<div id="program-rows"></div>
-			</div>
-		</div>
-	</div>
-	<div id="program-tools">
-		<div id="program-stats">
-			<div class="program-stat" data-stat="products">
-				<span class="program-stat-name">PRODUCTS:</span>
-				<span class="program-stat-val">0/6</span>
-			</div>
-			<div class="program-stat" data-stat="cost">
-				<span class="program-stat-name">COST:</span>
-				<span class="program-stat-val">0<span class="tiny-g">G</span></span>
-			</div>
-			<div class="program-stat" data-stat="cycle">
-				<span class="program-stat-name">CYCLES:</span>
-				<span class="program-stat-val">0</span>
-			</div>
-			<div class="program-stat" data-stat="area">
-				<span class="program-stat-name">AREA:</span>
-				<span class="program-stat-val">0</span>
-			</div>
-			<div class="program-stat" data-stat="instructions">
-				<span class="program-stat-name">INSTRUCTIONS:</span>
-				<span class="program-stat-val">0</span>
-			</div>
+			<hr>
+			<div id="level-select-content"></div>
 		</div>
 	</div>
 	<div id="modal" class="modal modal-xl fade" tabindex="-1">

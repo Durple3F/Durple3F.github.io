@@ -7,6 +7,8 @@ import { INSTRUCTIONS, Instruction, createInstructionButton } from "./instructio
 import { GLYPHTYPES } from "./glyphs.js";
 import { TrackPiece } from "./track.js";
 import { loadLocale } from "./locale.js";
+import { CAMPAIGNS, showCampaignChapter } from "./campaigns.js";
+import { SCENARIOS } from "./scenarios.js";
 
 const FRAMERATE = 60
 let tickInterval
@@ -16,7 +18,9 @@ const debug = document.getElementById("debug")
 const ctx = canvas.getContext("2d")
 const controls = new ControlManager(canvas)
 
-const game = new Game(canvas, controls)
+let scenario = SCENARIOS["test"]
+let currentCampaign = CAMPAIGNS["base"]
+let game = new Game(canvas, controls, scenario)
 console.log(game)
 
 const resize = () => {
@@ -91,10 +95,14 @@ $("#playback-advance-button").on("click", () => {
 	game.stopSimulationAtNextTimestep = true
 })
 $("#playback-play-button").on("click", () => {
-	if (!game.isPlayingSimulation){
-		game.startSimulation()
+	if (game.controls.isPressing("Alt")){
+		$("#playback-fast-forward-button").click()
+	} else {
+		if (!game.isPlayingSimulation){
+			game.startSimulation()
+		}
+		game.playbackSpeed = 1
 	}
-	game.playbackSpeed = 1
 })
 $("#playback-fast-forward-button").on("click", () => {
 	if (!game.isPlayingSimulation){
@@ -146,10 +154,29 @@ async function loadGame(){
 
 }
 
-function startGame(){
-	window.addEventListener("resize", resize)
-	resize()
-	$("#loading-screen").fadeOut()
+function startLevel(scenario){
+	$("#game-menu").fadeOut()
+	game = new Game(canvas, controls, scenario)
+	clearInterval(tickInterval)
 	tickInterval = setInterval(tick, 1000 / FRAMERATE)
 }
+
+function startGame(){
+	$("#loading-screen").fadeOut()
+	showCampaignChapter(currentCampaign, 0)
+	$("#level-select-content").find(".level-select-choice").on("click", e => {
+		let elem = e.delegateTarget
+		let event = $(elem).data("event")
+		switch (event.type){
+			case "puzzle":
+			let scenarioId = event.info.scenarioId
+			let scenario = SCENARIOS[scenarioId]
+			startLevel(scenario)
+			break
+		}
+	})
+}
+
+window.addEventListener("resize", resize)
+resize()
 loadGame().then(() => startGame())

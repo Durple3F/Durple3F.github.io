@@ -9,6 +9,49 @@
 	"scoreboard-best-prev": "PREV:",
 
 	"scenarios": {
-		"test": "Test Scenario"
+		"test": {
+			"name": "Test Scenario"
+		}
+	},
+	"campaigns": {
+		"base": {
+			"chapters": {
+				"prologue": {
+					"name": "Prologue",
+					"subtitle": "The Transmutation Engine",
+					"top-header": "Imperial University"
+				},
+				"chapter-1": {
+					"name": "Chapter I",
+					"subtitle": "Life in a Great House",
+					"top-header": "House Van Tassen"
+				},
+				"chapter-2": {
+					"name": "Chapter II",
+					"subtitle": "Unprecedented Actions",
+					"top-header": "House Colvan"
+				},
+				"chapter-3": {
+					"name": "Chapter III",
+					"subtitle": "Exile and Thievery",
+					"top-header": "The Downriver Quarters"
+				},
+				"chapter-4": {
+					"name": "Chapter IV",
+					"subtitle": "An Uncommon Ally",
+					"top-header": "House Soria"
+				},
+				"chapter-5": {
+					"name": "Chapter V",
+					"subtitle": "Opposing Plots",
+					"top-header": "The City"
+				},
+				"appendix": {
+					"name": "Appendix",
+					"subtitle": "Fontenelle's Alchemical Observations",
+					"top-header": "Production Alchemy"
+				}
+			}
+		}
 	}
 }

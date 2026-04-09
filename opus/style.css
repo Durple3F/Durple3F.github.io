@@ -17,6 +17,99 @@ body {
 	--base-program-row-color: oklch(0.2015 0.074 250.71);
 }
 
+#game-ui {
+	position: absolute;
+	top: 0; left: 0;
+	width: 100vw;
+	height: 100vh;
+}
+
+#game-menu {
+	position: absolute;
+	top: 0; left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgb(69, 69, 69);
+	z-index: 20;
+
+	#level-select-bg {
+		position: absolute;
+		top: 0; left: 0;
+		width: 100vw;
+		height: 100vh;
+	}
+
+	#level-chapter-title {
+		position: absolute;
+		top: 0.5em; left: 50%;
+		width: 60%;
+		transform: translateX(-50%);
+		text-align: center;
+		font-family: "Crimson Text", serif;
+		font-size: 140%;
+		padding: 0.5em;
+		background-color: rgba(0, 0, 0, 0.332);
+		border-bottom: 0.1em solid #908b8f;
+		mask-image: radial-gradient(at center, black 20%, transparent 70%);
+		mask-position: center;
+		mask-size: 100% 200%;
+	}
+
+	#level-select {
+		position: absolute;
+		top: 50%; left: 5%;
+		min-width: 24%;
+		transform: translateY(-50%);
+		background-color: rgba(0, 0, 0, 0.5);
+		text-align: center;
+		padding: 2em;
+		font-family: "Crimson Text", serif;
+		color: #f6f3ec;
+		border: 0.1em solid #887a77;
+
+		--divider-color: #81818180;
+
+		hr {
+			border-color: var(--divider-color);
+			opacity: 1;
+		}
+
+		#level-select-header {
+			.level-select-name {
+				font-size: 120%;
+				font-weight: bold;
+			}
+		}
+
+		#level-select-content {
+			.level-select-choice {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				
+				padding-bottom: 0.5em;
+				padding-top: 0.5em;
+				padding-left: 0.5em;
+				padding-right: 0.5em;
+				border-bottom: var(--bs-border-width) solid var(--divider-color);
+
+				.level-select-icon {
+					height: 2em;
+					pointer-events: none;
+				}
+				.level-select-checkbox {
+					height: 2em;
+					pointer-events: none;
+				}
+			}
+			.level-select-choice:hover {
+				background-color: rgba(255, 255, 255, 0.15);
+				box-shadow: inset 0 0 1em rgba(0, 0, 0, 0.305);
+			}
+		}
+	}
+}
+
 #screen {
 	position: absolute;
 	top: 0; right: 0;
@@ -66,8 +159,10 @@ body {
 }
 
 .components-label {
-	font-family: "Quintessential", serif;
+	font-family: "Crimson Text", serif;
+	text-transform: uppercase;
 	text-align: center;
+	margin-bottom: 0;
 }
 .components-list {
 	display: flex;
