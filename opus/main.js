@@ -24,17 +24,19 @@ let saveFile
 
 let scenario = SCENARIOS["test"]
 let currentCampaign = CAMPAIGNS["base"]
-let game = new Game(canvas, controls, scenario)
-console.log(game)
+let game
 
 const resize = () => {
 	canvas.width = canvas.clientWidth
 	canvas.height = canvas.clientHeight
-	game.resizeScreen()
+	if (game){
+		game.resizeScreen()
+	}
 	window.requestAnimationFrame(draw)
 }
 
 function draw(){
+	if (!game) return
 	render(game, ctx, canvas.width, canvas.height)
 }
 function tick(){
@@ -173,6 +175,8 @@ function startLevel(scenario, solution){
 	clearInterval(tickInterval)
 	tickInterval = setInterval(tick, 1000 / FRAMERATE)
 
+	console.log(solution)
+
 	game.promise.then(events => {
 		game.isActive = false
 		handleGameEvents(events)
@@ -212,7 +216,7 @@ function startGame(){
 			case "puzzle":
 			let scenarioId = event.info.scenarioId
 			let scenario = SCENARIOS[scenarioId]
-			showScenario(scenario).then(events => {
+			showScenario(scenario, saveFile.uuid).then(events => {
 				handleGameEvents(events)
 			})
 			// startLevel(scenario)

@@ -3,7 +3,6 @@ import { SCENARIOS } from "./scenarios"
 const dbName = "opus-minor"
 const dbVersion = 1
 let db
-let saveFileCount = -1
 
 const dbStores = [
 	{
@@ -127,8 +126,9 @@ export async function createSaveFile(name){
 }
 
 export class SolutionSave {
-	constructor(scenario){
+	constructor(scenario, saveUUID){
 		this.uuid = self.crypto.randomUUID()
+		this.saveUUID = saveUUID
 		this.version = version
 		this.scenarioId = scenario.id
 		this.verified = false
@@ -143,6 +143,7 @@ export class SolutionSave {
 	toStore(){
 		let obj = {
 			uuid: this.uuid,
+			saveUUID: this.saveUUID,
 			version: this.version,
 			scenarioId: this.scenarioId,
 			verified: this.verified,
@@ -151,12 +152,15 @@ export class SolutionSave {
 			solutionCost: this.solutionCost,
 			solutionCycle: this.solutionCycle,
 			solutionInstructionCount: this.solutionInstructionCount,
-			components: [],
-			programs: []
+			components: this.components,
+			programs: this.programs
 		}
 		return obj
 	}
 	static fromStore(store){
+		if (!store.saveUUID) {
+			throw new Error("The data is missing a save it belongs to.")
+		}
 		if (!store.scenarioId) {
 			throw new Error("The data is missing a scenario.")
 		}
@@ -164,7 +168,7 @@ export class SolutionSave {
 		if (!scenario){
 			throw new Error("Can't find scenario: "+store.scenarioId)
 		}
-		let solution = new SolutionSave(scenario)
+		let solution = new SolutionSave(scenario, store.saveUUID)
 		solution.uuid = store.uuid
 		solution.version = store.version
 		solution.scenarioId = store.scenarioId
@@ -173,8 +177,8 @@ export class SolutionSave {
 		solution.solutionCost = store.solutionCost
 		solution.solutionCycle = store.solutionCycle
 		solution.solutionInstructionCount = store.solutionInstructionCount
-		solution.components = []
-		solution.programs = []
+		solution.components = store.components
+		solution.programs = store.programs
 		return solution
 	}
 }
@@ -203,15 +207,53 @@ export async function getSolutions(scenario){
 	await promise
 	return result
 }
-
-export async function createSolution(scenario){
+export async function getSolution(uuid){
 	let resolve
 	let promise = new Promise(res => resolve = res)
-	const solution = new SolutionSave(scenario, "New Solution 1")
+	const transaction = db.transaction(["solutions"], "readonly")
+	const solutionsStore = transaction.objectStore("solutions")
+	const key = IDBKeyRange.only(uuid)
+	const index = solutionsStore.index("uuid")
+	const request = index.openCursor(key)
+	let cursor
+	let result
+	let primaryKey
+	request.onsuccess = async event => {
+		cursor = event.target.result
+		if (cursor){
+			let val = cursor.value
+			result = val
+			primaryKey = cursor.primaryKey
+		}
+		resolve()
+	}
+	await promise
+	return [primaryKey, result]
+}
+
+export async function createSolution(scenario, saveUUID){
+	let resolve
+	let promise = new Promise(res => resolve = res)
+	const solution = new SolutionSave(scenario, saveUUID)
 	const transaction = db.transaction(["solutions"], "readwrite")
 	const solutionsStore = transaction.objectStore("solutions")
 	const request = solutionsStore.put(solution.toStore())
 	request.onsuccess = () => resolve()
+	await promise
+	return solution
+}
+
+export async function saveSolution(solution){
+	let resolve
+	let promise = new Promise(res => resolve = res)
+	let [primaryKey, record] = await getSolution(solution.uuid)
+	const transaction = db.transaction(["solutions"], "readwrite")
+	const solutionsStore = transaction.objectStore("solutions")
+	const request = solutionsStore.put(solution.toStore(), primaryKey)
+	request.onsuccess = () => resolve()
+	request.onerror = (e, f, g) => {
+		console.log(request.error)
+	}
 	await promise
 	return solution
 }

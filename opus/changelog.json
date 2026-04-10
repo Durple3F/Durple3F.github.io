@@ -158,9 +158,11 @@
 		},
 		"20260410": {
 			"date": "April 10, 2026",
-			"line-count": 5300,
+			"line-count": 5700,
 			"changes": [
-				"- "
+				"- More work on the scenario screen",
+				"- Working on permanently storing players' solutions to puzzles.",
+				"- Your solutions to a puzzle now save and will remain there when you return."
 			]
 		}
 	}

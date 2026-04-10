@@ -249,6 +249,9 @@ export class Hex {
 		var r = (2/3 * y)
 		return new Hex(q, r, -q - r)
 	}
+	static fromObj(obj){
+		return new Hex(obj.q, obj.r, obj.s)
+	}
 }
 Hex.directions = [new Hex(1, 0, -1), new Hex(1, -1, 0), new Hex(0, -1, 1), new Hex(-1, 0, 1), new Hex(-1, 1, 0), new Hex(0, 1, -1)]
 Hex.diagonals = [new Hex(2, -1, -1), new Hex(1, -2, 1), new Hex(-1, -1, 2), new Hex(-2, 1, 1), new Hex(-1, 2, -1), new Hex(1, 1, -2)]

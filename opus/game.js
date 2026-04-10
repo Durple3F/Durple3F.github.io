@@ -6,6 +6,7 @@ import { Glyph } from "./glyphs.js"
 import { armSize, atomSize, msPerCycle, submissionsPerProduct } from "./config.js"
 import { Track, TrackPiece } from "./track.js"
 import { getLocaleString } from "./locale.js"
+import { saveSolution } from "./database.js"
 
 const min = Math.min
 const max = Math.max
@@ -104,6 +105,10 @@ export class Game{
 		this.playingAnimations = []
 
 		this.solutionUsedHexes = []
+		this.componentCountInfos = {
+			"Product": [],
+			"Reagent": []
+		}
 
 		this.hexSize = 40
 		this.canvas = canvas
@@ -118,16 +123,197 @@ export class Game{
 		})
 
 		this.setScenario(scenario)
+		this.createComponentCountInfos()
+		this.loadSolution(this.solution)
 		this.initialize()
 		this.fillComponentPane()
+		this.performUIUpdates()
 	}
 
 	setScenario(scenario){
 		this.currentLevel = new Level(scenario)
 		this.simulation = new Level(scenario)
 	}
+	saveSolution(){
+		let solution = this.solution
+		let components = this.currentLevel.grid.contents
+		let savedComponents = solution.components
+		let programs = this.currentLevel.programs
+		savedComponents.length = 0
+		for (let component of components){
+			let obj = {}
+			let homeTile = component.homeTile
+			obj.type = component.type
+			obj.homeTile = homeTile
+			switch (component.type){
+				case "Track": {
+					let trackPieces = component.trackPieces
+					obj.trackPieces = []
+					for (let trackPiece of trackPieces){
+						obj.trackPieces.push(trackPiece.coord)
+					}
+				} break
+				case "Product": {
+					let countInfo = component.componentCountInfos.find(info => info.type === "Product")
+					let index = countInfo.index
+					obj.hexRotation = component.currentHexRotation
+					obj.productIndex = index
+				} break
+				case "Reagent": {
+					let countInfo = component.componentCountInfos.find(info => info.type === "Reagent")
+					let index = countInfo.index
+					obj.hexRotation = component.currentHexRotation
+					obj.reagentIndex = index
+				} break
+				case "Glyph": {
+					obj.hexRotation = component.currentHexRotation
+					let glyphType = component.glyphType
+					let glyphId = glyphType.id
+					obj.glyphId = glyphId
+				} break
+				case "ArmMechanism": {
+					obj.hexRotation = component.currentHexRotation
+					let mechanismType = component.mechanismType
+					let mechanismId = mechanismType.id
+					obj.mechanismId = mechanismId
+					let armLength = component.arms.contents[0].distance
+					obj.armLength = armLength
+					let programIndex = programs.indexOf(component.program)
+					obj.programIndex = programIndex
+				} break
+			}
+			savedComponents.push(obj)
+		}
+
+		let savedPrograms = solution.programs
+		savedPrograms.length = 0
+		for (let program of programs){
+			let instructions = program.instructions
+			let savedProgram = {
+				name: program.name,
+				instructions: []
+			}
+			let savedInstructions = savedProgram.instructions
+			savedPrograms.push(savedProgram)
+			for (let instruction of instructions){
+				let savedInstruction = instruction.type.id
+				savedInstructions.push(savedInstruction)
+			}
+		}
+
+		saveSolution(solution)
+	}
+	loadSolution(solution){
+		let savedComponents = solution.components
+		let savedPrograms = solution.programs
+		let programs = this.currentLevel.programs
+		let scenario = this.currentLevel.scenario
+		for (let savedComponent of savedComponents){
+			let component
+			switch (savedComponent.type){
+				case "Track": {
+					let track = new Track()
+					let homeTile = savedComponent.homeTile
+					track.homeTile = Hex.fromObj(homeTile)
+					for (let savedTrackPiece of savedComponent.trackPieces){
+						let coord = Hex.fromObj(savedTrackPiece)
+						track.addTrackPiece(coord, true)
+					}
+					component = track
+				} break
+				case "Product": {
+					let productMolecules = scenario.productMolecules
+					let index = savedComponent.productIndex
+					let product = productMolecules[index]
+					let molecule = createMolecule(product.molecule)
+					component = new Product(molecule)
+					let homeTile = savedComponent.homeTile
+					component.homeTile = Hex.fromObj(homeTile)
+					if (savedComponent.hexRotation){
+						while (savedComponent.hexRotation < component.currentHexRotation){
+							component.rotateRight()
+						}
+						while (savedComponent.hexRotation > component.currentHexRotation){
+							component.rotateLeft()
+						}
+					}
+					component.componentCountInfos.push(this.componentCountInfos["Product"][index])
+				} break
+				case "Reagent": {
+					let reagentMolecules = scenario.reagentMolecules
+					let index = savedComponent.reagentIndex
+					let reagent = reagentMolecules[index]
+					let molecule = createMolecule(reagent.molecule)
+					component = new Reagent(molecule)
+					let homeTile = savedComponent.homeTile
+					component.homeTile = Hex.fromObj(homeTile)
+					if (savedComponent.hexRotation){
+						while (savedComponent.hexRotation < component.currentHexRotation){
+							component.rotateRight()
+						}
+						while (savedComponent.hexRotation > component.currentHexRotation){
+							component.rotateLeft()
+						}
+					}
+					component.componentCountInfos.push(this.componentCountInfos["Reagent"][index])
+				} break
+				case "Glyph": {
+					let glyphId = savedComponent.glyphId
+					component = new Glyph(glyphId)
+					let homeTile = savedComponent.homeTile
+					component.homeTile = Hex.fromObj(homeTile)
+					if (savedComponent.hexRotation){
+						while (savedComponent.hexRotation < component.currentHexRotation){
+							component.rotateRight()
+						}
+						while (savedComponent.hexRotation > component.currentHexRotation){
+							component.rotateLeft()
+						}
+					}
+				} break
+				case "ArmMechanism": {
+					let mechanismId = savedComponent.mechanismId
+					component = new ArmMechanism(mechanismId)
+					let homeTile = savedComponent.homeTile
+					component.homeTile = Hex.fromObj(homeTile)
+					if (savedComponent.hexRotation){
+						while (savedComponent.hexRotation < component.currentHexRotation){
+							component.rotateRight()
+						}
+						while (savedComponent.hexRotation > component.currentHexRotation){
+							component.rotateLeft()
+						}
+					}
+					let firstArm = component.arms.contents[0]
+					let lengthDiff = savedComponent.armLength - firstArm.distance
+					if (firstArm.distance !== savedComponent.armLength){
+						for (let arm of component.arms.contents){
+							arm.distance += lengthDiff
+						}
+					}
+					component.rotationPoint = firstArm.direction.scale(firstArm.distance)
+
+					let savedProgram = savedPrograms[savedComponent.programIndex]
+					let program = new Program(component, savedProgram.name)
+					component.program = program
+					let savedInstructions = savedProgram.instructions
+					for (let i = 0; i < savedInstructions.length; i++){
+						let instructionTypeId = savedInstructions[i]
+						let instructionType = INSTRUCTIONS[instructionTypeId]
+						let instruction = new Instruction(instructionType)
+						program.instructions[i] = instruction
+					}
+					programs.push(program)
+				} break
+			}
+			if (component){
+				this.addComponent(component, this.currentLevel)
+			}
+		}
+	}
 
 	win(){
+		this.saveSolution()
 		this.playbackSpeed = 0
 		let modalTag = $("#modal")
 		clearModal(modalTag)
@@ -158,10 +344,10 @@ export class Game{
 		// scoreboards.append(instructionsScoreboard)
 
 		let playerName = "You"
-		let nowCost = 0
+		let nowCost = this.getTotalCost()
 		let nowCycles = this.simulationTimeStep + 1
 		let nowArea = this.solutionUsedHexes.length
-		let nowInstructions = 0
+		let nowInstructions = this.getTotalInstructions()
 
 		fillScoreboard(
 			costScoreboard, playerName, getLocaleString("scoreboard-title-cost", language, "COST"), 0, nowCost, 0, 0, {}, []
@@ -194,6 +380,33 @@ export class Game{
 		})
 	}
 
+	createComponentCountInfos(){
+		let scenario = this.currentLevel.scenario
+		let productMolecules = scenario.productMolecules
+		let reagentMolecules = scenario.reagentMolecules
+		for (let productMolecule of productMolecules){
+			let index = productMolecules.indexOf(productMolecule)
+			let componentCountInfo = {
+				type: "Product",
+				index: index,
+				count: 0,
+				maxCount: 1
+			}
+			this.componentCountInfos["Product"][index] = componentCountInfo
+		}
+
+		for (let reagentMolecule of reagentMolecules){
+			let index = reagentMolecules.indexOf(reagentMolecule)
+			let componentCountInfo = {
+				type: "Reagent",
+				index: index,
+				count: 0,
+				maxCount: 1
+			}
+			this.componentCountInfos["Reagent"][index] = componentCountInfo
+		}
+	}
+
 	fillComponentPane(){
 		let scenario = this.currentLevel.scenario
 		let productMolecules = scenario.productMolecules
@@ -211,12 +424,7 @@ export class Game{
 
 		for (let productMolecule of productMolecules){
 			let index = productMolecules.indexOf(productMolecule)
-			let componentCountInfo = {
-				type: "Product",
-				index: index,
-				count: 0,
-				maxCount: 1
-			}
+			let componentCountInfo = this.componentCountInfos["Product"][index]
 			let moleculeName = productMolecule.name
 			let molecule = createMolecule(productMolecule.molecule)
 			let componentTag = $("<div class='component'>")
@@ -234,12 +442,7 @@ export class Game{
 
 		for (let reagentMolecule of reagentMolecules){
 			let index = reagentMolecules.indexOf(reagentMolecule)
-			let componentCountInfo = {
-				type: "Reagent",
-				index: index,
-				count: 0,
-				maxCount: 1
-			}
+			let componentCountInfo = this.componentCountInfos["Reagent"][index]
 			let moleculeName = reagentMolecule.name
 			let molecule = createMolecule(reagentMolecule.molecule)
 			let componentTag = $("<div class='component'>")
@@ -267,13 +470,13 @@ export class Game{
 			})
 		}
 
-		for (let glyphName of allowedGlyphs){
+		for (let glyphId of allowedGlyphs){
 			let componentTag = $("<div class='component'>")
-			componentTag.text(glyphName)
+			componentTag.text(glyphId)
 			glyphsPane.append(componentTag)
 			componentTag.attr("data-available", true)
 			componentTag.on("mousedown", () => {
-				let component = new Glyph(glyphName)
+				let component = new Glyph(glyphId)
 				this.beginHoldingComponent(component)
 				this.selectedComponent.isRendered = false
 			})
@@ -341,6 +544,9 @@ export class Game{
 			let program = new Program(component, programs.length + 1)
 			programs.push(program)
 			component.program = program
+		}
+		if (component.program && level === this.currentLevel && !component.program.elem){
+			let program = component.program
 			program.createElement()
 			program.elem[0].addEventListener("mousemove", e => {
 				this.handleProgramMouseMove(e, program, component)
@@ -922,6 +1128,7 @@ export class Game{
 			}
 			this.cancelPlacement()
 		}
+		this.saveSolution()
 	}
 	cancelPlacement(force=false){
 		let component = this.selectedComponent

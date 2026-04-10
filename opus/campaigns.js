@@ -64,7 +64,7 @@ export function showCampaignChapter(campaign, chapterIndex){
 	}
 }
 
-export async function showScenario(scenario){
+export async function showScenario(scenario, saveUUID){
 	let resolve
 	let promise = new Promise(res => resolve = res)
 	let resultEvents = []
@@ -94,7 +94,7 @@ export async function showScenario(scenario){
 	let solutionsContainer = $("<div>").addClass("solutions-list").appendTo(right)
 	getSolutions(scenario).then(async solutionList => {
 		if (solutionList.length === 0){
-			const solution = await createSolution(scenario)
+			const solution = await createSolution(scenario, saveUUID)
 			solutionList.push(solution)
 		}
 
