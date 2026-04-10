@@ -107,6 +107,20 @@ export function fillScoreboard(tag, playerName, title, best, now, prev, targets,
 	}
 }
 
+export function clearModal(modal){
+	let header = modal.find(".modal-header")
+	let body = modal.find(".modal-body")
+	let footer = modal.find(".modal-footer")
+
+	modal.removeClass().addClass("modal").addClass("modal-xl").addClass("fade")
+	modal.find(".modal-dialog").removeClass().addClass("modal-dialog")
+	header.show().attr("style", "").empty().removeClass().addClass("modal-header")
+	body.show().attr("style", "").empty().removeClass().addClass("modal-body")
+	footer.show().attr("style", "").empty().removeClass().addClass("modal-footer")
+
+	header.append($("<div>").addClass("modal-title"))
+}
+
 export class Rectangle {
 	constructor (x, y, width, height){
 		this.x = x

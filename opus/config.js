@@ -6,4 +6,4 @@ export const atomSize = 0.6
 export const atomRenderSize = 0.7
 export const armSize = 0.4
 export const msPerCycle = 500
-export const submissionsPerProduct = 6
+export const submissionsPerProduct = 0

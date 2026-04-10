@@ -148,10 +148,19 @@
 		},
 		"20260409": {
 			"date": "April 9, 2026",
-			"line-count": 4700,
+			"line-count": 5000,
 			"changes": [
 				"- Stats actually display now",
-				"- You can play/pause the game with your keyboard."
+				"- You can play/pause the game with your keyboard.",
+				"- Level select screen",
+				"- Starting to work on persistent storage with save files and stuff."
+			]
+		},
+		"20260410": {
+			"date": "April 10, 2026",
+			"line-count": 5300,
+			"changes": [
+				"- "
 			]
 		}
 	}

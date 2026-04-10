@@ -1,14 +1,15 @@
 import {Game} from "./game.js";
 import {render} from "./render.js";
 import ControlManager from './controls.js';
-import { easeInOutCubic, easeInOutSine, easeOutCubic, loadSprite } from "./util.js"
+import { easeInOutSine, loadSprite } from "./util.js"
 import { ELEMENTS } from "./elements.js";
 import { INSTRUCTIONS, Instruction, createInstructionButton } from "./instructions.js";
 import { GLYPHTYPES } from "./glyphs.js";
 import { TrackPiece } from "./track.js";
 import { loadLocale } from "./locale.js";
-import { CAMPAIGNS, showCampaignChapter } from "./campaigns.js";
+import { CAMPAIGNS, showCampaignChapter, showScenario } from "./campaigns.js";
 import { SCENARIOS } from "./scenarios.js";
+import { createSaveFile, getSaveFiles, openDatabase, SaveFile } from "./database.js";
 
 const FRAMERATE = 60
 let tickInterval
@@ -17,6 +18,9 @@ const canvas = document.getElementById("screen")
 const debug = document.getElementById("debug")
 const ctx = canvas.getContext("2d")
 const controls = new ControlManager(canvas)
+
+let saveFiles = []
+let saveFile
 
 let scenario = SCENARIOS["test"]
 let currentCampaign = CAMPAIGNS["base"]
@@ -34,12 +38,14 @@ function draw(){
 	render(game, ctx, canvas.width, canvas.height)
 }
 function tick(){
-	const start = performance.now()
-	game.tick()
-	const tickEnd = performance.now()
-	draw()
-	const drawEnd = performance.now()
-	debug.innerHTML = `d${drawEnd-tickEnd}ms\nt${tickEnd-start}ms`
+	if (game && game.isActive){
+		const start = performance.now()
+		game.tick()
+		const tickEnd = performance.now()
+		draw()
+		const drawEnd = performance.now()
+		debug.innerHTML = `d${drawEnd-tickEnd}ms\nt${tickEnd-start}ms`
+	}
 }
 
 const componentsPane = $("#components")
@@ -117,6 +123,13 @@ window.addEventListener("mousemove", e => {
 
 async function loadGame(){
 	await loadLocale("./src/locale/en.json", "en")
+	await openDatabase()
+	saveFiles = await getSaveFiles()
+	if (!saveFiles.length){
+		let saveFile = await createSaveFile("You")
+		saveFiles.push(saveFile)
+	}
+	saveFile = saveFiles[0]
 
 	//Display instructions
 	for (let typeId in INSTRUCTIONS){
@@ -154,11 +167,39 @@ async function loadGame(){
 
 }
 
-function startLevel(scenario){
+function startLevel(scenario, solution){
 	$("#game-menu").fadeOut()
-	game = new Game(canvas, controls, scenario)
+	game = new Game(canvas, controls, scenario, solution)
 	clearInterval(tickInterval)
 	tickInterval = setInterval(tick, 1000 / FRAMERATE)
+
+	game.promise.then(events => {
+		game.isActive = false
+		handleGameEvents(events)
+	})
+}
+
+async function handleGameEvents(events){
+	for (let event of events){
+		switch (event.type){
+			case "change-scene": {
+				let scene = event.val
+				switch (scene){
+					case "level-select": {
+						$("#game-menu").fadeIn()
+					} break
+				}
+			} break
+			case "set-completion": {
+
+			} break
+			case "open-level": {
+				let scenario = event.scenario
+				let solution = event.solution
+				startLevel(scenario, solution)
+			} break
+		}
+	}
 }
 
 function startGame(){
@@ -171,7 +212,10 @@ function startGame(){
 			case "puzzle":
 			let scenarioId = event.info.scenarioId
 			let scenario = SCENARIOS[scenarioId]
-			startLevel(scenario)
+			showScenario(scenario).then(events => {
+				handleGameEvents(events)
+			})
+			// startLevel(scenario)
 			break
 		}
 	})

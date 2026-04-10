@@ -1,4 +1,4 @@
-import {Hex, Grid, Component, Atom, loadSprite, Molecule, Reagent, tagHierarchy, lerp, clamp, Product, createMolecule, Circle, find_angle, cross_product, Rectangle, fillScoreboard} from "./util.js"
+import {Hex, Grid, Component, Atom, loadSprite, Molecule, Reagent, tagHierarchy, lerp, clamp, Product, createMolecule, Circle, find_angle, cross_product, Rectangle, fillScoreboard, clearModal} from "./util.js"
 import { ArmMechanism, ARMTYPES } from "./arms.js"
 import { SCENARIOS } from "./scenarios.js"
 import { createInstructionTag, Instruction, INSTRUCTIONS } from "./instructions.js"
@@ -81,8 +81,10 @@ export class Program{
 }
 
 export class Game{
-	constructor(canvas, controls, scenario){
+	constructor(canvas, controls, scenario, solution){
 		this.controls = controls
+		this.solution = solution
+		this.isActive = true
 		this.lastTick = performance.now()
 		this.isDraggingMap = false
 		this.selectedComponent = null
@@ -110,6 +112,11 @@ export class Game{
 		this.xOffset = -0.5 * canvas.width
 		this.yOffset = -0.5 * canvas.height
 		this.hoveredHex = null
+
+		this.promise = new Promise(resolve => {
+			this.resolvePromise = resolve
+		})
+
 		this.setScenario(scenario)
 		this.initialize()
 		this.fillComponentPane()
@@ -123,18 +130,15 @@ export class Game{
 	win(){
 		this.playbackSpeed = 0
 		let modalTag = $("#modal")
+		clearModal(modalTag)
 
 		let header = modalTag.find(".modal-header")
 		header.addClass("justify-content-center")
-		let closeButton = modalTag.find(".btn-close")
-		closeButton.hide()
 		let title = modalTag.find(".modal-title")
-		body.empty()
 		title.text(getLocaleString("you-win-message", language))
 		title.addClass("text-center").addClass("display-3")
 		let body = modalTag.find(".modal-body")
-		body.empty()
-		let scenarioName = getLocaleString(["scenarios", this.currentLevel.scenario.id], language, "%scenario name%")
+		let scenarioName = getLocaleString(["scenarios", this.currentLevel.scenario.id, "name"], language, "%scenario name%")
 		let winSubtitle = getLocaleString("you-win-subtitle", language, "%win message%")
 		body.addClass("text-center")
 		body.append($("<h2>").text(scenarioName))
@@ -174,6 +178,20 @@ export class Game{
 			keyboard: false
 		})
 		modal.toggle()
+
+		modalTag.on("hidden.bs.modal", () => {
+			this.resolvePromise([
+				{
+					type: "change-scene",
+					val: "level-select"
+				},
+				{
+					type: "set-completion",
+					completed: true,
+					scenario: this.currentLevel.scenario
+				}
+			])
+		})
 	}
 
 	fillComponentPane(){
@@ -594,7 +612,6 @@ export class Game{
 				let instruction = instructions[i]
 				switch (instruction.type.id){
 					case "reset": {
-						console.log(i, positionInfo)
 						let rotation = ((positionInfo.rotation % 6) + 6) % 6
 						let extension = positionInfo.extension - 1
 						let trackIndexChange = positionInfo.track

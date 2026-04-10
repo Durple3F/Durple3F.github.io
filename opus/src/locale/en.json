@@ -7,6 +7,11 @@
 	"scoreboard-best-best": "BEST:",
 	"scoreboard-best-now": "NOW:",
 	"scoreboard-best-prev": "PREV:",
+	"button-open-puzzle": "Open",
+	"solution-stat-cost": "COST",
+	"solution-stat-cycle": "CYCLES",
+	"solution-stat-area": "AREA",
+	"solution-stat-instructions": "INSTRUCTIONS",
 
 	"scenarios": {
 		"test": {

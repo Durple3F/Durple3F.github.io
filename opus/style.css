@@ -15,18 +15,22 @@ body {
 	--programs-bg: rgb(20, 45, 121);
 	--pane-border: 3px solid black;
 	--base-program-row-color: oklch(0.2015 0.074 250.71);
+
+	--parchment-bg: #cfcdc1;
 }
 
 #game-ui {
 	position: absolute;
-	top: 0; left: 0;
+	top: 0;
+	left: 0;
 	width: 100vw;
 	height: 100vh;
 }
 
 #game-menu {
 	position: absolute;
-	top: 0; left: 0;
+	top: 0;
+	left: 0;
 	width: 100vw;
 	height: 100vh;
 	background-color: rgb(69, 69, 69);
@@ -34,14 +38,16 @@ body {
 
 	#level-select-bg {
 		position: absolute;
-		top: 0; left: 0;
+		top: 0;
+		left: 0;
 		width: 100vw;
 		height: 100vh;
 	}
 
 	#level-chapter-title {
 		position: absolute;
-		top: 0.5em; left: 50%;
+		top: 0.5em;
+		left: 50%;
 		width: 60%;
 		transform: translateX(-50%);
 		text-align: center;
@@ -57,7 +63,8 @@ body {
 
 	#level-select {
 		position: absolute;
-		top: 50%; left: 5%;
+		top: 50%;
+		left: 5%;
 		min-width: 24%;
 		transform: translateY(-50%);
 		background-color: rgba(0, 0, 0, 0.5);
@@ -86,7 +93,7 @@ body {
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
-				
+
 				padding-bottom: 0.5em;
 				padding-top: 0.5em;
 				padding-left: 0.5em;
@@ -97,11 +104,13 @@ body {
 					height: 2em;
 					pointer-events: none;
 				}
+
 				.level-select-checkbox {
 					height: 2em;
 					pointer-events: none;
 				}
 			}
+
 			.level-select-choice:hover {
 				background-color: rgba(255, 255, 255, 0.15);
 				box-shadow: inset 0 0 1em rgba(0, 0, 0, 0.305);
@@ -112,14 +121,18 @@ body {
 
 #screen {
 	position: absolute;
-	top: 0; right: 0;
-	height: var(--screen-height); width: 85vw;
+	top: 0;
+	right: 0;
+	height: var(--screen-height);
+	width: 85vw;
 }
 
 #components {
 	position: absolute;
-	top: 0; left: 0;
-	height: calc(100vh - var(--bottom-pane-height)); width: 15vw;
+	top: 0;
+	left: 0;
+	height: calc(100vh - var(--bottom-pane-height));
+	width: 15vw;
 	padding-top: 1em;
 	background-color: var(--components-bg);
 	border-right: var(--pane-border);
@@ -135,9 +148,12 @@ body {
 	cursor: pointer;
 	transition: filter 0.05s ease-out;
 }
+
 #components-tab {
-	top: 2vh; left: 15vw;
-	height: 8vh; width: 3vh;
+	top: 2vh;
+	left: 15vw;
+	height: 8vh;
+	width: 3vh;
 	background-color: var(--components-bg);
 	/* background-color: oklab(from var(--components-bg) calc()); */
 	border-top: var(--pane-border);
@@ -164,6 +180,7 @@ body {
 	text-align: center;
 	margin-bottom: 0;
 }
+
 .components-list {
 	display: flex;
 	flex-direction: row;
@@ -175,7 +192,7 @@ body {
 
 .component {
 	border: 0.1em solid lightblue;
-	background-color:rgb(27, 98, 169);
+	background-color: rgb(27, 98, 169);
 	padding: 0.3em;
 	margin: 0.5em;
 	min-width: 35%;
@@ -188,6 +205,7 @@ body {
 	pointer-events: none;
 	transition: box-shadow 0.1s ease-out;
 }
+
 .component[data-available="true"] {
 	cursor: pointer;
 	opacity: 1;
@@ -200,33 +218,43 @@ body {
 
 #bottom-pane {
 	position: absolute;
-	bottom: 0; left: 0;
+	bottom: 0;
+	left: 0;
 	width: 100vw;
 	height: var(--bottom-pane-height);
 	z-index: 15;
 	background-color: var(--programs-bg);
 	border-top: var(--pane-border);
 }
+
 #instruction-pane {
 	position: absolute;
-	top: 0; left: 0;
-	height: 100%; width: 15%;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 15%;
 	background-color: var(--playback-bg);
 	border-right: var(--pane-border);
 }
+
 #program-pane {
 	position: absolute;
-	top: 0; left: 15%;
-	height: 100%; width: 85%;
+	top: 0;
+	left: 15%;
+	height: 100%;
+	width: 85%;
 	display: flex;
 	overflow-y: auto;
 
 	#program-names {
 		width: var(--program-row-height);
 	}
-	#program-names > *, #program-rows > * {
+
+	#program-names>*,
+	#program-rows>* {
 		height: var(--program-row-height);
 	}
+
 	.program-name {
 		background-color: black;
 		width: 100%;
@@ -237,15 +265,18 @@ body {
 		font-size: 160%;
 		font-family: monospace;
 	}
+
 	#program-rows-wrapper {
 		margin-left: 2px;
 		overflow-x: auto;
 		flex-grow: 1;
 	}
+
 	#program-rows {
 		min-width: 100%;
 		width: fit-content;
 	}
+
 	.program-row {
 		width: 100%;
 		display: flex;
@@ -253,37 +284,48 @@ body {
 		justify-content: left;
 		padding-right: 30vw;
 	}
+
 	/* Add sibling index to firefox now. */
 	.program-row:nth-of-type(10n+0) {
 		background-color: oklch(from var(--base-program-row-color) l c calc(h + 36*9));
 	}
+
 	.program-row:nth-of-type(10n+1) {
 		background-color: oklch(from var(--base-program-row-color) l c h);
 	}
+
 	.program-row:nth-of-type(10n+2) {
 		background-color: oklch(from var(--base-program-row-color) l c calc(h + 36*1));
 	}
+
 	.program-row:nth-of-type(10n+3) {
 		background-color: oklch(from var(--base-program-row-color) l c calc(h + 36*2));
 	}
+
 	.program-row:nth-of-type(10n+4) {
 		background-color: oklch(from var(--base-program-row-color) l c calc(h + 36*3));
 	}
+
 	.program-row:nth-of-type(10n+5) {
 		background-color: oklch(from var(--base-program-row-color) l c calc(h + 36*4));
 	}
+
 	.program-row:nth-of-type(10n+6) {
 		background-color: oklch(from var(--base-program-row-color) l c calc(h + 36*5));
 	}
+
 	.program-row:nth-of-type(10n+7) {
 		background-color: oklch(from var(--base-program-row-color) l c calc(h + 36*6));
 	}
+
 	.program-row:nth-of-type(10n+8) {
 		background-color: oklch(from var(--base-program-row-color) l c calc(h + 36*7));
 	}
+
 	.program-row:nth-of-type(10n+9) {
 		background-color: oklch(from var(--base-program-row-color) l c calc(h + 36*8));
 	}
+
 	.program-row .instruction {
 		height: 100%;
 		display: flex-inline;
@@ -323,8 +365,9 @@ body {
 				color: transparent;
 				background-clip: text;
 			}
+
 			.program-stat-val {
-				background-color: #bfb7ac;
+				background-color: var(--parchment-bg);
 				color: #372d23;
 				min-width: 3em;
 				display: inline-block;
@@ -342,8 +385,10 @@ body {
 	overflow-y: auto;
 	margin-top: 0.25vw;
 	position: absolute;
-	top: 0; left: 0;
-	width: 100%; height: 75%;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 75%;
 }
 
 .instruction-button {
@@ -357,9 +402,10 @@ body {
 .instruction-button .instruction {
 	width: 100%;
 }
+
 .instruction {
 	aspect-ratio: 10 / 9;
-	background-color: #cfcdc1;
+	background-color: var(--parchment-bg);
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -383,6 +429,7 @@ body {
 		}
 	}
 }
+
 .instruction[data-type="idle"] {
 	opacity: 0;
 }
@@ -395,8 +442,10 @@ body {
 
 #playback-pane {
 	position: absolute;
-	bottom: 0; left: 0;
-	width: 100%; height: 25%;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 25%;
 	display: flex;
 	justify-content: space-evenly;
 	align-items: center;
@@ -412,26 +461,38 @@ body {
 	--bs-modal-header-border-width: calc(var(--bs-modal-border-width) / 3);
 	--bs-modal-footer-border-width: calc(var(--bs-modal-border-width) / 3);
 	font-family: "Crimson Text", serif;
+	/* pointer-events: none; */
 
-	h1, h2, h3, h4, h5, h6 {
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
 		font-weight: normal;
 	}
+
+	&>* {
+		pointer-events: auto;
+	}
 }
+
 .scoreboards {
 	display: flex;
 	justify-content: space-evenly;
 	align-items: top;
 	color: #2c251d;
-	
+
 	.scoreboard {
 		width: 28%;
 		border: 0.2em solid var(--bs-modal-border-color);
-		background: radial-gradient(circle at top center,rgba(197, 199, 188, 1) 0%, rgba(128, 126, 105, 1) 100%);
+		background: radial-gradient(circle at top center, rgba(197, 199, 188, 1) 0%, rgba(128, 126, 105, 1) 100%);
 		box-shadow: inset 0 0 0.7em black;
 
 		.scoreboard-title {
 			font-weight: bold;
 		}
+
 		.scoreboard-bests {
 			display: flex;
 			justify-content: space-between;
@@ -446,6 +507,7 @@ body {
 				}
 			}
 		}
+
 		.scoreboard-records {
 			display: flex;
 			flex-direction: column;
@@ -460,9 +522,116 @@ body {
 				align-items: center;
 				border-bottom: 0.1em solid var(--bs-modal-border-color);
 			}
+
 			.scoreboard-player {
 				font-weight: bold;
 			}
+		}
+	}
+}
+
+.scenario-container {
+	display: flex;
+	justify-content: center;
+	align-items: stretch;
+	min-height: 60vh;
+	font-family: "Crimson Text", serif;
+
+	.scenario-story {
+		width: 40%;
+		min-height: 100%;
+		overflow-y: auto;
+		background-color: var(--parchment-bg);
+	}
+
+	.scenario-ui {
+		width: 60%;
+		min-height: 100%;
+		overflow-y: auto;
+		background-color: rgba(0, 0, 0, 0.5);
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		align-items: stretch;
+		text-align: center;
+
+		.scenario-title {
+			font-size: 150%;
+			text-transform: uppercase;
+		}
+	}
+}
+
+.solutions-list {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+
+	padding: 1em;
+
+	.solution {
+		width: 48%;
+		margin: 1%;
+		min-height: 4em;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		position: relative;
+		cursor: pointer;
+
+		.solution-bg {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			z-index: 2;
+			border: 0.3em double #dbd7d6d5;
+		}
+		.solution-bg2 {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			z-index: 1;
+		}
+
+		.solution-name {
+			line-height: 0.9;
+			z-index: 3;
+		}
+
+		.solution-stats {
+			font-size: 90%;
+			color: hsl(from var(--bs-modal-color) h s l / 0.8);
+			line-height: 0.9;
+			z-index: 3;
+
+			.solution-stat {
+				margin: 0.2em;
+			}
+		}
+	}
+	.solution[data-active="true"] {
+		.solution-bg {
+			border: initial;
+			background-image: linear-gradient(to bottom, #dfdbb8, #7b6d3e);
+			--width: 1em;
+			mask:
+				linear-gradient(white 0 0),
+    		linear-gradient(black 0 0);
+			mask-position: center;
+			mask-repeat: no-repeat;
+  		mask-size: calc(100% - var(--width)) calc(100% - var(--width)), 100% 100%;
+ 			mask-composite: exclude;
+			box-shadow: 0 0 1em white;
+		}
+		.solution-bg2 {
+			box-shadow: 0 0 0.5em white;
 		}
 	}
 }
@@ -477,7 +646,8 @@ body {
 
 #debug {
 	position: absolute;
-	top: 0; right: 0;
+	top: 0;
+	right: 0;
 	background-color: rgba(0, 0, 0, 0.2);
 	color: white;
 	font-family: monospace;
@@ -488,15 +658,18 @@ body {
 
 #tooltip {
 	position: absolute;
-	top: 0; left: 0;
+	top: 0;
+	left: 0;
 	z-index: 100;
 	pointer-events: none;
 }
 
 #loading-screen {
 	position: absolute;
-	top: 0; left: 0;
-	height: 100vh; width: 100vw;
+	top: 0;
+	left: 0;
+	height: 100vh;
+	width: 100vw;
 	background-color: black;
 	color: white;
 	z-index: 100;
