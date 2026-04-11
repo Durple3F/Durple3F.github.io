@@ -30,19 +30,21 @@ new Scenario("test",
 			]
 		}
 	], [
-	{
-		"name": "Elemental Fire",
-		"molecule": [
-			[
-				["Fire", 0, 0, 0]
+		{
+			"name": "Elemental Fire",
+			"molecule": [
+				[
+					["Fire", 0, 0, 0]
+				]
 			]
-		]
-	}
-], [
-	"Fixed-Length Arm",
-	"Fixed-Length Double Arm",
-	"Fixed-Length Triple Arm",
-	"Fixed-Length Sextuple Arm",
-	"Piston Arm",
-	"Van Berlo's Wheel",
-], ["Glyph of Bonding"])
+		}
+	], [
+		"Fixed-Length Arm",
+		"Fixed-Length Double Arm",
+		"Fixed-Length Triple Arm",
+		"Fixed-Length Sextuple Arm",
+		"Piston Arm",
+		"Van Berlo's Wheel",
+	],
+	["Glyph of Bonding"]
+)
