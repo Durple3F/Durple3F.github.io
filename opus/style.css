@@ -118,6 +118,31 @@ body {
 			}
 		}
 	}
+
+	#level-select-chapter-container {
+		position: absolute;
+		bottom: 0.5em;
+		left: 50%;
+		transform: translateX(-50%);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		.level-select-chapter {
+			height: 7em;
+
+			img {
+				height: 100%;
+				aspect-ratio: 1 / 1;
+			}
+		}
+		.level-select-chapter[data-unlocked="true"] {
+			cursor: pointer;
+		}
+		.level-select-chapter[data-unlocked="true"]:hover {
+			filter: brightness(1.2) drop-shadow(0 0 0.5em rgba(197, 123, 89, 0.623));
+		}
+	}
 }
 
 #screen {
@@ -471,10 +496,6 @@ body {
 	h5,
 	h6 {
 		font-weight: normal;
-	}
-
-	&>* {
-		pointer-events: auto;
 	}
 }
 .modal-xl {

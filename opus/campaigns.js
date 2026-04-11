@@ -13,9 +13,10 @@ export class CampaignEvent {
 }
 
 export class CampaignChapter {
-	constructor(id, eventList){
+	constructor(id, eventList, imageUrls){
 		this.id = id
 		this.events = eventList
+		this.imageUrls = imageUrls
 	}
 }
 
@@ -61,6 +62,20 @@ export function showCampaignChapter(campaign, chapterIndex){
 			break
 		}
 		choicesTag.append(tag)
+	}
+
+	let chaptersContainer = $("#level-select-chapter-container")
+	chaptersContainer.empty()
+	for (let i = 0; i < campaign.chapters.length; i++){
+		let chapter = campaign.chapters[i]
+		let chapterTag = $("<div>").addClass("level-select-chapter").appendTo(chaptersContainer)
+		let image = $("<img>").appendTo(chapterTag).attr("src", chapter.imageUrls.unlocked)
+
+		chapterTag.attr("data-unlocked", true)
+		chapterTag.on("click", () => {
+			if (i === chapterIndex) return
+			showCampaignChapter(campaign, i)
+		})
 	}
 }
 
@@ -112,7 +127,6 @@ export async function showScenario(scenario, saveUUID){
 		let nameTag = $("<div>").addClass("solution-name").appendTo(tag)
 		nameTag.text(solution.name)
 		let statsTag = $("<div>").addClass("solution-stats").appendTo(tag)
-		console.log(solution)
 		if (solution.verified){
 			let area = solution.solutionArea
 			let cost = solution.solutionCost
@@ -133,11 +147,11 @@ export async function showScenario(scenario, saveUUID){
 			// .append(getLocaleString("solution-stat-instructions", language, "INSTRUCTIONS"))
 		} else {
 			let partCount = solution.components.length
-			let partTag = $("<span>").addClass("solution-stat").appendTo(statsTag)
-			partTag.append(partCount).append(" ").append(getLocaleString("solution-stat-parts", language, "PARTS"))
-			statsTag.append("/")
 			let verifiedTag = $("<span>").addClass("solution-stat").appendTo(statsTag)
 			verifiedTag.append(getLocaleString("solution-stat-solved", language, "NOT SOLVED YET"))
+			statsTag.append("/")
+			let partTag = $("<span>").addClass("solution-stat").appendTo(statsTag)
+			partTag.append(partCount).append(" ").append(getLocaleString("solution-stat-parts", language, "PARTS"))
 		}
 		return tag
 	}
@@ -263,5 +277,14 @@ export async function showScenario(scenario, saveUUID){
 new Campaign("base", [
 	new CampaignChapter("prologue", [
 		new CampaignEvent("puzzle", {scenarioId: "test"})
-	])
+	], {
+		locked: "./src/img/campaigns/base/prologue locked.png",
+		unlocked: "./src/img/campaigns/base/prologue.png"
+	}),
+	new CampaignChapter("chapter-1", [
+		
+	], {
+		locked: "./src/img/campaigns/base/chapter 1 locked.png",
+		unlocked: "./src/img/campaigns/base/chapter 1.png"
+	}),
 ])

@@ -17,7 +17,7 @@
 	"solution-stat-area": "AREA",
 	"solution-stat-instructions": "INSTRUCTIONS",
 	"solution-stat-parts": "PARTS",
-	"solution-stat-solved": "NOT SOLVED YET",
+	"solution-stat-solved": "NOT YET SOLVED",
 	"message-please-rename-solution": "Please enter a new name for this solution:",
 	"button-cancel-rename-solution": "Cancel",
 	"button-submit-rename-solution": "Rename Solution",
