@@ -1,4 +1,4 @@
-import { createSolution, getSolutions, SolutionSave } from "./database"
+import { createSolution, deleteSolution, getSolutions, saveSolution, SolutionSave } from "./database"
 import { getLocaleString } from "./locale"
 import { SCENARIOS } from "./scenarios"
 import { clearModal } from "./util"
@@ -81,7 +81,17 @@ export async function showScenario(scenario, saveUUID){
 
 	let container = $("<div>").addClass("scenario-container").appendTo(body)
 	let left = $("<div>").addClass("scenario-story").appendTo(container)
-	var right = $("<div>").addClass("scenario-ui").appendTo(container)
+	let right = $("<div>").addClass("scenario-ui").appendTo(container)
+
+	let renameContainer = $("<div>").addClass("solution-rename-container").appendTo(right)
+	renameContainer.hide()
+	renameContainer.append($("<div>").text(getLocaleString("message-please-rename-solution", language, "Rename: ")))
+	let renameInput = $("<input>").appendTo(renameContainer)
+	let renameButtonsContainer = $("<div>").addClass("btn-container").appendTo(renameContainer)
+	let cancelRenameButton = $("<button>").text(getLocaleString("button-cancel-rename-solution", language, "Cancel"))
+	cancelRenameButton.appendTo(renameButtonsContainer)
+	let submitRenameButton = $("<button>").text(getLocaleString("button-submit-rename-solution", language, "Rename"))
+	submitRenameButton.appendTo(renameButtonsContainer)
 
 	left.text("STORY GOES HERE")
 
@@ -91,43 +101,66 @@ export async function showScenario(scenario, saveUUID){
 	let scoreboardsContainer = $("<div>").addClass("scoreboards-container").appendTo(right)
 
 	let selectedSolution = null
+	let selectedSolutionTag = null
 	let solutionsContainer = $("<div>").addClass("solutions-list").appendTo(right)
-	getSolutions(scenario).then(async solutionList => {
-		if (solutionList.length === 0){
-			const solution = await createSolution(scenario, saveUUID)
-			solutionList.push(solution)
-		}
 
-		selectedSolution = solutionList[0]
-		const selectSolution = tag => {
-			tag.attr("data-active", true)
-			if (tag.data("solution") instanceof SolutionSave){
-				selectedSolution = tag.data("solution")
-			}
-		}
-
-		for (let solution of solutionList){
-			let tag = $("<div>").addClass("solution").appendTo(solutionsContainer)
-			tag.data("solution", solution)
-			let bg = $("<div>").addClass("solution-bg").appendTo(tag)
-			let bg2 = $("<div>").addClass("solution-bg2").appendTo(tag)
-			let nameTag = $("<div>").addClass("solution-name").appendTo(tag)
-			nameTag.text(solution.name)
-			let statsTag = $("<div>").addClass("solution-stats").appendTo(tag)
+	const createSolutionTag = solution => {
+		let tag = $("<div>").addClass("solution").appendTo(solutionsContainer)
+		tag.data("solution", solution)
+		let bg = $("<div>").addClass("solution-bg").appendTo(tag)
+		let bg2 = $("<div>").addClass("solution-bg2").appendTo(tag)
+		let nameTag = $("<div>").addClass("solution-name").appendTo(tag)
+		nameTag.text(solution.name)
+		let statsTag = $("<div>").addClass("solution-stats").appendTo(tag)
+		console.log(solution)
+		if (solution.verified){
 			let area = solution.solutionArea
 			let cost = solution.solutionCost
 			let cycles = solution.solutionCycle
 			let instructionCount = solution.solutionInstructionCount
 			let areaTag = $("<span>").addClass("solution-stat").appendTo(statsTag)
 			areaTag.append(area).append(" ").append(getLocaleString("solution-stat-area", language, "AREA"))
+			statsTag.append("/")
 			let costTag = $("<span>").addClass("solution-stat").appendTo(statsTag)
 			costTag.append(cost).append($("<span>").addClass("tiny-g").text("G")).append(" ")
 			.append(getLocaleString("solution-stat-cost", language, "COST"))
+			statsTag.append("/")
 			let cycleTag = $("<span>").addClass("solution-stat").appendTo(statsTag)
 			cycleTag.append(cycles).append(" ").append(getLocaleString("solution-stat-cycle", language, "CYCLES"))
+			//TODO:
 			// let instructionCountTag = $("<span>").addClass("solution-stat").appendTo(statsTag)
 			// instructionCountTag.append(instructionCount).append(" ")
 			// .append(getLocaleString("solution-stat-instructions", language, "INSTRUCTIONS"))
+		} else {
+			let partCount = solution.components.length
+			let partTag = $("<span>").addClass("solution-stat").appendTo(statsTag)
+			partTag.append(partCount).append(" ").append(getLocaleString("solution-stat-parts", language, "PARTS"))
+			statsTag.append("/")
+			let verifiedTag = $("<span>").addClass("solution-stat").appendTo(statsTag)
+			verifiedTag.append(getLocaleString("solution-stat-solved", language, "NOT SOLVED YET"))
+		}
+		return tag
+	}
+	const selectSolution = tag => {
+		if (selectedSolutionTag){
+			selectedSolutionTag.attr("data-active", false)
+		}
+		tag.attr("data-active", true)
+		if (tag.data("solution") instanceof SolutionSave){
+			selectedSolution = tag.data("solution")
+			selectedSolutionTag = tag
+		}
+	}
+	
+	getSolutions(scenario).then(async solutionList => {
+		if (solutionList.length === 0){
+			const solution = await createSolution(scenario, saveUUID)
+			solutionList.push(solution)
+		}
+
+		for (let solution of solutionList){
+			let tag = createSolutionTag(solution)
+			
 			if (solution === solutionList[0]){
 				selectSolution(tag)
 			}
@@ -155,6 +188,64 @@ export async function showScenario(scenario, saveUUID){
 		resolve()
 		modal.toggle()
 	})
+
+	const handleNew = async () => {
+		let solution = await createSolution(scenario, saveUUID)
+		let tag = createSolutionTag(solution)
+		tag.on("click", () => selectSolution(tag))
+		selectSolution(tag)
+	}
+
+	const handleCopy = async () => {
+		let solution = selectedSolution
+		let clone = solution.clone()
+		let tag = createSolutionTag(clone)
+		tag.on("click", () => selectSolution(tag))
+		selectSolution(tag)
+	}
+
+	const handleDelete = async () => {
+		await deleteSolution(selectedSolution)
+		selectedSolutionTag.remove()
+		let otherSolutions = solutionsContainer.children(".solution")
+		if (otherSolutions.length){
+			let first = otherSolutions[0]
+			selectSolution($(first))
+		} else {
+			handleNew()
+		}
+	}
+
+	const handleRename = () => {
+		renameContainer.fadeIn()
+		renameInput.val(selectedSolution.name)
+	}
+	const handleRenameCancel = () => {
+		renameContainer.fadeOut()
+	}
+	const handleRenameSubmit = () => {
+		let newName = renameInput.val()
+		selectedSolutionTag.find(".solution-name").text(newName)
+		selectedSolution.name = newName
+		saveSolution(selectedSolution)
+		renameContainer.fadeOut()
+	}
+
+	let newSolutionButton = $("<button>").addClass("new-solution-button").appendTo(leftButtons)
+	newSolutionButton.text(getLocaleString("button-new-solution", language, "Open"))
+	newSolutionButton.on("click", () => handleNew())
+	let renameSolutionButton = $("<button>").addClass("rename-solution-button").appendTo(leftButtons)
+	renameSolutionButton.text(getLocaleString("button-rename-solution", language, "Rename"))
+	renameSolutionButton.on("click", () => handleRename())
+	let copySolutionButton = $("<button>").addClass("copy-solution-button").appendTo(leftButtons)
+	copySolutionButton.text(getLocaleString("button-copy-solution", language, "Copy"))
+	copySolutionButton.on("click", () => handleCopy())
+	let deleteSolutionButton = $("<button>").addClass("delete-solution-button").appendTo(leftButtons)
+	deleteSolutionButton.text(getLocaleString("button-delete-solution", language, "Delete"))
+	deleteSolutionButton.on("click", () => handleDelete())
+
+	cancelRenameButton.on("click", () => handleRenameCancel())
+	submitRenameButton.on("click", () => handleRenameSubmit())
 
 	let modal = new bootstrap.Modal(modalTag[0], {
 		keyboard: false

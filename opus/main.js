@@ -87,7 +87,9 @@ componentsTab.on("click", () => {
 })
 
 $(document).on("keydown", e => {
-	e.preventDefault()
+	if (e.originalEvent.key === "Tab"){
+		e.preventDefault()
+	}
 })
 $("#playback-stop-button").on("click", () => {
 	game.stopSimulation()

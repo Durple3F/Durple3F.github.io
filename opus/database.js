@@ -140,6 +140,16 @@ export class SolutionSave {
 		this.components = []
 		this.programs = []
 	}
+	clone(){
+		let scenario = SCENARIOS[this.scenarioId]
+		let clone = new SolutionSave(scenario, this.saveUUID)
+		let uuid = clone.uuid
+		for (let key in this){
+			clone[key] = JSON.parse(JSON.stringify(this[key]))
+		}
+		clone.uuid = uuid
+		return clone
+	}
 	toStore(){
 		let obj = {
 			uuid: this.uuid,
@@ -173,6 +183,7 @@ export class SolutionSave {
 		solution.version = store.version
 		solution.scenarioId = store.scenarioId
 		solution.name = store.name
+		solution.verified = store.verified
 		solution.solutionArea = store.solutionArea
 		solution.solutionCost = store.solutionCost
 		solution.solutionCycle = store.solutionCycle
@@ -196,13 +207,14 @@ export async function getSolutions(scenario){
 	const result = []
 	request.onsuccess = async event => {
 		cursor = event.target.result
-		while (cursor){
+		if (cursor){
 			let val = cursor.value
 			let solution = SolutionSave.fromStore(val)
 			result.push(solution)
-			cursor = await cursor.continue()
+			cursor.continue()
+		} else {
+			resolve(result)
 		}
-		resolve()
 	}
 	await promise
 	return result
@@ -239,6 +251,22 @@ export async function createSolution(scenario, saveUUID){
 	const solutionsStore = transaction.objectStore("solutions")
 	const request = solutionsStore.put(solution.toStore())
 	request.onsuccess = () => resolve()
+	await promise
+	return solution
+}
+export async function deleteSolution(solution){
+	let resolve
+	let promise = new Promise(res => resolve = res)
+	const transaction = db.transaction(["solutions"], "readwrite")
+	const solutionsStore = transaction.objectStore("solutions")
+	const range = IDBKeyRange.only(solution.scenarioId)
+	const index = solutionsStore.index("scenarioId")
+	const request = index.getKey(range)
+	request.onsuccess = e => {
+		let primaryKey = e.target.result
+		solutionsStore.delete(primaryKey)
+		resolve()
+	}
 	await promise
 	return solution
 }

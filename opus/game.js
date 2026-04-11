@@ -313,7 +313,18 @@ export class Game{
 	}
 
 	win(){
+		let playerName = "You"
+		let nowCost = this.getTotalCost()
+		let nowCycles = this.simulationTimeStep + 1
+		let nowArea = this.solutionUsedHexes.length
+		let nowInstructions = this.getTotalInstructions()
+		this.solution.solutionArea = nowArea
+		this.solution.solutionCost = nowCost
+		this.solution.solutionCycle = nowCycles
+		this.solution.solutionInstructionCount = nowInstructions
+		this.solution.verified = true
 		this.saveSolution()
+
 		this.playbackSpeed = 0
 		let modalTag = $("#modal")
 		clearModal(modalTag)
@@ -342,12 +353,6 @@ export class Game{
 		// TODO:
 		// let instructionsScoreboard = $("<div>").addClass("scoreboard")
 		// scoreboards.append(instructionsScoreboard)
-
-		let playerName = "You"
-		let nowCost = this.getTotalCost()
-		let nowCycles = this.simulationTimeStep + 1
-		let nowArea = this.solutionUsedHexes.length
-		let nowInstructions = this.getTotalInstructions()
 
 		fillScoreboard(
 			costScoreboard, playerName, getLocaleString("scoreboard-title-cost", language, "COST"), 0, nowCost, 0, 0, {}, []
@@ -378,6 +383,14 @@ export class Game{
 				}
 			])
 		})
+	}
+	exit(){
+		this.resolvePromise([
+			{
+				type: "change-scene",
+				val: "level-select"
+			}
+		])
 	}
 
 	createComponentCountInfos(){
@@ -633,6 +646,7 @@ export class Game{
 		this.heldInstructions = []
 		$("#tooltip").empty()
 		this.performUIUpdates()
+		this.saveSolution()
 	}
 	placeHeldInstructions(){
 		
@@ -2328,7 +2342,11 @@ export class Game{
 			$("#playback-advance-button").click()
 		}
 		if (controls.justPressed("Escape")){
-			$("#playback-stop-button").click()
+			if (this.isPlayingSimulation){
+				$("#playback-stop-button").click()
+			} else {
+				this.exit()
+			}
 		}
 
 		//Advance time

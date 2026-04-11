@@ -8,10 +8,19 @@
 	"scoreboard-best-now": "NOW:",
 	"scoreboard-best-prev": "PREV:",
 	"button-open-puzzle": "Open",
+	"button-new-solution": "New",
+	"button-copy-solution": "Copy",
+	"button-rename-solution": "Rename",
+	"button-delete-solution": "Delete",
 	"solution-stat-cost": "COST",
 	"solution-stat-cycle": "CYCLES",
 	"solution-stat-area": "AREA",
 	"solution-stat-instructions": "INSTRUCTIONS",
+	"solution-stat-parts": "PARTS",
+	"solution-stat-solved": "NOT SOLVED YET",
+	"message-please-rename-solution": "Please enter a new name for this solution:",
+	"button-cancel-rename-solution": "Cancel",
+	"button-submit-rename-solution": "Rename Solution",
 
 	"scenarios": {
 		"test": {

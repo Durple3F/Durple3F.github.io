@@ -162,7 +162,8 @@
 			"changes": [
 				"- More work on the scenario screen",
 				"- Working on permanently storing players' solutions to puzzles.",
-				"- Your solutions to a puzzle now save and will remain there when you return."
+				"- Your solutions to a puzzle now save and will remain there when you return.",
+				"- Added buttons to create new solutions, copy solutions, and delete solutions."
 			]
 		}
 	}

@@ -17,6 +17,7 @@ body {
 	--base-program-row-color: oklch(0.2015 0.074 250.71);
 
 	--parchment-bg: #cfcdc1;
+	--border-color-secondary: #dbd7d6d5;
 }
 
 #game-ui {
@@ -476,6 +477,9 @@ body {
 		pointer-events: auto;
 	}
 }
+.modal-xl {
+	--bs-modal-width: 75vw;
+}
 
 .scoreboards {
 	display: flex;
@@ -538,14 +542,14 @@ body {
 	font-family: "Crimson Text", serif;
 
 	.scenario-story {
-		width: 40%;
+		width: 35%;
 		min-height: 100%;
 		overflow-y: auto;
 		background-color: var(--parchment-bg);
 	}
 
 	.scenario-ui {
-		width: 60%;
+		width: 65%;
 		min-height: 100%;
 		overflow-y: auto;
 		background-color: rgba(0, 0, 0, 0.5);
@@ -554,10 +558,91 @@ body {
 		justify-content: space-between;
 		align-items: stretch;
 		text-align: center;
+		position: relative;
 
 		.scenario-title {
 			font-size: 150%;
 			text-transform: uppercase;
+		}
+
+		.scenario-buttons {
+			display: flex;
+			justify-content: space-between;
+			padding-left: 4em;
+			padding-right: 4em;
+
+			button {
+				border: 0.1em solid #14130f;
+				background: linear-gradient(180deg,rgba(20, 19, 15, 1) 0%, rgba(210, 212, 201, 1) 10%, rgba(82, 83, 77, 1) 23%, rgba(61, 62, 57, 1) 71%, rgba(90, 91, 83, 1) 77%, rgba(27, 28, 20, 1) 91%, rgba(88, 89, 83, 1) 100%);
+				padding: 0.5em;
+				color: #030301;
+				font-size: 140%;
+				flex-grow: 1;
+			}
+			button:hover {
+				color: #fbfdf2;
+				filter: brightness(1.3);
+			}
+			.solution-management-buttons {
+				display: flex;
+				justify-content: space-evenly;
+				align-items: center;
+				flex-grow: 1;
+
+				button {
+					width: 25%;
+					flex-grow: none;
+				}
+			}
+		}
+
+		.solution-rename-container {
+			position: absolute;
+			top: 0; left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.888);
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			z-index: 10;
+			padding-left: 15%;
+			padding-right: 15%;
+			font-size: 130%;
+
+			&> * {
+				width: 100%;
+				margin: 0.6em;
+			}
+			input {
+				background-color: transparent;
+				border: 0.1em solid var(--border-color-secondary);
+				padding: 0.3em;
+				text-align: center;
+				outline: none;
+			}
+
+			.btn-container {
+				display: flex;
+				justify-content: space-between;
+
+				button {
+					background-color: transparent;
+					border: 0.2em double var(--border-color-secondary);
+					padding: 0.3em;
+					width: 50%;
+				}
+				button:first-child {
+					margin-right: 0.6em;
+				}
+				button:last-child {
+					margin-left: 0.6em;
+				}
+				button:hover {
+					box-shadow: inset 0 0 0.5em white;
+				}
+			}
 		}
 	}
 }
@@ -566,8 +651,10 @@ body {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	align-items: center;
+	align-items: flex-start;
 	flex-wrap: wrap;
+	align-content: flex-start;
+	flex-grow: 1;
 
 	padding: 1em;
 
@@ -589,7 +676,7 @@ body {
 			width: 100%;
 			height: 100%;
 			z-index: 2;
-			border: 0.3em double #dbd7d6d5;
+			border: 0.3em double var(--border-color-secondary);
 		}
 		.solution-bg2 {
 			position: absolute;
@@ -620,7 +707,7 @@ body {
 		.solution-bg {
 			border: initial;
 			background-image: linear-gradient(to bottom, #dfdbb8, #7b6d3e);
-			--width: 1em;
+			--width: 0.6em;
 			mask:
 				linear-gradient(white 0 0),
     		linear-gradient(black 0 0);
