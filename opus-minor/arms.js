@@ -56,6 +56,8 @@ export class ArmMechanism extends Component {
 		let type = ARMTYPES[typeId];
 		this.mechanismType = type;
 		this.program = null;
+		this.isGrabbing = false;
+		this.grabAnimationProgress = 0;
 		this.attachedTrack = null;
 		this.attachedTrackIndex = null;
 		for (let armLocation of type.armDirectionList) {

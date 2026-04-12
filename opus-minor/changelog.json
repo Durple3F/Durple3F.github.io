@@ -179,9 +179,11 @@
 		},
 		"20260412": {
 			"date": "April 12, 2026",
-			"line-count": 6200,
+			"line-count": 6300,
 			"changes": [
-				"- Finished the Silver, Gold, and Quicksilver images."
+				"- Finished the Silver, Gold, and Quicksilver images.",
+				"- Arms have li'l grippers now so you can tell whether they're currently gripping something or not.",
+				"- Arms that are grabbing can't grab again."
 			]
 		}
 	}

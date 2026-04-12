@@ -124,9 +124,9 @@ export class Game{
 		})
 
 		this.setScenario(scenario)
+		this.initialize()
 		this.createComponentCountInfos()
 		this.loadSolution(this.solution)
-		this.initialize()
 		this.fillComponentPane()
 		this.performUIUpdates()
 	}
@@ -604,6 +604,8 @@ export class Game{
 
 	initialize(){
 		this.resizeScreen()
+		$("#program-names").empty()
+		$("#program-rows").empty()
 	}
 
 	beginHoldingInstruction(instruction){
@@ -1785,6 +1787,17 @@ export class Game{
 					}
 				} break
 				case "grabber_grab": {
+					if (component.isGrabbing) break
+					component.isGrabbing = true
+					let animation = {
+						type: "set_grab_animation",
+						target: component,
+						startT: timestep,
+						endT: timestep + 1,
+						startV: 0,
+						endV: 1
+					}
+					this.playingAnimations.push(animation)
 					const arms = component.arms.contents
 					for (let arm of arms){
 						const targetHex = homeTile.add(arm.direction.scale(arm.distance)).round()
@@ -1808,6 +1821,17 @@ export class Game{
 					}
 				} break
 				case "grabber_drop": {
+					if (!component.isGrabbing) break
+					component.isGrabbing = false
+					let animation = {
+						type: "set_grab_animation",
+						target: component,
+						startT: timestep,
+						endT: timestep + 1,
+						startV: 1,
+						endV: 0
+					}
+					this.playingAnimations.push(animation)
 					const arms = component.arms.contents
 					for (let arm of arms){
 						arm.grippedComponent = null
@@ -2229,6 +2253,10 @@ export class Game{
 				const v = lerp(animation.startV, animation.endV, p)
 				component.offsetDistance = v
 			} break
+			case "set_grab_animation": {
+				const v = lerp(animation.startV, animation.endV, p)
+				component.grabAnimationProgress = v
+			} break
 		}
 	}
 	applyAllAnimations(){
@@ -2277,6 +2305,9 @@ export class Game{
 			} break
 			case "set_track_index": {
 				component.attachedTrackIndex = animation.endV
+			} break
+			case "set_grab_animation": {
+				component.grabAnimationProgress = animation.endV
 			} break
 		}
 	}

@@ -3,6 +3,7 @@ import {drawCollisionCircles, drawGhostRotation, drawMoleculeHomeTile, atomRende
 import { TrackPiece } from "./track.js";
 import Color from "https://colorjs.io/dist/color.js";
 
+const TWOPI = 2 * Math.PI
 const ROOT3 = Math.sqrt(3)
 const max = Math.max
 const min = Math.min
@@ -83,6 +84,7 @@ function drawArmMechanism(ctx, mechanism, x, y, hexSize, inRadius, horiz, vert){
 
 	//use the home tile to handle fine decimal rotation
 	const angle = mechanism.rotation
+	const hexRotation = mechanism.currentHexRotation
 	const cosT = cos(angle)
 	const sinT = sin(angle)
 	const atomSize = atomRenderSize
@@ -119,6 +121,7 @@ function drawArmMechanism(ctx, mechanism, x, y, hexSize, inRadius, horiz, vert){
 		const r = hand.r
 		//Because arms can have their hands any distance from the home tile, multiply these distances to get the true distance.
 		const distance = arm.distance
+		const handRadius = hexSize * atomSize * 0.8
 		const handX = (q + 0.5 * r) * horiz * distance
 		const handY = r * vert * distance
 
@@ -129,7 +132,27 @@ function drawArmMechanism(ctx, mechanism, x, y, hexSize, inRadius, horiz, vert){
 		ctx.globalAlpha = alpha
 		ctx.strokeStyle = color
 		ctx.lineWidth = hexSize * 0.1
-		ctx.arc(handX, handY, hexSize * atomSize, 0, Math.PI * 2)
+		ctx.arc(handX, handY, handRadius, 0, Math.PI * 2)
+		ctx.closePath()
+		ctx.stroke()
+
+		//Fingers
+		const fingerCount = 3
+		const fingerBaseAngle = (hexRotation * TWOPI / 6) - TWOPI / 12
+		const fingerAngleStep = TWOPI / fingerCount
+		const fingerLength = handRadius * 0.3 * (2 - mechanism.grabAnimationProgress)
+		ctx.beginPath()
+		for (let i = 0; i < fingerCount; i++){
+			const angle = i * fingerAngleStep + fingerBaseAngle
+			const fCos = cos(angle)
+			const fSin = sin(angle)
+			const circleX = handX + fCos * handRadius
+			const circleY = handY + fSin * handRadius
+			const endX = handX + fCos * (handRadius + fingerLength)
+    	const endY = handY + fSin * (handRadius + fingerLength)
+			ctx.moveTo(circleX, circleY)
+			ctx.lineTo(endX, endY)
+		}
 		ctx.closePath()
 		ctx.stroke()
 
@@ -138,11 +161,9 @@ function drawArmMechanism(ctx, mechanism, x, y, hexSize, inRadius, horiz, vert){
 		const ux = handX / len
 		const uy = handY / len
 
-		const radius = hexSize * atomSize
-
 		// Endpoint just before the circle
-		const endX = handX - ux * radius
-		const endY = handY - uy * radius
+		const endX = handX - ux * handRadius
+		const endY = handY - uy * handRadius
 
 		ctx.beginPath()
 		ctx.moveTo(0, 0)
