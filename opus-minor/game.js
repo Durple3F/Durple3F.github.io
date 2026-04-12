@@ -65,6 +65,7 @@ export class Program{
 		let programRow = $("<div>").addClass("program-row")
 		this.elem = programRow
 		let programName = $("<div>").addClass("program-name").text(this.name)
+		this.elem.data("name-tag", programName)
 		$("#program-names").append(programName)
 		$("#program-rows").append(programRow)
 	}
@@ -1021,12 +1022,15 @@ export class Game{
 	}
 	renderPrograms(){
 		let programs = this.currentLevel.programs
-		for (let program of programs){
+		for (let i = 0; i < programs.length; i++){
+			let program = programs[i]
+			program.name = i + 1
 			let row = program.elem
+			row.data("name-tag")?.text(program.name)
 			let instructions = program.instructions
 			row.empty()
-			for (let i = 0; i < instructions.length; i++){
-				let instruction = instructions[i]
+			for (let j = 0; j < instructions.length; j++){
+				let instruction = instructions[j]
 				let tag = createInstructionTag(instruction)
 				row.append(tag)
 				tag.data("program", program)
@@ -1153,6 +1157,17 @@ export class Game{
 		} else {
 			this.selectedComponent = null
 			this.isAdjustingComponent = false
+
+			if (component.program){
+				let index = this.currentLevel.programs.indexOf(component.program)
+				if (index !== -1){
+					this.currentLevel.programs.splice(index, 1)
+				}
+				if (component.program.elem){
+					component.program.elem.data("name-tag").remove()
+					component.program.elem.remove()
+				}
+			}
 		}
 		this.performUIUpdates()
 	}
@@ -1394,7 +1409,7 @@ export class Game{
 						glyphData.inputs[name] = {
 							atom: atom,
 							molecule: molecule,
-							held: !heldMolecules.includes(molecule)
+							held: heldMolecules.includes(molecule)
 						}
 					}
 				}

@@ -7,6 +7,11 @@ export class Element {
 		this.spriteMap = options.sprites;
 		this.sprites = {};
 		this.loaded = false;
+		this.properties = options.properties ?? {}
+		if (!this.properties.tags){
+			this.properties.tags = []
+		}
+		ELEMENTS[this.id] = this
 	}
 
 	async load() {
@@ -20,33 +25,99 @@ export class Element {
 		return await Promise.all(promises);
 	}
 }
-ELEMENTS["Fire"] = new Element({
+new Element({
 	id: "Fire",
 	sprites: {
 		atom: "./src/img/atoms/fire.png"
 	}
 });
-ELEMENTS["Air"] = new Element({
+new Element({
 	id: "Air",
 	sprites: {
 		atom: "./src/img/atoms/air.png"
 	}
 });
-ELEMENTS["Water"] = new Element({
+new Element({
 	id: "Water",
 	sprites: {
 		atom: "./src/img/atoms/water.png"
 	}
 });
-ELEMENTS["Earth"] = new Element({
+new Element({
 	id: "Earth",
 	sprites: {
 		atom: "./src/img/atoms/earth.png"
 	}
 });
-ELEMENTS["Salt"] = new Element({
+new Element({
 	id: "Salt",
 	sprites: {
 		atom: "./src/img/atoms/salt.png"
+	}
+});
+new Element({
+	id: "Quicksilver",
+	sprites: {
+		atom: "./src/img/atoms/quicksilver.png"
+	}
+});
+new Element({
+	id: "Lead",
+	sprites: {
+		atom: "./src/img/atoms/lead.png"
+	},
+	properties: {
+		tags: ["metal"],
+		metalicity: 1
+	}
+});
+new Element({
+	id: "Tin",
+	sprites: {
+		atom: "./src/img/atoms/tin.png"
+	},
+	properties: {
+		tags: ["metal"],
+		metalicity: 2
+	}
+});
+new Element({
+	id: "Iron",
+	sprites: {
+		atom: "./src/img/atoms/iron.png"
+	},
+	properties: {
+		tags: ["metal"],
+		metalicity: 3
+	}
+});
+new Element({
+	id: "Copper",
+	sprites: {
+		atom: "./src/img/atoms/copper.png"
+	},
+	properties: {
+		tags: ["metal"],
+		metalicity: 4
+	}
+});
+new Element({
+	id: "Silver",
+	sprites: {
+		atom: "./src/img/atoms/silver.png"
+	},
+	properties: {
+		tags: ["metal"],
+		metalicity: 5
+	}
+});
+new Element({
+	id: "Gold",
+	sprites: {
+		atom: "./src/img/atoms/gold.png"
+	},
+	properties: {
+		tags: ["metal"],
+		metalicity: 6
 	}
 });

@@ -208,9 +208,8 @@ async function handleGameEvents(events){
 	}
 }
 
-function startGame(){
-	$("#loading-screen").fadeOut()
-	showCampaignChapter(currentCampaign, 0)
+function switchCampaignChapter(campaign, chapterIndex){
+	showCampaignChapter(campaign, chapterIndex)
 	$("#level-select-content").find(".level-select-choice").on("click", e => {
 		let elem = e.delegateTarget
 		let event = $(elem).data("event")
@@ -225,6 +224,19 @@ function startGame(){
 			break
 		}
 	})
+	
+	let chapterTags = $("#level-select-chapter-container").find(".level-select-chapter")
+	chapterTags.on("click", e => {
+		let tag = $(e.delegateTarget)
+		let newIndex = tag.data("chapterIndex")
+		if (newIndex === chapterIndex) return
+		switchCampaignChapter(campaign, newIndex)
+	})
+}
+
+function startGame(){
+	$("#loading-screen").fadeOut()
+	switchCampaignChapter(currentCampaign, 0)
 }
 
 window.addEventListener("resize", resize)

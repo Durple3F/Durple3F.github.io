@@ -1,11 +1,11 @@
 export class Scenario {
-	constructor(id, productList, reagentList, allowedMechanisms, allowedGlyphs, prices={}) {
+	constructor(id, options={}) {
 		this.id = id
-		this.productMolecules = productList
-		this.reagentMolecules = reagentList
-		this.allowedMechanisms = allowedMechanisms
-		this.allowedGlyphs = allowedGlyphs
-		this.prices = prices
+		this.productMolecules = options.products ?? []
+		this.reagentMolecules = options.reagents ?? []
+		this.allowedMechanisms = options.mechanisms ?? []
+		this.allowedGlyphs = options.glyphs ?? []
+		this.prices = options.prices ?? []
 		for (let type of ["Product", "Reagent", "Glyph", "ArmMechanism", "Track"]){
 			if (!this.prices[type]){
 				this.prices[type] = {}
@@ -16,8 +16,8 @@ export class Scenario {
 }
 
 export const SCENARIOS = {}
-new Scenario("test",
-	[
+new Scenario("test", {
+	products: [
 		{
 			"name": "Phlogiston",
 			"molecule": [
@@ -29,7 +29,8 @@ new Scenario("test",
 				]
 			]
 		}
-	], [
+	],
+	reagents: [
 		{
 			"name": "Elemental Fire",
 			"molecule": [
@@ -38,7 +39,8 @@ new Scenario("test",
 				]
 			]
 		}
-	], [
+	],
+	mechanisms: [
 		"Fixed-Length Arm",
 		"Fixed-Length Double Arm",
 		"Fixed-Length Triple Arm",
@@ -46,5 +48,46 @@ new Scenario("test",
 		"Piston Arm",
 		"Van Berlo's Wheel",
 	],
-	["Glyph of Bonding"]
-)
+	glyphs: ["Glyph of Bonding"]
+})
+new Scenario("refined-gold", {
+	products: [
+		{
+			"name": "Elemental Gold",
+			"molecule": [
+				[
+					["Gold", 0, 0, 0]
+				]
+			]
+		}
+	],
+	reagents: [
+		{
+			"name": "Elemental Lead",
+			"molecule": [
+				[
+					["Lead", 0, 0, 0]
+				]
+			]
+		},
+		{
+			"name": "Elemental Quicksilver",
+			"molecule": [
+				[
+					["Quicksilver", 0, 0, 0]
+				]
+			]
+		}
+	],
+	mechanisms: [
+		"Fixed-Length Arm",
+		"Fixed-Length Double Arm",
+		"Fixed-Length Triple Arm",
+		"Fixed-Length Sextuple Arm",
+		"Piston Arm",
+	],
+	glyphs: [
+		"Glyph of Bonding",
+		"Glyph of Projection",
+	]
+})

@@ -25,6 +25,9 @@
 	"scenarios": {
 		"test": {
 			"name": "Test Scenario"
+		},
+		"refined-gold": {
+			"name": "Refined Gold"
 		}
 	},
 	"campaigns": {

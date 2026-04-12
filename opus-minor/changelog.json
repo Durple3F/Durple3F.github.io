@@ -168,9 +168,20 @@
 		},
 		"20260411": {
 			"date": "April 11, 2026",
-			"line-count": 6000,
+			"line-count": 6200,
 			"changes": [
-				"- Working on creating the chapter switcher"
+				"- Working on creating the chapter switcher",
+				"- Fixed some issues with how programs get named when you do remove arms",
+				"- Adding images of Lead, Tin, Iron, Copper",
+				"- Added placeholder images for Silver, Gold, and Quicksilver. (Ran out of time)",
+				"- Working on adding the Glyph of Projection."
+			]
+		},
+		"20260412": {
+			"date": "April 12, 2026",
+			"line-count": 6200,
+			"changes": [
+				"- Finished the Silver, Gold, and Quicksilver images."
 			]
 		}
 	}

@@ -319,7 +319,7 @@ function drawProduct(ctx, reagent, x, y, hexSize, inRadius, horiz, vert){
 	}
 
 	ctx.save()
-	ctx.filter = "brightness(0.2)"
+	ctx.filter = "brightness(0.5)"
 	drawMolecule(ctx, molecule, x, y, hexSize, inRadius, horiz, vert)
 	ctx.restore()
 }

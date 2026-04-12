@@ -72,10 +72,7 @@ export function showCampaignChapter(campaign, chapterIndex){
 		let image = $("<img>").appendTo(chapterTag).attr("src", chapter.imageUrls.unlocked)
 
 		chapterTag.attr("data-unlocked", true)
-		chapterTag.on("click", () => {
-			if (i === chapterIndex) return
-			showCampaignChapter(campaign, i)
-		})
+		chapterTag.data("chapterIndex", i)
 	}
 }
 
@@ -282,7 +279,7 @@ new Campaign("base", [
 		unlocked: "./src/img/campaigns/base/prologue.png"
 	}),
 	new CampaignChapter("chapter-1", [
-		
+		new CampaignEvent("puzzle", {scenarioId: "refined-gold"})
 	], {
 		locked: "./src/img/campaigns/base/chapter 1 locked.png",
 		unlocked: "./src/img/campaigns/base/chapter 1.png"
