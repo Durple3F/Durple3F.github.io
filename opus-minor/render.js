@@ -78,7 +78,7 @@ function drawHex(ctx, hex, x, y, size, inRadius, q, r, s){
 	}
 }
 
-function drawArmMechanism(ctx, mechanism, x, y, hexSize, inRadius, horiz, vert){
+function drawArmMechanism(ctx, mechanism, x, y, hexSize, inRadius, horiz, vert, hasShadow=false){
 	const arms = mechanism.arms.contents
 	const alpha = mechanism.isGhost ? 0.7 : 1
 
@@ -88,20 +88,10 @@ function drawArmMechanism(ctx, mechanism, x, y, hexSize, inRadius, horiz, vert){
 	const cosT = cos(angle)
 	const sinT = sin(angle)
 	const atomSize = atomRenderSize
+	const baseRadius = hexSize * 0.5
 
 	let isPiston = !!mechanism.mechanismType.abilities["piston_extend"]
 	let color = isPiston ? "#F5BF45" : "#6AE3F7"
-
-	//Draw base
-	ctx.save()
-	ctx.beginPath()
-	ctx.moveTo(x, y)
-	ctx.globalAlpha = alpha
-	ctx.fillStyle = color
-	ctx.arc(x, y, hexSize * 0.5, 0, Math.PI * 2)
-	ctx.closePath()
-	ctx.fill()
-	ctx.restore()
 
 	//Draw atoms if need be
 	const atoms = mechanism.atoms.contents
@@ -112,7 +102,7 @@ function drawArmMechanism(ctx, mechanism, x, y, hexSize, inRadius, horiz, vert){
 		const atomY = r * vert
 		const atomXR = x + atomX * cosT - atomY * sinT
 		const atomYR = y + atomX * sinT + atomY * cosT
-		drawAtom(ctx, atom, atomXR, atomYR, hexSize, inRadius, alpha)
+		drawAtom(ctx, atom, atomXR, atomYR, hexSize, inRadius, alpha, hasShadow)
 	}
 
 	for (let arm of arms){
@@ -126,6 +116,8 @@ function drawArmMechanism(ctx, mechanism, x, y, hexSize, inRadius, horiz, vert){
 		const handY = r * vert * distance
 
 		ctx.save()
+		ctx.shadowColor = "black";
+		ctx.shadowBlur = hexSize * 0.2;
 		ctx.translate(x, y)
 		ctx.rotate(angle)
 		ctx.beginPath()
@@ -133,15 +125,12 @@ function drawArmMechanism(ctx, mechanism, x, y, hexSize, inRadius, horiz, vert){
 		ctx.strokeStyle = color
 		ctx.lineWidth = hexSize * 0.1
 		ctx.arc(handX, handY, handRadius, 0, Math.PI * 2)
-		ctx.closePath()
-		ctx.stroke()
 
 		//Fingers
 		const fingerCount = 3
 		const fingerBaseAngle = (hexRotation * TWOPI / 6) - TWOPI / 12
 		const fingerAngleStep = TWOPI / fingerCount
 		const fingerLength = handRadius * 0.3 * (2 - mechanism.grabAnimationProgress)
-		ctx.beginPath()
 		for (let i = 0; i < fingerCount; i++){
 			const angle = i * fingerAngleStep + fingerBaseAngle
 			const fCos = cos(angle)
@@ -153,8 +142,6 @@ function drawArmMechanism(ctx, mechanism, x, y, hexSize, inRadius, horiz, vert){
 			ctx.moveTo(circleX, circleY)
 			ctx.lineTo(endX, endY)
 		}
-		ctx.closePath()
-		ctx.stroke()
 
 		//Draw the arm connecting the home tile to the hand
 		const len = Math.hypot(handX, handY)
@@ -164,14 +151,26 @@ function drawArmMechanism(ctx, mechanism, x, y, hexSize, inRadius, horiz, vert){
 		// Endpoint just before the circle
 		const endX = handX - ux * handRadius
 		const endY = handY - uy * handRadius
+		const startX = ux * baseRadius
+		const startY = uy * baseRadius
 
-		ctx.beginPath()
-		ctx.moveTo(0, 0)
+		ctx.moveTo(startX, startY)
 		ctx.lineTo(endX, endY)
 		ctx.closePath()
 		ctx.stroke()
 		ctx.restore()
 	}
+
+	//Draw base
+	ctx.save()
+	ctx.beginPath()
+	ctx.moveTo(x, y)
+	ctx.globalAlpha = alpha
+	ctx.fillStyle = color
+	ctx.arc(x, y, baseRadius, 0, Math.PI * 2)
+	ctx.closePath()
+	ctx.fill()
+	ctx.restore()
 
 	//Draw number
 	if (mechanism.program){
@@ -189,7 +188,7 @@ function drawArmMechanism(ctx, mechanism, x, y, hexSize, inRadius, horiz, vert){
 	}
 }
 
-function drawMolecule(ctx, molecule, x, y, hexSize, inRadius, horiz, vert){
+function drawMolecule(ctx, molecule, x, y, hexSize, inRadius, horiz, vert, hasShadow=false){
 	const atoms = molecule.atoms
 	const contents = atoms.contents
 	const bonds = molecule.bonds.contents
@@ -236,7 +235,7 @@ function drawMolecule(ctx, molecule, x, y, hexSize, inRadius, horiz, vert){
 		const atomY = r * vert
 		const atomXR = x + atomX * cosT - atomY * sinT
 		const atomYR = y + atomX * sinT + atomY * cosT
-		drawAtom(ctx, atom, atomXR, atomYR, hexSize, inRadius, alpha)
+		drawAtom(ctx, atom, atomXR, atomYR, hexSize, inRadius, alpha, hasShadow)
 
 		if (drawGhostRotation){
 			ctx.globalAlpha = 0.5
@@ -257,11 +256,15 @@ function drawMolecule(ctx, molecule, x, y, hexSize, inRadius, horiz, vert){
 	}
 }
 
-function drawAtom(ctx, atom, x, y, hexSize, inRadius, alpha){
+function drawAtom(ctx, atom, x, y, hexSize, inRadius, alpha, hasShadow=false){
 	// console.log(atom)
 	let atomSize = inRadius * 0.8
 	let sprite = atom.element.sprites["atom"]
 	ctx.save()
+	if (hasShadow){
+		ctx.shadowColor = "black";
+		ctx.shadowBlur = hexSize * 0.2;
+	}
 	ctx.globalAlpha = alpha
 	ctx.drawImage(sprite, x - atomSize, y - atomSize, 2*atomSize, 2*atomSize)
 	ctx.restore()
@@ -392,10 +395,10 @@ function drawTrack(ctx, track, x, y, hexSize, inRadius, horiz, vert){
 function drawComponent(ctx, component, x, y, hexSize, inRadius, horiz, vert, isSimulated){
 	if (!component.isRendered) return
 	switch (component.type){
-		case "Molecule": drawMolecule(ctx, component, x, y, hexSize, inRadius, horiz, vert); break
+		case "Molecule": drawMolecule(ctx, component, x, y, hexSize, inRadius, horiz, vert, true); break
 		case "Reagent": drawReagent(ctx, component, x, y, hexSize, inRadius, horiz, vert); break
 		case "Product": drawProduct(ctx, component, x, y, hexSize, inRadius, horiz, vert, isSimulated); break
-		case "ArmMechanism": drawArmMechanism(ctx, component, x, y, hexSize, inRadius, horiz, vert); break
+		case "ArmMechanism": drawArmMechanism(ctx, component, x, y, hexSize, inRadius, horiz, vert, true); break
 		case "Glyph": drawGlyph(ctx, component, x, y, hexSize, inRadius, horiz, vert); break
 		case "Track": drawTrack(ctx, component, x, y, hexSize, inRadius, horiz, vert); break
 	}

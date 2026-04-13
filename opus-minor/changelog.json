@@ -191,7 +191,9 @@
 			"date": "April 13, 2026",
 			"line-count": 6600,
 			"changes": [
-				"- Improved how the computer calculates what hexes a component moves over as it rotates."
+				"- Improved how the computer calculates what hexes a component moves over as it rotates.",
+				"- Added shadows to arms & atoms.",
+				"- Improved how arms are rendered."
 			]
 		}
 	}
