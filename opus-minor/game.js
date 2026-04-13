@@ -7,6 +7,7 @@ import { armSize, atomSize, msPerCycle, submissionsPerProduct } from "./config.j
 import { Track, TrackPiece } from "./track.js"
 import { getLocaleString } from "./locale.js"
 import { saveSolution } from "./database.js"
+import { playSound } from "./sounds.js"
 
 const min = Math.min
 const max = Math.max
@@ -1142,6 +1143,7 @@ export class Game{
 			this.selectedComponent.isGhost = false
 			this.selectedComponent = null
 			this.performUIUpdates()
+			playSound("piece_place")
 		} else {
 			if (component.lastPlacement && component.lastPlacement.equals(component.homeTile)){
 				component.lastPlacement = null
@@ -1159,6 +1161,7 @@ export class Game{
 		} else {
 			this.selectedComponent = null
 			this.isAdjustingComponent = false
+			playSound("piece_remove")
 
 			if (component.program){
 				let index = this.currentLevel.programs.indexOf(component.program)
@@ -2527,6 +2530,7 @@ export class Game{
 					} else {
 						component.rotateRight()
 					}
+					playSound("piece_rotate")
 				}
 				if (component.type === "ArmMechanism"){
 					const mechanismType = component.mechanismType
@@ -2627,6 +2631,11 @@ export class Game{
 				}
 
 				if (isAdjusting || hexes.some(hex => hex.equals(hoveredHex))){
+					if (isAdjusting){
+						playSound("piece_modify")
+					} else {
+						playSound("piece_pickup")
+					}
 					this.beginHoldingComponent(component, isAdjusting)
 					break
 				}

@@ -1,6 +1,7 @@
 import { createSolution, deleteSolution, getSolutions, saveSolution, SolutionSave } from "./database"
 import { getLocaleString } from "./locale"
 import { SCENARIOS } from "./scenarios"
+import { playSound } from "./sounds"
 import { clearModal } from "./util"
 
 export const CAMPAIGNS = {}
@@ -82,6 +83,7 @@ export async function showScenario(scenario, saveUUID){
 	let resultEvents = []
 	let modalTag = $("#modal")
 	clearModal(modalTag)
+	playSound("ui_modal")
 
 	modalTag.find(".modal-dialog").addClass("modal-dialog-scrollable").addClass("modal-dialog-centered")
 
@@ -198,6 +200,7 @@ export async function showScenario(scenario, saveUUID){
 		openLevel()
 		resolve()
 		modal.toggle()
+		playSound("ui_modal_close")
 	})
 
 	const handleNew = async () => {

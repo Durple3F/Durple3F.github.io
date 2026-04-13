@@ -10,6 +10,7 @@ import { loadLocale } from "./locale.js";
 import { CAMPAIGNS, showCampaignChapter, showScenario } from "./campaigns.js";
 import { SCENARIOS } from "./scenarios.js";
 import { createSaveFile, getSaveFiles, openDatabase, SaveFile } from "./database.js";
+import { loadNeededSounds, playSound } from "./sounds.js";
 
 const FRAMERATE = 60
 let tickInterval
@@ -124,6 +125,11 @@ window.addEventListener("mousemove", e => {
 	$("#tooltip").css("top", e.clientY)
 	$("#tooltip").css("left", e.clientX)
 })
+//Hide modal noise
+$("#modal").on("click", e => {
+	if (e.target !== $("#modal")[0]) return
+	playSound("ui_modal_close")
+})
 
 async function loadGame(){
 	await loadLocale("./src/locale/en.json", "en")
@@ -168,6 +174,9 @@ async function loadGame(){
 		trackPromises.push(p)
 	}
 	await Promise.all(trackPromises)
+
+	//Load sound effects
+	await loadNeededSounds()
 
 }
 
