@@ -189,9 +189,9 @@
 		},
 		"20260413": {
 			"date": "April 13, 2026",
-			"line-count": 6300,
+			"line-count": 6600,
 			"changes": [
-				"- "
+				"- Improved how the computer calculates what hexes a component moves over as it rotates."
 			]
 		}
 	}

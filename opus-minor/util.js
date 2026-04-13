@@ -1,3 +1,4 @@
+import { atomSize } from "./config";
 import { ELEMENTS } from "./elements";
 import { getLocaleString } from "./locale";
 
@@ -185,6 +186,13 @@ export class Hex {
 	}
 	neighbor(direction) {
 		return this.add(Hex.direction(direction));
+	}
+	neighbors() {
+		let result = []
+		for (let i = 0; i < 6; i++){
+			result.push(this.neighbor(i))
+		}
+		return result
 	}
 	diagonalNeighbor(direction) {
 		return this.add(Hex.diagonals[direction]);
@@ -440,6 +448,81 @@ export class Component {
 			let dest = atom.coord.add(b)
 			atom.setCoords(dest.q, dest.r, dest.s)
 		}
+	}
+	getRotationHexFootprint(angle){
+		let result = []
+		let homeTile = this.homeTile
+		let checkHexes = []
+		let overlapThreshold = 0.5
+		let checksPerRad = 1.5
+		for (let atom of this.atoms.contents){
+			checkHexes.push(atom.coord)
+		}
+		// if (this.type === "ArmMechanism"){
+		// 	let found = false
+		// 	let home = new Hex(0, 0, 0)
+		// 	for (let checkHex of checkHexes){
+		// 		if (home.equals(checkHex)){
+		// 			found = true
+		// 			break
+		// 		}
+		// 	}
+		// }
+		for (let arm of this.arms.contents){
+			for (let i = 1; i <= arm.distance; i++){
+				let hex = arm.direction.scale(i)
+				let found = false
+				for (let checkHex of checkHexes){
+					if (hex.equals(checkHex)){
+						found = true
+						break
+					}
+				}
+				if (!found){
+					checkHexes.push(hex)
+				}
+			}
+		}
+		for (let hex of checkHexes){
+			let xy = hex.toXY()
+			let x = xy[0]
+			let y = xy[1]
+			let distance = Math.hypot(x, y)
+			let angleChecks = Math.ceil(Math.abs(angle) * checksPerRad * distance)
+			let angleStep = angle / angleChecks
+			for (let j = 1; j <= angleChecks; j++){
+				let curAngle = angleStep * j
+				let cos = Math.cos(curAngle)
+				let sin = Math.sin(curAngle)
+				let newX = x*cos - y*sin
+				let newY = x*sin + y*cos
+				let circle = new Circle(newX, newY, atomSize)
+				let closestHex = Hex.fromXY(newX, newY).round()
+				let neighbors = closestHex.neighbors()
+				neighbors.push(closestHex)
+				for (let neighbor of neighbors){
+					let nXY = neighbor.toXY()
+					let otherCircle = new Circle(nXY[0], nXY[1], overlapThreshold)
+					if (!circle.intersects(otherCircle)) continue
+					let found = false
+					for (let checkHex of result){
+						if (neighbor.equals(checkHex)){
+							found = true
+							break
+						}
+					}
+					if (!found){
+						result.push(neighbor)
+					}
+				}
+			}
+		}
+		let mapped = []
+		for (let hex of result){
+			mapped.push(hex.add(homeTile))
+		}
+
+		return mapped
 	}
 }
 

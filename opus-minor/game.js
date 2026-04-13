@@ -793,12 +793,14 @@ export class Game{
 				grabbing: false,
 				rotation: 0,
 				extension: 1,
+				initialExtension: 1,
 				track: 0
 			}
 			let maxLength = 3
 			let minLength = 1
 			if (program.component){
 				positionInfo.extension = program.component.arms.contents[0].distance
+				positionInfo.initialExtension = positionInfo.extension
 				let mechanismType = program.component.mechanismType
 				minLength = mechanismType.abilities["min_length"]
 				maxLength = mechanismType.abilities["max_length"]
@@ -826,7 +828,7 @@ export class Game{
 					case "reset": {
 						positionInfo.grabbing = false
 						positionInfo.rotation = 0
-						positionInfo.extension = 1
+						positionInfo.extension = positionInfo.initialExtension
 						positionInfo.track = 0
 					} break
 				}
@@ -838,19 +840,22 @@ export class Game{
 					case "reset": {
 						let rotation = ((positionInfo.rotation % 6) + 6) % 6
 						let extension = positionInfo.extension - 1
+						let initialExtension = positionInfo.initialExtension - 1
+						let extensionDiff = initialExtension - extension
 						let trackIndexChange = positionInfo.track
 						let generated = []
+						console.log(positionInfo)
 						if (positionInfo.grabbing){
 							let ins = new Instruction(INSTRUCTIONS["grabber_drop"])
 							generated.push(ins)
 						}
-						if (extension !== 0){
-							while (extension < 0){
+						if (extensionDiff !== 0){
+							while (extensionDiff < 0){
 								let ins = new Instruction(INSTRUCTIONS["piston_extend"])
 								generated.push(ins)
 								extension++
 							}
-							while (extension > 0){
+							while (extensionDiff > 0){
 								let ins = new Instruction(INSTRUCTIONS["piston_retract"])
 								generated.push(ins)
 								extension--
@@ -1557,6 +1562,7 @@ export class Game{
 			}
 		}
 
+		//Arms have no collision but do affect area
 		let level = this.simulation
 		let components = level.grid.contents
 		for (let component of components){
@@ -1602,6 +1608,14 @@ export class Game{
 	}
 	updateUsedHexes(){
 		let hexes = this.getAllSimulationAreaHexes()
+		this.addSimulationAreaHexes(hexes)
+		let alreadyUsed = this.solutionUsedHexes
+		for (let hex of alreadyUsed){
+			let levelHex = this.getHexAt(hex.q, hex.r)
+			levelHex.active = true
+		}
+	}
+	addSimulationAreaHexes(hexes){
 		let alreadyUsed = this.solutionUsedHexes
 		for (let hex of hexes){
 			let used = false
@@ -1614,10 +1628,6 @@ export class Game{
 			if (!used){
 				alreadyUsed.push(hex)
 			}
-		}
-		for (let hex of alreadyUsed){
-			let levelHex = this.getHexAt(hex.q, hex.r)
-			levelHex.active = true
 		}
 	}
 
@@ -2285,6 +2295,8 @@ export class Game{
 		switch (animation.type){
 			case "set_rotation": {
 				let difference = animation.endV - animation.startV
+				let hexesPassedThrough = component.getRotationHexFootprint(difference)
+				this.addSimulationAreaHexes(hexesPassedThrough)
 				if (difference > 0){
 					component.rotation = 0
 					component.rotateRight()
@@ -2402,7 +2414,7 @@ export class Game{
 		if (this.isPlayingSimulation && this.playbackSpeed > 0 && dt > 0){
 			//Increase time slightly.
 			this.simulationDeltaT += this.playbackSpeed * (dt / msPerCycle)
-			//simulation time, simulation delta time.
+			// this.simulationDeltaT += 1
 			this.placeReagents()
 
 			this.applyAllAnimations()
