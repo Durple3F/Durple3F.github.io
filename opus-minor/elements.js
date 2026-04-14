@@ -29,24 +29,36 @@ new Element({
 	id: "Fire",
 	sprites: {
 		atom: "./src/img/atoms/fire.png"
+	},
+	properties: {
+		tags: ["classical_element"]
 	}
 });
 new Element({
 	id: "Air",
 	sprites: {
 		atom: "./src/img/atoms/air.png"
+	},
+	properties: {
+		tags: ["classical_element"]
 	}
 });
 new Element({
 	id: "Water",
 	sprites: {
 		atom: "./src/img/atoms/water.png"
+	},
+	properties: {
+		tags: ["classical_element"]
 	}
 });
 new Element({
 	id: "Earth",
 	sprites: {
 		atom: "./src/img/atoms/earth.png"
+	},
+	properties: {
+		tags: ["classical_element"]
 	}
 });
 new Element({

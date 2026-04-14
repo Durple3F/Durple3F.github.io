@@ -377,13 +377,13 @@ export class Game{
 		modalTag.on("hidden.bs.modal", () => {
 			this.resolvePromise([
 				{
-					type: "change-scene",
-					val: "level-select"
-				},
-				{
 					type: "set-completion",
 					completed: true,
 					scenario: this.currentLevel.scenario
+				},
+				{
+					type: "change-scene",
+					val: "level-select"
 				}
 			])
 		})
@@ -1069,7 +1069,6 @@ export class Game{
 			let row = program.elem
 			if (timestep < program.startStep) continue
 			let instructionIndex = (timestep - program.startStep) % program.period + program.startStep
-			console.log(instructionIndex, timestep, program.startStep, program.period)
 			row.find(`.instruction`).removeClass("highlight")
 			row.find(`.instruction[data-index=${instructionIndex}]`).addClass("highlight")
 		}

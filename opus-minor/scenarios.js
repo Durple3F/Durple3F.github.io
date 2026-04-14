@@ -160,5 +160,6 @@ new Scenario("face-powder", {
 	],
 	glyphs: [
 		"Glyph of Bonding",
+		"Glyph of Calcification",
 	]
 })

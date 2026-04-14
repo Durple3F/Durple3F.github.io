@@ -71,6 +71,7 @@ export function showCampaignChapter(campaign, chapterIndex, saveFile){
 	for (let event of chapter.events){
 		let tag = $("<div>").addClass("level-select-choice").appendTo(choicesTag)
 		tag.data("event", event)
+		let eventId = event.id
 		switch (event.type){
 			case "puzzle":
 			let scenarioId = event.info.scenarioId
@@ -79,7 +80,7 @@ export function showCampaignChapter(campaign, chapterIndex, saveFile){
 			tag.append(image)
 			let scenarioName = getLocaleString(["scenarios", scenarioId, "name"], language, scenarioId)
 			tag.append($("<span>").addClass("level-select-name").text(scenarioName))
-			let checkboxState = false
+			let checkboxState = progress.events[eventId].completed
 			let checkboxUrl
 			if (checkboxState){
 				checkboxUrl = "./src/img/puzzle-select/list_checked.png"

@@ -242,7 +242,7 @@ async function handleGameEvents(events){
 	}
 }
 
-function switchCampaignChapter(campaign, chapterIndex, saveFile){
+function switchCampaignChapter(campaign, chapterIndex){
 	currentCampaignChapterIndex = chapterIndex
 	showCampaignChapter(campaign, chapterIndex, saveFile)
 	$("#level-select-content").find(".level-select-choice").on("click", e => {
@@ -285,7 +285,7 @@ function switchCampaignChapter(campaign, chapterIndex, saveFile){
 		let tag = $(e.delegateTarget)
 		let newIndex = tag.data("chapterIndex")
 		if (newIndex === chapterIndex) return
-		switchCampaignChapter(campaign, newIndex, saveFile)
+		switchCampaignChapter(campaign, newIndex)
 	})
 }
 
@@ -297,7 +297,7 @@ $("#options-container").on("click", openMenu)
 
 function startGame(){
 	$("#loading-screen").fadeOut()
-	switchCampaignChapter(currentCampaign, 0, saveFile)
+	switchCampaignChapter(currentCampaign, 0)
 }
 
 window.addEventListener("resize", resize)

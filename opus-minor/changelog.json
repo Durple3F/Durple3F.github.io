@@ -204,7 +204,10 @@
 			"changes": [
 				"- You can now mash tab to zip through steps of a simulation",
 				"- Now while the simulation is playing, you can see the instructions that stuff like 'reset' and 'repeat' contain.",
-				"- Puzzles can now be locked and unlocked, and there's a cute animation that unlocks each puzzle one by one."
+				"- Puzzles can now be locked and unlocked, and there's a cute animation that unlocks each puzzle one by one.",
+				"- Puzzles are now marked as completed / uncompleted as you complete them.",
+				"- Added Glyph of Calcification",
+				"- Added the level Face Powder"
 			]
 		}
 	}

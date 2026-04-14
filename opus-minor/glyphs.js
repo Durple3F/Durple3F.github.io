@@ -241,6 +241,50 @@ new GlyphType({
 		ctx.drawImage(leadSprite, otherRingHexXY[0] - leadWidth * 0.5, otherRingHexXY[1] - leadHeight * 0.5, leadWidth, leadHeight)
 	}
 })
+new GlyphType({
+	id: "Glyph of Calcification",
+	sprites: {
+		base: "./src/img/glyphs/calcification/calcinator_base.png",
+		ring: "./src/img/glyphs/calcification/calcinator_bowl.png",
+		symbols: "./src/img/glyphs/calcification/calcinator_symbols.png",
+		// bond: "./src/img/glyphs/calcification/bond.png",
+	},
+	sounds: [
+		{
+			id: "glyph_calcification",
+			url: "./src/sounds/glyph_calcification.mp3",
+			category: "sfx"
+		}
+	],
+	inputs: [
+		new GlyphInput("element", "ring", new Hex(0, 0, 0)),
+	],
+	execute: function (game, level, inputs) {
+		let input = inputs["element"]
+		if (!input) return
+		let atom = input.atom
+		let element = atom.element
+		let tags = element.properties.tags
+		if (!tags.includes("classical_element")) return
+		input.atom.element = ELEMENTS["Salt"]
+		playSound("glyph_calcification")
+	},
+	render: function (ctx, glyph, x, y, hexSize, inRadius, horiz, vert) {
+		const ringSize = atomRenderSize * hexSize * 1.15
+		const baseSprite = this.sprites["base"]
+		ctx.translate(x, y)
+		const angle = glyph.rotation - (glyph.currentHexRotation * Math.PI / 3)
+		ctx.rotate(angle)
+		ctx.drawImage(baseSprite, - horiz * 0.5, - vert * 2 / 3, horiz, vert * 4 / 3)
+
+		//ring
+		const ringSprite = this.sprites["ring"]
+		ctx.drawImage(ringSprite, - horiz * 0.5, - vert * 2 / 3, horiz, vert * 4 / 3)
+		//symbols
+		const symbolsSprite = this.sprites["symbols"]
+		ctx.drawImage(symbolsSprite, - horiz * 0.5, - vert * 2 / 3, horiz, vert * 4 / 3)
+	}
+})
 
 export class Glyph extends Component {
 	constructor(typeId) {
