@@ -9,7 +9,7 @@ import { TrackPiece } from "./track.js";
 import { loadLocale } from "./locale.js";
 import { CAMPAIGNS, showCampaignChapter, showOptions, showScenario } from "./campaigns.js";
 import { SCENARIOS } from "./scenarios.js";
-import { createSaveFile, getSaveFiles, openDatabase, SaveFile } from "./database.js";
+import { createSaveFile, getSaveFiles, openDatabase, SaveFile, saveSaveFile } from "./database.js";
 import { changeCategoryVolume, loadNeededSounds, playSound } from "./sounds.js";
 
 const FRAMERATE = 60
@@ -25,6 +25,7 @@ let saveFile
 
 let scenario = SCENARIOS["test"]
 let currentCampaign = CAMPAIGNS["base"]
+let currentCampaignChapterIndex = 0
 let game
 
 const resize = () => {
@@ -186,6 +187,8 @@ async function loadGame(){
 
 	//Load sound effects
 	await loadNeededSounds()
+
+	saveFile.initializeCampaigns()
 	
 	//set settings
 	for (let categoryName in saveFile.settings.sounds){
@@ -215,11 +218,20 @@ async function handleGameEvents(events){
 				switch (scene){
 					case "level-select": {
 						$("#game-menu").fadeIn()
+						switchCampaignChapter(currentCampaign, currentCampaignChapterIndex)
 					} break
 				}
 			} break
 			case "set-completion": {
-
+				let scenarioId = event.scenario.id
+				let campaignId = currentCampaign.id
+				let progress = saveFile.campaignsProgress[campaignId]
+				let targetState = event.completed
+				let curState = progress.events[scenarioId].completed
+				if (targetState !== curState){
+					progress.events[scenarioId].completed = targetState
+					saveSaveFile(saveFile)
+				}
 			} break
 			case "open-level": {
 				let scenario = event.scenario
@@ -230,8 +242,9 @@ async function handleGameEvents(events){
 	}
 }
 
-function switchCampaignChapter(campaign, chapterIndex){
-	showCampaignChapter(campaign, chapterIndex)
+function switchCampaignChapter(campaign, chapterIndex, saveFile){
+	currentCampaignChapterIndex = chapterIndex
+	showCampaignChapter(campaign, chapterIndex, saveFile)
 	$("#level-select-content").find(".level-select-choice").on("click", e => {
 		let elem = e.delegateTarget
 		let event = $(elem).data("event")
@@ -246,13 +259,33 @@ function switchCampaignChapter(campaign, chapterIndex){
 			break
 		}
 	})
+
+	let chapter = campaign.chapters[chapterIndex]
+	let progress = saveFile.campaignsProgress[campaign.id]
+	//Do the little unlock animation for each of the things that should unlock
+	let shouldUnlock = saveFile.getNewCampaignUnlocks(campaign.id)
+	.filter(eventId => chapter.events.some(event => event.id === eventId))
+	let unlocks = 0
+	for (let eventId of shouldUnlock){
+		let tag = $("#level-select-content").find(`.level-select-choice[data-event-id="${eventId}"]`)
+		unlocks++
+		let ms = 500 * unlocks
+		setTimeout(() => {
+			tag.removeClass("locked")
+			playSound("ui_unlock")
+		}, ms)
+		progress.events[eventId].unlocked = true
+	}
+	if (unlocks > 0){
+		saveSaveFile(saveFile)
+	}
 	
 	let chapterTags = $("#level-select-chapter-container").find(".level-select-chapter")
 	chapterTags.on("click", e => {
 		let tag = $(e.delegateTarget)
 		let newIndex = tag.data("chapterIndex")
 		if (newIndex === chapterIndex) return
-		switchCampaignChapter(campaign, newIndex)
+		switchCampaignChapter(campaign, newIndex, saveFile)
 	})
 }
 
@@ -264,7 +297,7 @@ $("#options-container").on("click", openMenu)
 
 function startGame(){
 	$("#loading-screen").fadeOut()
-	switchCampaignChapter(currentCampaign, 0)
+	switchCampaignChapter(currentCampaign, 0, saveFile)
 }
 
 window.addEventListener("resize", resize)

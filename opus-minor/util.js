@@ -669,11 +669,12 @@ export class Molecule extends Component {
 		}
 		this.atoms.contents.push(atom)
 	}
-	addBond(atom1, atom2, type = "simple") {
+	addBond(atom1, atom2, typeId = "simple") {
 		if (atom1.coord.distance(atom2.coord) !== 1) {
 			console.error("These two atoms are too far apart to be bonded:")
 			console.log(atom1, atom2)
 		}
+		let type = BONDTYPES[typeId]
 		let bond = new Bond(atom1, atom2, type)
 		let taken = false
 		for (let otherBond of this.bonds.contents) {

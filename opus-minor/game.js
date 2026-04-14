@@ -2576,7 +2576,6 @@ export class Game{
 					} else {
 						component.rotateRight()
 					}
-					playSound("piece_rotate")
 				}
 				if (component.type === "ArmMechanism"){
 					const mechanismType = component.mechanismType
@@ -2600,6 +2599,7 @@ export class Game{
 						let firstArm = arms[0]
 						let difference = firstArm.direction.scale(firstArm.distance)
 						component.rotationPoint = difference
+						playSound("piece_modify")
 					}
 				}
 
@@ -2677,9 +2677,7 @@ export class Game{
 				}
 
 				if (isAdjusting || hexes.some(hex => hex.equals(hoveredHex))){
-					if (isAdjusting){
-						playSound("piece_modify")
-					} else {
+					if (!isAdjusting){
 						playSound("piece_pickup")
 					}
 					this.beginHoldingComponent(component, isAdjusting)

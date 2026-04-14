@@ -126,3 +126,39 @@ new Scenario("refined-gold", {
 		"Glyph of Projection",
 	]
 })
+new Scenario("face-powder", {
+	products: [
+		{
+			"name": "Face Powder",
+			"molecule": [
+				[
+					["Salt", 0, 0, 0],
+					["Earth", 1, 0, -1],
+				],
+				[
+					[0, 1]
+				]
+			]
+		}
+	],
+	reagents: [
+		{
+			"name": "Elemental Earth",
+			"molecule": [
+				[
+					["Earth", 0, 0, 0]
+				]
+			]
+		}
+	],
+	mechanisms: [
+		"Fixed-Length Arm",
+		"Fixed-Length Double Arm",
+		"Fixed-Length Triple Arm",
+		"Fixed-Length Sextuple Arm",
+		"Piston Arm",
+	],
+	glyphs: [
+		"Glyph of Bonding",
+	]
+})

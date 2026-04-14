@@ -36,6 +36,11 @@ export const neededSounds = [
 		url: "./src/sounds/piece_rotate.mp3",
 		category: "sfx"
 	},
+	{
+		id: "ui_unlock",
+		url: "./src/sounds/ui_unlock.mp3",
+		category: "sfx"
+	},
 ]
 export const categoryVolumes = {
 	sfx: 1,

@@ -1,3 +1,4 @@
+import { CampaignProgress, CAMPAIGNS, EventProgress } from "./campaigns"
 import { SCENARIOS } from "./scenarios"
 import { categoryVolumes } from "./sounds"
 
@@ -93,12 +94,68 @@ export class SaveFile {
 		for (let categoryName in categoryVolumes){
 			this.settings.sounds[categoryName] = categoryVolumes[categoryName]
 		}
+		this.campaignsProgress = {}
+	}
+	initializeCampaigns(){
+		let progresses = this.campaignsProgress
+		for (let campaignId in CAMPAIGNS){
+			let campaign = CAMPAIGNS[campaignId]
+			if (!(campaignId in progresses)){
+				let progress = new CampaignProgress(campaign)
+				progresses[campaignId] = progress
+			}
+			let campaignProgress = progresses[campaignId]
+			//Attach a new progress tracker to any events that didn't exist last time the game loaded.
+			for (let chapter of campaign.chapters){
+				for (let event of chapter.events){
+					let id = event.id
+					if (!(id in campaignProgress.events)){
+						let progress = new EventProgress(event.id, false, false)
+						campaignProgress.events[id] = progress
+					}
+				}
+			}
+		}
+	}
+	getNewCampaignUnlocks(campaignId){
+		let campaign = CAMPAIGNS[campaignId]
+		let progress = this.campaignsProgress[campaignId]
+		let result = []
+
+		const shouldUnlock = condition => {
+			switch (condition.type){
+				case "completed":
+				let eventId = condition.eventId
+				let hasCompleted = progress.events[eventId].completed
+				return hasCompleted
+			}
+			return false
+		}
+
+		for (let chapter of campaign.chapters){
+			for (let event of chapter.events){
+				let id = event.id
+				if (progress.events[id].unlocked) continue
+				if (!event.info.unlock){
+					result.push(id)
+					continue
+				}
+				let unlock = event.info.unlock
+				let metCondition = shouldUnlock(unlock)
+				if (metCondition){
+					result.push(id)
+					continue
+				}
+			}
+		}
+		return result
 	}
 	toStore(){
 		let obj = {
 			name: this.name,
 			uuid: this.uuid,
-			settings: this.settings
+			settings: this.settings,
+			campaignsProgress: this.campaignsProgress
 		}
 		return obj
 	}
@@ -106,6 +163,7 @@ export class SaveFile {
 		let save = new SaveFile(store.name)
 		save.uuid = store.uuid
 		save.settings = store.settings ?? save.settings
+		save.campaignsProgress = store.campaignsProgress ?? save.campaignsProgress
 		return save
 	}
 }

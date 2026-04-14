@@ -7,9 +7,10 @@ import { clearModal } from "./util"
 export const CAMPAIGNS = {}
 
 export class CampaignEvent {
-	constructor(type, options){
+	constructor(type, id, options){
 		this.type = type
-		this.info = options
+		this.id = id
+		this.info = options ?? {}
 	}
 }
 
@@ -29,7 +30,31 @@ export class Campaign {
 	}
 }
 
-export function showCampaignChapter(campaign, chapterIndex){
+export class EventProgress {
+	constructor(id, completed, unlocked){
+		this.id = id
+		this.completed = completed
+		this.unlocked = unlocked
+	}
+}
+export class CampaignProgress {
+	constructor(campaign){
+		this.events = {}
+		for (let chapter of campaign.chapters){
+			for (let event of chapter.events){
+				let id = event.id
+				let progress = new EventProgress(id, false, false)
+				if (id in this.events){
+					console.warn("This event has a duplicate event id:", event, campaign)
+					continue
+				}
+				this.events[id] = progress
+			}
+		}
+	}
+}
+
+export function showCampaignChapter(campaign, chapterIndex, saveFile){
 	let campaignId = campaign.id
 	let chapter = campaign.chapters[chapterIndex]
 	let chapterName = getLocaleString(["campaigns", campaignId, "chapters", chapter.id, "name"], language, chapter.id)
@@ -39,10 +64,12 @@ export function showCampaignChapter(campaign, chapterIndex){
 	let chapterTitle = getLocaleString(["campaigns", campaignId, "chapters", chapter.id, "top-header"], language, chapter.id)
 	$("#level-chapter-title").text(chapterTitle)
 
+	let progress = saveFile.campaignsProgress[campaign.id]
+
 	let choicesTag = $("#level-select-content")
 	choicesTag.empty()
 	for (let event of chapter.events){
-		let tag = $("<div>").addClass("level-select-choice")
+		let tag = $("<div>").addClass("level-select-choice").appendTo(choicesTag)
 		tag.data("event", event)
 		switch (event.type){
 			case "puzzle":
@@ -62,7 +89,12 @@ export function showCampaignChapter(campaign, chapterIndex){
 			tag.append($("<img>").addClass("level-select-icon").attr("src", checkboxUrl))
 			break
 		}
-		choicesTag.append(tag)
+		
+		let id = event.id
+		tag.attr("data-event-id", id)
+		if (!progress.events[id].unlocked){
+			tag.addClass("locked")
+		}
 	}
 
 	let chaptersContainer = $("#level-select-chapter-container")
@@ -356,13 +388,23 @@ export async function showOptions(saveFile){
 
 new Campaign("base", [
 	new CampaignChapter("prologue", [
-		new CampaignEvent("puzzle", {scenarioId: "test"})
+		new CampaignEvent("puzzle", "test", {
+			scenarioId: "test",
+			// unlock: {type: "startsUnlocked"}
+		})
 	], {
 		locked: "./src/img/campaigns/base/prologue locked.png",
 		unlocked: "./src/img/campaigns/base/prologue.png"
 	}),
 	new CampaignChapter("chapter-1", [
-		new CampaignEvent("puzzle", {scenarioId: "refined-gold"})
+		new CampaignEvent("puzzle", "refined-gold", {
+			scenarioId: "refined-gold",
+			// unlock: {type: "startsUnlocked"}
+		}),
+		new CampaignEvent("puzzle", "face-powder", {
+			scenarioId: "face-powder",
+			unlock: {type: "completed", eventId: "refined-gold"}
+		}),
 	], {
 		locked: "./src/img/campaigns/base/chapter 1 locked.png",
 		unlocked: "./src/img/campaigns/base/chapter 1.png"
