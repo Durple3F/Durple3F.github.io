@@ -143,6 +143,34 @@ body {
 			filter: brightness(1.2) drop-shadow(0 0 0.5em rgba(197, 123, 89, 0.623));
 		}
 	}
+
+	.level-select-btn {
+		position: absolute;
+		width: 5vw;
+		aspect-ratio: 129 / 138;
+		cursor: pointer;
+
+		.img_inactive, .img_active {
+			position: absolute;
+			top: 0; left: 0;
+			width: 100%;
+		}
+		.img_active {
+			opacity: 0.001;
+		}
+		&:hover {
+			.img_active {
+				opacity: 1;
+			}
+			.img_inactive {
+				display: none;
+			}
+		}
+	}
+	#options-container {
+		left: 1vw;
+		bottom: 0;
+	}
 }
 
 #screen {
@@ -497,6 +525,11 @@ body {
 	h6 {
 		font-weight: normal;
 	}
+
+	.top-right {
+		position: absolute;
+		top: 0.5em; right: 0.5em;
+	}
 }
 .modal-xl {
 	--bs-modal-width: 75vw;
@@ -742,6 +775,56 @@ body {
 			box-shadow: 0 0 0.5em white;
 		}
 	}
+}
+
+#menu {
+	--bs-modal-bg: #0b0a08;
+	--bs-modal-color: #f9f6ef;
+	--bs-modal-border-color: #56564e;
+	--bs-modal-border-width: 0.6em;
+	--bs-modal-header-border-color: var(--bs-modal-border-color);
+	--bs-modal-footer-border-color: var(--bs-modal-border-color);
+	--bs-modal-header-border-width: calc(var(--bs-modal-border-width) / 3);
+	--bs-modal-footer-border-width: calc(var(--bs-modal-border-width) / 3);
+	--bs-modal-border-radius: 0;
+	font-family: "Crimson Text", serif;
+	/* pointer-events: none; */
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		font-weight: normal;
+	}
+
+	.modal-header {
+		position: relative;
+		text-align: center;
+		justify-content: center;
+		border-bottom: 0;
+
+		.btn-close {
+			position: absolute;
+			top: 50%;
+			right: 1.2rem;
+			transform: translateY(-25%);
+		}
+	}
+	.modal-footer {
+		display: none;
+	}
+}
+
+.sound-category {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+input[type="range"] {
+	width: 50%;
 }
 
 .tiny-g {

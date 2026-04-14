@@ -37,6 +37,10 @@ export const neededSounds = [
 		category: "sfx"
 	},
 ]
+export const categoryVolumes = {
+	sfx: 1,
+	music: 1
+}
 
 class Sound {
 	constructor(id, url, category="sfx"){
@@ -57,12 +61,16 @@ class Sound {
 		clone.elem.removeEventListener("canplaythrough", clone.handleCanPlayThrough)
 		clone.elem = this.elem.cloneNode()
 		clone.complete = this.complete
+		clone.setVolume(this.elem.volume)
 		if (clone.complete){
 			clone.resolve()
 		} else {
 			clone.elem.addEventListener("canplaythrough", clone.handleCanPlayThrough)
 		}
 		return clone
+	}
+	setVolume(volume){
+		this.elem.volume = volume
 	}
 }
 
@@ -110,4 +118,18 @@ export async function loadNeededSounds(){
 		promises.push(p)
 	}
 	await Promise.all(promises)
+}
+
+export function changeCategoryVolume(category, volume, saveFile){
+	for (let soundId in SOUNDS){
+		let snd = SOUNDS[soundId]
+		if (snd.category !== category) continue
+		snd.setVolume(volume)
+	}
+	for (let snd of playingSounds){
+		if (snd.category !== category) continue
+		snd.setVolume(volume)
+	}
+	categoryVolumes[category] = volume
+	saveFile.settings.sounds[category] = volume
 }

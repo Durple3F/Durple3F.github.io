@@ -1,4 +1,5 @@
 import { SCENARIOS } from "./scenarios"
+import { categoryVolumes } from "./sounds"
 
 const dbName = "opus-minor"
 const dbVersion = 1
@@ -87,17 +88,24 @@ export class SaveFile {
 	constructor(name){
 		this.name = name
 		this.uuid = self.crypto.randomUUID()
+		this.settings = {}
+		this.settings.sounds = {}
+		for (let categoryName in categoryVolumes){
+			this.settings.sounds[categoryName] = categoryVolumes[categoryName]
+		}
 	}
 	toStore(){
 		let obj = {
 			name: this.name,
-			uuid: this.uuid
+			uuid: this.uuid,
+			settings: this.settings
 		}
 		return obj
 	}
 	static fromStore(store){
 		let save = new SaveFile(store.name)
 		save.uuid = store.uuid
+		save.settings = store.settings ?? save.settings
 		return save
 	}
 }
@@ -112,6 +120,29 @@ export async function getSaveFiles(){
 	await promise
 	return request.result.map(val => SaveFile.fromStore(val))
 }
+export async function getSaveFile(uuid){
+	let resolve
+	let promise = new Promise(res => resolve = res)
+	const transaction = db.transaction(["save-file"], "readonly")
+	const saveFileStore = transaction.objectStore("save-file")
+	const key = IDBKeyRange.only(uuid)
+	const index = saveFileStore.index("uuid")
+	const request = index.openCursor(key)
+	let cursor
+	let result
+	let primaryKey
+	request.onsuccess = async event => {
+		cursor = event.target.result
+		if (cursor){
+			let val = cursor.value
+			result = val
+			primaryKey = cursor.primaryKey
+		}
+		resolve()
+	}
+	await promise
+	return [primaryKey, result]
+}
 
 export async function createSaveFile(name){
 	let resolve
@@ -121,6 +152,20 @@ export async function createSaveFile(name){
 	const saveFileStore = transaction.objectStore("save-file")
 	const request = saveFileStore.put(saveFile.toStore())
 	request.onsuccess = () => resolve()
+	await promise
+	return saveFile
+}
+export async function saveSaveFile(saveFile){
+	let resolve
+	let promise = new Promise(res => resolve = res)
+	let [primaryKey, record] = await getSaveFile(saveFile.uuid)
+	const transaction = db.transaction(["save-file"], "readwrite")
+	const saveFileStore = transaction.objectStore("save-file")
+	const request = saveFileStore.put(saveFile.toStore(), primaryKey)
+	request.onsuccess = () => resolve()
+	request.onerror = (e) => {
+		console.log(request.error)
+	}
 	await promise
 	return saveFile
 }
@@ -279,7 +324,7 @@ export async function saveSolution(solution){
 	const solutionsStore = transaction.objectStore("solutions")
 	const request = solutionsStore.put(solution.toStore(), primaryKey)
 	request.onsuccess = () => resolve()
-	request.onerror = (e, f, g) => {
+	request.onerror = (e) => {
 		console.log(request.error)
 	}
 	await promise

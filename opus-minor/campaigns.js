@@ -1,7 +1,7 @@
-import { createSolution, deleteSolution, getSolutions, saveSolution, SolutionSave } from "./database"
+import { createSolution, deleteSolution, getSolutions, saveSaveFile, saveSolution, SolutionSave } from "./database"
 import { getLocaleString } from "./locale"
 import { SCENARIOS } from "./scenarios"
-import { playSound } from "./sounds"
+import { categoryVolumes, changeCategoryVolume, playSound } from "./sounds"
 import { clearModal } from "./util"
 
 export const CAMPAIGNS = {}
@@ -272,6 +272,86 @@ export async function showScenario(scenario, saveUUID){
 
 	await promise
 	return resultEvents
+}
+export async function showOptions(saveFile){
+	let resolve
+	let promise = new Promise(res => resolve = res)
+	let resultEvents = []
+	let modalTag = $("#modal")
+	clearModal(modalTag)
+	playSound("ui_modal")
+
+	modalTag.find(".modal-dialog").addClass("modal-dialog-scrollable").addClass("modal-dialog-centered")
+
+	let header = modalTag.find(".modal-header")
+	header.hide()
+	let body = modalTag.find(".modal-body")
+	body.addClass("p-0")
+	modalTag.find(".modal-footer").hide()
+
+	let container = $("<div>").addClass("scenario-container").appendTo(body)
+	let left = $("<div>").addClass("scenario-story").appendTo(container)
+	let right = $("<div>").addClass("scenario-ui").appendTo(container)
+
+	body.append(`<button type="button" class="btn-close top-right" data-bs-dismiss="modal" aria-label="Close"></button>`)
+
+	left.text("STORY GOES HERE")
+	right.css("font-size", "160%")
+	right.css("padding-left", "5em")
+	right.css("padding-right", "5em")
+
+	const easing = 0.01
+	const toPerceptualVolume = (x, max = 1000, k = easing) => {
+		// Clamp input
+		x = Math.max(0, Math.min(max, x))
+		return Math.log1p(k * (x / max)) / Math.log1p(k)
+	}
+	const fromPerceptualVolume = (y, max = 1000, k = easing) => {
+		// Clamp input
+		y = Math.max(0, Math.min(1, y))
+		return (max / k) * (Math.exp(y * Math.log1p(k)) - 1)
+	}
+
+	const readyChangeVolume = (container, category, name) => {
+		let curVolume = categoryVolumes[category]
+		container.addClass("sound-category")
+		let nameTag = $("<div>").addClass("sound-category-name").text(name).appendTo(container)
+		let rangeTag = $("<input>").attr("type", "range").attr("min", 0).attr("max", 1000).appendTo(container)
+		rangeTag.addClass("form-range")
+		let curVal = fromPerceptualVolume(curVolume, 1000, easing)
+		rangeTag.val(curVal)
+		let changeInterval = -1
+		const change = () => {
+			let val = rangeTag.val()
+			let volume = toPerceptualVolume(val, 1000, easing)
+			changeCategoryVolume(category, volume, saveFile)
+		}
+		rangeTag.on("mousedown", () => {
+			clearInterval(changeInterval)
+			changeInterval = setInterval(change, 10)
+			const remove =  () => {
+				clearInterval(changeInterval)
+				playSound("ui_modal")
+				$("body")[0].removeEventListener("mouseup", remove)
+			}
+			$("body")[0].addEventListener("mouseup", remove)
+		})
+	}
+
+	let sfxContainer = $("<div>").appendTo(right)
+	readyChangeVolume(sfxContainer, "sfx", "Sound Volume")
+
+	let modal = new bootstrap.Modal(modalTag[0], {
+		keyboard: false
+	})
+	modal.toggle()
+
+	modalTag.on("hidden.bs.modal", async () => {
+		await saveSaveFile(saveFile)
+		resolve()
+	})
+	await promise
+	return promise
 }
 
 new Campaign("base", [

@@ -189,11 +189,20 @@
 		},
 		"20260413": {
 			"date": "April 13, 2026",
-			"line-count": 6600,
+			"line-count": 6800,
 			"changes": [
 				"- Improved how the computer calculates what hexes a component moves over as it rotates.",
 				"- Added shadows to arms & atoms.",
-				"- Improved how arms are rendered."
+				"- Improved how arms are rendered.",
+				"- Added an options menu & you can change how loud sound effects are.",
+				"- Your save file remembers your settings"
+			]
+		},
+		"20260414": {
+			"date": "April 14, 2026",
+			"line-count": 6800,
+			"changes": [
+				"- "
 			]
 		}
 	}

@@ -7,10 +7,10 @@ import { INSTRUCTIONS, Instruction, createInstructionButton } from "./instructio
 import { GLYPHTYPES } from "./glyphs.js";
 import { TrackPiece } from "./track.js";
 import { loadLocale } from "./locale.js";
-import { CAMPAIGNS, showCampaignChapter, showScenario } from "./campaigns.js";
+import { CAMPAIGNS, showCampaignChapter, showOptions, showScenario } from "./campaigns.js";
 import { SCENARIOS } from "./scenarios.js";
 import { createSaveFile, getSaveFiles, openDatabase, SaveFile } from "./database.js";
-import { loadNeededSounds, playSound } from "./sounds.js";
+import { changeCategoryVolume, loadNeededSounds, playSound } from "./sounds.js";
 
 const FRAMERATE = 60
 let tickInterval
@@ -177,7 +177,11 @@ async function loadGame(){
 
 	//Load sound effects
 	await loadNeededSounds()
-
+	
+	//set settings
+	for (let categoryName in saveFile.settings.sounds){
+		changeCategoryVolume(categoryName, saveFile.settings.sounds[categoryName], saveFile)
+	}
 }
 
 function startLevel(scenario, solution){
@@ -242,6 +246,12 @@ function switchCampaignChapter(campaign, chapterIndex){
 		switchCampaignChapter(campaign, newIndex)
 	})
 }
+
+function openMenu(){
+	showOptions(saveFile)
+}
+
+$("#options-container").on("click", openMenu)
 
 function startGame(){
 	$("#loading-screen").fadeOut()
