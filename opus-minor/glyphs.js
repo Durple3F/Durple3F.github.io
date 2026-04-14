@@ -1,5 +1,6 @@
 import { atomRenderSize } from "./config.js";
 import { ELEMENTS } from "./elements.js";
+import { loadSound, playSound } from "./sounds.js";
 import { Component, Hex } from "./util.js";
 import { loadSprite } from "./util.js";
 
@@ -23,6 +24,7 @@ export class GlyphType {
 	constructor(options) {
 		this.id = options.id
 		this.spriteMap = options.sprites
+		this.sounds = options.sounds
 		this.sprites = {}
 		this.loaded = false
 		this.execute = options.execute
@@ -39,6 +41,13 @@ export class GlyphType {
 				.then(img => this.sprites[spriteName] = img)
 			promises.push(p)
 		}
+		for (let sound of this.sounds) {
+			let id = sound.id
+			let url = sound.url
+			let category = sound.category ?? "sfx"
+			let p = loadSound(id, url, category)
+			promises.push(p)
+		}
 		return await Promise.all(promises)
 	}
 }
@@ -50,6 +59,13 @@ new GlyphType({
 		bond: "./src/img/glyphs/bonder_bond.png",
 		cylinder: "./src/img/glyphs/bonder_bond_cylinder.png",
 	},
+	sounds: [
+		{
+			id: "glyph_bonding",
+			url: "./src/sounds/glyph_bonding.mp3",
+			category: "sfx"
+		}
+	],
 	inputs: [
 		new GlyphInput("a", "ring", new Hex(0, 0, 0)),
 		new GlyphInput("b", "ring", Hex.directions[0])
@@ -68,11 +84,16 @@ new GlyphType({
 		if (moleculeA !== moleculeB) {
 			let newHomeTile = moleculeA.homeTile
 			let atoms = moleculeB.atoms.contents
+			let bondsA = moleculeA.bonds.contents
+			let bondsB = moleculeB.bonds.contents
 			let difference = moleculeB.homeTile.subtract(moleculeA.homeTile)
 			for (let atom of atoms) {
 				let newCoord = atom.coord.add(difference)
 				atom.setCoords(newCoord.q, newCoord.r, newCoord.s)
 				moleculeA.addAtom(atom)
+			}
+			for (let bond of bondsB){
+				moleculeA.addBond(bond.atoms[0], bond.atoms[1], bond.type.id)
 			}
 			//Replace moleculeA as the gripped component of all arms that were holding moleculeB.
 			const components = level.grid.contents
@@ -92,11 +113,13 @@ new GlyphType({
 		let bonds = moleculeA.bonds.contents
 		let bondExists = false
 		for (let bond of bonds) {
-			if (bond.type === "simple" && bond.atoms.includes(atomA) && bond.atoms.includes(atomB)) {
+			if (bond.type.id === "simple" && bond.atoms.includes(atomA) && bond.atoms.includes(atomB)) {
 				bondExists = true
+				break
 			}
 		}
 		if (!bondExists) {
+			playSound("glyph_bonding")
 			moleculeA.addBond(atomA, atomB, "simple")
 		}
 	},
@@ -140,6 +163,13 @@ new GlyphType({
 		quicksilver_symbol: "./src/img/glyphs/projection/quicksilver_symbol.png",
 		lead_symbol: "./src/img/glyphs/projection/lead_symbol.png",
 	},
+	sounds: [
+		{
+			id: "glyph_projection",
+			url: "./src/sounds/glyph_projection.mp3",
+			category: "sfx"
+		}
+	],
 	inputs: [
 		new GlyphInput("quicksilver", "hole", new Hex(0, 0, 0)),
 		new GlyphInput("metal", "ring", Hex.directions[0])
@@ -170,6 +200,7 @@ new GlyphType({
 		}
 		if (nextElement){
 			metalInput.atom.element = nextElement
+			playSound("glyph_projection")
 			game.deleteComponent(quicksilverInput.molecule, level)
 		}
 	},

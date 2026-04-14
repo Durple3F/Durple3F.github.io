@@ -497,11 +497,15 @@ body {
 		pointer-events: none;
 		opacity: 0;
 
-		.instruction:not(:first-child) {
+		/* .instruction:not(:first-child) {
 			border-left-color: var(--parchment-bg);
 		}
 		.instruction:not(:last-child) {
 			border-right-color: var(--parchment-bg);
+		} */
+		
+		.instruction {
+			background-color: hsl(from var(--parchment-bg) calc(h + 10) calc(s * 0.5) calc(l * 0.8) / 1);
 		}
 	}
 }

@@ -55,6 +55,7 @@ class Sound {
 			this.resolve()
 		}
 		this.elem.addEventListener("canplaythrough", this.handleCanPlayThrough)
+		this.setVolume(categoryVolumes[this.category])
 	}
 	clone(){
 		let clone = new Sound(this.id, this.url, this.category)
