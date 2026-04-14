@@ -54,12 +54,14 @@ export function createInstructionTag(instruction){
 	tag.attr("data-type", type.id)
 	tag.data("instruction", instruction)
 
-	let arrow = $("<div>").addClass("instruction-arrow")
-	tag.append(arrow)
+	let arrow = $("<div>").addClass("instruction-arrow").appendTo(tag)
 
-	for (let i = 1; i < instruction.generatedInstructions.length; i++){
+	let generatedInstructions = instruction.generatedInstructions
+	let generatedTag = $("<div>").addClass("instruction-generated").appendTo(tag)
+
+	for (let i = 1; i < generatedInstructions.length; i++){
 		let part = $("<img>").addClass("instruction-arrow-part")
-		if (i === instruction.generatedInstructions.length - 1){
+		if (i === generatedInstructions.length - 1){
 			if (instruction.isLegal){
 				part.attr("src", "./src/img/arrow-head.png")
 			} else {
@@ -75,6 +77,11 @@ export function createInstructionTag(instruction){
 			part.attr("data-final", false)
 		}
 		arrow.append(part)
+	}
+	for (let i = 0; i < generatedInstructions.length; i++){
+		let newInstruction = generatedInstructions[i]
+		let newTag = createInstructionTag(newInstruction)
+		generatedTag.append(newTag)
 	}
 
 	return tag

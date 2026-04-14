@@ -301,7 +301,7 @@ body {
 	overflow-y: auto;
 
 	#program-names {
-		width: var(--program-row-height);
+		min-width: var(--program-row-height);
 	}
 
 	#program-names>*,
@@ -383,6 +383,10 @@ body {
 	.program-row .instruction {
 		height: 100%;
 		display: flex-inline;
+
+		&.highlight {
+			filter: brightness(1.2);
+		}
 	}
 }
 
@@ -482,6 +486,27 @@ body {
 			display: inline-block;
 		}
 	}
+
+	.instruction-generated {
+		position: absolute;
+		top: calc(var(--instruction-border-thickness) * -1);
+		left: calc(-1 * var(--instruction-border-thickness));
+		height: calc(100% + var(--instruction-border-thickness) * 2 - 0.5px);
+		display: flex;
+		z-index: 20;
+		pointer-events: none;
+		opacity: 0;
+
+		.instruction:not(:first-child) {
+			border-left-color: var(--parchment-bg);
+		}
+		.instruction:not(:last-child) {
+			border-right-color: var(--parchment-bg);
+		}
+	}
+}
+#program-rows.playing .instruction-generated {
+	opacity: 1;
 }
 
 .instruction[data-type="idle"] {

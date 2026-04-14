@@ -96,14 +96,23 @@ $("#playback-stop-button").on("click", () => {
 	game.stopSimulation()
 })
 $("#playback-pause-button").on("click", () => {
-	game.stopSimulationAtNextTimestep = true
+	game.stopSimulationAtNextTimeStep = true
 })
 $("#playback-advance-button").on("click", () => {
 	if (!game.isPlayingSimulation){
 		game.startSimulation()
 	}
-	game.playbackSpeed = 1
-	game.stopSimulationAtNextTimestep = true
+	if (!game.stopSimulationAtNextTimeStep){
+		game.playbackSpeed = 1
+		game.stopSimulationAtNextTimeStep = true
+		game.stopSimulationAtTimeStep = game.simulationTimeStep + 1
+	} else {
+		game.simulationDeltaT += 1
+		if (game.simulationDeltaT % 1 > 0.2){
+			game.simulationDeltaT -= (game.simulationDeltaT % 1) - 0.2
+		}
+		game.stopSimulationAtTimeStep += 1
+	}
 })
 $("#playback-play-button").on("click", () => {
 	if (game.controls.isPressing("Alt")){

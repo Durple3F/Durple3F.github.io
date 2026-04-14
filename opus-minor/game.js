@@ -103,7 +103,8 @@ export class Game{
 		this.simulationTimeStep = 0
 		this.simulationDeltaT = 0
 		this.playbackSpeed = 1
-		this.stopSimulationAtNextTimestep = false
+		this.stopSimulationAtNextTimeStep = false
+		this.stopSimulationAtTimeStep = Infinity
 		this.playingAnimations = []
 
 		this.solutionUsedHexes = []
@@ -130,6 +131,7 @@ export class Game{
 		this.loadSolution(this.solution)
 		this.fillComponentPane()
 		this.performUIUpdates()
+		console.log(this)
 	}
 
 	setScenario(scenario){
@@ -607,6 +609,7 @@ export class Game{
 		this.resizeScreen()
 		$("#program-names").empty()
 		$("#program-rows").empty()
+		$("#program-rows").removeClass("playing")
 	}
 
 	beginHoldingInstruction(instruction){
@@ -844,7 +847,6 @@ export class Game{
 						let extensionDiff = initialExtension - extension
 						let trackIndexChange = positionInfo.track
 						let generated = []
-						console.log(positionInfo)
 						if (positionInfo.grabbing){
 							let ins = new Instruction(INSTRUCTIONS["grabber_drop"])
 							generated.push(ins)
@@ -1042,10 +1044,34 @@ export class Game{
 				let tag = createInstructionTag(instruction)
 				row.append(tag)
 				tag.data("program", program)
-				tag[0].addEventListener("mousedown", () => {
-					// this.beginHoldingInstruction(instruction)
-				})
+				tag.data("instruction", instruction)
+
+				let generatedTags = tag.children(".instruction-generated").children(".instruction")
+				if (!generatedTags.length){
+					tag.data("instructionIndex", j)
+					tag.attr("data-index", j)
+				}
+				for (let k = 0; k < generatedTags.length; k++){
+					let gen = $(generatedTags[k])
+					gen.data("instructionIndex", j + k)
+					gen.attr("data-index", j + k)
+				}
+				// tag[0].addEventListener("mousedown", () => {
+				// 	this.beginHoldingInstruction(instruction)
+				// })
 			}
+		}
+	}
+	highlightPrograms(timestep){
+		let programs = this.currentLevel.programs
+		for (let program of programs){
+			let instructions = program.instructions
+			let row = program.elem
+			if (timestep < program.startStep) continue
+			let instructionIndex = (timestep - program.startStep) % program.period + program.startStep
+			console.log(instructionIndex, timestep, program.startStep, program.period)
+			row.find(`.instruction`).removeClass("highlight")
+			row.find(`.instruction[data-index=${instructionIndex}]`).addClass("highlight")
 		}
 	}
 
@@ -1696,14 +1722,21 @@ export class Game{
 		this.simulationDeltaT = 0
 		this.playbackSpeed = 1
 		this.isPlayingSimulation = true
-		this.beginAnimatingInstructions(this.simulationTimeStep)
+		$("#program-rows").addClass("playing")
+		this.advanceTimeStep(this.simulationTimeStep)
 	}
 	stopSimulation(){
 		this.resetSimulation()
 		this.simulationTimeStep = 0
 		this.simulationDeltaT = 0
 		this.isPlayingSimulation = false
+		$("#program-rows").removeClass("playing")
 		this.playingAnimations.length = 0
+	}
+	advanceTimeStep(timestep){
+		this.beginAnimatingInstructions(timestep)
+		this.applyAllAnimations()
+		this.highlightPrograms(timestep - 1)
 	}
 	beginAnimatingInstructions(timestep){
 		//Some things happen the moment a time step starts.
@@ -2425,14 +2458,15 @@ export class Game{
 				ticks++
 				this.simulationTimeStep++
 				this.simulationDeltaT--
-				this.beginAnimatingInstructions(this.simulationTimeStep)
-				this.applyAllAnimations()
+				this.advanceTimeStep(this.simulationTimeStep)
 			}
-			if (ticks > 0 && this.stopSimulationAtNextTimestep){
-				this.stopSimulationAtNextTimestep = false
-				this.playbackSpeed = 0
-				this.simulationDeltaT = 0
-				this.applyAllAnimations()
+			if (ticks > 0 && this.stopSimulationAtNextTimeStep){
+				if (this.simulationTimeStep >= this.stopSimulationAtTimeStep){
+					this.stopSimulationAtNextTimeStep = false
+					this.playbackSpeed = 0
+					this.simulationDeltaT = 0
+					this.applyAllAnimations()
+				}
 			}
 			
 			this.detectCollisions()
