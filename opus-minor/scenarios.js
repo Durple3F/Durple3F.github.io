@@ -6,6 +6,7 @@ export class Scenario {
 		this.allowedMechanisms = options.mechanisms ?? []
 		this.allowedGlyphs = options.glyphs ?? []
 		this.prices = options.prices ?? []
+		this.sideContent = options.sideContent ?? null
 		for (let type of ["Product", "Reagent", "Glyph", "ArmMechanism", "Track"]){
 			if (!this.prices[type]){
 				this.prices[type] = {}
@@ -124,7 +125,11 @@ new Scenario("refined-gold", {
 	glyphs: [
 		"Glyph of Bonding",
 		"Glyph of Projection",
-	]
+	],
+	sideContent: {
+		type: "dialogue",
+		dialogueId: "refined-gold"
+	}
 })
 new Scenario("face-powder", {
 	products: [

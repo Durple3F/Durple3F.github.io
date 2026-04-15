@@ -1,4 +1,5 @@
 import { createSolution, deleteSolution, getSolutions, saveSaveFile, saveSolution, SolutionSave } from "./database"
+import { DIALOGUES } from "./dialogue"
 import { getLocaleString } from "./locale"
 import { SCENARIOS } from "./scenarios"
 import { categoryVolumes, changeCategoryVolume, playSound } from "./sounds"
@@ -54,6 +55,11 @@ export class CampaignProgress {
 	}
 }
 
+export async function switchBackground(url){
+	let bg = $("#level-select-bg")
+	bg.css("background-image", `url(${url})`)
+}
+
 export function showCampaignChapter(campaign, chapterIndex, saveFile){
 	let campaignId = campaign.id
 	let chapter = campaign.chapters[chapterIndex]
@@ -63,6 +69,10 @@ export function showCampaignChapter(campaign, chapterIndex, saveFile){
 	$("#level-select-header").find(".level-select-subtitle").text(chapterSubtitle)
 	let chapterTitle = getLocaleString(["campaigns", campaignId, "chapters", chapter.id, "top-header"], language, chapter.id)
 	$("#level-chapter-title").text(chapterTitle)
+
+	if (chapter.imageUrls.background){
+		switchBackground(chapter.imageUrls.background)
+	}
 
 	let progress = saveFile.campaignsProgress[campaign.id]
 
@@ -110,7 +120,8 @@ export function showCampaignChapter(campaign, chapterIndex, saveFile){
 	}
 }
 
-export async function showScenario(scenario, saveUUID){
+export async function showScenario(scenario, campaign, saveFile){
+	let saveUUID = saveFile.uuid
 	let resolve
 	let promise = new Promise(res => resolve = res)
 	let resultEvents = []
@@ -140,7 +151,17 @@ export async function showScenario(scenario, saveUUID){
 	let submitRenameButton = $("<button>").text(getLocaleString("button-submit-rename-solution", language, "Rename"))
 	submitRenameButton.appendTo(renameButtonsContainer)
 
-	left.text("STORY GOES HERE")
+	let sideContent = scenario.sideContent
+	if (sideContent){
+		switch (sideContent.type){
+			case "dialogue":
+			let dialogueId = sideContent.dialogueId
+			let dialogue = DIALOGUES[dialogueId]
+			let content = dialogue.createTag(saveFile, campaign.id)
+			left.html(content)
+			break
+		}
+	}
 
 	let scenarioName = getLocaleString(["scenarios", scenario.id, "name"], language, scenario.id)
 	let scenarioTitle = $("<div>").addClass("scenario-title").text(scenarioName).appendTo(right)
@@ -395,7 +416,8 @@ new Campaign("base", [
 		})
 	], {
 		locked: "./src/img/campaigns/base/prologue locked.png",
-		unlocked: "./src/img/campaigns/base/prologue.png"
+		unlocked: "./src/img/campaigns/base/prologue.png",
+		background: "./src/bg/background_0.png"
 	}),
 	new CampaignChapter("chapter-1", [
 		new CampaignEvent("puzzle", "refined-gold", {
@@ -408,6 +430,7 @@ new Campaign("base", [
 		}),
 	], {
 		locked: "./src/img/campaigns/base/chapter 1 locked.png",
-		unlocked: "./src/img/campaigns/base/chapter 1.png"
+		unlocked: "./src/img/campaigns/base/chapter 1.png",
+		background: "./src/bg/background_1.png"
 	}),
 ])

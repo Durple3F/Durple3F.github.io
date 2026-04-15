@@ -39,6 +39,17 @@ const dbStores = [
 	},
 ]
 
+export function doesSaveMeetCriteria(saveFile, campaignId, condition){
+	let progress = saveFile.campaignsProgress[campaignId]
+	switch (condition.type){
+		case "completed":
+		let eventId = condition.eventId
+		let hasCompleted = progress.events[eventId].completed
+		return hasCompleted
+	}
+	return false
+}
+
 async function createObjectStore(store){
 	if (!store.options) store.options = {}
 	if (!store.indexes) store.indexes = []
@@ -122,16 +133,6 @@ export class SaveFile {
 		let progress = this.campaignsProgress[campaignId]
 		let result = []
 
-		const shouldUnlock = condition => {
-			switch (condition.type){
-				case "completed":
-				let eventId = condition.eventId
-				let hasCompleted = progress.events[eventId].completed
-				return hasCompleted
-			}
-			return false
-		}
-
 		for (let chapter of campaign.chapters){
 			for (let event of chapter.events){
 				let id = event.id
@@ -141,7 +142,7 @@ export class SaveFile {
 					continue
 				}
 				let unlock = event.info.unlock
-				let metCondition = shouldUnlock(unlock)
+				let metCondition = doesSaveMeetCriteria(this, campaignId, unlock)
 				if (metCondition){
 					result.push(id)
 					continue

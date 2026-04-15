@@ -252,7 +252,7 @@ function switchCampaignChapter(campaign, chapterIndex){
 			case "puzzle":
 			let scenarioId = event.info.scenarioId
 			let scenario = SCENARIOS[scenarioId]
-			showScenario(scenario, saveFile.uuid).then(events => {
+			showScenario(scenario, campaign, saveFile).then(events => {
 				handleGameEvents(events)
 			})
 			// startLevel(scenario)

@@ -73,5 +73,32 @@
 				}
 			}
 		}
+	},
+	"speakers": {
+		"anataeus": {
+			"name": "Anataeus Vaya"
+		},
+		"concordia": {
+			"name": "Concordia Lem"
+		}
+	},
+	"dialogues": {
+		"refined-gold": {
+			"before-0": "Well, this is an odd first project. I feel like someone's having a laugh at my expense.",
+			"before-1": "Why, were you asked to create the Philosopher’s Stone?",
+			"before-2": "Close, actually. One more guess.",
+			"before-3": "Transform lead into gold?",
+			"before-4": "Yes. Apparently there’s an old Van Tassen lead mine, and wouldn’t it be better if it produced gold instead of lead?",
+			"before-5": "Armand suggested it, so casually...",
+			"before-6": "Sounds wonderful. Time to put your University degree to the test!",
+			"after-0": "“Can you make lead into gold?”",
+			"after-1": "I can scarcely believe it...",
+			"after-2": "Well, at least it’s finished with now.",
+			"after-3": "Like asking a fish if it can swim!",
+			"after-4": "You're taking this remarkably poorly, Anataeus.",
+			"after-5": "I was expecting a challenge, that’s all.",
+			"after-6": "Sounds like you want a chance to show off.",
+			"after-7": "I’m not sure I’d go that far."
+		}
 	}
 }

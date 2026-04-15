@@ -209,6 +209,14 @@
 				"- Added Glyph of Calcification",
 				"- Added the level Face Powder"
 			]
+		},
+		"20260415": {
+			"date": "April 15, 2026",
+			"line-count": 7400,
+			"changes": [
+				"- Added a very shoddy background to the level select screen.",
+				"- Tons of work on dialogue screen."
+			]
 		}
 	}
 }
