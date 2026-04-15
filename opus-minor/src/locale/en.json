@@ -21,6 +21,7 @@
 	"message-please-rename-solution": "Please enter a new name for this solution:",
 	"button-cancel-rename-solution": "Cancel",
 	"button-submit-rename-solution": "Rename Solution",
+	"unlock-beat-puzzle-to-continue": "Solve this puzzle to continue",
 
 	"scenarios": {
 		"test": {

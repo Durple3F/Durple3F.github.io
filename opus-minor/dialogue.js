@@ -1,4 +1,6 @@
+import { doesSaveMeetCriteria } from "./database"
 import { getLocaleString } from "./locale"
+import { playSound } from "./sounds"
 
 export const SPEAKERS = {}
 
@@ -44,12 +46,27 @@ export class DialogueStory {
 	}
 	createTag(saveFile, campaignId){
 		let tag = $("<div>").addClass("dialogue-container")
+		let progress = {
+			messageId: 0
+		}
+		let tagMap = {}
 
+		let totalMessages = 0
+		let pretendEverythingIsLocked = true
+		let done = false
 		for (let section of this.messagesList){
+			let sectionIndex = this.messagesList.indexOf(section)
 			let sectionTag = $("<div>").addClass("dialogue-section-container").appendTo(tag)
 			if (section.unlock){
 				let unlockTag = $("<div>").addClass("dialogue-section-unlock").appendTo(sectionTag)
-				unlockTag.text("Unlock this somehow or whatever :/")
+				let unlockText = getLocaleString("unlock-beat-puzzle-to-continue", language, "Solve this puzzle to continue")
+				unlockTag.text(unlockText)
+				tagMap[totalMessages - 1] = tagMap[totalMessages - 1].add(sectionTag)
+				let isUnlocked = doesSaveMeetCriteria(saveFile, campaignId, section.unlock)
+				if (!isUnlocked || pretendEverythingIsLocked){
+					done = true
+					break
+				}
 			}
 			let messages = section.messages
 			let exchanges = []
@@ -70,6 +87,8 @@ export class DialogueStory {
 				let speaker = exchange[0].speaker
 				let side = exchange[0].side
 				exchangeTag.addClass(side)
+				exchangeTag.attr("data-message-id", totalMessages)
+				tagMap[totalMessages] = exchangeTag
 
 				let name = getLocaleString(["speakers", speaker.id, "name"], language, speaker.id)
 				let nameTag = $("<div>").addClass("speaker-name-container").appendTo(right)
@@ -86,6 +105,11 @@ export class DialogueStory {
 
 				for (let message of exchange){
 					let messageTag = $("<div>").addClass("dialogue-message").appendTo(right)
+					messageTag.attr("data-message-id", totalMessages)
+					if (!tagMap[totalMessages]){
+						tagMap[totalMessages] = messageTag
+					}
+					totalMessages++
 					if (exchange.length === 1){
 						messageTag.addClass("lone")
 					}
@@ -94,6 +118,26 @@ export class DialogueStory {
 				}
 			}
 		}
+		for (let i = progress.messageId + 1; i < totalMessages; i++){
+			tagMap[i].hide()
+		}
+
+		let arrowContainer = $("<div>").addClass("dialogue-advance-container").appendTo(tag)
+		let arrow = $("<div>").addClass("dialogue-advance-arrow").appendTo(arrowContainer)
+
+		tag.on("click", () => {
+			progress.messageId++
+			let toShow = tagMap[progress.messageId]
+			if (toShow){
+				toShow.fadeIn()
+				let lastElem = toShow[toShow.length - 1]
+				lastElem.scrollIntoView({behavior: "smooth"})
+				playSound("click_story")
+			}
+			if (progress.messageId >= totalMessages - 1){
+				arrowContainer.animate({opacity: 0}, 1000)
+			}
+		})
 
 		return tag
 	}

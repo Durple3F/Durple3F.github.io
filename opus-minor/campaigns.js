@@ -219,7 +219,7 @@ export async function showScenario(scenario, campaign, saveFile){
 		}
 	}
 	
-	getSolutions(scenario).then(async solutionList => {
+	getSolutions(scenario, saveFile.uuid).then(async solutionList => {
 		if (solutionList.length === 0){
 			const solution = await createSolution(scenario, saveUUID)
 			solutionList.push(solution)

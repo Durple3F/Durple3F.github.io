@@ -298,7 +298,7 @@ export class SolutionSave {
 	}
 }
 
-export async function getSolutions(scenario){
+export async function getSolutions(scenario, saveUUID=null){
 	let resolve
 	let promise = new Promise(res => resolve = res)
 	const scenarioId = scenario.id
@@ -321,6 +321,9 @@ export async function getSolutions(scenario){
 		}
 	}
 	await promise
+	if (saveUUID){
+		result = result.filter(solutionSave => solutionSave.saveUUID === saveUUID)
+	}
 	return result
 }
 export async function getSolution(uuid){
