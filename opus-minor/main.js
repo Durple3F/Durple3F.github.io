@@ -94,19 +94,22 @@ $(document).on("keydown", e => {
 	}
 })
 $("#playback-stop-button").on("click", () => {
+	playSound("sim_stop")
 	game.stopSimulation()
 })
 $("#playback-pause-button").on("click", () => {
+	playSound("sim_stop")
 	game.stopSimulationAtNextTimeStep = true
 })
 $("#playback-advance-button").on("click", () => {
+	playSound("sim_step")
 	if (!game.isPlayingSimulation){
 		game.startSimulation()
 	}
 	if (!game.stopSimulationAtNextTimeStep){
 		game.playbackSpeed = 1
 		game.stopSimulationAtNextTimeStep = true
-		game.stopSimulationAtTimeStep = game.simulationTimeStep + 1
+		game.stopSimulationAtTimeStep = game.simulationTimeStep
 	} else {
 		game.simulationDeltaT += 1
 		if (game.simulationDeltaT % 1 > 0.2){
@@ -120,6 +123,7 @@ $("#playback-play-button").on("click", () => {
 		$("#playback-fast-forward-button").click()
 	} else {
 		if (!game.isPlayingSimulation){
+			playSound("sim_start")
 			game.startSimulation()
 		}
 		game.playbackSpeed = 1
@@ -127,6 +131,7 @@ $("#playback-play-button").on("click", () => {
 })
 $("#playback-fast-forward-button").on("click", () => {
 	if (!game.isPlayingSimulation){
+		playSound("sim_start")
 		game.startSimulation()
 	}
 	game.playbackSpeed = 5

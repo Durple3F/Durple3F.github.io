@@ -308,7 +308,7 @@ export async function getSolutions(scenario, saveUUID=null){
 	const index = solutionsStore.index("scenarioId")
 	const request = index.openCursor(key)
 	let cursor
-	const result = []
+	let result = []
 	request.onsuccess = async event => {
 		cursor = event.target.result
 		if (cursor){

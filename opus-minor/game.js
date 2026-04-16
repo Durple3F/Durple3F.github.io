@@ -494,8 +494,8 @@ export class Game{
 			componentTag.attr("data-available", true)
 			componentTag.on("mousedown", () => {
 				let component = new Glyph(glyphId)
+				component.isRendered = false
 				this.beginHoldingComponent(component)
-				this.selectedComponent.isRendered = false
 			})
 		}
 
@@ -1335,6 +1335,7 @@ export class Game{
 					window.alert("Some components collided with each other. Reset the simulation and try again.")
 					legal = false
 					this.playbackSpeed = 0
+					playSound("sim_error")
 					let r1 = circle1.radius * 1.3
 					let r2 = circle2.radius * 1.3
 					let box1 = new Rectangle(circle1.x - r1, circle1.y - r1, r1*2, r1*2)
@@ -2163,6 +2164,7 @@ export class Game{
 
 			//For all moving molecules, ensure that all arms that are gripping that molecule are being animated in a valid way.
 			const armsGripping = armsGrippingMolecules.get(molecule)
+			const mechsGripping = armMechanismsGrippingMolecules.get(molecule)
 			const mechanismsGripping = armMechanismsGrippingMolecules.get(molecule)
 			for (let offset of offsets){
 				let dir = offset.direction
@@ -2221,8 +2223,58 @@ export class Game{
 					break
 				}
 			}
+
+			//It's impossible to have two arms holding an atom at the same time AND rotate the atom somehow.
+			//UNLESS the molecule is pivoting AND each arm is gripping the same atom
+			if (rotations.length && armsGripping.length > 1){
+				let onAtom = false
+				let homeTile = molecule.homeTile
+				let zero = new Hex(0, 0, 0)
+				for (let atom of molecule.atoms.contents){
+					if (atom.coord.equals(zero)){
+						onAtom = true
+						break
+					}
+				}
+				if (onAtom){
+					//The atom is being pivoted.
+					let bad = false
+					for (let mechanism of mechsGripping){
+						for (let arm of mechanism.arms.contents){
+							if (!armsGripping.includes(arm)) continue
+							if (!homeTile.equals(mechanism.homeTile)){
+								bad = true
+								break
+							}
+						}
+						if (bad){
+							break
+						}
+					}
+					if (bad){
+						illegalAnimation = true
+						window.alert("A molecule was moved in an impossible way. Two arms are trying to pivot it in different ways.")
+						illegalMolecules.push(molecule)
+						console.trace()
+						break
+					}
+				} else {
+					//The atom is being rotated about another point.
+					if (mechsGripping.length > 1){
+						illegalAnimation = true
+						window.alert("A molecule was moved in an impossible way. Two arms are trying to rotate it in different ways.")
+						illegalMolecules.push(molecule)
+						console.trace()
+						break
+					}
+				}
+			}
+			if (illegalAnimation){
+				break
+			}
 		}
 		if (illegalAnimation){
+			playSound("sim_error")
 			this.playbackSpeed = 0
 			for (let molecule of illegalMolecules){
 				let circles = this.getSimulationCollisionCircles(molecule)

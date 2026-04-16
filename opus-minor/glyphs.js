@@ -1,7 +1,7 @@
 import { atomRenderSize } from "./config.js";
 import { ELEMENTS } from "./elements.js";
 import { loadSound, playSound } from "./sounds.js";
-import { Component, Hex } from "./util.js";
+import { Component, Hex, Molecule } from "./util.js";
 import { loadSprite } from "./util.js";
 
 export class GlyphInput {
@@ -125,6 +125,124 @@ new GlyphType({
 	},
 	render: function (ctx, glyph, x, y, hexSize, inRadius, horiz, vert) {
 		const ringSize = atomRenderSize * hexSize * 1.15
+		const baseSprite = this.sprites["base"]
+		ctx.translate(x, y)
+		const angle = glyph.rotation - (glyph.currentHexRotation * Math.PI / 3)
+		ctx.rotate(angle)
+		ctx.drawImage(baseSprite, - horiz * 0.5, - vert * 2 / 3, horiz * 2, vert * 4 / 3)
+
+		//extras
+		const bondSprite = this.sprites["bond"]
+		const cylinderSprite = this.sprites["cylinder"]
+		const centerX = horiz * 0.5
+		const bondWidth = ringSize * 0.7
+		const bondHeight = ringSize * 1.18
+		const cylWidth = bondWidth
+		const cylHeight = bondHeight * 0.42
+		ctx.drawImage(bondSprite, centerX - bondWidth * 0.5, -bondHeight * 0.5, bondWidth, bondHeight)
+		ctx.drawImage(cylinderSprite, centerX - cylWidth * 0.5, -cylHeight * 0.5, cylWidth, cylHeight)
+		ctx.rotate(-angle)
+
+		//rings
+		const ringSprite = this.sprites["ring"]
+		ctx.drawImage(ringSprite, -ringSize, -ringSize, ringSize * 2, ringSize * 2)
+		const otherRingHex = Hex.directions[glyph.currentHexRotation]
+		const otherRingHexXY = otherRingHex.toXY()
+		otherRingHexXY[0] *= hexSize
+		otherRingHexXY[1] *= hexSize
+		ctx.drawImage(ringSprite, otherRingHexXY[0] - ringSize, otherRingHexXY[1] - ringSize, ringSize * 2, ringSize * 2)
+	}
+})
+new GlyphType({
+	id: "Glyph of Unbonding",
+	sprites: {
+		base: "./src/img/glyphs/unbonder/base.png",
+		ring: "./src/img/glyphs/bonder_ring.png",
+		bond: "./src/img/glyphs/unbonder/bond.png",
+		cylinder: "./src/img/glyphs/unbonder/cylinder.png",
+	},
+	sounds: [
+		{
+			id: "glyph_unbonding",
+			url: "./src/sounds/glyph_unbonding.mp3",
+			category: "sfx"
+		}
+	],
+	inputs: [
+		new GlyphInput("a", "ring", new Hex(0, 0, 0)),
+		new GlyphInput("b", "ring", Hex.directions[0])
+	],
+	execute: function (game, level, inputs) {
+		let inputA = inputs["a"]
+		let inputB = inputs["b"]
+		if (!inputA || !inputB) return
+
+		let atomA = inputA.atom
+		let moleculeA = inputA.molecule
+		let atomB = inputB.atom
+		let moleculeB = inputB.molecule
+
+		//If these are different molecules, they can't be unbonded, so do nothing.
+		if (moleculeA !== moleculeB) {
+			return
+		}
+
+		//Remove all bonds of any kind connecting these two atoms.
+		let removed = 0
+		let bondsA = moleculeA.bonds.contents
+		for (let i = 0; i < bondsA.length; i++){
+			let bond = bondsA[i]
+			if (bond.atoms.includes(atomA) && bond.atoms.includes(atomB)){
+				bondsA.splice(i, 1)
+				i--
+				removed = true
+				continue
+			}
+		}
+		if (removed){
+			playSound("glyph_unbonding")
+		}
+
+		//Determine whether these atoms are still connected
+		let atomsA = [atomA]
+		for (let i = 0; i < atomsA.length; i++){
+			let atom = atomsA[i]
+			let thoseBonds = bondsA.filter(bond => bond.atoms.includes(atom))
+			let newBonds = thoseBonds.filter(bond => bond.atoms.some(atom => !atomsA.includes(atom)))
+			let newAtoms = newBonds.flatMap(bond => bond.atoms.filter(atom => !atomsA.includes(atom)))
+			newAtoms.forEach(atom => atomsA.push(atom))
+		}
+
+		let atomsB = []
+		for (let atom of moleculeA.atoms.contents){
+			if (!atomsA.includes(atom)){
+				atomsB.push(atom)
+			}
+		}
+
+		if (atomsB.length === 0){
+			//Awesome there's the same, we're done here
+			return
+		}
+		//Disconnect all atoms of atomsB into their own molecule
+		let newMolecule = new Molecule()
+		newMolecule.homeTile = moleculeA.homeTile
+		for (let atom of atomsB){
+			let oldAtoms = moleculeA.atoms.contents
+			oldAtoms.splice(oldAtoms.indexOf(atom), 1)
+			newMolecule.addAtom(atom)
+		}
+		//Find all the bonds connecting atoms that WERE in moleculeA, but are now in the new molecule.
+		for (let bond of bondsA){
+			if (atomsB.includes(bond.atoms[0]) && atomsB.includes(bond.atoms[1])){
+				bondsA.splice(bondsA.indexOf(bond), 1)
+				newMolecule.addBond(bond.atoms[0], bond.atoms[1], bond.type.id)
+			}
+		}
+		game.addComponent(newMolecule, level)
+	},
+	render: function (ctx, glyph, x, y, hexSize, inRadius, horiz, vert) {
+		const ringSize = atomRenderSize * hexSize * 1.07
 		const baseSprite = this.sprites["base"]
 		ctx.translate(x, y)
 		const angle = glyph.rotation - (glyph.currentHexRotation * Math.PI / 3)

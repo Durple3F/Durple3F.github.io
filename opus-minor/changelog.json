@@ -217,6 +217,15 @@
 				"- Added a very shoddy background to the level select screen.",
 				"- Tons of work on dialogue screen."
 			]
+		},
+		"20260416": {
+			"date": "April 16, 2026",
+			"line-count": 7900,
+			"changes": [
+				"- Added the glyph of unbonding.",
+				"- Working on adding the level Waterproof Sealant.",
+				"- Added dialogue to Face Powder."
+			]
 		}
 	}
 }

@@ -413,6 +413,10 @@ new Campaign("base", [
 		new CampaignEvent("puzzle", "test", {
 			scenarioId: "test",
 			// unlock: {type: "startsUnlocked"}
+		}),
+		new CampaignEvent("puzzle", "test2", {
+			scenarioId: "test2",
+			// unlock: {type: "startsUnlocked"}
 		})
 	], {
 		locked: "./src/img/campaigns/base/prologue locked.png",
@@ -426,6 +430,10 @@ new Campaign("base", [
 		}),
 		new CampaignEvent("puzzle", "face-powder", {
 			scenarioId: "face-powder",
+			unlock: {type: "completed", eventId: "refined-gold"}
+		}),
+		new CampaignEvent("puzzle", "waterproof-sealant", {
+			scenarioId: "waterproof-sealant",
 			unlock: {type: "completed", eventId: "refined-gold"}
 		}),
 	], {

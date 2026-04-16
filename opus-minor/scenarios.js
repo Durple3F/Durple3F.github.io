@@ -86,6 +86,46 @@ new Scenario("test", {
 	],
 	glyphs: ["Glyph of Bonding"]
 })
+new Scenario("test2", {
+	products: [
+		{
+			"name": "Output",
+			"molecule": [
+				[
+					["Fire", 0, 0, 0],
+				], []
+			]
+		}
+	],
+	reagents: [
+		{
+			"name": "Input",
+			"molecule": [
+				[
+					["Fire", 0, 0, 0],
+					["Fire", 1, 0, -1],
+					["Fire", 2, -1, -1],
+					["Fire", 2, -2, 0],
+					["Fire", 1, -2, 1],
+				], [
+					[0, 1],
+					[1, 2],
+					[2, 3],
+					[3, 4],
+				]
+			]
+		}
+	],
+	mechanisms: [
+		"Fixed-Length Arm",
+		"Fixed-Length Double Arm",
+		"Fixed-Length Triple Arm",
+		"Fixed-Length Sextuple Arm",
+		"Piston Arm",
+		"Van Berlo's Wheel",
+	],
+	glyphs: ["Glyph of Bonding", "Glyph of Unbonding"]
+})
 new Scenario("refined-gold", {
 	products: [
 		{
@@ -166,5 +206,61 @@ new Scenario("face-powder", {
 	glyphs: [
 		"Glyph of Bonding",
 		"Glyph of Calcification",
-	]
+	],
+	sideContent: {
+		type: "dialogue",
+		dialogueId: "face-powder"
+	}
+})
+new Scenario("waterproof-sealant", {
+	products: [
+		{
+			"name": "Waterproof Sealant",
+			"molecule": [
+				[
+					["Air", -1, 0, 1],
+					["Air", 0, 0, 0],
+					["Water", 1, -1, 0],
+				],
+				[
+					[0, 1],
+					[1, 2]
+				]
+			]
+		}
+	],
+	reagents: [
+		{
+			"name": "Elemental Air",
+			"molecule": [
+				[
+					["Air", 0, 0, 0]
+				]
+			]
+		},
+		{
+			"name": "Elemental Water",
+			"molecule": [
+				[
+					["Water", 0, 0, 0]
+				]
+			]
+		},
+	],
+	mechanisms: [
+		"Fixed-Length Arm",
+		"Fixed-Length Double Arm",
+		"Fixed-Length Triple Arm",
+		"Fixed-Length Sextuple Arm",
+		"Piston Arm",
+	],
+	glyphs: [
+		"Glyph of Bonding",
+		"Glyph of Unbonding",
+		"Glyph of Calcification",
+	],
+	sideContent: {
+		type: "dialogue",
+		dialogueId: "waterproof-sealant"
+	}
 })

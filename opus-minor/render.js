@@ -305,9 +305,9 @@ function drawReagent(ctx, reagent, x, y, hexSize, inRadius, horiz, vert, isSimul
 
 	ctx.save()
 	if (isSimulated){
-		ctx.filter = "brightness(0.2)"
+		ctx.filter = "brightness(0.5)"
 	}
-	drawMolecule(ctx, molecule, x, y, hexSize, inRadius, horiz, vert)
+	drawMolecule(ctx, molecule, x, y, hexSize, inRadius, horiz, vert, false)
 	ctx.restore()
 }
 function drawProduct(ctx, reagent, x, y, hexSize, inRadius, horiz, vert){
@@ -396,7 +396,7 @@ function drawComponent(ctx, component, x, y, hexSize, inRadius, horiz, vert, isS
 	if (!component.isRendered) return
 	switch (component.type){
 		case "Molecule": drawMolecule(ctx, component, x, y, hexSize, inRadius, horiz, vert, true); break
-		case "Reagent": drawReagent(ctx, component, x, y, hexSize, inRadius, horiz, vert); break
+		case "Reagent": drawReagent(ctx, component, x, y, hexSize, inRadius, horiz, vert, isSimulated); break
 		case "Product": drawProduct(ctx, component, x, y, hexSize, inRadius, horiz, vert, isSimulated); break
 		case "ArmMechanism": drawArmMechanism(ctx, component, x, y, hexSize, inRadius, horiz, vert, true); break
 		case "Glyph": drawGlyph(ctx, component, x, y, hexSize, inRadius, horiz, vert); break

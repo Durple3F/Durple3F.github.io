@@ -32,6 +32,9 @@
 		},
 		"face-powder": {
 			"name": "Face Powder"
+		},
+		"waterproof-sealant": {
+			"name": "Waterproof Sealant"
 		}
 	},
 	"campaigns": {
@@ -100,6 +103,37 @@
 			"after-5": "I was expecting a challenge, that’s all.",
 			"after-6": "Sounds like you want a chance to show off.",
 			"after-7": "I’m not sure I’d go that far."
+		},
+		"face-powder": {
+			"before-0": "Have you seen the Lady Van Tassen recently?",
+			"before-1": "A few days ago. Why?",
+			"before-2": "Did you notice how pale her face is?",
+			"before-3": "Oh, she's well known for her pallor. Why, did someone ask you to do something about it?",
+			"before-4": "Armand himself did. It seems it’s gotten worse lately. People are whispering about her health.",
+			"before-5": "That’s unfortunate.",
+			"before-6": "The Lady hasn’t had an easy time of things. I’d hate to see her slandered on top of it all.",
+			"after-0": "This should make the Lady’s face look less pale. Though it’s quite a superficial solution.",
+			"after-1": "Who can really say what troubles the Lady Van Tassen? It’s not for us to know.",
+			"after-2": "Have you ever heard her speak? She didn’t say a word during the dinner I went to.",
+			"after-3": "I remember her speaking to me once or twice when I was a child.",
+			"after-4": "Odd. Just another one of the many Van Tassen mysteries, I suppose.",
+			"after-5": "One gets used to them after a while."
+		},
+		"waterproof-sealant": {
+			"before-0": "Do you know much about ships, Concordia?",
+			"before-1": "Our merchant fleet delivers goods from overseas about once a month. Why?",
+			"before-2": "Captain Gelt told me they used to have some kind of substance they put on the hulls so they don’t rot.",
+			"before-3": "I don’t know anything about it. Have you ever been on a ship?",
+			"before-4": "I haven’t, no. You?",
+			"before-5": "Not at all. It soudns ghastly! Being tossed around on the ocean, then getting eaten by sea monsters.",
+			"before-6": "I’m not sure <i>all</i> sea voyages are like that.",
+			"before-7": "Enough of them are.",
+			"after-0": "With this sealant ready, the fleet should soon be ready to set sail again and bring back— well, whatever it brings.",
+			"after-1": "They’re loaded with all kinds of things. Cloth, pottery, mineral ores, rare herbs... strange stones.",
+			"after-2": "Sometimes even animals.",
+			"after-3": "Sounds like a good business.",
+			"after-4": "I’m not sure. Those contracts were drawn up centuries ago.",
+			"after-5": "I doubt even Armand knows the details."
 		}
 	}
 }

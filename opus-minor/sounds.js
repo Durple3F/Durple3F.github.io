@@ -46,6 +46,26 @@ export const neededSounds = [
 		url: "./src/sounds/click_story.mp3",
 		category: "sfx"
 	},
+	{
+		id: "sim_start",
+		url: "./src/sounds/sim_start.mp3",
+		category: "sfx"
+	},
+	{
+		id: "sim_step",
+		url: "./src/sounds/sim_step.mp3",
+		category: "sfx"
+	},
+	{
+		id: "sim_stop",
+		url: "./src/sounds/sim_stop.mp3",
+		category: "sfx"
+	},
+	{
+		id: "sim_error",
+		url: "./src/sounds/sim_error.mp3",
+		category: "sfx"
+	},
 ]
 export const categoryVolumes = {
 	sfx: 1,

@@ -31,8 +31,8 @@ new DialogueSpeaker("concordia", {
 		"large": "./src/portraits/concordia_large.png",
 		"shabby": "./src/portraits/concordia_shabby_small.png",
 		"shabby_large": "./src/portraits/concordia_shabby_large.png",
-		"nametag": "./src/portraits/anataeus_nametag.png",
-		"border": "./src/portraits/anataeus_border.png",
+		"nametag": "./src/portraits/concordia_nametag.png",
+		"border": "./src/portraits/concordia_border.png",
 	},
 	defaultColor: "#6e344c"
 })
@@ -52,7 +52,7 @@ export class DialogueStory {
 		let tagMap = {}
 
 		let totalMessages = 0
-		let pretendEverythingIsLocked = true
+		let pretendEverythingIsLocked = false
 		let done = false
 		for (let section of this.messagesList){
 			let sectionIndex = this.messagesList.indexOf(section)
@@ -114,7 +114,7 @@ export class DialogueStory {
 						messageTag.addClass("lone")
 					}
 					let text = getLocaleString(["dialogues", this.id, message.textId], language, `%${message.textId}%`)
-					messageTag.text(text)
+					messageTag.html(text)
 				}
 			}
 		}
@@ -185,5 +185,50 @@ new DialogueStory("refined-gold", [
 	], {
 		type: "completed",
 		eventId: "refined-gold"
+	})
+])
+new DialogueStory("face-powder", [
+	new DialogueMessages([
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-0"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-1"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-2"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-3"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-4"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-5"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-6"}),
+	]),
+	new DialogueMessages([
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-0"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "after-1"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-2"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "after-3"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-4"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "after-5"})
+	], {
+		type: "completed",
+		eventId: "face-powder"
+	})
+])
+new DialogueStory("waterproof-sealant", [
+	new DialogueMessages([
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-0"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-1"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-2"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-3"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-4"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-5"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-6"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-7"}),
+	]),
+	new DialogueMessages([
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-0"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "after-1"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "after-2"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-3"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "after-4"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "after-5"})
+	], {
+		type: "completed",
+		eventId: "waterproof-sealant"
 	})
 ])
