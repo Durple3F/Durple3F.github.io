@@ -232,3 +232,50 @@ new DialogueStory("waterproof-sealant", [
 		eventId: "waterproof-sealant"
 	})
 ])
+new DialogueStory("hangover-cure", [
+	new DialogueMessages([
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-0"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-1"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-2"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-3"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-4"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-5"}),
+	]),
+	new DialogueMessages([
+		new DialogueMessage({speaker: "concordia", side: "right", text: "after-0"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-1"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "after-2"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-3"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-4"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "after-5"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-6"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "after-7"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "after-8"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-9"}),
+	], {
+		type: "completed",
+		eventId: "hangover-cure"
+	})
+])
+new DialogueStory("airship-fuel", [
+	new DialogueMessages([
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-0"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-1"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-2"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-3"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-4"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-5"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-6"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-7"}),
+	]),
+	new DialogueMessages([
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-0"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "after-1"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-2"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "after-3"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-4"}),
+	], {
+		type: "completed",
+		eventId: "airship-fuel"
+	})
+])

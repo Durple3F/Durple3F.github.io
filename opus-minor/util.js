@@ -453,7 +453,7 @@ export class Component {
 		let result = []
 		let homeTile = this.homeTile
 		let checkHexes = []
-		let overlapThreshold = 0.5
+		let overlapThreshold = atomSize
 		let checksPerRad = 1.5
 		for (let atom of this.atoms.contents){
 			checkHexes.push(atom.coord)

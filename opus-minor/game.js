@@ -1625,7 +1625,7 @@ export class Game{
 					let dy = handY - homeXY[1]
 					dx *= i / distance
 					dy *= i / distance
-					let circle = new Circle(homeXY[0] + dx, homeXY[1] + dy, atomSize)
+					let circle = new Circle(homeXY[0] + dx, homeXY[1] + dy, atomSize * 1.2)
 					let toAdd = this.getCircleOverlappingHexes(circle)
 					for (let hex of toAdd){
 						hexes.push(hex)

@@ -256,12 +256,108 @@ new Scenario("waterproof-sealant", {
 	],
 	glyphs: [
 		"Glyph of Bonding",
-		"Glyph of Unbonding",
 		"Glyph of Multi-bonding",
+		"Glyph of Unbonding",
 		"Glyph of Calcification",
 	],
 	sideContent: {
 		type: "dialogue",
 		dialogueId: "waterproof-sealant"
+	}
+})
+new Scenario("hangover-cure", {
+	products: [
+		{
+			"name": "Hangover Cure",
+			"molecule": [
+				[
+					["Salt", -1, 0, 1],
+					["Water", 0, 0, 0],
+					["Salt", 1, -1, 0],
+				],
+				[
+					[0, 1],
+					[1, 2]
+				]
+			]
+		}
+	],
+	reagents: [
+		{
+			"name": "Elemental Water",
+			"molecule": [
+				[
+					["Air", 0, 0, 0]
+				]
+			]
+		},
+	],
+	mechanisms: [
+		"Fixed-Length Arm",
+		"Fixed-Length Double Arm",
+		"Fixed-Length Triple Arm",
+		"Fixed-Length Sextuple Arm",
+		"Piston Arm",
+	],
+	glyphs: [
+		"Glyph of Bonding",
+		"Glyph of Multi-bonding",
+		"Glyph of Unbonding",
+		"Glyph of Calcification",
+	],
+	sideContent: {
+		type: "dialogue",
+		dialogueId: "hangover-cure"
+	}
+})
+new Scenario("airship-fuel", {
+	products: [
+		{
+			"name": "Airship Fuel",
+			"molecule": [
+				[
+					["Salt", 0, -1, 1],
+					["Fire", 0, 0, 0],
+					["Fire", 1, 0, -1],
+					["Salt", 1, 1, -2],
+				],
+				[
+					[0, 1],
+					[1, 2],
+					[2, 3],
+				]
+			]
+		}
+	],
+	reagents: [
+		{
+			"name": "Elemental Fire",
+			"molecule": [[["Fire", 0, 0, 0]]]
+		},
+		{
+			"name": "Elemental Fire",
+			"molecule": [[["Fire", 0, 0, 0]]]
+		},
+		{
+			"name": "Elemental Fire",
+			"molecule": [[["Fire", 0, 0, 0]]]
+		},
+	],
+	mechanisms: [
+		"Fixed-Length Arm",
+		"Fixed-Length Double Arm",
+		"Fixed-Length Triple Arm",
+		"Fixed-Length Sextuple Arm",
+		"Piston Arm",
+	],
+	glyphs: [
+		"Glyph of Bonding",
+		"Glyph of Multi-bonding",
+		"Glyph of Unbonding",
+		"Glyph of Calcification",
+	],
+	sideContent: {
+		type: "dialogue",
+		dialogueId: "airship-fuel"
 	}
 })

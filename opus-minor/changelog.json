@@ -225,7 +225,9 @@
 				"- Added the glyph of unbonding.",
 				"- Working on adding the level Waterproof Sealant.",
 				"- Added dialogue to Face Powder.",
-				"- You can no longer mess with program instructions mid-simulation"
+				"- You can no longer mess with program instructions mid-simulation",
+				"- Added the levels Hangover Cure and Airship Fuel",
+				"- Fixed an inconsistency with how arms interact with hex area."
 			]
 		}
 	}

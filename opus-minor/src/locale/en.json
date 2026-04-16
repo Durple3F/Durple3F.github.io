@@ -35,6 +35,12 @@
 		},
 		"waterproof-sealant": {
 			"name": "Waterproof Sealant"
+		},
+		"hangover-cure": {
+			"name": "Hangover Cure"
+		},
+		"airship-fuel": {
+			"name": "Airship Fuel"
 		}
 	},
 	"campaigns": {
@@ -134,6 +140,39 @@
 			"after-3": "Sounds like a good business.",
 			"after-4": "I’m not sure. Those contracts were drawn up centuries ago.",
 			"after-5": "I doubt even Armand knows the details."
+		},
+		"hangover-cure": {
+			"before-0": "If I’d known I was to be tasked with curing a hangover…",
+			"before-1": "Oh, I bet I know who asked you for that. It was Captain Gelt, wasn’t it?",
+			"before-2": "How’d you guess?",
+			"before-3": "It would be good for him to be at least <i>somewhat</i> functional in the mornings.",
+			"before-4": "Yes, seems prudent for the head of security for the entire House to not be totally incapacitated on a regular basis.",
+			"before-5": "Let’s not go too far.",
+			"after-0": "There are days when I could use such a cure myself.",
+			"after-1": "Here, have some.",
+			"after-2": "What? This isn’t for me, Anataeus. If you get caught–",
+			"after-3": "It’s fine. There’s a secret.",
+			"after-4": "My amazing hangover cure… is water!",
+			"after-5": "Just plain water?",
+			"after-6": "Captain Gelt has no idea, but apparently he loves it. Works wonders, he says.",
+			"after-7": "That’s rather funny.",
+			"after-8": "Also, I’ll never trust an alchemist again.",
+			"after-9": "You shouldn’t."
+		},
+		"airship-fuel": {
+			"before-0": "Captain Gelt asked for something to put in the Van Tassen airship. Apparently it’s out of fuel?",
+			"before-1": "Oh, that old thing…",
+			"before-2": "First time I’ve heard someone say “that old thing” in reference to an <i>airship</i>…",
+			"before-3": "The last time I remember the airship in the air was the celebration for Frederick’s birth.",
+			"before-4": "Clearly Frederick disappointed his grandfather so much they never took it out again.",
+			"before-5": "Ha. More likely it’s simply been out of fuel this whole time.",
+			"before-6": "The whole time? Are you serious?",
+			"before-7": "After the old Head Alchemist died we had an “interim” one for a while who was… not great.",
+			"after-0": "Simple enough. Now the Van Tassen airship can take to the skies again!",
+			"after-1": "Sure, as long as we can find someone to pilot it.",
+			"after-2": "Doesn’t seem too complicated. How about me?",
+			"after-3": "How about Captain Gelt? Or Frederick?",
+			"after-4": "That’s a disturbing thought… maybe we should pretend the airship is still out of fuel."
 		}
 	}
 }

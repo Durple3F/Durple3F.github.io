@@ -436,6 +436,14 @@ new Campaign("base", [
 			scenarioId: "waterproof-sealant",
 			unlock: {type: "completed", eventId: "refined-gold"}
 		}),
+		new CampaignEvent("puzzle", "hangover-cure", {
+			scenarioId: "hangover-cure",
+			unlock: {type: "completed", eventId: "refined-gold"}
+		}),
+		new CampaignEvent("puzzle", "airship-fuel", {
+			scenarioId: "airship-fuel",
+			unlock: {type: "completed", eventId: "refined-gold"}
+		}),
 	], {
 		locked: "./src/img/campaigns/base/chapter 1 locked.png",
 		unlocked: "./src/img/campaigns/base/chapter 1.png",
