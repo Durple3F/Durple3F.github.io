@@ -124,7 +124,7 @@ new Scenario("test2", {
 		"Piston Arm",
 		"Van Berlo's Wheel",
 	],
-	glyphs: ["Glyph of Bonding", "Glyph of Unbonding"]
+	glyphs: ["Glyph of Bonding", "Glyph of Unbonding", "Glyph of Multi-bonding"]
 })
 new Scenario("refined-gold", {
 	products: [
@@ -257,6 +257,7 @@ new Scenario("waterproof-sealant", {
 	glyphs: [
 		"Glyph of Bonding",
 		"Glyph of Unbonding",
+		"Glyph of Multi-bonding",
 		"Glyph of Calcification",
 	],
 	sideContent: {

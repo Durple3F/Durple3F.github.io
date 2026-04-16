@@ -51,6 +51,35 @@ export class GlyphType {
 		return await Promise.all(promises)
 	}
 }
+
+function combineMolecules(moleculeA, moleculeB, game, level){
+	let newHomeTile = moleculeA.homeTile
+	let atoms = moleculeB.atoms.contents
+	let bondsA = moleculeA.bonds.contents
+	let bondsB = moleculeB.bonds.contents
+	let difference = moleculeB.homeTile.subtract(moleculeA.homeTile)
+	for (let atom of atoms) {
+		let newCoord = atom.coord.add(difference)
+		atom.setCoords(newCoord.q, newCoord.r, newCoord.s)
+		moleculeA.addAtom(atom)
+	}
+	for (let bond of bondsB){
+		moleculeA.addBond(bond.atoms[0], bond.atoms[1], bond.type.id)
+	}
+	//Replace moleculeA as the gripped component of all arms that were holding moleculeB.
+	const components = level.grid.contents
+	for (let component of components) {
+		if (component.type !== "ArmMechanism") continue
+		let arms = component.arms.contents
+		for (let arm of arms) {
+			if (arm.grippedComponent === moleculeB) {
+				arm.grippedComponent = moleculeA
+			}
+		}
+	}
+	game.deleteComponent(moleculeB, level)
+}
+
 new GlyphType({
 	id: "Glyph of Bonding",
 	sprites: {
@@ -82,31 +111,7 @@ new GlyphType({
 
 		//If these are different molecules, merge them into moleculeA.
 		if (moleculeA !== moleculeB) {
-			let newHomeTile = moleculeA.homeTile
-			let atoms = moleculeB.atoms.contents
-			let bondsA = moleculeA.bonds.contents
-			let bondsB = moleculeB.bonds.contents
-			let difference = moleculeB.homeTile.subtract(moleculeA.homeTile)
-			for (let atom of atoms) {
-				let newCoord = atom.coord.add(difference)
-				atom.setCoords(newCoord.q, newCoord.r, newCoord.s)
-				moleculeA.addAtom(atom)
-			}
-			for (let bond of bondsB){
-				moleculeA.addBond(bond.atoms[0], bond.atoms[1], bond.type.id)
-			}
-			//Replace moleculeA as the gripped component of all arms that were holding moleculeB.
-			const components = level.grid.contents
-			for (let component of components) {
-				if (component.type !== "ArmMechanism") continue
-				let arms = component.arms.contents
-				for (let arm of arms) {
-					if (arm.grippedComponent === moleculeB) {
-						arm.grippedComponent = moleculeA
-					}
-				}
-			}
-			game.deleteComponent(moleculeB, level)
+			combineMolecules(moleculeA, moleculeB, game, level)
 		}
 
 		//If no simple bond exists, add a simple bond between atomA and atomB in moleculeA.
@@ -151,6 +156,120 @@ new GlyphType({
 		otherRingHexXY[0] *= hexSize
 		otherRingHexXY[1] *= hexSize
 		ctx.drawImage(ringSprite, otherRingHexXY[0] - ringSize, otherRingHexXY[1] - ringSize, ringSize * 2, ringSize * 2)
+	}
+})
+new GlyphType({
+	id: "Glyph of Multi-bonding",
+	sprites: {
+		base: "./src/img/glyphs/multibond/speed_bonder_base.png",
+		ring: "./src/img/glyphs/bonder_ring.png",
+		bond: "./src/img/glyphs/bonder_bond.png",
+		cylinder: "./src/img/glyphs/bonder_bond_cylinder.png",
+		cylinder2: "./src/img/glyphs/multibond/cylinder2.png",
+	},
+	sounds: [
+		{
+			id: "glyph_bonding",
+			url: "./src/sounds/glyph_bonding.mp3",
+			category: "sfx"
+		}
+	],
+	inputs: [
+		new GlyphInput("a", "ring", new Hex(0, 0, 0)),
+		new GlyphInput("b", "ring", Hex.directions[0]),
+		new GlyphInput("c", "ring", Hex.directions[2]),
+		new GlyphInput("d", "ring", Hex.directions[4]),
+	],
+	execute: function (game, level, inputs) {
+		let inputA = inputs["a"]
+		let inputB = inputs["b"]
+		let inputC = inputs["c"]
+		let inputD = inputs["d"]
+		if (!inputA) return
+		if (!inputB && !inputC && !inputD) return
+		let center = inputA
+		let edges = [inputB, inputC, inputD]
+		let added = false
+		for (let input of edges){
+			if (!input) continue
+			let atomA = center.atom
+			let moleculeA = center.molecule
+			let atomB = input.atom
+			let moleculeB = input.molecule
+
+			//If these are different molecules, merge them into moleculeA.
+			if (moleculeA !== moleculeB) {
+				combineMolecules(moleculeA, moleculeB, game, level)
+			}
+			//If no simple bond exists, add a simple bond between atomA and atomB in moleculeA.
+			let bonds = moleculeA.bonds.contents
+			let bondExists = false
+			for (let bond of bonds) {
+				if (bond.type.id === "simple" && bond.atoms.includes(atomA) && bond.atoms.includes(atomB)) {
+					bondExists = true
+					break
+				}
+			}
+			if (!bondExists) {
+				added = true
+				moleculeA.addBond(atomA, atomB, "simple")
+			}
+		}
+		if (added){
+			playSound("glyph_bonding")
+		}
+	},
+	render: function (ctx, glyph, x, y, hexSize, inRadius, horiz, vert) {
+		const ringSize = atomRenderSize * hexSize * 1.15
+		const baseSprite = this.sprites["base"]
+		ctx.translate(x, y)
+		const angle = glyph.rotation - (glyph.currentHexRotation * Math.PI / 3)
+		ctx.rotate(angle)
+		ctx.drawImage(baseSprite, - horiz * 1, - vert * 5 / 3, horiz * 2.5, vert * 10 / 3)
+
+		//extras
+		const bondSprite = this.sprites["bond"]
+		const cylinderSprite = this.sprites["cylinder"]
+		const cylinderSprite2 = this.sprites["cylinder2"]
+		const centerX = horiz * 0.5
+		const bondWidth = ringSize * 0.7
+		const bondHeight = ringSize * 1.18
+		const cylWidth = bondWidth
+		const cylHeight = bondHeight * 0.42
+		ctx.drawImage(bondSprite, centerX - bondWidth * 0.5, -bondHeight * 0.5, bondWidth, bondHeight)
+		ctx.drawImage(cylinderSprite, centerX - cylWidth * 0.5, -cylHeight * 0.5, cylWidth, cylHeight)
+		ctx.rotate(Math.PI * 2 / 3)
+		ctx.drawImage(bondSprite, centerX - bondWidth * 0.5, -bondHeight * 0.5, bondWidth, bondHeight)
+		ctx.drawImage(cylinderSprite2, centerX - cylWidth * 0.5, -cylHeight * 0.5, cylWidth, cylHeight)
+		ctx.rotate(Math.PI * 2 / 3)
+		ctx.drawImage(bondSprite, centerX - bondWidth * 0.5, -bondHeight * 0.5, bondWidth, bondHeight)
+		ctx.drawImage(cylinderSprite, centerX - cylWidth * 0.5, -cylHeight * 0.5, cylWidth, cylHeight)
+		ctx.rotate(-angle + Math.PI * -4 / 3)
+
+		//rings
+		const ringSprite = this.sprites["ring"]
+		ctx.drawImage(ringSprite, -ringSize, -ringSize, ringSize * 2, ringSize * 2)
+		const otherRingHex = Hex.directions[glyph.currentHexRotation]
+		const otherRingHexXY = otherRingHex.toXY()
+		otherRingHexXY[0] *= hexSize
+		otherRingHexXY[1] *= hexSize
+		ctx.translate(otherRingHexXY[0], otherRingHexXY[1])
+		ctx.drawImage(ringSprite, - ringSize, - ringSize, ringSize * 2, ringSize * 2)
+		ctx.translate(-otherRingHexXY[0], -otherRingHexXY[1])
+
+		ctx.rotate(Math.PI * 2 / 3)
+		ctx.translate(otherRingHexXY[0], otherRingHexXY[1])
+		ctx.rotate(Math.PI * -2 / 3)
+		ctx.drawImage(ringSprite, - ringSize, - ringSize, ringSize * 2, ringSize * 2)
+		ctx.rotate(Math.PI * 2 / 3)
+		ctx.translate(-otherRingHexXY[0], -otherRingHexXY[1])
+
+		ctx.rotate(Math.PI * 2 / 3)
+		ctx.translate(otherRingHexXY[0], otherRingHexXY[1])
+		ctx.rotate(Math.PI * -4 / 3)
+		ctx.drawImage(ringSprite, - ringSize, - ringSize, ringSize * 2, ringSize * 2)
+		ctx.rotate(Math.PI * 4 / 3)
+		ctx.translate(-otherRingHexXY[0], -otherRingHexXY[1])
 	}
 })
 new GlyphType({

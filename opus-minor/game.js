@@ -470,8 +470,8 @@ export class Game{
 			componentTag.on("mousedown", () => {
 				let component = new Reagent(molecule)
 				component.componentCountInfos.push(componentCountInfo)
+				component.isRendered = false
 				this.beginHoldingComponent(component)
-				this.selectedComponent.isRendered = false
 			})
 		}
 
@@ -665,6 +665,7 @@ export class Game{
 		let mouseY = event.clientY - rect.y
 	}
 	handleProgramMouseUp(event, program, component){
+		if (this.isPlayingSimulation) return
 		//if the player was holding an instruction, place it.
 		//Otherwise, do nothing.
 		if (!this.heldInstructions.length) return
@@ -698,29 +699,32 @@ export class Game{
 		this.performUIUpdates()
 	}
 	handleProgramMouseDown(event, program, component){
-		let tags = tagHierarchy(event.target).reverse()
-		let instructionTag = tags.find(tag => $(tag).hasClass("instruction"))
-		//Check if the player is trying to place an instruction they're already holding
-		//(like ones they create with keys)
-		if (this.heldInstructions.length){
-			let row = program.elem[0]
-			let rect = row.getBoundingClientRect()
-			let mouseX = event.clientX - rect.x
-			let mouseY = event.clientY - rect.y
-			//Instructions have a 10 / 9 aspect ratio
-			let instructionWidth = rect.height * 10 / 9
-			let instructionIndex = Math.floor(mouseX / instructionWidth)
-			let instruction = this.heldInstructions[0][0]
-			this.insertProgramInstruction(instruction, program, instructionIndex)
-			this.endHoldingInstructions()
-			this.performUIUpdates()
-			this.overrideInstructionMouseUp = true
-			return
-		}
-		//Check if the player is clicking an instruction
-		if (instructionTag){
-			let instruction = $(instructionTag).data("instruction")
-			this.beginHoldingInstruction(instruction)
+		if (event.buttons === 1){
+			if (this.isPlayingSimulation) return
+			let tags = tagHierarchy(event.target).reverse()
+			let instructionTag = tags.find(tag => $(tag).hasClass("instruction"))
+			//Check if the player is trying to place an instruction they're already holding
+			//(like ones they create with keys)
+			if (this.heldInstructions.length){
+				let row = program.elem[0]
+				let rect = row.getBoundingClientRect()
+				let mouseX = event.clientX - rect.x
+				let mouseY = event.clientY - rect.y
+				//Instructions have a 10 / 9 aspect ratio
+				let instructionWidth = rect.height * 10 / 9
+				let instructionIndex = Math.floor(mouseX / instructionWidth)
+				let instruction = this.heldInstructions[0][0]
+				this.insertProgramInstruction(instruction, program, instructionIndex)
+				this.endHoldingInstructions()
+				this.performUIUpdates()
+				this.overrideInstructionMouseUp = true
+				return
+			}
+			//Check if the player is clicking an instruction
+			if (instructionTag){
+				let instruction = $(instructionTag).data("instruction")
+				this.beginHoldingInstruction(instruction)
+			}
 		}
 	}
 	insertProgramInstruction(instruction, program, instructionIndex){

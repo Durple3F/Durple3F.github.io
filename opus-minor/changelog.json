@@ -224,7 +224,8 @@
 			"changes": [
 				"- Added the glyph of unbonding.",
 				"- Working on adding the level Waterproof Sealant.",
-				"- Added dialogue to Face Powder."
+				"- Added dialogue to Face Powder.",
+				"- You can no longer mess with program instructions mid-simulation"
 			]
 		}
 	}
