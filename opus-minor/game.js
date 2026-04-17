@@ -852,6 +852,7 @@ export class Game{
 		let programs = this.currentLevel.programs
 		let firstProgramIndex = programs.indexOf(program)
 		let firstInstruction = this.heldInstructions[0][0]
+		let held = this.heldInstructions
 		for (let i = 0; i < this.heldInstructions.length; i++){
 			let heldInstructions = this.heldInstructions[i]
 			let addToProgram = programs[firstProgramIndex + i]
@@ -860,10 +861,10 @@ export class Game{
 				this.insertProgramInstruction(instruction, addToProgram, instructionIndex + j)
 			}
 		}
-
-		this.deselectInstructions()
+		
 		this.endHoldingInstructions()
 		this.performUIUpdates()
+		this.selectInstructions(held)
 	}
 	handleProgramMouseDown(event, program, component){
 		if (event.buttons === 1){
