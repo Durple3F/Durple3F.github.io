@@ -332,6 +332,10 @@ body {
 		margin-left: 2px;
 		overflow-x: auto;
 		flex-grow: 1;
+
+		&.ready-fast-forward {
+			cursor: url("./src/img/cursor_fast_forward.png") 50 50, auto;
+		}
 	}
 
 	#program-rows {

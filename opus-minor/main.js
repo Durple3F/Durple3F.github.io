@@ -92,6 +92,16 @@ $(document).on("keydown", e => {
 	if (e.originalEvent.key === "Tab"){
 		e.preventDefault()
 	}
+	if (e.originalEvent.key === "Alt"){
+		$("#program-rows-wrapper").addClass("ready-fast-forward")
+		e.preventDefault()
+	}
+})
+$(document).on("keyup", e => {
+	if (e.originalEvent.key === "Alt"){
+		$("#program-rows-wrapper").removeClass("ready-fast-forward")
+		e.preventDefault()
+	}
 })
 $("#playback-stop-button").on("click", () => {
 	playSound("sim_stop")

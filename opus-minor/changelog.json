@@ -220,14 +220,15 @@
 		},
 		"20260416": {
 			"date": "April 16, 2026",
-			"line-count": 7900,
+			"line-count": 8200,
 			"changes": [
 				"- Added the glyph of unbonding.",
 				"- Working on adding the level Waterproof Sealant.",
 				"- Added dialogue to Face Powder.",
 				"- You can no longer mess with program instructions mid-simulation",
 				"- Added the levels Hangover Cure and Airship Fuel",
-				"- Fixed an inconsistency with how arms interact with hex area."
+				"- Fixed an inconsistency with how arms interact with hex area.",
+				"- Added a way to fast-forward to a specific instruction. Just alt-click on the instruction."
 			]
 		}
 	}

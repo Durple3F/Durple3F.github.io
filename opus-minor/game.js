@@ -66,6 +66,7 @@ export class Program{
 		let programRow = $("<div>").addClass("program-row")
 		this.elem = programRow
 		let programName = $("<div>").addClass("program-name").text(this.name)
+		this.elem.data("program", this)
 		this.elem.data("name-tag", programName)
 		$("#program-names").append(programName)
 		$("#program-rows").append(programRow)
@@ -700,9 +701,20 @@ export class Game{
 	}
 	handleProgramMouseDown(event, program, component){
 		if (event.buttons === 1){
-			if (this.isPlayingSimulation) return
 			let tags = tagHierarchy(event.target).reverse()
 			let instructionTag = tags.find(tag => $(tag).hasClass("instruction"))
+			//If the player is holding alt, fast forward to that instruction.
+			if (instructionTag && this.controls.isPressing("Alt")){
+				let row = tags.find(tag => $(tag).hasClass("program-row"))
+				let instruction = $(instructionTag).data("instruction")
+				let program = $(row).data("program")
+				let index = program.instructions.indexOf(instruction)
+				$("#playback-fast-forward-button").click()
+				this.stopSimulationAtTimeStep = index + 1
+				this.stopSimulationAtNextTimeStep = true
+				return
+			}
+			if (this.isPlayingSimulation) return
 			//Check if the player is trying to place an instruction they're already holding
 			//(like ones they create with keys)
 			if (this.heldInstructions.length){
@@ -2781,6 +2793,13 @@ export class Game{
 			}
 		} else if (this.overrideInstructionMouseUp && !isLeftClicking){
 			this.overrideInstructionMouseUp = false
+		}
+
+		//Fast-forward step keyboard controls
+		if (controls.isPressing("Alt")){
+			$("#program-rows-wrapper").addClass("ready-fast-forward")
+		} else {
+			$("#program-rows-wrapper").removeClass("ready-fast-forward")
 		}
 
 		controls.tick()
