@@ -525,3 +525,16 @@ export function render(game, ctx, w, h){
 		}
 	}
 }
+
+export function renderEffects(game, ctx, w, h){
+	ctx.clearRect(0, 0, w, h)
+	if (game.isDraggingBox){
+		ctx.save()
+		ctx.strokeStyle = "red"
+		ctx.lineWidth = 2
+		let dragBox = game.dragBox
+		let rect = dragBox.rect
+		ctx.strokeRect(rect.x, rect.y, rect.w, rect.h)
+		ctx.restore()
+	}
+}

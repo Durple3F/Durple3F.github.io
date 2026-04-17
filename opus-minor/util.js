@@ -30,7 +30,7 @@ export function find_angle(A, B, C) {
 	return Math.acos((BC * BC + AB * AB - AC * AC) / (2 * BC * AB));
 }
 export function cross_product(Ax, Ay, Bx, By, Cx, Cy) {
-	let cross = (Cx - Bx)*(Ay - By) - (Cy - By)*(Ax - Bx)
+	let cross = (Cx - Bx) * (Ay - By) - (Cy - By) * (Ax - Bx)
 	return cross
 }
 
@@ -57,7 +57,7 @@ export function tagHierarchy(tag) {
 	return nodes
 }
 
-export function fillScoreboard(tag, playerName, title, best, now, prev, targets, histogram, scores){
+export function fillScoreboard(tag, playerName, title, best, now, prev, targets, histogram, scores) {
 	tag.append($("<div>").addClass("scoreboard-title").text(title))
 	let bestRow = $("<div>").addClass("scoreboard-bests")
 	tag.append(bestRow)
@@ -66,13 +66,13 @@ export function fillScoreboard(tag, playerName, title, best, now, prev, targets,
 	let bestText = getLocaleString("scoreboard-best-best", language, "BEST:")
 	bestTag.append($("<span>").addClass("scoreboard-best-title").text(bestText))
 	bestTag.append($("<span>").addClass("scoreboard-score").text(best))
-	
+
 	let nowTag = $("<div>").addClass("scoreboard-best")
 	bestRow.append(nowTag)
 	let nowText = getLocaleString("scoreboard-best-now", language, "NOW:")
 	nowTag.append($("<span>").addClass("scoreboard-best-title").text(nowText))
 	nowTag.append($("<span>").addClass("scoreboard-score").text(now))
-	
+
 	let prevTag = $("<div>").addClass("scoreboard-best")
 	bestRow.append(prevTag)
 	let prevText = getLocaleString("scoreboard-best-prev", language, "NOW:")
@@ -87,10 +87,10 @@ export function fillScoreboard(tag, playerName, title, best, now, prev, targets,
 		score: best,
 		isPlayer: true
 	})
-	while (shownScores.length < 12){
+	while (shownScores.length < 12) {
 		shownScores.push({})
 	}
-	for (let score of shownScores){
+	for (let score of shownScores) {
 		let scoreTag = $("<div>").addClass("scoreboard-record")
 		recordsTag.append(scoreTag)
 		let nameTag = $("<div>").addClass("scoreboard-player-name")
@@ -102,13 +102,13 @@ export function fillScoreboard(tag, playerName, title, best, now, prev, targets,
 		scoreTag.append(valTag)
 		if ("score" in score) valTag.text(score.score)
 		else valTag.css("opacity", 0)
-		if (score.isPlayer){
+		if (score.isPlayer) {
 			scoreTag.addClass("scoreboard-player")
 		}
 	}
 }
 
-export function clearModal(modal){
+export function clearModal(modal) {
 	let header = modal.find(".modal-header")
 	let body = modal.find(".modal-body")
 	let footer = modal.find(".modal-footer")
@@ -123,11 +123,21 @@ export function clearModal(modal){
 }
 
 export class Rectangle {
-	constructor (x, y, width, height){
+	constructor(x, y, width, height) {
 		this.x = x
 		this.y = y
 		this.w = width
 		this.h = height
+	}
+	intersects(rect) {
+		let a = this
+		let b = rect
+		return !(
+			((a.y + a.h) < (b.y)) ||
+			(a.y > (b.y + b.h)) ||
+			((a.x + a.w) < b.x) ||
+			(a.x > (b.x + b.w))
+		);
 	}
 }
 export class Circle {
@@ -189,7 +199,7 @@ export class Hex {
 	}
 	neighbors() {
 		let result = []
-		for (let i = 0; i < 6; i++){
+		for (let i = 0; i < 6; i++) {
 			result.push(this.neighbor(i))
 		}
 		return result
@@ -251,13 +261,13 @@ export class Hex {
 		return this.q === b.q && this.r === b.r
 	}
 
-	static fromXY(x, y){
+	static fromXY(x, y) {
 		// cartesian to hex
-		var q = (ROOT3/3 * x - 1/3 * y)
-		var r = (2/3 * y)
+		var q = (ROOT3 / 3 * x - 1 / 3 * y)
+		var r = (2 / 3 * y)
 		return new Hex(q, r, -q - r)
 	}
-	static fromObj(obj){
+	static fromObj(obj) {
 		return new Hex(obj.q, obj.r, obj.s)
 	}
 }
@@ -409,7 +419,7 @@ export class Component {
 			let coord = arm.direction
 			arm.setCoords(-coord.s, -coord.q, -coord.r)
 		}
-		if (this.molecule){
+		if (this.molecule) {
 			this.molecule.rotateLeft()
 		}
 		let inputs = this.inputs
@@ -431,7 +441,7 @@ export class Component {
 			let coord = arm.direction
 			arm.setCoords(-coord.r, -coord.s, -coord.q)
 		}
-		if (this.molecule){
+		if (this.molecule) {
 			this.molecule.rotateRight()
 		}
 		let inputs = this.inputs
@@ -449,13 +459,13 @@ export class Component {
 			atom.setCoords(dest.q, dest.r, dest.s)
 		}
 	}
-	getRotationHexFootprint(angle){
+	getRotationHexFootprint(angle) {
 		let result = []
 		let homeTile = this.homeTile
 		let checkHexes = []
 		let overlapThreshold = atomSize
 		let checksPerRad = 1.5
-		for (let atom of this.atoms.contents){
+		for (let atom of this.atoms.contents) {
 			checkHexes.push(atom.coord)
 		}
 		// if (this.type === "ArmMechanism"){
@@ -468,57 +478,57 @@ export class Component {
 		// 		}
 		// 	}
 		// }
-		for (let arm of this.arms.contents){
-			for (let i = 1; i <= arm.distance; i++){
+		for (let arm of this.arms.contents) {
+			for (let i = 1; i <= arm.distance; i++) {
 				let hex = arm.direction.scale(i)
 				let found = false
-				for (let checkHex of checkHexes){
-					if (hex.equals(checkHex)){
+				for (let checkHex of checkHexes) {
+					if (hex.equals(checkHex)) {
 						found = true
 						break
 					}
 				}
-				if (!found){
+				if (!found) {
 					checkHexes.push(hex)
 				}
 			}
 		}
-		for (let hex of checkHexes){
+		for (let hex of checkHexes) {
 			let xy = hex.toXY()
 			let x = xy[0]
 			let y = xy[1]
 			let distance = Math.hypot(x, y)
 			let angleChecks = Math.ceil(Math.abs(angle) * checksPerRad * distance)
 			let angleStep = angle / angleChecks
-			for (let j = 1; j <= angleChecks; j++){
+			for (let j = 1; j <= angleChecks; j++) {
 				let curAngle = angleStep * j
 				let cos = Math.cos(curAngle)
 				let sin = Math.sin(curAngle)
-				let newX = x*cos - y*sin
-				let newY = x*sin + y*cos
+				let newX = x * cos - y * sin
+				let newY = x * sin + y * cos
 				let circle = new Circle(newX, newY, atomSize)
 				let closestHex = Hex.fromXY(newX, newY).round()
 				let neighbors = closestHex.neighbors()
 				neighbors.push(closestHex)
-				for (let neighbor of neighbors){
+				for (let neighbor of neighbors) {
 					let nXY = neighbor.toXY()
 					let otherCircle = new Circle(nXY[0], nXY[1], overlapThreshold)
 					if (!circle.intersects(otherCircle)) continue
 					let found = false
-					for (let checkHex of result){
-						if (neighbor.equals(checkHex)){
+					for (let checkHex of result) {
+						if (neighbor.equals(checkHex)) {
 							found = true
 							break
 						}
 					}
-					if (!found){
+					if (!found) {
 						result.push(neighbor)
 					}
 				}
 			}
 		}
 		let mapped = []
-		for (let hex of result){
+		for (let hex of result) {
 			mapped.push(hex.add(homeTile))
 		}
 

@@ -188,6 +188,15 @@ body {
 	height: var(--screen-height);
 	width: 85vw;
 }
+#screen-effects {
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 100vh;
+	width: 100vw;
+	pointer-events: none;
+	z-index: 30;
+}
 
 #components {
 	position: absolute;

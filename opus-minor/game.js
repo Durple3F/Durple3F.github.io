@@ -11,6 +11,7 @@ import { playSound } from "./sounds.js"
 
 const min = Math.min
 const max = Math.max
+const abs = Math.abs
 const sin = Math.sin
 const cos = Math.cos
 const ROOT3 = Math.sqrt(3)
@@ -84,6 +85,19 @@ export class Program{
 	}
 }
 
+class DragBox {
+	constructor(type, p1x, p1y, p2x, p2y){
+		this.type = type
+		this.origin = [p1x, p1y]
+		this.setRect(p2x, p2y)
+	}
+	setRect(px, py){
+		let p1x = this.origin[0]
+		let p1y = this.origin[1]
+		this.rect = new Rectangle(min(p1x, px), min(p1y, py), abs(p1x - px), abs(p1y - py))
+	}
+}
+
 export class Game{
 	constructor(canvas, controls, scenario, solution){
 		this.controls = controls
@@ -95,6 +109,7 @@ export class Game{
 		this.isAdjustingComponent = false
 		this.heldInstruction = null
 		this.heldInstructions = []
+		this.selectedInstructions = []
 		//When you place an instruction by clicking the mouse down (via keys) you do nothing when you lift the mouse back up.
 		this.overrideInstructionMouseUp = false
 
@@ -121,6 +136,8 @@ export class Game{
 		this.xOffset = -0.5 * canvas.width
 		this.yOffset = -0.5 * canvas.height
 		this.hoveredHex = null
+		this.isDraggingBox = false
+		this.dragBox = null
 
 		this.promise = new Promise(resolve => {
 			this.resolvePromise = resolve
@@ -664,28 +681,165 @@ export class Game{
 		let rect = row.getBoundingClientRect()
 		let mouseX = event.clientX - rect.x
 		let mouseY = event.clientY - rect.y
+
+		if (this.dragBox?.type === "instructions"){
+			//The player is clicking and dragging a box over their program instructions.
+			let programs = this.currentLevel.programs
+			let dragRect = this.dragBox.rect
+			let selectedPrograms = []
+			let selectedInstructions = []
+			for (let program of programs){
+				let row = program.elem
+				let rect = row[0].getBoundingClientRect()
+				let h = rect.height
+				let w = rect.width
+				let rowRect = new Rectangle(rect.x, rect.y, w, h)
+				let instructionTags = row.children(".instruction")
+				if (!rowRect.intersects(dragRect)){
+					continue
+				}
+				let rowSelected = []
+				for (let instructionTag of instructionTags){
+					let rect = instructionTag.getBoundingClientRect()
+					let h = rect.height
+					let w = rect.width
+					let insRect = new Rectangle(rect.x, rect.y, w, h)
+					if (insRect.intersects(dragRect)){
+						let instruction = $(instructionTag).data("instruction")
+						rowSelected.push(instruction)
+					}
+				}
+				if (rowSelected.length){
+					selectedPrograms.push(program)
+					selectedInstructions.push(rowSelected)
+				}
+			}
+			//Normalize instructions
+			let minIndex = Infinity
+			let maxIndex = -Infinity
+			for (let i = 0; i < selectedPrograms.length; i++){
+				let program = selectedPrograms[i]
+				let instructions = program.instructions
+				let selected = selectedInstructions[i]
+				let first = selected[0]
+				let last = selected[selected.length - 1]
+				let firstIndex = instructions.indexOf(first)
+				let lastIndex = instructions.indexOf(last)
+				if (firstIndex < minIndex) minIndex = firstIndex
+				if (lastIndex > maxIndex) maxIndex = lastIndex
+			}
+			for (let i = 0; i < selectedPrograms.length; i++){
+				let instructions = selectedPrograms[i].instructions
+				let selected = selectedInstructions[i]
+				for (let j = minIndex; j <= maxIndex; j++){
+					let instruction = instructions[j]
+					if (!instruction){
+						instruction = new Instruction(INSTRUCTIONS["idle"])
+					}
+					selected[j - minIndex] = instruction
+				}
+			}
+			//Remove any timesteps from the beginning/end where nothing happens
+			let removingFromBeginning = true
+			while (removingFromBeginning){
+				let allIdle = true
+				let foundIdle = false
+				for (let j = 0; j < selectedPrograms.length; j++){
+					let instruction = selectedInstructions[j][0]
+					if (!instruction) continue
+					if (instruction.type.id !== "idle"){
+						allIdle = false
+					} else {
+						foundIdle = true
+					}
+				}
+				if (allIdle && foundIdle){
+					for (let j = 0; j < selectedPrograms.length; j++){
+						selectedInstructions[j].splice(0, 1)
+					}
+				} else {
+					removingFromBeginning = false
+					break
+				}
+			}
+			//Remove from the end as well
+			let removingFromEnd = true
+			while (removingFromEnd){
+				let allIdle = true
+				let foundIdle = false
+				for (let j = 0; j < selectedPrograms.length; j++){
+					let lastIndex = selectedInstructions[j].length - 1
+					let instruction = selectedInstructions[j][lastIndex]
+					if (!instruction) continue
+					if (instruction.type.id !== "idle"){
+						allIdle = false
+					} else {
+						foundIdle = true
+					}
+				}
+				if (allIdle && foundIdle){
+					for (let j = 0; j < selectedPrograms.length; j++){
+						let lastIndex = selectedInstructions[j].length - 1
+						selectedInstructions[j].splice(lastIndex, 1)
+					}
+				} else {
+					removingFromBeginning = false
+					break
+				}
+			}
+			//Finally, remove all instructions from rows that are now completely idle.
+			for (let i = 0; i < selectedInstructions.length; i++){
+				let allIdle = true
+				let selected = selectedInstructions[i]
+				for (let j = 0; j < selected.length; j++){
+					let instruction = selected[j]
+					if (!instruction) continue
+					if (instruction.type.id !== "idle"){
+						allIdle = false
+					}
+				}
+				if (allIdle){
+					selected.splice(0, selected.length)
+				}
+			}
+			//At this point, there may be some empty lists at the beginning/end of the list.
+			while (selectedInstructions[0]?.length === 0){
+				selectedInstructions.splice(0, 1)
+			}
+			while (selectedInstructions[selectedInstructions.length - 1]?.length === 0){
+				selectedInstructions.splice(selectedInstructions.length - 1, 1)
+			}
+			this.selectInstructions(selectedInstructions)
+			return
+		}
+		//Otherwise, they might be starting to drag instructions
+		const controls = this.controls
+		if (controls.isClicking("left") && this.selectedInstructions.length){
+			let oldMousePos = controls.mouseDownOrigin
+			if (oldMousePos){
+				let mouseX = controls.mouse.clientX
+				let mouseY = controls.mouse.clientY
+				let dist = Math.hypot(oldMousePos[0] - mouseX, oldMousePos[1] - mouseY)
+				if (dist > 5){
+					this.beginHoldingInstructions(this.selectedInstructions)
+				}
+			}
+		}
 	}
 	handleProgramMouseUp(event, program, component){
 		if (this.isPlayingSimulation) return
 		//if the player was holding an instruction, place it.
 		//Otherwise, do nothing.
-		if (!this.heldInstructions.length) return
 		if (this.overrideInstructionMouseUp) return
-		let instruction = this.heldInstructions[0][0]
-
-		//If the player is moving this instruction, first remove it from any row it was in.
-		let programs = this.currentLevel.programs
-		let originalProgram = null
-		let originalIndex = null
-		for (let levelProgram of programs){
-			let instructions = levelProgram.instructions
-			if (instructions.includes(instruction)){
-				let index = instructions.indexOf(instruction)
-				originalProgram = levelProgram
-				originalIndex = index
-				break
+		if (this.isDraggingBox) {
+			let rect = this.dragBox.rect
+			let size = max(rect.w, rect.h)
+			if (size > 5){
+				return
 			}
 		}
+		this.deselectInstructions()
+		if (!this.heldInstructions.length) return
 
 		let row = program.elem[0]
 		let rect = row.getBoundingClientRect()
@@ -694,8 +848,20 @@ export class Game{
 		//Instructions have a 10 / 9 aspect ratio
 		let instructionWidth = rect.height * 10 / 9
 		let instructionIndex = Math.floor(mouseX / instructionWidth)
-		this.insertProgramInstruction(instruction, program, instructionIndex)
 
+		let programs = this.currentLevel.programs
+		let firstProgramIndex = programs.indexOf(program)
+		let firstInstruction = this.heldInstructions[0][0]
+		for (let i = 0; i < this.heldInstructions.length; i++){
+			let heldInstructions = this.heldInstructions[i]
+			let addToProgram = programs[firstProgramIndex + i]
+			for (let j = 0; j < heldInstructions.length; j++){
+				let instruction = heldInstructions[j]
+				this.insertProgramInstruction(instruction, addToProgram, instructionIndex + j)
+			}
+		}
+
+		this.deselectInstructions()
 		this.endHoldingInstructions()
 		this.performUIUpdates()
 	}
@@ -714,6 +880,7 @@ export class Game{
 				this.stopSimulationAtNextTimeStep = true
 				return
 			}
+			//If you're playing the simulation, you CAN'T edit things.
 			if (this.isPlayingSimulation) return
 			//Check if the player is trying to place an instruction they're already holding
 			//(like ones they create with keys)
@@ -735,8 +902,27 @@ export class Game{
 			//Check if the player is clicking an instruction
 			if (instructionTag){
 				let instruction = $(instructionTag).data("instruction")
-				this.beginHoldingInstruction(instruction)
+				if (instruction.type.id !== "idle"){
+					//If this tag was already selected, do nothing.
+					let alreadySelected = false
+					if (this.selectedInstructions.length){
+						let thoseInstructions = this.selectedInstructions.flat(2)
+						if (thoseInstructions.includes(instruction)){
+							alreadySelected = true
+						}
+					}
+					if (!alreadySelected){
+						this.selectInstructions([[instruction]])
+					}
+					return
+					// this.beginHoldingInstruction(instruction)
+				}
 			}
+			//Otherwise, they must be beginning to click and drag a box.
+			let x = event.clientX
+			let y = event.clientY
+			this.isDraggingBox = true
+			this.dragBox = new DragBox("instructions", x, y, x, y)
 		}
 	}
 	insertProgramInstruction(instruction, program, instructionIndex){
@@ -1087,6 +1273,30 @@ export class Game{
 			let instructionIndex = (timestep - program.startStep) % program.period + program.startStep
 			row.find(`.instruction`).removeClass("highlight")
 			row.find(`.instruction[data-index=${instructionIndex}]`).addClass("highlight")
+		}
+	}
+	selectInstructions(instructionsList){
+		this.selectedInstructions = instructionsList
+		let thoseInstructions = this.selectedInstructions.flat(2)
+		let programs = this.currentLevel.programs
+		for (let program of programs){
+			let instructionTags = program.elem.children(".instruction")
+			instructionTags.removeClass("highlight")
+			for (let instructionTag of instructionTags){
+				let instructionTagJ = $(instructionTag)
+				let instruction = instructionTagJ.data("instruction")
+				if (thoseInstructions.includes(instruction)){
+					instructionTagJ.addClass("highlight")
+				}
+			}
+		}
+	}
+	deselectInstructions(){
+		this.selectedInstructions = []
+		let programs = this.currentLevel.programs
+		for (let program of programs){
+			let instructionTags = program.elem.children(".instruction")
+			instructionTags.removeClass("highlight")
 		}
 	}
 
@@ -2800,6 +3010,18 @@ export class Game{
 			$("#program-rows-wrapper").addClass("ready-fast-forward")
 		} else {
 			$("#program-rows-wrapper").removeClass("ready-fast-forward")
+		}
+
+		//Click-and-drag boxes.
+		if (this.isDraggingBox){
+			if (!isLeftClicking){
+				this.isDraggingBox = false
+				this.dragBox = null
+			} else {
+				let clientX = controls.mouse.clientX
+				let clientY = controls.mouse.clientY
+				this.dragBox.setRect(clientX, clientY)
+			}
 		}
 
 		controls.tick()

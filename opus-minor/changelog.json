@@ -230,6 +230,13 @@
 				"- Fixed an inconsistency with how arms interact with hex area.",
 				"- Added a way to fast-forward to a specific instruction. Just alt-click on the instruction."
 			]
+		},
+		"20260417": {
+			"date": "April 17, 2026",
+			"line-count": 8200,
+			"changes": [
+				"- Begun work on being able to click and drag instructions."
+			]
 		}
 	}
 }

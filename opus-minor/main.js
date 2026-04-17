@@ -1,5 +1,5 @@
 import {Game} from "./game.js";
-import {render} from "./render.js";
+import {render, renderEffects} from "./render.js";
 import ControlManager from './controls.js';
 import { easeInOutSine, loadSprite } from "./util.js"
 import { ELEMENTS } from "./elements.js";
@@ -16,8 +16,10 @@ const FRAMERATE = 60
 let tickInterval
 
 const canvas = document.getElementById("screen")
+const canvas2 = document.getElementById("screen-effects")
 const debug = document.getElementById("debug")
 const ctx = canvas.getContext("2d")
+const ctx2 = canvas2.getContext("2d")
 const controls = new ControlManager(canvas)
 
 let saveFiles = []
@@ -31,6 +33,8 @@ let game
 const resize = () => {
 	canvas.width = canvas.clientWidth
 	canvas.height = canvas.clientHeight
+	canvas2.width = canvas2.clientWidth
+	canvas2.height = canvas2.clientHeight
 	if (game){
 		game.resizeScreen()
 	}
@@ -40,6 +44,7 @@ const resize = () => {
 function draw(){
 	if (!game) return
 	render(game, ctx, canvas.width, canvas.height)
+	renderEffects(game, ctx2, canvas2.width, canvas2.height)
 }
 function tick(){
 	if (game && game.isActive){

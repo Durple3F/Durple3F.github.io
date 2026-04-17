@@ -6,6 +6,8 @@ export default class ControlManager {
 		this.mouse = {
 			x: this.canvas.clientWidth * 0.5,
 			y: this.canvas.clientHeight * 0.5,
+			clientX: 0,
+			clientY: 0,
 			vx: 0,
 			vy: 0,
 			buttons: {
@@ -25,6 +27,8 @@ export default class ControlManager {
 			},
 			records: []
 		}
+		//Remembers the pixel the player last clicked, then forgets it when they stop holding click
+		this.mouseDownOrigin = null
 		window.addEventListener("keydown", e => {
 			let key = e.key
 			this.setButtonState(key, true)
@@ -51,17 +55,15 @@ export default class ControlManager {
 		})
 		window.addEventListener("mousedown", e => {
 			let buttons = e.buttons
+			this.mouseDownOrigin = [e.clientX, e.clientY]
 			this.setMouseButtonState(buttons)
 			this.setMousePosition(e.clientX, e.clientY)
 		})
 		window.addEventListener("mouseup", e => {
 			let buttons = e.buttons
+			this.mouseDownOrigin = null
 			this.setMouseButtonState(buttons)
 			this.setMousePosition(e.clientX, e.clientY)
-		})
-		window.addEventListener("mouseup", e => {
-			let buttons = e.buttons
-			this.setMouseButtonState(buttons)
 		})
 	}
 	setButtonState(key, value){
@@ -148,6 +150,8 @@ export default class ControlManager {
 	}
 	setMousePosition(x, y){
 		let offset = $(this.canvas).offset()
+		this.mouse.clientX = x
+		this.mouse.clientY = y
 		x -= offset.left
 		y -= offset.top
 		this.mouse.x = x
