@@ -530,7 +530,9 @@ export function renderEffects(game, ctx, w, h){
 	ctx.clearRect(0, 0, w, h)
 	if (game.isDraggingBox){
 		ctx.save()
-		ctx.strokeStyle = "red"
+		ctx.strokeStyle = "#cfcdc1"
+		ctx.shadowColor = "#cfcdc1"
+		ctx.shadowBlur = 20
 		ctx.lineWidth = 2
 		let dragBox = game.dragBox
 		let rect = dragBox.rect

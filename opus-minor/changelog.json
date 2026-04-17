@@ -233,11 +233,14 @@
 		},
 		"20260417": {
 			"date": "April 17, 2026",
-			"line-count": 8500,
+			"line-count": 8800,
 			"changes": [
 				"- You can now move instructions by clicking and dragging them.",
-				"- Added the level Precision Machine Oil.",
-				"- There's a neat graphical effect when you calcify an atom now"
+				"- Added the levels Precision Machine Oil, Health Tonic.",
+				"- There's a neat graphical effect when you calcify an atom now",
+				"- Added Vitae, Mors elements",
+				"- Weird tweak to how cycles are performed, because glyphs need to run their code after some instructions run but before some others.",
+				"- Dragging the map is done with right mouse now."
 			]
 		}
 	}

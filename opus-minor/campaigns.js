@@ -448,6 +448,19 @@ new Campaign("base", [
 			scenarioId: "precision-machine-oil",
 			unlock: {type: "completed", eventId: "refined-gold"}
 		}),
+		new CampaignEvent("puzzle", "health-tonic", {
+			scenarioId: "health-tonic",
+			unlock: {
+				type: "and",
+				conditions: [
+					{type: "completed", eventId: "face-powder"},
+					{type: "completed", eventId: "waterproof-sealant"},
+					{type: "completed", eventId: "hangover-cure"},
+					{type: "completed", eventId: "airship-fuel"},
+					{type: "completed", eventId: "precision-machine-oil"},
+				]
+			}
+		}),
 	], {
 		locked: "./src/img/campaigns/base/chapter 1 locked.png",
 		unlocked: "./src/img/campaigns/base/chapter 1.png",

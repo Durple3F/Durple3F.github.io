@@ -287,7 +287,7 @@ new Scenario("hangover-cure", {
 			"name": "Elemental Water",
 			"molecule": [
 				[
-					["Air", 0, 0, 0]
+					["Water", 0, 0, 0]
 				]
 			]
 		},
@@ -380,7 +380,7 @@ new Scenario("precision-machine-oil", {
 	],
 	reagents: [
 		{
-			"name": "Elemental Fire",
+			"name": "Elemental Water",
 			"molecule": [[["Water", 0, 0, 0]]]
 		},
 		{
@@ -409,5 +409,65 @@ new Scenario("precision-machine-oil", {
 	sideContent: {
 		type: "dialogue",
 		dialogueId: "precision-machine-oil"
+	}
+})
+new Scenario("health-tonic", {
+	products: [
+		{
+			"name": "Health Tonic",
+			"molecule": [
+				[
+					["Salt", -1, 0, 1],
+					["Water", 0, 0, 0],
+					["Salt", 0, 1, -1],
+					["Vitae", 1, 1, -2],
+					["Vitae", 1, -1, 0],
+				],
+				[
+					[0, 1],
+					[1, 2],
+					[2, 3],
+					[1, 4],
+				]
+			]
+		}
+	],
+	reagents: [
+		{
+			"name": "Distilled Water",
+			"molecule": [
+				[
+					["Salt", -1, 0, 1],
+					["Water", 0, 0, 0],
+					["Salt", 0, 1, -1],
+				],
+				[
+					[0, 1],
+					[1, 2]
+				]
+			]
+		},
+		{
+			"name": "Elemental Vitae",
+			"molecule": [[["Vitae", 0, 0, 0]]]
+		},
+	],
+	mechanisms: [
+		"Fixed-Length Arm",
+		"Fixed-Length Double Arm",
+		"Fixed-Length Triple Arm",
+		"Fixed-Length Sextuple Arm",
+		"Piston Arm",
+	],
+	glyphs: [
+		"Glyph of Bonding",
+		"Glyph of Multi-bonding",
+		"Glyph of Unbonding",
+		"Glyph of Calcification",
+		"Glyph of Projection",
+	],
+	sideContent: {
+		type: "dialogue",
+		dialogueId: "health-tonic"
 	}
 })

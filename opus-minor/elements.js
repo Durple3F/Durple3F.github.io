@@ -133,3 +133,15 @@ new Element({
 		metalicity: 6
 	}
 });
+new Element({
+	id: "Vitae",
+	sprites: {
+		atom: "./src/img/atoms/vitae.png"
+	}
+});
+new Element({
+	id: "Mors",
+	sprites: {
+		atom: "./src/img/atoms/mors.png"
+	}
+});

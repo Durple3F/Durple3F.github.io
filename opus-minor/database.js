@@ -46,6 +46,12 @@ export function doesSaveMeetCriteria(saveFile, campaignId, condition){
 		let eventId = condition.eventId
 		let hasCompleted = progress.events[eventId].completed
 		return hasCompleted
+		case "and":
+		let conditions = condition.conditions
+		let conditionMet = conditions.every(condition => {
+			return doesSaveMeetCriteria(saveFile, campaignId, condition)
+		})
+		return conditionMet
 	}
 	return false
 }

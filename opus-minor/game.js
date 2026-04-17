@@ -1984,6 +1984,72 @@ export class Game{
 		//Namely, placing reagents onto the board needs to happen before the arms can grab them.
 		this.placeReagents()
 
+		const programs = this.simulation.programs
+		//Grabbing & Dropping happen first, because glyphs rely on knowing which things are grabbing them.
+		for (let program of programs){
+			const instruction = program.getInstruction(timestep)
+			if (!instruction) continue
+			const instructionType = instruction.type.id
+			const component = program.component
+			const mechanismType = component.mechanismType
+			const abilities = mechanismType.abilities
+			if (instructionType in abilities && !abilities[instructionType]) continue
+			const homeTile = component.homeTile
+			switch (instructionType){
+				case "grabber_grab": {
+					if (component.isGrabbing) break
+					component.isGrabbing = true
+					let animation = {
+						type: "set_grab_animation",
+						target: component,
+						startT: timestep,
+						endT: timestep + 1,
+						startV: 0,
+						endV: 1
+					}
+					this.playingAnimations.push(animation)
+					const arms = component.arms.contents
+					for (let arm of arms){
+						const targetHex = homeTile.add(arm.direction.scale(arm.distance)).round()
+						//find the first molecule that has an atom at that hex.
+						const components = this.simulation.grid.contents
+						let targetMolecule = null
+						for (let otherComponent of components){
+							if (otherComponent.type !== "Molecule") continue
+							const hexes = this.getSimulationCollisionHexes(otherComponent)
+							for (let hex of hexes){
+								if (hex.equals(targetHex)){
+									targetMolecule = otherComponent
+									break
+								}
+							}
+							if (targetMolecule) break
+						}
+						if (targetMolecule){
+							arm.grippedComponent = targetMolecule
+						}
+					}
+				} break
+				case "grabber_drop": {
+					if (!component.isGrabbing) break
+					component.isGrabbing = false
+					let animation = {
+						type: "set_grab_animation",
+						target: component,
+						startT: timestep,
+						endT: timestep + 1,
+						startV: 1,
+						endV: 0
+					}
+					this.playingAnimations.push(animation)
+					const arms = component.arms.contents
+					for (let arm of arms){
+						arm.grippedComponent = null
+					}
+				} break
+			}
+		}
+
 		//Then, run all glyphs.
 		this.carryOutGlyphs()
 
@@ -2004,7 +2070,6 @@ export class Game{
 		}
 
 		//get each instruction that should be executed right now and add them to the list of animations
-		const programs = this.simulation.programs
 		for (let program of programs){
 			const instruction = program.getInstruction(timestep)
 			if (!instruction) continue
@@ -2071,57 +2136,6 @@ export class Game{
 						}
 						this.playingAnimations.push(animation)
 						moleculeMovements.get(molecule).push(animation)
-					}
-				} break
-				case "grabber_grab": {
-					if (component.isGrabbing) break
-					component.isGrabbing = true
-					let animation = {
-						type: "set_grab_animation",
-						target: component,
-						startT: timestep,
-						endT: timestep + 1,
-						startV: 0,
-						endV: 1
-					}
-					this.playingAnimations.push(animation)
-					const arms = component.arms.contents
-					for (let arm of arms){
-						const targetHex = homeTile.add(arm.direction.scale(arm.distance)).round()
-						//find the first molecule that has an atom at that hex.
-						const components = this.simulation.grid.contents
-						let targetMolecule = null
-						for (let otherComponent of components){
-							if (otherComponent.type !== "Molecule") continue
-							const hexes = this.getSimulationCollisionHexes(otherComponent)
-							for (let hex of hexes){
-								if (hex.equals(targetHex)){
-									targetMolecule = otherComponent
-									break
-								}
-							}
-							if (targetMolecule) break
-						}
-						if (targetMolecule){
-							arm.grippedComponent = targetMolecule
-						}
-					}
-				} break
-				case "grabber_drop": {
-					if (!component.isGrabbing) break
-					component.isGrabbing = false
-					let animation = {
-						type: "set_grab_animation",
-						target: component,
-						startT: timestep,
-						endT: timestep + 1,
-						startV: 1,
-						endV: 0
-					}
-					this.playingAnimations.push(animation)
-					const arms = component.arms.contents
-					for (let arm of arms){
-						arm.grippedComponent = null
 					}
 				} break
 				case "piston_extend": {
@@ -2788,6 +2802,7 @@ export class Game{
 		if (!this.isPlayingSimulation) hoveredHex.active = true
 
 		const isLeftClicking = controls.isClicking("left")
+		const isRightClicking = controls.isClicking("right")
 		const isMouseOnScreen = controls.isMouseOnScreen()
 
 		//Finding whether we should show any components' rotation points
@@ -2979,10 +2994,10 @@ export class Game{
 		}
 
 		//Map dragging
-		if (controls.justClicked("left")){
+		if (controls.justClicked("right")){
 			this.isDraggingMap = true
 		}
-		if (!isMouseOnScreen || !isLeftClicking || this.selectedComponent) {
+		if (!isMouseOnScreen || isLeftClicking || !isRightClicking || this.selectedComponent) {
 			this.isDraggingMap = false
 		}
 		if (this.isDraggingMap){

@@ -44,6 +44,9 @@
 		},
 		"precision-machine-oil": {
 			"name": "Precision Machine Oil"
+		},
+		"health-tonic": {
+			"name": "Health Tonic"
 		}
 	},
 	"campaigns": {
@@ -196,6 +199,24 @@
 			"after-4": "Maybe that’s what Armand is trying to prevent, no?",
 			"after-5": "Quite likely. Pity he has only Frederick to work with.",
 			"after-6": "One can only play the game with the pieces one has."
+		},
+		"health-tonic": {
+			"before-0": "Do you know exactly how old Armand is?",
+			"before-1": "Both he and the Lady are rather advanced in age.",
+			"before-2": "And Frederick is the only possible heir?",
+			"before-3": "As Armand’s only surviving grandson, he would be difficult to oppose.",
+			"before-4": "There are some other claimants from distant branches of the family, but they’re weak.",
+			"before-5": "What brought this on?",
+			"before-6": "Promise not to tell anyone, but I was asked to make a tonic to assist in regulating an irregular heartbeat.",
+			"before-7": "Oh Armand… hopefully he’s set up everything for an orderly succession of power after he’s gone.",
+			"before-8": "Let’s not get too ahead of ourselves. I do intend to keep him healthy.",
+			"after-0": "There, that should do it. One healthy-ish patriarch for the House Van Tassen, as ordered.",
+			"after-1": "Long live the patriarch Armand!",
+			"after-2": "Yeah, long live, I guess.",
+			"after-3": "You don’t seem particularly enthusiastic.",
+			"after-4": "I do think it’s good if he stays alive.",
+			"after-5": "After all, he pays for everything around here.",
+			"after-6": "You’d do well to show a little more appreciation for your House."
 		}
 	}
 }

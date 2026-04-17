@@ -93,6 +93,14 @@ componentsTab.on("click", () => {
 	})
 })
 
+$(document).on("mousedown", e => {
+	if (e.originalEvent.button === 2){
+		e.preventDefault()
+	}
+})
+$(document).on("contextmenu", e => {
+	e.preventDefault()
+})
 $(document).on("keydown", e => {
 	if (e.originalEvent.key === "Tab"){
 		e.preventDefault()
