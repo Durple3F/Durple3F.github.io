@@ -236,7 +236,8 @@
 			"line-count": 8500,
 			"changes": [
 				"- You can now move instructions by clicking and dragging them.",
-				"- Added the level Precision Machine Oil."
+				"- Added the level Precision Machine Oil.",
+				"- There's a neat graphical effect when you calcify an atom now"
 			]
 		}
 	}

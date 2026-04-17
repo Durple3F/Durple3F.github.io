@@ -1,7 +1,7 @@
 import { atomRenderSize } from "./config.js";
 import { ELEMENTS } from "./elements.js";
 import { loadSound, playSound } from "./sounds.js";
-import { Component, Hex, Molecule } from "./util.js";
+import { clamp, Component, Hex, Molecule } from "./util.js";
 import { loadSprite } from "./util.js";
 
 export class GlyphInput {
@@ -484,7 +484,16 @@ new GlyphType({
 		base: "./src/img/glyphs/calcification/calcinator_base.png",
 		ring: "./src/img/glyphs/calcification/calcinator_bowl.png",
 		symbols: "./src/img/glyphs/calcification/calcinator_symbols.png",
-		// bond: "./src/img/glyphs/calcification/bond.png",
+		flash_1: "./src/img/glyphs/calcification/flash/calcify_glyph_0001.png",
+		flash_2: "./src/img/glyphs/calcification/flash/calcify_glyph_0002.png",
+		flash_3: "./src/img/glyphs/calcification/flash/calcify_glyph_0003.png",
+		flash_4: "./src/img/glyphs/calcification/flash/calcify_glyph_0004.png",
+		flash_5: "./src/img/glyphs/calcification/flash/calcify_glyph_0005.png",
+		flash_6: "./src/img/glyphs/calcification/flash/calcify_glyph_0006.png",
+		flash_7: "./src/img/glyphs/calcification/flash/calcify_glyph_0007.png",
+		flash_8: "./src/img/glyphs/calcification/flash/calcify_glyph_0008.png",
+		flash_9: "./src/img/glyphs/calcification/flash/calcify_glyph_0009.png",
+		flash_10: "./src/img/glyphs/calcification/flash/calcify_glyph_0010.png",
 	},
 	sounds: [
 		{
@@ -505,6 +514,7 @@ new GlyphType({
 		if (!tags.includes("classical_element")) return
 		input.atom.element = ELEMENTS["Salt"]
 		playSound("glyph_calcification")
+		this.data.lastActivation = performance.now()
 	},
 	render: function (ctx, glyph, x, y, hexSize, inRadius, horiz, vert) {
 		const ringSize = atomRenderSize * hexSize * 1.15
@@ -520,6 +530,29 @@ new GlyphType({
 		//symbols
 		const symbolsSprite = this.sprites["symbols"]
 		ctx.drawImage(symbolsSprite, - horiz * 0.5, - vert * 2 / 3, horiz, vert * 4 / 3)
+
+		if (glyph.data.lastActivation){
+			let diff = performance.now() - glyph.data.lastActivation + 1
+			let p = clamp(diff / 500, 0, 1)
+			if (p <= 0.9){
+				let frame = Math.floor(p * 10) + 1
+				let flashName = `flash_${frame}`
+				let frame2 = frame+1
+				let flashName2 = `flash_${frame2}`
+				let flash = this.sprites[flashName]
+				let flash2 = this.sprites[flashName]
+				let p2 = (p * 10) % 1
+				// ctx.globalAlpha = p2
+				// ctx.drawImage(flash2, - horiz * 0.5, - vert * 2 / 3, horiz, vert * 4 / 3)
+				ctx.globalAlpha = 1
+				ctx.drawImage(flash, - horiz * 0.5, - vert * 2 / 3, horiz, vert * 4 / 3)
+			} else if (p > 0.9 && p !== 1){
+				let p2 = (p * 10) % 1
+				let flash = this.sprites["flash_10"]
+				ctx.globalAlpha = 1 - p2
+				ctx.drawImage(flash, - horiz * 0.5, - vert * 2 / 3, horiz, vert * 4 / 3)
+			}
+		}
 	}
 })
 
@@ -532,6 +565,7 @@ export class Glyph extends Component {
 			let clone = input.clone()
 			this.inputs.contents.push(clone)
 		}
+		this.data = {}
 	}
 	clone() {
 		let clone = new Glyph(this.glyphType.id)
