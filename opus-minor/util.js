@@ -34,6 +34,10 @@ export function cross_product(Ax, Ay, Bx, By, Cx, Cy) {
 	return cross
 }
 
+export function choice(arr){
+	return arr[Math.floor(Math.random() * arr.length)]
+}
+
 export async function loadSprite(url) {
 	let img = new Image()
 	img.src = url

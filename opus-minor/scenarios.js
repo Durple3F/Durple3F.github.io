@@ -361,3 +361,53 @@ new Scenario("airship-fuel", {
 		dialogueId: "airship-fuel"
 	}
 })
+new Scenario("precision-machine-oil", {
+	products: [
+		{
+			"name": "Precision Machine Oil",
+			"molecule": [
+				[
+					["Tin", -1, 0, 1],
+					["Water", 0, 0, 0],
+					["Tin", 1, 0, -1],
+				],
+				[
+					[0, 1],
+					[1, 2],
+				]
+			]
+		}
+	],
+	reagents: [
+		{
+			"name": "Elemental Fire",
+			"molecule": [[["Water", 0, 0, 0]]]
+		},
+		{
+			"name": "Elemental Lead",
+			"molecule": [[["Lead", 0, 0, 0]]]
+		},
+		{
+			"name": "Elemental Quicksilver",
+			"molecule": [[["Quicksilver", 0, 0, 0]]]
+		},
+	],
+	mechanisms: [
+		"Fixed-Length Arm",
+		"Fixed-Length Double Arm",
+		"Fixed-Length Triple Arm",
+		"Fixed-Length Sextuple Arm",
+		"Piston Arm",
+	],
+	glyphs: [
+		"Glyph of Bonding",
+		"Glyph of Multi-bonding",
+		"Glyph of Unbonding",
+		"Glyph of Calcification",
+		"Glyph of Projection",
+	],
+	sideContent: {
+		type: "dialogue",
+		dialogueId: "precision-machine-oil"
+	}
+})

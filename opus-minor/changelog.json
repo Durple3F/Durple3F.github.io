@@ -233,9 +233,10 @@
 		},
 		"20260417": {
 			"date": "April 17, 2026",
-			"line-count": 8200,
+			"line-count": 8500,
 			"changes": [
-				"- Begun work on being able to click and drag instructions."
+				"- You can now move instructions by clicking and dragging them.",
+				"- Added the level Precision Machine Oil."
 			]
 		}
 	}

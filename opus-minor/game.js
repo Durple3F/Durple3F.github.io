@@ -1,4 +1,4 @@
-import {Hex, Grid, Component, Atom, loadSprite, Molecule, Reagent, tagHierarchy, lerp, clamp, Product, createMolecule, Circle, find_angle, cross_product, Rectangle, fillScoreboard, clearModal} from "./util.js"
+import {Hex, Grid, Component, Atom, loadSprite, Molecule, Reagent, tagHierarchy, lerp, clamp, Product, createMolecule, Circle, find_angle, cross_product, Rectangle, fillScoreboard, clearModal, choice} from "./util.js"
 import { ArmMechanism, ARMTYPES } from "./arms.js"
 import { SCENARIOS } from "./scenarios.js"
 import { createInstructionTag, Instruction, INSTRUCTIONS } from "./instructions.js"
@@ -17,6 +17,15 @@ const cos = Math.cos
 const ROOT3 = Math.sqrt(3)
 const floor = Math.floor
 const ceil = Math.ceil
+
+const fanfareSounds = [
+	"fanfare_solving1",
+	"fanfare_solving2",
+	"fanfare_solving3",
+	"fanfare_solving4",
+	"fanfare_solving5",
+	"fanfare_solving6"
+]
 
 export class Level{
 	constructor(scenario){
@@ -391,6 +400,8 @@ export class Game{
 			keyboard: false
 		})
 		modal.toggle()
+
+		playSound(choice(fanfareSounds))
 
 		modalTag.on("hidden.bs.modal", () => {
 			this.resolvePromise([
@@ -814,13 +825,14 @@ export class Game{
 		}
 		//Otherwise, they might be starting to drag instructions
 		const controls = this.controls
-		if (controls.isClicking("left") && this.selectedInstructions.length){
+		if (controls.isClicking("left") && this.selectedInstructions.length && !this.heldInstructions.length){
 			let oldMousePos = controls.mouseDownOrigin
 			if (oldMousePos){
 				let mouseX = controls.mouse.clientX
 				let mouseY = controls.mouse.clientY
 				let dist = Math.hypot(oldMousePos[0] - mouseX, oldMousePos[1] - mouseY)
 				if (dist > 5){
+					playSound("instruction_pickup")
 					this.beginHoldingInstructions(this.selectedInstructions)
 				}
 			}
@@ -861,6 +873,7 @@ export class Game{
 				this.insertProgramInstruction(instruction, addToProgram, instructionIndex + j)
 			}
 		}
+		playSound("instruction_place")
 		
 		this.endHoldingInstructions()
 		this.performUIUpdates()
@@ -895,6 +908,7 @@ export class Game{
 				let instructionIndex = Math.floor(mouseX / instructionWidth)
 				let instruction = this.heldInstructions[0][0]
 				this.insertProgramInstruction(instruction, program, instructionIndex)
+				playSound("instruction_place")
 				this.endHoldingInstructions()
 				this.performUIUpdates()
 				this.overrideInstructionMouseUp = true
@@ -3001,6 +3015,7 @@ export class Game{
 		if (this.heldInstructions.length){
 			if (!continueHoldingInstructions){
 				this.endHoldingInstructions()
+				playSound("instruction_remove")
 			}
 		} else if (this.overrideInstructionMouseUp && !isLeftClicking){
 			this.overrideInstructionMouseUp = false

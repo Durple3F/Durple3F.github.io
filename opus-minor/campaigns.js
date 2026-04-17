@@ -444,6 +444,10 @@ new Campaign("base", [
 			scenarioId: "airship-fuel",
 			unlock: {type: "completed", eventId: "refined-gold"}
 		}),
+		new CampaignEvent("puzzle", "precision-machine-oil", {
+			scenarioId: "precision-machine-oil",
+			unlock: {type: "completed", eventId: "refined-gold"}
+		}),
 	], {
 		locked: "./src/img/campaigns/base/chapter 1 locked.png",
 		unlocked: "./src/img/campaigns/base/chapter 1.png",

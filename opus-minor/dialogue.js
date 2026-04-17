@@ -279,3 +279,30 @@ new DialogueStory("airship-fuel", [
 		eventId: "airship-fuel"
 	})
 ])
+new DialogueStory("precision-machine-oil", [
+	new DialogueMessages([
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-0"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-1"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-2"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-3"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-4"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-5"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-6"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-7"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-8"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-9"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-10"}),
+	]),
+	new DialogueMessages([
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-0"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "after-1"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-2"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "after-3"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-4"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "after-5"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-6"}),
+	], {
+		type: "completed",
+		eventId: "precision-machine-oil"
+	})
+])

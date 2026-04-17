@@ -41,6 +41,9 @@
 		},
 		"airship-fuel": {
 			"name": "Airship Fuel"
+		},
+		"precision-machine-oil": {
+			"name": "Precision Machine Oil"
 		}
 	},
 	"campaigns": {
@@ -173,6 +176,26 @@
 			"after-2": "Doesn’t seem too complicated. How about me?",
 			"after-3": "How about Captain Gelt? Or Frederick?",
 			"after-4": "That’s a disturbing thought… maybe we should pretend the airship is still out of fuel."
+		},
+		"precision-machine-oil": {
+			"before-0": "Oh dear. Oh dear.",
+			"before-1": "What is it now?",
+			"before-2": "Apparently Armand arranged for Frederick to go on a date with a young lady from another House.",
+			"before-3": "Oh dear.",
+			"before-4": "And now I have to make some machine oil.",
+			"before-5": "You… what?",
+			"before-6": "For the observatory. Frederick tried to take her there, but everything was rusted solid.",
+			"before-7": "Of course.",
+			"before-8": "Even better? Clara, the young lady, is from House Soria.",
+			"before-9": "He was probably hoping to prove our observatory is just as good as theirs.",
+			"before-10": "Oh, she must’ve been tremendously impressed all around.",
+			"after-0": "Well, Frederick’s dates at the observatory ought to go better now. Maybe he and Clara could have a do-over.",
+			"after-1": "I don’t think it works like that.",
+			"after-2": "Do you see any other choices?",
+			"after-3": "For Clara Soria? I believe House Colvan has a young man around Frederick’s age.",
+			"after-4": "Maybe that’s what Armand is trying to prevent, no?",
+			"after-5": "Quite likely. Pity he has only Frederick to work with.",
+			"after-6": "One can only play the game with the pieces one has."
 		}
 	}
 }

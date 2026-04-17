@@ -66,6 +66,51 @@ export const neededSounds = [
 		url: "./src/sounds/sim_error.mp3",
 		category: "sfx"
 	},
+	{
+		id: "instruction_pickup",
+		url: "./src/sounds/instruction_pickup.mp3",
+		category: "sfx"
+	},
+	{
+		id: "instruction_place",
+		url: "./src/sounds/instruction_place.mp3",
+		category: "sfx"
+	},
+	{
+		id: "instruction_remove",
+		url: "./src/sounds/instruction_remove.mp3",
+		category: "sfx"
+	},
+	{
+		id: "fanfare_solving1",
+		url: "./src/sounds/fanfare_solving1.mp3",
+		category: "sfx"
+	},
+	{
+		id: "fanfare_solving2",
+		url: "./src/sounds/fanfare_solving2.mp3",
+		category: "sfx"
+	},
+	{
+		id: "fanfare_solving3",
+		url: "./src/sounds/fanfare_solving3.mp3",
+		category: "sfx"
+	},
+	{
+		id: "fanfare_solving4",
+		url: "./src/sounds/fanfare_solving4.mp3",
+		category: "sfx"
+	},
+	{
+		id: "fanfare_solving5",
+		url: "./src/sounds/fanfare_solving5.mp3",
+		category: "sfx"
+	},
+	{
+		id: "fanfare_solving6",
+		url: "./src/sounds/fanfare_solving6.mp3",
+		category: "sfx"
+	},
 ]
 export const categoryVolumes = {
 	sfx: 1,
