@@ -149,18 +149,6 @@ function drawHexOriginal(ctx, hex, x, y, size, inRadius, q, r, s) {
 	ctx.fill()
 	ctx.stroke()
 	ctx.restore()
-
-	if (drawHexCoords) {
-		ctx.save()
-		const fontSize = size * 0.4
-		const font = fontSize + "px monospace"
-		ctx.font = font
-		ctx.fillStyle = "red"
-		ctx.fillText(q, x - fontSize * 0.2, y - fontSize * 0.8)
-		ctx.fillText(r, x - fontSize * 0.2, y + fontSize * 0.2)
-		ctx.fillText(s, x - fontSize * 0.2, y + fontSize * 1.2)
-		ctx.restore()
-	}
 }
 
 function drawArmMechanism(ctx, mechanism, x, y, hexSize, inRadius, horiz, vert, hasShadow = false) {
@@ -477,7 +465,7 @@ function drawTrack(ctx, track, x, y, hexSize, inRadius, horiz, vert) {
 	}
 }
 
-function drawComponent(ctx, component, x, y, hexSize, inRadius, horiz, vert, isSimulated) {
+export function drawComponent(ctx, component, x, y, hexSize, inRadius, horiz, vert, isSimulated) {
 	if (!component.isRendered) return
 	switch (component.type) {
 		case "Molecule": drawMolecule(ctx, component, x, y, hexSize, inRadius, horiz, vert, true); break
@@ -558,6 +546,18 @@ export function render(game, ctx, w, h) {
 				drawHex(ctx, hex, x, y, hexSize, inRadius, q, r, s, horiz, vert, spriteName, recession)
 			} else if (hexDrawTheme === "rainbow") {
 				drawHexOriginal(ctx, hex, x, y, hexSize, inRadius, q, r, s, horiz, vert)
+			}
+			
+			if (drawHexCoords) {
+				ctx.save()
+				const fontSize = size * 0.4
+				const font = fontSize + "px monospace"
+				ctx.font = font
+				ctx.fillStyle = "red"
+				ctx.fillText(q, x - fontSize * 0.2, y - fontSize * 0.8)
+				ctx.fillText(r, x - fontSize * 0.2, y + fontSize * 0.2)
+				ctx.fillText(s, x - fontSize * 0.2, y + fontSize * 1.2)
+				ctx.restore()
 			}
 		}
 	}

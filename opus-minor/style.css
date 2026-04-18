@@ -301,9 +301,8 @@ body {
 
 
 .component {
-	border: 0.1em solid lightblue;
-	background-color: rgb(27, 98, 169);
-	padding: 0.3em;
+	/* border: 0.1em solid lightblue; */
+	/* background-color: rgb(27, 98, 169); */
 	margin: 0.5em;
 	min-width: 35%;
 	flex-grow: 1;
@@ -311,9 +310,20 @@ body {
 	justify-content: center;
 	align-items: center;
 	text-align: center;
+	flex-direction: column;
 	opacity: 0.5;
 	pointer-events: none;
 	transition: box-shadow 0.1s ease-out;
+
+	.component-icon {
+		margin: 1em;
+		width: 100%;
+		height: auto;
+		filter: brightness(0.7);
+	}
+	&:has(.small-icon){
+		max-width: 40%;
+	}
 }
 
 .component[data-available="true"] {
@@ -322,7 +332,8 @@ body {
 	pointer-events: auto;
 
 	&:hover {
-		box-shadow: 0 0 5px white;
+		/* box-shadow: 0 0 5px white; */
+		filter: drop-shadow(0 0 0.5em rgba(255, 255, 255, 0.394));
 	}
 }
 

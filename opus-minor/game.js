@@ -4,11 +4,12 @@ import { ArmMechanism, ARMTYPES } from "./arms.js"
 import { SCENARIOS } from "./scenarios.js"
 import { createInstructionTag, Instruction, INSTRUCTIONS } from "./instructions.js"
 import { Glyph } from "./glyphs.js"
-import { armSize, atomSize, msPerCycle, submissionsPerProduct } from "./config.js"
+import { armSize, atomRenderSize, atomSize, msPerCycle, submissionsPerProduct } from "./config.js"
 import { Track, TrackPiece } from "./track.js"
 import { getLocaleString } from "./locale.js"
 import { saveSolution } from "./database.js"
 import { playSound } from "./sounds.js"
+import { drawComponent } from "./render.js"
 
 const min = Math.min
 const max = Math.max
@@ -475,16 +476,19 @@ export class Game{
 			let moleculeName = productMolecule.name
 			let molecule = createMolecule(productMolecule.molecule)
 			let componentTag = $("<div class='component'>")
-			componentTag.text(moleculeName)
 			productsPane.append(componentTag)
 			componentTag.attr("data-available", true)
 			componentTag.data("count", componentCountInfo)
-			componentTag.on("mousedown", () => {
+			componentTag.on("mousedown", e => {
+				if (e.originalEvent.button !== 0) return
 				let component = new Product(molecule)
 				component.componentCountInfos.push(componentCountInfo)
 				this.beginHoldingComponent(component)
 				this.selectedComponent.isRendered = false
 			})
+			const component = new Product(molecule)
+			const canvas = this.createComponentIcon(component)
+			componentTag.append($(canvas).addClass("component-icon"))
 		}
 
 		for (let reagentMolecule of reagentMolecules){
@@ -493,53 +497,66 @@ export class Game{
 			let moleculeName = reagentMolecule.name
 			let molecule = createMolecule(reagentMolecule.molecule)
 			let componentTag = $("<div class='component'>")
-			componentTag.text(moleculeName)
 			reagentsPane.append(componentTag)
 			componentTag.attr("data-available", true)
 			componentTag.data("count", componentCountInfo)
-			componentTag.on("mousedown", () => {
+			componentTag.on("mousedown", e => {
+				if (e.originalEvent.button !== 0) return
 				let component = new Reagent(molecule)
 				component.componentCountInfos.push(componentCountInfo)
 				component.isRendered = false
 				this.beginHoldingComponent(component)
 			})
+			const component = new Reagent(molecule)
+			const canvas = this.createComponentIcon(component)
+			componentTag.append($(canvas).addClass("component-icon"))
 		}
 
 		for (let mechanismName of allowedMechanisms){
 			let componentTag = $("<div class='component'>")
-			componentTag.text(mechanismName)
 			mechanismsPane.append(componentTag)
 			componentTag.attr("data-available", true)
-			componentTag.on("mousedown", () => {
+			componentTag.on("mousedown", e => {
+				if (e.originalEvent.button !== 0) return
 				let component = new ArmMechanism(mechanismName)
 				component.isRendered = false
 				this.beginHoldingComponent(component)
 			})
+			const component = new ArmMechanism(mechanismName)
+			const canvas = this.createComponentIcon(component)
+			componentTag.append($(canvas).addClass("component-icon"))
 		}
 
 		for (let glyphId of allowedGlyphs){
 			let componentTag = $("<div class='component'>")
-			componentTag.text(glyphId)
 			glyphsPane.append(componentTag)
 			componentTag.attr("data-available", true)
-			componentTag.on("mousedown", () => {
+			componentTag.on("mousedown", e => {
+				if (e.originalEvent.button !== 0) return
 				let component = new Glyph(glyphId)
 				component.isRendered = false
 				this.beginHoldingComponent(component)
 			})
+			const component = new Glyph(glyphId)
+			const canvas = this.createComponentIcon(component)
+			componentTag.append($(canvas).addClass("component-icon"))
 		}
 
 		//Add one last mechanism for tracks.
 		let trackTag = $("<div class='component'>")
-		trackTag.text("Track")
 		mechanismsPane.append(trackTag)
 		trackTag.attr("data-available", true)
-		trackTag.on("mousedown", () => {
+		trackTag.on("mousedown", e => {
+			if (e.originalEvent.button !== 0) return
 			let component = new Track()
 			component.isRendered = false
 			component.addTrackPiece(new Hex(0, 0, 0))
 			this.beginHoldingComponent(component)
 		})
+		const component = new Track()
+		component.addTrackPiece(new Hex(0, 0, 0))
+		const canvas = this.createComponentIcon(component)
+		trackTag.append($(canvas).addClass("component-icon"))
 	}
 	updateComponentPane(){
 		let holdingCounts = []
@@ -563,6 +580,73 @@ export class Game{
 				$(componentTag).attr("data-available", true)
 			}
 		}
+	}
+	createComponentIcon(component){
+		const canvas = document.createElement("canvas")
+		const hexes = this.getPlacementCollisionHexes(component)
+		//arm hexes
+		if (component.type === "ArmMechanism"){
+			for (let arm of component.arms.contents){
+				let tile = component.homeTile.add(arm.direction.scale(arm.distance))
+				hexes.push(tile)
+			}
+		}
+		const xys = hexes.map(hex => hex.toXY())
+		const hexSize = this.hexSize * 5
+		if (!xys.length) return canvas
+		const rects = xys.map(xy => {
+			let x = xy[0]
+			let y = xy[1]
+			return new Rectangle(x - 1, y - 1, 2, 2)
+		})
+		let minX = xys[0][0], maxX = xys[0][0]
+		let minY = xys[0][1], maxY = xys[0][1]
+		for (let rect of rects){
+			if (rect.x < minX) minX = rect.x
+			if (rect.x + rect.w > maxX) maxX = rect.x + rect.w
+			if (rect.y < minY) minY = rect.y
+			if (rect.y + rect.h > maxY) maxY = rect.y + rect.h
+		}
+		const homeTile = component.homeTile
+		let homeX = homeTile.toXY()[0]
+		let homeY = homeTile.toXY()[1]
+		if (minX < 0){
+			homeX -= minX
+			maxX -= minX
+			minX -= minX
+		}
+		if (minY < 0){
+			homeY -= minY
+			maxY -= minY
+			minY -= minY
+		}
+		let centerX = (maxX - minX) * 0.5
+		let centerY = (maxY - minY) * 0.5
+		const ctx = canvas.getContext("2d")
+		const inRadius = hexSize * ROOT3 * 0.5
+		const horiz = ROOT3 * hexSize
+		const vert = 1.5 * hexSize
+		
+		let x = homeX
+		let y = homeY
+		let w = maxX - minX
+		let h = maxY - minY
+		console.log(x, y, w, h)
+
+		if (w <= 4 || component.type === "ArmMechanism" || component.type === "Glyph"){
+			$(canvas).addClass("small-icon")
+		}
+		
+		x *= hexSize
+		y *= hexSize
+		w *= hexSize
+		h *= hexSize
+		
+		canvas.width = w
+		canvas.height = h
+		drawComponent(ctx, component, x, y, hexSize, inRadius, horiz, vert, false)
+		console.log(ctx.canvas)
+		return canvas
 	}
 
 	addComponent(component, level){
