@@ -38,20 +38,6 @@ export function choice(arr){
 	return arr[Math.floor(Math.random() * arr.length)]
 }
 
-export async function loadSprite(url) {
-	let img = new Image()
-	img.src = url
-	return await new Promise((resolve, reject) => {
-		img.onload = () => {
-			resolve(img)
-		}
-		img.onerror = async () => {
-			img = await loadSprite(url)
-			resolve(img)
-		}
-	})
-}
-
 //Returns an array of that tag and its parents and ancestors.
 export function tagHierarchy(tag) {
 	const nodes = [tag]

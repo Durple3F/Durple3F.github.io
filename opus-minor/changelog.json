@@ -242,6 +242,13 @@
 				"- Weird tweak to how cycles are performed, because glyphs need to run their code after some instructions run but before some others.",
 				"- Dragging the map is done with right mouse now."
 			]
+		},
+		"20260418": {
+			"date": "April 18, 2026",
+			"line-count": 9000,
+			"changes": [
+				"- The hexes use the game's green hexagon pattern now."
+			]
 		}
 	}
 }

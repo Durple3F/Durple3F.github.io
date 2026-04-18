@@ -1,7 +1,8 @@
-import {Hex, Atom, Molecule} from "./util.js";
-import {drawCollisionCircles, drawGhostRotation, drawMoleculeHomeTile, atomRenderSize, drawHexCoords} from "./config.js";
+import { Hex, Atom, Molecule } from "./util.js";
+import { drawCollisionCircles, drawGhostRotation, drawMoleculeHomeTile, atomRenderSize, drawHexCoords, hexDrawTheme } from "./config.js";
 import { TrackPiece } from "./track.js";
 import Color from "https://colorjs.io/dist/color.js";
+import { SPRITES } from "./sprites.js";
 
 const TWOPI = 2 * Math.PI
 const ROOT3 = Math.sqrt(3)
@@ -14,41 +15,125 @@ const cos = Math.cos
 const sqrt = Math.sqrt
 
 const hexColorCache = new Map()
+const hexCache = new Map()
 
-function drawHex(ctx, hex, x, y, size, inRadius, q, r, s){
+function drawTiledBackground(ctx, hex_base, backgroundOffsetX, backgroundOffsetY) {
+	const tileW = hex_base.width;
+	const tileH = hex_base.height;
+
+	const canvasW = ctx.canvas.width;
+	const canvasH = ctx.canvas.height;
+
+	// Normalize offsets to prevent runaway values
+	const offsetX = ((backgroundOffsetX % tileW) + tileW) % tileW;
+	const offsetY = ((backgroundOffsetY % tileH) + tileH) % tileH;
+
+	// Start slightly off-screen so edges are covered
+	const startX = -offsetX;
+	const startY = -offsetY;
+
+	for (let x = startX; x < canvasW; x += tileW) {
+		for (let y = startY; y < canvasH; y += tileH) {
+			ctx.drawImage(hex_base, x, y);
+		}
+	}
+}
+
+function chooseHexBackground(rand){
+	if (rand < 0.02){
+		return "hex_1"
+	} else if (rand < 0.04){
+		return "hex_2"
+	} else if (rand < 0.34){
+		return "hex_0"
+	} else if (rand < 0.64){
+		return "hex_4"
+	}
+	return "hex_3"
+}
+function chooseHexRecession(rand){
+	if (rand < 0.05){
+		return "hex_recessed_shadow"
+	} else if (rand < 0.1){
+		return "hex_protruding_shadow"
+	}
+	return "hex_shadow"
+}
+// function drawHexShadow(ctx, hex, x, y, size, inRadius, q, r, s, horiz, vert, spriteName, recession) {
+// 	const hexX = x - horiz * 0.5
+// 	const hexY = y - vert * 2 / 3
+// 	const hexW = horiz
+// 	const hexH = vert * 4 / 3
+// 	ctx.save()
+// 	ctx.globalAlpha = 0.7
+// 	const shadow = SPRITES[recession]
+// 	let shadowW = hexW / 87 * shadow.width
+// 	let shadowH = hexH / 100 * shadow.height
+// 	if (recession === "hex_protruding_shadow"){
+// 		shadowW += 5
+// 		shadowH += 5
+// 	} else {
+// 		shadowW -= size * 0.01
+// 		shadowH -= size * 0.01
+// 	}
+// 	const shadowX = (hexX + hexW * 0.5) - (shadowW * 0.5)
+// 	const shadowY = (hexY + hexH * 0.5) - (shadowH * 0.5)
+// 	ctx.drawImage(shadow, shadowX, shadowY, shadowW, shadowH)
+// 	ctx.restore()
+// }
+function drawHex(ctx, hex, x, y, size, inRadius, q, r, s, horiz, vert, spriteName, recession) {
+	const hexX = x - horiz * 0.5
+	const hexY = y - vert * 2 / 3
+	const hexW = horiz
+	const hexH = vert * 4 / 3
+	ctx.save()
+	ctx.globalAlpha = 0.7
+	if (recession === "hex_shadow"){
+		const shadowW = hexW / 87 * 125
+		const shadowH = hexH / 100 * 130
+		const shadowX = (hexX + hexW * 0.5) - (shadowW * 0.5)
+		const shadowY = (hexY + hexH * 0.5) - (shadowH * 0.5)
+		const shadow = SPRITES[recession]
+		ctx.drawImage(shadow, shadowX, shadowY, shadowW, shadowH)
+	}
+	const sprite = SPRITES[spriteName]
+	ctx.drawImage(sprite, hexX, hexY, hexW, hexH)
+	ctx.restore()
+}
+function drawHexOriginal(ctx, hex, x, y, size, inRadius, q, r, s) {
 	//x, y is the center of the hexagon.
-	const diagx = ROOT3*0.5*size
-	const diagy = size*0.5
+	const diagx = ROOT3 * 0.5 * size
+	const diagy = size * 0.5
 	ctx.save()
 	let key = `${hex.q},${hex.r},${hex.active}`
 	let color = "gray"
 	let color2
-	
-	if (!hexColorCache.has(key)){
-		if (hex.q === 0 && hex.r === 0){
+
+	if (!hexColorCache.has(key)) {
+		if (hex.q === 0 && hex.r === 0) {
 			let bri = 20
-			if (hex.active){
+			if (hex.active) {
 				bri *= 1.4
 			}
 			color2 = new Color("hsl", [0, 0, bri])
-			color = color2.toString({format: "hex"})
+			color = color2.toString({ format: "hex" })
 		} else {
 			let xy = hex.toXY()
 			let d = Math.hypot(xy[0], xy[1])
 			let sat = min(80, max(20, d + 20))
 			let bri = min(50, max(20, sqrt(d) + 20))
-			if (hex.active){
+			if (hex.active) {
 				bri *= 1.4
 			}
 			let cangle = Math.atan2(xy[0], xy[1]) * 180 / Math.PI;
 			color2 = new Color("hsl", [cangle, sat, bri]);
-			color = color2.toString({format: "hex"})
+			color = color2.toString({ format: "hex" })
 		}
 		hexColorCache.set(key, color)
 	} else {
 		color = hexColorCache.get(key)
 	}
-	
+
 
 	ctx.fillStyle = color
 	ctx.lineWidth = max(size * 0.05, 2)
@@ -65,10 +150,10 @@ function drawHex(ctx, hex, x, y, size, inRadius, q, r, s){
 	ctx.stroke()
 	ctx.restore()
 
-	if (drawHexCoords){
+	if (drawHexCoords) {
 		ctx.save()
 		const fontSize = size * 0.4
-		const font = fontSize+"px monospace"
+		const font = fontSize + "px monospace"
 		ctx.font = font
 		ctx.fillStyle = "red"
 		ctx.fillText(q, x - fontSize * 0.2, y - fontSize * 0.8)
@@ -78,7 +163,7 @@ function drawHex(ctx, hex, x, y, size, inRadius, q, r, s){
 	}
 }
 
-function drawArmMechanism(ctx, mechanism, x, y, hexSize, inRadius, horiz, vert, hasShadow=false){
+function drawArmMechanism(ctx, mechanism, x, y, hexSize, inRadius, horiz, vert, hasShadow = false) {
 	const arms = mechanism.arms.contents
 	const alpha = mechanism.isGhost ? 0.7 : 1
 
@@ -95,7 +180,7 @@ function drawArmMechanism(ctx, mechanism, x, y, hexSize, inRadius, horiz, vert, 
 
 	//Draw atoms if need be
 	const atoms = mechanism.atoms.contents
-	for (let atom of atoms){
+	for (let atom of atoms) {
 		const q = atom.coord.q
 		const r = atom.coord.r
 		const atomX = (q + 0.5 * r) * horiz
@@ -105,7 +190,7 @@ function drawArmMechanism(ctx, mechanism, x, y, hexSize, inRadius, horiz, vert, 
 		drawAtom(ctx, atom, atomXR, atomYR, hexSize, inRadius, alpha, hasShadow)
 	}
 
-	for (let arm of arms){
+	for (let arm of arms) {
 		const hand = arm.direction
 		const q = hand.q
 		const r = hand.r
@@ -131,14 +216,14 @@ function drawArmMechanism(ctx, mechanism, x, y, hexSize, inRadius, horiz, vert, 
 		const fingerBaseAngle = (hexRotation * TWOPI / 6) - TWOPI / 12
 		const fingerAngleStep = TWOPI / fingerCount
 		const fingerLength = handRadius * 0.3 * (2 - mechanism.grabAnimationProgress)
-		for (let i = 0; i < fingerCount; i++){
+		for (let i = 0; i < fingerCount; i++) {
 			const angle = i * fingerAngleStep + fingerBaseAngle
 			const fCos = cos(angle)
 			const fSin = sin(angle)
 			const circleX = handX + fCos * handRadius
 			const circleY = handY + fSin * handRadius
 			const endX = handX + fCos * (handRadius + fingerLength)
-    	const endY = handY + fSin * (handRadius + fingerLength)
+			const endY = handY + fSin * (handRadius + fingerLength)
 			ctx.moveTo(circleX, circleY)
 			ctx.lineTo(endX, endY)
 		}
@@ -173,22 +258,22 @@ function drawArmMechanism(ctx, mechanism, x, y, hexSize, inRadius, horiz, vert, 
 	ctx.restore()
 
 	//Draw number
-	if (mechanism.program){
+	if (mechanism.program) {
 		ctx.save()
 		const name = mechanism.program.name
 		const fontSize = hexSize * 0.4
-		const font = fontSize+"px monospace"
+		const font = fontSize + "px monospace"
 		ctx.font = font
 		ctx.globalAlpha = alpha
 		ctx.fillStyle = "black"
 		const length = name.toString().length - 1
 		const diffX = hexSize * 0.1
-		ctx.fillText(name, x - hexSize*0.1 - diffX * length, y + hexSize * 0.1)
+		ctx.fillText(name, x - hexSize * 0.1 - diffX * length, y + hexSize * 0.1)
 		ctx.restore()
 	}
 }
 
-function drawMolecule(ctx, molecule, x, y, hexSize, inRadius, horiz, vert, hasShadow=false){
+function drawMolecule(ctx, molecule, x, y, hexSize, inRadius, horiz, vert, hasShadow = false) {
 	const atoms = molecule.atoms
 	const contents = atoms.contents
 	const bonds = molecule.bonds.contents
@@ -199,7 +284,7 @@ function drawMolecule(ctx, molecule, x, y, hexSize, inRadius, horiz, vert, hasSh
 	const cosT = cos(angle)
 	const sinT = sin(angle)
 
-	for (let bond of bonds){
+	for (let bond of bonds) {
 		const atom1 = bond.atoms[0]
 		const q1 = atom1.coord.q
 		const r1 = atom1.coord.r
@@ -228,7 +313,7 @@ function drawMolecule(ctx, molecule, x, y, hexSize, inRadius, horiz, vert, hasSh
 		ctx.stroke()
 		ctx.restore()
 	}
-	for (let atom of contents){
+	for (let atom of contents) {
 		const q = atom.coord.q
 		const r = atom.coord.r
 		const atomX = (q + 0.5 * r) * horiz
@@ -237,14 +322,14 @@ function drawMolecule(ctx, molecule, x, y, hexSize, inRadius, horiz, vert, hasSh
 		const atomYR = y + atomX * sinT + atomY * cosT
 		drawAtom(ctx, atom, atomXR, atomYR, hexSize, inRadius, alpha, hasShadow)
 
-		if (drawGhostRotation){
+		if (drawGhostRotation) {
 			ctx.globalAlpha = 0.5
-			drawAtom(ctx, atom, atomX+x, atomY+y, hexSize, inRadius, alpha)
+			drawAtom(ctx, atom, atomX + x, atomY + y, hexSize, inRadius, alpha)
 			ctx.globalAlpha = 1
 		}
 	}
 
-	if (drawMoleculeHomeTile){
+	if (drawMoleculeHomeTile) {
 		ctx.save()
 		ctx.beginPath()
 		ctx.moveTo(x, y)
@@ -256,28 +341,28 @@ function drawMolecule(ctx, molecule, x, y, hexSize, inRadius, horiz, vert, hasSh
 	}
 }
 
-function drawAtom(ctx, atom, x, y, hexSize, inRadius, alpha, hasShadow=false){
+function drawAtom(ctx, atom, x, y, hexSize, inRadius, alpha, hasShadow = false) {
 	// console.log(atom)
 	let atomSize = inRadius * 0.8
 	let sprite = atom.element.sprites["atom"]
 	ctx.save()
-	if (hasShadow){
+	if (hasShadow) {
 		ctx.shadowColor = "black";
 		ctx.shadowBlur = hexSize * 0.2;
 	}
 	ctx.globalAlpha = alpha
-	ctx.drawImage(sprite, x - atomSize, y - atomSize, 2*atomSize, 2*atomSize)
+	ctx.drawImage(sprite, x - atomSize, y - atomSize, 2 * atomSize, 2 * atomSize)
 	ctx.restore()
 }
 
-function drawReagent(ctx, reagent, x, y, hexSize, inRadius, horiz, vert, isSimulated){
+function drawReagent(ctx, reagent, x, y, hexSize, inRadius, horiz, vert, isSimulated) {
 	//A reagent is just the hexagonal grid underneath the molecule that it produces.
 	//Before the simulation starts, it should render the molecule that it produces as though it were a normal molecule
-	const diagx = ROOT3*0.5*hexSize
-	const diagy = hexSize*0.5
+	const diagx = ROOT3 * 0.5 * hexSize
+	const diagy = hexSize * 0.5
 	const molecule = reagent.molecule
 	const atoms = molecule.atoms.contents
-	for (let atom of atoms){
+	for (let atom of atoms) {
 		const q = atom.coord.q
 		const r = atom.coord.r
 		const atomX = (q + 0.5 * r) * horiz
@@ -304,19 +389,19 @@ function drawReagent(ctx, reagent, x, y, hexSize, inRadius, horiz, vert, isSimul
 	}
 
 	ctx.save()
-	if (isSimulated){
+	if (isSimulated) {
 		ctx.filter = "brightness(0.5)"
 	}
 	drawMolecule(ctx, molecule, x, y, hexSize, inRadius, horiz, vert, false)
 	ctx.restore()
 }
-function drawProduct(ctx, reagent, x, y, hexSize, inRadius, horiz, vert){
+function drawProduct(ctx, reagent, x, y, hexSize, inRadius, horiz, vert) {
 	//A product is just the hexagonal grid underneath the molecule that it produces.
-	const diagx = ROOT3*0.5*hexSize
-	const diagy = hexSize*0.5
+	const diagx = ROOT3 * 0.5 * hexSize
+	const diagy = hexSize * 0.5
 	const molecule = reagent.molecule
 	const atoms = molecule.atoms.contents
-	for (let atom of atoms){
+	for (let atom of atoms) {
 		const q = atom.coord.q
 		const r = atom.coord.r
 		const atomX = (q + 0.5 * r) * horiz
@@ -348,18 +433,18 @@ function drawProduct(ctx, reagent, x, y, hexSize, inRadius, horiz, vert){
 	ctx.restore()
 }
 
-function drawGlyph(ctx, glyph, x, y, hexSize, inRadius, horiz, vert){
+function drawGlyph(ctx, glyph, x, y, hexSize, inRadius, horiz, vert) {
 	let glyphType = glyph.glyphType
 	ctx.save()
 	glyphType.render(ctx, glyph, x, y, hexSize, inRadius, horiz, vert)
 	ctx.restore()
 }
 
-function drawTrack(ctx, track, x, y, hexSize, inRadius, horiz, vert){
+function drawTrack(ctx, track, x, y, hexSize, inRadius, horiz, vert) {
 	const trackPieces = track.trackPieces
 	const homeTile = track.homeTile
 	const sprites = TrackPiece.sprites
-	for (let trackPiece of trackPieces){
+	for (let trackPiece of trackPieces) {
 		ctx.save()
 		const trackTile = trackPiece.coord
 		const q = trackTile.q
@@ -374,27 +459,27 @@ function drawTrack(ctx, track, x, y, hexSize, inRadius, horiz, vert){
 		const spriteRenderOffset = 2
 		ctx.drawImage(
 			sprite,
-			spriteOffset, spriteOffset, sprite.width - spriteOffset*2, sprite.height - spriteOffset*2,
+			spriteOffset, spriteOffset, sprite.width - spriteOffset * 2, sprite.height - spriteOffset * 2,
 			- horiz * 0.5 - spriteRenderOffset, - vert * 2 / 3 - spriteRenderOffset,
-			horiz + spriteRenderOffset*2, vert * 4 / 3 + spriteRenderOffset*2
+			horiz + spriteRenderOffset * 2, vert * 4 / 3 + spriteRenderOffset * 2
 		)
-		if (spriteNames.length > 1){
+		if (spriteNames.length > 1) {
 			const sprite = sprites[spriteNames[1]]
 			ctx.globalAlpha = 0.5
 			ctx.drawImage(
 				sprite,
-				spriteOffset, spriteOffset, sprite.width - spriteOffset*2, sprite.height - spriteOffset*2,
+				spriteOffset, spriteOffset, sprite.width - spriteOffset * 2, sprite.height - spriteOffset * 2,
 				- horiz * 0.5 - spriteRenderOffset, - vert * 2 / 3 - spriteRenderOffset,
-				horiz + spriteRenderOffset*2, vert * 4 / 3 + spriteRenderOffset*2
+				horiz + spriteRenderOffset * 2, vert * 4 / 3 + spriteRenderOffset * 2
 			)
 		}
 		ctx.restore()
 	}
 }
 
-function drawComponent(ctx, component, x, y, hexSize, inRadius, horiz, vert, isSimulated){
+function drawComponent(ctx, component, x, y, hexSize, inRadius, horiz, vert, isSimulated) {
 	if (!component.isRendered) return
-	switch (component.type){
+	switch (component.type) {
 		case "Molecule": drawMolecule(ctx, component, x, y, hexSize, inRadius, horiz, vert, true); break
 		case "Reagent": drawReagent(ctx, component, x, y, hexSize, inRadius, horiz, vert, isSimulated); break
 		case "Product": drawProduct(ctx, component, x, y, hexSize, inRadius, horiz, vert, isSimulated); break
@@ -403,7 +488,7 @@ function drawComponent(ctx, component, x, y, hexSize, inRadius, horiz, vert, isS
 		case "Track": drawTrack(ctx, component, x, y, hexSize, inRadius, horiz, vert); break
 	}
 
-	if (component.renderRotationPoint){
+	if (component.renderRotationPoint) {
 		let rotationPoint = component.rotationPoint
 		let rotationPointX = x + (rotationPoint.q + 0.5 * rotationPoint.r) * horiz
 		let rotationPointY = y + rotationPoint.r * vert
@@ -419,10 +504,10 @@ function drawComponent(ctx, component, x, y, hexSize, inRadius, horiz, vert, isS
 	}
 }
 
-export function render(game, ctx, w, h){
+export function render(game, ctx, w, h) {
 	ctx.clearRect(0, 0, w, h)
 	let level
-	if (game.isPlayingSimulation){
+	if (game.isPlayingSimulation) {
 		level = game.simulation
 	} else {
 		level = game.currentLevel
@@ -444,19 +529,41 @@ export function render(game, ctx, w, h){
 	const leftQ = floor(leftPixel / horiz)
 	const rightQ = ceil(rightPixel / horiz)
 
-	for (let r = topR; r <= bottomR; r++){
-		let offset = floor(-r*0.5)
-		for (let q = leftQ + offset; q <= rightQ + offset; q++){
-			let s = -q - r
-			let x = (q + 0.5 * r) * horiz - xOffset
-			let y = r * vert - yOffset
-			let hex = grid.findHex(q, r, s) || new Hex(q, r, s)
-			drawHex(ctx, hex, x, y, hexSize, inRadius, q, r, s)
+	//Place the base background
+	const backgroundOffsetX = -428 + xOffset
+	const backgroundOffsetY = 912 + yOffset
+	drawTiledBackground(ctx, SPRITES["hex_base"], backgroundOffsetX, backgroundOffsetY)
+
+	//Draw hexagons
+	const baseSeed = "steve"
+	for (let r = topR; r <= bottomR; r++) {
+		const offset = floor(-r * 0.5)
+		for (let q = leftQ + offset; q <= rightQ + offset; q++) {
+			const s = -q - r
+			const x = (q + 0.5 * r) * horiz - xOffset
+			const y = r * vert - yOffset
+			const hex = grid.findHex(q, r, s) || new Hex(q, r, s)
+			if (hexDrawTheme === "original"){
+				const seed = `${baseSeed},${q},${r},${s}`
+				let spriteName, recession
+				if (hexCache.has(seed)){
+					[spriteName, recession] = hexCache.get(seed)
+				} else {
+					const rng = new Math.seedrandom(seed)
+					spriteName = chooseHexBackground(rng.quick())
+					recession = chooseHexRecession(rng.quick())
+					hexCache.set(seed, [spriteName, recession])
+				}
+				recession = "hex_shadow"
+				drawHex(ctx, hex, x, y, hexSize, inRadius, q, r, s, horiz, vert, spriteName, recession)
+			} else if (hexDrawTheme === "rainbow") {
+				drawHexOriginal(ctx, hex, x, y, hexSize, inRadius, q, r, s, horiz, vert)
+			}
 		}
 	}
 
 	const components = grid.contents
-	for (let component of components){
+	for (let component of components) {
 		let homeTile = component.homeTile
 		let q = homeTile.q
 		let r = homeTile.r
@@ -466,15 +573,15 @@ export function render(game, ctx, w, h){
 		//Components can be offset in non-integer amounts to allow for smooth translation
 		let componentOffset = component.offset
 		let componentOffDist = component.offsetDistance
-		let	componentOffX = (componentOffset.q + 0.5*componentOffset.r) * horiz * componentOffDist
-		let	componentOffY = (componentOffset.r) * vert * componentOffDist
+		let componentOffX = (componentOffset.q + 0.5 * componentOffset.r) * horiz * componentOffDist
+		let componentOffY = (componentOffset.r) * vert * componentOffDist
 		x += componentOffX
 		y += componentOffY
 		let isSimulated = game.isPlayingSimulation
 		drawComponent(ctx, component, x, y, hexSize, inRadius, horiz, vert, isSimulated)
 	}
 
-	if (game.selectedComponent){
+	if (game.selectedComponent) {
 		let component = game.selectedComponent
 		let homeTile = component.homeTile
 		let q = homeTile.q
@@ -484,22 +591,22 @@ export function render(game, ctx, w, h){
 		//Components can be offset in non-integer amounts to allow for smooth translation
 		let componentOffset = component.offset
 		let componentOffDist = component.offsetDistance
-		let	componentOffX = (componentOffset.q + 0.5*componentOffset.r) * horiz * componentOffDist
-		let	componentOffY = (componentOffset.r) * vert * componentOffDist
+		let componentOffX = (componentOffset.q + 0.5 * componentOffset.r) * horiz * componentOffDist
+		let componentOffY = (componentOffset.r) * vert * componentOffDist
 		x += componentOffX
 		y += componentOffY
 		drawComponent(ctx, component, x, y, hexSize, inRadius, horiz, vert)
 	}
 
-	if (level.highlightBoxes.length){
+	if (level.highlightBoxes.length) {
 		ctx.save()
 		ctx.lineWidth = hexSize * 0.1
 		ctx.strokeStyle = "#E62551"
-		for (let box of level.highlightBoxes){
-			let x = box.x*horiz/ROOT3 - xOffset
-			let y = box.y*vert*2/3 - yOffset
-			let w = box.w*horiz/ROOT3
-			let h = box.h*vert*2/3
+		for (let box of level.highlightBoxes) {
+			let x = box.x * horiz / ROOT3 - xOffset
+			let y = box.y * vert * 2 / 3 - yOffset
+			let w = box.w * horiz / ROOT3
+			let h = box.h * vert * 2 / 3
 			ctx.beginPath()
 			ctx.rect(x, y, w, h)
 			ctx.closePath()
@@ -508,11 +615,11 @@ export function render(game, ctx, w, h){
 		ctx.restore()
 	}
 
-	if (game.isPlayingSimulation && drawCollisionCircles){
+	if (game.isPlayingSimulation && drawCollisionCircles) {
 		const circles = game.getAllSimulationCollisionCircles()
-		for (let circle of circles){
-			const x = circle.x * horiz/ROOT3 - xOffset
-			const y = circle.y * vert*2/3 - yOffset
+		for (let circle of circles) {
+			const x = circle.x * horiz / ROOT3 - xOffset
+			const y = circle.y * vert * 2 / 3 - yOffset
 			ctx.save()
 			ctx.beginPath()
 			ctx.moveTo(x, y)
@@ -526,9 +633,9 @@ export function render(game, ctx, w, h){
 	}
 }
 
-export function renderEffects(game, ctx, w, h){
+export function renderEffects(game, ctx, w, h) {
 	ctx.clearRect(0, 0, w, h)
-	if (game.isDraggingBox){
+	if (game.isDraggingBox) {
 		ctx.save()
 		ctx.strokeStyle = "#cfcdc1"
 		ctx.shadowColor = "#cfcdc1"

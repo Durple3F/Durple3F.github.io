@@ -1,7 +1,8 @@
-export const drawGhostRotation = true
-export const drawMoleculeHomeTile = true
+export const drawGhostRotation = false
+export const drawMoleculeHomeTile = false
 export const drawCollisionCircles = false
 export const drawHexCoords = false
+export const hexDrawTheme = "original" // original | rainbow
 export const atomSize = 0.6
 export const atomRenderSize = 0.7
 export const armSize = 0.4

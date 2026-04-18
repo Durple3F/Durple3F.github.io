@@ -1,4 +1,4 @@
-import { loadSprite } from "./util";
+import { loadSprite } from "./sprites";
 
 export const ELEMENTS = {};
 export class Element {

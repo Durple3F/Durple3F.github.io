@@ -1,4 +1,5 @@
-import {Hex, Grid, Component, Atom, loadSprite, Molecule, Reagent, tagHierarchy, lerp, clamp, Product, createMolecule, Circle, find_angle, cross_product, Rectangle, fillScoreboard, clearModal, choice} from "./util.js"
+import {Hex, Grid, Component, Atom, Molecule, Reagent, tagHierarchy, lerp, clamp, Product, createMolecule, Circle, find_angle, cross_product, Rectangle, fillScoreboard, clearModal, choice} from "./util.js"
+import { loadSprite } from "./sprites.js"
 import { ArmMechanism, ARMTYPES } from "./arms.js"
 import { SCENARIOS } from "./scenarios.js"
 import { createInstructionTag, Instruction, INSTRUCTIONS } from "./instructions.js"

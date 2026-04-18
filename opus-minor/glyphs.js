@@ -2,7 +2,7 @@ import { atomRenderSize } from "./config.js";
 import { ELEMENTS } from "./elements.js";
 import { loadSound, playSound } from "./sounds.js";
 import { clamp, Component, Hex, Molecule } from "./util.js";
-import { loadSprite } from "./util.js";
+import { loadSprite } from "./sprites.js";
 
 export class GlyphInput {
 	constructor(name, type, location) {

@@ -1,7 +1,8 @@
 import {Game} from "./game.js";
 import {render, renderEffects} from "./render.js";
 import ControlManager from './controls.js';
-import { easeInOutSine, loadSprite } from "./util.js"
+import { easeInOutSine } from "./util.js"
+import { loadNeededSprites, loadSprite } from "./sprites.js";
 import { ELEMENTS } from "./elements.js";
 import { INSTRUCTIONS, Instruction, createInstructionButton } from "./instructions.js";
 import { GLYPHTYPES } from "./glyphs.js";
@@ -191,6 +192,10 @@ async function loadGame(){
 			game.beginHoldingInstruction(instruction)
 		})
 	}
+
+	//Load sprites the game needs
+	await loadNeededSprites()
+
 	//Load element sprites
 	for (let elementId in ELEMENTS){
 		let element = ELEMENTS[elementId]
