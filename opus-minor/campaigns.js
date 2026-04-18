@@ -461,6 +461,19 @@ new Campaign("base", [
 				]
 			}
 		}),
+		new CampaignEvent("puzzle", "stamina-potion", {
+			scenarioId: "stamina-potion",
+			unlock: {
+				type: "and",
+				conditions: [
+					{type: "completed", eventId: "face-powder"},
+					{type: "completed", eventId: "waterproof-sealant"},
+					{type: "completed", eventId: "hangover-cure"},
+					{type: "completed", eventId: "airship-fuel"},
+					{type: "completed", eventId: "precision-machine-oil"},
+				]
+			}
+		}),
 	], {
 		locked: "./src/img/campaigns/base/chapter 1 locked.png",
 		unlocked: "./src/img/campaigns/base/chapter 1.png",

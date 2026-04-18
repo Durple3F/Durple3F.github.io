@@ -692,8 +692,8 @@ export class Molecule extends Component {
 }
 
 export function createMolecule(moleculeRecipe) {
-	let atomRecipeList = moleculeRecipe[0] ?? []
-	let bondRecipeList = moleculeRecipe[1] ?? []
+	let atomRecipeList = moleculeRecipe.atoms ?? moleculeRecipe[0] ?? []
+	let bondRecipeList = moleculeRecipe.bonds ?? moleculeRecipe[1] ?? []
 	//uses a simplified list of only the things that atoms NEED to create them
 	//and a simplified list of only the indexes of the atoms that are linked in bonds (as well as their bond type.)
 	let molecule = new Molecule()

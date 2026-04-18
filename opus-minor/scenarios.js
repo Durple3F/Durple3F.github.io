@@ -21,8 +21,8 @@ new Scenario("test", {
 	products: [
 		{
 			"name": "Phlogiston",
-			"molecule": [
-				[
+			"molecule": {
+				atoms: [
 					["Fire", 0, 0, 0],
 					["Fire", 1, 0, -1],
 					["Fire", 2, 0, -2],
@@ -33,7 +33,8 @@ new Scenario("test", {
 					["Fire", 7, 0, -7],
 					["Fire", 8, 0, -8],
 					["Fire", 9, 0, -9]
-				], [
+				],
+				bonds: [
 					[0, 1],
 					[1, 2],
 					[2, 3],
@@ -44,14 +45,14 @@ new Scenario("test", {
 					[7, 8],
 					[8, 9],
 				]
-			]
+			}
 		}
 	],
 	reagents: [
 		{
 			"name": "Elemental Fire",
-			"molecule": [
-				[
+			"molecule": {
+				atoms: [
 					["Fire", 0, 0, 0],
 					["Fire", 1, 0, -1],
 					["Fire", 2, 0, -2],
@@ -62,7 +63,8 @@ new Scenario("test", {
 					["Fire", 7, 0, -7],
 					["Fire", 8, 0, -8],
 					["Fire", 9, 0, -9]
-				], [
+				],
+				bonds: [
 					[0, 1],
 					[1, 2],
 					[2, 3],
@@ -73,7 +75,7 @@ new Scenario("test", {
 					[7, 8],
 					[8, 9],
 				]
-			]
+			}
 		}
 	],
 	mechanisms: [
@@ -90,11 +92,12 @@ new Scenario("test2", {
 	products: [
 		{
 			"name": "Output",
-			"molecule": [
-				[
+			"molecule": {
+				atoms: [
 					["Fire", 0, 0, 0],
-				], []
-			]
+				],
+				bonds: []
+			}
 		}
 	],
 	reagents: [
@@ -469,5 +472,73 @@ new Scenario("health-tonic", {
 	sideContent: {
 		type: "dialogue",
 		dialogueId: "health-tonic"
+	}
+})
+new Scenario("stamina-potion", {
+	products: [
+		{
+			"name": "Stamina Potion",
+			"molecule": {
+				atoms: [
+					["Iron", 0, 0, 0],
+					["Water", 1, 0, -1],
+					["Salt", 2, -1, -1],
+					["Salt", 1, 1, -2],
+					["Water", -1, 0, 1],
+					["Salt", -1, -1, 2],
+					["Salt", -2, 1, 1],
+				],
+				bonds: [
+					[0, 1],
+					[1, 2],
+					[1, 3],
+					[0, 4],
+					[4, 5],
+					[4, 6],
+				]
+			}
+		}
+	],
+	reagents: [
+		{
+			"name": "Distilled Water",
+			"molecule": {
+				atoms: [
+					["Salt", -1, 0, 1],
+					["Water", 0, 0, 0],
+					["Salt", 0, 1, -1],
+				],
+				bonds: [
+					[0, 1],
+					[1, 2]
+				]
+			}
+		},
+		{
+			"name": "Elemental Lead",
+			"molecule": {atoms: [["Lead", 0, 0, 0]]}
+		},
+		{
+			"name": "Elemental Quicksilver",
+			"molecule": {atoms: [["Quicksilver", 0, 0, 0]]}
+		},
+	],
+	mechanisms: [
+		"Fixed-Length Arm",
+		"Fixed-Length Double Arm",
+		"Fixed-Length Triple Arm",
+		"Fixed-Length Sextuple Arm",
+		"Piston Arm",
+	],
+	glyphs: [
+		"Glyph of Bonding",
+		"Glyph of Multi-bonding",
+		"Glyph of Unbonding",
+		"Glyph of Calcification",
+		"Glyph of Projection",
+	],
+	sideContent: {
+		type: "dialogue",
+		dialogueId: "stamina-potion"
 	}
 })

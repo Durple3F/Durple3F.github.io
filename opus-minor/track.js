@@ -14,6 +14,9 @@ export class TrackPiece {
 	getSpriteNameForDirection(direction){
 		return this.type + "_" + direction
 	}
+	getBaseSpriteName(){
+		return this.type + "_base"
+	}
 	getImageDirections(){
 		return [
 			this.getSpriteNameForDirection("bottom"),
@@ -62,22 +65,27 @@ TrackPiece.spriteMap = {
 	"single_right": "./src/img/tracks/single/right.png",
 	"single_top": "./src/img/tracks/single/top.png",
 	"single_bottom": "./src/img/tracks/single/bottom.png",
+	"single_base": "./src/img/tracks/single/track_single_hex.png",
 	"end_left": "./src/img/tracks/end/left.png",
 	"end_right": "./src/img/tracks/end/right.png",
 	"end_top": "./src/img/tracks/end/top.png",
 	"end_bottom": "./src/img/tracks/end/bottom.png",
+	"end_base": "./src/img/tracks/end/track_end_hex.png",
 	"bend_left": "./src/img/tracks/bend/left.png",
 	"bend_right": "./src/img/tracks/bend/right.png",
 	"bend_top": "./src/img/tracks/bend/top.png",
 	"bend_bottom": "./src/img/tracks/bend/bottom.png",
+	"bend_base": "./src/img/tracks/bend/track_bend_hex.png",
 	"sharp_left": "./src/img/tracks/sharp/left.png",
 	"sharp_right": "./src/img/tracks/sharp/right.png",
 	"sharp_top": "./src/img/tracks/sharp/top.png",
 	"sharp_bottom": "./src/img/tracks/sharp/bottom.png",
+	"sharp_base": "./src/img/tracks/sharp/track_sharp_hex.png",
 	"straight_left": "./src/img/tracks/straight/left.png",
 	"straight_right": "./src/img/tracks/straight/right.png",
 	"straight_top": "./src/img/tracks/straight/top.png",
 	"straight_bottom": "./src/img/tracks/straight/bottom.png",
+	"straight_base": "./src/img/tracks/straight/track_straight_hex.png",
 }
 TrackPiece.sprites = {}
 

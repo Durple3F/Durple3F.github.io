@@ -331,3 +331,35 @@ new DialogueStory("health-tonic", [
 		eventId: "health-tonic"
 	})
 ])
+new DialogueStory("stamina-potion", [
+	new DialogueMessages([
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-0"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-1"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-2"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-3"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-4"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-5"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-6"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-7"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-8"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-9"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-10"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-11"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-12"}),
+	]),
+	new DialogueMessages([
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-0"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-1"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "after-2"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-3"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "after-4"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-5"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "after-6"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-7"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "after-8"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-9"}),
+	], {
+		type: "completed",
+		eventId: "stamina-potion"
+	})
+])

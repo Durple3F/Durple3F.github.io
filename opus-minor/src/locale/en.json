@@ -47,6 +47,9 @@
 		},
 		"health-tonic": {
 			"name": "Health Tonic"
+		},
+		"stamina-potion": {
+			"name": "Stamina Potion"
 		}
 	},
 	"campaigns": {
@@ -217,6 +220,31 @@
 			"after-4": "I do think it’s good if he stays alive.",
 			"after-5": "After all, he pays for everything around here.",
 			"after-6": "You’d do well to show a little more appreciation for your House."
+		},
+		"stamina-potion": {
+			"before-0": "“A little boost at the necessary time.”",
+			"before-1": "What are you on about?",
+			"before-2": "“A little boost at the necessary time,” is how he put it…",
+			"before-3": "Who put what?",
+			"before-4": "Armand is worried about Frederick.",
+			"before-5": "Rightly so, I would say.",
+			"before-6": "Particularly: He wonders if Frederick will be able to produce an heir.",
+			"before-7": "I— oh.",
+			"before-8": "I’m to make him a potion that will…",
+			"before-9": "…give him a boost at the necessary time, I get it.",
+			"before-10": "That’s not so unusual, really. Stamina potions have long been used for such purposes.",
+			"before-11": "It’s not making it that’s the issue for me. It’s thinking about it.",
+			"before-12": "You should know better than to use your imagination in cases like this.",
+			"after-0": "I hope Frederick enjoys that potion… ugh.",
+			"after-1": "Armand must believe Frederick’s marriage is close at hand.",
+			"after-2": "Really? Really? Will it be the young lady from House Soria?",
+			"after-3": "I was just speculating.",
+			"after-4": "How exciting! The city would celebrate for days. The union of House Van Tassen and House Soria…",
+			"after-5": "As Provisioner, you’d have a lot of work to do.",
+			"after-6": "Yes, but it would be for a wedding! It would be quite fun.",
+			"after-7": "You arrange the party in the streets, I arrange the party in the sheets.",
+			"after-8": "Oh dear.",
+			"after-9": "Yes. Well."
 		}
 	}
 }

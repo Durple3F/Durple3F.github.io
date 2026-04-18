@@ -426,6 +426,10 @@ function drawGlyph(ctx, glyph, x, y, hexSize, inRadius, horiz, vert) {
 }
 
 function drawTrack(ctx, track, x, y, hexSize, inRadius, horiz, vert) {
+	const hexX = x - horiz * 0.5
+	const hexY = y - vert * 2 / 3
+	const hexW = horiz + 3
+	const hexH = vert * 4 / 3 + 3
 	const trackPieces = track.trackPieces
 	const homeTile = track.homeTile
 	const sprites = TrackPiece.sprites
@@ -439,6 +443,13 @@ function drawTrack(ctx, track, x, y, hexSize, inRadius, horiz, vert) {
 		const spriteNames = trackPiece.getImageDirections()
 		ctx.translate(pieceX, pieceY)
 		ctx.rotate(trackPiece.spriteRotation)
+		const baseSprite = sprites[trackPiece.getBaseSpriteName()]
+		ctx.drawImage(baseSprite, -hexW * 0.5, -hexH * 0.5, hexW, hexH)
+		const shadowSprite = SPRITES["hex_recessed_shadow"]
+		ctx.globalAlpha *= 0.4
+		ctx.drawImage(shadowSprite, -hexW * 0.5, -hexH * 0.5, hexW, hexH)
+		ctx.globalAlpha /= 0.4
+
 		const sprite = sprites[spriteNames[0]]
 		const spriteOffset = 1
 		const spriteRenderOffset = 2
@@ -547,7 +558,7 @@ export function render(game, ctx, w, h) {
 			
 			if (drawHexCoords) {
 				ctx.save()
-				const fontSize = size * 0.4
+				const fontSize = hexSize * 0.4
 				const font = fontSize + "px monospace"
 				ctx.font = font
 				ctx.fillStyle = "red"
