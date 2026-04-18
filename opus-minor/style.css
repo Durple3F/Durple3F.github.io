@@ -18,6 +18,8 @@ body {
 
 	--parchment-bg: #cfcdc1;
 	--border-color-secondary: #dbd7d6d5;
+	--gray-text-gradient: linear-gradient(180deg, rgb(107, 101, 89) 0%, rgb(159, 154, 150) 100%);
+	--gray-text-gradient2: linear-gradient(180deg, rgb(57, 55, 50) 0%, rgb(211, 207, 203) 100%);
 }
 
 #game-ui {
@@ -204,11 +206,62 @@ body {
 	left: 0;
 	height: calc(100vh - var(--bottom-pane-height));
 	width: 15vw;
-	padding-top: 1em;
 	background-color: var(--components-bg);
 	border-right: var(--pane-border);
 	overflow-y: auto;
 	z-index: 10;
+
+	#components-contents {
+		/* background: repeating-linear-gradient(135deg,rgba(33, 72, 102, 1) 0%, rgba(12, 16, 17, 1) 100%); */
+		background-image: url("./src/img/editor/background.png");
+		background-size: 20%;
+		background-position: -50% -50%;
+		/* background-attachment: fixed; */
+		filter: brightness(1.5);
+	}
+
+	.components-section {
+		padding-top: 2em;
+		position: relative;
+
+		.components-label {
+			font-family: "Crimson Text", serif;
+			text-transform: uppercase;
+			text-align: center;
+			margin-bottom: 0;
+			position: absolute;
+			top: 0.7em;
+			left: 50%;
+			transform: translateX(-50%);
+			background-image: var(--gray-text-gradient2);
+			background-clip: text;
+			color: transparent;
+		}
+
+		.components-section-bg {
+			position: absolute;
+			top: 0; left: 0;
+			height: 100%; width: 100%;
+			pointer-events: none;
+			background:
+			url("./src/img/editor/frame-top.png") no-repeat top left,
+			url("./src/img/editor/frame-bottom.png") no-repeat bottom left,
+			url("./src/img/editor/frame-middle.png") repeat-y bottom left;
+			background-size: 100% auto;
+		}
+
+		.components-list {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			justify-content: center;
+			align-items: center;
+			padding: 1em;
+			padding-top: 0.5em;
+			padding-bottom: 0.5em;
+			position: relative;
+		}
+	}
 }
 
 .ui-tab {
@@ -245,21 +298,7 @@ body {
 	}
 }
 
-.components-label {
-	font-family: "Crimson Text", serif;
-	text-transform: uppercase;
-	text-align: center;
-	margin-bottom: 0;
-}
 
-.components-list {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: center;
-	align-items: center;
-	padding-bottom: 0.5em;
-}
 
 .component {
 	border: 0.1em solid lightblue;
@@ -441,7 +480,7 @@ body {
 			transform: translateY(0.1em);
 
 			.program-stat-name {
-				background: linear-gradient(180deg, rgb(107, 101, 89) 0%, rgb(159, 154, 150) 100%);
+				background: var(--gray-text-gradient);
 				filter: drop-shadow(0 0.2em 0.1em black);
 				color: transparent;
 				background-clip: text;
