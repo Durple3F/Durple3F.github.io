@@ -18,6 +18,12 @@ export async function loadSprite(url, id=null) {
 }
 
 const neededSprites = [
+	{url: "./src/img/inputs/input_base.png", id: "reagent_base"},
+	{url: "./src/img/inputs/input_bond.png", id: "reagent_bond"},
+	{url: "./src/img/inputs/input_ring.png", id: "reagent_ring"},
+	{url: "./src/img/outputs/output_base.png", id: "product_base"},
+	{url: "./src/img/outputs/output_bond.png", id: "product_bond"},
+	{url: "./src/img/outputs/output_ring.png", id: "product_ring"},
 	{
 		url: "./src/img/hexes/base.png",
 		id: "hex_base"

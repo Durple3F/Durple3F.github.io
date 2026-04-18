@@ -348,8 +348,13 @@ function drawReagent(ctx, reagent, x, y, hexSize, inRadius, horiz, vert, isSimul
 	//Before the simulation starts, it should render the molecule that it produces as though it were a normal molecule
 	const diagx = ROOT3 * 0.5 * hexSize
 	const diagy = hexSize * 0.5
+	const hexW = horiz
+	const hexH = vert * 4 / 3
 	const molecule = reagent.molecule
 	const atoms = molecule.atoms.contents
+	const baseSprite = SPRITES["reagent_base"]
+	const ringSprite = SPRITES["reagent_ring"]
+	ctx.save()
 	for (let atom of atoms) {
 		const q = atom.coord.q
 		const r = atom.coord.r
@@ -359,36 +364,29 @@ function drawReagent(ctx, reagent, x, y, hexSize, inRadius, horiz, vert, isSimul
 		const atomYR = y + atomY //atomX * sinT + atomY * cosT
 
 		//Draw a hexagon on the ground
-		let color = "lightgreen"
-		ctx.fillStyle = color
-		ctx.lineWidth = max(hexSize * 0.05, 2)
-		ctx.strokeStyle = "black"
-		ctx.beginPath()
-		ctx.moveTo(atomXR, atomYR - hexSize)
-		ctx.lineTo(atomXR + diagx, atomYR - diagy)
-		ctx.lineTo(atomXR + diagx, atomYR + diagy)
-		ctx.lineTo(atomXR, atomYR + hexSize)
-		ctx.lineTo(atomXR - diagx, atomYR + diagy)
-		ctx.lineTo(atomXR - diagx, atomYR - diagy)
-		ctx.closePath()
-		ctx.fill()
-		ctx.stroke()
-		ctx.restore()
+		ctx.drawImage(baseSprite, atomXR - hexW * 0.5, atomYR - hexH * 0.5, hexW, hexH)
+		ctx.drawImage(ringSprite, atomXR - hexW * 0.5, atomYR - hexH * 0.5, hexW, hexH)
 	}
 
-	ctx.save()
-	if (isSimulated) {
-		ctx.filter = "brightness(0.5)"
+	if (!isSimulated) {
+		drawMolecule(ctx, molecule, x, y, hexSize, inRadius, horiz, vert, false)
 	}
-	drawMolecule(ctx, molecule, x, y, hexSize, inRadius, horiz, vert, false)
+
 	ctx.restore()
 }
 function drawProduct(ctx, reagent, x, y, hexSize, inRadius, horiz, vert) {
 	//A product is just the hexagonal grid underneath the molecule that it produces.
 	const diagx = ROOT3 * 0.5 * hexSize
 	const diagy = hexSize * 0.5
+	const hexW = horiz
+	const hexH = vert * 4 / 3
+	const ringW = hexW * 1
+	const ringH = hexH * 1
 	const molecule = reagent.molecule
 	const atoms = molecule.atoms.contents
+	const baseSprite = SPRITES["product_base"]
+	const ringSprite = SPRITES["product_ring"]
+	ctx.save()
 	for (let atom of atoms) {
 		const q = atom.coord.q
 		const r = atom.coord.r
@@ -398,26 +396,25 @@ function drawProduct(ctx, reagent, x, y, hexSize, inRadius, horiz, vert) {
 		const atomYR = y + atomY //atomX * sinT + atomY * cosT
 
 		//Draw a hexagon on the ground
-		let color = "tomato"
-		ctx.fillStyle = color
-		ctx.lineWidth = max(hexSize * 0.05, 2)
-		ctx.strokeStyle = "black"
-		ctx.beginPath()
-		ctx.moveTo(atomXR, atomYR - hexSize)
-		ctx.lineTo(atomXR + diagx, atomYR - diagy)
-		ctx.lineTo(atomXR + diagx, atomYR + diagy)
-		ctx.lineTo(atomXR, atomYR + hexSize)
-		ctx.lineTo(atomXR - diagx, atomYR + diagy)
-		ctx.lineTo(atomXR - diagx, atomYR - diagy)
-		ctx.closePath()
-		ctx.fill()
-		ctx.stroke()
-		ctx.restore()
+		ctx.drawImage(baseSprite, atomXR - hexW * 0.5, atomYR - hexH * 0.5, hexW, hexH)
 	}
 
-	ctx.save()
 	ctx.filter = "brightness(0.5)"
 	drawMolecule(ctx, molecule, x, y, hexSize, inRadius, horiz, vert)
+	ctx.filter = ""
+
+	for (let atom of atoms) {
+		const q = atom.coord.q
+		const r = atom.coord.r
+		const atomX = (q + 0.5 * r) * horiz
+		const atomY = r * vert
+		const atomXR = x + atomX //atomX * cosT - atomY * sinT
+		const atomYR = y + atomY //atomX * sinT + atomY * cosT
+
+		//Draw a hexagon on the ground
+		ctx.drawImage(ringSprite, atomXR - ringW * 0.5, atomYR - ringW * 0.5, ringW, ringW)
+	}
+
 	ctx.restore()
 }
 

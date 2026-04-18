@@ -249,7 +249,8 @@
 			"changes": [
 				"- The hexes use the game's green hexagon pattern now.",
 				"- Made the components pane on the left look way prettier. It has a nice background, nice accents around each section, it's great.",
-				"- Stuff on the left pane now actually shows you what it looks like! Very proud of this."
+				"- Stuff on the left pane now actually shows you what it looks like! Very proud of this.",
+				"- Improved how reagents and products are rendered."
 			]
 		}
 	}
