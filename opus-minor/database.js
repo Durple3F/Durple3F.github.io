@@ -52,6 +52,8 @@ export function doesSaveMeetCriteria(saveFile, campaignId, condition){
 			return doesSaveMeetCriteria(saveFile, campaignId, condition)
 		})
 		return conditionMet
+		case "never":
+		return false
 	}
 	return false
 }
@@ -123,9 +125,20 @@ export class SaveFile {
 				let progress = new CampaignProgress(campaign)
 				progresses[campaignId] = progress
 			}
+			let base = new CampaignProgress(campaign)
 			let campaignProgress = progresses[campaignId]
+
+			if (!("chapters" in campaignProgress)){
+				campaignProgress.chapters = base.chapters
+			}
+
 			//Attach a new progress tracker to any events that didn't exist last time the game loaded.
 			for (let chapter of campaign.chapters){
+				let chapterId = chapter.id
+				if (!(chapterId in campaignProgress.chapters)){
+					campaignProgress.chapters[chapterId] = base.chapters[chapterId]
+				}
+
 				for (let event of chapter.events){
 					let id = event.id
 					if (!(id in campaignProgress.events)){
@@ -139,20 +152,36 @@ export class SaveFile {
 	getNewCampaignUnlocks(campaignId){
 		let campaign = CAMPAIGNS[campaignId]
 		let progress = this.campaignsProgress[campaignId]
-		let result = []
+		let result = {}
+		let events = []
+		result.events = events
+		let unlockedChapters = []
+		result.chapters = unlockedChapters
 
 		for (let chapter of campaign.chapters){
+			let chapterId = chapter.id
+			if (!progress.chapters[chapterId].unlocked){
+				let unlock = chapter.unlock
+				let metCondition = true
+				if (unlock){
+					metCondition = doesSaveMeetCriteria(this, campaignId, unlock)
+				}
+				if (metCondition){
+					result.chapters.push(chapterId)
+				}
+			}
+
 			for (let event of chapter.events){
 				let id = event.id
 				if (progress.events[id].unlocked) continue
 				if (!event.info.unlock){
-					result.push(id)
+					result.events.push(id)
 					continue
 				}
 				let unlock = event.info.unlock
 				let metCondition = doesSaveMeetCriteria(this, campaignId, unlock)
 				if (metCondition){
-					result.push(id)
+					result.events.push(id)
 					continue
 				}
 			}

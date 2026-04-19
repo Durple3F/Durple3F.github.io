@@ -8,7 +8,7 @@ import { clearModal } from "./util"
 export const CAMPAIGNS = {}
 
 export class CampaignEvent {
-	constructor(type, id, options){
+	constructor(type, id, options) {
 		this.type = type
 		this.id = id
 		this.info = options ?? {}
@@ -16,15 +16,16 @@ export class CampaignEvent {
 }
 
 export class CampaignChapter {
-	constructor(id, eventList, imageUrls){
+	constructor(id, options) {
 		this.id = id
-		this.events = eventList
-		this.imageUrls = imageUrls
+		this.events = options.eventList
+		this.imageUrls = options.imageUrls
+		this.unlock = options.unlock ?? null
 	}
 }
 
 export class Campaign {
-	constructor(id, chapterList){
+	constructor(id, chapterList) {
 		this.id = id
 		this.chapters = chapterList
 		CAMPAIGNS[this.id] = this
@@ -32,20 +33,25 @@ export class Campaign {
 }
 
 export class EventProgress {
-	constructor(id, completed, unlocked){
+	constructor(id, completed, unlocked) {
 		this.id = id
 		this.completed = completed
 		this.unlocked = unlocked
 	}
 }
 export class CampaignProgress {
-	constructor(campaign){
+	constructor(campaign) {
+		this.chapters = {}
 		this.events = {}
-		for (let chapter of campaign.chapters){
-			for (let event of chapter.events){
+		for (let chapter of campaign.chapters) {
+			let id = chapter.id
+			this.chapters[id] = {
+				unlocked: false
+			}
+			for (let event of chapter.events) {
 				let id = event.id
 				let progress = new EventProgress(id, false, false)
-				if (id in this.events){
+				if (id in this.events) {
 					console.warn("This event has a duplicate event id:", event, campaign)
 					continue
 				}
@@ -55,12 +61,12 @@ export class CampaignProgress {
 	}
 }
 
-export async function switchBackground(url){
+export async function switchBackground(url) {
 	let bg = $("#level-select-bg")
 	bg.css("background-image", `url(${url})`)
 }
 
-export function showCampaignChapter(campaign, chapterIndex, saveFile){
+export function showCampaignChapter(campaign, chapterIndex, saveFile) {
 	let campaignId = campaign.id
 	let chapter = campaign.chapters[chapterIndex]
 	let chapterName = getLocaleString(["campaigns", campaignId, "chapters", chapter.id, "name"], language, chapter.id)
@@ -70,7 +76,7 @@ export function showCampaignChapter(campaign, chapterIndex, saveFile){
 	let chapterTitle = getLocaleString(["campaigns", campaignId, "chapters", chapter.id, "top-header"], language, chapter.id)
 	$("#level-chapter-title").text(chapterTitle)
 
-	if (chapter.imageUrls.background){
+	if (chapter.imageUrls.background) {
 		switchBackground(chapter.imageUrls.background)
 	}
 
@@ -78,14 +84,14 @@ export function showCampaignChapter(campaign, chapterIndex, saveFile){
 
 	let choicesTag = $("#level-select-content")
 	choicesTag.empty()
-	for (let event of chapter.events){
+	for (let event of chapter.events) {
 		let tag = $("<div>").addClass("level-select-choice").appendTo(choicesTag)
 		tag.data("event", event)
 		let iconTag = $("<img>").addClass("level-select-icon").appendTo(tag)
 		let nameTag = $("<span>").addClass("level-select-name").appendTo(tag)
 		let eventId = event.id
 		let checkboxState = progress.events[eventId].completed
-		switch (event.type){
+		switch (event.type) {
 			case "puzzle": {
 				let scenarioId = event.info.scenarioId
 				iconTag.attr("src", "./src/img/puzzle-select/icon_puzzle.png")
@@ -100,36 +106,41 @@ export function showCampaignChapter(campaign, chapterIndex, saveFile){
 			} break
 		}
 		let checkboxUrl
-		if (checkboxState){
+		if (checkboxState) {
 			checkboxUrl = "./src/img/puzzle-select/list_checked.png"
 		} else {
 			checkboxUrl = "./src/img/puzzle-select/list_unchecked.png"
 		}
 		tag.append($("<img>").addClass("level-select-icon").attr("src", checkboxUrl))
-		
+
 		let id = event.id
 		tag.attr("data-event-id", id)
-		if (!progress.events[id].unlocked){
+		if (!progress.events[id].unlocked) {
 			tag.addClass("locked")
 		}
 	}
 
 	let chaptersContainer = $("#level-select-chapter-container")
-	chaptersContainer.empty()
-	for (let i = 0; i < campaign.chapters.length; i++){
+	chaptersContainer.find(".level-select-chapter").remove()
+	for (let i = 0; i < campaign.chapters.length; i++) {
 		let chapter = campaign.chapters[i]
 		let chapterTag = $("<div>").addClass("level-select-chapter").appendTo(chaptersContainer)
-		let image = $("<img>").appendTo(chapterTag).attr("src", chapter.imageUrls.unlocked)
+		let unlockedState = progress.chapters[chapter.id].unlocked
+		let lockedImage = $("<img>").appendTo(chapterTag)
+		lockedImage.addClass("locked-icon").attr("src", chapter.imageUrls.locked)
+		let unlockedImage = $("<img>").appendTo(chapterTag)
+		unlockedImage.addClass("unlocked-icon").attr("src", chapter.imageUrls.unlocked)
 
-		chapterTag.attr("data-unlocked", true)
+		chapterTag.attr("data-unlocked", unlockedState)
 		chapterTag.data("chapterIndex", i)
+		chapterTag.attr("data-chapter-id", chapter.id)
 	}
 
 	saveFile.lastOpenCampaignId = campaign.id
 	saveFile.lastOpenChapterIndex = chapterIndex
 }
 
-export async function showScenario(scenario, campaign, saveFile){
+export async function showScenario(scenario, campaign, saveFile) {
 	let saveUUID = saveFile.uuid
 	let resolve
 	let promise = new Promise(res => resolve = res)
@@ -161,14 +172,14 @@ export async function showScenario(scenario, campaign, saveFile){
 	submitRenameButton.appendTo(renameButtonsContainer)
 
 	let sideContent = scenario.sideContent
-	if (sideContent){
-		switch (sideContent.type){
+	if (sideContent) {
+		switch (sideContent.type) {
 			case "dialogue":
-			let dialogueId = sideContent.dialogueId
-			let dialogue = DIALOGUES[dialogueId]
-			let content = dialogue.createTag(saveFile, campaign.id)
-			left.html(content)
-			break
+				let dialogueId = sideContent.dialogueId
+				let dialogue = DIALOGUES[dialogueId]
+				let content = dialogue.createTag(saveFile, campaign.id)
+				left.html(content)
+				break
 		}
 	}
 
@@ -189,7 +200,7 @@ export async function showScenario(scenario, campaign, saveFile){
 		let nameTag = $("<div>").addClass("solution-name").appendTo(tag)
 		nameTag.text(solution.name)
 		let statsTag = $("<div>").addClass("solution-stats").appendTo(tag)
-		if (solution.verified){
+		if (solution.verified) {
 			let area = solution.solutionArea
 			let cost = solution.solutionCost
 			let cycles = solution.solutionCycle
@@ -199,7 +210,7 @@ export async function showScenario(scenario, campaign, saveFile){
 			statsTag.append("/")
 			let costTag = $("<span>").addClass("solution-stat").appendTo(statsTag)
 			costTag.append(cost).append($("<span>").addClass("tiny-g").text("G")).append(" ")
-			.append(getLocaleString("solution-stat-cost", language, "COST"))
+				.append(getLocaleString("solution-stat-cost", language, "COST"))
 			statsTag.append("/")
 			let cycleTag = $("<span>").addClass("solution-stat").appendTo(statsTag)
 			cycleTag.append(cycles).append(" ").append(getLocaleString("solution-stat-cycle", language, "CYCLES"))
@@ -218,26 +229,26 @@ export async function showScenario(scenario, campaign, saveFile){
 		return tag
 	}
 	const selectSolution = tag => {
-		if (selectedSolutionTag){
+		if (selectedSolutionTag) {
 			selectedSolutionTag.attr("data-active", false)
 		}
 		tag.attr("data-active", true)
-		if (tag.data("solution") instanceof SolutionSave){
+		if (tag.data("solution") instanceof SolutionSave) {
 			selectedSolution = tag.data("solution")
 			selectedSolutionTag = tag
 		}
 	}
-	
+
 	getSolutions(scenario, saveFile.uuid).then(async solutionList => {
-		if (solutionList.length === 0){
+		if (solutionList.length === 0) {
 			const solution = await createSolution(scenario, saveUUID)
 			solutionList.push(solution)
 		}
 
-		for (let solution of solutionList){
+		for (let solution of solutionList) {
 			let tag = createSolutionTag(solution)
-			
-			if (solution === solutionList[0]){
+
+			if (solution === solutionList[0]) {
 				selectSolution(tag)
 			}
 			tag.on("click", () => selectSolution(tag))
@@ -250,7 +261,7 @@ export async function showScenario(scenario, campaign, saveFile){
 	openButton.text(getLocaleString("button-open-puzzle", language, "Open"))
 
 	const openLevel = () => {
-		if (selectedSolution && selectedSolution instanceof SolutionSave){
+		if (selectedSolution && selectedSolution instanceof SolutionSave) {
 			let scenario = SCENARIOS[selectedSolution.scenarioId]
 			resultEvents.push({
 				type: "open-level",
@@ -285,7 +296,7 @@ export async function showScenario(scenario, campaign, saveFile){
 		await deleteSolution(selectedSolution)
 		selectedSolutionTag.remove()
 		let otherSolutions = solutionsContainer.children(".solution")
-		if (otherSolutions.length){
+		if (otherSolutions.length) {
 			let first = otherSolutions[0]
 			selectSolution($(first))
 		} else {
@@ -336,7 +347,7 @@ export async function showScenario(scenario, campaign, saveFile){
 	await promise
 	return resultEvents
 }
-export async function showOptions(saveFile){
+export async function showOptions(saveFile) {
 	let resolve
 	let promise = new Promise(res => resolve = res)
 	let resultEvents = []
@@ -392,7 +403,7 @@ export async function showOptions(saveFile){
 		rangeTag.on("mousedown", () => {
 			clearInterval(changeInterval)
 			changeInterval = setInterval(change, 10)
-			const remove =  () => {
+			const remove = () => {
 				clearInterval(changeInterval)
 				playSound("ui_modal")
 				$("body")[0].removeEventListener("mouseup", remove)
@@ -418,87 +429,148 @@ export async function showOptions(saveFile){
 }
 
 new Campaign("base", [
-	new CampaignChapter("prologue", [
-		new CampaignEvent("puzzle", "test", {
-			scenarioId: "test",
-			// unlock: {type: "startsUnlocked"}
-		}),
-		new CampaignEvent("puzzle", "test2", {
-			scenarioId: "test2",
-			// unlock: {type: "startsUnlocked"}
-		})
-	], {
-		locked: "./src/img/campaigns/base/prologue locked.png",
-		unlocked: "./src/img/campaigns/base/prologue.png",
-		background: "./src/bg/background_0.png"
+	new CampaignChapter("prologue", {
+		eventList: [
+			new CampaignEvent("puzzle", "test", {
+				scenarioId: "test",
+				// unlock: {type: "startsUnlocked"}
+			}),
+			new CampaignEvent("puzzle", "test2", {
+				scenarioId: "test2",
+				// unlock: {type: "startsUnlocked"}
+			})
+		],
+		imageUrls: {
+			locked: "./src/img/campaigns/base/prologue locked.png",
+			unlocked: "./src/img/campaigns/base/prologue.png",
+			background: "./src/bg/background_0.png"
+		},
 	}),
-	new CampaignChapter("chapter-1", [
-		new CampaignEvent("story", "chapter-1-intro", {
-			storyId: "chapter-1-intro",
-		}),
-		new CampaignEvent("puzzle", "refined-gold", {
-			scenarioId: "refined-gold",
-			unlock: {type: "completed", eventId: "chapter-1-intro"}
-		}),
-		new CampaignEvent("puzzle", "face-powder", {
-			scenarioId: "face-powder",
-			unlock: {type: "completed", eventId: "refined-gold"}
-		}),
-		new CampaignEvent("puzzle", "waterproof-sealant", {
-			scenarioId: "waterproof-sealant",
-			unlock: {type: "completed", eventId: "refined-gold"}
-		}),
-		new CampaignEvent("puzzle", "hangover-cure", {
-			scenarioId: "hangover-cure",
-			unlock: {type: "completed", eventId: "refined-gold"}
-		}),
-		new CampaignEvent("puzzle", "airship-fuel", {
-			scenarioId: "airship-fuel",
-			unlock: {type: "completed", eventId: "refined-gold"}
-		}),
-		new CampaignEvent("puzzle", "precision-machine-oil", {
-			scenarioId: "precision-machine-oil",
-			unlock: {type: "completed", eventId: "refined-gold"}
-		}),
-		new CampaignEvent("puzzle", "health-tonic", {
-			scenarioId: "health-tonic",
-			unlock: {
-				type: "and",
-				conditions: [
-					{type: "completed", eventId: "face-powder"},
-					{type: "completed", eventId: "waterproof-sealant"},
-					{type: "completed", eventId: "hangover-cure"},
-					{type: "completed", eventId: "airship-fuel"},
-					{type: "completed", eventId: "precision-machine-oil"},
-				]
-			}
-		}),
-		new CampaignEvent("puzzle", "stamina-potion", {
-			scenarioId: "stamina-potion",
-			unlock: {
-				type: "and",
-				conditions: [
-					{type: "completed", eventId: "face-powder"},
-					{type: "completed", eventId: "waterproof-sealant"},
-					{type: "completed", eventId: "hangover-cure"},
-					{type: "completed", eventId: "airship-fuel"},
-					{type: "completed", eventId: "precision-machine-oil"},
-				]
-			}
-		}),
-		new CampaignEvent("story", "chapter-1-outro", {
-			storyId: "chapter-1-outro",
-			unlock: {
-				type: "and",
-				conditions: [
-					{type: "completed", eventId: "health-tonic"},
-					{type: "completed", eventId: "stamina-potion"},
-				]
-			}
-		}),
-	], {
-		locked: "./src/img/campaigns/base/chapter 1 locked.png",
-		unlocked: "./src/img/campaigns/base/chapter 1.png",
-		background: "./src/bg/background_1.png"
+	new CampaignChapter("chapter-1", {
+		eventList: [
+			new CampaignEvent("story", "chapter-1-intro", {
+				storyId: "chapter-1-intro",
+			}),
+			new CampaignEvent("puzzle", "refined-gold", {
+				scenarioId: "refined-gold",
+				unlock: { type: "completed", eventId: "chapter-1-intro" }
+			}),
+			new CampaignEvent("puzzle", "face-powder", {
+				scenarioId: "face-powder",
+				unlock: { type: "completed", eventId: "refined-gold" }
+			}),
+			new CampaignEvent("puzzle", "waterproof-sealant", {
+				scenarioId: "waterproof-sealant",
+				unlock: { type: "completed", eventId: "refined-gold" }
+			}),
+			new CampaignEvent("puzzle", "hangover-cure", {
+				scenarioId: "hangover-cure",
+				unlock: { type: "completed", eventId: "refined-gold" }
+			}),
+			new CampaignEvent("puzzle", "airship-fuel", {
+				scenarioId: "airship-fuel",
+				unlock: { type: "completed", eventId: "refined-gold" }
+			}),
+			new CampaignEvent("puzzle", "precision-machine-oil", {
+				scenarioId: "precision-machine-oil",
+				unlock: { type: "completed", eventId: "refined-gold" }
+			}),
+			new CampaignEvent("puzzle", "health-tonic", {
+				scenarioId: "health-tonic",
+				unlock: {
+					type: "and",
+					conditions: [
+						{ type: "completed", eventId: "face-powder" },
+						{ type: "completed", eventId: "waterproof-sealant" },
+						{ type: "completed", eventId: "hangover-cure" },
+						{ type: "completed", eventId: "airship-fuel" },
+						{ type: "completed", eventId: "precision-machine-oil" },
+					]
+				}
+			}),
+			new CampaignEvent("puzzle", "stamina-potion", {
+				scenarioId: "stamina-potion",
+				unlock: {
+					type: "and",
+					conditions: [
+						{ type: "completed", eventId: "face-powder" },
+						{ type: "completed", eventId: "waterproof-sealant" },
+						{ type: "completed", eventId: "hangover-cure" },
+						{ type: "completed", eventId: "airship-fuel" },
+						{ type: "completed", eventId: "precision-machine-oil" },
+					]
+				}
+			}),
+			new CampaignEvent("story", "chapter-1-outro", {
+				storyId: "chapter-1-outro",
+				unlock: {
+					type: "and",
+					conditions: [
+						{ type: "completed", eventId: "health-tonic" },
+						{ type: "completed", eventId: "stamina-potion" },
+					]
+				}
+			}),
+		],
+		imageUrls: {
+			locked: "./src/img/campaigns/base/chapter 1 locked.png",
+			unlocked: "./src/img/campaigns/base/chapter 1.png",
+			background: "./src/bg/background_1.png"
+		},
+	}),
+	new CampaignChapter("chapter-2", {
+		eventList: [
+			
+		],
+		imageUrls: {
+			locked: "./src/img/campaigns/base/chapter 2 locked.png",
+			unlocked: "./src/img/campaigns/base/chapter 2.png",
+			background: "./src/bg/background_2.png"
+		},
+		unlock: { type: "completed", eventId: "chapter-1-outro" }
+	}),
+	new CampaignChapter("chapter-3", {
+		eventList: [
+			
+		],
+		imageUrls: {
+			locked: "./src/img/campaigns/base/chapter 3 locked.png",
+			unlocked: "./src/img/campaigns/base/chapter 3.png",
+			background: "./src/bg/background_3.png"
+		},
+		unlock: { type: "never" }
+	}),
+	new CampaignChapter("chapter-4", {
+		eventList: [
+			
+		],
+		imageUrls: {
+			locked: "./src/img/campaigns/base/chapter 4 locked.png",
+			unlocked: "./src/img/campaigns/base/chapter 4.png",
+			background: "./src/bg/background_4.png"
+		},
+		unlock: { type: "never" }
+	}),
+	new CampaignChapter("chapter-5", {
+		eventList: [
+			
+		],
+		imageUrls: {
+			locked: "./src/img/campaigns/base/chapter 5 locked.png",
+			unlocked: "./src/img/campaigns/base/chapter 5.png",
+			background: "./src/bg/background_5.png"
+		},
+		unlock: { type: "never" }
+	}),
+	new CampaignChapter("chapter-6", {
+		eventList: [
+			
+		],
+		imageUrls: {
+			locked: "./src/img/campaigns/base/chapter 6 locked.png",
+			unlocked: "./src/img/campaigns/base/chapter 6.png",
+			background: "./src/bg/background_6.png"
+		},
+		unlock: { type: "never" }
 	}),
 ])

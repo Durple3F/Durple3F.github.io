@@ -321,10 +321,11 @@ function switchCampaignChapter(campaign, chapterIndex){
 	let chapter = campaign.chapters[chapterIndex]
 	let progress = saveFile.campaignsProgress[campaign.id]
 	//Do the little unlock animation for each of the things that should unlock
-	let shouldUnlock = saveFile.getNewCampaignUnlocks(campaign.id)
-	.filter(eventId => chapter.events.some(event => event.id === eventId))
+	let allUnlocks = saveFile.getNewCampaignUnlocks(campaign.id)
+	let unlockedChapters = allUnlocks.chapters
+	let unlockedEvents = allUnlocks.events.filter(eventId => chapter.events.some(event => event.id === eventId))
 	let unlocks = 0
-	for (let eventId of shouldUnlock){
+	for (let eventId of unlockedEvents){
 		let tag = $("#level-select-content").find(`.level-select-choice[data-event-id="${eventId}"]`)
 		unlocks++
 		let ms = 500 * unlocks
@@ -333,6 +334,16 @@ function switchCampaignChapter(campaign, chapterIndex){
 			playSound("ui_unlock")
 		}, ms)
 		progress.events[eventId].unlocked = true
+	}
+	for (let chapterId of unlockedChapters){
+		let tag = $("#level-select-chapter-container").find(`.level-select-chapter[data-chapter-id="${chapterId}"]`)
+		unlocks++
+		let ms = 500 * unlocks + 1000
+		setTimeout(() => {
+			tag.attr("data-unlocked", true)
+			playSound("ui_unlock")
+		}, ms)
+		progress.chapters[chapterId].unlocked = true
 	}
 	if (unlocks > 0){
 		saveSaveFile(saveFile)
