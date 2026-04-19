@@ -483,6 +483,16 @@ new Campaign("base", [
 				]
 			}
 		}),
+		new CampaignEvent("story", "chapter-1-outro", {
+			storyId: "chapter-1-outro",
+			unlock: {
+				type: "and",
+				conditions: [
+					{type: "completed", eventId: "health-tonic"},
+					{type: "completed", eventId: "stamina-potion"},
+				]
+			}
+		}),
 	], {
 		locked: "./src/img/campaigns/base/chapter 1 locked.png",
 		unlocked: "./src/img/campaigns/base/chapter 1.png",

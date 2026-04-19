@@ -36,6 +36,14 @@ new DialogueSpeaker("concordia", {
 	},
 	defaultColor: "#6e344c"
 })
+new DialogueSpeaker("gelt", {
+	images: {
+		"default": "./src/portraits/gelt_small.png",
+		"large": "./src/portraits/gelt_large.png",
+		"armor": "./src/portraits/gelt_armor_small.png",
+	},
+	defaultColor: "#4b455f"
+})
 
 export const DIALOGUES = {}
 export class DialogueStory {

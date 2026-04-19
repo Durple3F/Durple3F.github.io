@@ -12,7 +12,22 @@ export class Story {
 	}
 }
 
-const speakerPositions = {
+export const SPEAKERPOSITIONS = {
+	"offscreen-right": {
+		type: "add",
+		positions: [
+			{type: "center"},
+			{type: "multiply", scale: -0.2, position: {
+				type: "self-height"
+			}},
+			{type: "multiply", scale: 0.5, position: {
+				type: "container-width"
+			}},
+			{type: "multiply", scale: 1, position: {
+				type: "self-width"
+			}},
+		]
+	},
 	"default-1-of-2": {
 		type: "add",
 		positions: [
@@ -36,7 +51,40 @@ const speakerPositions = {
 				type: "self-width"
 			}}
 		]
-	}
+	},
+	"default-1-of-3": {
+		type: "add",
+		positions: [
+			{type: "center"},
+			{type: "multiply", scale: -0.2, position: {
+				type: "self-height"
+			}},
+			{type: "multiply", scale: -1, position: {
+				type: "self-width"
+			}}
+		]
+	},
+	"default-2-of-3": {
+		type: "add",
+		positions: [
+			{type: "center"},
+			{type: "multiply", scale: -0.2, position: {
+				type: "self-height"
+			}},
+		]
+	},
+	"default-3-of-3": {
+		type: "add",
+		positions: [
+			{type: "center"},
+			{type: "multiply", scale: -0.2, position: {
+				type: "self-height"
+			}},
+			{type: "multiply", scale: 1, position: {
+				type: "self-width"
+			}}
+		]
+	},
 }
 
 function determinePosition(position, portrait, container, cinematic){
@@ -71,6 +119,10 @@ function determinePosition(position, portrait, container, cinematic){
 		case "self-height": {
 			let y = container.height() * 0.6
 			return [0, y]
+		} break
+		case "container-width": {
+			let x = container.width()
+			return [x, 0]
 		} break
 	}
 	console.warn("Unhandled position type:", position)
@@ -109,11 +161,33 @@ const eventTypes = {
 			let tag = speaker.tag
 			let position = event.position
 			if (typeof position === "string"){
-				position = speakerPositions[position]
+				position = SPEAKERPOSITIONS[position]
 			}
 			let positionVal = determinePosition(position, speaker.tag, cinematic.tags.characters, cinematic)
 			tag.css("top", positionVal[1])
 			tag.css("left", positionVal[0])
+			tag.data("position", position)
+		}
+	},
+	"animate-speaker-position": {
+		run: async (cinematic, event) => {
+			let speakerIndex = event.index
+			if (event.id){
+				speakerIndex = cinematic.speakers.findIndex(cSpeaker => cSpeaker.speaker.id === event.id)
+			}
+			let speaker = cinematic.speakers[speakerIndex]
+			let tag = speaker.tag
+			let position = event.position
+			if (typeof position === "string"){
+				position = SPEAKERPOSITIONS[position]
+			}
+			let positionVal = determinePosition(position, speaker.tag, cinematic.tags.characters, cinematic)
+			let css = {
+				"left": positionVal[0],
+				"top": positionVal[1]
+			}
+			let duration = event.duration ?? 1000
+			tag.animate(css, duration)
 			tag.data("position", position)
 		}
 	},
@@ -267,4 +341,37 @@ new Story("chapter-1-intro", [
 	{type: "show-text", id: "concordia", text: "dialogue-15"},
 	{type: "show-text", id: "anataeus", text: "dialogue-16"},
 	{type: "show-text", id: "concordia", text: "dialogue-17"},
+])
+new Story("chapter-1-outro", [
+	{type: "set-background", url: "./src/img/cinematic-bg/workshop.png"},
+	{type: "set-title", title: "location"},
+	{type: "add-speaker", id: "anataeus"},
+	{type: "add-speaker", id: "concordia"},
+	{type: "add-speaker", id: "gelt"},
+	{type: "set-speaker-position", id: "anataeus", position: "default-1-of-2"},
+	{type: "set-speaker-position", id: "concordia", position: "default-2-of-2"},
+	{type: "set-speaker-position", id: "gelt", position: "offscreen-right"},
+	{type: "show-text", id: "concordia", text: "dialogue-0"},
+	{type: "show-text", id: "anataeus", text: "dialogue-1"},
+	{type: "show-text", id: "concordia", text: "dialogue-2"},
+	{type: "show-text", id: "anataeus", text: "dialogue-3"},
+	{type: "show-text", id: "concordia", text: "dialogue-4"},
+	{type: "show-text", id: "anataeus", text: "dialogue-5"},
+	{type: "show-text", id: "concordia", text: "dialogue-6"},
+	{type: "show-text", id: "anataeus", text: "dialogue-7"},
+	{type: "show-text", id: "concordia", text: "dialogue-8"},
+	{type: "show-text", id: "anataeus", text: "dialogue-9"},
+	{type: "show-text", id: "concordia", text: "dialogue-10"},
+	{type: "show-text", id: "anataeus", text: "dialogue-11"},
+	{type: "animate-speaker-position", id: "anataeus", position: "default-1-of-3", duration: 500},
+	{type: "animate-speaker-position", id: "concordia", position: "default-2-of-3", duration: 500},
+	{type: "animate-speaker-position", id: "gelt", position: "default-3-of-3", duration: 500},
+	{type: "show-text", id: "gelt", text: "dialogue-12"},
+	{type: "show-text", id: "anataeus", text: "dialogue-13"},
+	{type: "show-text", id: "gelt", text: "dialogue-14"},
+	{type: "show-text", id: "concordia", text: "dialogue-15"},
+	{type: "show-text", id: "gelt", text: "dialogue-16"},
+	{type: "show-text", id: "anataeus", text: "dialogue-17"},
+	{type: "show-text", id: "concordia", text: "dialogue-18"},
+	{type: "show-text", id: "anataeus", text: "dialogue-19"},
 ])

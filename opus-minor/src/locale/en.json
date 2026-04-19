@@ -269,6 +269,30 @@
 			"dialogue-15": "“Hnnngh, Alchemist… Provisioner… which were you again? Mm, yes, hnnnngh…”",
 			"dialogue-16": "You’ll get us in trouble.",
 			"dialogue-17": "I’ve been doing this for years."
+		},
+		"chapter-1-outro": {
+			"name": "An Act of Aggression",
+			"location": "Alchemist’s Workshop, House Van Tassen",
+			"dialogue-0": "That’s when I decided we needed to re-inventory everything in the building. You should have seen the look on Armand’s face!",
+			"dialogue-1": "Mm…",
+			"dialogue-2": "Anataeus, are you paying attention?",
+			"dialogue-3": "Hm?",
+			"dialogue-4": "That answers that question.",
+			"dialogue-5": "What?",
+			"dialogue-6": "You’re moping.",
+			"dialogue-7": "I am <i>not</i> moping. I am merely… moodily dehjected.",
+			"dialogue-8": "And what has the great alchemist of House Van Tassen so moodily dejected?",
+			"dialogue-9": "Nothing. I mean, I’m thinking about why I’m here.",
+			"dialogue-10": "You’re here because you’re our Alchemist.",
+			"dialogue-11": "I mean in the larger sense…",
+			"dialogue-12": "The alchemist is here, isn’t he?",
+			"dialogue-13": "Captain Gelt, what can I do for you?",
+			"dialogue-14": "Your presence is required in the main hall. It’s a matter of some emergency.",
+			"dialogue-15": "What ahppened?",
+			"dialogue-16": "An aggressive move from another House has taken us by surprise… we need to respond immediately.",
+			"dialogue-17": "My alchemy is at your disposal.",
+			"dialogue-18": "You almost sound excited.",
+			"dialogue-19": "I am! Finally, something significant is happening!"
 		}
 	}
 }
