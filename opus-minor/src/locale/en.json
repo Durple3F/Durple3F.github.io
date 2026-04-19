@@ -246,5 +246,29 @@
 			"after-8": "Oh dear.",
 			"after-9": "Yes. Well."
 		}
+	},
+	"cinematics": {
+		"chapter-1-intro": {
+			"name": "Van Tassen’s New Alchemist",
+			"location": "Alchemist’s Workshop, House Van Tassen",
+			"dialogue-0": "So how did it go?",
+			"dialogue-1": "A nightmare.",
+			"dialogue-2": "Armand kept going through his old stories about honor and righteousness.",
+			"dialogue-3": "The Lady Van Tassen looks like she’s embalmed.",
+			"dialogue-4": "Frederick spilled food down the front of his shirt.",
+			"dialogue-5": "What a brave man you are, surviving a formal dinner!",
+			"dialogue-6": "It really is difficult, though. I can’t stand the stuffiness.",
+			"dialogue-7": "Armand didn’t remember my name. Captain Gelt had to prompt him several times.",
+			"dialogue-8": "To be fair, you started only rather recently.",
+			"dialogue-9": "Yes, I suppose it’s too much to ask. Such a complicated, burdensome thing, to remember one single name, the name of your new Alchemist.",
+			"dialogue-10": "The one who graduated at the top of his class from the College of Alchemical Engineering…",
+			"dialogue-11": "Anataeus—",
+			"dialogue-12": "See! <i>You</i> remember my name just fine.",
+			"dialogue-13": "Think Armand would know <i>my</i> name? Keeping in mind I’ve been here my whole life.",
+			"dialogue-14": "Maybe next time you can go in my place! He might not even realize it’s a different person.",
+			"dialogue-15": "“Hnnngh, Alchemist… Provisioner… which were you again? Mm, yes, hnnnngh…”",
+			"dialogue-16": "You’ll get us in trouble.",
+			"dialogue-17": "I’ve been doing this for years."
+		}
 	}
 }

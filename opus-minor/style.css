@@ -1076,6 +1076,133 @@ input[type="range"] {
 	}
 }
 
+#story {
+	position: absolute;
+	top: 0; left: 0;
+	height: 100vh; width: 100vw;
+	font-family: "Crimson Text", serif;
+
+	#story-bg {
+		position: absolute;
+		top: 0; left: 0;
+		height: 100%; width: 100%;
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+	}
+
+	#story-title {
+		position: absolute;
+		top: 0.5em;
+		left: 50%;
+		width: 60%;
+		transform: translateX(-50%);
+		text-align: center;
+		font-size: 140%;
+		padding: 0.5em;
+		background-color: rgba(0, 0, 0, 0.782);
+		border-bottom: 0.1em solid #908b8f;
+		border-top: 0.1em solid #908b8f;
+		mask-image: radial-gradient(at center, black 20%, transparent 70%);
+		mask-position: center;
+		mask-size: 100% 200%;
+	}
+
+	#story-characters {
+		position: absolute;
+		top: 0; left: 0;
+		height: 100%; width: 100%;
+
+		.cinematic-speaker {
+			display: inline-block;
+			height: 60vh;
+			aspect-ratio: 383 / 561;
+			position: absolute;
+			transform: translate(-50%, -50%);
+			--border: url("./src/img/cinematic/portrait_frame_inactive.png");
+
+			&.active {
+				--border: url("./src/img/cinematic/portrait_frame_active.png");
+			}
+
+			.cinematic-speaker-bg {
+				position: absolute;
+				top: 0; left: 0;
+				height: 100%; width: 100%;
+				background-image: var(--border);
+				background-size: 100% 100%;
+				background-repeat: no-repeat;
+				z-index: 2;
+			}
+			.cinematic-speaker-portrait {
+				position: absolute;
+				top: 13%; left: 50%;
+				width: 65%;
+				transform: translateX(-50%);
+				aspect-ratio: 260 / 395;
+				z-index: 1;
+			}
+			&.active .cinematic-speaker-portrait {
+				top: 10%;
+				width: 69%;
+			}
+			.cinematic-speaker-name {
+				position: absolute;
+				bottom: 13.5%; left: 50%;
+				width: 80%;
+				transform: translateX(-50%);
+				text-align: center;
+				z-index: 3;
+				color: transparent;
+				background-image: var(--gray-text-gradient2);
+				background-clip: text;
+				text-transform: uppercase;
+				font-size: 1.4em;
+			}
+			&.active .cinematic-speaker-name {
+				bottom: 11.3%;
+				transform: translateX(-50%) scale(1.1);
+			}
+		}
+	}
+
+	#story-dialogue {
+		position: absolute;
+		bottom: 5%; left: 50%;
+		transform: translateX(-50%);
+		height: 30vh;
+		aspect-ratio: 973 / 219;
+
+		#story-dialogue-bg {
+			position: absolute;
+			top: 0; left: 0;
+			height: 100%; width: 100%;
+			background-image: url("./src/img/cinematic/text_frame.png");
+			background-size: 100% 100%;
+			background-repeat: no-repeat;
+		}
+
+		#story-dialogue-name {
+			position: absolute;
+			top: 13%; left: 26.5%;
+			transform: translateX(-50%);
+			font-size: 2.2vh;
+			text-transform: uppercase;
+			color: #261911;
+		}
+
+		#story-dialogue-text {
+			position: absolute;
+			--left: 10%;
+			bottom: 50%; left: var(--left);
+			width: calc(100% - var(--left) * 2);
+			transform: translateY(50%);
+			font-size: 2.5vh;
+			color: #261911;
+		}
+	}
+}
+
 .tiny-g {
 	display: inline-block;
 	font-size: 60%;

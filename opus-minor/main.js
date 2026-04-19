@@ -12,6 +12,7 @@ import { CAMPAIGNS, showCampaignChapter, showOptions, showScenario } from "./cam
 import { SCENARIOS } from "./scenarios.js";
 import { createSaveFile, getSaveFiles, openDatabase, SaveFile, saveSaveFile } from "./database.js";
 import { changeCategoryVolume, loadNeededSounds, playSound } from "./sounds.js";
+import { Cinematic, STORIES } from "./story.js";
 
 const FRAMERATE = 60
 let tickInterval
@@ -256,13 +257,19 @@ async function handleGameEvents(events){
 				}
 			} break
 			case "set-completion": {
-				let scenarioId = event.scenario.id
+				let eventId
+				if ("scenario" in event){
+					eventId = event.scenario.id
+				}
+				if ("story" in event){
+					eventId = event.story.id
+				}
 				let campaignId = currentCampaign.id
 				let progress = saveFile.campaignsProgress[campaignId]
 				let targetState = event.completed
-				let curState = progress.events[scenarioId].completed
+				let curState = progress.events[eventId].completed
 				if (targetState !== curState){
-					progress.events[scenarioId].completed = targetState
+					progress.events[eventId].completed = targetState
 					saveSaveFile(saveFile)
 				}
 			} break
@@ -275,22 +282,40 @@ async function handleGameEvents(events){
 	}
 }
 
+function startEvent(event, campaign, chapterIndex){
+	switch (event.type){
+		case "puzzle": {
+			$(".game-scene").hide()
+			$("#game-ui").show()
+			let scenarioId = event.info.scenarioId
+			let scenario = SCENARIOS[scenarioId]
+			showScenario(scenario, campaign, saveFile).then(events => {
+				handleGameEvents(events)
+			})
+		} break
+		case "story": {
+			console.log(event)
+			$(".game-scene").hide()
+			$("#story").show()
+			$("#game-menu").fadeOut()
+			let storyId = event.info.storyId
+			let story = STORIES[storyId]
+			let cinematic = new Cinematic(story)
+			cinematic.advance()
+			cinematic.promise.then(events => {
+				handleGameEvents(events)
+			})
+		} break
+	}
+}
+
 function switchCampaignChapter(campaign, chapterIndex){
 	currentCampaignChapterIndex = chapterIndex
 	showCampaignChapter(campaign, chapterIndex, saveFile)
 	$("#level-select-content").find(".level-select-choice").on("click", e => {
 		let elem = e.delegateTarget
 		let event = $(elem).data("event")
-		switch (event.type){
-			case "puzzle":
-			let scenarioId = event.info.scenarioId
-			let scenario = SCENARIOS[scenarioId]
-			showScenario(scenario, campaign, saveFile).then(events => {
-				handleGameEvents(events)
-			})
-			// startLevel(scenario)
-			break
-		}
+		startEvent(event, campaign, chapterIndex)
 	})
 
 	let chapter = campaign.chapters[chapterIndex]

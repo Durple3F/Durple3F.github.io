@@ -21,7 +21,7 @@
 </head>
 
 <body data-bs-theme="dark">
-	<div id="game-ui">
+	<div id="game-ui" class="game-scene">
 		<canvas id="screen"></canvas>
 		<div id="components">
 			<div id="components-contents">
@@ -103,6 +103,16 @@
 			</div>
 		</div>
 		<canvas id="screen-effects"></canvas>
+	</div>
+	<div id="story" class="game-scene" style="display: none">
+		<div id="story-bg"></div>
+		<div id="story-title"></div>
+		<div id="story-characters"></div>
+		<div id="story-dialogue">
+			<div id="story-dialogue-bg"></div>
+			<div id="story-dialogue-name"></div>
+			<div id="story-dialogue-text"></div>
+		</div>
 	</div>
 	<div id="game-menu">
 		<div id="level-select-bg"></div>

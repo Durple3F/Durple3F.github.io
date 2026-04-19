@@ -81,25 +81,31 @@ export function showCampaignChapter(campaign, chapterIndex, saveFile){
 	for (let event of chapter.events){
 		let tag = $("<div>").addClass("level-select-choice").appendTo(choicesTag)
 		tag.data("event", event)
+		let iconTag = $("<img>").addClass("level-select-icon").appendTo(tag)
+		let nameTag = $("<span>").addClass("level-select-name").appendTo(tag)
 		let eventId = event.id
+		let checkboxState = progress.events[eventId].completed
 		switch (event.type){
-			case "puzzle":
-			let scenarioId = event.info.scenarioId
-			let image = $("<img>").addClass("level-select-icon")
-			image.attr("src", "./src/img/puzzle-select/icon_puzzle.png")
-			tag.append(image)
-			let scenarioName = getLocaleString(["scenarios", scenarioId, "name"], language, scenarioId)
-			tag.append($("<span>").addClass("level-select-name").text(scenarioName))
-			let checkboxState = progress.events[eventId].completed
-			let checkboxUrl
-			if (checkboxState){
-				checkboxUrl = "./src/img/puzzle-select/list_checked.png"
-			} else {
-				checkboxUrl = "./src/img/puzzle-select/list_unchecked.png"
-			}
-			tag.append($("<img>").addClass("level-select-icon").attr("src", checkboxUrl))
-			break
+			case "puzzle": {
+				let scenarioId = event.info.scenarioId
+				iconTag.attr("src", "./src/img/puzzle-select/icon_puzzle.png")
+				let scenarioName = getLocaleString(["scenarios", scenarioId, "name"], language, scenarioId)
+				nameTag.text(scenarioName)
+			} break
+			case "story": {
+				let storyId = event.info.storyId
+				iconTag.attr("src", "./src/img/puzzle-select/icon_cinematic.png")
+				let storyName = getLocaleString(["cinematics", storyId, "name"], language, storyId)
+				nameTag.text(storyName)
+			} break
 		}
+		let checkboxUrl
+		if (checkboxState){
+			checkboxUrl = "./src/img/puzzle-select/list_checked.png"
+		} else {
+			checkboxUrl = "./src/img/puzzle-select/list_unchecked.png"
+		}
+		tag.append($("<img>").addClass("level-select-icon").attr("src", checkboxUrl))
 		
 		let id = event.id
 		tag.attr("data-event-id", id)
@@ -424,9 +430,12 @@ new Campaign("base", [
 		background: "./src/bg/background_0.png"
 	}),
 	new CampaignChapter("chapter-1", [
+		new CampaignEvent("story", "chapter-1-intro", {
+			storyId: "chapter-1-intro",
+		}),
 		new CampaignEvent("puzzle", "refined-gold", {
 			scenarioId: "refined-gold",
-			// unlock: {type: "startsUnlocked"}
+			unlock: {type: "completed", eventId: "chapter-1-intro"}
 		}),
 		new CampaignEvent("puzzle", "face-powder", {
 			scenarioId: "face-powder",
