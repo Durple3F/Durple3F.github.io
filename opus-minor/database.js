@@ -112,6 +112,8 @@ export class SaveFile {
 			this.settings.sounds[categoryName] = categoryVolumes[categoryName]
 		}
 		this.campaignsProgress = {}
+		this.lastOpenCampaignId = null
+		this.lastOpenChapterIndex = null
 	}
 	initializeCampaigns(){
 		let progresses = this.campaignsProgress
@@ -162,7 +164,9 @@ export class SaveFile {
 			name: this.name,
 			uuid: this.uuid,
 			settings: this.settings,
-			campaignsProgress: this.campaignsProgress
+			campaignsProgress: this.campaignsProgress,
+			lastOpenCampaignId: this.lastOpenCampaignId,
+			lastOpenChapterIndex: this.lastOpenChapterIndex,
 		}
 		return obj
 	}
@@ -171,6 +175,8 @@ export class SaveFile {
 		save.uuid = store.uuid
 		save.settings = store.settings ?? save.settings
 		save.campaignsProgress = store.campaignsProgress ?? save.campaignsProgress
+		save.lastOpenCampaignId = store.lastOpenCampaignId ?? save.lastOpenCampaignId
+		save.lastOpenChapterIndex = store.lastOpenChapterIndex ?? save.lastOpenChapterIndex
 		return save
 	}
 }

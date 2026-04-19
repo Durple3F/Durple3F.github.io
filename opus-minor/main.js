@@ -345,6 +345,8 @@ function switchCampaignChapter(campaign, chapterIndex){
 		if (newIndex === chapterIndex) return
 		switchCampaignChapter(campaign, newIndex)
 	})
+
+	saveSaveFile(saveFile)
 }
 
 function openMenu(){
@@ -355,7 +357,17 @@ $("#options-container").on("click", openMenu)
 
 function startGame(){
 	$("#loading-screen").fadeOut()
-	switchCampaignChapter(currentCampaign, 0)
+	let campaignId = saveFile.lastOpenCampaignId
+	let chapterIndex = saveFile.lastOpenChapterIndex
+	if (campaignId && campaignId in CAMPAIGNS){
+		currentCampaign = CAMPAIGNS["base"]
+	}
+	if (!chapterIndex || !(chapterIndex in currentCampaign.chapters)){
+		chapterIndex = 0
+	} else {
+		
+	}
+	switchCampaignChapter(currentCampaign, chapterIndex)
 }
 
 window.addEventListener("resize", resize)

@@ -124,6 +124,9 @@ export function showCampaignChapter(campaign, chapterIndex, saveFile){
 		chapterTag.attr("data-unlocked", true)
 		chapterTag.data("chapterIndex", i)
 	}
+
+	saveFile.lastOpenCampaignId = campaign.id
+	saveFile.lastOpenChapterIndex = chapterIndex
 }
 
 export async function showScenario(scenario, campaign, saveFile){

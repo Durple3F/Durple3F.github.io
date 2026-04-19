@@ -79,6 +79,7 @@ body {
 		font-family: "Crimson Text", serif;
 		color: #f6f3ec;
 		border: 0.1em solid #887a77;
+		font-size: 0.96em;
 
 		--divider-color: #81818180;
 
@@ -97,6 +98,9 @@ body {
 		}
 
 		#level-select-content {
+			max-height: 62vh;
+			overflow-y: auto;
+
 			.level-select-choice {
 				display: flex;
 				justify-content: space-between;
@@ -1142,10 +1146,19 @@ input[type="range"] {
 				transform: translateX(-50%);
 				aspect-ratio: 260 / 395;
 				z-index: 1;
+
+				.actual-portrait {
+					position: absolute;
+					top: 0; left: 0;
+					width: 100%; height: 100%;
+				}
 			}
 			&.active .cinematic-speaker-portrait {
 				top: 10%;
 				width: 69%;
+			}
+			&.flip .actual-portrait {
+				transform: scaleX(-1);
 			}
 			.cinematic-speaker-name {
 				position: absolute;

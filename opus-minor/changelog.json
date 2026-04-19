@@ -257,9 +257,11 @@
 		},
 		"20260419": {
 			"date": "April 19, 2026",
-			"line-count": 9700,
+			"line-count": 9900,
 			"changes": [
-				"- Lots of work on making those big fancy cinematic cutscenes that appear at the start/end of the chapters."
+				"- Lots of work on making those big fancy cinematic cutscenes that appear at the start/end of the chapters.",
+				"- Added the first two cinematics",
+				"- Now the game remembers which campaign & chapter you were last looking at."
 			]
 		}
 	}

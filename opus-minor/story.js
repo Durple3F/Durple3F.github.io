@@ -191,6 +191,17 @@ const eventTypes = {
 			tag.data("position", position)
 		}
 	},
+	"flip-speaker": {
+		run: async (cinematic, event) => {
+			let speakerIndex = event.index
+			if (event.id){
+				speakerIndex = cinematic.speakers.findIndex(cSpeaker => cSpeaker.speaker.id === event.id)
+			}
+			let speaker = cinematic.speakers[speakerIndex]
+			let tag = speaker.tag
+			tag.toggleClass("flip")
+		}
+	},
 	"show-text": {
 		run: async (cinematic, event) => {
 			let resolve
@@ -245,7 +256,8 @@ class CinematicSpeaker {
 		let speaker = this.speaker
 		let tag = $("<div>").addClass("cinematic-speaker")
 		let bg = $("<div>").addClass("cinematic-speaker-bg").appendTo(tag)
-		let img = $("<img>").addClass("cinematic-speaker-portrait").appendTo(tag)
+		let portrait = $("<div>").addClass("cinematic-speaker-portrait").appendTo(tag)
+		let img = $("<img>").addClass("actual-portrait").appendTo(portrait)
 		let nameTag = $("<div>").addClass("cinematic-speaker-name").appendTo(tag)
 		let name = getLocaleString(["speakers", speaker.id, "name"], language, speaker.id)
 		nameTag.html(name)
@@ -322,6 +334,7 @@ new Story("chapter-1-intro", [
 	{type: "add-speaker", id: "anataeus"},
 	{type: "add-speaker", id: "concordia"},
 	{type: "set-speaker-position", id: "anataeus", position: "default-1-of-2"},
+	{type: "flip-speaker", id: "anataeus"},
 	{type: "set-speaker-position", id: "concordia", position: "default-2-of-2"},
 	{type: "show-text", id: "concordia", text: "dialogue-0"},
 	{type: "show-text", id: "anataeus", text: "dialogue-1"},
@@ -349,6 +362,7 @@ new Story("chapter-1-outro", [
 	{type: "add-speaker", id: "concordia"},
 	{type: "add-speaker", id: "gelt"},
 	{type: "set-speaker-position", id: "anataeus", position: "default-1-of-2"},
+	{type: "flip-speaker", id: "anataeus"},
 	{type: "set-speaker-position", id: "concordia", position: "default-2-of-2"},
 	{type: "set-speaker-position", id: "gelt", position: "offscreen-right"},
 	{type: "show-text", id: "concordia", text: "dialogue-0"},
