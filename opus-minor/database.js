@@ -116,6 +116,7 @@ export class SaveFile {
 		this.campaignsProgress = {}
 		this.lastOpenCampaignId = null
 		this.lastOpenChapterIndex = null
+		this.lastOpenDate = new Date()
 	}
 	initializeCampaigns(){
 		let progresses = this.campaignsProgress

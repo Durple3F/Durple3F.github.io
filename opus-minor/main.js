@@ -1,7 +1,7 @@
 import {Game} from "./game.js";
 import {render, renderEffects} from "./render.js";
 import ControlManager from './controls.js';
-import { easeInOutSine } from "./util.js"
+import { clearModal, easeInOutSine } from "./util.js"
 import { loadNeededSprites, loadSprite } from "./sprites.js";
 import { ELEMENTS } from "./elements.js";
 import { INSTRUCTIONS, Instruction, createInstructionButton } from "./instructions.js";
@@ -171,15 +171,14 @@ $("#modal").on("click", e => {
 	playSound("ui_modal_close")
 })
 
+function pickSaveFile(save){
+	saveFile = save
+	saveFile.lastOpenDate = new Date()
+}
+
 async function loadGame(){
 	await loadLocale("./src/locale/en.json", "en")
 	await openDatabase()
-	saveFiles = await getSaveFiles()
-	if (!saveFiles.length){
-		let saveFile = await createSaveFile("You")
-		saveFiles.push(saveFile)
-	}
-	saveFile = saveFiles[0]
 
 	//Display instructions
 	for (let typeId in INSTRUCTIONS){
@@ -222,6 +221,12 @@ async function loadGame(){
 	//Load sound effects
 	await loadNeededSounds()
 
+	saveFiles = await getSaveFiles()
+	if (!saveFiles.length){
+		let saveFile = await createSaveFile("You")
+		saveFiles.push(saveFile)
+	}
+	pickSaveFile(saveFiles[0])
 	saveFile.initializeCampaigns()
 	
 	//set settings
@@ -366,8 +371,83 @@ function openMenu(){
 
 $("#options-container").on("click", openMenu)
 
-function startGame(){
-	$("#loading-screen").fadeOut()
+async function openSaveSelector(){
+	let modalTag = $("#modal")
+	clearModal(modalTag)
+	playSound("ui_modal")
+	let resolve
+	let promise = new Promise(res => resolve = res)
+
+	modalTag.find(".modal-dialog").addClass("modal-dialog-centered").addClass("modal-dialog-scrollable")
+	modalTag.find(".modal-title").text("Choose a Save File:").addClass("h2")
+	modalTag.find(".modal-header").addClass("justify-content-center")
+	modalTag.find(".modal-footer").hide()
+	let body = modalTag.find(".modal-body").addClass("save-selector")
+	let left = $("<div>").addClass("save-selector-list").appendTo(body)
+	let right = $("<div>").addClass("save-selector-info").appendTo(body)
+
+	let saveTagMap = new Map()
+	let activeTag = null
+
+	const selectSave = event => {
+		let tag = event.target
+		if ($(tag).hasClass("active")) return
+		let save = saveTagMap.get(tag)
+		console.log(save, saveTagMap)
+		saveFile = save
+		saveFile.initializeCampaigns()
+		$(activeTag).removeClass("active")
+		$(tag).addClass("active")
+		activeTag = tag
+	}
+
+	const addButtonFor = save => {
+		let tag = $("<div>").addClass("save-file").appendTo(left)
+		if (save === saveFile){
+			tag.addClass("active")
+			activeTag = tag
+		}
+		let nameTag = $("<div>").addClass("save-file-name").appendTo(tag)
+		nameTag.text(save.name)
+		let dateTag = $("<div>").addClass("save-file-date").appendTo(tag)
+		let dateText = save.lastOpenDate.toLocaleString(language)
+		dateTag.text(dateText)
+		saveTagMap.set(tag[0], save)
+		tag.on("click", selectSave)
+	}
+
+	for (let save of saveFiles){
+		addButtonFor(save)
+	}
+
+	const makeNewSave = async () => {
+		let newSaveFile = await createSaveFile("You")
+		saveFiles.push(newSaveFile)
+		addButtonFor(newSaveFile)
+	}
+
+	let newSaveBtn = $("<div>").addClass("new-save-btn").appendTo(left)
+	$("<i>").addClass("bi").addClass("bi-plus").appendTo(newSaveBtn)
+	$("<span>").text("New Save").appendTo(newSaveBtn)
+	newSaveBtn.on("click", makeNewSave)
+
+	let modal = new bootstrap.Modal(modalTag[0])
+	modal.toggle()
+
+	modalTag.on("hidden.bs.modal", () => {
+		resolve()
+	})
+
+	await promise
+	saveFile.lastOpenDate = new Date()
+	await saveSaveFile(saveFile)
+}
+
+function startGame(event){
+	if ($(event.target).attr("id") !== "title-screen"){
+		return
+	}
+	$("#title-screen").fadeOut()
 	let campaignId = saveFile.lastOpenCampaignId
 	let chapterIndex = saveFile.lastOpenChapterIndex
 	if (campaignId && campaignId in CAMPAIGNS){
@@ -381,6 +461,9 @@ function startGame(){
 	switchCampaignChapter(currentCampaign, chapterIndex)
 }
 
+$("#save-selector-btn").click(openSaveSelector)
+$("#title-screen").click(startGame)
+
 window.addEventListener("resize", resize)
 resize()
-loadGame().then(() => startGame())
+loadGame().then(() => $("#loading-screen").fadeOut())

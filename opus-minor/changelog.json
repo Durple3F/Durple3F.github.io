@@ -263,7 +263,16 @@
 				"- Added the first two cinematics",
 				"- Now the game remembers which campaign & chapter you were last looking at.",
 				"- Improved the style of the little chapter picker at the bottom",
-				"- Added the remaining chapters, though they're empty"
+				"- Added the remaining chapters, though they're empty right now"
+			]
+		},
+		"20260420": {
+			"date": "April 20, 2026",
+			"line-count": 10300,
+			"changes": [
+				"- Added the title screen",
+				"- Added the ability to switch save files",
+				"- Added the ability to create new save files"
 			]
 		}
 	}
