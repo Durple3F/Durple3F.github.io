@@ -197,6 +197,7 @@ export class SaveFile {
 			campaignsProgress: this.campaignsProgress,
 			lastOpenCampaignId: this.lastOpenCampaignId,
 			lastOpenChapterIndex: this.lastOpenChapterIndex,
+			lastOpenDate: this.lastOpenDate
 		}
 		return obj
 	}
@@ -207,6 +208,7 @@ export class SaveFile {
 		save.campaignsProgress = store.campaignsProgress ?? save.campaignsProgress
 		save.lastOpenCampaignId = store.lastOpenCampaignId ?? save.lastOpenCampaignId
 		save.lastOpenChapterIndex = store.lastOpenChapterIndex ?? save.lastOpenChapterIndex
+		save.lastOpenDate = store.lastOpenDate ?? save.lastOpenDate
 		return save
 	}
 }

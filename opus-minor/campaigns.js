@@ -177,6 +177,10 @@ export async function showScenario(scenario, campaign, saveFile) {
 			case "dialogue":
 				let dialogueId = sideContent.dialogueId
 				let dialogue = DIALOGUES[dialogueId]
+				if (!dialogue) {
+					left.html("Failed to load dialogue:"+ dialogueId)
+					break
+				}
 				let content = dialogue.createTag(saveFile, campaign.id)
 				left.html(content)
 				break
@@ -520,7 +524,22 @@ new Campaign("base", [
 	}),
 	new CampaignChapter("chapter-2", {
 		eventList: [
-			
+			new CampaignEvent("puzzle", "hair-product", {
+				scenarioId: "hair-product",
+				unlock: { type: "completed", eventId: "chapter-1-outro" }
+			}),
+			new CampaignEvent("puzzle", "rocket-propellant", {
+				scenarioId: "rocket-propellant",
+				unlock: { type: "completed", eventId: "chapter-1-outro" }
+			}),
+			new CampaignEvent("puzzle", "mist-of-incapacitation", {
+				scenarioId: "mist-of-incapacitation",
+				unlock: { type: "completed", eventId: "chapter-1-outro" }
+			}),
+			new CampaignEvent("puzzle", "explosive-compound", {
+				scenarioId: "explosive-compound",
+				unlock: { type: "completed", eventId: "chapter-1-outro" }
+			}),
 		],
 		imageUrls: {
 			locked: "./src/img/campaigns/base/chapter 2 locked.png",

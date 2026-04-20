@@ -268,11 +268,14 @@
 		},
 		"20260420": {
 			"date": "April 20, 2026",
-			"line-count": 10300,
+			"line-count": 10500,
 			"changes": [
 				"- Added the title screen",
 				"- Added the ability to switch save files",
-				"- Added the ability to create new save files"
+				"- Added the ability to create new save files",
+				"- Fixed bugs with the repeat instruction",
+				"- Fixed an issue with product icons",
+				"- Added the first 4 levels of chapter 2. There's no dialogue yet. Also the 4th one is impossible."
 			]
 		}
 	}

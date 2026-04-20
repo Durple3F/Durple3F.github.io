@@ -226,7 +226,8 @@ async function loadGame(){
 		let saveFile = await createSaveFile("You")
 		saveFiles.push(saveFile)
 	}
-	pickSaveFile(saveFiles[0])
+	let mostRecent = saveFiles.reduce((acc, v) => acc.lastOpenDate < v.lastOpenDate ? v : acc, saveFiles[0])
+	pickSaveFile(mostRecent)
 	saveFile.initializeCampaigns()
 	
 	//set settings

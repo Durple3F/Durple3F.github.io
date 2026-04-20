@@ -374,7 +374,7 @@ function drawReagent(ctx, reagent, x, y, hexSize, inRadius, horiz, vert, isSimul
 
 	ctx.restore()
 }
-function drawProduct(ctx, reagent, x, y, hexSize, inRadius, horiz, vert) {
+function drawProduct(ctx, reagent, x, y, hexSize, inRadius, horiz, vert, isSimulated) {
 	//A product is just the hexagonal grid underneath the molecule that it produces.
 	const diagx = ROOT3 * 0.5 * hexSize
 	const diagy = hexSize * 0.5
@@ -399,7 +399,9 @@ function drawProduct(ctx, reagent, x, y, hexSize, inRadius, horiz, vert) {
 		ctx.drawImage(baseSprite, atomXR - hexW * 0.5, atomYR - hexH * 0.5, hexW, hexH)
 	}
 
-	ctx.filter = "brightness(0.5)"
+	if (isSimulated !== "bypass"){
+		ctx.filter = "brightness(0.5)"
+	}
 	drawMolecule(ctx, molecule, x, y, hexSize, inRadius, horiz, vert)
 	ctx.filter = ""
 

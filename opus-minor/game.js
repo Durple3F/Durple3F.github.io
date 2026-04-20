@@ -633,8 +633,12 @@ export class Game{
 		let h = maxY - minY
 		console.log(x, y, w, h)
 
+		let isSimulated = false
 		if (w <= 4 || component.type === "ArmMechanism" || component.type === "Glyph"){
 			$(canvas).addClass("small-icon")
+		}
+		if (component.type === "Product"){
+			isSimulated = "bypass"
 		}
 		
 		x *= hexSize
@@ -644,7 +648,7 @@ export class Game{
 		
 		canvas.width = w
 		canvas.height = h
-		drawComponent(ctx, component, x, y, hexSize, inRadius, horiz, vert, false)
+		drawComponent(ctx, component, x, y, hexSize, inRadius, horiz, vert, isSimulated)
 		console.log(ctx.canvas)
 		return canvas
 	}
@@ -1207,7 +1211,6 @@ export class Game{
 									else if (right < left) change = -right
 									else change = 0
 								}
-								console.log(change)
 								while (change > 0){
 									let ins = new Instruction(INSTRUCTIONS["track_retreat"])
 									generated.push(ins)
@@ -1233,15 +1236,15 @@ export class Game{
 								ins = toCheck[0]
 								toCheck.splice(0, 1)
 								let type = ins.type
-								if (type.id !== "idle" && !ins.generatedInstructions.length){
-									prevInstructions.push(ins)
-								}
-
 								if (ins.generatedInstructions.length){
 									for (let ins2 of ins.generatedInstructions){
-										toCheck.push(ins2)
+										toCheck.unshift(ins2)
 									}
 								}
+								if (type.id !== "idle" && !ins.generatedInstructions.length){
+									prevInstructions.unshift(ins)
+								}
+
 								if (type.stopsRepeats){
 									stopped = true
 									if (prevInstructions.length !== 0){
@@ -3051,7 +3054,7 @@ export class Game{
 					this.tryToPlaceSelectedComponent()
 				}
 			}
-		} else if (controls.justClicked("left") && !this.isPlayingSimulation){
+		} else if (controls.justClicked("left") && !this.isPlayingSimulation && isMouseOnScreen){
 			//check if the player just clicked on a component they can move
 			const components = this.currentLevel.grid.contents
 			for (let i = components.length - 1; i >= 0; i--){

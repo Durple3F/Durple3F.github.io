@@ -542,3 +542,217 @@ new Scenario("stamina-potion", {
 		dialogueId: "stamina-potion"
 	}
 })
+new Scenario("hair-product", {
+	products: [
+		{
+			"name": "Hair Product",
+			"molecule": {
+				atoms: [
+					["Earth", 0, -1, 1],
+					["Earth", 0, 0, 0],
+					["Earth", 1, 0, -1],
+					["Earth", 2, -1, -1],
+				],
+				bonds: [
+					[0, 1],
+					[1, 2],
+					[2, 3],
+				]
+			}
+		}
+	],
+	reagents: [
+		{
+			"name": "Elemental Earth",
+			"molecule": {
+				atoms: [["Earth", -1, 0, 1]]
+			}
+		},
+	],
+	mechanisms: [
+		"Fixed-Length Arm",
+		"Fixed-Length Double Arm",
+		"Fixed-Length Triple Arm",
+		"Fixed-Length Sextuple Arm",
+		"Piston Arm",
+	],
+	glyphs: [
+		"Glyph of Bonding",
+		"Glyph of Multi-bonding",
+		"Glyph of Unbonding",
+		"Glyph of Calcification",
+	],
+	sideContent: {
+		type: "dialogue",
+		dialogueId: "hair-product"
+	}
+})
+new Scenario("rocket-propellant", {
+	products: [
+		{
+			"name": "Rocket Propellant",
+			"molecule": {
+				atoms: [
+					["Salt", -2, 1, 1],
+					["Fire", -1, 0, 1],
+					["Fire", 0, 0, 0],
+					["Fire", 1, 0, -1],
+					["Salt", 2, -1, -1],
+				],
+				bonds: [
+					[0, 1],
+					[1, 2],
+					[2, 3],
+					[3, 4],
+				]
+			}
+		}
+	],
+	reagents: [
+		{
+			"name": "Elemental Fire",
+			"molecule": {
+				atoms: [["Fire", -1, 0, 1]]
+			}
+		},
+		{
+			"name": "Elemental Fire",
+			"molecule": {
+				atoms: [["Fire", -1, 0, 1]]
+			}
+		},
+	],
+	mechanisms: [
+		"Fixed-Length Arm",
+		"Fixed-Length Double Arm",
+		"Fixed-Length Triple Arm",
+		"Fixed-Length Sextuple Arm",
+		"Piston Arm",
+	],
+	glyphs: [
+		"Glyph of Bonding",
+		"Glyph of Multi-bonding",
+		"Glyph of Unbonding",
+		"Glyph of Calcification",
+	],
+	sideContent: {
+		type: "dialogue",
+		dialogueId: "rocket-propellant"
+	}
+})
+new Scenario("mist-of-incapacitation", {
+	products: [
+		{
+			"name": "Mist of Incapacitation, Part A",
+			"molecule": {
+				atoms: [
+					["Air", 0, 0, 0],
+					["Quicksilver", 1, 0, -1],
+				],
+				bonds: [
+					[0, 1],
+				]
+			}
+		},
+		{
+			"name": "Mist of Incapacitation, Part B",
+			"molecule": {
+				atoms: [
+					["Air", 0, 0, 0],
+					["Tin", 1, 0, -1],
+				],
+				bonds: [
+					[0, 1],
+				]
+			}
+		},
+	],
+	reagents: [
+		{
+			"name": "Elemental Air",
+			"molecule": {
+				atoms: [["Air", 0, 0, 0]]
+			}
+		},
+		{
+			"name": "Elemental Quicksilver",
+			"molecule": {
+				atoms: [["Quicksilver", 0, 0, 0]]
+			}
+		},
+		{
+			"name": "Elemental Lead",
+			"molecule": {
+				atoms: [["Lead", 0, 0, 0]]
+			}
+		},
+	],
+	mechanisms: [
+		"Fixed-Length Arm",
+		"Fixed-Length Double Arm",
+		"Fixed-Length Triple Arm",
+		"Fixed-Length Sextuple Arm",
+		"Piston Arm",
+	],
+	glyphs: [
+		"Glyph of Bonding",
+		"Glyph of Multi-bonding",
+		"Glyph of Unbonding",
+		"Glyph of Calcification",
+		"Glyph of Projection",
+	],
+	sideContent: {
+		type: "dialogue",
+		dialogueId: "mist-of-incapacitation"
+	}
+})
+new Scenario("explosive-compound", {
+	products: [
+		{
+			"name": "Explosive Compount",
+			"molecule": {
+				atoms: [
+					["Fire", -1, 0, 1],
+					["Fire", 0, 0, 0],
+					["Air", 1, 0, -1],
+				],
+				bonds: [
+					[0, 1],
+					[1, 2],
+				]
+			}
+		},
+	],
+	reagents: [
+		{
+			"name": "Elemental Fire",
+			"molecule": {
+				atoms: [["Fire", 0, 0, 0]]
+			}
+		},
+		{
+			"name": "Elemental Fire",
+			"molecule": {
+				atoms: [["Fire", 0, 0, 0]]
+			}
+		},
+	],
+	mechanisms: [
+		"Fixed-Length Arm",
+		"Fixed-Length Double Arm",
+		"Fixed-Length Triple Arm",
+		"Fixed-Length Sextuple Arm",
+		"Piston Arm",
+	],
+	glyphs: [
+		"Glyph of Bonding",
+		"Glyph of Multi-bonding",
+		"Glyph of Triplex-bonding",
+		"Glyph of Unbonding",
+		"Glyph of Calcification",
+	],
+	sideContent: {
+		type: "dialogue",
+		dialogueId: "explosive-compound"
+	}
+})
