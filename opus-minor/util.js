@@ -674,10 +674,11 @@ export class Molecule extends Component {
 			let atom1 = bond1.atoms[0]
 			let atom2 = bond1.atoms[1]
 			for (let bond2 of bonds2) {
-				if (
-					(atom1.equals(bond2.atoms[0]) && atom2.equals(bond2.atoms[1])) ||
-					(atom1.equals(bond2.atoms[1]) && atom2.equals(bond2.atoms[0]))
-				) {
+				if (bond1.type !== bond2.type) continue
+				let sameAtoms = (atom1.equals(bond2.atoms[0]) && atom2.equals(bond2.atoms[1]))
+				//Check both orientations
+				if (!sameAtoms) sameAtoms = (atom1.equals(bond2.atoms[1]) && atom2.equals(bond2.atoms[0]))
+				if (sameAtoms) {
 					hasEqual = true
 					break
 				}

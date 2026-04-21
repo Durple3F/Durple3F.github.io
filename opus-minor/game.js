@@ -1844,6 +1844,11 @@ export class Game{
 					}
 				}
 				if (isEqual){
+					//Check that all atoms are in the same places
+					let clone = product.molecule.clone()
+					isEqual = molecule.equals(clone)
+				}
+				if (isEqual){
 					level.submittedProductCounts[0]++
 					this.deleteComponent(molecule, level)
 					break

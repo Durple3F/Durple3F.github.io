@@ -454,6 +454,7 @@ function startGame(event){
 		return
 	}
 	$("#title-screen").fadeOut()
+	playSound("title")
 	let campaignId = saveFile.lastOpenCampaignId
 	let chapterIndex = saveFile.lastOpenChapterIndex
 	if (campaignId && campaignId in CAMPAIGNS){

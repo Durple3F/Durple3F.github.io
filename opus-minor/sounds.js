@@ -111,6 +111,11 @@ export const neededSounds = [
 		url: "./src/sounds/fanfare_solving6.mp3",
 		category: "sfx"
 	},
+	{
+		id: "title",
+		url: "./src/sounds/title.mp3",
+		category: "sfx"
+	},
 ]
 export const categoryVolumes = {
 	sfx: 1,

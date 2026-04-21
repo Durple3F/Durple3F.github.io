@@ -285,7 +285,9 @@
 			"changes": [
 				"- Bonds use sprites now instead of just being a line.",
 				"- Working on triplex bonds, but it's bringing up some bugs.",
-				"- I understand now why they only bothered making 1 non-standard type of bond."
+				"- I understand now why they only bothered making 1 non-standard type of bond.",
+				"- Fixed an issue with how products end up in their bins.",
+				"- There's a sound effect on the home screen now wow yippee"
 			]
 		}
 	}
