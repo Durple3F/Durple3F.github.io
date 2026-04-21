@@ -261,7 +261,7 @@ function drawArmMechanism(ctx, mechanism, x, y, hexSize, inRadius, horiz, vert, 
 	}
 }
 
-function drawMolecule(ctx, molecule, x, y, hexSize, inRadius, horiz, vert, hasShadow = false) {
+function drawMoleculeBonds(ctx, molecule, x, y, hexSize, inRadius, horiz, vert, hasShadow = false) {
 	const atoms = molecule.atoms
 	const contents = atoms.contents
 	const bonds = molecule.bonds.contents
@@ -272,22 +272,6 @@ function drawMolecule(ctx, molecule, x, y, hexSize, inRadius, horiz, vert, hasSh
 	const cosT = cos(angle)
 	const sinT = sin(angle)
 
-	
-	for (let atom of contents) {
-		const q = atom.coord.q
-		const r = atom.coord.r
-		const atomX = (q + 0.5 * r) * horiz
-		const atomY = r * vert
-		const atomXR = x + atomX * cosT - atomY * sinT
-		const atomYR = y + atomX * sinT + atomY * cosT
-		drawAtom(ctx, atom, atomXR, atomYR, hexSize, inRadius, alpha, hasShadow)
-
-		if (drawGhostRotation) {
-			ctx.globalAlpha = 0.5
-			drawAtom(ctx, atom, atomX + x, atomY + y, hexSize, inRadius, alpha)
-			ctx.globalAlpha = 1
-		}
-	}
 	for (let bond of bonds) {
 		const atom1 = bond.atoms[0]
 		const q1 = atom1.coord.q
@@ -317,6 +301,34 @@ function drawMolecule(ctx, molecule, x, y, hexSize, inRadius, horiz, vert, hasSh
 		ctx.rotate(rotation)
 		ctx.drawImage(sprite, -spriteWidth * 0.5, -spriteHeight * 0.5, spriteWidth, spriteHeight)
 		ctx.restore()
+	}
+}
+function drawMolecule(ctx, molecule, x, y, hexSize, inRadius, horiz, vert, hasShadow = false) {
+	const atoms = molecule.atoms
+	const contents = atoms.contents
+	const bonds = molecule.bonds.contents
+	const alpha = molecule.isGhost ? 0.7 : 1
+
+	//use the home tile to handle fine decimal rotation
+	const angle = molecule.rotation
+	const cosT = cos(angle)
+	const sinT = sin(angle)
+
+	
+	for (let atom of contents) {
+		const q = atom.coord.q
+		const r = atom.coord.r
+		const atomX = (q + 0.5 * r) * horiz
+		const atomY = r * vert
+		const atomXR = x + atomX * cosT - atomY * sinT
+		const atomYR = y + atomX * sinT + atomY * cosT
+		drawAtom(ctx, atom, atomXR, atomYR, hexSize, inRadius, alpha, hasShadow)
+
+		if (drawGhostRotation) {
+			ctx.globalAlpha = 0.5
+			drawAtom(ctx, atom, atomX + x, atomY + y, hexSize, inRadius, alpha)
+			ctx.globalAlpha = 1
+		}
 	}
 
 	if (drawMoleculeHomeTile) {
@@ -372,6 +384,7 @@ function drawReagent(ctx, reagent, x, y, hexSize, inRadius, horiz, vert, isSimul
 
 	if (!isSimulated) {
 		drawMolecule(ctx, molecule, x, y, hexSize, inRadius, horiz, vert, false)
+		drawMoleculeBonds(ctx, molecule, x, y, hexSize, inRadius, horiz, vert, false)
 	}
 
 	ctx.restore()
@@ -418,6 +431,8 @@ function drawProduct(ctx, reagent, x, y, hexSize, inRadius, horiz, vert, isSimul
 		//Draw a hexagon on the ground
 		ctx.drawImage(ringSprite, atomXR - ringW * 0.5, atomYR - ringW * 0.5, ringW, ringW)
 	}
+
+	drawMoleculeBonds(ctx, molecule, x, y, hexSize, inRadius, horiz, vert)
 
 	ctx.restore()
 }
@@ -480,7 +495,10 @@ function drawTrack(ctx, track, x, y, hexSize, inRadius, horiz, vert) {
 export function drawComponent(ctx, component, x, y, hexSize, inRadius, horiz, vert, isSimulated) {
 	if (!component.isRendered) return
 	switch (component.type) {
-		case "Molecule": drawMolecule(ctx, component, x, y, hexSize, inRadius, horiz, vert, true); break
+		case "Molecule":
+			drawMolecule(ctx, component, x, y, hexSize, inRadius, horiz, vert, true);
+			drawMoleculeBonds(ctx, component, x, y, hexSize, inRadius, horiz, vert, true);
+		break
 		case "Reagent": drawReagent(ctx, component, x, y, hexSize, inRadius, horiz, vert, isSimulated); break
 		case "Product": drawProduct(ctx, component, x, y, hexSize, inRadius, horiz, vert, isSimulated); break
 		case "ArmMechanism": drawArmMechanism(ctx, component, x, y, hexSize, inRadius, horiz, vert, true); break

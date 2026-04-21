@@ -756,3 +756,53 @@ new Scenario("explosive-phial", {
 		dialogueId: "explosive-phial"
 	}
 })
+new Scenario("armor-filament", {
+	products: [
+		{
+			"name": "Armor Filament",
+			"molecule": {
+				atoms: [
+					["Iron", 0, 0, 0],
+					["Iron", 1, 0, -1],
+					["repetition", 2, 0, -2],
+				],
+				bonds: [
+					[0, 1],
+					[1, 2],
+				]
+			}
+		},
+	],
+	reagents: [
+		{
+			"name": "Elemental Quicksilver",
+			"molecule": {
+				atoms: [["Quicksilver", 0, 0, 0]]
+			}
+		},
+		{
+			"name": "Elemental Lead",
+			"molecule": {
+				atoms: [["Lead", 0, 0, 0]]
+			}
+		},
+	],
+	mechanisms: [
+		"Fixed-Length Arm",
+		"Fixed-Length Double Arm",
+		"Fixed-Length Triple Arm",
+		"Fixed-Length Sextuple Arm",
+		"Piston Arm",
+	],
+	glyphs: [
+		"Glyph of Bonding",
+		"Glyph of Multi-bonding",
+		"Glyph of Unbonding",
+		"Glyph of Calcification",
+		"Glyph of Projection",
+	],
+	sideContent: {
+		type: "dialogue",
+		dialogueId: "armor-filament"
+	}
+})

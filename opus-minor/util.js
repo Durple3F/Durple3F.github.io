@@ -734,18 +734,38 @@ export class Molecule extends Component {
 	}
 }
 
-export function createMolecule(moleculeRecipe) {
+export function createMolecule(moleculeRecipe, repetitionsAllowed=0) {
 	let atomRecipeList = moleculeRecipe.atoms ?? moleculeRecipe[0] ?? []
 	let bondRecipeList = moleculeRecipe.bonds ?? moleculeRecipe[1] ?? []
 	//uses a simplified list of only the things that atoms NEED to create them
 	//and a simplified list of only the indexes of the atoms that are linked in bonds (as well as their bond type.)
 	let molecule = new Molecule()
 	let atoms = []
+
+	let repetitionBondInfo = []
+	let repetitionCoord = null
+
 	for (let atomRecipe of atomRecipeList) {
-		let atom = new Atom(atomRecipe[0])
+		let atomIndex = atomRecipeList.indexOf(atomRecipe)
+		let elementId = atomRecipe[0]
 		let q = atomRecipe[1]
 		let r = atomRecipe[2]
 		let s = atomRecipe[3]
+		if (elementId === "repetition"){
+			if (repetitionCoord){
+				throw new Error("You can't have two repetition symbols in a molecule")
+			}
+			repetitionCoord = new Hex(q, r, s)
+			//Find any bonds connected to this atom, and remove them (for now)
+			repetitionBondInfo = bondRecipeList.filter(bondRecipe => {
+				return bondRecipe[0] === atomIndex || bondRecipe[1] === atomIndex
+			})
+			bondRecipeList = bondRecipeList.filter(bondRecipe => {
+				return bondRecipe[0] !== atomIndex && bondRecipe[1] !== atomIndex
+			})
+			continue
+		}
+		let atom = new Atom(elementId)
 		atom.setCoords(q, r, s)
 		atoms.push(atom)
 	}
@@ -755,8 +775,70 @@ export function createMolecule(moleculeRecipe) {
 	for (let bondRecipe of bondRecipeList) {
 		let atom1Index = bondRecipe[0]
 		let atom2Index = bondRecipe[1]
-		molecule.addBond(atoms[atom1Index], atoms[atom2Index], bondRecipe[2])
+		let bondTypeId = bondRecipe[2] ?? "simple"
+		molecule.addBond(atoms[atom1Index], atoms[atom2Index], bondTypeId)
 	}
+
+	if (repetitionCoord){
+		let repetitionMolecule = molecule
+		molecule = repetitionMolecule.clone()
+		for (let i = 1; i <= repetitionsAllowed; i++){
+			let toAdd = repetitionMolecule.atoms.contents
+			let newAtoms = []
+			for (let atom of toAdd){
+				let clone = atom.clone()
+				let newCoord = repetitionCoord.scale(i).add(clone.coord)
+				clone.setCoords(newCoord.q, newCoord.r, newCoord.s)
+				molecule.addAtom(clone)
+				atoms.push(clone)
+				newAtoms.push(clone)
+			}
+			for (let bondRecipe of bondRecipeList){
+				let atom1Index = bondRecipe[0]
+				let atom2Index = bondRecipe[1]
+				let bondTypeId = bondRecipe[2] ?? "simple"
+				molecule.addBond(newAtoms[atom1Index], newAtoms[atom2Index], bondTypeId)
+			}
+		}
+		let repetitionSymbolLocation = repetitionCoord.scale(repetitionsAllowed + 1)
+		let repetitionAtom = new Atom("repetition")
+		repetitionAtom.setCoords(repetitionSymbolLocation.q, repetitionSymbolLocation.r, repetitionSymbolLocation.s)
+		molecule.addAtom(repetitionAtom)
+
+		for (let bondRecipe of repetitionBondInfo){
+			let atom1Index = bondRecipe[0]
+			let atom2Index = bondRecipe[1]
+			let bondTypeId = bondRecipe[2]
+			let atom1 = atoms[atom1Index]
+			let atom2 = atoms[atom2Index]
+			let coord1 = atom1?.coord || repetitionCoord
+			let coord2 = atom2?.coord || repetitionCoord
+			let coordDiff = coord1.subtract(coord2)
+			for (let i = 1; i <= repetitionsAllowed; i++){
+				let coord1 = repetitionCoord.scale(i)
+				let coord2 = coord1.add(coordDiff)
+				let foundAtom1 = atoms.find(atom => {
+					return atom.coord.equals(coord1)
+				})
+				let foundAtom2 = atoms.find(atom => {
+					return atom.coord.equals(coord2)
+				})
+				if (!foundAtom1 || !foundAtom2){
+					throw new Error("Unable to find an atom connected to the repetition symbol")
+				}
+				molecule.addBond(foundAtom1, foundAtom2, bondTypeId)
+			}
+			let foundAtom = atoms.find(atom => {
+				return atom.coord.equals(repetitionSymbolLocation.add(coordDiff))
+			})
+			if (!foundAtom){
+				throw new Error("Unable to find an atom connected to the repetition symbol")
+			}
+			molecule.addBond(foundAtom, repetitionAtom, bondTypeId)
+		}
+		console.log(molecule)
+	}
+
 	return molecule
 }
 

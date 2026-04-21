@@ -281,13 +281,14 @@
 		},
 		"20260421": {
 			"date": "April 21, 2026",
-			"line-count": 10700,
+			"line-count": 10900,
 			"changes": [
 				"- Bonds use sprites now instead of just being a line.",
 				"- Working on triplex bonds, but it's bringing up some bugs.",
 				"- I understand now why they only bothered making 1 non-standard type of bond.",
 				"- Fixed an issue with how products end up in their bins.",
-				"- There's a sound effect on the home screen now wow yippee"
+				"- There's a sound effect on the home screen now wow yippee",
+				"- You can now have polymer-type products that repeat any number of times. Currently the game doesn't actually let you submit them, so you can't beat the level yet. We shall see."
 			]
 		}
 	}

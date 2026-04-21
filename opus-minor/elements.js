@@ -26,6 +26,12 @@ export class Element {
 	}
 }
 new Element({
+	id: "repetition",
+	sprites: {
+		atom: "./src/img/atoms/repetition_symbol.png"
+	}
+});
+new Element({
 	id: "Fire",
 	sprites: {
 		atom: "./src/img/atoms/fire.png"

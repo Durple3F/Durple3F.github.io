@@ -540,6 +540,10 @@ new Campaign("base", [
 				scenarioId: "explosive-phial",
 				unlock: { type: "completed", eventId: "chapter-1-outro" }
 			}),
+			new CampaignEvent("puzzle", "armor-filament", {
+				scenarioId: "armor-filament",
+				unlock: { type: "completed", eventId: "chapter-1-outro" }
+			}),
 		],
 		imageUrls: {
 			locked: "./src/img/campaigns/base/chapter 2 locked.png",

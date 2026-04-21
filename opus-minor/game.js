@@ -258,7 +258,7 @@ export class Game{
 					let productMolecules = scenario.productMolecules
 					let index = savedComponent.productIndex
 					let product = productMolecules[index]
-					let molecule = createMolecule(product.molecule)
+					let molecule = createMolecule(product.molecule, 5)
 					component = new Product(molecule)
 					let homeTile = savedComponent.homeTile
 					component.homeTile = Hex.fromObj(homeTile)
@@ -474,7 +474,7 @@ export class Game{
 			let index = productMolecules.indexOf(productMolecule)
 			let componentCountInfo = this.componentCountInfos["Product"][index]
 			let moleculeName = productMolecule.name
-			let molecule = createMolecule(productMolecule.molecule)
+			let molecule = createMolecule(productMolecule.molecule, 5)
 			let componentTag = $("<div class='component'>")
 			productsPane.append(componentTag)
 			componentTag.attr("data-available", true)
@@ -486,7 +486,8 @@ export class Game{
 				this.beginHoldingComponent(component)
 				this.selectedComponent.isRendered = false
 			})
-			const component = new Product(molecule)
+			let iconMolecule = createMolecule(productMolecule.molecule)
+			const component = new Product(iconMolecule)
 			const canvas = this.createComponentIcon(component)
 			componentTag.append($(canvas).addClass("component-icon"))
 		}
@@ -631,7 +632,7 @@ export class Game{
 		let y = homeY
 		let w = maxX - minX
 		let h = maxY - minY
-		console.log(x, y, w, h)
+		// console.log(x, y, w, h)
 
 		let isSimulated = false
 		if (w <= 4 || component.type === "ArmMechanism" || component.type === "Glyph"){
@@ -649,7 +650,7 @@ export class Game{
 		canvas.width = w
 		canvas.height = h
 		drawComponent(ctx, component, x, y, hexSize, inRadius, horiz, vert, isSimulated)
-		console.log(ctx.canvas)
+		// console.log(ctx.canvas)
 		return canvas
 	}
 
