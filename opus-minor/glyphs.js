@@ -273,6 +273,100 @@ new GlyphType({
 	}
 })
 new GlyphType({
+	id: "Glyph of Triplex-bonding",
+	sprites: {
+		base: "./src/img/glyphs/triplex/prismabonder_base.png",
+		connections: "./src/img/glyphs/triplex/prismabonder_connections.png",
+		symbol: "./src/img/glyphs/triplex/prismabonder_symbol.png",
+		ring: "./src/img/glyphs/bonder_ring.png",
+		bond11: "./src/img/glyphs/triplex/cylinder_gray_1.png",
+		bond12: "./src/img/glyphs/triplex/cylinder_gray_2.png",
+		bond21: "./src/img/glyphs/triplex/cylinder_red_1.png",
+		bond22: "./src/img/glyphs/triplex/cylinder_red_2.png",
+		bond31: "./src/img/glyphs/triplex/cylinder_yellow_1.png",
+		bond32: "./src/img/glyphs/triplex/cylinder_yellow_2.png",
+	},
+	sounds: [
+		{
+			id: "glyph_bonding",
+			url: "./src/sounds/glyph_bonding.mp3",
+			category: "sfx"
+		}
+	],
+	inputs: [
+		new GlyphInput("a", "ring", new Hex(0, 0, 0)),
+		new GlyphInput("b", "ring", Hex.directions[0]),
+		new GlyphInput("c", "ring", Hex.directions[1]),
+	],
+	execute: function (game, level, inputs) {
+		let inputA = inputs["a"]
+		let inputB = inputs["b"]
+		let inputC = inputs["c"]
+		
+	},
+	render: function (ctx, glyph, x, y, hexSize, inRadius, horiz, vert) {
+		const ringSize = atomRenderSize * hexSize * 1.15
+		const symbolSize = ringSize * 0.4
+		const baseSprite = this.sprites["base"]
+		const connSprite = this.sprites["connections"]
+		const symbolSprite = this.sprites["symbol"]
+		const hexRotation = glyph.currentHexRotation
+		const bondSprite1Name = (hexRotation < 2 || hexRotation >= 5) ? "bond11" : "bond12"
+		const bondSprite2Name = (hexRotation > 2) ? "bond21" : "bond22"
+		const bondSprite3Name = (hexRotation > 0 && hexRotation < 4) ? "bond31" : "bond32"
+		const bondSprite1 = this.sprites[bondSprite1Name]
+		const bondSprite2 = this.sprites[bondSprite2Name]
+		const bondSprite3 = this.sprites[bondSprite3Name]
+		ctx.translate(x, y)
+		const angle = glyph.rotation - (glyph.currentHexRotation * Math.PI / 3)
+		ctx.rotate(angle)
+		ctx.drawImage(baseSprite, - horiz * 0.5, - vert * 5 / 3, horiz * 2, vert * 7 / 3)
+		ctx.drawImage(connSprite, - horiz * 0.5, - vert * 5 / 3, horiz * 2, vert * 7 / 3)
+		ctx.rotate(-angle)
+
+		//rings
+		const ringSprite = this.sprites["ring"]
+		const otherRingHex = Hex.directions[hexRotation]
+		const forwardRingHex = Hex.directions[0]
+		const otherRingHexXY = otherRingHex.toXY()
+		otherRingHexXY[0] *= hexSize
+		otherRingHexXY[1] *= hexSize
+		const forwardRingXY = forwardRingHex.toXY()
+		forwardRingXY[0] *= hexSize
+		forwardRingXY[1] *= hexSize
+
+		const bondWidth = ringSize * 0.7
+		const bondHeight = ringSize * 1.18
+		const cylWidth = bondWidth
+		const cylHeight = bondHeight * 0.42
+		const stepAngle = Math.PI * 2 / 3
+		const stepX = forwardRingXY[0]
+		const stepY = forwardRingXY[1]
+		ctx.rotate(angle)
+		ctx.drawImage(bondSprite1, horiz * 0.5 - cylWidth * 0.5, -cylHeight * 0.5, cylWidth, cylHeight)
+		ctx.translate(stepX, stepY)
+		ctx.rotate(-stepAngle)
+		ctx.drawImage(bondSprite2, horiz * 0.5 - cylWidth * 0.5, -cylHeight * 0.5, cylWidth, cylHeight)
+		ctx.translate(stepX, stepY)
+		ctx.rotate(-stepAngle)
+		ctx.drawImage(bondSprite3, horiz * 0.5 - cylWidth * 0.5, -cylHeight * 0.5, cylWidth, cylHeight)
+		ctx.translate(stepX, stepY)
+		ctx.rotate(-stepAngle)
+		ctx.rotate(-angle)
+
+		ctx.drawImage(ringSprite, -ringSize, -ringSize, ringSize * 2, ringSize * 2)
+		ctx.drawImage(symbolSprite, -symbolSize, -symbolSize * 0.8, symbolSize * 2, symbolSize * 2 * 0.8)
+		ctx.translate(otherRingHexXY[0], otherRingHexXY[1])
+		ctx.drawImage(ringSprite, - ringSize, - ringSize, ringSize * 2, ringSize * 2)
+		ctx.drawImage(symbolSprite, -symbolSize, -symbolSize * 0.8, symbolSize * 2, symbolSize * 2 * 0.8)
+		ctx.rotate(-stepAngle)
+		ctx.translate(otherRingHexXY[0], otherRingHexXY[1])
+		ctx.rotate(stepAngle)
+		ctx.drawImage(ringSprite, - ringSize, - ringSize, ringSize * 2, ringSize * 2)
+		ctx.drawImage(symbolSprite, -symbolSize, -symbolSize * 0.8, symbolSize * 2, symbolSize * 2 * 0.8)
+	}
+})
+new GlyphType({
 	id: "Glyph of Unbonding",
 	sprites: {
 		base: "./src/img/glyphs/unbonder/base.png",
