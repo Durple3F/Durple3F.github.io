@@ -1,7 +1,7 @@
 import { atomRenderSize } from "./config.js";
 import { ELEMENTS } from "./elements.js";
 import { loadSound, playSound } from "./sounds.js";
-import { clamp, Component, Hex, Molecule } from "./util.js";
+import { BONDTYPES, clamp, Component, Hex, Molecule } from "./util.js";
 import { loadSprite } from "./sprites.js";
 
 export class GlyphInput {
@@ -109,16 +109,11 @@ new GlyphType({
 		let atomB = inputB.atom
 		let moleculeB = inputB.molecule
 
-		//If these are different molecules, merge them into moleculeA.
-		if (moleculeA !== moleculeB) {
-			combineMolecules(moleculeA, moleculeB, game, level)
-		}
-
 		//If no simple bond exists, add a simple bond between atomA and atomB in moleculeA.
 		let bonds = moleculeA.bonds.contents
 		let bondExists = false
 		for (let bond of bonds) {
-			if (bond.type.id === "simple" && bond.atoms.includes(atomA) && bond.atoms.includes(atomB)) {
+			if (bond.atoms.includes(atomA) && bond.atoms.includes(atomB)) {
 				bondExists = true
 				break
 			}
@@ -126,6 +121,11 @@ new GlyphType({
 		if (!bondExists) {
 			playSound("glyph_bonding")
 			moleculeA.addBond(atomA, atomB, "simple")
+
+			//If these are different molecules, merge them into moleculeA.
+			if (moleculeA !== moleculeB) {
+				combineMolecules(moleculeA, moleculeB, game, level)
+			}
 		}
 	},
 	render: function (ctx, glyph, x, y, hexSize, inRadius, horiz, vert) {
@@ -197,15 +197,11 @@ new GlyphType({
 			let atomB = input.atom
 			let moleculeB = input.molecule
 
-			//If these are different molecules, merge them into moleculeA.
-			if (moleculeA !== moleculeB) {
-				combineMolecules(moleculeA, moleculeB, game, level)
-			}
 			//If no simple bond exists, add a simple bond between atomA and atomB in moleculeA.
 			let bonds = moleculeA.bonds.contents
 			let bondExists = false
 			for (let bond of bonds) {
-				if (bond.type.id === "simple" && bond.atoms.includes(atomA) && bond.atoms.includes(atomB)) {
+				if (bond.atoms.includes(atomA) && bond.atoms.includes(atomB)) {
 					bondExists = true
 					break
 				}
@@ -213,6 +209,10 @@ new GlyphType({
 			if (!bondExists) {
 				added = true
 				moleculeA.addBond(atomA, atomB, "simple")
+				//If these are different molecules, merge them into moleculeA.
+				if (moleculeA !== moleculeB) {
+					combineMolecules(moleculeA, moleculeB, game, level)
+				}
 			}
 		}
 		if (added){
@@ -291,7 +291,22 @@ new GlyphType({
 			id: "glyph_bonding",
 			url: "./src/sounds/glyph_bonding.mp3",
 			category: "sfx"
-		}
+		},
+		{
+			id: "glyph_triplex1",
+			url: "./src/sounds/glyph_triplex1.mp3",
+			category: "sfx"
+		},
+		{
+			id: "glyph_triplex2",
+			url: "./src/sounds/glyph_triplex2.mp3",
+			category: "sfx"
+		},
+		{
+			id: "glyph_triplex3",
+			url: "./src/sounds/glyph_triplex3.mp3",
+			category: "sfx"
+		},
 	],
 	inputs: [
 		new GlyphInput("a", "ring", new Hex(0, 0, 0)),
@@ -302,7 +317,47 @@ new GlyphType({
 		let inputA = inputs["a"]
 		let inputB = inputs["b"]
 		let inputC = inputs["c"]
-		
+		if (!!inputA + !!inputB + !!inputC < 2) return
+		let checks = [
+			[inputA, inputB, "triplex_1", "glyph_triplex2"], //gray
+			[inputB, inputC, "triplex_0", "glyph_triplex1"], //red
+			[inputC, inputA, "triplex_2", "glyph_triplex3"], //yellow
+		]
+
+		for (let check of checks){
+			let input1 = check[0]
+			let input2 = check[1]
+			if (!input1 || !input2) continue
+			let typeId = check[2]
+			let type = BONDTYPES[typeId]
+			let soundId = check[3]
+			let moleculeA = input1.molecule
+			let atomA = input1.atom
+			let moleculeB = input2.molecule
+			let atomB = input2.atom
+
+			//If no simple bond exists, add a simple bond between atomA and atomB in moleculeA.
+			let bonds = moleculeA.bonds.contents
+			let bondExists = false
+			for (let bond of bonds) {
+				if (bond.atoms.includes(atomA) && bond.atoms.includes(atomB)) {
+					let thatType = bond.type
+					let compatible = type.compatibleBondTypeIds.includes(thatType.id)
+					if (!compatible){
+						bondExists = true
+						break
+					}
+				}
+			}
+			if (!bondExists) {
+				moleculeA.addBond(atomA, atomB, typeId)
+				playSound(soundId)
+				//If these are different molecules, merge them into moleculeA.
+				if (moleculeA !== moleculeB) {
+					combineMolecules(moleculeA, moleculeB, game, level)
+				}
+			}
+		}
 	},
 	render: function (ctx, glyph, x, y, hexSize, inRadius, horiz, vert) {
 		const ringSize = atomRenderSize * hexSize * 1.15

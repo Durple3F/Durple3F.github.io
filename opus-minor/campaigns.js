@@ -536,8 +536,8 @@ new Campaign("base", [
 				scenarioId: "mist-of-incapacitation",
 				unlock: { type: "completed", eventId: "chapter-1-outro" }
 			}),
-			new CampaignEvent("puzzle", "explosive-compound", {
-				scenarioId: "explosive-compound",
+			new CampaignEvent("puzzle", "explosive-phial", {
+				scenarioId: "explosive-phial",
 				unlock: { type: "completed", eventId: "chapter-1-outro" }
 			}),
 		],

@@ -706,10 +706,10 @@ new Scenario("mist-of-incapacitation", {
 		dialogueId: "mist-of-incapacitation"
 	}
 })
-new Scenario("explosive-compound", {
+new Scenario("explosive-phial", {
 	products: [
 		{
-			"name": "Explosive Compount",
+			"name": "Explosive Compound",
 			"molecule": {
 				atoms: [
 					["Fire", -1, 0, 1],
@@ -753,6 +753,6 @@ new Scenario("explosive-compound", {
 	],
 	sideContent: {
 		type: "dialogue",
-		dialogueId: "explosive-compound"
+		dialogueId: "explosive-phial"
 	}
 })

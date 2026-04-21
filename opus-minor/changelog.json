@@ -275,7 +275,16 @@
 				"- Added the ability to create new save files",
 				"- Fixed bugs with the repeat instruction",
 				"- Fixed an issue with product icons",
-				"- Added the first 4 levels of chapter 2. There's no dialogue yet. Also the 4th one is impossible."
+				"- Added the first 4 levels of chapter 2. There's no dialogue yet. Also the 4th one is impossible.",
+				"- Added the visuals for the Glyph of Triplex-bonding"
+			]
+		},
+		"20260421": {
+			"date": "April 21, 2026",
+			"line-count": 10700,
+			"changes": [
+				"- Bonds use sprites now instead of just being a line.",
+				"- Working on triplex bonds, but it's bringing up some bugs."
 			]
 		}
 	}

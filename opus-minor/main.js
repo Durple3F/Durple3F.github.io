@@ -1,7 +1,7 @@
 import {Game} from "./game.js";
 import {render, renderEffects} from "./render.js";
 import ControlManager from './controls.js';
-import { clearModal, easeInOutSine } from "./util.js"
+import { BONDTYPES, clearModal, easeInOutSine } from "./util.js"
 import { loadNeededSprites, loadSprite } from "./sprites.js";
 import { ELEMENTS } from "./elements.js";
 import { INSTRUCTIONS, Instruction, createInstructionButton } from "./instructions.js";
@@ -200,6 +200,11 @@ async function loadGame(){
 	for (let elementId in ELEMENTS){
 		let element = ELEMENTS[elementId]
 		await element.load()
+	}
+	//Load bond sprites
+	for (let bondTypeId in BONDTYPES){
+		let bondType = BONDTYPES[bondTypeId]
+		await bondType.load()
 	}
 	//Load glyph sprites
 	for (let glyphId in GLYPHTYPES){

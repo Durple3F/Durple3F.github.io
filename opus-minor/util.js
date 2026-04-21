@@ -1,6 +1,7 @@
 import { atomSize } from "./config";
 import { ELEMENTS } from "./elements";
 import { getLocaleString } from "./locale";
+import { loadSprite } from "./sprites";
 
 const ROOT3 = Math.sqrt(3)
 
@@ -549,16 +550,52 @@ export class Atom {
 
 export const BONDTYPES = {}
 export class BondType {
-	constructor(id) {
+	constructor(id, options={}) {
 		this.id = id
+		this.sprites = {}
+		this.spriteMap = options.sprites ?? {}
+		this.compatibleBondTypeIds = options.compatibleBonds ?? []
+		BONDTYPES[this.id] = this
+	}
+	async load() {
+		let promises = [];
+		for (let spriteName in this.spriteMap) {
+			let url = this.spriteMap[spriteName];
+			let p = loadSprite(url)
+				.then(img => this.sprites[spriteName] = img);
+			promises.push(p);
+		}
+		return await Promise.all(promises);
 	}
 }
-BONDTYPES["simple"] = new BondType("simple")
+new BondType("simple", {
+	sprites: {
+		bond: "./src/img/bonds/standard.png"
+	}
+})
+new BondType("triplex_0", {
+	sprites: {
+		bond: "./src/img/bonds/prisma_0.png"
+	},
+	compatibleBonds: ["triplex_1", "triplex_2"]
+})
+new BondType("triplex_1", {
+	sprites: {
+		bond: "./src/img/bonds/prisma_1.png"
+	},
+	compatibleBonds: ["triplex_0", "triplex_2"]
+})
+new BondType("triplex_2", {
+	sprites: {
+		bond: "./src/img/bonds/prisma_2.png"
+	},
+	compatibleBonds: ["triplex_1", "triplex_0"]
+})
 
 export class Bond {
-	constructor(atom1, atom2) {
+	constructor(atom1, atom2, typeId="simple") {
 		this.atoms = [atom1, atom2]
-		this.type = BONDTYPES["simple"]
+		this.type = BONDTYPES[typeId]
 	}
 }
 
@@ -580,7 +617,7 @@ export class Molecule extends Component {
 			let atom2Index = this.atoms.contents.indexOf(atom2)
 			let atom1Clone = clone.atoms.contents[atom1Index]
 			let atom2Clone = clone.atoms.contents[atom2Index]
-			let bondClone = new Bond(atom1Clone, atom2Clone)
+			let bondClone = new Bond(atom1Clone, atom2Clone, bond.type.id)
 			clone.bonds.contents.push(bondClone)
 		}
 		clone.currentHexRotation = this.currentHexRotation
@@ -674,8 +711,8 @@ export class Molecule extends Component {
 			console.error("These two atoms are too far apart to be bonded:")
 			console.log(atom1, atom2)
 		}
-		let type = BONDTYPES[typeId]
-		let bond = new Bond(atom1, atom2, type)
+		let bond = new Bond(atom1, atom2, typeId)
+		let type = bond.type
 		let taken = false
 		for (let otherBond of this.bonds.contents) {
 			if (otherBond.atoms.includes(atom1) && otherBond.atoms.includes(atom2) && type === otherBond.type) {

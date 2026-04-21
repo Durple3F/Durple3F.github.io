@@ -1,5 +1,5 @@
 import { Hex, Atom, Molecule } from "./util.js";
-import { drawCollisionCircles, drawGhostRotation, drawMoleculeHomeTile, atomRenderSize, drawHexCoords, hexDrawTheme } from "./config.js";
+import { drawCollisionCircles, drawGhostRotation, drawMoleculeHomeTile, atomRenderSize, drawHexCoords, hexDrawTheme, atomSize } from "./config.js";
 import { TrackPiece } from "./track.js";
 import Color from "https://colorjs.io/dist/color.js";
 import { SPRITES } from "./sprites.js";
@@ -272,6 +272,22 @@ function drawMolecule(ctx, molecule, x, y, hexSize, inRadius, horiz, vert, hasSh
 	const cosT = cos(angle)
 	const sinT = sin(angle)
 
+	
+	for (let atom of contents) {
+		const q = atom.coord.q
+		const r = atom.coord.r
+		const atomX = (q + 0.5 * r) * horiz
+		const atomY = r * vert
+		const atomXR = x + atomX * cosT - atomY * sinT
+		const atomYR = y + atomX * sinT + atomY * cosT
+		drawAtom(ctx, atom, atomXR, atomYR, hexSize, inRadius, alpha, hasShadow)
+
+		if (drawGhostRotation) {
+			ctx.globalAlpha = 0.5
+			drawAtom(ctx, atom, atomX + x, atomY + y, hexSize, inRadius, alpha)
+			ctx.globalAlpha = 1
+		}
+	}
 	for (let bond of bonds) {
 		const atom1 = bond.atoms[0]
 		const q1 = atom1.coord.q
@@ -290,31 +306,17 @@ function drawMolecule(ctx, molecule, x, y, hexSize, inRadius, horiz, vert, hasSh
 		const atom2YR = y + atom2X * sinT + atom2Y * cosT
 
 		const type = bond.type
+		const sprite = type.sprites["bond"]
+		const spriteWidth = horiz - atomSize * hexSize * 2
+		const spriteHeight = hexSize * 0.4
+		const dx = atom2XR - atom1XR
+		const dy = atom2YR - atom1YR
+		const rotation = Math.atan2(dy, dx)
 		ctx.save()
-		ctx.beginPath()
-		ctx.lineWidth = hexSize * 0.4
-		ctx.strokeStyle = "white"
-		ctx.globalAlpha = alpha
-		ctx.moveTo(atom1XR, atom1YR)
-		ctx.lineTo(atom2XR, atom2YR)
-		ctx.closePath()
-		ctx.stroke()
+		ctx.translate(atom1XR + dx * 0.5, atom1YR + dy * 0.5)
+		ctx.rotate(rotation)
+		ctx.drawImage(sprite, -spriteWidth * 0.5, -spriteHeight * 0.5, spriteWidth, spriteHeight)
 		ctx.restore()
-	}
-	for (let atom of contents) {
-		const q = atom.coord.q
-		const r = atom.coord.r
-		const atomX = (q + 0.5 * r) * horiz
-		const atomY = r * vert
-		const atomXR = x + atomX * cosT - atomY * sinT
-		const atomYR = y + atomX * sinT + atomY * cosT
-		drawAtom(ctx, atom, atomXR, atomYR, hexSize, inRadius, alpha, hasShadow)
-
-		if (drawGhostRotation) {
-			ctx.globalAlpha = 0.5
-			drawAtom(ctx, atom, atomX + x, atomY + y, hexSize, inRadius, alpha)
-			ctx.globalAlpha = 1
-		}
 	}
 
 	if (drawMoleculeHomeTile) {
