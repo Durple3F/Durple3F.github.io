@@ -726,6 +726,11 @@ export class Molecule extends Component {
 			this.bonds.contents.push(bond)
 		}
 	}
+	hasBond(atom1, atom2, typeId=null) {
+		return this.bonds.contents.some(bond => {
+			return bond.atoms.includes(atom1) && bond.atoms.includes(atom2) && (typeId ? bond.type.id === typeId : true)
+		})
+	}
 }
 
 export function createMolecule(moleculeRecipe) {

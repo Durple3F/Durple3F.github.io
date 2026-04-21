@@ -284,7 +284,8 @@
 			"line-count": 10700,
 			"changes": [
 				"- Bonds use sprites now instead of just being a line.",
-				"- Working on triplex bonds, but it's bringing up some bugs."
+				"- Working on triplex bonds, but it's bringing up some bugs.",
+				"- I understand now why they only bothered making 1 non-standard type of bond."
 			]
 		}
 	}

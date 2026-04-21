@@ -52,6 +52,7 @@ export class GlyphType {
 	}
 }
 
+//Molecule A is given all of the contents of molecule B, then molecule B is deleted.
 function combineMolecules(moleculeA, moleculeB, game, level){
 	let newHomeTile = moleculeA.homeTile
 	let atoms = moleculeB.atoms.contents
@@ -80,6 +81,73 @@ function combineMolecules(moleculeA, moleculeB, game, level){
 	game.deleteComponent(moleculeB, level)
 }
 
+function makeBonds(checks, game, level){
+	let molecules = checks.map(c => c[0]).concat(checks.map(c => c[1]))
+	.filter(v => v).map(v => v.molecule).filter((v, i, s)=>s.indexOf(v)===i)
+	let bondsToCreate = []
+	let toCombine = []
+	for (let check of checks){
+		let input1 = check[0]
+		let input2 = check[1]
+		if (!input1 || !input2) continue
+		let typeId = check[2]
+		let type = BONDTYPES[typeId]
+		let soundId = check[3]
+		let moleculeA = input1.molecule
+		let atomA = input1.atom
+		let moleculeB = input2.molecule
+		let atomB = input2.atom
+
+		//If no simple bond exists, add a simple bond between atomA and atomB in moleculeA.
+		let bonds = moleculeA.bonds.contents
+		let bondExists = false
+		for (let bond of bonds) {
+			if (bond.atoms.includes(atomA) && bond.atoms.includes(atomB)) {
+				let thatType = bond.type
+				let compatible = type.compatibleBondTypeIds.includes(thatType.id)
+				if (!compatible){
+					bondExists = true
+					break
+				}
+			}
+		}
+		if (!bondExists) {
+			bondsToCreate.push([atomA, atomB, typeId, soundId])
+			//If these are different molecules, merge them into moleculeA.
+			if (moleculeA !== moleculeB) {
+				toCombine.push(moleculeA)
+				toCombine.push(moleculeB)
+			}
+		}
+	}
+	toCombine = toCombine.filter((v, i, s) => s.indexOf(v) === i)
+	if (toCombine.length){
+		let first = toCombine[0]
+		for (let i = 1; i < toCombine.length; i++){
+			combineMolecules(first, toCombine[i], game, level)
+		}
+	}
+	for (let bondInstruction of bondsToCreate){
+		let atomA = bondInstruction[0]
+		let atomB = bondInstruction[1]
+		let typeId = bondInstruction[2]
+		let soundId = bondInstruction[3]
+		let added = false
+		for (let molecule of molecules){
+			if (!molecule.atoms.contents.includes(atomA)) continue
+			if (!molecule.atoms.contents.includes(atomB)) continue
+			if (molecule.hasBond(atomA, atomB, typeId)){
+				continue
+			}
+			molecule.addBond(atomA, atomB, typeId)
+			added = true
+		}
+		if (added){
+			playSound(soundId)
+		}
+	}
+}
+
 new GlyphType({
 	id: "Glyph of Bonding",
 	sprites: {
@@ -103,30 +171,11 @@ new GlyphType({
 		let inputA = inputs["a"]
 		let inputB = inputs["b"]
 		if (!inputA || !inputB) return
+		let checks = [
+			[inputA, inputB, "simple", "glyph_bonding"],
+		]
 
-		let atomA = inputA.atom
-		let moleculeA = inputA.molecule
-		let atomB = inputB.atom
-		let moleculeB = inputB.molecule
-
-		//If no simple bond exists, add a simple bond between atomA and atomB in moleculeA.
-		let bonds = moleculeA.bonds.contents
-		let bondExists = false
-		for (let bond of bonds) {
-			if (bond.atoms.includes(atomA) && bond.atoms.includes(atomB)) {
-				bondExists = true
-				break
-			}
-		}
-		if (!bondExists) {
-			playSound("glyph_bonding")
-			moleculeA.addBond(atomA, atomB, "simple")
-
-			//If these are different molecules, merge them into moleculeA.
-			if (moleculeA !== moleculeB) {
-				combineMolecules(moleculeA, moleculeB, game, level)
-			}
-		}
+		makeBonds(checks, game, level)
 	},
 	render: function (ctx, glyph, x, y, hexSize, inRadius, horiz, vert) {
 		const ringSize = atomRenderSize * hexSize * 1.15
@@ -187,37 +236,13 @@ new GlyphType({
 		let inputD = inputs["d"]
 		if (!inputA) return
 		if (!inputB && !inputC && !inputD) return
-		let center = inputA
-		let edges = [inputB, inputC, inputD]
-		let added = false
-		for (let input of edges){
-			if (!input) continue
-			let atomA = center.atom
-			let moleculeA = center.molecule
-			let atomB = input.atom
-			let moleculeB = input.molecule
+		let checks = [
+			[inputA, inputB, "simple", "glyph_bonding"],
+			[inputA, inputC, "simple", "glyph_bonding"],
+			[inputA, inputD, "simple", "glyph_bonding"],
+		]
 
-			//If no simple bond exists, add a simple bond between atomA and atomB in moleculeA.
-			let bonds = moleculeA.bonds.contents
-			let bondExists = false
-			for (let bond of bonds) {
-				if (bond.atoms.includes(atomA) && bond.atoms.includes(atomB)) {
-					bondExists = true
-					break
-				}
-			}
-			if (!bondExists) {
-				added = true
-				moleculeA.addBond(atomA, atomB, "simple")
-				//If these are different molecules, merge them into moleculeA.
-				if (moleculeA !== moleculeB) {
-					combineMolecules(moleculeA, moleculeB, game, level)
-				}
-			}
-		}
-		if (added){
-			playSound("glyph_bonding")
-		}
+		makeBonds(checks, game, level)
 	},
 	render: function (ctx, glyph, x, y, hexSize, inRadius, horiz, vert) {
 		const ringSize = atomRenderSize * hexSize * 1.15
@@ -324,40 +349,7 @@ new GlyphType({
 			[inputC, inputA, "triplex_2", "glyph_triplex3"], //yellow
 		]
 
-		for (let check of checks){
-			let input1 = check[0]
-			let input2 = check[1]
-			if (!input1 || !input2) continue
-			let typeId = check[2]
-			let type = BONDTYPES[typeId]
-			let soundId = check[3]
-			let moleculeA = input1.molecule
-			let atomA = input1.atom
-			let moleculeB = input2.molecule
-			let atomB = input2.atom
-
-			//If no simple bond exists, add a simple bond between atomA and atomB in moleculeA.
-			let bonds = moleculeA.bonds.contents
-			let bondExists = false
-			for (let bond of bonds) {
-				if (bond.atoms.includes(atomA) && bond.atoms.includes(atomB)) {
-					let thatType = bond.type
-					let compatible = type.compatibleBondTypeIds.includes(thatType.id)
-					if (!compatible){
-						bondExists = true
-						break
-					}
-				}
-			}
-			if (!bondExists) {
-				moleculeA.addBond(atomA, atomB, typeId)
-				playSound(soundId)
-				//If these are different molecules, merge them into moleculeA.
-				if (moleculeA !== moleculeB) {
-					combineMolecules(moleculeA, moleculeB, game, level)
-				}
-			}
-		}
+		makeBonds(checks, game, level)
 	},
 	render: function (ctx, glyph, x, y, hexSize, inRadius, horiz, vert) {
 		const ringSize = atomRenderSize * hexSize * 1.15
