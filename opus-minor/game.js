@@ -36,11 +36,13 @@ export class Level{
 		this.timestep = 0
 		this.programs = []
 		this.submittedProductCounts = []
+		this.neededProductCounts = []
 		this.usedProductCounts = []
 		this.usedReagentCounts = []
 		for (let i = 0; i < this.scenario.productMolecules.length; i++){
 			let product = this.scenario.productMolecules[i]
 			this.submittedProductCounts[i] = 0
+			this.neededProductCounts[i] = product.required ?? submissionsPerProduct
 			this.usedProductCounts[i] = 0
 		}
 		for (let i = 0; i < this.scenario.reagentMolecules.length; i++){
@@ -475,6 +477,7 @@ export class Game{
 			let componentCountInfo = this.componentCountInfos["Product"][index]
 			let moleculeName = productMolecule.name
 			let molecule = createMolecule(productMolecule.molecule, 5)
+			console.log(molecule.clone())
 			let componentTag = $("<div class='component'>")
 			productsPane.append(componentTag)
 			componentTag.attr("data-available", true)
@@ -1829,27 +1832,126 @@ export class Game{
 			productHexes.set(product, hexes)
 		}
 		for (let molecule of allMolecules){
-			if (heldMolecules.includes(molecule)){
-				continue
-			}
 			let hexes = this.getPlacementCollisionHexes(molecule)
 			hexes.sort(sortFunction)
 			let wasRemoved = false
 			for (let product of products){
 				let hexes2 = productHexes.get(product)
-				if (hexes.length !== hexes2.length) continue
 				let isEqual = true
-				for (let i = 0; i < hexes.length; i++){
-					if (!hexes[i].equals(hexes2[i])){
+				let canSubmit = true
+				if (!product.molecule.isRepeating()){
+					//Non-repeating molecules need to exactly match the product's footprint
+					if (hexes.length !== hexes2.length) {
 						isEqual = false
 					}
+					if (isEqual){
+						for (let i = 0; i < hexes.length; i++){
+							if (!hexes[i].equals(hexes2[i])){
+								isEqual = false
+							}
+						}
+					}
+					//They must also contain exactly the same atoms in exactly the same places.
+					if (isEqual){
+						//Check that all atoms are in the same places
+						let clone = product.molecule.clone()
+						isEqual = molecule.equals(clone)
+					}
+					canSubmit = !heldMolecules.includes(molecule)
+				} else {
+					//All hexes of the product must appear in the molecule
+					// for (let i = 0; i < hexes2.length; i++){
+					// 	let found = false
+					// 	let targetHex = hexes2[i]
+					// 	for (let hex of hexes){
+					// 		if (hex.equals(targetHex)){
+					// 			found = true
+					// 			break
+					// 		}
+					// 	}
+					// 	if (!found){
+					// 		isEqual = false
+					// 		break
+					// 	}
+					// }
+					//They must also contain the same stuff in the same spots too, but it's hard to find that.
+					if (isEqual){
+						let productHomeTile = product.homeTile
+						let moleculeHomeTile = molecule.homeTile
+						let productAtoms = product.molecule.atoms.contents
+						let moleculeAtoms = molecule.atoms.contents
+						for (let atom of productAtoms){
+							//The repetition atom doesn't count
+							if (atom.element.id === "repetition") {
+								continue
+							}
+							let coord = productHomeTile.add(atom.coord)
+							let foundAtom = null
+							for (let atom2 of moleculeAtoms){
+								let coord2 = molecule.homeTile.add(atom2.coord)
+								if (coord.equals(coord2)){
+									foundAtom = atom2
+									break
+								}
+							}
+							//We should have already ruled this possibility out
+							//But just in case
+							//If you have an atom on the product and no atom on the molecule
+							//That's bad
+							if (!foundAtom){
+								isEqual = false
+								break
+							}
+							if (!foundAtom.equals(atom)){
+								isEqual = false
+								break
+							}
+						}
+					}
+					//They must also have equivalent bonds in each of the same places
+					//(It's important to have this check, because the repetition atom is ignored for atom equality, but checked for bond equality)
+					if (isEqual){
+						let productHomeTile = product.homeTile
+						let moleculeHomeTile = molecule.homeTile
+						let productBonds = product.molecule.bonds.contents
+						let moleculeBonds = molecule.bonds.contents
+						for (let bond of productBonds){
+							let atom1 = bond.atoms[0]
+							let coord1 = productHomeTile.add(atom1.coord)
+							let atom2 = bond.atoms[1]
+							let coord2 = productHomeTile.add(atom2.coord)
+							if (atom1.element.id === "repetition") continue
+							if (atom2.element.id === "repetition") continue
+							let diff = coord1.subtract(coord2)
+							let found = false
+							for (let bond2 of moleculeBonds){
+								let atom3 = bond.atoms[0]
+								let coord3 = productHomeTile.add(atom3.coord)
+								let atom4 = bond.atoms[1]
+								let coord4 = productHomeTile.add(atom4.coord)
+								if (coord2.equals(coord3)){
+									//flip 'em
+									atom3 = atom4
+									coord3 = coord4
+									atom4 = bond.atoms[0]
+									coord4 = productHomeTile.add(atom4.coord)
+								}
+								if (!coord1.equals(coord3)){
+									continue
+								}
+								if (!coord2.equals(coord4)){
+									continue
+								}
+								found = true
+							}
+							if (!found){
+								isEqual = false
+								break
+							}
+						}
+					}
 				}
-				if (isEqual){
-					//Check that all atoms are in the same places
-					let clone = product.molecule.clone()
-					isEqual = molecule.equals(clone)
-				}
-				if (isEqual){
+				if (isEqual && canSubmit){
 					level.submittedProductCounts[0]++
 					this.deleteComponent(molecule, level)
 					break
@@ -2807,7 +2909,11 @@ export class Game{
 		let productTag = statsTag.find(".program-stat[data-stat='products']")
 		let totalProducts = 0
 		let submittedProductCounts = this.simulation.submittedProductCounts
-		let neededProducts = submittedProductCounts.length * submissionsPerProduct
+		let neededProductCounts = this.simulation.neededProductCounts
+		let neededProducts = 0
+		for (let count of neededProductCounts){
+			neededProducts += count
+		}
 		for (let count of submittedProductCounts){
 			totalProducts += min(submissionsPerProduct, count)
 		}
@@ -2876,9 +2982,12 @@ export class Game{
 		//Handle winning
 		if (this.isPlayingSimulation && this.playbackSpeed > 0 && dt > 0){
 			let submittedProductCounts = this.simulation.submittedProductCounts
+			let neededProductCounts = this.simulation.neededProductCounts
 			let won = true
-			for (let productCount of submittedProductCounts){
-				if (productCount < submissionsPerProduct){
+			for (let i = 0; i < submittedProductCounts.length; i++){
+				let neededCount = neededProductCounts[i]
+				let productCount = submittedProductCounts[i]
+				if (productCount < neededCount){
 					won = false
 					break
 				}

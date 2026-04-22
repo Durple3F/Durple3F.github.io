@@ -1,10 +1,10 @@
 export const drawGhostRotation = false
 export const drawMoleculeHomeTile = false
 export const drawCollisionCircles = false
-export const drawHexCoords = false
+export const drawHexCoords = true
 export const hexDrawTheme = "original" // original | rainbow
 export const atomSize = 0.6
 export const atomRenderSize = 0.7
 export const armSize = 0.4
-export const msPerCycle = 600
+export const msPerCycle = 300
 export const submissionsPerProduct = 6

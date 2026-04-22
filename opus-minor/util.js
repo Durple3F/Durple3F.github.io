@@ -707,6 +707,25 @@ export class Molecule extends Component {
 		}
 		this.atoms.contents.push(atom)
 	}
+	removeAtomsOfType(elementId){
+		let atoms = this.atoms.contents
+		let bonds = this.bonds.contents
+		let toRemove = []
+		for (let i = 0; i < atoms.length; i++){
+			let atom = atoms[i]
+			if (atom.element.id === elementId){
+				atoms.splice(i, 1)
+				i--
+				for (let j = 0; j < bonds.length; j++){
+					let bond = bonds[j]
+					if (bond.atoms.includes(atom)){
+						bonds.splice(j, 1)
+						j--
+					}
+				}
+			}
+		}
+	}
 	addBond(atom1, atom2, typeId = "simple") {
 		if (atom1.coord.distance(atom2.coord) !== 1) {
 			console.error("These two atoms are too far apart to be bonded:")
@@ -725,12 +744,16 @@ export class Molecule extends Component {
 		}
 		if (!taken) {
 			this.bonds.contents.push(bond)
+			return bond
 		}
 	}
 	hasBond(atom1, atom2, typeId=null) {
 		return this.bonds.contents.some(bond => {
 			return bond.atoms.includes(atom1) && bond.atoms.includes(atom2) && (typeId ? bond.type.id === typeId : true)
 		})
+	}
+	isRepeating(){
+		return this.atoms.contents.some(atom => atom.element.id === "repetition")
 	}
 }
 
@@ -804,7 +827,7 @@ export function createMolecule(moleculeRecipe, repetitionsAllowed=0) {
 		let repetitionAtom = new Atom("repetition")
 		repetitionAtom.setCoords(repetitionSymbolLocation.q, repetitionSymbolLocation.r, repetitionSymbolLocation.s)
 		molecule.addAtom(repetitionAtom)
-
+		
 		for (let bondRecipe of repetitionBondInfo){
 			let atom1Index = bondRecipe[0]
 			let atom2Index = bondRecipe[1]
@@ -817,10 +840,10 @@ export function createMolecule(moleculeRecipe, repetitionsAllowed=0) {
 			for (let i = 1; i <= repetitionsAllowed; i++){
 				let coord1 = repetitionCoord.scale(i)
 				let coord2 = coord1.add(coordDiff)
-				let foundAtom1 = atoms.find(atom => {
+				let foundAtom1 = molecule.atoms.contents.find(atom => {
 					return atom.coord.equals(coord1)
 				})
-				let foundAtom2 = atoms.find(atom => {
+				let foundAtom2 = molecule.atoms.contents.find(atom => {
 					return atom.coord.equals(coord2)
 				})
 				if (!foundAtom1 || !foundAtom2){
@@ -836,7 +859,6 @@ export function createMolecule(moleculeRecipe, repetitionsAllowed=0) {
 			}
 			molecule.addBond(foundAtom, repetitionAtom, bondTypeId)
 		}
-		console.log(molecule)
 	}
 
 	return molecule

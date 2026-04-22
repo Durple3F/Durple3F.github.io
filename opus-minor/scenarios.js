@@ -760,6 +760,7 @@ new Scenario("armor-filament", {
 	products: [
 		{
 			"name": "Armor Filament",
+			"required": 1,
 			"molecule": {
 				atoms: [
 					["Iron", 0, 0, 0],
@@ -784,6 +785,12 @@ new Scenario("armor-filament", {
 			"name": "Elemental Lead",
 			"molecule": {
 				atoms: [["Lead", 0, 0, 0]]
+			}
+		},
+		{
+			"name": "Elemental Iron",
+			"molecule": {
+				atoms: [["Iron", 0, 0, 0]]
 			}
 		},
 	],

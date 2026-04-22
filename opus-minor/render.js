@@ -583,7 +583,7 @@ export function render(game, ctx, w, h) {
 				const fontSize = hexSize * 0.4
 				const font = fontSize + "px monospace"
 				ctx.font = font
-				ctx.fillStyle = "red"
+				ctx.fillStyle = "black"
 				ctx.fillText(q, x - fontSize * 0.2, y - fontSize * 0.8)
 				ctx.fillText(r, x - fontSize * 0.2, y + fontSize * 0.2)
 				ctx.fillText(s, x - fontSize * 0.2, y + fontSize * 1.2)
