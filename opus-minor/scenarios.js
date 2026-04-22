@@ -759,9 +759,9 @@ new Scenario("explosive-phial", {
 new Scenario("armor-filament", {
 	products: [
 		{
-			"name": "Armor Filament",
-			"required": 1,
-			"molecule": {
+			name: "Armor Filament",
+			required: 1,
+			molecule: {
 				atoms: [
 					["Iron", 0, 0, 0],
 					["Iron", 1, 0, -1],
@@ -776,21 +776,15 @@ new Scenario("armor-filament", {
 	],
 	reagents: [
 		{
-			"name": "Elemental Quicksilver",
-			"molecule": {
+			name: "Elemental Quicksilver",
+			molecule: {
 				atoms: [["Quicksilver", 0, 0, 0]]
 			}
 		},
 		{
-			"name": "Elemental Lead",
-			"molecule": {
+			name: "Elemental Lead",
+			molecule: {
 				atoms: [["Lead", 0, 0, 0]]
-			}
-		},
-		{
-			"name": "Elemental Iron",
-			"molecule": {
-				atoms: [["Iron", 0, 0, 0]]
 			}
 		},
 	],
@@ -811,5 +805,130 @@ new Scenario("armor-filament", {
 	sideContent: {
 		type: "dialogue",
 		dialogueId: "armor-filament"
+	}
+})
+new Scenario("courage-potion", {
+	products: [
+		{
+			name: "Distilled Alcohol",
+			molecule: {
+				atoms: [
+					["Water", 0, 0, 0],
+					["Salt", -1, 0, 1],
+					["Salt", 0, 1, -1],
+					["Fire", 1, -1, 0],
+				],
+				bonds: [
+					[0, 1],
+					[0, 2],
+					[0, 3],
+				]
+			}
+		},
+	],
+	reagents: [
+		{
+			name: "Elemental Fire",
+			molecule: {
+				atoms: [["Fire", 0, 0, 0]]
+			}
+		},
+		{
+			name: "Elemental Water",
+			molecule: {
+				atoms: [["Water", 0, 0, 0]]
+			}
+		},
+	],
+	mechanisms: [
+		"Fixed-Length Arm",
+		"Fixed-Length Double Arm",
+		"Fixed-Length Triple Arm",
+		"Fixed-Length Sextuple Arm",
+		"Piston Arm",
+	],
+	glyphs: [
+		"Glyph of Bonding",
+		"Glyph of Multi-bonding",
+		"Glyph of Unbonding",
+		"Glyph of Calcification",
+	],
+	sideContent: {
+		type: "dialogue",
+		dialogueId: "courage-potion"
+	}
+})
+new Scenario("surrender-flare", {
+	products: [
+		{
+			name: "Green Flare Salt",
+			molecule: {
+				atoms: [
+					["Copper", 0, 0, 0],
+					["Salt", 1, 0, -1],
+					["Salt", 1, -1, 0],
+					["Salt", 0, 1, -1],
+					["Salt", -1, 0, 1],
+					["Salt", -1, 1, 0],
+					["Salt", 0, -1, 1],
+				],
+				bonds: [
+					[0, 1],
+					[0, 2],
+					[0, 3],
+					[0, 4],
+					[0, 5],
+					[0, 6],
+				]
+			}
+		},
+	],
+	reagents: [
+		{
+			name: "Green Flare Salt",
+			molecule: {
+				atoms: [
+					["Iron", 0, 0, 0],
+					["Salt", 1, 0, -1],
+					["Salt", 1, -1, 0],
+					["Salt", 0, 1, -1],
+					["Salt", -1, 0, 1],
+					["Salt", -1, 1, 0],
+					["Salt", 0, -1, 1],
+				],
+				bonds: [
+					[0, 1],
+					[0, 2],
+					[0, 3],
+					[0, 4],
+					[0, 5],
+					[0, 6],
+				]
+			}
+		},
+		{
+			name: "Elemental Quicksilver",
+			molecule: {
+				atoms: [["Quicksilver", 0, 0, 0]]
+			}
+		},
+	],
+	mechanisms: [
+		"Fixed-Length Arm",
+		"Fixed-Length Double Arm",
+		"Fixed-Length Triple Arm",
+		"Fixed-Length Sextuple Arm",
+		"Piston Arm",
+	],
+	glyphs: [
+		"Glyph of Bonding",
+		"Glyph of Multi-bonding",
+		"Glyph of Unbonding",
+		"Glyph of Calcification",
+		"Glyph of Projection",
+	],
+	sideContent: {
+		type: "dialogue",
+		dialogueId: "surrender-flare"
 	}
 })

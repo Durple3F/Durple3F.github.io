@@ -243,107 +243,114 @@ export class Game{
 		let savedPrograms = solution.programs
 		let programs = this.currentLevel.programs
 		let scenario = this.currentLevel.scenario
-		for (let savedComponent of savedComponents){
-			let component
-			switch (savedComponent.type){
-				case "Track": {
-					let track = new Track()
-					let homeTile = savedComponent.homeTile
-					track.homeTile = Hex.fromObj(homeTile)
-					for (let savedTrackPiece of savedComponent.trackPieces){
-						let coord = Hex.fromObj(savedTrackPiece)
-						track.addTrackPiece(coord, true)
-					}
-					component = track
-				} break
-				case "Product": {
-					let productMolecules = scenario.productMolecules
-					let index = savedComponent.productIndex
-					let product = productMolecules[index]
-					let molecule = createMolecule(product.molecule, 5)
-					component = new Product(molecule)
-					let homeTile = savedComponent.homeTile
-					component.homeTile = Hex.fromObj(homeTile)
-					if (savedComponent.hexRotation){
-						while (savedComponent.hexRotation < component.currentHexRotation){
-							component.rotateRight()
+		try {
+			for (let savedComponent of savedComponents){
+				let component
+				switch (savedComponent.type){
+					case "Track": {
+						let track = new Track()
+						let homeTile = savedComponent.homeTile
+						track.homeTile = Hex.fromObj(homeTile)
+						for (let savedTrackPiece of savedComponent.trackPieces){
+							let coord = Hex.fromObj(savedTrackPiece)
+							track.addTrackPiece(coord, true)
 						}
-						while (savedComponent.hexRotation > component.currentHexRotation){
-							component.rotateLeft()
+						component = track
+					} break
+					case "Product": {
+						let productMolecules = scenario.productMolecules
+						let index = savedComponent.productIndex
+						let product = productMolecules[index]
+						let molecule = createMolecule(product.molecule, 5)
+						component = new Product(molecule)
+						let homeTile = savedComponent.homeTile
+						component.homeTile = Hex.fromObj(homeTile)
+						if (savedComponent.hexRotation){
+							while (savedComponent.hexRotation < component.currentHexRotation){
+								component.rotateRight()
+							}
+							while (savedComponent.hexRotation > component.currentHexRotation){
+								component.rotateLeft()
+							}
 						}
-					}
-					component.componentCountInfos.push(this.componentCountInfos["Product"][index])
-				} break
-				case "Reagent": {
-					let reagentMolecules = scenario.reagentMolecules
-					let index = savedComponent.reagentIndex
-					let reagent = reagentMolecules[index]
-					let molecule = createMolecule(reagent.molecule)
-					component = new Reagent(molecule)
-					let homeTile = savedComponent.homeTile
-					component.homeTile = Hex.fromObj(homeTile)
-					if (savedComponent.hexRotation){
-						while (savedComponent.hexRotation < component.currentHexRotation){
-							component.rotateRight()
+						component.componentCountInfos.push(this.componentCountInfos["Product"][index])
+					} break
+					case "Reagent": {
+						let reagentMolecules = scenario.reagentMolecules
+						let index = savedComponent.reagentIndex
+						let reagent = reagentMolecules[index]
+						let molecule = createMolecule(reagent.molecule)
+						component = new Reagent(molecule)
+						let homeTile = savedComponent.homeTile
+						component.homeTile = Hex.fromObj(homeTile)
+						if (savedComponent.hexRotation){
+							while (savedComponent.hexRotation < component.currentHexRotation){
+								component.rotateRight()
+							}
+							while (savedComponent.hexRotation > component.currentHexRotation){
+								component.rotateLeft()
+							}
 						}
-						while (savedComponent.hexRotation > component.currentHexRotation){
-							component.rotateLeft()
+						component.componentCountInfos.push(this.componentCountInfos["Reagent"][index])
+					} break
+					case "Glyph": {
+						let glyphId = savedComponent.glyphId
+						component = new Glyph(glyphId)
+						let homeTile = savedComponent.homeTile
+						component.homeTile = Hex.fromObj(homeTile)
+						if (savedComponent.hexRotation){
+							while (savedComponent.hexRotation < component.currentHexRotation){
+								component.rotateRight()
+							}
+							while (savedComponent.hexRotation > component.currentHexRotation){
+								component.rotateLeft()
+							}
 						}
-					}
-					component.componentCountInfos.push(this.componentCountInfos["Reagent"][index])
-				} break
-				case "Glyph": {
-					let glyphId = savedComponent.glyphId
-					component = new Glyph(glyphId)
-					let homeTile = savedComponent.homeTile
-					component.homeTile = Hex.fromObj(homeTile)
-					if (savedComponent.hexRotation){
-						while (savedComponent.hexRotation < component.currentHexRotation){
-							component.rotateRight()
+					} break
+					case "ArmMechanism": {
+						let mechanismId = savedComponent.mechanismId
+						component = new ArmMechanism(mechanismId)
+						let homeTile = savedComponent.homeTile
+						component.homeTile = Hex.fromObj(homeTile)
+						if (savedComponent.hexRotation){
+							while (savedComponent.hexRotation < component.currentHexRotation){
+								component.rotateRight()
+							}
+							while (savedComponent.hexRotation > component.currentHexRotation){
+								component.rotateLeft()
+							}
 						}
-						while (savedComponent.hexRotation > component.currentHexRotation){
-							component.rotateLeft()
+						let firstArm = component.arms.contents[0]
+						let lengthDiff = savedComponent.armLength - firstArm.distance
+						if (firstArm.distance !== savedComponent.armLength){
+							for (let arm of component.arms.contents){
+								arm.distance += lengthDiff
+							}
 						}
-					}
-				} break
-				case "ArmMechanism": {
-					let mechanismId = savedComponent.mechanismId
-					component = new ArmMechanism(mechanismId)
-					let homeTile = savedComponent.homeTile
-					component.homeTile = Hex.fromObj(homeTile)
-					if (savedComponent.hexRotation){
-						while (savedComponent.hexRotation < component.currentHexRotation){
-							component.rotateRight()
-						}
-						while (savedComponent.hexRotation > component.currentHexRotation){
-							component.rotateLeft()
-						}
-					}
-					let firstArm = component.arms.contents[0]
-					let lengthDiff = savedComponent.armLength - firstArm.distance
-					if (firstArm.distance !== savedComponent.armLength){
-						for (let arm of component.arms.contents){
-							arm.distance += lengthDiff
-						}
-					}
-					component.rotationPoint = firstArm.direction.scale(firstArm.distance)
+						component.rotationPoint = firstArm.direction.scale(firstArm.distance)
 
-					let savedProgram = savedPrograms[savedComponent.programIndex]
-					let program = new Program(component, savedProgram.name)
-					component.program = program
-					let savedInstructions = savedProgram.instructions
-					for (let i = 0; i < savedInstructions.length; i++){
-						let instructionTypeId = savedInstructions[i]
-						let instructionType = INSTRUCTIONS[instructionTypeId]
-						let instruction = new Instruction(instructionType)
-						program.instructions[i] = instruction
-					}
-					programs.push(program)
-				} break
+						let savedProgram = savedPrograms[savedComponent.programIndex]
+						let program = new Program(component, savedProgram.name)
+						component.program = program
+						let savedInstructions = savedProgram.instructions
+						for (let i = 0; i < savedInstructions.length; i++){
+							let instructionTypeId = savedInstructions[i]
+							let instructionType = INSTRUCTIONS[instructionTypeId]
+							let instruction = new Instruction(instructionType)
+							program.instructions[i] = instruction
+						}
+						programs.push(program)
+					} break
+				}
+				if (component){
+					this.addComponent(component, this.currentLevel)
+				}
 			}
-			if (component){
-				this.addComponent(component, this.currentLevel)
-			}
+		}
+		catch (e) {
+			alert("This solution could not be loaded.")
+			console.log(e)
+			this.exit()
 		}
 	}
 

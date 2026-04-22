@@ -293,10 +293,11 @@
 		},
 		"20260422": {
 			"date": "April 22, 2026",
-			"line-count": 11000,
+			"line-count": 11200,
 			"changes": [
 				"- Repeating products work now!",
-				"- Scenarios can now decide how many of each product the player has to submit."
+				"- Scenarios can now decide how many of each product the player has to submit.",
+				"- Added the rest of the levels in chapter 2"
 			]
 		}
 	}

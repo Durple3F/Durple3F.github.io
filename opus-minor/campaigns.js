@@ -544,6 +544,14 @@ new Campaign("base", [
 				scenarioId: "armor-filament",
 				unlock: { type: "completed", eventId: "chapter-1-outro" }
 			}),
+			new CampaignEvent("puzzle", "courage-potion", {
+				scenarioId: "courage-potion",
+				unlock: { type: "completed", eventId: "chapter-1-outro" }
+			}),
+			new CampaignEvent("puzzle", "surrender-flare", {
+				scenarioId: "surrender-flare",
+				unlock: { type: "completed", eventId: "chapter-1-outro" }
+			}),
 		],
 		imageUrls: {
 			locked: "./src/img/campaigns/base/chapter 2 locked.png",
