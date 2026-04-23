@@ -663,6 +663,74 @@ export function render(game, ctx, w, h) {
 	}
 }
 
+export function renderPrograms(game, ctx, w, h){
+	ctx.clearRect(0, 0, w, h)
+	const windowH = window.innerHeight
+
+	//Frame
+	const targetFrameHeight = windowH * 0.3 //40vh
+	const frameY = h - targetFrameHeight
+
+	const frameLeft = SPRITES["program_pane_frame_left"]
+	const frameMiddle = SPRITES["program_pane_frame_center"]
+	const frameRight = SPRITES["program_pane_frame_right"]
+
+	// Scale widths based on height (preserve aspect ratio)
+	const frameLeftW = targetFrameHeight * (frameLeft.width / frameLeft.height)
+	const frameMiddleW = targetFrameHeight * (frameMiddle.width / frameMiddle.height)
+	const frameRightW = targetFrameHeight * (frameRight.width / frameRight.height)
+	const frameRemainingW = w - frameLeftW - frameRightW
+
+	//Program rows
+	{
+		const boxX = frameLeftW * 281 / 295;   // left
+		const boxEndX = w - frameRightW * 26 / 74;
+		const boxY = frameY + targetFrameHeight * 45 / 296;   // top
+		const boxEndY = frameY + targetFrameHeight * 272 / 296;
+		const boxW = boxEndX - boxX;   // width
+		const boxH = boxEndY - boxY;   // height
+
+		// Fit sprite to box width
+		const drawH = boxH / 6
+
+		// Number of vertical tiles (ceil to ensure coverage)
+		const tileCount = Math.ceil(boxH / drawH)
+
+		ctx.save()
+
+		// Clip to the box so we don't overdraw
+		ctx.beginPath()
+		ctx.rect(boxX, boxY, boxW, boxH)
+		ctx.clip()
+
+		let y = boxY
+		let firstProgramRow = 0
+		const programRowDividerSprite = SPRITES["program_row_divider"]
+
+		for (let i = 0; i < tileCount; i++) {
+			const programRowIndex = firstProgramRow + i
+			const spriteName = programRowIndex % 2 ? "program_row_first" : "program_row_second"
+			const sprite = SPRITES[spriteName]
+			const aspect = sprite.width / sprite.height
+			const drawW = drawH * aspect
+			let x = 0
+			while (x < boxW){
+				ctx.drawImage(sprite, boxX + x, y, drawW + 1, drawH)
+				x += drawW
+			}
+			ctx.drawImage(programRowDividerSprite, boxX, y + drawH * 0.9, boxW, drawH * 0.2)
+			y += drawH
+		}
+
+		ctx.restore()
+	}
+
+	//Actually draw frame
+	ctx.drawImage(frameLeft, 0, frameY, frameLeftW, targetFrameHeight)
+	ctx.drawImage(frameMiddle, frameLeftW, frameY, frameRemainingW, targetFrameHeight)
+	ctx.drawImage(frameRight, w - frameRightW, frameY, frameRightW, targetFrameHeight)
+}
+
 export function renderEffects(game, ctx, w, h) {
 	ctx.clearRect(0, 0, w, h)
 	if (game.isDraggingBox) {

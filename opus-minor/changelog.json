@@ -293,12 +293,15 @@
 		},
 		"20260422": {
 			"date": "April 22, 2026",
-			"line-count": 11200,
+			"line-count": 11300,
 			"changes": [
 				"- Repeating products work now!",
 				"- Scenarios can now decide how many of each product the player has to submit.",
 				"- Added the rest of the levels in chapter 2",
-				"- Added the halt instruction"
+				"- Added the halt instruction",
+				"- I'm starting to rework the entire bottom pane to look more like the one in-game. It's going to take a long time.",
+				"- Currently the frame for the program frame is in place, and it scales nicely for most screen sizes.",
+				"- I also have the program rows being rendered, but they don't display the correct information yet."
 			]
 		}
 	}

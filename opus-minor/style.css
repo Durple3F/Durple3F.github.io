@@ -7,7 +7,7 @@ body {
 }
 
 :root {
-	--bottom-pane-height: min(35vh, 15vw);
+	--bottom-pane-height: 35vh;
 	--screen-height: calc(100vh - var(--bottom-pane-height));
 	--program-row-height: 5vh;
 	--components-bg: rgb(41, 49, 112);
@@ -233,8 +233,8 @@ body {
 	position: absolute;
 	top: 0;
 	right: 0;
-	height: var(--screen-height);
-	width: 85vw;
+	height: 100vh; /* var(--screen-height); */
+	width: 100vw;
 }
 #screen-effects {
 	position: absolute;
@@ -246,11 +246,22 @@ body {
 	z-index: 30;
 }
 
+#program-screen {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100vw;
+	aspect-ratio: 1362 / 296;
+	z-index: 15;
+	/* background-color: var(--programs-bg); */
+	/* border-top: var(--pane-border); */
+}
+
 #components {
 	position: absolute;
 	top: 0;
 	left: 0;
-	height: calc(100vh - var(--bottom-pane-height));
+	height: 80vh;
 	width: 15vw;
 	background-color: var(--components-bg);
 	border-right: var(--pane-border);
@@ -307,6 +318,9 @@ body {
 			padding-bottom: 0.5em;
 			position: relative;
 		}
+	}
+	.components-section:last-child {
+		padding-bottom: 10vh;
 	}
 }
 
@@ -390,8 +404,9 @@ body {
 	width: 100vw;
 	height: var(--bottom-pane-height);
 	z-index: 15;
-	background-color: var(--programs-bg);
+	/* background-color: var(--programs-bg); */
 	border-top: var(--pane-border);
+	display: none;
 }
 
 #instruction-pane {
