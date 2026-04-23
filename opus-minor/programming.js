@@ -1,4 +1,6 @@
 import { Instruction, INSTRUCTIONS } from "./instructions";
+import { SPRITES } from "./sprites";
+import { Rectangle } from "./util";
 
 
 export class Program {
@@ -58,6 +60,94 @@ export class ProgramManager {
 	constructor(canvas, controls){
 		this.canvas = canvas
 		this.controls = controls
+		this.isDragging = false
+		this.yOffset = 0
+		this.xOffset = 0
+		this.programBoxLocation = new Rectangle(0, 0, 0, 0)
+		this.renderInfo = {}
+		this.resizeScreen()
+	}
+	resizeScreen(){
+		const renderInfo = this.renderInfo
+		const w = window.innerWidth
+		const h = window.innerHeight
+		//Frame
+		const targetFrameHeight = h * 0.3 //40vh
+		const frameY = h - targetFrameHeight
 		
+		const frameLeft = SPRITES["program_pane_frame_left"]
+		const frameMiddle = SPRITES["program_pane_frame_center"]
+		const frameRight = SPRITES["program_pane_frame_right"]
+	
+		// Scale widths based on height (preserve aspect ratio)
+		const frameLeftW = targetFrameHeight * (frameLeft.width / frameLeft.height)
+		const frameMiddleW = targetFrameHeight * (frameMiddle.width / frameMiddle.height)
+		const frameRightW = targetFrameHeight * (frameRight.width / frameRight.height)
+		const frameRemainingW = w - frameLeftW - frameRightW
+		renderInfo.frameLeftW = frameLeftW
+		renderInfo.frameMiddleW = frameMiddleW
+		renderInfo.frameRightW = frameRightW
+		renderInfo.frameRemainingW = frameRemainingW
+
+		//Program rows
+		const boxX = frameLeftW * 281 / 295;   // left
+		const boxEndX = w - frameRightW * 26 / 74;
+		const boxY = frameY + targetFrameHeight * 45 / 296;   // top
+		const boxEndY = frameY + targetFrameHeight * 272 / 296;
+		const boxW = boxEndX - boxX;   // width
+		const boxH = boxEndY - boxY;   // height
+		renderInfo.programBoxX = boxX
+		renderInfo.programBoxX2 = boxEndX
+		renderInfo.programBoxW = boxW
+		renderInfo.programBoxY = boxY
+		renderInfo.programBoxY2 = boxEndY
+		renderInfo.programBoxH = boxH
+		this.programBoxLocation.x = boxX
+		this.programBoxLocation.y = boxY
+		this.programBoxLocation.w = boxW
+		this.programBoxLocation.h = boxH
+
+		const programH = boxH / 6
+		renderInfo.programH = programH
+		const programSprite = SPRITES["instruction"]
+		const drawW = programH * programSprite.width / programSprite.height
+		renderInfo.tileW = drawW
+	}
+	getIndexesFromXY(x, y){
+		let boxX = this.programBoxLocation.x
+		let boxY = this.programBoxLocation.y
+		let realX = x - boxX - this.xOffset
+		let realY = y - boxY - this.yOffset
+		let programIndex = realY / this.renderInfo.programH
+		let tileIndex = realX / this.renderInfo.tileW
+		programIndex = Math.floor(programIndex)
+		tileIndex = Math.floor(tileIndex)
+		return [programIndex, tileIndex]
+	}
+	tick(){
+		const controls = this.controls
+		const mouseX = controls.mouse.x
+		const mouseY = controls.mouse.y
+		const isInProgramBox = this.programBoxLocation.contains(mouseX, mouseY)
+		if (isInProgramBox){
+			if (controls.justClicked("right")){
+				this.isDragging = true
+			}
+		}
+		if (!controls.isClicking("right")) {
+			this.isDragging = false
+		}
+
+		if (this.isDragging){
+			let records = controls.mouse.records
+			let prev = records[records.length - 2]
+			let cur = records[records.length - 1]
+			let dx = prev[0] - cur[0]
+			let dy = prev[1] - cur[1]
+			this.xOffset += dx
+			this.yOffset += dy
+			if (this.yOffset < 0) this.yOffset = 0
+			if (this.xOffset < 0) this.xOffset = 0
+		}
 	}
 }

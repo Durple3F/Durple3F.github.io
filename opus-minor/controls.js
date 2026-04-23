@@ -148,6 +148,19 @@ export default class ControlManager {
 		}
 		return this.getMouseButtonState(index) && !this.mouse.prevButtons[index]
 	}
+	justUnclicked(mouseButtonName){
+		let index = 1
+		switch (mouseButtonName){
+			case undefined: break
+			case 1: index = 1; break
+			case 2: index = 2; break
+			case 3: index = 3; break
+			case "left": index = 1; break
+			case "right": index = 2; break
+			case "middle": index = 3; break
+		}
+		return !this.getMouseButtonState(index) && this.mouse.prevButtons[index]
+	}
 	setMousePosition(x, y){
 		let offset = $(this.canvas).offset()
 		this.mouse.clientX = x

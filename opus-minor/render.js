@@ -666,6 +666,8 @@ export function render(game, ctx, w, h) {
 export function renderPrograms(game, ctx, w, h){
 	ctx.clearRect(0, 0, w, h)
 	const windowH = window.innerHeight
+	const programManager = game.programManager
+	const renderInfo = programManager.renderInfo
 
 	//Frame
 	const targetFrameHeight = windowH * 0.3 //40vh
@@ -676,13 +678,14 @@ export function renderPrograms(game, ctx, w, h){
 	const frameRight = SPRITES["program_pane_frame_right"]
 
 	// Scale widths based on height (preserve aspect ratio)
-	const frameLeftW = targetFrameHeight * (frameLeft.width / frameLeft.height)
-	const frameMiddleW = targetFrameHeight * (frameMiddle.width / frameMiddle.height)
-	const frameRightW = targetFrameHeight * (frameRight.width / frameRight.height)
-	const frameRemainingW = w - frameLeftW - frameRightW
+	const frameLeftW = renderInfo.frameLeftW
+	const frameMiddleW = renderInfo.frameMiddleW
+	const frameRightW = renderInfo.frameRightW
+	const frameRemainingW = renderInfo.frameRemainingW
 
 	//Program rows
 	{
+		const programs = game.currentLevel.programs
 		const boxX = frameLeftW * 281 / 295;   // left
 		const boxEndX = w - frameRightW * 26 / 74;
 		const boxY = frameY + targetFrameHeight * 45 / 296;   // top
@@ -691,10 +694,10 @@ export function renderPrograms(game, ctx, w, h){
 		const boxH = boxEndY - boxY;   // height
 
 		// Fit sprite to box width
-		const drawH = boxH / 6
+		const drawH = renderInfo.programH
 
 		// Number of vertical tiles (ceil to ensure coverage)
-		const tileCount = Math.ceil(boxH / drawH)
+		const tileCount = ceil(boxH / drawH) + 1
 
 		ctx.save()
 
@@ -703,21 +706,51 @@ export function renderPrograms(game, ctx, w, h){
 		ctx.rect(boxX, boxY, boxW, boxH)
 		ctx.clip()
 
-		let y = boxY
-		let firstProgramRow = 0
+		const yOffset = programManager.yOffset
+		const xOffset = programManager.xOffset
+		let firstProgramRow = floor(yOffset / drawH)
+		let y = boxY - yOffset + firstProgramRow * drawH
 		const programRowDividerSprite = SPRITES["program_row_divider"]
+		const instructionSprite = SPRITES["instruction"]
 
 		for (let i = 0; i < tileCount; i++) {
 			const programRowIndex = firstProgramRow + i
-			const spriteName = programRowIndex % 2 ? "program_row_first" : "program_row_second"
+			let program = programs[programRowIndex]
+			const spriteName = program ? (programRowIndex % 2 ? "program_row_second" : "program_row_first") : "program_row_background"
 			const sprite = SPRITES[spriteName]
-			const aspect = sprite.width / sprite.height
-			const drawW = drawH * aspect
-			let x = 0
-			while (x < boxW){
-				ctx.drawImage(sprite, boxX + x, y, drawW + 1, drawH)
-				x += drawW
+			const drawW = renderInfo.tileW
+			let firstTile = floor(xOffset / drawW)
+
+			//Draw background tiles
+			let bgTileX = boxX - xOffset + firstTile * drawW
+			let insTileCount = ceil(boxW / drawW) + 1
+			for (let j = 0; j < insTileCount; j++){
+				ctx.drawImage(sprite, bgTileX, y, drawW + 1, drawH)
+				bgTileX += drawW
 			}
+
+			if (program){
+				let instructions = program.instructions
+				let insTileX = boxX - xOffset + (firstTile - 1) * drawW
+				let insTileCount = ceil(boxW / drawW) + 1
+				for (let j = 0; j < insTileCount; j++){
+					let instructionIndex = firstTile + j
+					let instruction = instructions[instructionIndex]
+					insTileX += drawW
+					if (!instruction) continue
+					let instructionType = instruction.type
+					if (instructionType.id === "idle") continue
+					ctx.drawImage(instructionSprite, insTileX, y, drawW, drawH)
+					const instructionIconSprite = instructionType.sprite
+					const centerX = insTileX + drawW * 0.5
+					const centerY = y + drawH * 0.5
+					const insW = drawH * 0.9
+					const insX = centerX - insW * 0.53
+					const insY = centerY - insW * 0.53
+					ctx.drawImage(instructionIconSprite, insX, insY, insW, insW)
+				}
+			}
+
 			ctx.drawImage(programRowDividerSprite, boxX, y + drawH * 0.9, boxW, drawH * 0.2)
 			y += drawH
 		}

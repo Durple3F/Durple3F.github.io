@@ -303,6 +303,16 @@
 				"- Currently the frame for the program frame is in place, and it scales nicely for most screen sizes.",
 				"- I also have the program rows being rendered, but they don't display the correct information yet."
 			]
+		},
+		"20260423": {
+			"date": "April 23, 2026",
+			"line-count": 11300,
+			"changes": [
+				"- Now the rows show the proper programs",
+				"- Now it renders the instruction boxes within each program",
+				"- Now it renders the instructions within the boxes",
+				"- Now you can pick up instructions and put them back down"
+			]
 		}
 	}
 }

@@ -67,7 +67,7 @@ class DragBox {
 }
 
 export class Game{
-	constructor(canvas, controls, scenario, solution){
+	constructor(canvas, programCanvas, controls, scenario, solution){
 		this.controls = controls
 		this.solution = solution
 		this.isActive = true
@@ -106,6 +106,8 @@ export class Game{
 		this.hoveredHex = null
 		this.isDraggingBox = false
 		this.dragBox = null
+
+		this.programManager = new ProgramManager(programCanvas, this.controls)
 
 		this.promise = new Promise(resolve => {
 			this.resolvePromise = resolve
@@ -739,8 +741,22 @@ export class Game{
 		this.performUIUpdates()
 		this.saveSolution()
 	}
-	placeHeldInstructions(){
+	placeHeldInstructions(programIndex, instructionIndex){
+		let held = this.heldInstructions
+		let programs = this.currentLevel.programs
+		for (let i = 0; i < this.heldInstructions.length; i++){
+			let heldInstructions = this.heldInstructions[i]
+			let addToProgram = programs[programIndex + i]
+			for (let j = 0; j < heldInstructions.length; j++){
+				let instruction = heldInstructions[j]
+				this.insertProgramInstruction(instruction, addToProgram, instructionIndex + j)
+			}
+		}
+		playSound("instruction_place")
 		
+		this.endHoldingInstructions()
+		this.performUIUpdates()
+		this.selectInstructions(held)
 	}
 	handleProgramMouseMove(event, program, component){
 		let row = program.elem[0]
@@ -1548,6 +1564,8 @@ export class Game{
 		// const leftQ = floor(leftPixel / horiz)
 		// const rightQ = ceil(rightPixel / horiz)
 		// grid.fill(leftQ, rightQ, topR, bottomR)
+
+		this.programManager.resizeScreen()
 	}
 
 	getHexAt(q, r){
@@ -2912,6 +2930,8 @@ export class Game{
 		const dt = now - this.lastTick
 		this.lastTick = now
 		const controls = this.controls
+		const screenW = this.canvas.width
+		const screenH = this.canvas.height
 
 		//Playback keyboard controls
 		if (controls.justPressed(" ")){
@@ -2982,21 +3002,26 @@ export class Game{
 
 		let mouseX = controls.mouse.x
 		let mouseY = controls.mouse.y
+		let clientX = controls.mouse.clientX
+		let clientY = controls.mouse.clientY
 		let hoveredHex = this.getHexFromXY(mouseX, mouseY)
 		if (this.hoveredHex && !this.isPlayingSimulation) this.hoveredHex.active = false
 		this.hoveredHex = hoveredHex
 		if (!this.isPlayingSimulation) hoveredHex.active = true
 
+		const componentPaneWidth = screenW * 0.15
+		const programPaneHeight = screenH * 0.72
 		const isLeftClicking = controls.isClicking("left")
 		const isRightClicking = controls.isClicking("right")
 		const isMouseOnScreen = controls.isMouseOnScreen()
+		const isMouseOnBoard = isMouseOnScreen && controls.mouse.clientX > componentPaneWidth && controls.mouse.clientY < programPaneHeight
 
 		//Finding whether we should show any components' rotation points
 		const components = this.currentLevel.grid.contents
 		for (let component of components){
 			component.renderRotationPoint = false
 		}
-		if (isMouseOnScreen){
+		if (isMouseOnBoard){
 			for (let component of components){
 				//1-atom products and reagents don't need a rotation point.
 				if (component.type === "Product" || component.type === "Reagent"){
@@ -3023,11 +3048,11 @@ export class Game{
 			this.updateComponentPane()
 			if (!this.isAdjustingComponent){
 				//This code runs while the player is moving a component
-				if (isLeftClicking && isMouseOnScreen && hoveredHex){
+				if (isLeftClicking && isMouseOnBoard && hoveredHex){
 					this.selectedComponent.homeTile = hoveredHex
 					this.selectedComponent.isRendered = true
 				}
-				else if (!isLeftClicking && isMouseOnScreen && hoveredHex){
+				else if (!isLeftClicking && isMouseOnBoard && hoveredHex){
 					//If the proposed placement is legal, place it. Otherwise, cancel.
 					this.tryToPlaceSelectedComponent()
 				}
@@ -3035,7 +3060,7 @@ export class Game{
 					this.cancelPlacement()
 				}
 				//If the player drags a previously-placed component offscreen, delete it.
-				else if (!isMouseOnScreen && this.selectedComponent.lastPlacement){
+				else if (!isMouseOnBoard && this.selectedComponent.lastPlacement){
 					this.cancelPlacement(true)
 				}
 			} else if (this.selectedComponent.type !== "Track") {
@@ -3152,7 +3177,7 @@ export class Game{
 					this.tryToPlaceSelectedComponent()
 				}
 			}
-		} else if (controls.justClicked("left") && !this.isPlayingSimulation && isMouseOnScreen){
+		} else if (controls.justClicked("left") && !this.isPlayingSimulation && isMouseOnBoard){
 			//check if the player just clicked on a component they can move
 			const components = this.currentLevel.grid.contents
 			for (let i = components.length - 1; i >= 0; i--){
@@ -3180,10 +3205,10 @@ export class Game{
 		}
 
 		//Map dragging
-		if (controls.justClicked("right")){
+		if (isMouseOnBoard && controls.justClicked("right")){
 			this.isDraggingMap = true
 		}
-		if (!isMouseOnScreen || isLeftClicking || !isRightClicking || this.selectedComponent) {
+		if (!isMouseOnBoard || isLeftClicking || !isRightClicking || this.selectedComponent) {
 			this.isDraggingMap = false
 		}
 		if (this.isDraggingMap){
@@ -3197,8 +3222,69 @@ export class Game{
 			this.resizeScreen()
 		}
 
+		//Programming pane
+		let holdingKeyInstruction = this.isHoldingKeyInstruction
+		const mouseIsOnBottom = isMouseOnScreen && !isMouseOnBoard && controls.mouse.clientY >= programPaneHeight
+		if (mouseIsOnBottom && !this.isPlayingSimulation){
+			//Check if the player is clicking a non-idle instruction
+			if (controls.justClicked("left")){
+				let [programIndex, instructionIndex] = this.programManager.getIndexesFromXY(clientX, clientY)
+				let program = this.currentLevel.programs[programIndex]
+				if (program){
+					let instruction = program.instructions[instructionIndex]
+					if (instruction){
+						this.selectInstructions([[instruction]])
+					}
+				}
+			}
+			//If the player is ready to move an instruction, get ready to move it
+			if (isLeftClicking && this.selectedInstructions.length && !this.heldInstructions.length){
+				let oldMousePos = controls.mouseDownOrigin
+				if (oldMousePos){
+					let mouseX = controls.mouse.clientX
+					let mouseY = controls.mouse.clientY
+					let dist = Math.hypot(oldMousePos[0] - mouseX, oldMousePos[1] - mouseY)
+					if (dist > 5){
+						playSound("instruction_pickup")
+						this.beginHoldingInstructions(this.selectedInstructions)
+					}
+				}
+			}
+		}
+
+		//Instruction placement
+		if (this.heldInstructions.length){
+			// if (!continueHoldingInstructions){
+			// 	this.endHoldingInstructions()
+			// 	playSound("instruction_remove")
+			// }
+			let isMouseInProgramBox = this.programManager.programBoxLocation.contains(clientX, clientY)
+			let placingKeyInstruction = holdingKeyInstruction && controls.justClicked("left")
+			let placingRealInstruction = !holdingKeyInstruction && controls.justUnclicked("left")
+			let shouldPlace = placingKeyInstruction || placingRealInstruction
+			if (shouldPlace){
+				let [programIndex, instructionIndex] = this.programManager.getIndexesFromXY(clientX, clientY)
+				let program = this.currentLevel.programs[programIndex]
+				if (program){
+					this.placeHeldInstructions(programIndex, instructionIndex)
+				}
+			}
+			if (this.heldInstructions.length && !holdingKeyInstruction && !isLeftClicking && !isMouseInProgramBox){
+				this.endHoldingInstructions()
+				if (!this.isHoldingKeyInstruction){
+					playSound("instruction_remove")
+				}
+			}
+			if (this.heldInstructions.length && holdingKeyInstruction){
+				if (!controls.isPressing(this.heldInstructions[0][0].type.key)){
+					this.endHoldingInstructions()
+				}
+			}
+		}
+
 		//instruction keyboard controls
 		let continueHoldingInstructions = isLeftClicking
+		this.isHoldingKeyInstruction = false
 		for (let instructionId in INSTRUCTIONS){
 			let instructionType = INSTRUCTIONS[instructionId]
 			let key = instructionType.key
@@ -3209,18 +3295,12 @@ export class Game{
 			}
 			if (pressing){
 				continueHoldingInstructions = true
+				holdingKeyInstruction = true
+				this.isHoldingKeyInstruction = true
 			}
 		}
 
-		//Instruction placement
-		if (this.heldInstructions.length){
-			if (!continueHoldingInstructions){
-				this.endHoldingInstructions()
-				playSound("instruction_remove")
-			}
-		} else if (this.overrideInstructionMouseUp && !isLeftClicking){
-			this.overrideInstructionMouseUp = false
-		}
+		this.programManager.tick()
 
 		//Fast-forward step keyboard controls
 		if (controls.isPressing("Alt")){

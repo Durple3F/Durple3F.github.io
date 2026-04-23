@@ -7,7 +7,7 @@ body {
 }
 
 :root {
-	--bottom-pane-height: 35vh;
+	--bottom-pane-height: 26.4vh;
 	--screen-height: calc(100vh - var(--bottom-pane-height));
 	--program-row-height: 5vh;
 	--components-bg: rgb(41, 49, 112);
@@ -251,8 +251,10 @@ body {
 	bottom: 0;
 	left: 0;
 	width: 100vw;
-	aspect-ratio: 1362 / 296;
+	height: 100vh;
+	/* aspect-ratio: 1362 / 296; */
 	z-index: 15;
+	pointer-events: none;
 	/* background-color: var(--programs-bg); */
 	/* border-top: var(--pane-border); */
 }
@@ -261,7 +263,7 @@ body {
 	position: absolute;
 	top: 0;
 	left: 0;
-	height: 80vh;
+	height: 75vh;
 	width: 15vw;
 	background-color: var(--components-bg);
 	border-right: var(--pane-border);
@@ -320,7 +322,7 @@ body {
 		}
 	}
 	.components-section:last-child {
-		padding-bottom: 10vh;
+		padding-bottom: 3vh;
 	}
 }
 

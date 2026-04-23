@@ -227,6 +227,14 @@ async function loadGame(){
 		trackPromises.push(p)
 	}
 	await Promise.all(trackPromises)
+	//Load instruction sprites
+	let instructionPromises = []
+	for (let instructionTypeId in INSTRUCTIONS){
+		let instructionType = INSTRUCTIONS[instructionTypeId]
+		let p = instructionType.load()
+		instructionPromises.push(p)
+	}
+	await Promise.all(instructionPromises)
 
 	//Load sound effects
 	await loadNeededSounds()
@@ -248,7 +256,7 @@ async function loadGame(){
 
 function startLevel(scenario, solution){
 	$("#game-menu").fadeOut()
-	game = new Game(canvas, controls, scenario, solution)
+	game = new Game(canvas, canvas3, controls, scenario, solution)
 	clearInterval(tickInterval)
 	tickInterval = setInterval(tick, 1000 / FRAMERATE)
 

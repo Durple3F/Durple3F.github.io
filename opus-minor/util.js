@@ -130,6 +130,9 @@ export class Rectangle {
 			(a.x > (b.x + b.w))
 		);
 	}
+	contains(x, y){
+		return x >= this.x && y >= this.y && x <= this.x + this.w && y <= this.y + this.h
+	}
 }
 export class Circle {
 	constructor(x, y, radius) {
