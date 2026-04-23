@@ -507,6 +507,10 @@ body {
 			/* filter: brightness(1.2); */
 		}
 	}
+
+	&.halted {
+		filter: brightness(0.8);
+	}
 }
 
 #program-tools {

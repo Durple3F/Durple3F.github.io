@@ -60,6 +60,8 @@ export class Program{
 		this.startStep = 0
 		//a program's period is the number of instructions from the first to the last non-idle instruction.
 		this.period = 0
+		this.halts = false
+		this.haltIndex = -1
 		this.instructions = []
 		this.generatedInstructions = []
 		this.isLegal = true
@@ -70,6 +72,8 @@ export class Program{
 		let clone = new Program(component ?? this.component, this.name)
 		clone.startStep = this.startStep
 		clone.period = this.period
+		clone.halts = this.halts
+		clone.haltIndex = this.haltIndex
 		clone.instructions = this.instructions
 		clone.generatedInstructions = this.generatedInstructions
 		clone.elem = this.elem
@@ -88,7 +92,10 @@ export class Program{
 
 	getInstruction(timestep){
 		let instructions = this.generatedInstructions
-		if (timestep < instructions.length){
+		if (this.halts && timestep >= this.haltIndex){
+			console.log("the halterrr")
+			return new Instruction(INSTRUCTIONS["idle"])
+		} else if (timestep < instructions.length){
 			return instructions[timestep]
 		} else if (timestep >= instructions.length && this.period > 0){
 			let offset = timestep - this.startStep
@@ -1323,9 +1330,17 @@ export class Game{
 					break
 				}
 			}
+			//Check halting
+			for (let i = 0; i < instructions.length; i++){
+				let instruction = instructions[i]
+				if (instruction.type.id === "halt"){
+					program.halts = true
+					program.haltIndex = i
+				}
+			}
 
 			program.period = endStep - program.startStep + 1
-			if (program.period > maxPeriod){
+			if (program.period > maxPeriod && !program.halts){
 				maxPeriod = program.period
 			}
 		}
@@ -1334,6 +1349,9 @@ export class Game{
 		//(a 5-step program that starts on step 200 is 5 steps long.)
 		for (let program of programs){
 			let instructions = program.instructions
+			if (program.halts){
+				continue
+			}
 			while (instructions.length < program.startStep + maxPeriod){
 				let instruction = new Instruction(INSTRUCTIONS["idle"])
 				instructions.push(instruction)
@@ -1384,8 +1402,18 @@ export class Game{
 			let instructions = program.instructions
 			let row = program.elem
 			if (timestep < program.startStep) continue
-			let instructionIndex = (timestep - program.startStep) % program.period + program.startStep
 			row.find(`.instruction`).removeClass("highlight")
+
+			if (program.halts){
+				if (timestep >= program.haltIndex){
+					row.addClass("halted")
+					continue
+				} else {
+					row.removeClass("halted")
+				}
+			}
+
+			let instructionIndex = (timestep - program.startStep) % program.period + program.startStep
 			row.find(`.instruction[data-index=${instructionIndex}]`).addClass("highlight")
 		}
 	}

@@ -297,7 +297,8 @@
 			"changes": [
 				"- Repeating products work now!",
 				"- Scenarios can now decide how many of each product the player has to submit.",
-				"- Added the rest of the levels in chapter 2"
+				"- Added the rest of the levels in chapter 2",
+				"- Added the halt instruction"
 			]
 		}
 	}
