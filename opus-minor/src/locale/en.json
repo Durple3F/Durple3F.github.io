@@ -50,6 +50,27 @@
 		},
 		"stamina-potion": {
 			"name": "Stamina Potion"
+		},
+		"hair-product": {
+			"name": "Hair Product"
+		},
+		"rocket-propellant": {
+			"name": "Rocket Propellant"
+		},
+		"mist-of-incapacitation": {
+			"name": "Mist of Incapacitation"
+		},
+		"explosive-phial": {
+			"name": "Explosive Phial"
+		},
+		"armor-filament": {
+			"name": "Armor Filament"
+		},
+		"courage-potion": {
+			"name": "Courage Potion"
+		},
+		"surrender-flare": {
+			"name": "Surrender Flare"
 		}
 	},
 	"campaigns": {
@@ -99,6 +120,12 @@
 		},
 		"concordia": {
 			"name": "Concordia Lem"
+		},
+		"gelt": {
+			"name": "Captain Gelt"
+		},
+		"armand": {
+			"name": "Armand Van Tassen"
 		}
 	},
 	"dialogues": {
@@ -245,6 +272,67 @@
 			"after-7": "You arrange the party in the streets, I arrange the party in the sheets.",
 			"after-8": "Oh dear.",
 			"after-9": "Yes. Well."
+		},
+		"hair-product": {
+			"before-0": "This is <i>not</i> the best use of my time.",
+			"before-1": "The patriarch has personally requested it.",
+			"before-2": "That doesn’t change anything.",
+			"before-3": "As heir, Frederick must make a public appearance in the battle. Otherwise, it may be a problem for the family’s honor.",
+			"before-4": "I get that part. It’s the part about his hair needing to be styled perfectly that I don’t understand.",
+			"before-5": "This is a war!",
+			"before-6": "Precisely, that’s why his hair gel needs to be extra strong.",
+			"before-7": "Do you even understand what I’m saying right now?",
+			"before-8": "This is how the Houses work, Anataeus. The way things look is very important.",
+			"before-9": "Maybe even more important than the way things are.",
+			"before-10": "I’m starting to learn that, yes.",
+			"after-0": "This ought keep Frederick’s hair solidly in place, even if he wanders into a cyclone.",
+			"after-1": "Excellent, I’ll have this sent to his personal staff immediately.",
+			"after-2": "Here’s hoping his well-styled hair helps him in the battle.",
+			"after-3": "He won’t enter the fight, that would be madness!",
+			"after-4": "He just needs to be out in the street for a little while so people see him.",
+			"after-5": "Will he make a little speech or something?",
+			"after-6": "Probably best if he doesn’t.",
+			"after-7": "He will hold up his sword. That should be enough to inspire the soldiers.",
+			"after-8": "I’ll take your word for it."
+		},
+		"rocket-propellant": {
+			"before-0": "Shouldn’t they have stayed their attack by now?",
+			"before-1": "Hm… perhaps they need a little more prompting.",
+			"before-2": "I had the rockets brought out of storage, but much of the propellant has leaked away.",
+			"before-3": "When was the last time they were used?",
+			"before-4": "Long before either of you were born.",
+			"before-5": "Well, it’s no problem. I’ll just make a new propellant.",
+			"before-6": "I’m certain that’ll be more powerful than what you had before anyway.",
+			"before-7": "Aren’t we sanguine today.",
+			"after-0": "I’m eager to see how the rockets perform.",
+			"after-1": "The din and the smoke is always quite a sight. A rocket barrage should give them a good fright!",
+			"after-2": "I hope it convinces them to stop advancing.",
+			"after-3": "Oh yes, they’ll regret not stopping earlier.",
+			"after-4": "It’s taken us long enough to organize this response.",
+			"after-5": "But! Now that we have, the full might of House Van Tassen will bear down on them.",
+			"after-6": "That will put a stop to their advance."
+		},
+		"mist-of-incapacitation": {
+			"before-0": "Wait. The airship dock is lost now too?",
+			"before-1": "It seems they’re moving quite fast… faster than we anticipated.",
+			"before-2": "This is absurd. Don’t we outnumber them?",
+			"before-3": "We do, but—",
+			"before-4": "If this keeps happening, won’t we lose the war?",
+			"before-5": "Come now, it’s hardly a war.",
+			"before-6": "Then what is it?",
+			"before-7": "I’ve explained it. It’s best understood as— say, a kind of diplomacy.",
+			"before-8": "This is absurd!",
+			"before-9": "I’ll do it, then. I’ll ensure that House Colvan regrets every building they take.",
+			"after-0": "These phials contain a vapor that makes areas inaccessible for a time.",
+			"after-1": "A mist of poison?",
+			"after-2": "It won’t be fatal.",
+			"after-3": "Not very honorable. I doubt Armand would be pleased.",
+			"after-4": "Do you have better ideas? We’ve been struggling to catch up this whole time!",
+			"after-5": "Nonsense. We’re making a good show of our defense while we wait for House Colvan to respond to our message.",
+			"after-6": "A truce will be negotiated soon enough.",
+			"after-7": "Won’t the terms be more favorable if we push back harder?",
+			"after-8": "The terms will be favorable either way. Armand is a masterful negotiator.",
+			"after-9": "It’s how we built this House into what it is today."
 		}
 	},
 	"cinematics": {
@@ -293,6 +381,25 @@
 			"dialogue-17": "My alchemy is at your disposal.",
 			"dialogue-18": "You almost sound excited.",
 			"dialogue-19": "I am! Finally, something significant is happening!"
+		},
+		"chapter-2-intro": {
+			"name": "The Honorable Path",
+			"location": "The Greathall, House Van Tassen",
+			"dialogue-0": "House Colvan? That‘s unfortunate.",
+			"dialogue-1": "I will have to lodge a formal protest.",
+			"dialogue-2": "Shall I begin developing weapons for a counterattack? Something like a flame grenade with—",
+			"dialogue-3": "I doubt that will be necessary. It’s not uncommon for Houses to renegotiate territories this way.",
+			"dialogue-4": "But… they’ve taken over multiple buildings of ours without any resistance…",
+			"dialogue-5": "They’ll stop pushing forward soon and attempt to reinforce the new borders. That’s how it goes with this sort of thing.",
+			"dialogue-6": "We should push back at least a little bit.",
+			"dialogue-7": "We wouldn’t want to look weak, after all.",
+			"dialogue-8": "I’ll execute a limited rearguard action with forces stationed in the area.",
+			"dialogue-9": "That’s… that’s all?",
+			"dialogue-10": "Listen. House Colvan doesn’t want a full-on battle any more than we do. We’ll trade a few streets and that should be the end of it.",
+			"dialogue-11": "I believe young Taros Colvan is the head of that family now… likely he is keen to test our response.",
+			"dialogue-12": "I will send a message to him and we will settle this like honorable Houses.",
+			"dialogue-13": "Taros? He was a bright boy…",
+			"dialogue-14": "Yes. I’m sure he’ll listen to reason."
 		}
 	}
 }

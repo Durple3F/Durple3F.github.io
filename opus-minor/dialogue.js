@@ -41,6 +41,15 @@ new DialogueSpeaker("gelt", {
 		"default": "./src/portraits/gelt_small.png",
 		"large": "./src/portraits/gelt_large.png",
 		"armor": "./src/portraits/gelt_armor_small.png",
+		"nametag": "./src/portraits/gelt_nametag.png",
+		"border": "./src/portraits/gelt_border.png",
+	},
+	defaultColor: "#4b455f"
+})
+new DialogueSpeaker("armand", {
+	images: {
+		"default": "./src/portraits/armand_large.png",
+		"large": "./src/portraits/armand_large.png",
 	},
 	defaultColor: "#4b455f"
 })
@@ -369,5 +378,87 @@ new DialogueStory("stamina-potion", [
 	], {
 		type: "completed",
 		eventId: "stamina-potion"
+	})
+])
+new DialogueStory("hair-product", [
+	new DialogueMessages([
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-0"}),
+		new DialogueMessage({speaker: "gelt", side: "right", text: "before-1"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-2"}),
+		new DialogueMessage({speaker: "gelt", side: "right", text: "before-3"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-4"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-5"}),
+		new DialogueMessage({speaker: "gelt", side: "right", text: "before-6"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-7"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-8"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-9"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-10"}),
+	]),
+	new DialogueMessages([
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-0"}),
+		new DialogueMessage({speaker: "gelt", side: "right", text: "after-1"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-2"}),
+		new DialogueMessage({speaker: "gelt", side: "right", text: "after-3"}),
+		new DialogueMessage({speaker: "gelt", side: "right", text: "after-4"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-5"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "after-6"}),
+		new DialogueMessage({speaker: "gelt", side: "right", text: "after-7"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-8"}),
+	], {
+		type: "completed",
+		eventId: "hair-product"
+	})
+])
+new DialogueStory("rocket-propellant", [
+	new DialogueMessages([
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-0"}),
+		new DialogueMessage({speaker: "gelt", side: "right", text: "before-1"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-2"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-3"}),
+		new DialogueMessage({speaker: "gelt", side: "right", text: "before-4"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-5"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-6"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-7"}),
+	]),
+	new DialogueMessages([
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-0"}),
+		new DialogueMessage({speaker: "gelt", side: "right", text: "after-1"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "after-2"}),
+		new DialogueMessage({speaker: "gelt", side: "right", text: "after-3"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-4"}),
+		new DialogueMessage({speaker: "gelt", side: "right", text: "after-5"}),
+		new DialogueMessage({speaker: "gelt", side: "right", text: "after-6"}),
+	], {
+		type: "completed",
+		eventId: "rocket-propellant"
+	})
+])
+new DialogueStory("mist-of-incapacitation", [
+	new DialogueMessages([
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-0"}),
+		new DialogueMessage({speaker: "gelt", side: "right", text: "before-1"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-2"}),
+		new DialogueMessage({speaker: "gelt", side: "right", text: "before-3"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-4"}),
+		new DialogueMessage({speaker: "gelt", side: "right", text: "before-5"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-6"}),
+		new DialogueMessage({speaker: "gelt", side: "right", text: "before-7"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-8"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-9"}),
+	]),
+	new DialogueMessages([
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-0"}),
+		new DialogueMessage({speaker: "gelt", side: "right", text: "after-1"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-2"}),
+		new DialogueMessage({speaker: "gelt", side: "right", text: "after-3"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-4"}),
+		new DialogueMessage({speaker: "gelt", side: "right", text: "after-5"}),
+		new DialogueMessage({speaker: "gelt", side: "right", text: "after-6"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-7"}),
+		new DialogueMessage({speaker: "gelt", side: "right", text: "after-8"}),
+		new DialogueMessage({speaker: "gelt", side: "right", text: "after-9"}),
+	], {
+		type: "completed",
+		eventId: "mist-of-incapacitation"
 	})
 ])

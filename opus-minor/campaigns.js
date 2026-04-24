@@ -524,6 +524,9 @@ new Campaign("base", [
 	}),
 	new CampaignChapter("chapter-2", {
 		eventList: [
+			new CampaignEvent("story", "chapter-2-intro", {
+				storyId: "chapter-2-intro",
+			}),
 			new CampaignEvent("puzzle", "hair-product", {
 				scenarioId: "hair-product",
 				unlock: { type: "completed", eventId: "chapter-1-outro" }

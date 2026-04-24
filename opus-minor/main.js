@@ -279,6 +279,7 @@ function startEvent(event, campaign, chapterIndex){
 			$(".game-scene").hide()
 			$("#story").show()
 			$("#game-menu").fadeOut()
+			playSound("click_story")
 			let storyId = event.info.storyId
 			let story = STORIES[storyId]
 			let cinematic = new Cinematic(story)
