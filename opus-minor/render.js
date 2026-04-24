@@ -719,13 +719,14 @@ export function renderPrograms(game, ctx, w, h){
 		for (let instruction of allSelectedInstructions){
 			selectedInstructionsMap.set(instruction, true)
 		}
-
+		
+		const drawW = renderInfo.tileW
+		let arrowInstructions = []
 		for (let i = 0; i < tileCount; i++) {
 			const programRowIndex = firstProgramRow + i
 			let program = programs[programRowIndex]
 			const spriteName = program ? (programRowIndex % 2 ? "program_row_second" : "program_row_first") : "program_row_background"
 			const sprite = SPRITES[spriteName]
-			const drawW = renderInfo.tileW
 			let firstTile = floor(xOffset / drawW)
 
 			//Draw background tiles
@@ -758,11 +759,38 @@ export function renderPrograms(game, ctx, w, h){
 					const insX = centerX - insW * 0.53
 					const insY = centerY - insW * 0.53
 					ctx.drawImage(instructionIconSprite, insX, insY, insW, insW)
+
+					//Arrow
+					if (instruction.generatedInstructions.length > 1){
+						arrowInstructions.push({
+							instruction: instruction,
+							programIndex: programRowIndex,
+							instructionIndex: instructionIndex
+						})
+					}
 				}
 			}
 
 			ctx.drawImage(programRowDividerSprite, boxX, y + drawH * 0.9, boxW, drawH * 0.2)
 			y += drawH
+		}
+		const arrowHead = SPRITES["arrow_head"]
+		const arrowPart = SPRITES["arrow_part"]
+		const arrowHead2 = SPRITES["arrow_head_illegal"]
+		const arrowPart2 = SPRITES["arrow_part_illegal"]
+		for (let arrowInstruction of arrowInstructions){
+			let instruction = arrowInstruction.instruction
+			let generated = instruction.generatedInstructions
+			let programIndex = arrowInstruction.programIndex
+			let instructionIndex = arrowInstruction.instructionIndex
+			let y = boxY - yOffset + programIndex * drawH
+			let x = boxX - xOffset + instructionIndex * drawW
+			const head = instruction.isLegal ? arrowHead : arrowHead2
+			const part = instruction.isLegal ? arrowPart : arrowPart2
+			for (let i = 1; i < generated.length - 1; i++){
+				ctx.drawImage(part, x + drawW * i, y, drawW, drawH)
+			}
+			ctx.drawImage(head, x + drawW * (generated.length - 1), y, drawW, drawH)
 		}
 
 		ctx.restore()
