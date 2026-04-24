@@ -772,6 +772,40 @@ export function renderPrograms(game, ctx, w, h){
 	ctx.drawImage(frameLeft, 0, frameY, frameLeftW, targetFrameHeight)
 	ctx.drawImage(frameMiddle, frameLeftW, frameY, frameRemainingW, targetFrameHeight)
 	ctx.drawImage(frameRight, w - frameRightW, frameY, frameRightW, targetFrameHeight)
+
+	//The buttons
+	{
+		const hoverIndex = game.hoveringPlaybackButton
+		let spriteName1 = hoverIndex === 0 ? "stop_button_hover" : "stop_button"
+		if (!game.isPlayingSimulation) spriteName1 = "stop_button"
+		const spriteName2 = hoverIndex === 1 ? "step_button_hover" : "step_button"
+		let spriteName3 = hoverIndex === 2 ? "play_button_hover" : "play_button"
+		if (game.isPlayingSimulation){
+			spriteName3 = hoverIndex === 2 ? "pause_button_hover" : "pause_button"
+		}
+		if (game.controls.isPressing("Alt")){
+			spriteName3 = hoverIndex === 2 ? "fast_forward_button_hover" : "fast_forward_button"
+		}
+		const stopButtonSprite = SPRITES[spriteName1]
+		const stepButtonSprite = SPRITES[spriteName2]
+		const playButtonSprite = SPRITES[spriteName3]
+		const buttonLocations = programManager.buttonLocations
+		const buttonX1 = buttonLocations[0].x
+		const buttonY = buttonLocations[0].y
+		const buttonW = buttonLocations[0].w
+		const buttonH = buttonLocations[0].h
+		const buttonX2 = buttonLocations[1].x
+		const buttonX3 = buttonLocations[2].x
+
+		ctx.save()
+		if (!game.isPlayingSimulation){
+			ctx.filter = "brightness(0.5)"
+		}
+		ctx.drawImage(stopButtonSprite, buttonX1, buttonY, buttonW, buttonH)
+		ctx.restore()
+		ctx.drawImage(stepButtonSprite, buttonX2, buttonY, buttonW, buttonH)
+		ctx.drawImage(playButtonSprite, buttonX3, buttonY, buttonW, buttonH)
+	}
 }
 
 export function renderEffects(game, ctx, w, h) {

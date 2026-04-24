@@ -107,6 +107,9 @@ export class Game{
 		this.isDraggingBox = false
 		this.dragBox = null
 
+		//Set to 0 for stop, 1 for step, 2 for play, even as they change
+		this.hoveringPlaybackButton = -1
+
 		this.programManager = new ProgramManager(programCanvas, this.controls)
 
 		this.promise = new Promise(resolve => {
@@ -3331,6 +3334,7 @@ export class Game{
 		}
 
 		//Programming pane
+		let didSelectInstruction = false
 		let holdingKeyInstruction = this.isHoldingKeyInstruction
 		const mouseIsOnBottom = isMouseOnScreen && !isMouseOnBoard && controls.mouse.clientY >= programPaneHeight
 		if (mouseIsOnBottom && !this.isPlayingSimulation){
@@ -3341,6 +3345,7 @@ export class Game{
 				if (program){
 					let instruction = program.instructions[instructionIndex]
 					if (instruction){
+						didSelectInstruction = true
 						if (this.selectedInstructions.length && controls.isPressing("Shift")){
 							//Find indexes of first instruction
 							this.addToSelectedInstructions(instruction)
@@ -3361,10 +3366,26 @@ export class Game{
 					let dist = Math.hypot(oldMousePos[0] - mouseX, oldMousePos[1] - mouseY)
 					if (dist > 5){
 						playSound("instruction_pickup")
+						if (controls.isPressing("Control")){
+							//Clone all selected instructions and select those first
+							let newSelection = []
+							for (let instructions of this.selectedInstructions){
+								let newInstructions = []
+								newSelection.push(newInstructions)
+								for (let instruction of instructions){
+									let clone = instruction.clone()
+									newInstructions.push(clone)
+								}
+							}
+							this.selectInstructions(newSelection)
+						}
 						this.beginHoldingInstructions(this.selectedInstructions)
 					}
 				}
 			}
+		}
+		if (controls.justClicked("left") && !didSelectInstruction){
+			this.deselectInstructions()
 		}
 
 		//Instruction placement
@@ -3423,6 +3444,67 @@ export class Game{
 		}
 
 		this.programManager.tick()
+
+		if (mouseIsOnBottom){
+			let buttonLocations = this.programManager.buttonLocations
+			this.hoveringPlaybackButton = -1
+			for (let i = 0; i < buttonLocations.length; i++){
+				let rect = buttonLocations[i]
+				let contains = rect.contains(clientX, clientY)
+				if (contains){
+					this.hoveringPlaybackButton = i
+					break
+				}
+			}
+		}
+		if (controls.justClicked("left") && this.hoveringPlaybackButton >= 0){
+			switch (this.hoveringPlaybackButton){
+				//Stop button
+				case 0: {
+					if (this.isPlayingSimulation){
+						playSound("sim_stop")
+						this.stopSimulation()
+					}
+				} break
+				//Step button
+				case 1: {
+					playSound("sim_step")
+					if (!this.isPlayingSimulation){
+						this.startSimulation()
+					}
+					if (!this.stopSimulationAtNextTimeStep){
+						this.playbackSpeed = 1
+						this.stopSimulationAtNextTimeStep = true
+						this.stopSimulationAtTimeStep = this.simulationTimeStep
+					} else {
+						this.simulationDeltaT += 1
+						if (this.simulationDeltaT % 1 > 0.2){
+							this.simulationDeltaT -= (this.simulationDeltaT % 1) - 0.2
+						}
+						this.stopSimulationAtTimeStep += 1
+					}
+				} break
+				//Play button
+				case 2: {
+					if (!this.isPlayingSimulation){
+						playSound("sim_start")
+						this.startSimulation()
+						if (this.controls.isPressing("Alt")){
+							this.playbackSpeed = 5
+						} else {
+							this.playbackSpeed = 1
+						}
+					} else {
+						if (this.controls.isPressing("Alt")){
+							this.playbackSpeed = 5
+						} else {
+							playSound("sim_stop")
+							this.stopSimulationAtNextTimeStep = true
+						}
+					}
+				} break
+			}
+		}
 
 		//Fast-forward step keyboard controls
 		if (controls.isPressing("Alt")){

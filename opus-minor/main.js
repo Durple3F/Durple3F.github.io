@@ -85,12 +85,12 @@ componentsTab.on("click", () => {
 		}
 		componentsPane.css("transform", transform)
 		componentsTab.css("transform", transform)
-		$(canvas).width(window.innerWidth - paneWidth - xOffset)
+		// $(canvas).width(window.innerWidth - paneWidth - xOffset)
 		
-		canvas.width = canvas.clientWidth
-		canvas.height = canvas.clientHeight
-		game.resizeScreen()
-		window.requestAnimationFrame(draw)
+		// canvas.width = canvas.clientWidth
+		// canvas.height = canvas.clientHeight
+		// game.resizeScreen()
+		// window.requestAnimationFrame(draw)
 	}
 	$({ val: 0 }).animate({ val: 1 }, {
 		duration: 100,

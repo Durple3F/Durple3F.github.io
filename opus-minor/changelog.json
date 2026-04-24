@@ -312,7 +312,9 @@
 				"- Now it renders the instruction boxes within each program",
 				"- Now it renders the instructions within the boxes",
 				"- Now you can pick up instructions and put them back down",
-				"- Now you can hold shift to select multiple instructions. It's slightly different from how it works in-game for 2 reasons. Reason 1: It was easier to program. Reason 2: I do actually prefer it."
+				"- Now you can hold shift to select multiple instructions. It's slightly different from how it works in-game for 2 reasons. Reason 1: It was easier to program. Reason 2: I do actually prefer it.",
+				"- Now you can hold control to copy past instructions",
+				"- Now the stop/step/play buttons render but they do nothing"
 			]
 		}
 	}

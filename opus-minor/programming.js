@@ -64,6 +64,11 @@ export class ProgramManager {
 		this.yOffset = 0
 		this.xOffset = 0
 		this.programBoxLocation = new Rectangle(0, 0, 0, 0)
+		this.buttonLocations = [
+			new Rectangle(0, 0, 0, 0),
+			new Rectangle(0, 0, 0, 0),
+			new Rectangle(0, 0, 0, 0),
+		]
 		this.renderInfo = {}
 		this.resizeScreen()
 	}
@@ -112,6 +117,27 @@ export class ProgramManager {
 		const programSprite = SPRITES["instruction"]
 		const drawW = programH * programSprite.width / programSprite.height
 		renderInfo.tileW = drawW
+
+		const stopButtonSprite = SPRITES["stop_button"]
+		const buttonX1 = frameLeftW * 17 / frameLeft.width
+		const buttonX2 = frameLeftW * 251 / frameLeft.width
+		const buttonY = frameY + targetFrameHeight * 219 / frameLeft.height
+		const sizeFactor = frameLeftW / frameLeft.width
+		const buttonW = stopButtonSprite.width * sizeFactor
+		const buttonH = stopButtonSprite.height * sizeFactor
+		const remainingButtonW = buttonX2 - buttonX1 - buttonW * 3
+		this.buttonLocations[0].x = buttonX1
+		this.buttonLocations[0].y = buttonY
+		this.buttonLocations[0].w = buttonW
+		this.buttonLocations[0].h = buttonH
+		this.buttonLocations[1].x = buttonX1 + buttonW + remainingButtonW * 0.5
+		this.buttonLocations[1].y = buttonY
+		this.buttonLocations[1].w = buttonW
+		this.buttonLocations[1].h = buttonH
+		this.buttonLocations[2].x = buttonX1 + buttonW * 2 + remainingButtonW
+		this.buttonLocations[2].y = buttonY
+		this.buttonLocations[2].w = buttonW
+		this.buttonLocations[2].h = buttonH
 	}
 	getIndexesFromXY(x, y){
 		let boxX = this.programBoxLocation.x
