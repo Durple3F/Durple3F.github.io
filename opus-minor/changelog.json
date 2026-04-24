@@ -327,7 +327,9 @@
 				"- Now the instruction buttons are back, and they even react when you hover them",
 				"- Now you can alt-click an instruction to fast forward to it again",
 				"- Now you can click and drag instructions again",
-				"- Removed a bunch of now-unnecessary code!"
+				"- Removed a bunch of now-unnecessary code!",
+				"- Added the little key indicators on the instruction buttons",
+				"- Halting instruction lowlighting"
 			]
 		}
 	}

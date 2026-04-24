@@ -43,8 +43,7 @@ export class Program {
 
 	getInstruction(timestep) {
 		let instructions = this.generatedInstructions
-		if (this.halts && timestep >= this.haltIndex) {
-			console.log("the halterrr")
+		if (this.halts && timestep > this.haltIndex) {
 			return new Instruction(INSTRUCTIONS["idle"])
 		} else if (timestep < instructions.length) {
 			return instructions[timestep]
@@ -192,11 +191,14 @@ export class ProgramManager {
 		tileIndex = Math.floor(tileIndex)
 		return [programIndex, tileIndex]
 	}
+	isInProgramBox(x, y){
+		return this.programBoxLocation.contains(x, y)
+	}
 	tick(){
 		const controls = this.controls
 		const mouseX = controls.mouse.x
 		const mouseY = controls.mouse.y
-		const isInProgramBox = this.programBoxLocation.contains(mouseX, mouseY)
+		const isInProgramBox = this.isInProgramBox(mouseX, mouseY)
 		if (isInProgramBox){
 			if (controls.justClicked("right")){
 				this.isDragging = true

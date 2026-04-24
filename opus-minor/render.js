@@ -714,6 +714,7 @@ export function renderPrograms(game, ctx, w, h){
 		let y = boxY - yOffset + firstProgramRow * drawH
 		const programRowDividerSprite = SPRITES["program_row_divider"]
 		const instructionSprite = SPRITES["instruction"]
+		const instructionDisabledSprite = SPRITES["instruction_disabled"]
 		const instructionHighlightSprite = SPRITES["instruction_highlight"]
 		const instructionSelectedSprite = SPRITES["instruction_selected"]
 
@@ -756,7 +757,11 @@ export function renderPrograms(game, ctx, w, h){
 					if (!instruction) continue
 					let instructionType = instruction.type
 					if (instructionType.id === "idle") continue
-					ctx.drawImage(instructionSprite, insTileX, y, drawW, drawH)
+					let boxSprite = instructionSprite
+					if (program.halts && game.simulationTimeStep > program.haltIndex){
+						boxSprite = instructionDisabledSprite
+					}
+					ctx.drawImage(boxSprite, insTileX, y, drawW, drawH)
 					if (selectedInstructionsMap.has(instruction)){
 						ctx.drawImage(instructionSelectedSprite, insTileX, y, drawW, drawH)
 					}
@@ -842,6 +847,13 @@ export function renderPrograms(game, ctx, w, h){
 			const insX = centerX - insW * 0.53
 			const insY = centerY - insW * 0.53
 			ctx.drawImage(iconSprite, insX, insY, insW, insW)
+			const key = insType.key?.toUpperCase()
+			if (key){
+				const fontSize = boxH * 0.4
+				ctx.font = `${fontSize}px serif`
+				ctx.fillStyle = "white"
+				ctx.fillText(key, centerX - fontSize * 0.4, y + boxH + fontSize * 0.65)
+			}
 
 			if (insButtonStates[i] === "hover"){
 				ctx.drawImage(instructionHighlightSprite, insX, insY + insW * 0.05, insW, insW * 0.9)

@@ -3101,7 +3101,7 @@ export class Game{
 				} else {
 					beginningDragBox = true
 				}
-				if (beginningDragBox){
+				if (beginningDragBox && this.programManager.isInProgramBox(clientX, clientY)){
 					let x = clientX
 					let y = clientY
 					this.isDraggingBox = true
@@ -3361,9 +3361,11 @@ export class Game{
 					}
 					for (let i = newSelection.length - 1; i >= 0; i--){
 						let instructions = newSelection[i]
+						if (!instructions){
+							console.log(newSelection)
+						}
 						if (instructions.every(ins => ins.type.id === "idle")){
 							newSelection.splice(i, 1)
-							i++
 						} else break
 					}
 					for (let i = 0; i < w; i++){
@@ -3377,7 +3379,6 @@ export class Game{
 						if (newSelection.every(list => list[w - 1].type.id === "idle")){
 							newSelection.forEach(list => list.splice(w - 1, 1))
 							w--
-							i++
 						} else break
 					}
 					let insCount = newSelection.flat(2).length
