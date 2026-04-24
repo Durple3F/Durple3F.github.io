@@ -320,11 +320,14 @@
 		},
 		"20260424": {
 			"date": "April 24, 2026",
-			"line-count": 11900,
+			"line-count": 11700,
 			"changes": [
 				"- Now the pause button works. It didn't before",
 				"- Now there's a highlight on the currently playing instructions",
-				"- Now the instruction buttons are back, and they even react when you hover them"
+				"- Now the instruction buttons are back, and they even react when you hover them",
+				"- Now you can alt-click an instruction to fast forward to it again",
+				"- Now you can click and drag instructions again",
+				"- Removed a bunch of now-unnecessary code!"
 			]
 		}
 	}

@@ -123,49 +123,6 @@ $(document).on("keyup", e => {
 		e.preventDefault()
 	}
 })
-$("#playback-stop-button").on("click", () => {
-	playSound("sim_stop")
-	game.stopSimulation()
-})
-$("#playback-pause-button").on("click", () => {
-	playSound("sim_stop")
-	game.stopSimulationAtNextTimeStep = true
-})
-$("#playback-advance-button").on("click", () => {
-	playSound("sim_step")
-	if (!game.isPlayingSimulation){
-		game.startSimulation()
-	}
-	if (!game.stopSimulationAtNextTimeStep){
-		game.playbackSpeed = 1
-		game.stopSimulationAtNextTimeStep = true
-		game.stopSimulationAtTimeStep = game.simulationTimeStep
-	} else {
-		game.simulationDeltaT += 1
-		if (game.simulationDeltaT % 1 > 0.2){
-			game.simulationDeltaT -= (game.simulationDeltaT % 1) - 0.2
-		}
-		game.stopSimulationAtTimeStep += 1
-	}
-})
-$("#playback-play-button").on("click", () => {
-	if (game.controls.isPressing("Alt")){
-		$("#playback-fast-forward-button").click()
-	} else {
-		if (!game.isPlayingSimulation){
-			playSound("sim_start")
-			game.startSimulation()
-		}
-		game.playbackSpeed = 1
-	}
-})
-$("#playback-fast-forward-button").on("click", () => {
-	if (!game.isPlayingSimulation){
-		playSound("sim_start")
-		game.startSimulation()
-	}
-	game.playbackSpeed = 5
-})
 window.addEventListener("mousemove", e => {
 	$("#tooltip").css("top", e.clientY)
 	$("#tooltip").css("left", e.clientX)
