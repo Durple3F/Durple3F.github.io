@@ -113,7 +113,7 @@ export class DialogueStory {
 				nameTag.css("background-image", `url(${nameImage})`)
 				$("<span>").text(name).appendTo(nameTag)
 
-				let image = speaker.imageUrls["default"]
+				let image = speaker.imageUrls[exchange[0].portrait]
 				let borderImage = speaker.imageUrls["border"]
 				let borderTag = $("<div>").addClass("dialogue-speaker-border").appendTo(left)
 				borderTag.css("background-image", `url(${borderImage})`)
@@ -177,6 +177,7 @@ export class DialogueMessage {
 		}
 		this.textId = options.text
 		this.side = options.side ?? "left"
+		this.portrait = options.portrait ?? "default"
 	}
 }
 
@@ -460,5 +461,99 @@ new DialogueStory("mist-of-incapacitation", [
 	], {
 		type: "completed",
 		eventId: "mist-of-incapacitation"
+	})
+])
+new DialogueStory("explosive-phial", [
+	new DialogueMessages([
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-0"}),
+		new DialogueMessage({speaker: "gelt", side: "right", text: "before-1"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-2"}),
+		new DialogueMessage({speaker: "gelt", side: "right", text: "before-3"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-4"}),
+		new DialogueMessage({speaker: "gelt", side: "right", text: "before-5"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-6"}),
+	]),
+	new DialogueMessages([
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-0"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "after-1"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-2"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "after-3"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-4"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "after-5"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-6"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "after-7"}),
+	], {
+		type: "completed",
+		eventId: "explosive-phial"
+	})
+])
+new DialogueStory("armor-filament", [
+	new DialogueMessages([
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-0"}),
+		new DialogueMessage({speaker: "gelt", portrait: "armor", side: "right", text: "before-1"}),
+		new DialogueMessage({speaker: "gelt", portrait: "armor", side: "right", text: "before-2"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-3"}),
+		new DialogueMessage({speaker: "gelt", portrait: "armor", side: "right", text: "before-4"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-5"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-6"}),
+	]),
+	new DialogueMessages([
+		new DialogueMessage({speaker: "gelt", portrait: "armor", side: "right", text: "after-0"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-1"}),
+		new DialogueMessage({speaker: "gelt", portrait: "armor", side: "right", text: "after-2"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-3"}),
+		new DialogueMessage({speaker: "gelt", portrait: "armor", side: "right", text: "after-4"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "after-5"}),
+	], {
+		type: "completed",
+		eventId: "armor-filament"
+	})
+])
+new DialogueStory("courage-potion", [
+	new DialogueMessages([
+		new DialogueMessage({speaker: "gelt", portrait: "armor", side: "right", text: "before-0"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-1"}),
+		new DialogueMessage({speaker: "gelt", portrait: "armor", side: "right", text: "before-2"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-3"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-4"}),
+		new DialogueMessage({speaker: "gelt", portrait: "armor", side: "right", text: "before-5"}),
+	]),
+	new DialogueMessages([
+		new DialogueMessage({speaker: "concordia", side: "right", text: "after-0"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-1"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "after-2"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-3"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-4"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "after-5"}),
+	], {
+		type: "completed",
+		eventId: "courage-potion"
+	})
+])
+new DialogueStory("surrender-flare", [
+	new DialogueMessages([
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-0"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-1"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-2"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-3"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-4"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-5"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-6"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-7"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "before-8"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "before-9"}),
+	]),
+	new DialogueMessages([
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-0"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "after-1"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-2"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "after-3"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-4"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-5"}),
+		new DialogueMessage({speaker: "concordia", side: "right", text: "after-6"}),
+		new DialogueMessage({speaker: "anataeus", side: "left", text: "after-7"}),
+	], {
+		type: "completed",
+		eventId: "surrender-flare"
 	})
 ])

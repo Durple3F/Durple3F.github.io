@@ -555,6 +555,10 @@ new Campaign("base", [
 				scenarioId: "surrender-flare",
 				unlock: { type: "completed", eventId: "chapter-1-outro" }
 			}),
+			new CampaignEvent("story", "chapter-2-outro", {
+				storyId: "chapter-2-outro",
+				unlock: { type: "completed", eventId: "chapter-1-outro" }
+			}),
 		],
 		imageUrls: {
 			locked: "./src/img/campaigns/base/chapter 2 locked.png",
