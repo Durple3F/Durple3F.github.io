@@ -78,6 +78,7 @@ export class Game{
 		this.heldInstruction = null
 		this.heldInstructions = []
 		this.selectedInstructions = []
+		this.highlightedInstructions = []
 		//When you place an instruction by clicking the mouse down (via keys) you do nothing when you lift the mouse back up.
 		this.overrideInstructionMouseUp = false
 
@@ -1365,12 +1366,14 @@ export class Game{
 		}
 	}
 	highlightPrograms(timestep){
-		let programs = this.currentLevel.programs
+		let level = this.isPlayingSimulation ? this.simulation : this.currentLevel
+		let programs = level.programs
+		let highlighted = this.highlightedInstructions
+		highlighted.length = 0
 		for (let program of programs){
 			let instructions = program.instructions
 			let row = program.elem
 			if (timestep < program.startStep) continue
-			row.find(`.instruction`).removeClass("highlight")
 
 			if (program.halts){
 				if (timestep >= program.haltIndex){
@@ -1382,7 +1385,7 @@ export class Game{
 			}
 
 			let instructionIndex = (timestep - program.startStep) % program.period + program.startStep
-			row.find(`.instruction[data-index=${instructionIndex}]`).addClass("highlight")
+			highlighted.push(instructions[instructionIndex])
 		}
 	}
 	selectInstructions(instructionsList){
@@ -2225,35 +2228,46 @@ export class Game{
 		}
 		const components = this.currentLevel.grid.contents
 		const simulationComponents = this.simulation.grid.contents
+		const componentProgramMap = new Map()
 		for (let component of components){
 			//Create a copy in the simulation
 			let clone = component.clone()
 			clone.renderRotationPoint = false
 			simulationComponents.push(clone)
+			if (clone.program){
+				let index = this.currentLevel.programs.indexOf(component.program)
+				componentProgramMap.set(clone, index)
+			}
 		}
 
 		//Attach programs to the new simulation
 		const simulationPrograms = this.simulation.programs
 		for (let component of simulationComponents){
 			if (component.program){
-				simulationPrograms.push(component.program)
+				let index = componentProgramMap.get(component)
+				let program = this.currentLevel.programs[index]
+				let cloneProgram = program.clone()
+				cloneProgram.component = component
+				simulationPrograms[index] = cloneProgram
+				component.program = cloneProgram
 			}
 		}
 		this.placeArmsOnTracks(this.simulation)
 
 		//Update programs that have reset instruction
-		// for (let program of simulationPrograms){
-		// 	let instructions = program.instructions
-		// 	for (let i = 0; i < instructions.length; i++){
-		// 		let instruction = instructions[i]
-		// 		if (instruction.generatedInstructions.length){
-		// 			let toAdd = instruction.generatedInstructions
-		// 			for (let j = 0; j < toAdd.length; j++){
-		// 				instructions[i + j] = toAdd[j]
-		// 			}
-		// 		}
-		// 	}
-		// }
+		for (let program of simulationPrograms){
+			let instructions = program.instructions
+			for (let i = 0; i < instructions.length; i++){
+				let instruction = instructions[i]
+				if (instruction.generatedInstructions.length){
+					let toAdd = instruction.generatedInstructions
+					for (let j = 0; j < toAdd.length; j++){
+						instructions[i + j] = toAdd[j]
+					}
+				}
+			}
+		}
+
 		this.performUIUpdates()
 	}
 	startSimulation(){
@@ -2285,7 +2299,7 @@ export class Game{
 	advanceTimeStep(timestep){
 		this.beginAnimatingInstructions(timestep)
 		this.applyAllAnimations()
-		this.highlightPrograms(timestep - 1)
+		this.highlightPrograms(timestep)
 	}
 	beginAnimatingInstructions(timestep){
 		//Some things happen the moment a time step starts.
@@ -3044,25 +3058,6 @@ export class Game{
 		const screenW = this.canvas.width
 		const screenH = this.canvas.height
 
-		//Playback keyboard controls
-		if (controls.justPressed(" ")){
-			if (this.isPlayingSimulation && this.playbackSpeed > 0){
-				$("#playback-pause-button").click()
-			} else {
-				$("#playback-play-button").click()
-			}
-		}
-		if (controls.justPressed("Tab")){
-			$("#playback-advance-button").click()
-		}
-		if (controls.justPressed("Escape")){
-			if (this.isPlayingSimulation){
-				$("#playback-stop-button").click()
-			} else {
-				this.exit()
-			}
-		}
-
 		//Advance time
 		if (this.isPlayingSimulation && this.playbackSpeed > 0 && dt > 0){
 			//Increase time slightly.
@@ -3337,7 +3332,7 @@ export class Game{
 		let didSelectInstruction = false
 		let holdingKeyInstruction = this.isHoldingKeyInstruction
 		const mouseIsOnBottom = isMouseOnScreen && !isMouseOnBoard && controls.mouse.clientY >= programPaneHeight
-		if (mouseIsOnBottom && !this.isPlayingSimulation){
+		if (!this.isPlayingSimulation && mouseIsOnBottom && !this.isPlayingSimulation){
 			//Check if the player is clicking a non-idle instruction
 			if (controls.justClicked("left")){
 				let [programIndex, instructionIndex] = this.programManager.getIndexesFromXY(clientX, clientY)
@@ -3384,12 +3379,12 @@ export class Game{
 				}
 			}
 		}
-		if (controls.justClicked("left") && !didSelectInstruction){
+		if (this.isPlayingSimulation || (controls.justClicked("left") && !didSelectInstruction)){
 			this.deselectInstructions()
 		}
 
 		//Instruction placement
-		if (this.heldInstructions.length){
+		if (!this.isPlayingSimulation && this.heldInstructions.length){
 			// if (!continueHoldingInstructions){
 			// 	this.endHoldingInstructions()
 			// 	playSound("instruction_remove")
@@ -3428,18 +3423,33 @@ export class Game{
 		//instruction keyboard controls
 		let continueHoldingInstructions = isLeftClicking
 		this.isHoldingKeyInstruction = false
-		for (let instructionId in INSTRUCTIONS){
-			let instructionType = INSTRUCTIONS[instructionId]
-			let key = instructionType.key
-			let pressing = controls.isPressing(key)
-			if (pressing && (controls.justPressed(key) || !this.heldInstructions.length)){
+		if (!this.isPlayingSimulation){
+			for (let instructionId in INSTRUCTIONS){
+				let instructionType = INSTRUCTIONS[instructionId]
+				let key = instructionType.key
+				let pressing = controls.isPressing(key)
+				if (pressing && (controls.justPressed(key) || !this.heldInstructions.length)){
+					let instruction = new Instruction(instructionType)
+					this.beginHoldingInstruction(instruction)
+				}
+				if (pressing){
+					continueHoldingInstructions = true
+					holdingKeyInstruction = true
+					this.isHoldingKeyInstruction = true
+				}
+			}
+		}
+
+		//Instruction visual controls
+		let insButtons = this.programManager.insButtons
+		let insButtonLocations = this.programManager.insButtonLocations
+		for (let i = 0; i < insButtonLocations.length; i++){
+			let rect = insButtonLocations[i]
+			if (controls.justClicked("left") && rect.contains(clientX, clientY)){
+				let instructionTypeId = insButtons[i]
+				let instructionType = INSTRUCTIONS[instructionTypeId]
 				let instruction = new Instruction(instructionType)
 				this.beginHoldingInstruction(instruction)
-			}
-			if (pressing){
-				continueHoldingInstructions = true
-				holdingKeyInstruction = true
-				this.isHoldingKeyInstruction = true
 			}
 		}
 
@@ -3457,8 +3467,29 @@ export class Game{
 				}
 			}
 		}
-		if (controls.justClicked("left") && this.hoveringPlaybackButton >= 0){
-			switch (this.hoveringPlaybackButton){
+
+		let intendedPlaybackButton = this.hoveringPlaybackButton
+		let isPressingPlaybackButton = false
+		//Playback keyboard controls
+		if (controls.justPressed(" ")){
+			intendedPlaybackButton = 2
+			isPressingPlaybackButton = true
+		}
+		if (controls.justPressed("Tab")){
+			intendedPlaybackButton = 1
+			isPressingPlaybackButton = true
+		}
+		if (controls.justPressed("Escape")){
+			if (this.isPlayingSimulation){
+				intendedPlaybackButton = 0
+				isPressingPlaybackButton = true
+			} else {
+				this.exit()
+			}
+		}
+
+		if ((controls.justClicked("left") && this.hoveringPlaybackButton >= 0) || (isPressingPlaybackButton && intendedPlaybackButton >= 0)){
+			switch (intendedPlaybackButton){
 				//Stop button
 				case 0: {
 					if (this.isPlayingSimulation){
@@ -3494,23 +3525,24 @@ export class Game{
 						} else {
 							this.playbackSpeed = 1
 						}
+					} else if (this.playbackSpeed === 0){
+						playSound("sim_start")
+						if (this.controls.isPressing("Alt")){
+							this.playbackSpeed = 5
+						} else {
+							this.playbackSpeed = 1
+						}
 					} else {
 						if (this.controls.isPressing("Alt")){
 							this.playbackSpeed = 5
 						} else {
 							playSound("sim_stop")
 							this.stopSimulationAtNextTimeStep = true
+							this.stopSimulationAtTimeStep = Math.floor(this.simulationTimeStep + 1)
 						}
 					}
 				} break
 			}
-		}
-
-		//Fast-forward step keyboard controls
-		if (controls.isPressing("Alt")){
-			$("#program-rows-wrapper").addClass("ready-fast-forward")
-		} else {
-			$("#program-rows-wrapper").removeClass("ready-fast-forward")
 		}
 
 		//Click-and-drag boxes.

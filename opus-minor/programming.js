@@ -25,7 +25,7 @@ export class Program {
 		clone.period = this.period
 		clone.halts = this.halts
 		clone.haltIndex = this.haltIndex
-		clone.instructions = this.instructions
+		clone.instructions = this.instructions.map(ins => ins.clone())
 		clone.generatedInstructions = this.generatedInstructions
 		clone.elem = this.elem
 		return clone
@@ -70,6 +70,29 @@ export class ProgramManager {
 			new Rectangle(0, 0, 0, 0),
 		]
 		this.renderInfo = {}
+		this.insButtons = [
+			"pivot_ccw",
+			"piston_extend",
+			"pivot_cw",
+			"grabber_drop",
+			"track_retreat",
+			"rotator_ccw",
+			"piston_retract",
+			"rotator_cw",
+			"grabber_grab",
+			"track_advance",
+			null,
+			"period_override",
+			"reset",
+			"repeat",
+			"halt",
+		]
+		this.insButtonLocations = []
+		this.insButtonStates = []
+		for (let i = 0; i < this.insButtons.length; i++){
+			this.insButtonLocations[i] = new Rectangle(0, 0, 0, 0)
+			this.insButtonStates[i] = "inactive"
+		}
 		this.resizeScreen()
 	}
 	resizeScreen(){
@@ -138,6 +161,25 @@ export class ProgramManager {
 		this.buttonLocations[2].y = buttonY
 		this.buttonLocations[2].w = buttonW
 		this.buttonLocations[2].h = buttonH
+
+		const insSectionX = frameLeftW * 25 / frameLeft.width
+		const insSectionY = frameY + targetFrameHeight * 58 / frameLeft.height + 1
+		const insSectionPadW = frameLeftW * 2.6 / frameLeft.width
+		const insSectionPadH = targetFrameHeight * 15.9 / frameLeft.height
+		const insBoxH = renderInfo.programH
+		const insBoxW = renderInfo.tileW
+		const instructionSprite = SPRITES["instruction"]
+
+		for (let i = 0; i < 15; i++){
+			const rx = i % 5
+			const ry = Math.floor(i / 5)
+			const x = insSectionX + (insSectionPadW + insBoxW) * rx
+			const y = insSectionY + (insSectionPadH + insBoxH) * ry
+			this.insButtonLocations[i].x = x
+			this.insButtonLocations[i].y = y
+			this.insButtonLocations[i].w = insBoxW
+			this.insButtonLocations[i].h = insBoxH
+		}
 	}
 	getIndexesFromXY(x, y){
 		let boxX = this.programBoxLocation.x
@@ -174,6 +216,15 @@ export class ProgramManager {
 			this.yOffset += dy
 			if (this.yOffset < 0) this.yOffset = 0
 			if (this.xOffset < 0) this.xOffset = 0
+		}
+
+		for (let i = 0; i < this.insButtonLocations.length; i++){
+			let rect = this.insButtonLocations[i]
+			if (rect.contains(mouseX, mouseY)){
+				this.insButtonStates[i] = "hover"
+			} else {
+				this.insButtonStates[i] = "inactive"
+			}
 		}
 	}
 }

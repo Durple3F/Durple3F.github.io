@@ -3,6 +3,7 @@ import { drawCollisionCircles, drawGhostRotation, drawMoleculeHomeTile, atomRend
 import { TrackPiece } from "./track.js";
 import Color from "https://colorjs.io/dist/color.js";
 import { SPRITES } from "./sprites.js";
+import { INSTRUCTIONS } from "./instructions.js";
 
 const TWOPI = 2 * Math.PI
 const ROOT3 = Math.sqrt(3)
@@ -685,7 +686,8 @@ export function renderPrograms(game, ctx, w, h){
 
 	//Program rows
 	{
-		const programs = game.currentLevel.programs
+		const level = game.isPlayingSimulation ? game.simulation : game.currentLevel
+		const programs = level.programs
 		const boxX = frameLeftW * 281 / 295;   // left
 		const boxEndX = w - frameRightW * 26 / 74;
 		const boxY = frameY + targetFrameHeight * 45 / 296;   // top
@@ -712,12 +714,18 @@ export function renderPrograms(game, ctx, w, h){
 		let y = boxY - yOffset + firstProgramRow * drawH
 		const programRowDividerSprite = SPRITES["program_row_divider"]
 		const instructionSprite = SPRITES["instruction"]
+		const instructionHighlightSprite = SPRITES["instruction_highlight"]
 		const instructionSelectedSprite = SPRITES["instruction_selected"]
 
 		const allSelectedInstructions = game.selectedInstructions.flat(2)
 		const selectedInstructionsMap = new Map()
 		for (let instruction of allSelectedInstructions){
 			selectedInstructionsMap.set(instruction, true)
+		}
+		const allHighlightedInstructions = game.highlightedInstructions
+		const highlightedInstructionsMap = new Map()
+		for (let instruction of allHighlightedInstructions){
+			highlightedInstructionsMap.set(instruction, true)
 		}
 		
 		const drawW = renderInfo.tileW
@@ -760,6 +768,10 @@ export function renderPrograms(game, ctx, w, h){
 					const insY = centerY - insW * 0.53
 					ctx.drawImage(instructionIconSprite, insX, insY, insW, insW)
 
+					if (highlightedInstructionsMap.has(instruction)){
+						ctx.drawImage(instructionHighlightSprite, insX, insY + insW * 0.05, insW, insW * 0.9)
+					}
+
 					//Arrow
 					if (instruction.generatedInstructions.length > 1){
 						arrowInstructions.push({
@@ -801,6 +813,41 @@ export function renderPrograms(game, ctx, w, h){
 	ctx.drawImage(frameMiddle, frameLeftW, frameY, frameRemainingW, targetFrameHeight)
 	ctx.drawImage(frameRight, w - frameRightW, frameY, frameRightW, targetFrameHeight)
 
+
+	//Instruction buttons
+	{
+		const insSectionX = frameLeftW * 25 / frameLeft.width
+		const insSectionY = frameY + targetFrameHeight * 58 / frameLeft.height + 1
+		const insSectionPadW = frameLeftW * 2.6 / frameLeft.width
+		const insSectionPadH = targetFrameHeight * 15.9 / frameLeft.height
+		const boxH = renderInfo.programH
+		const boxW = renderInfo.tileW
+		const instructionSprite = SPRITES["instruction"]
+		const instructionHighlightSprite = SPRITES["instruction_highlight"]
+		const insButtons = programManager.insButtons
+		const insButtonLocations = programManager.insButtonLocations
+		const insButtonStates = programManager.insButtonStates
+
+		for (let i = 0; i < 15; i++){
+			if (!insButtons[i]) continue
+			const x = insButtonLocations[i].x
+			const y = insButtonLocations[i].y
+			ctx.drawImage(instructionSprite, x, y, boxW, boxH)
+			const iconName = insButtons[i]
+			const insType = INSTRUCTIONS[iconName]
+			const iconSprite = insType.sprite
+			const centerX = x + boxW * 0.5
+			const centerY = y + boxH * 0.5
+			const insW = boxH * 0.9
+			const insX = centerX - insW * 0.53
+			const insY = centerY - insW * 0.53
+			ctx.drawImage(iconSprite, insX, insY, insW, insW)
+
+			if (insButtonStates[i] === "hover"){
+				ctx.drawImage(instructionHighlightSprite, insX, insY + insW * 0.05, insW, insW * 0.9)
+			}
+		}
+	}
 	//The buttons
 	{
 		const hoverIndex = game.hoveringPlaybackButton

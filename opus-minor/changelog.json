@@ -314,8 +314,17 @@
 				"- Now you can pick up instructions and put them back down",
 				"- Now you can hold shift to select multiple instructions. It's slightly different from how it works in-game for 2 reasons. Reason 1: It was easier to program. Reason 2: I do actually prefer it.",
 				"- Now you can hold control to copy past instructions",
-				"- Now the stop/step/play buttons render but they do nothing",
+				"- Now the stop/step/play buttons render",
 				"- Now the reset/repeat instructions properly display their lengths again"
+			]
+		},
+		"20260424": {
+			"date": "April 24, 2026",
+			"line-count": 11900,
+			"changes": [
+				"- Now the pause button works. It didn't before",
+				"- Now there's a highlight on the currently playing instructions",
+				"- Now the instruction buttons are back, and they even react when you hover them"
 			]
 		}
 	}
