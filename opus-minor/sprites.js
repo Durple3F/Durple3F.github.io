@@ -27,6 +27,7 @@ const neededSprites = [
 	{url: "./src/img/program-pane/row_background.png", id: "program_row_background"},
 	{url: "./src/img/program-pane/row_divider.png", id: "program_row_divider"},
 	{url: "./src/img/program-pane/instruction.png", id: "instruction"},
+	{url: "./src/img/program-pane/instruction_selected.png", id: "instruction_selected"},
 	{url: "./src/img/program-pane/instruction_extension.png", id: "instruction_extension"},
 	{url: "./src/img/program-pane/instruction_disabled.png", id: "instruction_disabled"},
 	{url: "./src/img/outputs/output_ring.png", id: "product_ring"},

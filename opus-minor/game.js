@@ -749,6 +749,7 @@ export class Game{
 			let addToProgram = programs[programIndex + i]
 			for (let j = 0; j < heldInstructions.length; j++){
 				let instruction = heldInstructions[j]
+				if (instruction.type.id === "idle") continue
 				this.insertProgramInstruction(instruction, addToProgram, instructionIndex + j)
 			}
 		}
@@ -1394,6 +1395,113 @@ export class Game{
 				if (thoseInstructions.includes(instruction)){
 					instructionTagJ.addClass("highlight")
 				}
+			}
+		}
+	}
+	addToSelectedInstructions(instruction){
+		let firstProgramIndex, firstInstructionIndex
+		let programs = this.currentLevel.programs
+		let selectedInstructions = this.selectedInstructions
+		if (!selectedInstructions.length){
+			this.selectInstructions([[instruction]])
+			return
+		}
+		let firstInstruction = null
+		let firstInstructionY = -1
+		let firstInstructionX = -1
+		let maxLength = -1
+		for (let i = 0; i < selectedInstructions.length; i++){
+			let instructions = selectedInstructions[i]
+			for (let j = 0; j < instructions.length; j++){
+				let instruction = instructions[j]
+				if (instruction){
+					firstInstruction = instruction
+					firstInstructionY = i
+					firstInstructionX = j
+					break
+				}
+			}
+			if (firstInstruction) break
+		}
+		for (let instructions of selectedInstructions){
+			if (instructions.length > maxLength){
+				maxLength = instructions.length
+			}
+		}
+		let minY = -1
+		let minX = -1
+		let maxY = -1
+		let maxX = -1
+		//Find that instruction in programs
+		for (let i = 0; i < programs.length; i++){
+			let instructions = programs[i].instructions
+			for (let j = 0; j < instructions.length; j++){
+				let instruction = instructions[j]
+				if (instruction === firstInstruction){
+					minY = i - firstInstructionY
+					minX = j - firstInstructionX
+					maxY = minY + selectedInstructions.length - 1
+					maxX = minX + maxLength - 1
+					break
+				}
+			}
+			if (minY >= 0) break
+		}
+
+		let givenY = -1
+		let givenX = -1
+		for (let i = 0; i < programs.length; i++){
+			let instructions = programs[i].instructions
+			for (let j = 0; j < instructions.length; j++){
+				let ins = instructions[j]
+				if (ins === instruction){
+					givenX = j
+					givenY = i
+					break
+				}
+			}
+			if (givenX >= 0) break
+		}
+
+		//Now, extend the lengths of each array until it contains the given instruction
+		while (givenY < minY){
+			let newRow = new Array(maxX - minX + 1)
+			selectedInstructions.unshift(newRow)
+			minY--
+		}
+		while (givenY > maxY){
+			let newRow = new Array(maxX - minX + 1)
+			selectedInstructions.push(newRow)
+			maxY++
+		}
+		while (givenX < minX){
+			for (let instructions of selectedInstructions){
+				instructions.unshift(null)
+			}
+			minX--
+			maxLength++
+		}
+		while (givenX > maxX){
+			for (let instructions of selectedInstructions){
+				instructions.push(null)
+			}
+			maxX++
+			maxLength++
+		}
+
+		//Then fill the remaining tiles with corresponding instructions from the programs
+		//(Thereby including the instruction itself)
+		for (let i = 0; i < selectedInstructions.length; i++){
+			let programIndex = minY + i
+			let program = programs[programIndex]
+			let instructions = program.instructions
+			for (let j = 0; j < maxLength; j++){
+				let instructionIndex = minX + j
+				let instruction = instructions[instructionIndex]
+				if (!instruction){
+					instruction = new Instruction(INSTRUCTIONS["idle"])
+				}
+				selectedInstructions[i][j] = instruction
 			}
 		}
 	}
@@ -3233,7 +3341,14 @@ export class Game{
 				if (program){
 					let instruction = program.instructions[instructionIndex]
 					if (instruction){
-						this.selectInstructions([[instruction]])
+						if (this.selectedInstructions.length && controls.isPressing("Shift")){
+							//Find indexes of first instruction
+							this.addToSelectedInstructions(instruction)
+						} else if (this.selectedInstructions.length && this.selectedInstructions.flat(2).includes(instruction)){
+							//Do nothing
+						} else {
+							this.selectInstructions([[instruction]])
+						}
 					}
 				}
 			}
@@ -3269,9 +3384,16 @@ export class Game{
 					this.placeHeldInstructions(programIndex, instructionIndex)
 				}
 			}
-			if (this.heldInstructions.length && !holdingKeyInstruction && !isLeftClicking && !isMouseInProgramBox){
-				this.endHoldingInstructions()
-				if (!this.isHoldingKeyInstruction){
+			if (this.heldInstructions.length && !holdingKeyInstruction && !isLeftClicking){
+				let shouldDelete = !isMouseInProgramBox
+				if (!shouldDelete){
+					let [programIndex, instructionIndex] = this.programManager.getIndexesFromXY(clientX, clientY)
+					if (!this.currentLevel.programs[programIndex]){
+						shouldDelete = true
+					}
+				}
+				if (shouldDelete){
+					this.endHoldingInstructions()
 					playSound("instruction_remove")
 				}
 			}

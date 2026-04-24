@@ -708,10 +708,17 @@ export function renderPrograms(game, ctx, w, h){
 
 		const yOffset = programManager.yOffset
 		const xOffset = programManager.xOffset
-		let firstProgramRow = floor(yOffset / drawH)
+		const firstProgramRow = floor(yOffset / drawH)
 		let y = boxY - yOffset + firstProgramRow * drawH
 		const programRowDividerSprite = SPRITES["program_row_divider"]
 		const instructionSprite = SPRITES["instruction"]
+		const instructionSelectedSprite = SPRITES["instruction_selected"]
+
+		const allSelectedInstructions = game.selectedInstructions.flat(2)
+		const selectedInstructionsMap = new Map()
+		for (let instruction of allSelectedInstructions){
+			selectedInstructionsMap.set(instruction, true)
+		}
 
 		for (let i = 0; i < tileCount; i++) {
 			const programRowIndex = firstProgramRow + i
@@ -741,6 +748,9 @@ export function renderPrograms(game, ctx, w, h){
 					let instructionType = instruction.type
 					if (instructionType.id === "idle") continue
 					ctx.drawImage(instructionSprite, insTileX, y, drawW, drawH)
+					if (selectedInstructionsMap.has(instruction)){
+						ctx.drawImage(instructionSelectedSprite, insTileX, y, drawW, drawH)
+					}
 					const instructionIconSprite = instructionType.sprite
 					const centerX = insTileX + drawW * 0.5
 					const centerY = y + drawH * 0.5
