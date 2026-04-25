@@ -10,9 +10,100 @@ const sigmarSpriteUrls = {
 	"hover": "./src/img/sigmars-garden/atom_hovered.png"
 }
 const sigmarAtoms = [
-	"Salt", "Air", "Fire", "Water", "Earth", "Vitae", "Mors",
-	"Quicksilver", "Lead", "Tin", "Iron", "Copper", "Silver", "Gold"
+	"Salt",
+	"Air",
+	"Fire",
+	"Water",
+	"Earth",
+	"Vitae",
+	"Mors",
+	"Quicksilver",
+	"Lead",
+	"Tin",
+	"Iron",
+	"Copper",
+	"Silver",
+	"Gold"
 ]
+const SIGMARRULES = {}
+
+class SigmarElement{
+	constructor(id, rules={}){
+		this.id = id
+		this.elementId = rules.elementId ?? id
+		this.matchesSingleton = rules.matchesSingleton ?? false
+		this.matchesWith = rules.matchesWith ?? []
+		this.restrictedSpawning = rules.restrictedSpawning ?? false
+		this.allowedHexes = rules.allowedHexes ?? []
+		this.disqualifyingElements = rules.disqualifyingElements ?? []
+		SIGMARRULES[this.id] = this
+	}
+}
+new SigmarElement("Salt", {
+	matchesWith: ["Salt", "Fire", "Water", "Earth", "Air"]
+})
+new SigmarElement("Air", {
+	matchesWith: ["Salt", "Air"]
+})
+new SigmarElement("Fire", {
+	matchesWith: ["Salt", "Fire"]
+})
+new SigmarElement("Water", {
+	matchesWith: ["Salt", "Water"]
+})
+new SigmarElement("Earth", {
+	matchesWith: ["Salt", "Earth"]
+})
+new SigmarElement("Vitae", {
+	matchesWith: ["Mors"]
+})
+new SigmarElement("Mors", {
+	matchesWith: ["Vitae"]
+})
+new SigmarElement("Quicksilver", {
+	matchesWith: ["Lead", "Tin", "Iron", "Copper", "Silver"]
+})
+new SigmarElement("Lead", {
+	matchesWith: ["Quicksilver"]
+})
+new SigmarElement("Tin", {
+	matchesWith: ["Quicksilver"],
+	disqualifyingElements: ["Lead"]
+})
+new SigmarElement("Iron", {
+	matchesWith: ["Quicksilver"],
+	disqualifyingElements: ["Lead", "Tin"]
+})
+new SigmarElement("Copper", {
+	matchesWith: ["Quicksilver"],
+	disqualifyingElements: ["Lead", "Tin", "Iron"]
+})
+new SigmarElement("Silver", {
+	matchesWith: ["Quicksilver"],
+	disqualifyingElements: ["Lead", "Tin", "Iron", "Copper"]
+})
+new SigmarElement("Gold", {
+	matchesSingleton: true,
+	restrictedSpawning: true,
+	allowedHexes: [new Hex(0, 0, 0)]
+})
+
+const sigmarCounts = {
+	"Salt": 4,
+	"Air": 8,
+	"Fire": 8,
+	"Water": 8,
+	"Earth": 8,
+	"Vitae": 4,
+	"Mors": 4,
+	"Quicksilver": 5,
+	"Lead": 1,
+	"Tin": 1,
+	"Iron": 1,
+	"Copper": 1,
+	"Silver": 1,
+	"Gold": 1
+}
 
 class SigmarAtom{
 	constructor(elementId) {
@@ -56,9 +147,11 @@ export class SigmarGarden{
 		}
 		let ps = Promise.all(promises);
 		await ps
-		sigmarAtoms.forEach(elementId => {
-			this.sprites[elementId] = ELEMENTS[elementId].sprites["atom"]
-		})
+		for (let sigmarElementId in SIGMARRULES){
+			let elementId = SIGMARRULES[sigmarElementId].elementId
+			let element = ELEMENTS[elementId]
+			this.sprites[elementId] = element.sprites["atom"]
+		}
 		SigmarGarden.loaded = true
 		return await ps
 	}
@@ -177,9 +270,6 @@ export class SigmarGarden{
 		let result = new Grid()
 		let atoms = result.contents
 
-		let gold = new Atom("Gold")
-		atoms.push(gold)
-
 		const gridSize = 5
 
 		//First, decide which initial layout to use.
@@ -239,13 +329,39 @@ export class SigmarGarden{
 								if (open[i] && !open[next] && open[after]){
 									wouldCreateMore.push(neighbors[next])
 								}
+								if (!open[i] && !open[next] && open[after]){
+									wouldCreateMore.push(neighbors[i])
+								}
 							}
 						}
+					}
+				}
+				let createMoreStats = {
+					counts: [],
+					hexes: []
+				}
+				for (let hex of wouldCreateMore){
+					let added = false
+					for (let i = 0; i < createMoreStats.hexes.length; i++){
+						let hex2 = createMoreStats.hexes[i]
+						if (hex.equals(hex2)){
+							createMoreStats.counts[i]++
+							added = true
+						}
+					}
+					if (!added){
+						createMoreStats.hexes.push(hex)
+						createMoreStats.counts.push(1)
 					}
 				}
 				//Remove duplicate hexes from wouldCreateMore
 				wouldCreateMore = wouldCreateMore.filter((hex, i) => {
 					return wouldCreateMore.findIndex(hex2 => hex.equals(hex2)) === i
+				}).filter((hex, i) => {
+					let index = createMoreStats.hexes.findIndex(hex2 => {
+						return hex.equals(hex2)
+					})
+					return createMoreStats.counts[index] <= 1
 				})
 				let options = []
 				for (let hex of hexes){
@@ -253,6 +369,7 @@ export class SigmarGarden{
 				}
 				if (openHexes >= 6){
 					//Remove all options that would create more open hexes
+					console.log(options.length)
 					for (let i = 0; i < options.length; i++){
 						let hex = options[i]
 						if (wouldCreateMore.some(hex2 => hex.equals(hex2))){
@@ -260,11 +377,15 @@ export class SigmarGarden{
 							i--
 						}
 					}
+					console.log(options.length)
 				}
-				let randomIndex = Math.floor(Math.random() * options.length)
-				let randomHex = options[randomIndex]
+				options = options.filter(hex => {
+					return layout.hasHex(hex)
+				})
+				let randomHex = choice(options)
 				let neighbors = randomHex.neighbors()
 				layout.removeHex(randomHex)
+				layoutSlice.removeHex(randomHex)
 				layout.removeHex(randomHex.rotateLeft().rotateLeft())
 				layout.removeHex(randomHex.rotateRight().rotateRight())
 				removed++
@@ -273,14 +394,35 @@ export class SigmarGarden{
 			for (let [key, hex] of layout.map){
 				result.addHex(hex)
 			}
+			result.addHex(new Hex(0, 0, 0))
 		}
 
-
+		let neededCounts = {}
+		let neededAtoms = []
+		let emptyHexes = new Grid()
 		for (let [key, hex] of result.map){
-			let atom = new SigmarAtom(choice(sigmarAtoms))
+			emptyHexes.addHex(hex)
+		}
+		for (let countName in sigmarCounts){
+			neededCounts[countName] = sigmarCounts[countName]
+			neededAtoms.push(countName)
+		}
+		while (neededAtoms.length){
+			let atomTypeId = choice(neededAtoms)
+			let atom = new SigmarAtom(atomTypeId)
+			neededCounts[atomTypeId]--
+			if (neededCounts[atomTypeId] <= 0){
+				neededAtoms.splice(neededAtoms.indexOf(atomTypeId), 1)
+			}
+			let emptyHexList = [...emptyHexes.map.values()]
+			console.log(emptyHexList)
+			let hex = choice(emptyHexList)
+			emptyHexes.removeHex(hex)
 			atom.setCoords(hex.q, hex.r, hex.s)
 			atoms.push(atom)
 		}
+		console.log(atoms.length, Object.keys(sigmarCounts).reduce((acc,v) => acc + sigmarCounts[v], 0))
+		console.log(emptyHexes)
 
 		return result
 	}
