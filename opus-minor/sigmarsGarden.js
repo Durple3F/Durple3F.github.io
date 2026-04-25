@@ -2,7 +2,7 @@ import ControlManager from "./controls"
 import { ELEMENTS } from "./elements"
 import { playSound } from "./sounds"
 import { loadSprite } from "./sprites"
-import { Atom, choice, Circle, clearModal, getRandomSubarray, Grid, Hex } from "./util"
+import { Atom, choice, Circle, clearModal, getRandomSubarray, getWeightedRandom, Grid, Hex } from "./util"
 
 const ROOT3 = Math.sqrt(3)
 const sigmarSpriteUrls = {
@@ -272,6 +272,10 @@ export class SigmarGarden{
 
 		const gridSize = 5
 
+		//Encourages a donut of empty space around the central atom
+		let innerBias = Math.random() * 5
+		let strandBias = Math.random() * 5
+
 		//First, decide which initial layout to use.
 		{
 			let layoutSlice = new Grid()
@@ -301,89 +305,22 @@ export class SigmarGarden{
 				let openHexes = 0
 				let hexes = [...layoutSlice.map.values()]
 				let wouldCreateMore = []
-				for (let hex of hexes){
+
+				let hexAvgNeighborContribution = []
+				for (let i = 0; i < hexes.length; i++){
+					let hex = hexes[i]
 					let neighbors = hex.neighbors()
-					let open = neighbors.map(hex => !layout.hasHex(hex))
-					let count = open.reduce((acc, v) => acc + v, 0)
-					//Decide whether this hex is already open
-					//If not, add hexes to the list of hexes that would add more open hexes.
-					if (count >= 5) openHexes += 3
-					else {
-						let isOpen = false
-						for (let i = 0; i < 6; i++){
-							let next = (i + 1) % 6
-							let after = (next + 1) % 6
-							if (open[i] && open[next] && open[after]){
-								openHexes += 3
-								isOpen = true
-								break
-							}
-						}
-						if (!isOpen){
-							for (let i = 0; i < 6; i++){
-								let next = (i + 1) % 6
-								let after = (next + 1) % 6
-								if (open[i] && open[next] && !open[after]){
-									wouldCreateMore.push(neighbors[after])
-								}
-								if (open[i] && !open[next] && open[after]){
-									wouldCreateMore.push(neighbors[next])
-								}
-								if (!open[i] && !open[next] && open[after]){
-									wouldCreateMore.push(neighbors[i])
-								}
-							}
-						}
-					}
+					let filled = neighbors.map(hex => layout.hasHex(hex))
+					hexAvgNeighborContribution[i] = filled.filter(v => v).length
 				}
-				let createMoreStats = {
-					counts: [],
-					hexes: []
-				}
-				for (let hex of wouldCreateMore){
-					let added = false
-					for (let i = 0; i < createMoreStats.hexes.length; i++){
-						let hex2 = createMoreStats.hexes[i]
-						if (hex.equals(hex2)){
-							createMoreStats.counts[i]++
-							added = true
-						}
-					}
-					if (!added){
-						createMoreStats.hexes.push(hex)
-						createMoreStats.counts.push(1)
-					}
-				}
-				//Remove duplicate hexes from wouldCreateMore
-				wouldCreateMore = wouldCreateMore.filter((hex, i) => {
-					return wouldCreateMore.findIndex(hex2 => hex.equals(hex2)) === i
-				}).filter((hex, i) => {
-					let index = createMoreStats.hexes.findIndex(hex2 => {
-						return hex.equals(hex2)
-					})
-					return createMoreStats.counts[index] <= 1
-				})
-				let options = []
-				for (let hex of hexes){
-					options.push(hex)
-				}
-				if (openHexes >= 6){
-					//Remove all options that would create more open hexes
-					console.log(options.length)
-					for (let i = 0; i < options.length; i++){
-						let hex = options[i]
-						if (wouldCreateMore.some(hex2 => hex.equals(hex2))){
-							options.splice(i, 1)
-							i--
-						}
-					}
-					console.log(options.length)
-				}
-				options = options.filter(hex => {
-					return layout.hasHex(hex)
-				})
-				let randomHex = choice(options)
-				let neighbors = randomHex.neighbors()
+				
+				let randomHex = getWeightedRandom(hexes.map((hex, i) => {
+					let neighborCount = hexAvgNeighborContribution[i]
+					let weight = Math.pow(6 - neighborCount, 3)
+					weight *= Math.pow(10 - hex.distance(new Hex(0, 0, 0)), innerBias)
+					weight *= Math.pow(neighborCount === 2 ? 1 : 10, strandBias)
+					return {value: hex, weight: weight}
+				}))
 				layout.removeHex(randomHex)
 				layoutSlice.removeHex(randomHex)
 				layout.removeHex(randomHex.rotateLeft().rotateLeft())

@@ -48,6 +48,21 @@ export function getRandomSubarray(arr, size) {
 	}
 	return shuffled.slice(0, size);
 }
+export function getWeightedRandom(data) {
+	// 1. Calculate the sum of all weights
+	const totalWeight = data.reduce((sum, item) => sum + item.weight, 0);
+
+	// 2. Pick a random number between 0 and totalWeight
+	let random = Math.random() * totalWeight;
+
+	// 3. Subtract weights until the random number is 'depleted'
+	for (const item of data) {
+		if (random < item.weight) {
+			return item.value;
+		}
+		random -= item.weight;
+	}
+}
 
 //Returns an array of that tag and its parents and ancestors.
 export function tagHierarchy(tag) {
@@ -304,7 +319,7 @@ export class Grid {
 		const key = this.getKey(q, r, s)
 		this.map.delete(key, hex)
 	}
-	hasHex(hex){
+	hasHex(hex) {
 		return this.map.has(this.getKey(hex.q, hex.r, hex.s))
 	}
 	fill(minQ, maxQ, minR, maxR) {
