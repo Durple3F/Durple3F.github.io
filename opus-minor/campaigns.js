@@ -104,6 +104,12 @@ export function showCampaignChapter(campaign, chapterIndex, saveFile) {
 				let storyName = getLocaleString(["cinematics", storyId, "name"], language, storyId)
 				nameTag.text(storyName)
 			} break
+			case "document": {
+				let documentId = event.info.documentId
+				iconTag.attr("src", "./src/img/puzzle-select/icon_document.png")
+				let documentName = getLocaleString(["documents", documentId, "name"], language, documentId)
+				nameTag.text(documentName)
+			} break
 		}
 		let checkboxUrl
 		if (checkboxState) {
@@ -452,8 +458,12 @@ new Campaign("base", [
 	}),
 	new CampaignChapter("chapter-1", {
 		eventList: [
+			new CampaignEvent("document", "chapter-1-intro-doc", {
+				documentId: "chapter-1-intro-doc",
+			}),
 			new CampaignEvent("story", "chapter-1-intro", {
 				storyId: "chapter-1-intro",
+				unlock: { type: "completed", eventId: "chapter-1-intro-doc" }
 			}),
 			new CampaignEvent("puzzle", "refined-gold", {
 				scenarioId: "refined-gold",

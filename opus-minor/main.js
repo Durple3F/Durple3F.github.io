@@ -13,6 +13,7 @@ import { SCENARIOS } from "./scenarios.js";
 import { createSaveFile, getSaveFiles, openDatabase, SaveFile, saveSaveFile } from "./database.js";
 import { changeCategoryVolume, loadNeededSounds, playSound } from "./sounds.js";
 import { Cinematic, STORIES } from "./story.js";
+import { DOCUMENTS } from "./documents.js";
 
 const FRAMERATE = 60
 let tickInterval
@@ -245,6 +246,9 @@ async function handleGameEvents(events){
 				if ("story" in event){
 					eventId = event.story.id
 				}
+				if ("document" in event){
+					eventId = event.document.id
+				}
 				let campaignId = currentCampaign.id
 				let progress = saveFile.campaignsProgress[campaignId]
 				let targetState = event.completed
@@ -263,19 +267,17 @@ async function handleGameEvents(events){
 	}
 }
 
-function startEvent(event, campaign, chapterIndex){
+async function startEvent(event, campaign, chapterIndex){
 	switch (event.type){
 		case "puzzle": {
 			$(".game-scene").hide()
 			$("#game-ui").show()
 			let scenarioId = event.info.scenarioId
 			let scenario = SCENARIOS[scenarioId]
-			showScenario(scenario, campaign, saveFile).then(events => {
-				handleGameEvents(events)
-			})
+			let events = await showScenario(scenario, campaign, saveFile)
+			handleGameEvents(events)
 		} break
 		case "story": {
-			console.log(event)
 			$(".game-scene").hide()
 			$("#story").show()
 			$("#game-menu").fadeOut()
@@ -284,9 +286,17 @@ function startEvent(event, campaign, chapterIndex){
 			let story = STORIES[storyId]
 			let cinematic = new Cinematic(story)
 			cinematic.advance()
-			cinematic.promise.then(events => {
-				handleGameEvents(events)
-			})
+			let events = await cinematic.promise
+			handleGameEvents(events)
+		} break
+		case "document": {
+			playSound("click_story")
+			let documentId = event.info.documentId
+			let document = DOCUMENTS[documentId]
+			await document.load()
+			let events = await document.display()
+			console.log(events)
+			handleGameEvents(events)
 		} break
 	}
 }
