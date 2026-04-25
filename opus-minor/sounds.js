@@ -116,6 +116,36 @@ export const neededSounds = [
 		url: "./src/sounds/title.mp3",
 		category: "sfx"
 	},
+	{
+		id: "ui_paper",
+		url: "./src/sounds/ui_paper.mp3",
+		category: "sfx"
+	},
+	{
+		id: "ui_paper_back",
+		url: "./src/sounds/ui_paper_back.mp3",
+		category: "sfx"
+	},
+	{
+		id: "solitaire_start",
+		url: "./src/sounds/solitaire_start.mp3",
+		category: "sfx"
+	},
+	{
+		id: "solitaire_end",
+		url: "./src/sounds/solitaire_end.mp3",
+		category: "sfx"
+	},
+	{
+		id: "solitaire_select",
+		url: "./src/sounds/solitaire_select.mp3",
+		category: "sfx"
+	},
+	{
+		id: "solitaire_match",
+		url: "./src/sounds/solitaire_match.mp3",
+		category: "sfx"
+	},
 ]
 export const categoryVolumes = {
 	sfx: 1,

@@ -110,6 +110,17 @@ export function showCampaignChapter(campaign, chapterIndex, saveFile) {
 				let documentName = getLocaleString(["documents", documentId, "name"], language, documentId)
 				nameTag.text(documentName)
 			} break
+			case "document": {
+				let documentId = event.info.documentId
+				iconTag.attr("src", "./src/img/puzzle-select/icon_document.png")
+				let documentName = getLocaleString(["documents", documentId, "name"], language, documentId)
+				nameTag.text(documentName)
+			} break
+			case "sigmars-garden": {
+				iconTag.attr("src", "./src/img/puzzle-select/icon_solitaire.png")
+				let name = getLocaleString(["sigmars-garden", "name"], language, "solitaire")
+				nameTag.text(name)
+			} break
 		}
 		let checkboxUrl
 		if (checkboxState) {
@@ -488,6 +499,18 @@ new Campaign("base", [
 			new CampaignEvent("puzzle", "precision-machine-oil", {
 				scenarioId: "precision-machine-oil",
 				unlock: { type: "completed", eventId: "refined-gold" }
+			}),
+			new CampaignEvent("sigmars-garden", "sigmars-garden-1", {
+				unlock: {
+					type: "and",
+					conditions: [
+						{ type: "completed", eventId: "face-powder" },
+						{ type: "completed", eventId: "waterproof-sealant" },
+						{ type: "completed", eventId: "hangover-cure" },
+						{ type: "completed", eventId: "airship-fuel" },
+						{ type: "completed", eventId: "precision-machine-oil" },
+					]
+				}
 			}),
 			new CampaignEvent("puzzle", "health-tonic", {
 				scenarioId: "health-tonic",

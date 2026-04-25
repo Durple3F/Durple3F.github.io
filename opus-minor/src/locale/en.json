@@ -23,6 +23,10 @@
 	"button-submit-rename-solution": "Rename Solution",
 	"unlock-beat-puzzle-to-continue": "Solve this puzzle to continue",
 
+	"sigmars-garden": {
+		"name": "Sigmar’s Garden"
+	},
+
 	"scenarios": {
 		"test": {
 			"name": "Test Scenario"

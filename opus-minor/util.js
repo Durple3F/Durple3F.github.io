@@ -35,8 +35,18 @@ export function cross_product(Ax, Ay, Bx, By, Cx, Cy) {
 	return cross
 }
 
-export function choice(arr){
+export function choice(arr) {
 	return arr[Math.floor(Math.random() * arr.length)]
+}
+export function getRandomSubarray(arr, size) {
+	var shuffled = arr.slice(0), i = arr.length, temp, index;
+	while (i--) {
+		index = Math.floor((i + 1) * Math.random());
+		temp = shuffled[index];
+		shuffled[index] = shuffled[i];
+		shuffled[i] = temp;
+	}
+	return shuffled.slice(0, size);
 }
 
 //Returns an array of that tag and its parents and ancestors.
@@ -130,7 +140,7 @@ export class Rectangle {
 			(a.x > (b.x + b.w))
 		);
 	}
-	contains(x, y){
+	contains(x, y) {
 		return x >= this.x && y >= this.y && x <= this.x + this.w && y <= this.y + this.h
 	}
 }
@@ -286,6 +296,16 @@ export class Grid {
 		const s = Math.floor(hex.s)
 		const key = this.getKey(q, r, s)
 		this.map.set(key, hex)
+	}
+	removeHex(hex) {
+		const q = Math.floor(hex.q)
+		const r = Math.floor(hex.r)
+		const s = Math.floor(hex.s)
+		const key = this.getKey(q, r, s)
+		this.map.delete(key, hex)
+	}
+	hasHex(hex){
+		return this.map.has(this.getKey(hex.q, hex.r, hex.s))
 	}
 	fill(minQ, maxQ, minR, maxR) {
 		const map = this.map
@@ -553,7 +573,7 @@ export class Atom {
 
 export const BONDTYPES = {}
 export class BondType {
-	constructor(id, options={}) {
+	constructor(id, options = {}) {
 		this.id = id
 		this.sprites = {}
 		this.spriteMap = options.sprites ?? {}
@@ -596,7 +616,7 @@ new BondType("triplex_2", {
 })
 
 export class Bond {
-	constructor(atom1, atom2, typeId="simple") {
+	constructor(atom1, atom2, typeId = "simple") {
 		this.atoms = [atom1, atom2]
 		this.type = BONDTYPES[typeId]
 	}
@@ -710,18 +730,18 @@ export class Molecule extends Component {
 		}
 		this.atoms.contents.push(atom)
 	}
-	removeAtomsOfType(elementId){
+	removeAtomsOfType(elementId) {
 		let atoms = this.atoms.contents
 		let bonds = this.bonds.contents
 		let toRemove = []
-		for (let i = 0; i < atoms.length; i++){
+		for (let i = 0; i < atoms.length; i++) {
 			let atom = atoms[i]
-			if (atom.element.id === elementId){
+			if (atom.element.id === elementId) {
 				atoms.splice(i, 1)
 				i--
-				for (let j = 0; j < bonds.length; j++){
+				for (let j = 0; j < bonds.length; j++) {
 					let bond = bonds[j]
-					if (bond.atoms.includes(atom)){
+					if (bond.atoms.includes(atom)) {
 						bonds.splice(j, 1)
 						j--
 					}
@@ -750,17 +770,17 @@ export class Molecule extends Component {
 			return bond
 		}
 	}
-	hasBond(atom1, atom2, typeId=null) {
+	hasBond(atom1, atom2, typeId = null) {
 		return this.bonds.contents.some(bond => {
 			return bond.atoms.includes(atom1) && bond.atoms.includes(atom2) && (typeId ? bond.type.id === typeId : true)
 		})
 	}
-	isRepeating(){
+	isRepeating() {
 		return this.atoms.contents.some(atom => atom.element.id === "repetition")
 	}
 }
 
-export function createMolecule(moleculeRecipe, repetitionsAllowed=0) {
+export function createMolecule(moleculeRecipe, repetitionsAllowed = 0) {
 	let atomRecipeList = moleculeRecipe.atoms ?? moleculeRecipe[0] ?? []
 	let bondRecipeList = moleculeRecipe.bonds ?? moleculeRecipe[1] ?? []
 	//uses a simplified list of only the things that atoms NEED to create them
@@ -777,8 +797,8 @@ export function createMolecule(moleculeRecipe, repetitionsAllowed=0) {
 		let q = atomRecipe[1]
 		let r = atomRecipe[2]
 		let s = atomRecipe[3]
-		if (elementId === "repetition"){
-			if (repetitionCoord){
+		if (elementId === "repetition") {
+			if (repetitionCoord) {
 				throw new Error("You can't have two repetition symbols in a molecule")
 			}
 			repetitionCoord = new Hex(q, r, s)
@@ -805,13 +825,13 @@ export function createMolecule(moleculeRecipe, repetitionsAllowed=0) {
 		molecule.addBond(atoms[atom1Index], atoms[atom2Index], bondTypeId)
 	}
 
-	if (repetitionCoord){
+	if (repetitionCoord) {
 		let repetitionMolecule = molecule
 		molecule = repetitionMolecule.clone()
-		for (let i = 1; i <= repetitionsAllowed; i++){
+		for (let i = 1; i <= repetitionsAllowed; i++) {
 			let toAdd = repetitionMolecule.atoms.contents
 			let newAtoms = []
-			for (let atom of toAdd){
+			for (let atom of toAdd) {
 				let clone = atom.clone()
 				let newCoord = repetitionCoord.scale(i).add(clone.coord)
 				clone.setCoords(newCoord.q, newCoord.r, newCoord.s)
@@ -819,7 +839,7 @@ export function createMolecule(moleculeRecipe, repetitionsAllowed=0) {
 				atoms.push(clone)
 				newAtoms.push(clone)
 			}
-			for (let bondRecipe of bondRecipeList){
+			for (let bondRecipe of bondRecipeList) {
 				let atom1Index = bondRecipe[0]
 				let atom2Index = bondRecipe[1]
 				let bondTypeId = bondRecipe[2] ?? "simple"
@@ -830,8 +850,8 @@ export function createMolecule(moleculeRecipe, repetitionsAllowed=0) {
 		let repetitionAtom = new Atom("repetition")
 		repetitionAtom.setCoords(repetitionSymbolLocation.q, repetitionSymbolLocation.r, repetitionSymbolLocation.s)
 		molecule.addAtom(repetitionAtom)
-		
-		for (let bondRecipe of repetitionBondInfo){
+
+		for (let bondRecipe of repetitionBondInfo) {
 			let atom1Index = bondRecipe[0]
 			let atom2Index = bondRecipe[1]
 			let bondTypeId = bondRecipe[2]
@@ -840,7 +860,7 @@ export function createMolecule(moleculeRecipe, repetitionsAllowed=0) {
 			let coord1 = atom1?.coord || repetitionCoord
 			let coord2 = atom2?.coord || repetitionCoord
 			let coordDiff = coord1.subtract(coord2)
-			for (let i = 1; i <= repetitionsAllowed; i++){
+			for (let i = 1; i <= repetitionsAllowed; i++) {
 				let coord1 = repetitionCoord.scale(i)
 				let coord2 = coord1.add(coordDiff)
 				let foundAtom1 = molecule.atoms.contents.find(atom => {
@@ -849,7 +869,7 @@ export function createMolecule(moleculeRecipe, repetitionsAllowed=0) {
 				let foundAtom2 = molecule.atoms.contents.find(atom => {
 					return atom.coord.equals(coord2)
 				})
-				if (!foundAtom1 || !foundAtom2){
+				if (!foundAtom1 || !foundAtom2) {
 					throw new Error("Unable to find an atom connected to the repetition symbol")
 				}
 				molecule.addBond(foundAtom1, foundAtom2, bondTypeId)
@@ -857,7 +877,7 @@ export function createMolecule(moleculeRecipe, repetitionsAllowed=0) {
 			let foundAtom = atoms.find(atom => {
 				return atom.coord.equals(repetitionSymbolLocation.add(coordDiff))
 			})
-			if (!foundAtom){
+			if (!foundAtom) {
 				throw new Error("Unable to find an atom connected to the repetition symbol")
 			}
 			molecule.addBond(foundAtom, repetitionAtom, bondTypeId)

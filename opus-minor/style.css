@@ -20,6 +20,7 @@ body {
 	--border-color-secondary: #dbd7d6d5;
 	--gray-text-gradient: linear-gradient(180deg, rgb(107, 101, 89) 0%, rgb(159, 154, 150) 100%);
 	--gray-text-gradient2: linear-gradient(180deg, rgb(57, 55, 50) 0%, rgb(211, 207, 203) 100%);
+	--fancy-button-bg: linear-gradient(180deg,rgba(20, 19, 15, 1) 0%, rgba(210, 212, 201, 1) 10%, rgba(82, 83, 77, 1) 23%, rgba(61, 62, 57, 1) 71%, rgba(90, 91, 83, 1) 77%, rgba(27, 28, 20, 1) 91%, rgba(88, 89, 83, 1) 100%)
 }
 
 #game-ui {
@@ -804,7 +805,7 @@ body {
 
 			button {
 				border: 0.1em solid #14130f;
-				background: linear-gradient(180deg,rgba(20, 19, 15, 1) 0%, rgba(210, 212, 201, 1) 10%, rgba(82, 83, 77, 1) 23%, rgba(61, 62, 57, 1) 71%, rgba(90, 91, 83, 1) 77%, rgba(27, 28, 20, 1) 91%, rgba(88, 89, 83, 1) 100%);
+				background: var(--fancy-button-bg);
 				padding: 0.5em;
 				color: #030301;
 				font-size: 140%;
@@ -1300,6 +1301,59 @@ input[type="range"] {
 	}
 	#document-container {
 		position: relative;
+	}	
+}
+
+.sigmars-garden-window {
+	display: flex;
+	justify-content: center;
+	align-items: stretch;
+	font-family: "Crimson Text", serif;
+	height: 100%;
+
+	.sigmars-garden-story {
+		width: 35%;
+		min-height: 100%;
+		overflow-y: auto;
+		background-color: var(--parchment-bg);
+		background-image: linear-gradient(to bottom, #c1c3b6, #97927e);
+		position: relative;
+	}
+
+	.sigmars-garden-container {
+		width: 65%;
+		min-height: 100%;
+		overflow-y: auto;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		align-items: stretch;
+		text-align: center;
+		position: relative;
+
+		.sigmars-garden-screen {
+			width: 100%;
+			aspect-ratio: 841 / 758;
+			background-image: url("./src/img/sigmars-garden/board.png");
+			background-size: cover;
+			background-position: center;
+			background-repeat: no-repeat;
+		}
+
+		.sigmar-new-game-btn {
+			position: absolute;
+			bottom: 1.1%; left: 0.9%;
+			width: 15.7%; height: 6.8%;
+			background: var(--fancy-button-bg);
+			border: none;
+			text-transform: uppercase;
+			color: #030301;
+
+			&:hover {
+				color: #fbfdf2;
+				filter: brightness(1.3);
+			}
+		}
 	}	
 }
 

@@ -1,4 +1,5 @@
 import { getLocaleString } from "./locale"
+import { playSound } from "./sounds"
 import { loadSprite } from "./sprites"
 
 export const DOCUMENTS = {}
@@ -136,6 +137,12 @@ export class Document {
 				}
 			])
 		})
+
+		const clickLeave = () => {
+			playSound("ui_paper_back")
+		}
+		modalTag[0].addEventListener("click", clickLeave)
+		promise.then(() => modalTag[0].removeEventListener("click", clickLeave))
 
 		return promise
 	}

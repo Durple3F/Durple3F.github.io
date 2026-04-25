@@ -333,6 +333,15 @@
 				"- Added a bunch of dialogue for all the levels in chapter 2.",
 				"- Added a way to show documents like the notes you find throughout the game."
 			]
+		},
+		"20260425": {
+			"date": "April 25, 2026",
+			"line-count": 12600,
+			"changes": [
+				"- It's Sigmar's Garden time.",
+				"- Got a window open that shows the canvas",
+				"- The game can now generate the positions that tiles will go in, but it doesn't fill them with legal atoms yet"
+			]
 		}
 	}
 }

@@ -14,6 +14,7 @@ import { createSaveFile, getSaveFiles, openDatabase, SaveFile, saveSaveFile } fr
 import { changeCategoryVolume, loadNeededSounds, playSound } from "./sounds.js";
 import { Cinematic, STORIES } from "./story.js";
 import { DOCUMENTS } from "./documents.js";
+import { SigmarGarden, SigmarGardenWindow } from "./sigmarsGarden.js";
 
 const FRAMERATE = 60
 let tickInterval
@@ -290,12 +291,18 @@ async function startEvent(event, campaign, chapterIndex){
 			handleGameEvents(events)
 		} break
 		case "document": {
-			playSound("click_story")
+			playSound("ui_paper")
 			let documentId = event.info.documentId
 			let document = DOCUMENTS[documentId]
 			await document.load()
 			let events = await document.display()
-			console.log(events)
+			handleGameEvents(events)
+		} break
+		case "sigmars-garden": {
+			await SigmarGarden.load()
+			let window = new SigmarGardenWindow()
+			window.show()
+			let events = await window.promise
 			handleGameEvents(events)
 		} break
 	}
