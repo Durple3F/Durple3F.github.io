@@ -40,19 +40,19 @@ class SigmarElement{
 	}
 }
 new SigmarElement("Salt", {
-	matchesWith: ["Salt", "Fire", "Water", "Earth", "Air"]
+	matchesWith: ["Salt", "Air", "Fire", "Water", "Earth"]
 })
 new SigmarElement("Air", {
-	matchesWith: ["Salt", "Air"]
+	matchesWith: ["Air", "Salt"]
 })
 new SigmarElement("Fire", {
-	matchesWith: ["Salt", "Fire"]
+	matchesWith: ["Fire", "Salt"]
 })
 new SigmarElement("Water", {
-	matchesWith: ["Salt", "Water"]
+	matchesWith: ["Water", "Salt"]
 })
 new SigmarElement("Earth", {
-	matchesWith: ["Salt", "Earth"]
+	matchesWith: ["Earth", "Salt"]
 })
 new SigmarElement("Vitae", {
 	matchesWith: ["Mors"]
@@ -105,9 +105,16 @@ const sigmarCounts = {
 	"Gold": 1
 }
 
+const sigmarVariants = {}
+sigmarVariants["base"] = {
+	counts: sigmarCounts
+}
+
 class SigmarAtom{
-	constructor(elementId) {
-		this.element = ELEMENTS[elementId]
+	constructor(typeId) {
+		this.typeId = typeId
+		let type = SIGMARRULES[this.typeId]
+		this.element = ELEMENTS[type.elementId]
 		this.coord = new Hex(0, 0, 0)
 		this.renderX = 0
 		this.renderY = 0
@@ -128,10 +135,11 @@ class SigmarAtom{
 }
 
 export class SigmarGarden{
-	constructor(canvas, controls){
+	constructor(canvas, controls, variant="base"){
 		this.canvas = canvas
 		this.ctx = this.canvas.getContext("2d")
 		this.controls = controls
+		this.ruleset = sigmarVariants[variant]
 		this.tickInterval = -1
 		this.grid = new Grid()
 		this.selectedAtoms = []
@@ -176,6 +184,7 @@ export class SigmarGarden{
 	carryOutSelection(){
 		let selected = this.selectedAtoms
 		if (selected.length > 1){
+				console.log(selected.map(x=>x))
 			if (this.doAtomsMatch(selected[0], selected[1])){
 				for (let atom of selected){
 					this.removeAtom(atom)
@@ -202,7 +211,9 @@ export class SigmarGarden{
 		this.determineOpenAtoms()
 	}
 	doAtomsMatch(atom1, atom2){
-		return true
+		let type1 = SIGMARRULES[atom1.typeId]
+		let type2 = SIGMARRULES[atom2.typeId]
+		return type1.matchesWith.includes(type2.id) || type2.matchesWith.includes(type1.id)
 	}
 	determineOpenAtoms(){
 		let taken = new Grid()
@@ -274,6 +285,7 @@ export class SigmarGarden{
 
 		//Encourages a donut of empty space around the central atom
 		let innerBias = Math.random() * 5
+		//Encourages bits that stick out from clumps of atoms
 		let strandBias = Math.random() * 5
 
 		//First, decide which initial layout to use.
@@ -340,31 +352,197 @@ export class SigmarGarden{
 		for (let [key, hex] of result.map){
 			emptyHexes.addHex(hex)
 		}
-		for (let countName in sigmarCounts){
-			neededCounts[countName] = sigmarCounts[countName]
+		let targetCounts = this.ruleset.counts
+		for (let countName in targetCounts){
+			neededCounts[countName] = targetCounts[countName]
 			neededAtoms.push(countName)
 		}
-		while (neededAtoms.length){
-			let atomTypeId = choice(neededAtoms)
-			let atom = new SigmarAtom(atomTypeId)
-			neededCounts[atomTypeId]--
-			if (neededCounts[atomTypeId] <= 0){
-				neededAtoms.splice(neededAtoms.indexOf(atomTypeId), 1)
+
+		//Create a list of all hexes that are special (because they are the only places where some atoms can spawn)
+		let reservedHexes = {}
+		for (let atomTypeId of neededAtoms){
+			let possibilities = []
+			let type = SIGMARRULES[atomTypeId]
+			if (type.restrictedSpawning){
+				reservedHexes[atomTypeId] = type.allowedHexes
 			}
-			let emptyHexList = [...emptyHexes.map.values()]
-			console.log(emptyHexList)
-			let hex = choice(emptyHexList)
-			emptyHexes.removeHex(hex)
-			atom.setCoords(hex.q, hex.r, hex.s)
-			atoms.push(atom)
 		}
-		console.log(atoms.length, Object.keys(sigmarCounts).reduce((acc,v) => acc + sigmarCounts[v], 0))
-		console.log(emptyHexes)
+
+		while (neededAtoms.length){
+			let emptyHexList = [...emptyHexes.map.values()]
+			let openEmptyHexes = emptyHexList.filter(hex => this.isHexOpen(hex, emptyHexes))
+
+			//Stuff like salt occasionally forces a specific kind of match
+			let forcedMatches = []
+			for (let atomTypeId of neededAtoms){
+				let count = neededCounts[atomTypeId]
+				if (count > 1) continue
+				let type = SIGMARRULES[atomTypeId]
+				if (type.matchesSingleton) continue
+				let totalCount = 0
+				let matchingTypes = type.matchesWith.map(atomTypeId => SIGMARRULES[atomTypeId])
+				for (let matchingType of matchingTypes){
+					totalCount += neededCounts[matchingType.id]
+					if (matchingType.id === atomTypeId){
+						totalCount--
+					}
+				}
+				if (totalCount === 1){
+					let able = matchingTypes.find(type => {
+						return type.id === atomTypeId ? neededCounts[type.id] > 1 : neededCounts[type.id] > 0
+					})
+					forcedMatches.push([atomTypeId, able.id])
+				}
+			}
+
+			let atomPossibilities = {}
+			for (let atomTypeId of neededAtoms){
+				let possibilities = []
+				let type = SIGMARRULES[atomTypeId]
+				atomPossibilities[atomTypeId] = possibilities
+				//If this type of atom would be disqualified because another type of atom has yet to be added,
+				//we cannot add this one. This is because, since we are building the structure inwards,
+				//we do not yet know whether we will have to place that disqualifying atom
+				//somewhere inaccessible.
+				if (type.disqualifyingElements){
+					if (neededAtoms.some(atomTypeId => type.disqualifyingElements.includes(atomTypeId))){
+						continue
+					}
+				}
+
+				if (type.restrictedSpawning){
+					//Atoms with restricted spawning can only spawn on tiles that are
+					//A) in their list, B) empty, and C) currently open
+					let allowedHexes = type.allowedHexes.filter(hex => emptyHexes.hasHex(hex))
+					.filter(hex => this.isHexOpen(hex, emptyHexes))
+					for (let hex of allowedHexes){
+						let atom = new SigmarAtom(atomTypeId)
+						atom.setCoords(hex.q, hex.r, hex.s)
+						possibilities.push(atom)
+					}
+					continue
+				}
+
+				//Normally, atoms can spawn on any tiles that are
+				//A) empty, B) currently open, and C) will not invalidate the possibilities of an atom with restricted spawning.
+				let allowedHexes = openEmptyHexes
+				for (let hex of allowedHexes){
+					let invalidated = false
+					for (let atomTypeId in reservedHexes){
+						let reserved = reservedHexes[atomTypeId]
+						if (reserved.length === 1 && reserved[0].equals(hex)){
+							invalidated = true
+							break
+						}
+					}
+					if (invalidated) break
+					let atom = new SigmarAtom(atomTypeId)
+					atom.setCoords(hex.q, hex.r, hex.s)
+					possibilities.push(atom)
+				}
+			}
+			// console.log(neededCounts)
+			// console.log(atomPossibilities)
+			//Remove all possibilities whose only option would be to add another atom to the same location
+			for (let atomTypeId of neededAtoms){
+				let type = SIGMARRULES[atomTypeId]
+				if (type.matchesSingleton) continue
+				let matchingTypes = type.matchesWith.map(atomTypeId => SIGMARRULES[atomTypeId])
+				atomPossibilities[atomTypeId] = atomPossibilities[atomTypeId].filter(possibility => {
+					//Check there exists another distinct possibility for one of the matching types.
+					return matchingTypes.some(type => {
+						if (!atomPossibilities[type.id]) return false
+						return atomPossibilities[type.id].some(otherPossibility => {
+							if (possibility.coord.equals(otherPossibility.coord)) return false
+							return true
+						})
+					})
+				})
+			}
+			// console.log(atomPossibilities)
+			let canAddTypes = neededAtoms.filter(atomTypeId => {
+				let possibilities = atomPossibilities[atomTypeId]
+				//If we can find nowhere to insert the atom,
+				//obviously we can't add it.
+				if (!possibilities.length) return false
+				let type = SIGMARRULES[atomTypeId]
+				//If we can add this atom and this atom alone,
+				//awesome. We can do it.
+				if (type.matchesSingleton) return true
+				//Therefore this atom must be one of the normal 2-matching ones.
+				//If we can find a placement that allows for the placement of a matching atom,
+				//It's legal.
+				//Then we can add it.
+				return true
+			})
+			// console.log(canAddTypes)
+			let atomTypeId = choice(canAddTypes)
+			// if (!atomTypeId) atomTypeId = choice(neededAtoms)
+			let type = SIGMARRULES[atomTypeId]
+			let addedAtoms = []
+			if (type.matchesSingleton){
+				let atom = choice(atomPossibilities[atomTypeId])
+				addedAtoms.push(atom)
+			} else {
+				let atom = choice(atomPossibilities[atomTypeId])
+				if (atom){
+					addedAtoms.push(atom)
+					let matchingTypes = type.matchesWith.map(atomTypeId => SIGMARRULES[atomTypeId])
+					let forcedMatch = forcedMatches.find(match => {
+						return match.includes(atom.element.id)
+					})
+					if (forcedMatch) {
+						matchingTypes = matchingTypes.filter(type => {
+							return forcedMatch.includes(type.id)
+						})
+					}
+					let possibleComplements = matchingTypes.map(type => {
+						if (!atomPossibilities[type.id]) return []
+						if (atom.element.id === type.id && neededCounts[type.id] <= 1) return []
+						if (forcedMatch && !forcedMatch.includes(type.id)) return []
+						return atomPossibilities[type.id].filter(possibility => {
+							if (possibility.coord.equals(atom.coord)) return false
+							return true
+						})
+					}).flat()
+					// console.log(possibleComplements)
+					if (possibleComplements.length){
+						let complement = choice(possibleComplements)
+						addedAtoms.push(complement)
+					}
+				}
+			}
+
+			for (let atom of addedAtoms){
+				let atomTypeId = atom.element.id
+				neededCounts[atomTypeId]--
+				if (neededCounts[atomTypeId] <= 0){
+					neededAtoms.splice(neededAtoms.indexOf(atomTypeId), 1)
+				}
+				emptyHexes.removeHex(atom.coord)
+				atoms.push(atom)
+				// console.log("Added",atom.element.id)
+			}
+			if (addedAtoms.length === 0){
+				break
+			}
+		}
 
 		return result
 	}
 	startNewGame(){
-		this.grid = this.generate()
+		let newGrid
+		let attempts = 0
+		while (!newGrid){
+			try {
+				attempts++
+				newGrid = this.generate()
+			} catch {
+				//Do nothing
+			}
+		}
+		this.grid = newGrid
+		console.log(attempts)
 		this.determineOpenAtoms()
 	}
 	render(){
@@ -452,7 +630,8 @@ export class SigmarGarden{
 SigmarGarden.sprites = {}
 
 export class SigmarGardenWindow {
-	constructor(){
+	constructor(event){
+		this.event = event
 		this.promise = new Promise(res => this.resolve = res)
 	}
 	show(){
@@ -488,7 +667,17 @@ export class SigmarGardenWindow {
 		modal.toggle()
 
 		modalTag.on("hidden.bs.modal", () => {
-			resolve([])
+			resolve([
+				{
+					type: "set-completion",
+					completed: true,
+					eventId: this.event.id
+				},
+				{
+					type: "change-scene",
+					val: "level-select"
+				}
+			])
 		})
 
 		modalTag.on("shown.bs.modal", () => {

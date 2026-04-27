@@ -336,11 +336,27 @@
 		},
 		"20260425": {
 			"date": "April 25, 2026",
-			"line-count": 12600,
+			"line-count": 13000,
 			"changes": [
 				"- It's Sigmar's Garden time.",
 				"- Got a window open that shows the canvas",
-				"- The game can now generate the positions that tiles will go in, but it doesn't fill them with legal atoms yet"
+				"- The game can now generate the positions that tiles will go in, but it doesn't fill them with legal atoms yet",
+				"- This is really hard"
+			]
+		},
+		"20260426": {
+			"date": "April 26, 2026",
+			"line-count": 13200,
+			"changes": [
+				"- Sigmar's Garden now generates valid levels almost every single time it tries.",
+				"- Fixed a bug that happened when you tried to match two non-matching tiles."
+			]
+		},
+		"20260427": {
+			"date": "April 27, 2026",
+			"line-count": 13200,
+			"changes": [
+				"- "
 			]
 		}
 	}

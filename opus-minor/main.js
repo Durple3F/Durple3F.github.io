@@ -250,6 +250,9 @@ async function handleGameEvents(events){
 				if ("document" in event){
 					eventId = event.document.id
 				}
+				if ("eventId" in event){
+					eventId = event.eventId
+				}
 				let campaignId = currentCampaign.id
 				let progress = saveFile.campaignsProgress[campaignId]
 				let targetState = event.completed
@@ -300,7 +303,7 @@ async function startEvent(event, campaign, chapterIndex){
 		} break
 		case "sigmars-garden": {
 			await SigmarGarden.load()
-			let window = new SigmarGardenWindow()
+			let window = new SigmarGardenWindow(event)
 			window.show()
 			let events = await window.promise
 			handleGameEvents(events)
