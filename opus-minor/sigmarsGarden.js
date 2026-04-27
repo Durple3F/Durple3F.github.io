@@ -7,7 +7,9 @@ import { Atom, choice, Circle, clearModal, getRandomSubarray, getWeightedRandom,
 const ROOT3 = Math.sqrt(3)
 const sigmarSpriteUrls = {
 	"board": "./src/img/sigmars-garden/board.png",
-	"hover": "./src/img/sigmars-garden/atom_hovered.png"
+	"hover": "./src/img/sigmars-garden/atom_hovered.png",
+	"dot": "./src/img/sigmars-garden/divider_dot.png",
+	"line": "./src/img/sigmars-garden/divider_line.png",
 }
 const sigmarAtoms = [
 	"Salt",
@@ -36,23 +38,72 @@ class SigmarElement{
 		this.restrictedSpawning = rules.restrictedSpawning ?? false
 		this.allowedHexes = rules.allowedHexes ?? []
 		this.disqualifyingElements = rules.disqualifyingElements ?? []
+		this.canShowWarning = rules.canShowWarning ?? false
+		this.showWarningFunction = rules.showWarningFunction ?? (() => false)
+		this.showStats = rules.showStats ?? false
+		this.statsLocation = rules.statsLocation ?? {}
 		SIGMARRULES[this.id] = this
 	}
 }
 new SigmarElement("Salt", {
-	matchesWith: ["Salt", "Air", "Fire", "Water", "Earth"]
+	matchesWith: ["Salt", "Air", "Fire", "Water", "Earth"],
+	canShowWarning: true,
+	showWarningFunction: (stat, atoms) => stat.count % 2 ? true : false,
+	showStats: true,
+	statsLocation: {
+		x: 0.205,
+		y: 0.9545,
+		size: 0.26,
+		showCount: true
+	}
 })
 new SigmarElement("Air", {
-	matchesWith: ["Air", "Salt"]
+	matchesWith: ["Air", "Salt"],
+	canShowWarning: true,
+	showWarningFunction: (stat, atoms) => stat.count % 2 ? true : false,
+	showStats: true,
+	statsLocation: {
+		x: 0.265,
+		y: 0.9545,
+		size: 0.26,
+		showCount: true
+	}
 })
 new SigmarElement("Fire", {
-	matchesWith: ["Fire", "Salt"]
+	matchesWith: ["Fire", "Salt"],
+	canShowWarning: true,
+	showWarningFunction: (stat, atoms) => stat.count % 2 ? true : false,
+	showStats: true,
+	statsLocation: {
+		x: 0.311,
+		y: 0.9545,
+		size: 0.26,
+		showCount: true
+	}
 })
 new SigmarElement("Water", {
-	matchesWith: ["Water", "Salt"]
+	matchesWith: ["Water", "Salt"],
+	canShowWarning: true,
+	showWarningFunction: (stat, atoms) => stat.count % 2 ? true : false,
+	showStats: true,
+	statsLocation: {
+		x: 0.361,
+		y: 0.9545,
+		size: 0.26,
+		showCount: true
+	}
 })
 new SigmarElement("Earth", {
-	matchesWith: ["Earth", "Salt"]
+	matchesWith: ["Earth", "Salt"],
+	canShowWarning: true,
+	showWarningFunction: (stat, atoms) => stat.count % 2 ? true : false,
+	showStats: true,
+	statsLocation: {
+		x: 0.411,
+		y: 0.9545,
+		size: 0.26,
+		showCount: true
+	}
 })
 new SigmarElement("Vitae", {
 	matchesWith: ["Mors"]
@@ -61,31 +112,74 @@ new SigmarElement("Mors", {
 	matchesWith: ["Vitae"]
 })
 new SigmarElement("Quicksilver", {
-	matchesWith: ["Lead", "Tin", "Iron", "Copper", "Silver"]
+	matchesWith: ["Lead", "Tin", "Iron", "Copper", "Silver"],
+	showStats: true,
+	statsLocation: {
+		x: 0.482,
+		y: 0.9545,
+		size: 0.26,
+		showCount: true
+	}
 })
 new SigmarElement("Lead", {
-	matchesWith: ["Quicksilver"]
+	matchesWith: ["Quicksilver"],
+	showStats: true,
+	statsLocation: {
+		x: 0.542,
+		y: 0.9545,
+		size: 0.26,
+	}
 })
 new SigmarElement("Tin", {
 	matchesWith: ["Quicksilver"],
-	disqualifyingElements: ["Lead"]
+	disqualifyingElements: ["Lead"],
+	showStats: true,
+	statsLocation: {
+		x: 0.592,
+		y: 0.9545,
+		size: 0.26,
+	}
 })
 new SigmarElement("Iron", {
 	matchesWith: ["Quicksilver"],
-	disqualifyingElements: ["Lead", "Tin"]
+	disqualifyingElements: ["Lead", "Tin"],
+	showStats: true,
+	statsLocation: {
+		x: 0.642,
+		y: 0.9545,
+		size: 0.26,
+	}
 })
 new SigmarElement("Copper", {
 	matchesWith: ["Quicksilver"],
-	disqualifyingElements: ["Lead", "Tin", "Iron"]
+	disqualifyingElements: ["Lead", "Tin", "Iron"],
+	showStats: true,
+	statsLocation: {
+		x: 0.692,
+		y: 0.9545,
+		size: 0.26,
+	}
 })
 new SigmarElement("Silver", {
 	matchesWith: ["Quicksilver"],
-	disqualifyingElements: ["Lead", "Tin", "Iron", "Copper"]
+	disqualifyingElements: ["Lead", "Tin", "Iron", "Copper"],
+	showStats: true,
+	statsLocation: {
+		x: 0.742,
+		y: 0.9545,
+		size: 0.26,
+	}
 })
 new SigmarElement("Gold", {
 	matchesSingleton: true,
 	restrictedSpawning: true,
-	allowedHexes: [new Hex(0, 0, 0)]
+	allowedHexes: [new Hex(0, 0, 0)],
+	showStats: true,
+	statsLocation: {
+		x: 0.792,
+		y: 0.9545,
+		size: 0.26,
+	}
 })
 
 const sigmarCounts = {
@@ -121,6 +215,7 @@ class SigmarAtom{
 		this.renderSize = 0
 		this.isSelected = false
 		this.isHovered = false
+		this.isHighlighted = false
 		this.isOpen = false
 	}
 	equals(otherAtom) {
@@ -133,6 +228,15 @@ class SigmarAtom{
 		return this
 	}
 }
+class SigmarStat {
+	constructor(){
+		this.count = 0
+		this.warning = false
+		this.circle = new Circle(0, 0, 0)
+		this.isHovered = false
+		this.isSelected = false
+	}
+}
 
 export class SigmarGarden{
 	constructor(canvas, controls, variant="base"){
@@ -142,6 +246,7 @@ export class SigmarGarden{
 		this.ruleset = sigmarVariants[variant]
 		this.tickInterval = -1
 		this.grid = new Grid()
+		this.gridStats = {}
 		this.selectedAtoms = []
 		this.startNewGame()
 	}
@@ -209,6 +314,7 @@ export class SigmarGarden{
 			}
 		}
 		this.determineOpenAtoms()
+		this.updateStats()
 	}
 	doAtomsMatch(atom1, atom2){
 		let type1 = SIGMARRULES[atom1.typeId]
@@ -276,6 +382,28 @@ export class SigmarGarden{
 			}
 		}
 		return false
+	}
+	updateStats(){
+		let atomStartCounts = this.ruleset.counts
+		let stats = this.gridStats
+		for (let atomTypeId in atomStartCounts){
+			let stat = new SigmarStat()
+			stats[atomTypeId] = stat
+		}
+		let atoms = this.grid.contents
+		for (let atom of atoms){
+			let atomTypeId = atom.typeId
+			let stat = stats[atomTypeId]
+			stat.count++
+		}
+		for (let atomTypeId in stats){
+			let stat = stats[atomTypeId]
+			let type = SIGMARRULES[atomTypeId]
+			if (type.canShowWarning){
+				stat.warning = type.showWarningFunction(stat, atoms)
+			}
+		}
+		console.log(stats)
 	}
 	generate(){
 		let result = new Grid()
@@ -544,6 +672,7 @@ export class SigmarGarden{
 		this.grid = newGrid
 		console.log(attempts)
 		this.determineOpenAtoms()
+		this.updateStats()
 	}
 	render(){
 		const ctx = this.ctx
@@ -587,16 +716,66 @@ export class SigmarGarden{
 			ctx.drawImage(sprite, atomX - atomW * 0.5, atomY - atomH * 0.5, atomW, atomH)
 			ctx.restore()
 
-			if (atom.isHovered || atom.isSelected){
+			if (atom.isHovered || atom.isSelected || atom.isHighlighted){
 				const hover = sprites["hover"]
 				const hoverW = atomW * 1.4
 				const hoverH = atomH * 1.4
 				ctx.save()
-				ctx.globalAlpha = atom.isSelected ? 1 : 0.3
+				ctx.globalAlpha = (atom.isSelected || atom.isHighlighted) ? 1 : 0.3
 				ctx.drawImage(hover, atomX - hoverW * 0.5, atomY - hoverH * 0.5, hoverW, hoverH)
 				ctx.restore()
 			}
 		}
+
+		//Render stats at the bottom
+		const stats = this.gridStats
+		for (let atomTypeId in stats){
+			const type = SIGMARRULES[atomTypeId]
+			if (!type.showStats) continue
+			const stat = stats[atomTypeId]
+			const elementId = type.elementId
+			const sprite = sprites[elementId]
+			const location = type.statsLocation
+			const size = location.size * hexSize
+			const x = location.x * w
+			const y = location.y * h
+			const atomX = x
+			const atomY = y
+			const atomW = size * 2
+			const atomH = size * 2
+			ctx.save()
+			ctx.globalAlpha = stat.count > 0 ? 1 : 0.3
+			ctx.drawImage(sprite, atomX - size, atomY - size, atomW, atomH)
+			stat.circle = new Circle(atomX, atomY, size)
+
+			if (location.showCount){
+				let color = stat.warning ? "#c0391a" : "#f2f2e8"
+				let fontSize = size * 0.14
+				ctx.font = `${size}px serif`
+				ctx.fillStyle = color
+				ctx.fillText(stat.count, x + size - fontSize, y - size + fontSize * 2)
+			}
+			ctx.globalAlpha = 1
+
+			if (stat.isHovered){
+				const hover = sprites["hover"]
+				const hoverW = atomW * 1.4
+				const hoverH = atomH * 1.4
+				ctx.globalAlpha = stat.isSelected ? 1 : 0.3
+				ctx.drawImage(hover, atomX - hoverW * 0.5, atomY - hoverH * 0.5, hoverW, hoverH)
+			}
+
+			ctx.restore()
+		}
+
+		const dotSprite = sprites["dot"]
+		const lineSprite = sprites["line"]
+		const dotSize = w * 0.005
+		const lineW = w * 0.0035
+		const lineH = h * 0.06
+		ctx.drawImage(dotSprite, w * 0.235 - dotSize * 0.5, h * 0.956 - dotSize * 0.5, dotSize, dotSize)
+		ctx.drawImage(lineSprite, w * 0.4475 - lineW * 0.5, h * 0.956 - lineH * 0.5, lineW, lineH)
+		ctx.drawImage(dotSprite, w * 0.512 - dotSize * 0.5, h * 0.956 - dotSize * 0.5, dotSize, dotSize)
 	}
 	tick(){
 		let controls = this.controls
@@ -614,6 +793,33 @@ export class SigmarGarden{
 				atom.isHovered = false
 			}
 		}
+
+		let stats = this.gridStats
+		let highlightedType = null
+		for (let atomTypeId in stats){
+			let stat = stats[atomTypeId]
+			let circle = stat.circle
+			if (circle.contains(mouseX, mouseY) && stat.count > 0){
+				stat.isHovered = true
+				if (controls.isClicking("left")){
+					stat.isSelected = true
+					highlightedType = atomTypeId
+				} else {
+					stat.isSelected = false
+				}
+			} else {
+				stat.isHovered = false
+				stat.isSelected = false
+			}
+		}
+		for (let atom of atoms){
+			if (atom.typeId === highlightedType){
+				atom.isHighlighted = true
+			} else {
+				atom.isHighlighted = false
+			}
+		}
+
 		controls.tick()
 	}
 	startTicks(){
