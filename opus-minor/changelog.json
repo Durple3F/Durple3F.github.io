@@ -354,9 +354,12 @@
 		},
 		"20260427": {
 			"date": "April 27, 2026",
-			"line-count": 13200,
+			"line-count": 13500,
 			"changes": [
-				"- Added the stats along the bottom of the sigmar's garden screen that let you view specific atoms."
+				"- Added the stats along the bottom of the sigmar's garden screen that let you view specific atoms.",
+				"- Starting to work on the sigmar's garden tutorial",
+				"- Added close buttons to windows",
+				"- Updated the images for Salt and Quicksilver"
 			]
 		}
 	}

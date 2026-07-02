@@ -1320,6 +1320,15 @@ input[type="range"] {
 		position: relative;
 	}
 
+	.sigmars-help-section {
+		position: absolute;
+		top: 0; left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: var(--parchment-bg);
+		background-image: linear-gradient(to bottom, #c1c3b6, #97927e);
+	}
+
 	.sigmars-garden-container {
 		width: 65%;
 		min-height: 100%;
@@ -1339,11 +1348,7 @@ input[type="range"] {
 			background-position: center;
 			background-repeat: no-repeat;
 		}
-
-		.sigmar-new-game-btn {
-			position: absolute;
-			bottom: 1.1%; left: 0.9%;
-			width: 15.7%; height: 6.8%;
+		button {
 			background: var(--fancy-button-bg);
 			border: none;
 			text-transform: uppercase;
@@ -1354,7 +1359,63 @@ input[type="range"] {
 				filter: brightness(1.3);
 			}
 		}
+
+		.sigmars-new-game-btn {
+			position: absolute;
+			bottom: 1.1%; left: 0.9%;
+			width: 15.7%; height: 6.8%;
+		}
+		.sigmars-help-btn {
+			position: absolute;
+			bottom: 1.1%; left: 82.7%;
+			width: 4.4%; height: 6.8%;
+
+			img {
+				position: absolute;
+				top: 50%; left: 50%;
+				transform: translate(-50%, -50%);
+				image-rendering: smooth;
+			}
+			.hover-img {
+				opacity: 0;
+			}
+			&:hover {
+				img {
+					opacity: 0;
+				}
+				.hover-img {
+					opacity: 1;
+				}
+			}
+		}
 	}	
+}
+
+.close-btn-container {
+	position: absolute;
+	right: 0; top: 0;
+	height: 5%;
+	aspect-ratio: 1 / 1;
+	background-image: url("./src/img/x_frame.png");
+	background-size: 100% 100%;
+
+	img {
+		position: absolute;
+		top: 0; right: 0;
+		width: 87.5%;
+		aspect-ratio: 32 / 33;
+	}
+	.hover-img {
+		opacity: 0;
+	}
+	&:hover {
+		img {
+			opacity: 0;
+		}
+		.hover-img {
+			opacity: 1;
+		}
+	}
 }
 
 .tiny-g {

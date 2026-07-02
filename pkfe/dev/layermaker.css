@@ -1,0 +1,21 @@
+body {
+	text-align: center;
+	width: 100vw;
+	height: 100vh;
+	margin: 0;
+}
+body > div {
+	display: inline-block;
+}
+
+#canvas {
+	background-image: repeating-linear-gradient(-45deg,black 0px, rgba(255, 0, 255, 1) 10px, black 20px)
+}
+
+canvas {
+	height: 100%;
+}
+
+* {
+	image-rendering: pixelated;
+}

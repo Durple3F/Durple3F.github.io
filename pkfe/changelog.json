@@ -1,0 +1,38 @@
+{
+	"versions": {
+		"20260629": {
+			"date": "June 29, 2026",
+			"line-count": 290,
+			"changes": [
+				"- Got all the basics set up. There's currently just a screen that shows an image of a popplio sprite. It's amazing"
+			]
+		},
+		"20269630": {
+			"date": "June 30, 2026",
+			"line-count": 480,
+			"changes": [
+				"- Working on making the map on screen able to show arbitrary tiles.",
+				"- The neat thing about how I'm handling the tiles is that they're being placed on a 2d plane via uvs, and are not simply 1000 very carefully placed squares. It's all one big square cut up into pieces. The advantage here is that updating which tile something displays is easy, as well as that rendering 1 quad is faster than 1000 quads.",
+				"- It took some doing, but I made a function that lets me update an arbitrary tile to have an arbitrary value.",
+				"- Now I can also rotate tiles if I feel like it"
+			]
+		},
+		"20260701": {
+			"date": "July 1, 2026",
+			"line-count": 830,
+			"changes": [
+				"- Working on a separate page to help with developing maps. It can display them in simpler 2d and help show what I'm making without so much trial and error.",
+				"- Made a pretty basic little test map. It's still completely 2d but I can add stuff soon."
+			]
+		},
+		"20260702": {
+			"date": "July 2, 2026",
+			"line-count": 830,
+			"changes": [
+				"- Honestly I'm pretty happy with the little bit of story I've got written down so far. It's not in the game yet, but I have a plan for the first few levels.",
+				"- The game now loads maps from a file, and as usual I've left it open to load other stuff later if somebody else makes a campaign.",
+				"- Created a very rough map for the tutorial level to take place on."
+			]
+		}
+	}
+}

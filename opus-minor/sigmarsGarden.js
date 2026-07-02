@@ -862,10 +862,36 @@ export class SigmarGardenWindow {
 		let controls = new ControlManager(canvas[0])
 		let sigmar = new SigmarGarden(canvas[0], controls)
 
-		let newGameButton = $("<button>").addClass("sigmar-new-game-btn").text("New Game").appendTo(right)
-		newGameButton[0].addEventListener("click", () => {
-			sigmar.startNewGame()
+		let helpSection = $("<div>").addClass("sigmars-help-section").appendTo(container)
+		helpSection.hide()
+
+		let hideHelpBtn = $("<div>").addClass("close-btn-container").appendTo(helpSection)
+		$("<img>").attr("src", "./src/img/close_hover.png").addClass("hover-img").appendTo(hideHelpBtn)
+		$("<img>").attr("src", "./src/img/close.png").addClass("normal-img").appendTo(hideHelpBtn)
+		hideHelpBtn.on("click", () => {
+			helpSection.hide()
 		})
+
+		let closeBtn = $("<div>").addClass("close-btn-container").appendTo(right)
+		$("<img>").attr("src", "./src/img/close_hover.png").addClass("hover-img").appendTo(closeBtn)
+		$("<img>").attr("src", "./src/img/close.png").addClass("normal-img").appendTo(closeBtn)
+		closeBtn.on("click", () => {
+			modal.hide()
+		})
+
+		let newGameButton = $("<button>").addClass("sigmars-new-game-btn").text("New Game").appendTo(right)
+		const newGame = () => {
+			sigmar.startNewGame()
+		}
+		newGameButton[0].addEventListener("click", newGame)
+
+		let helpButton = $("<button>").addClass("sigmars-help-btn").appendTo(right)
+		$("<img>").attr("src", "./src/img/sigmars-garden/diagram_icon_hover.png").addClass("hover-img").appendTo(helpButton)
+		$("<img>").attr("src", "./src/img/sigmars-garden/diagram_icon.png").addClass("normal-img").appendTo(helpButton)
+		const toggleHelp = () => {
+			helpSection.show()
+		}
+		helpButton[0].addEventListener("click", toggleHelp)
 		
 		let modal = new bootstrap.Modal(modalTag[0], {
 			keyboard: false
