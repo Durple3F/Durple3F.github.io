@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { LZString } from './lz-string.min.js';
+import { PROPDATAS, SceneProp } from './props.js';
 export const LEVELS = {}
 export const MAPDATAS = {}
 export const TILESETS = {}
@@ -21,6 +22,7 @@ export class MapData {
 		this.layers = base.layers
 		this.ambientLight = base.ambientLight
 		this.backgroundColor = base.backgroundColor
+		this.props = base.props
 	}
 }
 
@@ -82,7 +84,10 @@ export class BattleMap {
 		this.mapdata = mapdata
 		this.tilesets = []
 		this.layers = []
+		this.props = []
 		this.group = new THREE.Group()
+		this.group.castShadow = true;
+		this.group.receiveShadow = true;
 
 		for (let i = 0; i < mapdata.layers.length; i++) {
 			this.layers.push(new BattleMapLayer(mapdata.layers[i]))
@@ -99,7 +104,7 @@ export class BattleMap {
 		for (let i = 0; i < mapdata.layers.length; i++) {
 			let layerId = mapdata.layers[i]
 			let layer = this.layers[i]
-			const material = new THREE.MeshBasicMaterial({ map: layer.atlas.texture, transparent: true });
+			const material = new THREE.MeshStandardMaterial({ map: layer.atlas.texture, transparent: true });
 			const geometry = new THREE.BufferGeometry(layer.width, layer.height);
 
 			//Creating the buffer geometry is a real pain in the butt.
@@ -173,6 +178,8 @@ export class BattleMap {
 			geometry.setIndex(indices);
 			const imageMesh = new THREE.Mesh(geometry, material);
 			layer.mesh = imageMesh
+			// imageMesh.castShadow = true;
+			imageMesh.receiveShadow = true;
 			imageMesh.rotation.x = -Math.PI * 1
 			imageMesh.rotation.y = Math.PI * 1
 			this.group.add(imageMesh);
@@ -180,6 +187,24 @@ export class BattleMap {
 			for (let tile of layer.tiles){
 				layer.setTile(tile.x, tile.z, tile.spriteIndexes[tile.spriteIndex])
 			}
+		}
+
+		for (let propBase of mapdata.props){
+			const propData = PROPDATAS[propBase.modelId]
+			await propData.load()
+			const prop = new SceneProp(propBase)
+			this.props.push(prop)
+			if ("scale" in propBase){
+				prop.model.scale.x = propBase.scale
+				prop.model.scale.y = propBase.scale
+				prop.model.scale.z = propBase.scale
+			}
+			if ("position" in propBase){
+				prop.scene.position.x = propBase.position[0]
+				prop.scene.position.y = propBase.position[1]
+				prop.scene.position.z = propBase.position[2]
+			}
+			this.group.add(prop.scene)
 		}
 	}
 }

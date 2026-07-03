@@ -1,6 +1,8 @@
 import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { MAPDATAS, BattleMap, LEVELS } from './level.js';
 import { CAMPAIGNS } from './campaigns.js';
+import { clamp } from './util.js';
 
 export class BattleGame {
 	constructor(renderer, controls) {
@@ -16,6 +18,7 @@ export class BattleGame {
 		this.textureLoader = new THREE.TextureLoader()
 
 		this.newScene()
+		const orbitControls = new OrbitControls( this.cameras[0], renderer.domElement );
 	}
 	async newScene() {
 		let level = this.level
@@ -29,18 +32,25 @@ export class BattleGame {
 		this.cameras.push(new THREE.PerspectiveCamera(45, width / height, 0.01 * scale, 500 * scale));
 		let camera = this.cameras[0]
 		camera.position.z = 5 * scale;
-		camera.position.y = 15 * scale;
+		camera.position.y = 7 * scale;
 		camera.rotation.x = -Math.PI * 0.3
 		this.currentCamera = 0
 
-		const al = new THREE.AmbientLight(0xffffff, 0.3);
+		const al = new THREE.AmbientLight(0xffffff, 1);
 		scene.add(al);
 		this.lights.push(al)
-		const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-		directionalLight.position.set(5, 20, -5)
-		directionalLight.lookAt(0, 0, 0)
+		const directionalLight = new THREE.DirectionalLight(0xffffff, 0.4);
+		directionalLight.position.set(6, 10, 30)
+		directionalLight.lookAt(5, 0, 10)
+		directionalLight.castShadow = true
+		directionalLight.shadow.camera.left = -20;
+		directionalLight.shadow.camera.right = 20;
+		directionalLight.shadow.normalBias = 0.5
+		// directionalLight.shadow.bias = -0.005
 		scene.add(directionalLight);
 		this.lights.push(directionalLight)
+		// const helper = new THREE.CameraHelper(directionalLight.shadow.camera);
+		// scene.add(helper);
 
 		scene.background = new THREE.Color().setRGB(0.5, 0.5, 0.5);
 
@@ -127,8 +137,20 @@ export class BattleGame {
 			camera1.position.z += 0.3
 		}
 
-		//Update tiles on the map
 		const map = this.map
+		const cameraPos = this.cameras[this.currentCamera].position
+		// let tempVector = new THREE.Vector3()
+		for (let prop of map.props){
+			if (prop.isBillboard){
+				// prop.scene.lookAt(this.cameras[this.currentCamera].position)
+				const dx = cameraPos.x - prop.scene.position.x
+				const dz = cameraPos.z - prop.scene.position.z
+				prop.scene.rotation.y = clamp(Math.atan2(dx, dz), -1, 1) * 0.25
+				console.log(prop.scene.rotation.y)
+			}
+		}
+
+		//Update map tiles that update
 		for (let layer of map.layers){
 			for (let tile of layer.tiles){
 				if (tile.spriteChangeInterval === -1) continue
@@ -147,6 +169,7 @@ export class BattleGame {
 				layer.isMeshDirty = false
 			}
 		}
+
 		this.lastFrameTime = now
 	}
 }

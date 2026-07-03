@@ -6,6 +6,8 @@ import { framesPerSecond } from './config.js';
 import { loadCampaign } from './campaigns.js';
 
 const renderer = new THREE.WebGLRenderer( { antialias: false } );
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFShadowMap;
 $("#screen").append( renderer.domElement );
 const controls = new ControlManager()
 let game

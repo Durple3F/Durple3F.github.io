@@ -27,11 +27,12 @@
 		},
 		"20260702": {
 			"date": "July 2, 2026",
-			"line-count": 830,
+			"line-count": 1100,
 			"changes": [
 				"- Honestly I'm pretty happy with the little bit of story I've got written down so far. It's not in the game yet, but I have a plan for the first few levels.",
 				"- The game now loads maps from a file, and as usual I've left it open to load other stuff later if somebody else makes a campaign.",
-				"- Created a very rough map for the tutorial level to take place on."
+				"- Created a very rough map for the tutorial level to take place on.",
+				"- I can now place props onto the map. They're just model files, but I could add any model I like. I'm using it for trees right now in the forest."
 			]
 		}
 	}
