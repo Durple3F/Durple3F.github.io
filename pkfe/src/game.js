@@ -146,7 +146,7 @@ export class BattleGame {
 				const dx = cameraPos.x - prop.scene.position.x
 				const dz = cameraPos.z - prop.scene.position.z
 				prop.scene.rotation.y = clamp(Math.atan2(dx, dz), -1, 1) * 0.25
-				console.log(prop.scene.rotation.y)
+				// console.log(prop.scene.rotation.y)
 			}
 		}
 

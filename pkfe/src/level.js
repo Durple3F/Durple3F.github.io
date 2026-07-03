@@ -6,7 +6,7 @@ export const MAPDATAS = {}
 export const TILESETS = {}
 
 export class BattleLevel {
-	constructor(levelData){
+	constructor(levelData) {
 		let mapdata = MAPDATAS[levelData.map]
 		this.map = new BattleMap(mapdata)
 		LEVELS[levelData.id] = this
@@ -36,7 +36,7 @@ class MapLayerData {
 export class BattleMapLayer {
 	constructor(mapLayerData) {
 		this.tiles = []
-		if ("tiledata" in mapLayerData){
+		if ("tiledata" in mapLayerData) {
 			this.loadFromEncodedString(mapLayerData.tiledata)
 		} else {
 			this.width = mapLayerData.width
@@ -64,13 +64,13 @@ export class BattleMapLayer {
 		uvAttribute.addUpdateRange(index, 8)
 		this.isMeshDirty = true
 	}
-	loadFromEncodedString(tiledataStr){
+	loadFromEncodedString(tiledataStr) {
 		let data = JSON.parse(LZString.decompressFromBase64(tiledataStr))
 		this.tiles.length = 0
 		this.width = data[0]
 		this.height = data[1]
 		let tilesData = data[2]
-		for (let tileData of tilesData){
+		for (let tileData of tilesData) {
 			let tile = new Tile(tileData[0], tileData[1], tileData[2], tileData[3], tileData[4])
 			this.tiles.push(tile)
 		}
@@ -105,6 +105,54 @@ export class BattleMap {
 			let layerId = mapdata.layers[i]
 			let layer = this.layers[i]
 			const material = new THREE.MeshStandardMaterial({ map: layer.atlas.texture, transparent: true });
+
+			material.onBeforeCompile = (shader) => {
+
+				const width = parseFloat(this.width)
+				const height = parseFloat(this.height)
+				const fadeDistance = 2;
+
+				shader.uniforms.mapHalfSize = {
+					value: new THREE.Vector2(width / 2, height / 2)
+				};
+
+				shader.uniforms.fadeDistance = {
+					value: fadeDistance
+				};
+
+				shader.vertexShader = `
+					varying vec3 worldPos;
+        ` + shader.vertexShader.replace(
+					"#include <worldpos_vertex>",
+					`
+					#include <worldpos_vertex>
+					worldPos = worldPosition.xyz;
+					`
+				);
+				shader.fragmentShader = `
+					varying vec3 worldPos;
+					uniform vec2 mapHalfSize;
+					uniform float fadeDistance;
+        ` + shader.fragmentShader.replace(
+					"#include <dithering_fragment>",
+					`
+
+					float dx = mapHalfSize.x - abs(worldPos.x);
+					float dz = mapHalfSize.y - abs(worldPos.z);
+
+					float edge = min(dx, dz);
+
+					//float alpha = clamp(edge / fadeDistance, 0.0, 1.0);
+					float alpha = smoothstep(0.0, fadeDistance, edge);
+
+					gl_FragColor.a *= alpha;
+
+					#include <dithering_fragment>
+					`
+				);
+
+			};
+
 			const geometry = new THREE.BufferGeometry(layer.width, layer.height);
 
 			//Creating the buffer geometry is a real pain in the butt.
@@ -184,22 +232,22 @@ export class BattleMap {
 			imageMesh.rotation.y = Math.PI * 1
 			this.group.add(imageMesh);
 
-			for (let tile of layer.tiles){
+			for (let tile of layer.tiles) {
 				layer.setTile(tile.x, tile.z, tile.spriteIndexes[tile.spriteIndex])
 			}
 		}
 
-		for (let propBase of mapdata.props){
+		for (let propBase of mapdata.props) {
 			const propData = PROPDATAS[propBase.modelId]
 			await propData.load()
 			const prop = new SceneProp(propBase)
 			this.props.push(prop)
-			if ("scale" in propBase){
+			if ("scale" in propBase) {
 				prop.model.scale.x = propBase.scale
 				prop.model.scale.y = propBase.scale
 				prop.model.scale.z = propBase.scale
 			}
-			if ("position" in propBase){
+			if ("position" in propBase) {
 				prop.scene.position.x = propBase.position[0]
 				prop.scene.position.y = propBase.position[1]
 				prop.scene.position.z = propBase.position[2]
@@ -282,16 +330,16 @@ export class TileAtlas {
 }
 
 export class Tile {
-	constructor(x, y, z, spriteIndexes, spriteChangeInterval=200) {
+	constructor(x, y, z, spriteIndexes, spriteChangeInterval = 200) {
 		this.x = x
 		this.y = y
 		this.z = z
-		if (typeof spriteIndexes === "number"){
+		if (typeof spriteIndexes === "number") {
 			spriteIndexes = [spriteIndexes]
 		}
 		this.spriteIndex = 0
 		this.spriteIndexes = spriteIndexes
-		if (this.spriteIndexes.length <= 1){
+		if (this.spriteIndexes.length <= 1) {
 			spriteChangeInterval = -1
 		}
 		this.spriteChangeInterval = spriteChangeInterval

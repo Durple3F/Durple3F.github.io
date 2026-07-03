@@ -34,6 +34,13 @@
 				"- Created a very rough map for the tutorial level to take place on.",
 				"- I can now place props onto the map. They're just model files, but I could add any model I like. I'm using it for trees right now in the forest."
 			]
+		},
+		"20260703": {
+			"date": "July 3, 2026",
+			"line-count": 1100,
+			"changes": [
+				"- Added a really neat shader that makes the map fade at the edges!"
+			]
 		}
 	}
 }
