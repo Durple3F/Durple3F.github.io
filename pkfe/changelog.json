@@ -37,9 +37,10 @@
 		},
 		"20260703": {
 			"date": "July 3, 2026",
-			"line-count": 1100,
+			"line-count": 1280,
 			"changes": [
-				"- Added a really neat shader that makes the map fade at the edges!"
+				"- Added a really neat shader that makes the map fade at the edges!",
+				"- Put a good amount of work into getting a damn character to exist on the map. There's a lot to think about and prepare for."
 			]
 		}
 	}

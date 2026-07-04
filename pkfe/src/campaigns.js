@@ -1,4 +1,5 @@
-import {BattleLevel, MapData, TileSet} from "./level.js"
+import { CharacterSpriteSheet } from "./battleCharacters.js"
+import {BattleLevel, LEVELDATAS, MapData, TileSet} from "./level.js"
 import { PROPDATAS, ScenePropData } from "./props.js"
 
 export const CAMPAIGNS = {}
@@ -20,7 +21,11 @@ export async function loadCampaign(url, name){
 		}
 		for (let levelId in campaignData.levels){
 			let base = campaignData.levels[levelId]
-			let level = new BattleLevel(base)
+			LEVELDATAS[levelId] = base
+		}
+		for (let characterSpriteSheetId in campaignData.characterSpriteSheets){
+			let base = campaignData.characterSpriteSheets[characterSpriteSheetId]
+			let spritesheet = new CharacterSpriteSheet(base)
 		}
 	})
 }

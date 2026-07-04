@@ -1,15 +1,61 @@
 import * as THREE from 'three';
 import { LZString } from './lz-string.min.js';
 import { PROPDATAS, SceneProp } from './props.js';
+import { BattleCharacter } from './battleCharacters.js';
 export const LEVELS = {}
+export const LEVELDATAS = {}
 export const MAPDATAS = {}
 export const TILESETS = {}
 
 export class BattleLevel {
 	constructor(levelData) {
-		let mapdata = MAPDATAS[levelData.map]
-		this.map = new BattleMap(mapdata)
-		LEVELS[levelData.id] = this
+		this.id = levelData.id
+		LEVELS[this.id] = this
+		this.map = MAPDATAS[levelData.map]
+		this.characters = []
+		if ("battleCharacters" in levelData){
+			for (let charData of levelData.battleCharacters){
+				//TODO: The character data is purposefully vague, for example only specifying that the player character is to be present, but not which pokemon that character is. This is where I'll have to define that later.
+				let character = new BattleCharacter("popplio", "popplio", {}, "base", [])
+				character.levelCharacterId = charData.id
+				this.characters.push(character)
+			}
+		}
+		this.formationSlots = []
+		if ("formationSlots" in levelData){
+			for (let slotData of levelData.formationSlots){
+				let slot = new FormationSlot(slotData.location)
+				if (slotData.forcedCharacter){
+					let character = this.characters.find(char => char.levelCharacterId === slotData.forcedCharacter)
+					slot.setCharacter(character)
+				}
+				this.formationSlots.push(slot)
+			}
+		}
+	}
+}
+
+class BattleForce {
+	constructor(id, isPlayerControlled=false, relationships={}){
+		this.id = id
+		this.isPlayerControlled = isPlayerControlled
+		this.relationships = relationships
+	}
+}
+
+class FormationSlot {
+	constructor(location){
+		this.location = location
+		this.isOccupied = false
+		this.character = null
+	}
+	setCharacter(character){
+		this.character = character
+		this.isOccupied = true
+	}
+	removeCharacter(){
+		this.character = null
+		this.isOccupied = false
 	}
 }
 
@@ -23,13 +69,6 @@ export class MapData {
 		this.ambientLight = base.ambientLight
 		this.backgroundColor = base.backgroundColor
 		this.props = base.props
-	}
-}
-
-class MapLayerData {
-	constructor(tilesetId, tiles) {
-		this.tileset = TILESETS[tilesetId]
-		this.tiles = tiles
 	}
 }
 
@@ -348,4 +387,4 @@ export class Tile {
 }
 
 new TileSet("test-tiles", "img/tilesets/test.png", 16, 16, 32, 32)
-new MapData("test", 64, 64, [new MapLayerData("test-tiles", [])])
+// new MapData("test", 64, 64, [new MapLayerData("test-tiles", [])])

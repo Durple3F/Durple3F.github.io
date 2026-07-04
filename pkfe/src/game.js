@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { MAPDATAS, BattleMap, LEVELS } from './level.js';
+import { MAPDATAS, BattleMap, LEVELS, LEVELDATAS, BattleLevel } from './level.js';
 import { CAMPAIGNS } from './campaigns.js';
 import { clamp } from './util.js';
 
@@ -39,7 +39,7 @@ export class BattleGame {
 		const al = new THREE.AmbientLight(0xffffff, 1);
 		scene.add(al);
 		this.lights.push(al)
-		const directionalLight = new THREE.DirectionalLight(0xffffff, 0.4);
+		const directionalLight = new THREE.DirectionalLight(0xffffff, 5);
 		directionalLight.position.set(6, 10, 30)
 		directionalLight.lookAt(5, 0, 10)
 		directionalLight.castShadow = true
@@ -56,16 +56,6 @@ export class BattleGame {
 
 		const axesHelper = new THREE.AxesHelper( 5 );
 		scene.add( axesHelper );
-
-		const geometry = new THREE.PlaneGeometry(1, 1);
-		const texture = this.textureLoader.load('img/pokemon/popplio.png');
-		texture.colorSpace = THREE.SRGBColorSpace
-		texture.magFilter = THREE.NearestFilter;
-		texture.minFilter = THREE.NearestFilter;
-		texture.generateMipmaps = false;
-		const material = new THREE.MeshBasicMaterial({ map: texture, transparent: false });
-		const imageMesh = new THREE.Mesh(geometry, material);
-		// scene.add(imageMesh);
 
 		return scene
 	}
@@ -86,8 +76,29 @@ export class BattleGame {
 	}
 
 	async loadLevel(levelId){
-		console.log(LEVELS)
-		await this.loadMap("night forest")
+		let levelData = LEVELDATAS[levelId]
+		let level = new BattleLevel(levelData)
+		this.level = level
+		await this.loadMap(level.map.id)
+		const geometry = new THREE.PlaneGeometry(1, 1);
+		const texture = this.textureLoader.load('img/pokemon/popplio/popplio.png');
+		texture.colorSpace = THREE.SRGBColorSpace
+		texture.magFilter = THREE.NearestFilter;
+		texture.minFilter = THREE.NearestFilter;
+		texture.generateMipmaps = false;
+		const material = new THREE.MeshStandardMaterial({ map: texture, transparent: true });
+		const imageMesh = new THREE.Mesh(geometry, material);
+		// this.scene.add(imageMesh);
+
+		for (let character of level.characters){
+			await character.load()
+			this.scene.add(character.object)
+		}
+		
+		//If there's no need to choose character slots, just skip to starting the level.
+		if (level.formationSlots.every(slot => slot.isOccupied)){
+			this.resetCharacterPositions()
+		}
 	}
 	async loadMap(mapId){
 		let mapdata = MAPDATAS[mapId]
@@ -107,6 +118,16 @@ export class BattleGame {
 		}
 		await map.loadAtlases(this.textureLoader)
 		await map.load()
+	}
+
+	resetCharacterPositions(){
+		//Resets all characters to be at the formation slots they started on.
+		for (let slot of this.level.formationSlots){
+			let character = slot.character
+			let coord = slot.location
+			console.log(coord)
+			character.object.position.set(coord[0], coord[1], coord[2])
+		}
 	}
 
 	tick() {
@@ -139,15 +160,20 @@ export class BattleGame {
 
 		const map = this.map
 		const cameraPos = this.cameras[this.currentCamera].position
-		// let tempVector = new THREE.Vector3()
+		//Point billboarded props at the screen
 		for (let prop of map.props){
 			if (prop.isBillboard){
 				// prop.scene.lookAt(this.cameras[this.currentCamera].position)
 				const dx = cameraPos.x - prop.scene.position.x
 				const dz = cameraPos.z - prop.scene.position.z
 				prop.scene.rotation.y = clamp(Math.atan2(dx, dz), -1, 1) * 0.25
-				// console.log(prop.scene.rotation.y)
 			}
+		}
+
+		for (let character of this.level.characters){
+			const dx = cameraPos.x - character.object.position.x;
+			const dz = cameraPos.z - character.object.position.z;
+			character.object.rotation.y = Math.atan2(dx, dz);
 		}
 
 		//Update map tiles that update

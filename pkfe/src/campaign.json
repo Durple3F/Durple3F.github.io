@@ -2,7 +2,26 @@
 	"levels": {
 		"tutorial": {
 			"id": "tutorial",
-			"map": "night forest"
+			"map": "night forest",
+			"battleCharacters": [
+				{
+					"id": "player",
+					"pokemonId": "popplio"
+				}
+			],
+			"formationSlots": [
+				{
+					"location": [2, 0, 10],
+					"forceId": "player",
+					"forcedCharacter": "player"
+				}
+			],
+			"forces": [
+				{
+					"id": "player",
+					"playerControlled": true
+				}
+			]
 		}
 	},
 	"maps": {
@@ -20,6 +39,7 @@
 					"name": "terrain-background",
 					"tileset": "night forest",
 					"position": [0, 0, 0],
+					"scale": 0.5,
 					"tiledata": "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"
 				}
 			],
@@ -107,6 +127,18 @@
 		"tree1": {
 			"id": "tree1",
 			"path": "./props/tree1.glb"
+		}
+	},
+	"characterSpriteSheets": {
+		"popplio": {
+			"id": "popplio",
+			"path": "./img/pokemon/popplio/popplio.png",
+			"characterWidth": 1,
+			"characterHeight": 1,
+			"spriteWidth": 64,
+			"spriteHeight": 64,
+			"rows": 1,
+			"columns": 1
 		}
 	}
 }
