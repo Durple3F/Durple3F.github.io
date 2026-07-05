@@ -55,11 +55,12 @@
 		},
 		"20260705": {
 			"date": "July 5, 2026",
-			"line-count": 1560,
+			"line-count": 1900,
 			"changes": [
 				"- Added a bunch of trees to the map I'm working on.",
 				"- The camera now automatically focuses on the player",
-				"- The first scene needs a stufful in it, and I added it."
+				"- The first scene needs a stufful in it, and I added it.",
+				"- Lots of work towards starting to make cutscenes work. I've done this a few times already, surely it can't be that bad in 3d. Right?"
 			]
 		}
 	}

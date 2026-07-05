@@ -3,6 +3,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { MAPDATAS, BattleMap, LEVELS, LEVELDATAS, BattleLevel } from './level.js';
 import { CAMPAIGNS } from './campaigns.js';
 import { clamp } from './util.js';
+import { BattleCutscene } from './cutscenes.js';
 
 export class BattleGame {
 	constructor(renderer, controls) {
@@ -38,7 +39,7 @@ export class BattleGame {
 		const al = new THREE.AmbientLight(0xffffff, 1);
 		scene.add(al);
 		this.lights.push(al)
-		const directionalLight = new THREE.DirectionalLight(0xbb8800, 0.7);
+		const directionalLight = new THREE.DirectionalLight(0x00bb88, 0.7);
 		directionalLight.position.set(6, 10, 30)
 		directionalLight.lookAt(5, 0, 10)
 		directionalLight.castShadow = true
@@ -81,15 +82,6 @@ export class BattleGame {
 		let level = new BattleLevel(levelData)
 		this.level = level
 		await this.loadMap(level.map.id)
-		// const geometry = new THREE.PlaneGeometry(1, 1);
-		// const texture = this.textureLoader.load('img/pokemon/popplio/popplio.png');
-		// texture.colorSpace = THREE.SRGBColorSpace
-		// texture.magFilter = THREE.NearestFilter;
-		// texture.minFilter = THREE.NearestFilter;
-		// texture.generateMipmaps = false;
-		// const material = new THREE.MeshStandardMaterial({ map: texture, transparent: true });
-		// const imageMesh = new THREE.Mesh(geometry, material);
-		// this.scene.add(imageMesh);
 
 		for (let character of level.characters){
 			await character.load()
@@ -100,6 +92,9 @@ export class BattleGame {
 		if (level.formationSlots.every(slot => slot.isOccupied)){
 			this.resetCharacterPositions()
 		}
+
+		//Run any start-of-level cutscenes
+		await this.runCutscenes("basic", "levelStart")
 	}
 	async loadMap(mapId){
 		let mapdata = MAPDATAS[mapId]
@@ -119,6 +114,23 @@ export class BattleGame {
 		}
 		await map.loadAtlases(this.textureLoader)
 		await map.load()
+	}
+
+	async runCutscenes(triggerType, triggerEvent){
+		let cutscenesToRun = []
+		let cutscenes = this.level.cutscenes
+		if (triggerType === "basic"){
+			for (let cutsceneData of cutscenes){
+				let trigger = cutsceneData.trigger
+				if (trigger.type === "basic" && trigger.event === triggerEvent){
+					cutscenesToRun.push(cutsceneData)
+				}
+			}
+		}
+		for (let cutsceneData of cutscenesToRun){
+			let cutscene = new BattleCutscene(this, cutsceneData, triggerEvent)
+			await cutscene.play()
+		}
 	}
 
 	resetCharacterPositions(){

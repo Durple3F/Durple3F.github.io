@@ -32,11 +32,14 @@
 			],
 			"cutscenes": [
 				{
-					"trigger": "onStart",
+					"trigger": {
+						"type": "basic",
+						"event": "levelStart"
+					},
 					"events": [
 						{"type": "load-value", "value": "player"},
-						{"type": "load-value", "value": [0, 0, -5]},
-						{"type": "translateCharacter", "characterId": -2, "mode": "offset", "to": -1, "duration": 10000}
+						{"type": "load-value", "value": {"x":0, "y":0, "z":-5}},
+						{"type": "path-character", "characterId": -2, "mode": "offset", "to": -1, "duration": 10000}
 					]
 				}
 			]

@@ -32,6 +32,11 @@ export class BattleLevel {
 				this.formationSlots.push(slot)
 			}
 		}
+
+		this.cutscenes = levelData.cutscenes ?? []
+	}
+	getCharacter(characterId){
+		return this.characters.find(char => char.levelCharacterId === characterId)
 	}
 }
 
