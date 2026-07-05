@@ -16,7 +16,7 @@ export class BattleLevel {
 		if ("battleCharacters" in levelData){
 			for (let charData of levelData.battleCharacters){
 				//TODO: The character data is purposefully vague, for example only specifying that the player character is to be present, but not which pokemon that character is. This is where I'll have to define that later.
-				let character = new BattleCharacter("popplio", "popplio", {}, "base", [])
+				let character = new BattleCharacter(charData.pokemonId, charData.pokemonId, {}, "base", [])
 				character.levelCharacterId = charData.id
 				this.characters.push(character)
 			}
@@ -83,7 +83,7 @@ export class BattleMapLayer {
 			for (let i = 0; i < width * height; i++) {
 				let x = i % width
 				let z = Math.floor(i / width)
-				this.tiles.push(new Tile(x, 0, z, [0]))
+				// this.tiles.push(new Tile(x, 0, z, [0]))
 			}
 		}
 		this.tileset = mapLayerData.tileset
@@ -271,7 +271,7 @@ export class BattleMap {
 			imageMesh.receiveShadow = true;
 			imageMesh.rotation.x = -Math.PI * 1
 			imageMesh.rotation.y = Math.PI * 1
-			imageMesh.scale.x = layer.scale
+			imageMesh.scale.x = layer.scale * -1
 			imageMesh.scale.y = layer.scale
 			imageMesh.scale.z = layer.scale
 			this.group.add(imageMesh);

@@ -16,6 +16,7 @@ export class BattleGame {
 		this.actors = []
 		this.lastFrameTime = performance.now()
 		this.textureLoader = new THREE.TextureLoader()
+		this.isPlayingCutscene = false
 
 		this.newScene()
 		const orbitControls = new OrbitControls( this.cameras[0], renderer.domElement );
@@ -24,6 +25,7 @@ export class BattleGame {
 		let level = this.level
 		// let worldData = level.worldData
 		let scale = 1 //worldData.scale
+		this.worldScale = scale
 
 		let width = window.innerWidth, height = window.innerHeight;
 		let scene = new THREE.Scene();
@@ -31,9 +33,6 @@ export class BattleGame {
 		this.cameras.length = 0;
 		this.cameras.push(new THREE.PerspectiveCamera(45, width / height, 0.01 * scale, 500 * scale));
 		let camera = this.cameras[0]
-		camera.position.z = 2.5 * scale;
-		camera.position.y = 3.5 * scale;
-		camera.rotation.x = -Math.PI * 0.3
 		this.currentCamera = 0
 
 		const al = new THREE.AmbientLight(0xffffff, 1);
@@ -82,19 +81,19 @@ export class BattleGame {
 		let level = new BattleLevel(levelData)
 		this.level = level
 		await this.loadMap(level.map.id)
-		const geometry = new THREE.PlaneGeometry(1, 1);
-		const texture = this.textureLoader.load('img/pokemon/popplio/popplio.png');
-		texture.colorSpace = THREE.SRGBColorSpace
-		texture.magFilter = THREE.NearestFilter;
-		texture.minFilter = THREE.NearestFilter;
-		texture.generateMipmaps = false;
-		const material = new THREE.MeshStandardMaterial({ map: texture, transparent: true });
-		const imageMesh = new THREE.Mesh(geometry, material);
+		// const geometry = new THREE.PlaneGeometry(1, 1);
+		// const texture = this.textureLoader.load('img/pokemon/popplio/popplio.png');
+		// texture.colorSpace = THREE.SRGBColorSpace
+		// texture.magFilter = THREE.NearestFilter;
+		// texture.minFilter = THREE.NearestFilter;
+		// texture.generateMipmaps = false;
+		// const material = new THREE.MeshStandardMaterial({ map: texture, transparent: true });
+		// const imageMesh = new THREE.Mesh(geometry, material);
 		// this.scene.add(imageMesh);
 
 		for (let character of level.characters){
 			await character.load()
-			this.scene.add(character.object)
+			this.scene.add(character.billboardPivot)
 		}
 		
 		//If there's no need to choose character slots, just skip to starting the level.
@@ -127,9 +126,18 @@ export class BattleGame {
 		for (let slot of this.level.formationSlots){
 			let character = slot.character
 			let coord = slot.location
-			console.log(coord)
-			character.object.position.set(coord[0], coord[1], coord[2])
+			character.billboardPivot.position.set(coord[0], coord[1], coord[2])
 		}
+
+		//Center camera on player character
+		let firstCharacter = this.level.formationSlots[0].character
+		let charWorldPos = firstCharacter.billboardPivot.position
+		let camera = this.cameras[this.currentCamera]
+		let scale = this.worldScale
+		camera.position.x = (charWorldPos.x) * scale
+		camera.position.y = (charWorldPos.y + 3.5) * scale
+		camera.position.z = (charWorldPos.z + 2.5) * scale
+		camera.rotation.x = -Math.PI * 0.3
 	}
 
 	tick() {
@@ -178,7 +186,7 @@ export class BattleGame {
 			const dz = cameraPos.z - character.object.position.z;
 			//Did you know that the pythagorean theorem scales into three dimensions without issue?
 			const horizontalDistance = Math.sqrt(dx * dx + dz * dz);
-			character.object.rotation.x = -Math.atan2(dy, horizontalDistance);
+			character.billboardPivot.rotation.x = -Math.atan2(dy, horizontalDistance);
 		}
 
 		//Update map tiles that update

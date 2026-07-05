@@ -21,6 +21,7 @@ class MapMaker {
 
 		this.tickInterval = -1
 		this.autosaveInterval = -1
+		console.log(this)
 	}
 	start(){
 		this.width = Number($("#map-width").val())

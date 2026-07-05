@@ -56,6 +56,8 @@ export class BattleCharacter {
 	constructor(pokemonId, spriteSheetId, stats, battleClass, equippedMoves){
 		this.pokemonId = pokemonId
 		this.spriteSheet = CHARACTERSPRITESHEETS[spriteSheetId]
+		this.object = null
+		this.billboardPivot = new THREE.Group()
 	}
 	async load(){
 		this.texture = await this.spriteSheet.getTexture()
@@ -75,7 +77,8 @@ export class BattleCharacter {
 		const imageMesh = new THREE.Mesh(geometry, material);
 		imageMesh.castShadow = true
 		this.object = imageMesh
-		this.setSprite("right")
+		this.billboardPivot.add(this.object)
+		this.setSprite("left")
 	}
 	setSprite(spriteKey){
 		//Set UV's to only show one sprite at a time.
