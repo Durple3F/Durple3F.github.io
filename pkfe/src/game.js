@@ -31,20 +31,22 @@ export class BattleGame {
 		this.cameras.length = 0;
 		this.cameras.push(new THREE.PerspectiveCamera(45, width / height, 0.01 * scale, 500 * scale));
 		let camera = this.cameras[0]
-		camera.position.z = 5 * scale;
-		camera.position.y = 7 * scale;
+		camera.position.z = 2.5 * scale;
+		camera.position.y = 3.5 * scale;
 		camera.rotation.x = -Math.PI * 0.3
 		this.currentCamera = 0
 
 		const al = new THREE.AmbientLight(0xffffff, 1);
 		scene.add(al);
 		this.lights.push(al)
-		const directionalLight = new THREE.DirectionalLight(0xffffff, 5);
+		const directionalLight = new THREE.DirectionalLight(0xbb8800, 0.7);
 		directionalLight.position.set(6, 10, 30)
 		directionalLight.lookAt(5, 0, 10)
 		directionalLight.castShadow = true
 		directionalLight.shadow.camera.left = -20;
 		directionalLight.shadow.camera.right = 20;
+		directionalLight.shadow.camera.top = 20;
+		directionalLight.shadow.camera.bottom = -20;
 		directionalLight.shadow.normalBias = 0.5
 		// directionalLight.shadow.bias = -0.005
 		scene.add(directionalLight);
@@ -146,16 +148,16 @@ export class BattleGame {
 
 		const camera1 = this.cameras[0]
 		if (controls.isPressing("a")) {
-			camera1.position.x += -0.3
+			camera1.position.x += -0.05
 		}
 		if (controls.isPressing("d")) {
-			camera1.position.x += 0.3
+			camera1.position.x += 0.05
 		}
 		if (controls.isPressing("w")) {
-			camera1.position.z += -0.3
+			camera1.position.z += -0.05
 		}
 		if (controls.isPressing("s")) {
-			camera1.position.z += 0.3
+			camera1.position.z += 0.05
 		}
 
 		const map = this.map
@@ -172,8 +174,11 @@ export class BattleGame {
 
 		for (let character of this.level.characters){
 			const dx = cameraPos.x - character.object.position.x;
+			const dy = cameraPos.y - character.object.position.y;
 			const dz = cameraPos.z - character.object.position.z;
-			character.object.rotation.y = Math.atan2(dx, dz);
+			//Did you know that the pythagorean theorem scales into three dimensions without issue?
+			const horizontalDistance = Math.sqrt(dx * dx + dz * dz);
+			character.object.rotation.x = -Math.atan2(dy, horizontalDistance);
 		}
 
 		//Update map tiles that update

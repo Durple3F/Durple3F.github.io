@@ -42,6 +42,23 @@
 				"- Added a really neat shader that makes the map fade at the edges!",
 				"- Put a good amount of work into getting a damn character to exist on the map. There's a lot to think about and prepare for."
 			]
+		},
+		"20260704": {
+			"date": "July 4, 2026",
+			"line-count": 1560,
+			"changes": [
+				"- Characters can now use sprite sheets to display multiple different sprites.",
+				"- Because my terrain sprites are smaller than my pokemon sprites, now the map can be shrunk/scaled.",
+				"- Made characters facing towards the camera work better.",
+				"- Added a bucket tool to my little map making program. Neat"
+			]
+		},
+		"20260705": {
+			"date": "July 5, 2026",
+			"line-count": 1560,
+			"changes": [
+				"- "
+			]
 		}
 	}
 }

@@ -92,6 +92,8 @@ export class BattleMapLayer {
 		this.atlas = null
 		this.mesh = null
 		this.uvsArray = null
+		this.position = mapLayerData.position ?? [0, 0, 0]
+		this.scale = mapLayerData.scale ?? 1
 	}
 
 	setTile(x, y, tileId, rotation = 0) {
@@ -147,9 +149,9 @@ export class BattleMap {
 
 			material.onBeforeCompile = (shader) => {
 
-				const width = parseFloat(this.width)
-				const height = parseFloat(this.height)
-				const fadeDistance = 2;
+				const width = this.width * layer.scale
+				const height = this.height * layer.scale
+				const fadeDistance = Math.sqrt(width * height / 500);
 
 				shader.uniforms.mapHalfSize = {
 					value: new THREE.Vector2(width / 2, height / 2)
@@ -269,6 +271,9 @@ export class BattleMap {
 			imageMesh.receiveShadow = true;
 			imageMesh.rotation.x = -Math.PI * 1
 			imageMesh.rotation.y = Math.PI * 1
+			imageMesh.scale.x = layer.scale
+			imageMesh.scale.y = layer.scale
+			imageMesh.scale.z = layer.scale
 			this.group.add(imageMesh);
 
 			for (let tile of layer.tiles) {

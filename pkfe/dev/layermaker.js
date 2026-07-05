@@ -23,23 +23,16 @@ class MapMaker {
 		this.autosaveInterval = -1
 	}
 	start(){
-		this.tileCanvas.width = this.tilesetImage.width
-		this.tileCanvas.height = this.tilesetImage.height
-		let context = this.context2
-		context.clearRect(0, 0, this.tileCanvas.width, this.tileCanvas.height)
-		context.drawImage(this.tilesetImage, 0, 0)
-
 		this.width = Number($("#map-width").val())
 		this.height = Number($("#map-height").val())
-		this.tiles = []
+		this.resetScreen()
+		
 		for (let i = 0; i < this.width * this.height; i++){
 			let x = i % this.width
 			let z = Math.floor(i / this.width)
 			let tile = new Tile(x, 0, z, 0)
 			this.tiles.push(tile)
 		}
-		this.canvas.width = this.width * this.tileset.spriteWidth
-		this.canvas.height = this.height * this.tileset.spriteHeight
 
 		clearInterval(this.tickInterval)
 		this.tickInterval = setInterval(() => this.tick(), 20)
@@ -83,6 +76,11 @@ class MapMaker {
 				let tile = this.tiles.find(t => t.x === tileX && t.z === tileY)
 				tile.spriteIndexes[0] = this.tool.tileId
 			}
+			else if (this.controls.justClicked() && this.tool.type === "bucket"){
+				let tileX = Math.floor(mouseX / canvasBox.width * this.width)
+				let tileY = Math.floor(mouseY / canvasBox.height * this.height)
+				this.bucket(this.tool.tileId, tileX, tileY)
+			}
 		} else if (this.isInBox(mouseX, mouseY, tilesetBox)){
 			mouseX = mouseX - tilesetBox.x
 			mouseY = mouseY - tilesetBox.y
@@ -104,8 +102,9 @@ class MapMaker {
 			this.context2.save()
 			this.context2.strokeStyle = "magenta"
 			this.context2.strokeRect(tileX, tileY, this.tileset.spriteWidth, this.tileset.spriteHeight)
-			console.log(tileX, tileY)
+			// console.log(tileX, tileY)
 		}
+		this.controls.tick()
 	}
 	isInBox(x, y, box){
 		return x >= box.x && x <= box.x + box.width && y >= box.y && y <= box.y + box.height
@@ -154,6 +153,57 @@ class MapMaker {
 			this.tiles.push(tile)
 		}
 	}
+
+	resetScreen(){
+		this.tileCanvas.width = this.tilesetImage.width
+		this.tileCanvas.height = this.tilesetImage.height
+		let context = this.context2
+		context.clearRect(0, 0, this.tileCanvas.width, this.tileCanvas.height)
+		context.drawImage(this.tilesetImage, 0, 0)
+
+		this.canvas.width = this.width * this.tileset.spriteWidth
+		this.canvas.height = this.height * this.tileset.spriteHeight
+	}
+
+	bucket(tileId, x, z){
+		let toSearch = []
+		let alreadySearched = []
+		toSearch.push(this.tiles.find(tile => tile.x === x && tile.z === z))
+		toSearch = toSearch.filter(tile => tile)
+		if (!toSearch.length) return
+		let compareTileId = toSearch[0].spriteIndexes[0]
+
+		//Find all identical tiles connected to this tile
+		while (toSearch.length){
+			let search = toSearch[0]
+			toSearch.splice(0, 1)
+			let locs = []
+			locs.push([search.x + 1, search.z])
+			locs.push([search.x - 1, search.z])
+			locs.push([search.x, search.z + 1])
+			locs.push([search.x, search.z - 1])
+			for (let loc of locs){
+				let found = alreadySearched.some(tile => {
+					return tile.x === loc[0] && tile.z === loc[1]
+				}) || toSearch.some(tile => {
+					return tile.x === loc[0] && tile.z === loc[1]
+				})
+				if (!found){
+					let add = this.tiles.find(tile => {
+						return tile.x === loc[0] && tile.z === loc[1] && tile.spriteIndexes[0] === compareTileId
+					})
+					if (add){
+						toSearch.push(add)
+					}
+				}
+			}
+			alreadySearched.push(search)
+		}
+
+		for (let tile of alreadySearched){
+			tile.spriteIndexes[0] = tileId
+		}
+	}
 }
 class Tile {
 	constructor(x, y, z, spriteIndexes, spriteChangeInterval=200) {
@@ -193,21 +243,45 @@ for (let tileset of TILESETS){
 	option.text(tileset.name)
 }
 
-function update(){
+async function update(){
+	let tilesetImage = await changeTileset()
+	let tileset = TILESETS[$("#tileset-picker").val()]
+	mapMaker.start()
+	mapMaker.load()
+}
+update()
+$("#update-btn").click(() => {
+	// localStorage.setItem("last-map-layer", null)
+	update()
+})
+
+function changeTool(){
+	let tool = $("#tool-picker").val()
+	mapMaker.tool.type = tool
+}
+$("#tool-picker").change(changeTool)
+changeTool()
+
+async function changeTileset(){
 	let tilesetImage = new Image()
 	let tileset = TILESETS[$("#tileset-picker").val()]
 	tilesetImage.src = tileset.src
 
-	const ready = () => {
-		mapMaker.tilesetImage = tilesetImage
-		mapMaker.tileset = tileset
-		mapMaker.start()
-		mapMaker.load()
-	}
-	if (tilesetImage.complete || tilesetImage.readyState === 4){
-		ready()
-	}
-	tilesetImage.addEventListener("load", ready)
+	await new Promise(res => {
+		const ready = () => {
+			res()
+		}
+		if (tilesetImage.complete || tilesetImage.readyState === 4){
+			ready()
+		}
+		tilesetImage.addEventListener("load", ready)
+	})
+	
+	mapMaker.tilesetImage = tilesetImage
+	mapMaker.tileset = tileset
+	mapMaker.resetScreen()
+	return tilesetImage
 }
-update()
-$("#update-btn").click(update)
+$("#tileset-picker").change(() => {
+	changeTileset()
+})
