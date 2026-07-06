@@ -33,7 +33,7 @@ export class BattleGame {
 		let scene = new THREE.Scene();
 		this.scene = scene
 		this.cameras.length = 0;
-		this.cameras.push(new THREE.PerspectiveCamera(45, width / height, 0.01 * scale, 500 * scale));
+		this.cameras.push(new THREE.PerspectiveCamera(20, width / height, 0.01 * scale, 500 * scale));
 		let camera = this.cameras[0]
 		this.currentCamera = 0
 
@@ -138,8 +138,8 @@ export class BattleGame {
 		}
 		let scale = this.worldScale
 		camera.position.x = (charWorldPos.x) * scale
-		camera.position.y = (charWorldPos.y + 3.5) * scale
-		camera.position.z = (charWorldPos.z + 2.5) * scale
+		camera.position.y = (charWorldPos.y + 8) * scale
+		camera.position.z = (charWorldPos.z + 5.5) * scale
 	}
 
 	resetCharacterPositions(){

@@ -68,7 +68,9 @@
 			"line-count": 2000,
 			"changes": [
 				"- The game now has a separate map storing the actual terrain information of the map. This includes information about which tiles each tile is connected to.",
-				"- Working on pathfinding. Not that hard honestly. It'll get a lot harder once there's a big pokemon. That's a later problem."
+				"- Working on pathfinding. Not that hard honestly. It'll get a lot harder once there's a big pokemon. That's a later problem.",
+				"- Cutscenes can now tell characters to move to different tiles.",
+				"- Made a mugshot sprite for popplio. Mugshot sprites are the big ones that are used in dialogue and on profile screens."
 			]
 		}
 	}
