@@ -65,5 +65,6 @@ const start = async () => {
 	// await game.startLevel("level1")
 	game.renderer.setAnimationLoop( animate );
 	resize()
+	await game.start()
 }
 start()

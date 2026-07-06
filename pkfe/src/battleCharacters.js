@@ -55,9 +55,13 @@ export class CharacterSpriteSheet {
 export class BattleCharacter {
 	constructor(pokemonId, spriteSheetId, stats, battleClass, equippedMoves){
 		this.pokemonId = pokemonId
+		this.homeTile = null
+		this.occupyingTiles = new Set()
 		this.spriteSheet = CHARACTERSPRITESHEETS[spriteSheetId]
 		this.object = null
 		this.billboardPivot = new THREE.Group()
+		this.fullGroup = new THREE.Group()
+		this.fullGroup.add(this.billboardPivot)
 	}
 	async load(){
 		this.texture = await this.spriteSheet.getTexture()

@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { MAPDATAS, BattleMap, LEVELS, LEVELDATAS, BattleLevel } from './level.js';
 import { CAMPAIGNS } from './campaigns.js';
-import { clamp } from './util.js';
+import { animate, clamp } from './util.js';
 import { BattleCutscene } from './cutscenes.js';
 
 export class BattleGame {
@@ -10,6 +10,7 @@ export class BattleGame {
 		console.log(this)
 		this.renderer = renderer
 		this.controls = controls
+		this.level = null
 		this.scene = new THREE.Scene()
 		this.lights = []
 		this.cameras = []
@@ -85,16 +86,13 @@ export class BattleGame {
 
 		for (let character of level.characters){
 			await character.load()
-			this.scene.add(character.billboardPivot)
+			this.scene.add(character.fullGroup)
 		}
 		
 		//If there's no need to choose character slots, just skip to starting the level.
 		if (level.formationSlots.every(slot => slot.isOccupied)){
 			this.resetCharacterPositions()
 		}
-
-		//Run any start-of-level cutscenes
-		await this.runCutscenes("basic", "levelStart")
 	}
 	async loadMap(mapId){
 		let mapdata = MAPDATAS[mapId]
@@ -133,23 +131,117 @@ export class BattleGame {
 		}
 	}
 
+	centerCameraOnCharacter(character, camera=null){
+		let charWorldPos = character.fullGroup.position
+		if (camera === null){
+			camera = this.cameras[this.currentCamera]
+		}
+		let scale = this.worldScale
+		camera.position.x = (charWorldPos.x) * scale
+		camera.position.y = (charWorldPos.y + 3.5) * scale
+		camera.position.z = (charWorldPos.z + 2.5) * scale
+	}
+
 	resetCharacterPositions(){
 		//Resets all characters to be at the formation slots they started on.
 		for (let slot of this.level.formationSlots){
 			let character = slot.character
 			let coord = slot.location
-			character.billboardPivot.position.set(coord[0], coord[1], coord[2])
+			let terrainTile = this.map.terrain.getTile(coord[0], coord[1], coord[2])
+			this.setCharacterTile(character, terrainTile)
+			character.homeTile = terrainTile
+			character.occupyingTiles.add(terrainTile)
+			terrainTile.occupyingCharacter = character
 		}
 
 		//Center camera on player character
 		let firstCharacter = this.level.formationSlots[0].character
-		let charWorldPos = firstCharacter.billboardPivot.position
-		let camera = this.cameras[this.currentCamera]
-		let scale = this.worldScale
-		camera.position.x = (charWorldPos.x) * scale
-		camera.position.y = (charWorldPos.y + 3.5) * scale
-		camera.position.z = (charWorldPos.z + 2.5) * scale
-		camera.rotation.x = -Math.PI * 0.3
+		this.cameras[0].rotation.x = -Math.PI * 0.3
+		this.centerCameraOnCharacter(firstCharacter)
+	}
+	setCharacterTile(character, terrainTile){
+		character.fullGroup.position.set(terrainTile.x, terrainTile.y, terrainTile.z)
+	}
+	offsetCharacter(character, distance){
+		const tiles = []
+		const newTiles = []
+		const dx = distance[0]
+		const dy = distance[1]
+		const dz = distance[2]
+		const terrain = this.map.terrain
+		const occupied = character.occupyingTiles
+		for (let tile of occupied){
+			tiles.push(tile)
+		}
+		//For each tile we have to move, if we can't find a corresponding tile, stop there.
+		//This character cannot move in that direction.
+		for (let i = 0; i < tiles.length; i++){
+			const tile = tiles[i]
+			const newTile = terrain.getTile(tile.x + dx, tile.y + dy, tile.z + dz)
+			if (!newTile){
+				return false
+			}
+			newTiles[i] = newTile
+		}
+		for (let i = 0; i < tiles.length; i++){
+			occupied.delete(tiles[i])
+		}
+		for (let i = 0; i < newTiles.length; i++){
+			occupied.add(newTiles[i])
+		}
+		return true
+	}
+	async moveCharacterAlongPath(character, path, duration, cameraFollow){
+		let pos = character.fullGroup.position
+		let totalCost = 0
+		let infos = []
+		for (let i = 0; i < path.length - 1; i++){
+			let info = {}
+			infos.push(info)
+			info.start = path[i]
+			info.end = path[i + 1]
+			info.cost = info.start.connectionCosts.get(info.end)
+			totalCost += info.cost
+		}
+		for (let info of infos){
+			info.duration = info.cost / totalCost * duration
+		}
+		for (let info of infos){
+			await this.moveCharacter(character, info.start, info.end, info.duration, cameraFollow)
+		}
+	}
+	async moveCharacter(character, start, end, duration=0, cameraFollow){
+		let resolve
+		const promise = new Promise(res => resolve = res)
+		const dx = end.x - start.x
+		const dy = end.y - start.y
+		const dz = end.z - start.z
+		const move = (start, end, p) => {
+			character.fullGroup.position.x = start.x + dx * p
+			character.fullGroup.position.y = start.y + dy * p
+			character.fullGroup.position.z = start.z + dz * p
+			if (cameraFollow){
+				this.centerCameraOnCharacter(character)
+			}
+		}
+		animate({
+			easing: "linear",
+			step: p => {
+				move(start, end, p)
+			},
+			complete: () => {
+				move(start, end, 1)
+				this.setCharacterTile(character, end)
+				resolve()
+			},
+			duration: duration
+		})
+		await promise
+	}
+
+	async start(){
+		//Run any start-of-level cutscenes
+		await this.runCutscenes("basic", "levelStart")
 	}
 
 	tick() {

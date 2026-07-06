@@ -14,15 +14,17 @@ export class CutsceneEventType {
 new CutsceneEventType("load-value", function(game, cutscene, event){
 	cutscene.info[cutscene.eventIndex] = event.value
 })
-new CutsceneEventType("path-character", function(game, cutscene, event){
+new CutsceneEventType("path-character", async function(game, cutscene, event){
 	let characterId = cutscene.getInfo(event.characterId)
 	let character = game.level.getCharacter(characterId)
+	let duration = event.duration
 	let mode = event.mode
 	if (mode === "offset"){
 		let offset = cutscene.getInfo(event.to)
-		let pos = character.billboardPivot.position
-		pos.x += offset.x
-		pos.y += offset.y
-		pos.z += offset.z
+		let start = character.homeTile
+		let terrain = game.map.terrain
+		let toTile = terrain.getTile(start.x + offset.x, start.y + offset.y, start.z + offset.z)
+		let path = game.map.terrain.findPath(start, toTile)
+		await game.moveCharacterAlongPath(character, path, duration, event.cameraFollow)
 	}
 })

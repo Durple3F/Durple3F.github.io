@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { LZString } from './lz-string.min.js';
 import { PROPDATAS, SceneProp } from './props.js';
 import { BattleCharacter } from './battleCharacters.js';
+import { Terrain } from './terrain.js';
 export const LEVELS = {}
 export const LEVELDATAS = {}
 export const MAPDATAS = {}
@@ -74,6 +75,7 @@ export class MapData {
 		this.ambientLight = base.ambientLight
 		this.backgroundColor = base.backgroundColor
 		this.props = base.props
+		this.terrain = base.terrain
 	}
 }
 
@@ -137,6 +139,11 @@ export class BattleMap {
 
 		for (let i = 0; i < mapdata.layers.length; i++) {
 			this.layers.push(new BattleMapLayer(mapdata.layers[i]))
+		}
+
+		this.terrain = new Terrain()
+		if ("terrain" in mapdata){
+			this.terrain.createFromData(mapdata.terrain)
 		}
 	}
 	async loadAtlases(loader) {

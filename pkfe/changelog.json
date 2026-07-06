@@ -62,6 +62,14 @@
 				"- The first scene needs a stufful in it, and I added it.",
 				"- Lots of work towards starting to make cutscenes work. I've done this a few times already, surely it can't be that bad in 3d. Right?"
 			]
+		},
+		"20260706": {
+			"date": "July 6, 2026",
+			"line-count": 2000,
+			"changes": [
+				"- The game now has a separate map storing the actual terrain information of the map. This includes information about which tiles each tile is connected to.",
+				"- Working on pathfinding. Not that hard honestly. It'll get a lot harder once there's a big pokemon. That's a later problem."
+			]
 		}
 	}
 }
