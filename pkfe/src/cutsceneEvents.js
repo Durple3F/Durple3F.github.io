@@ -1,3 +1,5 @@
+import { Dialogue } from "./dialogue.js"
+
 export const CUTSCENEEVENTS = {}
 
 export class CutsceneEventType {
@@ -27,4 +29,15 @@ new CutsceneEventType("path-character", async function(game, cutscene, event){
 		let path = game.map.terrain.findPath(start, toTile)
 		await game.moveCharacterAlongPath(character, path, duration, event.cameraFollow)
 	}
+})
+new CutsceneEventType("play-dialogue", async function(game, cutscene, event){
+	let dialogueId = event.id
+	let dialogueData = game.level.dialogues[dialogueId]
+	let dialogue = new Dialogue(game, dialogueData)
+	game.screen2d.isActive = true
+	game.screen2d.isFocused = true
+	let info = await dialogue.play()
+	game.screen2d.isActive = false
+	game.screen2d.isFocused = false
+	cutscene.info[cutscene.eventIndex] = info
 })

@@ -35,6 +35,7 @@ export class BattleLevel {
 		}
 
 		this.cutscenes = levelData.cutscenes ?? []
+		this.dialogues = levelData.dialogues ?? {}
 	}
 	getCharacter(characterId){
 		return this.characters.find(char => char.levelCharacterId === characterId)

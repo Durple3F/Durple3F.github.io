@@ -65,12 +65,20 @@
 		},
 		"20260706": {
 			"date": "July 6, 2026",
-			"line-count": 2000,
+			"line-count": 2300,
 			"changes": [
 				"- The game now has a separate map storing the actual terrain information of the map. This includes information about which tiles each tile is connected to.",
 				"- Working on pathfinding. Not that hard honestly. It'll get a lot harder once there's a big pokemon. That's a later problem.",
 				"- Cutscenes can now tell characters to move to different tiles.",
 				"- Made a mugshot sprite for popplio. Mugshot sprites are the big ones that are used in dialogue and on profile screens."
+			]
+		},
+		"20260707": {
+			"date": "July 7, 2026",
+			"line-count": 2400,
+			"changes": [
+				"- Working on the system for displaying characters' mugshots in the correct places during dialogue. As usual, I am making this too hard on myself by allowing arbitrary resolutions.",
+				"- Starting to work on how to create the box that the words actually go in during dialogue. I'm happy with how crisp the edges are on the characters, and I hope to do the same thing for the talk box, as I'm calling it."
 			]
 		}
 	}

@@ -1,10 +1,11 @@
 import { CharacterSpriteSheet } from "./battleCharacters.js"
+import { MugshotSpriteSheet, TalkBox } from "./dialogue.js"
 import {BattleLevel, LEVELDATAS, MapData, TileSet} from "./level.js"
 import { PROPDATAS, ScenePropData } from "./props.js"
 
 export const CAMPAIGNS = {}
 export async function loadCampaign(url, name){
-	await $.getJSON(url, campaignData => {
+	await $.getJSON(url, async campaignData => {
 		CAMPAIGNS[name] = campaignData
 		console.log(campaignData)
 		for (let mapDataBaseId in campaignData.maps){
@@ -26,6 +27,15 @@ export async function loadCampaign(url, name){
 		for (let characterSpriteSheetId in campaignData.characterSpriteSheets){
 			let base = campaignData.characterSpriteSheets[characterSpriteSheetId]
 			let spritesheet = new CharacterSpriteSheet(base)
+		}
+		for (let mugshotId in campaignData.mugshotSpriteSheets){
+			let base = campaignData.mugshotSpriteSheets[mugshotId]
+			let spritesheet = new MugshotSpriteSheet(base)
+		}
+		for (let talkboxId in campaignData.talkboxSpritesheets){
+			let base = campaignData.talkboxSpritesheets[talkboxId]
+			let talkbox = new TalkBox(base)
+			await talkbox.load()
 		}
 	})
 }

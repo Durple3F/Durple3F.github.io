@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { loadImage } from './util.js';
+import { MUGSHOTS } from './dialogue.js';
 
 const textureLoader = new THREE.TextureLoader()
 export const CHARACTERSPRITESHEETS = {}
@@ -18,12 +19,19 @@ export class CharacterSpriteSheet {
 		this.spriteUVMap = new Map()
 		this.isLoaded = false
 		this.texture = null
+		this.hasMugshot = options.hasMugshot ?? false
+		this.mugshotId = options.mugshotId ?? null
+		this.mugshot = null
 	}
 	async getTexture(){
 		if (this.texture){
 			return this.texture
 		}
 		const texture = await textureLoader.loadAsync(this.path)
+		if (this.hasMugshot){
+			this.mugshot = MUGSHOTS[this.mugshotId]
+			await this.mugshot.load()
+		}
 		this.isLoaded = true
 		return texture
 	}

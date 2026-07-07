@@ -4,11 +4,13 @@ import { MAPDATAS, BattleMap, LEVELS, LEVELDATAS, BattleLevel } from './level.js
 import { CAMPAIGNS } from './campaigns.js';
 import { animate, clamp } from './util.js';
 import { BattleCutscene } from './cutscenes.js';
+import { Screen2d } from './screen2d.js';
 
 export class BattleGame {
-	constructor(renderer, controls) {
+	constructor(renderer, screen2d, controls) {
 		console.log(this)
 		this.renderer = renderer
+		this.screen2d = new Screen2d(screen2d)
 		this.controls = controls
 		this.level = null
 		this.scene = new THREE.Scene()
@@ -25,8 +27,7 @@ export class BattleGame {
 	}
 	async newScene() {
 		let level = this.level
-		// let worldData = level.worldData
-		let scale = 1 //worldData.scale
+		let scale = 1
 		this.worldScale = scale
 
 		let width = window.innerWidth, height = window.innerHeight;
@@ -74,8 +75,9 @@ export class BattleGame {
 			camera.matrixWorldNeedsUpdate = true; 
 			camera.updateProjectionMatrix();
 		}
-		// this.renderer.domElement.width = width;
-		// this.renderer.domElement.height = height;
+		
+		this.screen2d.canvas.width = width
+		this.screen2d.canvas.height = height
 	}
 
 	async loadLevel(levelId){
@@ -84,6 +86,7 @@ export class BattleGame {
 		this.level = level
 		await this.loadMap(level.map.id)
 
+		//Load characters
 		for (let character of level.characters){
 			await character.load()
 			this.scene.add(character.fullGroup)
@@ -258,6 +261,7 @@ export class BattleGame {
 		const dt = now - this.lastFrameTime
 		// console.log(now, dt, this.lastFrameTime)
 
+		//TODO: Only care about controls if the 2d screen isn't focused.
 		const camera1 = this.cameras[0]
 		if (controls.isPressing("a")) {
 			camera1.position.x += -0.05
@@ -311,6 +315,10 @@ export class BattleGame {
 				layer.mesh.geometry.attributes.uv.needsUpdate = true
 				layer.isMeshDirty = false
 			}
+		}
+
+		if (this.screen2d.isActive || true) {
+			this.screen2d.render()
 		}
 
 		this.lastFrameTime = now

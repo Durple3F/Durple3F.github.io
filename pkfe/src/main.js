@@ -10,6 +10,8 @@ renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFShadowMap;
 $("#screen").append( renderer.domElement );
 const controls = new ControlManager()
+
+const screen2d = document.getElementById("screen2d")
 let game
 
 const frameTimes = {
@@ -60,7 +62,7 @@ window.addEventListener("resize", resize)
 
 const start = async () => {
 	await loadCampaign("./src/campaign.json", "base")
-	game = new BattleGame(renderer, controls)
+	game = new BattleGame(renderer, screen2d, controls)
 	await game.loadLevel("tutorial")
 	// await game.startLevel("level1")
 	game.renderer.setAnimationLoop( animate );
