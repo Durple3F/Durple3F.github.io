@@ -8,6 +8,13 @@ export class Screen2d {
 		this.renderFns = []
 	}
 
+	setActive(bool){
+		this.isActive = bool
+	}
+	setFocus(bool){
+		this.isFocused = bool
+	}
+
 	render(){
 		const ctx = this.context
 		const w = this.canvas.width

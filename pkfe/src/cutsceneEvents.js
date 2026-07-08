@@ -34,10 +34,10 @@ new CutsceneEventType("play-dialogue", async function(game, cutscene, event){
 	let dialogueId = event.id
 	let dialogueData = game.level.dialogues[dialogueId]
 	let dialogue = new Dialogue(game, dialogueData)
-	game.screen2d.isActive = true
-	game.screen2d.isFocused = true
+	game.screen2d.setActive(true)
+	game.screen2d.setFocus(true)
 	let info = await dialogue.play()
-	game.screen2d.isActive = false
-	game.screen2d.isFocused = false
+	game.screen2d.setActive(false)
+	game.screen2d.setFocus(false)
 	cutscene.info[cutscene.eventIndex] = info
 })

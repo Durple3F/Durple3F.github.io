@@ -1,13 +1,22 @@
+@font-face {
+	font-family: 'FireEmblem';
+	src: url('./fonts/fire-emblem-8-text.otf');
+}
+
 #screen {
 	position: absolute;
-	width: 100%; height: 100%;
-	top: 0; left: 0;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
 }
 
 #screen2d {
 	position: absolute;
-	width: 100%; height: 100%;
-	top: 0; left: 0;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
 	image-rendering: pixelated;
 	image-rendering: crisp-edges;
 	pointer-events: none;
@@ -15,7 +24,8 @@
 
 #debug {
 	position: absolute;
-	top: 0; left: 0;
+	top: 0;
+	left: 0;
 	background-color: rgba(0, 0, 0, 0.2);
 	color: white;
 	font-family: monospace;

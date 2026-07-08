@@ -80,6 +80,13 @@
 				"- Working on the system for displaying characters' mugshots in the correct places during dialogue. As usual, I am making this too hard on myself by allowing arbitrary resolutions.",
 				"- Starting to work on how to create the box that the words actually go in during dialogue. I'm happy with how crisp the edges are on the characters, and I hope to do the same thing for the talk box, as I'm calling it."
 			]
+		},
+		"20260708": {
+			"date": "July 8, 2026",
+			"line-count": 2400,
+			"changes": [
+				"- Working on the system for actually displaying text. Usually I just rely on the browser to handle this part."
+			]
 		}
 	}
 }

@@ -24,14 +24,27 @@ export class Dialogue {
 
 			let spritesheet = CHARACTERSPRITESHEETS[character.pokemonId]
 			let mugshotSpriteSheet = spritesheet.mugshot
-			let mugshot = new Mugshot(mugshotSpriteSheet.id, member.placement)
+			let mugshot = new Mugshot(member.id, mugshotSpriteSheet.id, member.placement)
 			this.speakers.push(mugshot)
 		}
 		this.dialogueBox = {
 			x: 0,
 			y: 0,
 			w: 0,
-			h: 0
+			h: 0,
+			tb: {
+				x: 0,
+				y: 0,
+				textX: 0,
+				textY: 0,
+				rows: 3,
+				columns: 10
+			}
+		}
+		//Arrays of TextCharacters
+		this.text = {
+			target: [],
+			displaying: []
 		}
 		this.renderFns = []
 	}
@@ -60,10 +73,135 @@ export class Dialogue {
 		}
 
 		//Talkbox
-		const talkboxImage = this.talkbox.image
-		ctx.drawImage(talkboxImage, 0, 0)
+		this.renderTalkBox(ctx)
+		this.renderText(ctx)
 
 		ctx.restore()
+	}
+	renderTalkBox(ctx){
+		const renderInfo = this.dialogueBox
+		const dialogueBoxX = renderInfo.x + renderInfo.tb.x
+		const dialogueBoxY = renderInfo.y + renderInfo.tb.y
+		const image = this.talkbox.image
+		const spriteDims = this.talkbox.spriteDimensions
+		const XL = dialogueBoxX
+		const YT = dialogueBoxY
+		const scale = 1
+		const rows = renderInfo.tb.rows
+		const columns = renderInfo.tb.columns
+		const TLD = spriteDims[0]
+		const TCD = spriteDims[1]
+		const TRD = spriteDims[2]
+		const CLD = spriteDims[3]
+		const CCD = spriteDims[4]
+		const CRD = spriteDims[5]
+		const BLD = spriteDims[6]
+		const BCD = spriteDims[7]
+		const BRD = spriteDims[8]
+		const XC = XL + TLD[2] * scale
+		const XR = XC + TCD[2] * scale * columns
+		const YC = YT + TLD[3] * scale
+		const YB = YC + CLD[3] * scale * rows
+		//center tiles
+		for (let i = 0; i < rows; i++){
+			for (let j = 0; j < columns; j++){
+				ctx.drawImage(
+					image,
+					CCD[0], CCD[1], CCD[2], CCD[3],
+					XC + CCD[2] * scale * j, YC + CCD[3] * scale * i, CCD[2] * scale, CCD[3] * scale
+				)
+			}
+		}
+		//top-left corner
+		ctx.drawImage(
+			image,
+			TLD[0], TLD[1], TLD[2], TLD[3],
+			XL, YT, TLD[2] * scale, TLD[3] * scale
+		)
+		//top-right corner
+		ctx.drawImage(
+			image,
+			TRD[0], TRD[1], TRD[2], TRD[3],
+			XR, YT, TRD[2] * scale, TRD[3] * scale
+		)
+		//bottom-left corner
+		ctx.drawImage(
+			image,
+			BLD[0], BLD[1], BLD[2], BLD[3],
+			XL, YB, BLD[2] * scale, BLD[3] * scale
+		)
+		//bottom-right corner
+		ctx.drawImage(
+			image,
+			BRD[0], BRD[1], BRD[2], BRD[3],
+			XR, YB, BRD[2] * scale, BRD[3] * scale
+		)
+		//middle bits
+		for (let i = 0; i < columns; i++){
+			ctx.drawImage(
+				image,
+				TCD[0], TCD[1], TCD[2], TCD[3],
+				XC + TCD[2] * scale * i, YT, TCD[2] * scale, TCD[3] * scale
+			)
+			ctx.drawImage(
+				image,
+				BCD[0], BCD[1], BCD[2], BCD[3],
+				XC + BCD[2] * scale * i, YB, BCD[2] * scale, BCD[3] * scale
+			)
+		}
+		//side bits
+		for (let i = 0; i < rows; i++){
+			ctx.drawImage(
+				image,
+				CLD[0], CLD[1], CLD[2], CLD[3],
+				XL, YC + CLD[3] * scale * i, CLD[2] * scale, CLD[3] * scale
+			)
+			ctx.drawImage(
+				image,
+				CRD[0], CRD[1], CRD[2], CRD[3],
+				XR, YC + CRD[3] * scale * i, CRD[2] * scale, CRD[3] * scale
+			)
+		}
+	}
+	renderText(ctx){
+		const renderInfo = this.dialogueBox
+		const tbInfo = renderInfo.tb
+		const startX = renderInfo.x + tbInfo.textX
+		const startY = renderInfo.y + tbInfo.textY
+		const lines = this.text.target
+		ctx.textBaseline = "hanging"
+		for (let line of lines){
+			for (let char of line){
+				let letter = char.character
+				ctx.font = char.getCanvasFont()
+				ctx.fillStyle = "white"
+				ctx.fillText(letter, startX + char.x, startY)
+			}
+		}
+	}
+
+	displayText(text){
+		let lines = [text] //worry about splitting the lines later
+		//TODO: also add a way to encode special characteristics into the text, different colors and stuff
+		lines = lines.map(line => line.split("").map(char => new TextCharacter(char, "FireEmblem", 32)))
+		this.text.target = lines
+		let displayed = lines.map(line => "")
+		this.text.displaying = displayed
+
+		//Determine where each character in each line must be placed
+		const canvas = new OffscreenCanvas(500, 500)
+		const ctx = canvas.getContext("2d")
+		for (let line of lines){
+			let x = -0.72
+			for (let char of line){
+				ctx.font = char.getCanvasFont()
+				let text = ctx.measureText(char.character)
+				let width = Math.ceil(text.width)
+				char.x = x
+				x += width + 2
+			}
+		}
+		console.log(this.text)
 	}
 
 	async play(){
@@ -113,6 +251,18 @@ export class Dialogue {
 		for (let speaker of this.speakers){
 			speaker.determinePlacement(this.screen, this.dialogueBox)
 		}
+
+		const tbDims = this.talkbox.spriteDimensions
+		const talkboxInfo = this.dialogueBox.tb
+		const talkboxSpriteWidth = tbDims[0][2] + tbDims[1][2] * talkboxInfo.columns + tbDims[2][2]
+		const talkboxSpriteHeight = tbDims[0][3] + tbDims[3][3] * talkboxInfo.rows + tbDims[6][3]
+		talkboxInfo.x = Math.round((dialogueBoxWidth - talkboxSpriteWidth) * 0.5)
+		talkboxInfo.y = Math.round((dialogueBoxHeight * 0.3 - talkboxSpriteHeight) * 0.5)
+		if (talkboxInfo.y < 0){
+			talkboxInfo.y = 0
+		}
+		talkboxInfo.textX = talkboxInfo.x + tbDims[0][2]
+		talkboxInfo.textY = talkboxInfo.y + tbDims[0][3]
 	}
 	getInfo(key){
 		if (typeof key === "number"){
@@ -156,7 +306,8 @@ export const MUGSHOTPLACEMENTS = {
 	}
 }
 export class Mugshot {
-	constructor(sheetId, placement){
+	constructor(id, sheetId, placement){
+		this.id = id
 		this.spritesheet = MUGSHOTS[sheetId]
 		this.placement = placement
 		this.spriteKey = "right"
@@ -212,11 +363,30 @@ export class TalkBox {
 		this.path = options.path
 		this.isLoaded = false
 		this.spriteDimensions = options.spriteDimensions
+		for (let dim of this.spriteDimensions){
+			dim[2] -= dim[0]
+			dim[3] -= dim[1]
+		}
 	}
 	async load(){
 		let image = await loadImage(this.path)
 		this.image = image
 		this.isLoaded = true
+	}
+}
+
+export class TextCharacter {
+	constructor(character, font, fontSize){
+		this.character = character
+		this.font = font
+		this.size = fontSize
+		this.x = 0
+		this.y = 0
+		this.w = 0
+		this.h = 0
+	}
+	getCanvasFont(){
+		return this.size + "px " + this.font
 	}
 }
 
@@ -234,5 +404,12 @@ export class DialogueEventType {
 new DialogueEventType("talk", async function(game, dialogue, event){
 	let character = dialogue.characters.get(event.speaker)
 	let spritesheet = CHARACTERSPRITESHEETS[character.pokemonId]
+	if ("sprite" in event){
+		console.log(dialogue.speakers, event.speaker)
+		let speaker = dialogue.speakers.find(speaker => speaker.id === event.speaker)
+		speaker.spriteKey = event.sprite
+	}
+
+	dialogue.displayText(event.text)
 	await delay(10000)
 })
