@@ -35,14 +35,19 @@ export class Dialogue {
 			tb: {
 				x: 0,
 				y: 0,
+				scale: 1,
 				textX: 0,
 				textY: 0,
-				rows: 3,
-				columns: 10
+				rows: 4,
+				columns: 20
 			}
 		}
 		//Arrays of TextCharacters
 		this.text = {
+			isFullyDisplayed: false,
+			lineIndex: 0,
+			charIndex: 0,
+			lastUpdate: performance.now(),
 			target: [],
 			displaying: []
 		}
@@ -86,7 +91,7 @@ export class Dialogue {
 		const spriteDims = this.talkbox.spriteDimensions
 		const XL = dialogueBoxX
 		const YT = dialogueBoxY
-		const scale = 1
+		const scale = renderInfo.tb.scale
 		const rows = renderInfo.tb.rows
 		const columns = renderInfo.tb.columns
 		const TLD = spriteDims[0]
@@ -168,14 +173,18 @@ export class Dialogue {
 		const tbInfo = renderInfo.tb
 		const startX = renderInfo.x + tbInfo.textX
 		const startY = renderInfo.y + tbInfo.textY
-		const lines = this.text.target
+		const scale = tbInfo.scale
+		const text = this.text
+		const lines = text.isFullyDisplayed ? text.target : text.displaying
 		ctx.textBaseline = "hanging"
 		for (let line of lines){
 			for (let char of line){
-				let letter = char.character
-				ctx.font = char.getCanvasFont()
-				ctx.fillStyle = "white"
-				ctx.fillText(letter, startX + char.x, startY)
+				const glyph = char.character
+				const font = char.font
+				const dim = font.spriteLocations[glyph]
+				const image = font.image
+				ctx.drawImage(image, dim.x, dim.y, dim.w, dim.h, startX + char.x * scale, startY, dim.w * scale, dim.h * scale)
+				// ctx.fillText(glyph, startX + char.x * scale, startY)
 			}
 		}
 	}
@@ -183,25 +192,58 @@ export class Dialogue {
 	displayText(text){
 		let lines = [text] //worry about splitting the lines later
 		//TODO: also add a way to encode special characteristics into the text, different colors and stuff
-		lines = lines.map(line => line.split("").map(char => new TextCharacter(char, "FireEmblem", 32)))
+		lines = lines.map(line => line.split("").map(char => new TextCharacter(char, "Fire Emblem", 32)))
 		this.text.target = lines
-		let displayed = lines.map(line => "")
+		let displayed = lines.map(line => [])
 		this.text.displaying = displayed
-
+		this.text.isFullyDisplayed = false
+		this.text.lineIndex = 0
+		this.text.charIndex = 0
+		this.text.lastUpdate = performance.now()
+		const scale = this.dialogueBox.tb.scale
+		
 		//Determine where each character in each line must be placed
 		const canvas = new OffscreenCanvas(500, 500)
 		const ctx = canvas.getContext("2d")
 		for (let line of lines){
-			let x = -0.72
+			let x = 0
+			let y = 0
 			for (let char of line){
-				ctx.font = char.getCanvasFont()
-				let text = ctx.measureText(char.character)
-				let width = Math.ceil(text.width)
-				char.x = x
-				x += width + 2
+				const glyph = char.character
+				const font = char.font
+				const dim = font.spriteLocations[glyph]
+				const image = font.image
+				const width = dim.w
+				char.x = x + dim.xBias
+				char.rightSpacing = font.defaultSpaceKern + dim.xBias
+				x += width + char.rightSpacing
+				char.y = y + dim.yBias
 			}
 		}
-		console.log(this.text)
+		// console.log(this.text)
+	}
+
+	tick(now, dt){
+		const text = this.text
+		const perCharTime = 100
+		if (!text.isFullyDisplayed && now > text.lastUpdate + perCharTime){
+			text.lastUpdate = text.lastUpdate + perCharTime
+			let targetLine = text.target[text.lineIndex]
+			if (targetLine){
+				let char = targetLine[text.charIndex]
+				if (char){
+					text.displaying[text.lineIndex].push(char)
+				}
+				text.charIndex++
+				if (!targetLine[text.charIndex]){
+					text.charIndex = 0
+					text.lineIndex++
+					if (!text.target[text.lineIndex]){
+						text.isFullyDisplayed = true
+					}
+				}
+			}
+		}
 	}
 
 	async play(){
@@ -256,13 +298,21 @@ export class Dialogue {
 		const talkboxInfo = this.dialogueBox.tb
 		const talkboxSpriteWidth = tbDims[0][2] + tbDims[1][2] * talkboxInfo.columns + tbDims[2][2]
 		const talkboxSpriteHeight = tbDims[0][3] + tbDims[3][3] * talkboxInfo.rows + tbDims[6][3]
-		talkboxInfo.x = Math.round((dialogueBoxWidth - talkboxSpriteWidth) * 0.5)
-		talkboxInfo.y = Math.round((dialogueBoxHeight * 0.3 - talkboxSpriteHeight) * 0.5)
+		//Determine scale
+		const talkboxSpaceX = dialogueBoxWidth
+		const talkboxSpaceY = dialogueBoxHeight * 0.5
+		let talkboxScale = Math.min(talkboxSpaceX / talkboxSpriteWidth, talkboxSpaceY / talkboxSpriteHeight)
+		talkboxScale = talkboxScale > 1 ? Math.floor(talkboxScale) : talkboxScale
+		talkboxInfo.x = Math.round((talkboxSpaceX - talkboxSpriteWidth * talkboxScale) * 0.5)
+		talkboxInfo.y = Math.round((talkboxSpaceY - talkboxSpriteHeight * talkboxScale) * 0.5)
+		talkboxInfo.x = Math.round(talkboxInfo.x / talkboxScale) * talkboxScale
+		talkboxInfo.y = Math.round(talkboxInfo.y / talkboxScale) * talkboxScale
 		if (talkboxInfo.y < 0){
 			talkboxInfo.y = 0
 		}
-		talkboxInfo.textX = talkboxInfo.x + tbDims[0][2]
-		talkboxInfo.textY = talkboxInfo.y + tbDims[0][3]
+		talkboxInfo.scale = talkboxScale
+		talkboxInfo.textX = talkboxInfo.x + tbDims[0][2] * talkboxScale
+		talkboxInfo.textY = talkboxInfo.y + tbDims[0][3] * talkboxScale
 	}
 	getInfo(key){
 		if (typeof key === "number"){
@@ -282,7 +332,6 @@ export class MugshotSpriteSheet {
 		this.rows = options.rows
 		this.columns = options.columns
 		this.spriteLocations = options.spriteLocations ?? {}
-		this.spriteUVMap = new Map()
 		this.isLoaded = false
 		this.image = null
 	}
@@ -342,6 +391,7 @@ export class Mugshot {
 		}
 		this.w = characterWidthLimit
 		this.h = characterHeightLimit
+		let scale = this.w / spriteWidth
 
 		let placement = MUGSHOTPLACEMENTS[this.placement]
 		if ("left" in placement){
@@ -352,6 +402,8 @@ export class Mugshot {
 			let centerY = Math.round(dialogueBoxHeight * placement.top)
 			this.y = Math.round(centerY - this.h * 0.5)
 		}
+		this.x = Math.round(this.x / scale) * scale
+		this.y = Math.round(this.y / scale) * scale
 	}
 }
 
@@ -375,18 +427,40 @@ export class TalkBox {
 	}
 }
 
+export const FONTS = {}
+export class FontSpriteSheet {
+	constructor(options){
+		this.id = options.id
+		FONTS[this.id] = this
+		this.path = options.path
+		this.alphabetHeight = options.alphabetHeight
+		this.defaultSpaceKern = options.defaultSpaceKern
+		this.spriteLocations = options.spriteLocations ?? {}
+		this.isLoaded = false
+		this.image = null
+	}
+	async load(){
+		let image = await loadImage(this.path)
+		this.image = image
+		this.isLoaded = true
+	}
+}
+
 export class TextCharacter {
-	constructor(character, font, fontSize){
+	constructor(character, fontId, fontSize){
 		this.character = character
-		this.font = font
+		this.font = FONTS[fontId]
+		console.log(this.font, fontId)
 		this.size = fontSize
 		this.x = 0
 		this.y = 0
 		this.w = 0
 		this.h = 0
+		this.rightSpacing = 0
 	}
-	getCanvasFont(){
-		return this.size + "px " + this.font
+	getCanvasFont(scale=1){
+		const size = this.size * scale
+		return size + "px " + this.font
 	}
 }
 
@@ -405,11 +479,23 @@ new DialogueEventType("talk", async function(game, dialogue, event){
 	let character = dialogue.characters.get(event.speaker)
 	let spritesheet = CHARACTERSPRITESHEETS[character.pokemonId]
 	if ("sprite" in event){
-		console.log(dialogue.speakers, event.speaker)
+		// console.log(dialogue.speakers, event.speaker)
 		let speaker = dialogue.speakers.find(speaker => speaker.id === event.speaker)
 		speaker.spriteKey = event.sprite
 	}
 
+	let resolve
+	let p = new Promise(res => resolve = res)
+	const advance = () => {
+		if (!dialogue.text.isFullyDisplayed){
+			dialogue.text.isFullyDisplayed = true
+		} else {
+			resolve()
+		}
+	}
+	game.inputs.addListener("confirm", advance)
+
 	dialogue.displayText(event.text)
-	await delay(10000)
+	await p
+	game.inputs.removeListener("confirm", advance)
 })

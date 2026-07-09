@@ -5,6 +5,7 @@ import { CAMPAIGNS } from './campaigns.js';
 import { animate, clamp } from './util.js';
 import { BattleCutscene } from './cutscenes.js';
 import { Screen2d } from './screen2d.js';
+import { InputManager } from './input.js';
 
 export class BattleGame {
 	constructor(renderer, screen2d, controls) {
@@ -12,6 +13,7 @@ export class BattleGame {
 		this.renderer = renderer
 		this.screen2d = new Screen2d(screen2d)
 		this.controls = controls
+		this.inputs = new InputManager(controls)
 		this.level = null
 		this.scene = new THREE.Scene()
 		this.lights = []
@@ -21,9 +23,10 @@ export class BattleGame {
 		this.lastFrameTime = performance.now()
 		this.textureLoader = new THREE.TextureLoader()
 		this.isPlayingCutscene = false
+		this.tickFns = []
 
 		this.newScene()
-		const orbitControls = new OrbitControls( this.cameras[0], renderer.domElement );
+		// const orbitControls = new OrbitControls( this.cameras[0], renderer.domElement );
 	}
 	async newScene() {
 		let level = this.level
@@ -250,7 +253,11 @@ export class BattleGame {
 	tick() {
 		const now = performance.now()
 		const controls = this.controls
-		controls.tick()
+		this.inputs.tick()
+
+		if (this.inputs.events.length){
+			console.log(this.inputs.events)
+		}
 
 		// const level = this.level
 		// const worldData = level.worldData
@@ -319,6 +326,10 @@ export class BattleGame {
 
 		if (this.screen2d.isActive || true) {
 			this.screen2d.render()
+		}
+
+		for (let fn of this.tickFns){
+			fn(now, dt)
 		}
 
 		this.lastFrameTime = now

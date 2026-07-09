@@ -75,6 +75,9 @@ export class ControlManager {
 		}
 		return pressed
 	}
+	justPressed(key){
+		return this.getButtonState(key) && !this.prevButtons[key]
+	}
 	setMouseButtonState(buttons){
 		//binary
 		//101 means pressing middle and left mouse but not right
