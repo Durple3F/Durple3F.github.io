@@ -90,6 +90,15 @@
 				"- The dialogue now waits for you to click OR press space. I'm trying to decouple the code that handles button presses from the code that decides what to do with those button presses.",
 				"- Hi. Did you know that there's no good solution in a javascript canvas for trying to render an actual font file's text so that it gives crisp, clear lines of the pixels that make it up? This is mostly because of the fact that font data is not truly stored in terms of pixels for nearly every font in existence. So I needed to write down the dimensions of every single character it was possible to display in this font, and display the images of those sprites. This is how it was done back in 1985 and by god it is still just as annoying. I was able to encode some of my personal favorite typographic features such as kerning to some limited degree."
 			]
+		},
+		"20260709": {
+			"date": "July 9, 2026",
+			"line-count": 3100,
+			"changes": [
+				"- Text being displayed now automatically splits into lines unless I tell it not to.",
+				"- Customized the font so that it wouldn't have that dumb outline.",
+				"- Text can now be shown in arbitrary colors."
+			]
 		}
 	}
 }
