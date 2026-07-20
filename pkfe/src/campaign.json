@@ -39,7 +39,7 @@
 					"events": [
 						{"type": "play-dialogue", "id": "intro"},
 						{"type": "load-value", "value": "player"},
-						{"type": "load-value", "value": {"x":0, "y":0, "z":-5}},
+						{"type": "load-value", "value": {"x":-6, "y":0, "z":-5}},
 						{"type": "path-character", "characterId": -2, "mode": "offset", "to": -1, "duration": 3000, "cameraFollow": true}
 					]
 				}
@@ -88,8 +88,8 @@
 			"backgroundColor": "#000040",
 			"terrain": {
 				"type": "simple",
-				"width": 16,
-				"height": 32
+				"width": 13,
+				"height": 29
 			},
 			"layers": [
 				{
@@ -462,19 +462,38 @@
 			"mugshotId": "popplio",
 			"characterWidth": 1,
 			"characterHeight": 1,
-			"spriteWidth": 64,
-			"spriteHeight": 64,
-			"rows": 2,
-			"columns": 2,
+			"spriteWidth": 32,
+			"spriteHeight": 32,
+			"rows": 1,
+			"columns": 8,
 			"spriteLocations": {
-				"left": [
-					0,
-					0
-				],
-				"right": [
-					0,
-					1
-				]
+				"left": [0, 0],
+				"right": [0, 1],
+				"up-left": [0, 2],
+				"up-right": [0, 3],
+				"walk-left-0": [0, 4],
+				"walk-left-1": [0, 5],
+				"walk-left-2": [0, 6],
+				"walk-left-3": [0, 7]
+			},
+			"animations": {
+				"idle-left": {
+					"id": "idle-left",
+					"fps": 10,
+					"frames": [
+						"left"
+					]
+				},
+				"walk-left": {
+					"id": "walk-left",
+					"fps": 12,
+					"frames": [
+						"walk-left-0",
+						"walk-left-1",
+						"walk-left-2",
+						"walk-left-3"
+					]
+				}
 			}
 		},
 		"stufful": {

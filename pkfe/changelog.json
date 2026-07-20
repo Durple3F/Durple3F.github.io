@@ -99,6 +99,13 @@
 				"- Customized the font so that it wouldn't have that dumb outline.",
 				"- Text can now be shown in arbitrary colors."
 			]
+		},
+		"20260710": {
+			"date": "July 10, 2026",
+			"line-count": 3100,
+			"changes": [
+				"- Tried to make a walk cycle for popplio. I don't think I did very well."
+			]
 		}
 	}
 }

@@ -287,6 +287,9 @@ export class BattleMap {
 			imageMesh.scale.x = layer.scale * -1
 			imageMesh.scale.y = layer.scale
 			imageMesh.scale.z = layer.scale
+			imageMesh.position.x += layer.position[0]
+			imageMesh.position.y += layer.position[1]
+			imageMesh.position.z += layer.position[2]
 			this.group.add(imageMesh);
 
 			for (let tile of layer.tiles) {

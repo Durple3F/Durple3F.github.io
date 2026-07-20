@@ -9,9 +9,12 @@ export class Terrain {
 	}
 	createSimpleTerrain(width, height, elevation) {
 		for (let i = 0; i < width * height; i++) {
-			let x = i % width
-			let z = Math.floor(i / width)
+			let x = i % width - Math.round(width / 2)
+			let z = Math.floor(i / width) - Math.round(height / 2)
 			let tile = new TerrainTile(x, elevation, z)
+			tile.worldPosition.x += 0
+			tile.worldPosition.y += 0
+			tile.worldPosition.z += 0
 			this.tiles.push(tile)
 		}
 		for (let tile of this.tiles) {
@@ -111,6 +114,11 @@ class TerrainTile {
 		this.x = x
 		this.y = y
 		this.z = z
+		this.worldPosition = {
+			x: x,
+			y: y,
+			z: z
+		}
 		this.connectionCosts = new Map()
 		this.connections = []
 		this.occupyingCharacter = null

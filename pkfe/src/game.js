@@ -166,7 +166,8 @@ export class BattleGame {
 		this.centerCameraOnCharacter(firstCharacter)
 	}
 	setCharacterTile(character, terrainTile){
-		character.fullGroup.position.set(terrainTile.x, terrainTile.y, terrainTile.z)
+		const tilePos = terrainTile.worldPosition
+		character.fullGroup.position.set(tilePos.x, tilePos.y, tilePos.z)
 	}
 	offsetCharacter(character, distance){
 		const tiles = []
@@ -219,13 +220,13 @@ export class BattleGame {
 	async moveCharacter(character, start, end, duration=0, cameraFollow){
 		let resolve
 		const promise = new Promise(res => resolve = res)
-		const dx = end.x - start.x
-		const dy = end.y - start.y
-		const dz = end.z - start.z
+		const dx = end.worldPosition.x - start.worldPosition.x
+		const dy = end.worldPosition.y - start.worldPosition.y
+		const dz = end.worldPosition.z - start.worldPosition.z
 		const move = (start, end, p) => {
-			character.fullGroup.position.x = start.x + dx * p
-			character.fullGroup.position.y = start.y + dy * p
-			character.fullGroup.position.z = start.z + dz * p
+			character.fullGroup.position.x = start.worldPosition.x + dx * p
+			character.fullGroup.position.y = start.worldPosition.y + dy * p
+			character.fullGroup.position.z = start.worldPosition.z + dz * p
 			if (cameraFollow){
 				this.centerCameraOnCharacter(character)
 			}
@@ -295,6 +296,7 @@ export class BattleGame {
 			}
 		}
 
+		//Update characters' tilt and animations
 		for (let character of this.level.characters){
 			const dx = cameraPos.x - character.object.position.x;
 			const dy = cameraPos.y - character.object.position.y;
@@ -302,6 +304,7 @@ export class BattleGame {
 			//Did you know that the pythagorean theorem scales into three dimensions without issue?
 			const horizontalDistance = Math.sqrt(dx * dx + dz * dz);
 			character.billboardPivot.rotation.x = -Math.atan2(dy, horizontalDistance);
+			character.updateAnimation(now)
 		}
 
 		//Update map tiles that update

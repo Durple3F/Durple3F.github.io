@@ -16,6 +16,7 @@ export class CharacterSpriteSheet {
 		this.rows = options.rows
 		this.columns = options.columns
 		this.spriteLocations = options.spriteLocations
+		this.animations = options.animations ?? {}
 		this.spriteUVMap = new Map()
 		this.isLoaded = false
 		this.texture = null
@@ -66,10 +67,12 @@ export class BattleCharacter {
 		this.homeTile = null
 		this.occupyingTiles = new Set()
 		this.spriteSheet = CHARACTERSPRITESHEETS[spriteSheetId]
+		this.animation = null
 		this.object = null
 		this.billboardPivot = new THREE.Group()
 		this.fullGroup = new THREE.Group()
 		this.fullGroup.add(this.billboardPivot)
+		this.setAnimation("walk-left")
 	}
 	async load(){
 		this.texture = await this.spriteSheet.getTexture()
@@ -98,5 +101,52 @@ export class BattleCharacter {
 		const geometry = this.object.geometry
 		geometry.attributes.uv.array.set(uvs)
 		geometry.attributes.uv.needsUpdate = true;
+	}
+	setAnimation(animationKey){
+		const animations = this.spriteSheet.animations
+		if (animationKey in animations){
+			this.animation = new CharacterAnimation(animations[animationKey])
+		}
+	}
+	updateAnimation(now){
+		if (!this.animation) return
+		const anim = this.animation
+		let curFrame = anim.getFrame(anim.frameIndex)
+		while (now - anim.lastUpdate > curFrame.duration){
+			anim.lastUpdate += curFrame.duration
+			anim.frameIndex++
+			curFrame = anim.getFrame(anim.frameIndex)
+		}
+		this.setSprite(curFrame.spriteKey)
+	}
+}
+
+class CharacterAnimation {
+	constructor(animationData){
+		this.id = animationData.id
+		this.frames = []
+		this.frameIndex = 0
+		this.lastUpdate = performance.now()
+
+		let defaultFps = 1000 / 20
+		if ("fps" in animationData){
+			defaultFps = 1000 / animationData.fps
+		}
+		for (let i = 0; i < animationData.frames.length; i++){
+			const frameData = animationData.frames[i]
+			if (typeof frameData === "string"){
+				const frame = new CharacterAnimationFrame(frameData, defaultFps)
+				this.frames[i] = frame
+			}
+		}
+	}
+	getFrame(index){
+		return this.frames[index % this.frames.length]
+	}
+}
+class CharacterAnimationFrame {
+	constructor(spriteKey, duration){
+		this.spriteKey = spriteKey
+		this.duration = duration
 	}
 }
